@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Gcc Trampoline | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="gcc对trampoline的定义如下：
+A trampoline is a small piece of code that is created at run time when the address of a nested function is taken. It normally resides on the stack, in the stack frame of the conta">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Gcc Trampoline">
+<meta property="og:url" content="http://yoursite.com/2010/09/27/gcc-trampoline/">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="gcc对trampoline的定义如下：
+A trampoline is a small piece of code that is created at run time when the address of a nested function is taken. It normally resides on the stack, in the stack frame of the conta">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Gcc Trampoline">
+<meta name="twitter:description" content="gcc对trampoline的定义如下：
+A trampoline is a small piece of code that is created at run time when the address of a nested function is taken. It normally resides on the stack, in the stack frame of the conta">
+
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-gcc-trampoline" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2010/09/27/gcc-trampoline/" class="article-date">
+  <time datetime="2010-09-28T06:21:28.000Z" itemprop="datePublished">Sep 27 2010</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Programming/">Programming</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Gcc Trampoline
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>gcc对<a href="http://gcc.gnu.org/onlinedocs/gccint/Trampolines.html" target="_blank" rel="external">trampoline的定义</a>如下：</p>
+<p>A trampoline is a small piece of code that is created at run time when the address of a nested function is taken. It normally resides on the stack, in the stack frame of the containing function.</p>
+<p>trampoline是因nested function应运而生的。其基本原理描述如下：</p>
+<p>The instructions in the trampoline must do two things: load a constant address into the static chain register, and jump to the real address of the nested function. On CISC machines such as the m68k, this requires two instructions, a move immediate and a jump. Then the two addresses exist in the trampoline as word-long immediate operands. On RISC machines, it is often necessary to load each address into a register in two parts. Then pieces of each address form separate immediate operands.</p>
+<p>下面我们来看看它具体是怎么工作的。看<a href="http://www.technovelty.org/code/c/trampoline.html" target="_blank" rel="external">这个例子</a>：<br>[c]</p>
+<h1 id="include">include</h1>
+<p>int function(int arg) {</p>
+<pre><code>    <span class="keyword">int</span> nested_function(<span class="keyword">int</span> nested_arg) {
+            <span class="keyword">return</span> arg + nested_arg;
+    }
+
+    <span class="keyword">return</span> nested_function(arg);
+</code></pre><p>}</p>
+<p>int main(void)<br>{<br>        printf(“%dn”, function(10));<br>}<br>[/c]<br>很明显我们使用到了一个nested function，但是我们看gcc生成的汇编：<br>[asm]<br>00000000004004c4 :<br>  4004c4:       55                      push   %rbp<br>  4004c5:       48 89 e5                mov    %rsp,%rbp<br>  4004c8:       89 7d fc                mov    %edi,-0x4(%rbp)<br>  4004cb:       4c 89 d0                mov    %r10,%rax<br>  4004ce:       8b 00                   mov    (%rax),%eax<br>  4004d0:       03 45 fc                add    -0x4(%rbp),%eax<br>  4004d3:       c9                      leaveq<br>  4004d4:       c3                      retq</p>
+<p>00000000004004d5 :<br>  4004d5:       55                      push   %rbp<br>  4004d6:       48 89 e5                mov    %rsp,%rbp<br>  4004d9:       48 83 ec 10             sub    $0x10,%rsp<br>  4004dd:       89 f8                   mov    %edi,%eax<br>  4004df:       89 45 f0                mov    %eax,-0x10(%rbp)<br>  4004e2:       8b 45 f0                mov    -0x10(%rbp),%eax<br>  4004e5:       48 8d 55 f0             lea    -0x10(%rbp),%rdx<br>  4004e9:       49 89 d2                mov    %rdx,%r10<br>  4004ec:       89 c7                   mov    %eax,%edi<br>  4004ee:       e8 d1 ff ff ff          callq  4004c4<br>  4004f3:       c9                      leaveq<br>  4004f4:       c3                      retq<br>[/asm]</p>
+<p>很明显这和普通的函数调用没什么区别嘛！（当然，除了汇编中的nest_function()的名字改变了。）没trampoline什么事。这是因为这时候还没必要使用trampoline，gcc优化还是很聪明的，它不到万不得已不会做一点儿额外的工作。</p>
+<p>下面我们就取一下它的地址：<br>[c]</p>
+<h1 id="include-1">include</h1>
+<p>int function(int arg) {</p>
+<pre><code>    <span class="keyword">int</span> nested_function(<span class="keyword">int</span> nested_arg) {
+            <span class="keyword">return</span> arg + nested_arg;
+    }
+
+    <span class="keyword">return</span> nested_function(arg);
+</code></pre><p>}</p>
+<p>int function2(int arg) {</p>
+<pre><code>    <span class="keyword">int</span> nested_function(<span class="keyword">int</span> nested_arg) {
+            <span class="keyword">return</span> arg + nested_arg;
+    }
+
+    <span class="keyword">int</span> (*function_pointer)(<span class="keyword">int</span> arg) = nested_function;
+
+    <span class="keyword">return</span> function_pointer(arg);
+</code></pre><p>}</p>
+<p>int main(void)<br>{<br>        printf(“%dn”, function(10));<br>        printf(“%dn”, function2(10));<br>        return 0;<br>}<br>[/c]<br>这时trampoline就产生了，因为我们对它取了地址，这个地址在栈上，而且nested function()的栈必须被设为外面function2()的栈。<br>[asm]<br>00000000004004f5 :<br>  4004f5:       55                      push   %rbp<br>  4004f6:       48 89 e5                mov    %rsp,%rbp<br>  4004f9:       89 7d fc                mov    %edi,-0x4(%rbp)<br>  4004fc:       4c 89 d0                mov    %r10,%rax<br>  4004ff:       8b 00                   mov    (%rax),%eax<br>  400501:       03 45 fc                add    -0x4(%rbp),%eax<br>  400504:       c9                      leaveq<br>  400505:       c3                      retq</p>
+<p>0000000000400506 :<br>  400506:       55                      push   %rbp<br>  400507:       48 89 e5                mov    %rsp,%rbp<br>  40050a:       48 83 ec 30             sub    $0x30,%rsp<br>  40050e:       89 f8                   mov    %edi,%eax<br>  400510:       89 45 d0                mov    %eax,-0x30(%rbp)<br>  400513:       48 8d 45 d0             lea    -0x30(%rbp),%rax<br>  400517:       48 83 c0 04             add    $0x4,%rax<br>  40051b:       48 8d 55 d0             lea    -0x30(%rbp),%rdx<br>  40051f:       b9 f5 04 40 00          mov    $0x4004f5,%ecx<br>  400524:       66 c7 00 41 bb          movw   $0xbb41,(%rax)<br>  400529:       89 48 02                mov    %ecx,0x2(%rax)<br>  40052c:       66 c7 40 06 49 ba       movw   $0xba49,0x6(%rax)<br>  400532:       48 89 50 08             mov    %rdx,0x8(%rax)<br>  400536:       c7 40 10 49 ff e3 90    movl   $0x90e3ff49,0x10(%rax)<br>  40053d:       48 8d 45 d0             lea    -0x30(%rbp),%rax<br>  400541:       48 83 c0 04             add    $0x4,%rax<br>  400545:       48 89 45 f8             mov    %rax,-0x8(%rbp)<br>  400549:       8b 45 d0                mov    -0x30(%rbp),%eax<br>  40054c:       48 8b 55 f8             mov    -0x8(%rbp),%rdx<br>  400550:       89 c7                   mov    %eax,%edi<br>  400552:       ff d2                   callq  *%rdx<br>  400554:       c9                      leaveq<br>  400555:       c3                      retq<br>[/asm]<br>读生成的汇编，我们可以看出堆栈大体这样：</p>
+<p><pre><br>[  xxx     ] &lt;-rsp<br>[  eax     ]<br>[  0xbb41  ]<br>[  addr    ]<br>[  0xba49  ]<br>[   rsp    ]<br>[0x90e3ff49]<br>…<br>[ xxx      ] &lt;- rbp<br></pre><br>其中addr是指nested_function.2079的地址。这里最让我们困惑的应该那三个常数，它们是什么？根据上面的定义你应该可以猜出，是指令！到底是什么指令呢？我们手工反汇编一下：<br>[c]<br>unsigned short arrary[] = {0xbb41, 0xffff, 0xffff};<br>unsigned short array2[] = {0xba49, 0xffff, 0xffff};<br>unsigned short arrary3 [] = {0xff49, 0x90e3};<br>[/c]<br>其中0xffff仅仅是用作标记。把此文件保存为decode.c，然后：</p>
+<p><pre><br>cr0% gcc -c decode.c<br>cr0% objdump -D decode.o<br></pre><br>我们可以得到，它们大体就是下面三条指令：</p>
+<p><pre><br>movl $nested_function.2079,%r11<br>movl %rsp, %r10<br>jmp *%r11<br>nop<br></pre><br>根据nested_function.2079里的代码，我们可以看出%r10传递的是参数的地址，然后就直接jmp到nested_function.2079里去了。这就是传说中的trampoline！</p>
+<p>注：此时的stack必须是可执行的，因为有代码放在了里面，查看其maps可以看出：</p>
+<p>bfebe000-bfed3000 rwxp 00000000 00:00 0          [stack]</p>
+<p>提到nested function，不能不提一个trick，就是用nested function<a href="http://gcc.gnu.org/ml/gcc-help/2010-08/msg00229.html" target="_blank" rel="external">来实现C的lambda</a>！如下：<br>[c]</p>
+<h1 id="define_lambda(l_ret_type,_l_arguments,_l_body)">define lambda(l_ret_type, l_arguments, l_body)</h1>
+<pre><code>({                                                           
+  l_ret_type l_anonymous_functions_name l_arguments          
+    l_body                                                   
+  &amp;amp;l_anonymous_functions_name;                               
+})
+
+qsort (<span class="built_in">array</span>, <span class="keyword">sizeof</span> (<span class="built_in">array</span>) / <span class="keyword">sizeof</span> (<span class="built_in">array</span>[<span class="number">0</span>]), <span class="keyword">sizeof</span> (<span class="built_in">array</span>[<span class="number">0</span>]),
+       lambda (<span class="keyword">int</span>, (<span class="keyword">const</span> <span class="keyword">void</span> *a, <span class="keyword">const</span> <span class="keyword">void</span> *b),
+               {
+                 dump ();
+                 <span class="built_in">printf</span> (<span class="string">"Comparison %d: %d and %dn"</span>,
+                         ++ comparison,
+                         *(<span class="keyword">const</span> <span class="keyword">int</span> *) a, *(<span class="keyword">const</span> <span class="keyword">int</span> *) b);
+                 <span class="keyword">return</span> *(<span class="keyword">const</span> <span class="keyword">int</span> *) a - *(<span class="keyword">const</span> <span class="keyword">int</span> *) b;
+               }));
+</code></pre><p>[/c]<br>怎么样？很有意思吧。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2010/09/27/gcc-trampoline/" data-id="obq01pamxcuew13f" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2010/09/28/-e9-95-bf-e9-80-94-e6-97-85-e8-a1-8c-e6-a3-80-e6-9f-a5-e5-88-97-e8-a1-a8/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          长途旅行物品检查列表
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2010/09/26/-e7-97-9b-e8-8b-a6-e5-8d-b3-e4-ba-ba-e7-94-9f/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">痛苦即人生</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Book-Reviews/">Book Reviews</a><span class="category-list-count">18</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/China/">China</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Collection/">Collection</a><span class="category-list-count">25</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">324</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux-Application/">Linux Application</a><span class="category-list-count">73</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux-Kernel/">Linux Kernel</a><span class="category-list-count">64</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Love/">Love</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Movies/">Movies</a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/">Programming</a><span class="category-list-count">152</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Science-Fiction/">Science Fiction</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Travel/">Travel</a><span class="category-list-count">19</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/geek/">geek</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/handling/">handling</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/joke/">joke</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/signal/">signal</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/unix/">unix</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/geek/" style="font-size: NaNpx;">geek</a><a href="/tags/handling/" style="font-size: NaNpx;">handling</a><a href="/tags/joke/" style="font-size: NaNpx;">joke</a><a href="/tags/linux/" style="font-size: NaNpx;">linux</a><a href="/tags/signal/" style="font-size: NaNpx;">signal</a><a href="/tags/unix/" style="font-size: NaNpx;">unix</a><a href="/tags/vim/" style="font-size: NaNpx;">vim</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">August 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">December 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">October 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">September 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">August 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">February 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01/">January 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12/">December 2012</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">November 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">October 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">September 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">August 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/07/">July 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">April 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">March 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">February 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">January 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/12/">December 2011</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">November 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/10/">October 2011</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">September 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08/">August 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/07/">July 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/06/">June 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/05/">May 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04/">April 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03/">March 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/02/">February 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/01/">January 2011</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/12/">December 2010</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/11/">November 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/10/">October 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/09/">September 2010</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08/">August 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07/">July 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06/">June 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05/">May 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04/">April 2010</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03/">March 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02/">February 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01/">January 2010</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12/">December 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11/">November 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10/">October 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09/">September 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08/">August 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07/">July 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/06/">June 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/05/">May 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04/">April 2009</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03/">March 2009</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02/">February 2009</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01/">January 2009</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12/">December 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/11/">November 2008</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/10/">October 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09/">September 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08/">August 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07/">July 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06/">June 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05/">May 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04/">April 2008</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03/">March 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02/">February 2008</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01/">January 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12/">December 2007</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11/">November 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10/">October 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09/">September 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08/">August 2007</a><span class="archive-list-count">31</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07/">July 2007</a><span class="archive-list-count">34</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06/">June 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05/">May 2007</a><span class="archive-list-count">25</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04/">April 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03/">March 2007</a><span class="archive-list-count">50</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02/">February 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01/">January 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12/">December 2006</a><span class="archive-list-count">5</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2014/08/12/linux-e7-bd-91-e7-bb-9c-e6-b5-81-e9-87-8f-e6-8e-a7-e5-88-b6-ef-bc-88-e4-b8-80-ef-bc-89/">Linux 网络流量控制（零）</a>
+          </li>
+        
+          <li>
+            <a href="/2014/08/01/ottawa-linux-symposium/">Ottawa Linux Symposium</a>
+          </li>
+        
+          <li>
+            <a href="/2014/05/31/skbuff-e5-86-85-e5-ad-98-e6-a8-a1-e5-9e-8b/">skbuff 内存模型</a>
+          </li>
+        
+          <li>
+            <a href="/2014/05/06/-e9-95-bf-e6-9c-9f-e6-8f-90-e4-be-9b-twitter-e5-86-85-e6-8e-a8/">长期提供 Twitter 内推</a>
+          </li>
+        
+          <li>
+            <a href="/2014/01/30/-e6-88-91-e7-9a-842013-ef-bc-9a-e6-88-91-e6-9d-a5-e5-88-b0-e4-ba-86-e7-be-8e-e5-9b-bd/">我的2013：我来到了美国</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2015 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+
+  </div>
+</body>
+</html>

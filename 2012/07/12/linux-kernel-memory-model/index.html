@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Linux kernel memory model | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="稍微了解 Linux 内核的人都知道，在 x86 上内核中所有的 struct page 是放在一个数组中管理的，它就是 mem_map，通过它我们就可以用 pfn 作为 index 来找到对应的 struct page 了：
+[c]
+define __pfn_to_page(pfn)      (mem_map + ((pfn) - ARCH_PFN_OFFSET))
+define __page">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux kernel memory model">
+<meta property="og:url" content="http://yoursite.com/2012/07/12/linux-kernel-memory-model/">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="稍微了解 Linux 内核的人都知道，在 x86 上内核中所有的 struct page 是放在一个数组中管理的，它就是 mem_map，通过它我们就可以用 pfn 作为 index 来找到对应的 struct page 了：
+[c]
+define __pfn_to_page(pfn)      (mem_map + ((pfn) - ARCH_PFN_OFFSET))
+define __page">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux kernel memory model">
+<meta name="twitter:description" content="稍微了解 Linux 内核的人都知道，在 x86 上内核中所有的 struct page 是放在一个数组中管理的，它就是 mem_map，通过它我们就可以用 pfn 作为 index 来找到对应的 struct page 了：
+[c]
+define __pfn_to_page(pfn)      (mem_map + ((pfn) - ARCH_PFN_OFFSET))
+define __page">
+
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-linux-kernel-memory-model" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2012/07/12/linux-kernel-memory-model/" class="article-date">
+  <time datetime="2012-07-12T20:39:19.000Z" itemprop="datePublished">Jul 12 2012</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux-Kernel/">Linux Kernel</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Linux kernel memory model
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>稍微了解 Linux 内核的人都知道，在 x86 上内核中所有的 struct page 是放在一个数组中管理的，它就是 mem_map，通过它我们就可以用 pfn 作为 index 来找到对应的 struct page 了：</p>
+<p>[c]</p>
+<h1 id="define___pfn_to_page(pfn)_(mem_map_+_((pfn)_-_ARCH_PFN_OFFSET))">define __pfn_to_page(pfn)      (mem_map + ((pfn) - ARCH_PFN_OFFSET))</h1>
+<h1 id="define___page_to_pfn(page)_((unsigned_long)((page)_-_mem_map)_+">define __page_to_pfn(page)     ((unsigned long)((page) - mem_map) +</h1>
+<pre><code>                             ARCH_PFN_OFFSET)
+</code></pre><p>[/c]</p>
+<p>这是以前旧的 memory model（这个词很流行，你应该在很多地方见过，比如 C/C++标准），现在情况变了。</p>
+<p>因为对 NUMA 和内存热插拔（memory hot-plug）的支持，Linux 内核中现在又引入两个新的 memory model，之前那个旧的被称为 Flat memory，新的两个被称为 Discontiguous memory 和 Sparse memory。它们对应的选项是：CONFIG_FLATMEM，CONFIG_DISCONTIGMEM，CONFIG_SPARSEMEM。让我们来看看这两个新的 memory model。</p>
+<p>顺便多说两句，NUMA 和内存热插拔并没有直接的联系，NUMA 系统不一定支持内存的热插拔，而可以进行内存热插拔的系统也不一定是 NUMA 的！NUMA 支持对应的选项是 CONFIG_NUMA，而内存热插拔对应的选项是 CONFIG_MEMORY_HOTPLUG 和 CONFIG_MEMORY_HOTREMOVE。由此也可以看出 Linux 内核配置是多么灵活，你可以任意搭配你需要的选项。</p>
+<p><strong>CONFIG_DISCONTIGMEM</strong></p>
+<p>mm/Kconfig 中对它的介绍是：</p>
+<blockquote>
+<p>This option provides enhanced support for discontiguous memory systems, over FLATMEM. These systems have holes in their physical address spaces, and this option provides more efficient handling of these holes.  However, the vast          majority of hardware has quite flat address spaces, and can have degraded performance from the extra overhead that this option imposes.</p>
+<p>Many NUMA configurations will have this as the only option.<br>Discontiguous memory 其实很简单，它上从 flat memory 的基础上对 NUMA 进行扩展得出来的。每一个 node 都有一个 struct pglist_data，对于 discontiguous memory 其中记录了每个 node 的 node_start_pfn、node_spanned_pages、node_mem_map，分别表示该 node 的起始页的 PFN、物理页的数量、这些页面的 mem_map。我们可以看 alloc_node_mem_map() 是如何初始化这几个值的：</p>
+</blockquote>
+<p>[c]<br>static void __init_refok alloc_node_mem_map(struct pglist_data <em>pgdat)<br>{<br>        /</em> Skip empty nodes */<br>        if (!pgdat-&gt;node_spanned_pages)<br>                return;</p>
+<h1 id="ifdef_CONFIG_FLAT_NODE_MEM_MAP">ifdef CONFIG_FLAT_NODE_MEM_MAP</h1>
+<pre><code>    <span class="comment">/* ia64 gets its own node_mem_map, before this, without bootmem */</span>
+    if (!pgdat-&amp;gt;node_mem_map) {
+            unsigned long size, <span class="operator"><span class="keyword">start</span>, <span class="keyword">end</span>;</span>
+            struct page *map;
+
+            <span class="comment">/*
+             * The zone's endpoints aren't required to be MAX_ORDER
+             * aligned but the node_mem_map endpoints must be in order
+             * for the buddy allocator to function correctly.
+             */</span>
+            <span class="operator"><span class="keyword">start</span> = pgdat-&amp;gt;</span>node_start_pfn &amp;amp; ~(MAX_ORDER_NR_PAGES - 1);
+            <span class="operator"><span class="keyword">end</span> = pgdat-&amp;gt;</span>node_start_pfn + pgdat-&amp;gt;node_spanned_pages;
+            <span class="operator"><span class="keyword">end</span> = ALIGN(<span class="keyword">end</span>, MAX_ORDER_NR_PAGES);</span>
+            size =  (<span class="operator"><span class="keyword">end</span> - <span class="keyword">start</span>) * sizeof(struct page);</span>
+            map = alloc_remap(pgdat-&amp;gt;node_id, size);
+            if (!map)
+                    map = alloc_bootmem_node_nopanic(pgdat, size);
+            pgdat-&amp;gt;node_mem_map = map + (pgdat-&amp;gt;node_start_pfn - <span class="operator"><span class="keyword">start</span>);</span>
+    }
+    //....
+</code></pre><p>}<br>[/c]</p>
+<p>所以，它对应的 <strong>pfn_to_page() 和 </strong>page_to_pfn() 定义如下：</p>
+<p>[c]</p>
+<h1 id="define_arch_local_page_offset(pfn,_nid)">define arch_local_page_offset(pfn, nid)</h1>
+<pre><code>    <span class="list">(<span class="list">(<span class="title">pfn</span>)</span> - NODE_DATA<span class="list">(<span class="title">nid</span>)</span>-<span class="keyword">&amp;gt</span><span class="comment">;node_start_pfn)</span></span>
+</code></pre><h1 id="define___pfn_to_page(pfn)">define __pfn_to_page(pfn)</h1>
+<p>({      unsigned long <strong>pfn = (pfn);<br>        unsigned long </strong>nid = arch_pfn_to_nid(<strong>pfn);<br>        NODE_DATA(</strong>nid)-&gt;node_mem_map + arch_local_page_offset(<strong>pfn, </strong>nid);<br>})</p>
+<h1 id="define___page_to_pfn(pg)">define __page_to_pfn(pg)</h1>
+<p>({      const struct page <em>__pg = (pg);<br>        struct pglist_data </em><strong>pgdat = NODE_DATA(page_to_nid(</strong>pg));<br>        (unsigned long)(<strong>pg - </strong>pgdat-&gt;node_mem_map) +<br>         __pgdat-&gt;node_start_pfn;<br>})<br>[/c]</p>
+<p>两个 node 之间的内存未必是连续的，中间可能有内存空洞，空洞的单位是 64M，但整个内存依然是 flat 的：</p>
+<p>[c]<br>/*</p>
+<ul>
+<li>generic node memory support, the following assumptions apply:<br>*</li>
+<li>1) memory comes in 64Mb contiguous chunks which are either present or not</li>
+<li>2) we will not have more than 64Gb in total<br>*</li>
+<li>for now assume that 64Gb is max amount of RAM for whole system</li>
+<li>64Gb / 4096bytes/page = 16777216 pages<br>*/<h1 id="define_MAX_NR_PAGES_16777216">define MAX_NR_PAGES 16777216</h1>
+<h1 id="define_MAX_SECTIONS_1024">define MAX_SECTIONS 1024</h1>
+<h1 id="define_PAGES_PER_SECTION_(MAX_NR_PAGES/MAX_SECTIONS)">define PAGES_PER_SECTION (MAX_NR_PAGES/MAX_SECTIONS)</h1>
+</li>
+</ul>
+<p>extern s8 physnode_map[];</p>
+<p>static inline int pfn_to_nid(unsigned long pfn)<br>{</p>
+<h1 id="ifdef_CONFIG_NUMA">ifdef CONFIG_NUMA</h1>
+<pre><code>    <span class="keyword">return</span>((<span class="keyword">int</span>) physnode_map[(pfn) / PAGES_PER_SECTION]);
+</code></pre><h1 id="else">else</h1>
+<pre><code>    <span class="keyword">return</span> <span class="number">0</span>;
+</code></pre><h1 id="endif">endif</h1>
+<p>}<br>[/c]</p>
+<p><strong>CONFIG_SPARSEMEM</strong></p>
+<p>Sparse memory 是一个相对比较复杂的模型。mm/Kconfig 中对它的介绍是：</p>
+<blockquote>
+<p>This will be the only option for some systems, including memory hotplug systems. This is normal. For many other systems, this will be an alternative to “Discontiguous Memory”.  This option provides some potential performance benefits, along with decreased code complexity, but it is newer, and more experimental.</p>
+</blockquote>
+<p>它主要是因为支持内存热插拔引入的。对于支持内存热插拔的系统，系统中的某一个部分内存可以随时被移除和添加，这就是得原本连续的内存空间变得稀疏。这个内存模型是把所有的内存空间划分成一个个 section，每个 section 都是同样大小的，可以进行热插拔的内存大小就是以 section 为单位的。在 x86_64 上面，每个 section 是 128M：</p>
+<p>[c]</p>
+<h1 id="ifdef_CONFIG_X86_32">ifdef CONFIG_X86_32</h1>
+<h1 id="ifdef_CONFIG_X86_PAE">ifdef CONFIG_X86_PAE</h1>
+<h1 id="define_SECTION_SIZE_BITS_29">define SECTION_SIZE_BITS     29</h1>
+<h1 id="define_MAX_PHYSADDR_BITS_36">define MAX_PHYSADDR_BITS     36</h1>
+<h1 id="define_MAX_PHYSMEM_BITS_36">define MAX_PHYSMEM_BITS      36</h1>
+<h1 id="else-1">else</h1>
+<h1 id="define_SECTION_SIZE_BITS_26">define SECTION_SIZE_BITS     26</h1>
+<h1 id="define_MAX_PHYSADDR_BITS_32">define MAX_PHYSADDR_BITS     32</h1>
+<h1 id="define_MAX_PHYSMEM_BITS_32">define MAX_PHYSMEM_BITS      32</h1>
+<h1 id="endif-1">endif</h1>
+<h1 id="else_/_CONFIG_X86_32_/">else /<em> CONFIG_X86_32 </em>/</h1>
+<h1 id="define_SECTION_SIZE_BITS_27_/_matt_-_128_is_convenient_right_now_/">define SECTION_SIZE_BITS      27 /<em> matt - 128 is convenient right now </em>/</h1>
+<h1 id="define_MAX_PHYSADDR_BITS_44">define MAX_PHYSADDR_BITS      44</h1>
+<h1 id="define_MAX_PHYSMEM_BITS_46">define MAX_PHYSMEM_BITS       46</h1>
+<h1 id="endif-2">endif</h1>
+<p>[/c]</p>
+<p>每个 section 有自己的 mem_map，所以其 __pfn_to_page 的定义如下：</p>
+<p>[c]<br>/*</p>
+<ul>
+<li>Note: section’s mem_map is encorded to reflect its start_pfn.</li>
+<li>section[i].section_mem_map == mem_map’s address - start_pfn;<br>*/<h1 id="define___page_to_pfn(pg)-1">define __page_to_pfn(pg)</h1>
+({      const struct page *__pg = (pg);                         <pre><code> <span class="keyword">int</span> __sec = page_to_section(__pg);                      
+ (<span class="keyword">unsigned</span> <span class="keyword">long</span>)(__pg - __section_mem_map_addr(__nr_to_section(__sec))); 
+</code></pre>})</li>
+</ul>
+<h1 id="define___pfn_to_page(pfn)-1">define __pfn_to_page(pfn)</h1>
+<p>({      unsigned long <strong>pfn = (pfn);<br>        struct mem_section *</strong>sec = <strong>pfn_to_section(</strong>pfn);<br>        <strong>section_mem_map_addr(</strong>sec) + __pfn;<br>})<br>[/c]</p>
+<p>Sparse memory 还有两个变异：SPARSEMEM_EXTREME 和 SPARSEMEM_VMEMMAP，前者是对更稀疏的内存做了优化，采用了两层 memory section，即二维数组：</p>
+<p>[c]</p>
+<h1 id="ifdef_CONFIG_SPARSEMEM_EXTREME">ifdef CONFIG_SPARSEMEM_EXTREME</h1>
+<h1 id="define_SECTIONS_PER_ROOT_(PAGE_SIZE_/_sizeof_(struct_mem_section))">define SECTIONS_PER_ROOT       (PAGE_SIZE / sizeof (struct mem_section))</h1>
+<h1 id="else-2">else</h1>
+<h1 id="define_SECTIONS_PER_ROOT_1">define SECTIONS_PER_ROOT       1</h1>
+<h1 id="endif-3">endif</h1>
+<h1 id="define_SECTION_NR_TO_ROOT(sec)_((sec)_/_SECTIONS_PER_ROOT)">define SECTION_NR_TO_ROOT(sec) ((sec) / SECTIONS_PER_ROOT)</h1>
+<h1 id="define_NR_SECTION_ROOTS_DIV_ROUND_UP(NR_MEM_SECTIONS,_SECTIONS_PER_ROOT)">define NR_SECTION_ROOTS        DIV_ROUND_UP(NR_MEM_SECTIONS, SECTIONS_PER_ROOT)</h1>
+<h1 id="define_SECTION_ROOT_MASK_(SECTIONS_PER_ROOT_-_1)">define SECTION_ROOT_MASK       (SECTIONS_PER_ROOT - 1)</h1>
+<h1 id="ifdef_CONFIG_SPARSEMEM_EXTREME-1">ifdef CONFIG_SPARSEMEM_EXTREME</h1>
+<p>extern struct mem_section *mem_section[NR_SECTION_ROOTS];</p>
+<h1 id="else-3">else</h1>
+<p>extern struct mem_section mem_section[NR_SECTION_ROOTS][SECTIONS_PER_ROOT];</p>
+<h1 id="endif-4">endif</h1>
+<p>static inline struct mem_section *__nr_to_section(unsigned long nr)<br>{<br>        if (!mem_section[SECTION_NR_TO_ROOT(nr)])<br>                return NULL;<br>        return &amp;mem_section[SECTION_NR_TO_ROOT(nr)][nr &amp; SECTION_ROOT_MASK];<br>}<br>[/c]</p>
+<p>后者是针对 x86_64 这种虚拟地址空间比较大的平台做了速度的优化，把 mem_map 里所有 struct page 的地址一一映射进 vmemmap 地址中去，这样它们的虚拟地址就是连续的了：</p>
+<p>[c]</p>
+<h1 id="define_VMEMMAP_START__AC(0xffffea0000000000,_UL)">define VMEMMAP_START    _AC(0xffffea0000000000, UL)</h1>
+<h1 id="define_vmemmap_((struct_page_*)VMEMMAP_START)">define vmemmap ((struct page *)VMEMMAP_START)</h1>
+<p>/<em> memmap is virtually contiguous.  </em>/</p>
+<h1 id="define___pfn_to_page(pfn)_(vmemmap_+_(pfn))">define __pfn_to_page(pfn)      (vmemmap + (pfn))</h1>
+<h1 id="define___page_to_pfn(page)_(unsigned_long)((page)_-_vmemmap)">define __page_to_pfn(page)     (unsigned long)((page) - vmemmap)</h1>
+<p>[/c]</p>
+<p>不过额外的代价就是初始化的时候要对每一个 struct page 做 populate，参见 sparse_mem_map_populate() 函数。另外可参考内存热插拔代码中函数 <strong>add_section() 和 </strong>remove_section() 的实现。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2012/07/12/linux-kernel-memory-model/" data-id="dtq73fugwnm1gaec" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2012/07/16/parallelism-concurrency/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Parallelism != Concurrency
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2012/07/06/treap/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">treap</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Book-Reviews/">Book Reviews</a><span class="category-list-count">18</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/China/">China</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Collection/">Collection</a><span class="category-list-count">25</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">324</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux-Application/">Linux Application</a><span class="category-list-count">73</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux-Kernel/">Linux Kernel</a><span class="category-list-count">64</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Love/">Love</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Movies/">Movies</a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/">Programming</a><span class="category-list-count">152</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Science-Fiction/">Science Fiction</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Travel/">Travel</a><span class="category-list-count">19</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/geek/">geek</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/handling/">handling</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/joke/">joke</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/signal/">signal</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/unix/">unix</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/geek/" style="font-size: NaNpx;">geek</a><a href="/tags/handling/" style="font-size: NaNpx;">handling</a><a href="/tags/joke/" style="font-size: NaNpx;">joke</a><a href="/tags/linux/" style="font-size: NaNpx;">linux</a><a href="/tags/signal/" style="font-size: NaNpx;">signal</a><a href="/tags/unix/" style="font-size: NaNpx;">unix</a><a href="/tags/vim/" style="font-size: NaNpx;">vim</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">August 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">December 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">October 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">September 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">August 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">February 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01/">January 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12/">December 2012</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">November 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">October 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">September 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">August 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/07/">July 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">April 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">March 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">February 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">January 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/12/">December 2011</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">November 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/10/">October 2011</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">September 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08/">August 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/07/">July 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/06/">June 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/05/">May 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04/">April 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03/">March 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/02/">February 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/01/">January 2011</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/12/">December 2010</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/11/">November 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/10/">October 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/09/">September 2010</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08/">August 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07/">July 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06/">June 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05/">May 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04/">April 2010</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03/">March 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02/">February 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01/">January 2010</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12/">December 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11/">November 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10/">October 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09/">September 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08/">August 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07/">July 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/06/">June 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/05/">May 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04/">April 2009</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03/">March 2009</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02/">February 2009</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01/">January 2009</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12/">December 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/11/">November 2008</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/10/">October 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09/">September 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08/">August 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07/">July 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06/">June 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05/">May 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04/">April 2008</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03/">March 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02/">February 2008</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01/">January 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12/">December 2007</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11/">November 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10/">October 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09/">September 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08/">August 2007</a><span class="archive-list-count">31</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07/">July 2007</a><span class="archive-list-count">34</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06/">June 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05/">May 2007</a><span class="archive-list-count">25</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04/">April 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03/">March 2007</a><span class="archive-list-count">50</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02/">February 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01/">January 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12/">December 2006</a><span class="archive-list-count">5</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2014/08/12/linux-e7-bd-91-e7-bb-9c-e6-b5-81-e9-87-8f-e6-8e-a7-e5-88-b6-ef-bc-88-e4-b8-80-ef-bc-89/">Linux 网络流量控制（零）</a>
+          </li>
+        
+          <li>
+            <a href="/2014/08/01/ottawa-linux-symposium/">Ottawa Linux Symposium</a>
+          </li>
+        
+          <li>
+            <a href="/2014/05/31/skbuff-e5-86-85-e5-ad-98-e6-a8-a1-e5-9e-8b/">skbuff 内存模型</a>
+          </li>
+        
+          <li>
+            <a href="/2014/05/06/-e9-95-bf-e6-9c-9f-e6-8f-90-e4-be-9b-twitter-e5-86-85-e6-8e-a8/">长期提供 Twitter 内推</a>
+          </li>
+        
+          <li>
+            <a href="/2014/01/30/-e6-88-91-e7-9a-842013-ef-bc-9a-e6-88-91-e6-9d-a5-e5-88-b0-e4-ba-86-e7-be-8e-e5-9b-bd/">我的2013：我来到了美国</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2015 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+
+  </div>
+</body>
+</html>

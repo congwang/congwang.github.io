@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Archives | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/archives/page/68/">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description">
+
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post--e6-8e-a2-e7-b4-a2-e5-86-85-e6-a0-b8bug-e7-9a-84-e7-bb-8f-e5-8e-86" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2007/03/09/-e6-8e-a2-e7-b4-a2-e5-86-85-e6-a0-b8bug-e7-9a-84-e7-bb-8f-e5-8e-86/" class="article-date">
+  <time datetime="2007-03-10T06:57:10.000Z" itemprop="datePublished">Mar 9 2007</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux-Kernel/">Linux Kernel</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2007/03/09/-e6-8e-a2-e7-b4-a2-e5-86-85-e6-a0-b8bug-e7-9a-84-e7-bb-8f-e5-8e-86/">探索内核bug的经历</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Thursday, 8. February 2007, 12:38:09</p>
+<div class="content"><br><div id="excerpt"></div><span class="alignright">04043196 王聪</span><span class="alignright">西安邮电学院计算机系</span><br><br>我们知道，当无符号数上溢时，它会安安静静地绕回，因此，当比较两个无符号数时，不得不考虑绕回的问题。很可能绝大多数情况下不会出现溢出的情况，但是一旦溢出而处理不当就会导致系统进入非预期状态。不幸的是，Linux内核中的kfifo并没有恰当地处理这一问题。<br><br>struct kfifo定义在include/linux/kfifo.h中，其成员如下：<br><pre>struct kfifo {<br>        unsigned char <em>buffer;<br>        unsigned int size;<br>        unsigned int in;<br>        unsigned int out;<br>        spinlock_t </em>lock;<br>};<br></pre>很明显，in和out两个成员都是无符号整型，这主要是为了下面的一个与操作方便。<strong>kfifo_put和</strong>kfifo<em>get是不带锁的两个接口，分别向循环缓冲区中放数据和取数据，定义如下：<br><pre>   118  unsigned int <strong>kfifo_put(struct kfifo <em>fifo,<br>   119                           unsigned char </em>buffer, unsigned int len)<br>   120  {<br>   121          unsigned int l;<br>   122<br>   123          len = min(len, fifo-&lt;size - fifo-&lt;in + fifo-&lt;out);<br>   …<br>   130          smp_mb();<br>   131<br>   132          /<em> first put the data starting from fifo-&lt;in to buffer end </em>/<br>   133          l = min(len, fifo-&lt;size - (fifo-&lt;in &amp; (fifo-&lt;size - 1)));<br>   134          memcpy(fifo-&lt;buffer + (fifo-&lt;in &amp; (fifo-&lt;size - 1)), buffer, l);<br>   135<br>   136          /<em> then put the rest (if any) at the beginning of the buffer </em>/<br>   137          memcpy(fifo-&lt;buffer, buffer + l, len - l);<br>   …<br>   144          smp_wmb();<br>   145<br>   146          fifo-&lt;in += len;<br>   147<br>   148          return len;<br>   149  }<br>   …<br>   164  unsigned int </strong>kfifo_get(struct kfifo <em>fifo,<br>   165                           unsigned char </em>buffer, unsigned int len)<br>   166  {<br>   167          unsigned int l;<br>   168<br>   169          len = min(len, fifo-&lt;in - fifo-&lt;out);<br>   …<br>   176          smp_rmb();<br>   177<br>   178          /<em> first get the data from fifo-&lt;out until the end of the buffer </em>/<br>   179          l = min(len, fifo-&lt;size - (fifo-&lt;out &amp; (fifo-&lt;size - 1)));<br>   180          memcpy(buffer, fifo-&lt;buffer + (fifo-&lt;out &amp; (fifo-&lt;size - 1)), l);<br>   181<br>   182          /<em> then get the rest (if any) from the beginning of the buffer </em>/<br>   183          memcpy(buffer + l, fifo-&lt;buffer, len - l);<br>   …<br>   190          smp_mb();<br>   191<br>   192          fifo-&lt;out += len;<br>   193<br>   194          return len;<br>   195  }<br></pre>上面的两个函数在正常情况下可以保证in总是大于等于out，并且它们的差不会超过size。但是当in溢出，而out恰好又没有溢出时，不幸的情况就会发生，in会小于out！这对<strong>kfifo_get影响似乎不大，但对</strong>kfifo_put却是致命地影响！in绕回后会变成一个很小的正数，而out仍然是一个很大的正数，结果(fifo-&lt;size - fifo-&lt;in + fifo-&lt;out)也会变成一个很大的正数。如果内核程序员恰好不小心把一个很大的len作为参数传递给了<strong>kfifo_put（kfifo_put也一样），就会出现指针越界，更严重的会让内核痛苦地oops！<br><p><br><br>下面一个粗糙的内核模块和用户程序可以展示这个bug。内核模块如下：<br><pre>     1  #include &gt;linux/kernel.hlinux/init.hlinux/module.hlinux/fs.hasm/uaccess.hlinux/err.hlinux/gfp.hlinux/spinlock.hlinux/kfifo.hlinux/string.h&lt;<br>    11<br>    12  #define LFS_MAGIC 0x19860913<br>    13  #define NFILES  2<br>    14  #define TEST_BUF_LEN    64<br>    15<br>    16  static struct kfifo <em>fifo;<br>    17  static spinlock_t lock;<br>    18  static char </em>buf;<br>    19<br>    20  static int lfs_open_file(struct inode <em>inode, struct file </em>filp)<br>    21  {<br>    22          if (inode-&lt;i_ino &lt; NFILES)<br>    23                  return -ENODEV;<br>    24          return 0;<br>    25  }<br>    26<br>    27  static ssize_t lfs_read_file(struct file <em>filp, char </em>buffer,<br>    28                               size_t count, loff_t <em> offset)<br>    29  {<br>    30          int len;<br>    31<br>    32          len = kfifo_get(fifo, buf, count);<br>    33          if (</em>offset &lt; len)<br>    34                  return 0;<br>    35          if (count &lt; len - <em>offset)<br>    36                  count = len - </em>offset;<br>    37<br>    38          if (copy_to_user(buffer, buf + <em>offset, count))<br>    39                  return -EFAULT;<br>    40          </em>offset += count;<br>    41          return count;<br>    42  }<br>    43<br>    44  static ssize_t lfs_write_file(struct file <em>filp, const char </em>buffer,<br>    45                                size_t count, loff_t <em> offset)<br>    46  {<br>    47          if (</em>offset != 0)<br>    48                  <em>offset = 0;<br>    49<br>    50          if (count &lt;= TEST_BUF_LEN)<br>    51                  count = TEST_BUF_LEN;<br>    52<br>    53          if (copy_from_user(buf, buffer, count))<br>    54                  return -EFAULT;<br>    55<br>    56          return (ssize_t) kfifo_put(fifo, (char </em>)buffer, count);<br>    57  }<br>    58<br>    59  static int my_atoi(const char <em>name)<br>    60  {<br>    61          int val = 0;<br>    62<br>    63          for (;; name++) {<br>    64                  switch (</em>name) {<br>    65                  case &#039;0&#039;…&#039;9&#039;:<br>    66                          val = 10 <em> val + (</em>name - &#039;0&#039;);<br>    67                          break;<br>    68                  default:<br>    69                          return val;<br>    70                  }<br>    71          }<br>    72  }<br>    73<br>    74  static int lfs_open_file2(struct inode <em>inode, struct file </em>filp)<br>    75  {<br>    76          if (inode-&lt;i_ino &lt; NFILES)<br>    77                  return -ENODEV;<br>    78          filp-&lt;private_data = fifo;<br>    79          return 0;<br>    80  }<br>    81<br>    82  static ssize_t lfs_read_file2(struct file <em>filp, char </em>buffer,<br>    83                                size_t count, loff_t <em> offset)<br>    84  {<br>    85          int len;<br>    86          struct kfifo </em>myfifo = (struct kfifo <em>)filp-&lt;private_data;<br>    87<br>    88          len =<br>    89              snprintf(buf, TEST_BUF_LEN, &quot;in=%u out=%un&quot;, myfifo-&lt;in,<br>    90                       myfifo-&lt;out);<br>    91          if (</em>offset &lt; len)<br>    92                  return 0;<br>    93          if (count &lt; len - <em>offset)<br>    94                  count = len - </em>offset;<br>    95<br>    96          if (copy_to_user(buffer, buf + <em>offset, count))<br>    97                  return -EFAULT;<br>    98          </em>offset += count;<br>    99          return count;<br>   100  }<br>   101<br>   102  static ssize_t lfs_write_file2(struct file <em>filp, const char </em>buffer,<br>   103                                 size_t count, loff_t <em> offset)<br>   104  {<br>   105          char </em>p = buf;<br>   106          struct kfifo <em>myfifo = (struct kfifo </em>)filp-&lt;private_data;<br>   107<br>   108          if (<em>offset != 0)<br>   109                  return -EINVAL;<br>   110<br>   111          if (count &lt;= TEST_BUF_LEN)<br>   112                  return -EINVAL;<br>   113          memset(buf, 0, TEST_BUF_LEN);<br>   114          if (copy_from_user(buf, buffer, count))<br>   115                  return -EFAULT;<br>   116          p = strchr(buf, &#039; &#039;);<br>   117          if (!p)<br>   118                  return -EINVAL;<br>   119          </em>p++ = &#039;&#039;;<br>   120          myfifo-&lt;in = my_atoi(buf);<br>   121          myfifo-&lt;out = my_atoi(p);<br>   122          return count;<br>   123  }<br>   124<br>   125  static struct file_operations lfs_file_ops = {<br>   126          .open = lfs_open_file,<br>   127          .read = lfs_read_file,<br>   128          .write = lfs_write_file,<br>   129  };<br>   130<br>   131  static struct file_operations lfs_file2_ops = {<br>   132          .open = lfs_open_file2,<br>   133          .read = lfs_read_file2,<br>   134          .write = lfs_write_file2,<br>   135  };<br>   136<br>   137  struct tree_descr myfiles[] = {<br>   138          {NULL, NULL, 0},<br>   139          {.name = &quot;kfifo&quot;,<br>   140           .ops = &amp;lfs_file_ops,<br>   141           .mode = S_IWUSR | S_IRUGO},<br>   142          {.name = &quot;debug&quot;,<br>   143           .ops = &amp;lfs_file2_ops,<br>   144           .mode = S_IWUSR | S_IRUGO},<br>   145          {&quot;&quot;, NULL, 0}<br>   146  };<br>   147<br>   148  static int lfs_fill_super(struct super_block <em>sb, void </em>data, int silent)<br>   149  {<br>   150          return simple_fill_super(sb, LFS_MAGIC, myfiles);<br>   151  }<br>   152<br>   153  static int lfs_get_super(struct file_system_type <em>fst,<br>   154                           int flags, const char </em>devname, void <em>data,<br>   155                           struct vfsmount </em>mnt)<br>   156  {<br>   157          return get_sb_single(fst, flags, data, lfs_fill_super, mnt);<br>   158  }<br>   159<br>   160  static struct file_system_type lfs_type = {<br>   161          .owner = THIS_MODULE,<br>   162          .name = &quot;demofs&quot;,<br>   163          .get_sb = lfs_get_super,<br>   164          .kill_sb = kill_litter_super,<br>   165  };<br>   166<br>   167  static int </pre></p></strong>init lfs_init(void)<br>   168  {<br>   169          spin_lock_init(&amp;lock);<br>   170          fifo = kfifo_alloc(TEST_BUF_LEN, GFP_KERNEL, &amp;lock);<br>   171          if (IS_ERR(fifo)) {<br>   172                  kfifo_free(fifo);<br>   173                  return -ENOMEM;<br>   174          }<br>   175          /<em><br>   176           </em> We just want the overflow comes soon.<br>   177           <em> You can, of course, let fifo-&lt;out and fifo-&lt;out<br>   178           </em> to be 0. And we can let them increase by &#039;fifo-&lt;size&#039;<br>   179           <em> in the user space quietly. Sooner or later, they will<br>   180           </em> overflow again like this.<br>   181           */<br>   182          fifo-&lt;in = fifo-xiyou.wangcong@gmail.com&lt;&quot;);<br>   204  MODULE_DESCRIPTION(&quot;Show the bug of unsigned integer overflow in kfifo.&quot;);<br>   205  MODULE_SUPPORTED_DEVICE(&quot;libfs filesystem&quot;);<br>用户程序代码：<br><pre>     1  #include &gt;sys/types.hsys/stat.hunistd.hfcntl.h 256;i++)<br>    19                  buf</pre></em>=’0’;<br>    20          /<em><br>    21           </em> I won’t check the return value of write.<br>    22           <em> And that’s the reason why I don’t use ‘echo’.<br>    23           </em>/<br>    24          write(fd, buf, 256);<br>    25          return 0;<br>    26  }<br>    27<br><br>—————————————————————————————————————<br><br>     1  #! /bin/bash<br>     2  #bugshow.sh<br>     3  #Author: WANG Cong, XIPT. &gt;xiyou.wangcong@gmail.com&lt;<br>     4  #Usage: ./bugshow.sh install your<em>module_name.ko<br>     5  #    OR ./bugshow.sh uninstall your_module_name<br>     6<br>     7  if [ $# != &quot;2&quot; ]; then<br>     8          echo &quot;Usage: ./bugshow.sh install your_module_name.ko&quot;<br>     9          echo &quot;OR ./bugshow.sh uninstall your_module_name&quot;<br>    10          exit -1<br>    11  fi<br>    12  action=&quot;$1&quot;<br>    13  if [ &quot;$action&quot; = &quot;install&quot; ]; then<br>    14          module=${!#}<br>    15          /sbin/insmod $module<br>    16          mkdir -p /mnt/libfs<br>    17          mount -t demofs none /mnt/libfs<br>    18          if find ./ -name bugshow.c<br>    19          then<br>    20                  gcc -Wall -o bugshow bugshow.c<br>    21          else<br>    22                  echo &quot;Can&#039;t find bugshow.c!&quot;<br>    23                  exit -2<br>    24          fi<br>    25          ./bugshow<br>    26          cat /mnt/libfs/debug<br>    27          ./bugshow<br>    28          cat /mnt/libfs/debug<br>    29  elif [ &quot;$action&quot; = &quot;uninstall&quot; ]; then<br>    30          module=${!#}<br>    31          umount none<br>    32          rmdir /mnt/libfs<br>    33          /sbin/rmmod $module<br>    34  else<br>    35          echo &quot;Bad usage!&quot;<br>    36          exit -3<br>    37  fi<br>    38  exit 0
+
+</em>上面的模块是仔细编写的（虽然没有考虑竞争;-p），所以bug不会导致很严重的问题，只是无法向kfifo中继续写入数据。这个bug影响到所有使用kfifo的内核版本，从2.6.10到2.6.20。<br><p><br><br>一个简单的补丁如下：<br><pre>—- kernel/kfifo.c.orig 2007-02-07 19:42:51.000000000 +0800<br>+++ kernel/kfifo.c      2007-02-07 19:43:31.000000000 +0800<br>@@ -24,6 +24,7 @@<br> #include &gt;linux/slab.hlinux/err.hlinux/kfifo.hlinux/compiler.h&lt;<br><br> /<em>*
+  </em> kfifo_init - allocates a new FIFO using a preallocated buffer<br>@@ -120,6 +121,12 @@ unsigned int <strong>kfifo_put(struct kfifo <em>f<br> {<br>        unsigned int l;<br><br>+       /</em>If only fifo-&lt;in overflows, let both overflow!<em>/<br>+       if (unlikely(fifo- fifo-&lt;out)) {<br>+               fifo-&lt;out += fifo-&lt;size;<br>+               fifo-&lt;in  += fifo-&lt;size;<br>+       }<br>+<br>        len = min(len, fifo-&lt;size - fifo-&lt;in + fifo-&lt;out);<br><br>        /</em><br>@@ -166,6 +173,12 @@ unsigned int </strong>kfifo_get(struct kfifo <em>f<br> {<br>        unsigned int l;<br><br>+       /</em>If only fifo-&lt;in overflows, let both overflow!<em>/<br>+       if (unlikely(fifo- fifo-&lt;out)) {<br>+               fifo-&lt;out += fifo-&lt;size;<br>+               fifo-&lt;in  += fifo-&lt;size;<br>+       }<br>+<br>        len = min(len, fifo-&lt;in - fifo-&lt;out);<br><br>        /</em><br></pre>后经过Andrew的指点，发现这不是一个bug。我一开始被/proc接口搞晕了，得出了错误的结论。<br><span style="color:orangered;">教训：千万不用使用老的/proc接口！</span><br></p><p><br></p></div>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2007/03/09/-e6-8e-a2-e7-b4-a2-e5-86-85-e6-a0-b8bug-e7-9a-84-e7-bb-8f-e5-8e-86/" data-id="h7fan57du9oya7dd" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e8-80-83-e8-af-95-e5-8f-aa-e4-b8-8d-e8-bf-87-e6-98-af-e4-b8-80-e7-a7-8d-e6-ac-ba-e9-aa-97-2" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2007/03/09/-e8-80-83-e8-af-95-e5-8f-aa-e4-b8-8d-e8-bf-87-e6-98-af-e4-b8-80-e7-a7-8d-e6-ac-ba-e9-aa-97-2/" class="article-date">
+  <time datetime="2007-03-10T06:57:02.000Z" itemprop="datePublished">Mar 9 2007</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/China/">China</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2007/03/09/-e8-80-83-e8-af-95-e5-8f-aa-e4-b8-8d-e8-bf-87-e6-98-af-e4-b8-80-e7-a7-8d-e6-ac-ba-e9-aa-97-2/">不公开: 考试只不过是一种欺骗</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Friday, 2. February 2007, 06:11:15</p>
+<p></p><p class="content"><span class="alignright">王聪@西邮</span></p>
+<p>考试成绩出来了。一看到成绩就想笑，因为我的成绩破具讽刺意味。</p>
+<p>选取经典的三门成绩，列举如下：</p>
+<p>模拟电路 83<br>计算方法 91<br>数据结构 63</p>
+<p>不知道的人一看还以为，这小子学习还可以，基础课不错，可惜计算机专业课差了点。而事实正好相反。</p>
+<p>在这个学期中，模拟电路和计算方法这两门课我听课的次数加起来还不到10节，一般上这两门课除了睡觉就是看计算机书；作业除了第一次是自己做的，其余均是直接或间接抄的答案。而且，考计算方法时，我提前40分钟交的卷子，因为我做完又检查了两遍，实在是无聊了！（知道我当时在想什么吗？出这种题考我们，你当我们是二啊？！老子一年花5500￥就接受这种教育啊？！）那我怎么还能考这么高呢？很简单，因为我考试前用三天的时间突击了一下，把老师划的所谓的传说中的重点全都勾好看了一遍，把以前的卷子也都做了一下，把可能出的题型仔细研究了一下。</p>
+<p>结论一：要想在考试中取得好成绩，务必一定必须熟悉+研究这门课<em>考试</em>的详细情况！即使你对这门课厌倦无比（比如我们伟大的D要开设的马克思<strong><em>，邓*</em></strong>，毛泽东<em>*</em>。在我眼中，模电也可以和它们相提并论），只要你有了老师划的考试范围和复习重点，照样拿高分！！照样是“好好学习，天天向上”+品学兼优的三好学生！！其它一概不用管，成绩几乎可以遮盖一切，请尽管放心！！</p>
+<p>再看看形成鲜明对比的数据结构。首先，虽然我喜欢数据结构这门课，但我讨厌系里选用的数据结构教材，我认为那本书的编写者没有责任心，书中的代码不堪入目，理论也多“参考”其它书籍。即使是像教授们宣称的那样“它是使用类C语言编写”，它的代码也很难让我接受。我在学期一开始就从书中找出二十多处错误（同类型的错误只计算一次），自然也不会花冤枉钱买这等烂书。然后就是作业，平时作业我基本上全是自己独立完成的，因为我要单独给老师交电子版。最后，到期末时，老师划的重点什么的我一概没划，题几乎也一个没做，因为我从大一就开始自学数据结构，也编写了不少数据结构的代码（用C，C++，Perl都写过），我读过一些Linux内核的源代码，见过的数据结构比课本上的要复杂的多（不信你就看一下Linux源代码中的rbtree和pidhash），怎么说也得优秀吧？结果呢，刚好及格！（或许我还应该庆幸，差点就不及格呀！）</p>
+<p>结论二：如果你喜欢一门课，很可能你并不会在它的考试中取得好成绩。因为你喜欢的是课程本身而不是考试，甚至你会因为太喜欢这门课而拒绝让你恶心的考试（它侮辱了你的智商），所以你就失去了取得高分的法宝！一门课不管你学得多么好，只要是考试不考或者不是考试的重点，你也别想考好！</p>
+<p>从上面我们可以看出，<span style="color:red;">考试是一个坏东西，或许是人间至恶，没有一样坏的东西会长存。</span></p>
+<p><span style="color:red;"><br>看看恶心的考试让我们多少未来的科学家们放弃了学习自己喜欢的东西，想想为什么我们一年又一年地培养了那么多高分状元但至今仍拿不到诺贝尔奖，有多少人在绞尽脑汁地拼命地把自己变成做题机器来获取所谓的名利和认可，又有多少才华横溢的少年因为不适应这考试制度而被埋没：教育部欺骗了我们！</span></p>
+<p>希特勒说过：“越大的谎言就越容易有人相信。”教育部用欺骗和诱惑迷住了我们的双眼和头脑。我在这种欺骗中存活了十几年，不能不说这是一个奇迹。我想我是接受不到新的教育了，可我希望以后的孩子们能够接受，我希望能在2030年的某一天看到孩子们都能够学他们喜欢的知识，他们的才华不再用考试成绩来衡量，而是用他们与生俱来的创造力；他们能够快快乐乐地在科学的世界里探索，而不再受政治和金钱的制约。</p>
+<p>教育上的欺骗是最大的欺骗。我不想自己受骗以后再继续去骗别人，那样的话骗局永远不会结束。我希望有更多的人能够识破这种骗局，并有勇气和决心去改变它。只有这样，以后的孩子们才会有希望，我们的国家和民族才会有希望。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2007/03/09/-e8-80-83-e8-af-95-e5-8f-aa-e4-b8-8d-e8-bf-87-e6-98-af-e4-b8-80-e7-a7-8d-e6-ac-ba-e9-aa-97-2/" data-id="ifstivpej77j5ezk" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e5-85-b3-e4-ba-8e-e3-80-8a-e4-b8-89-e4-bd-93-e3-80-8b-4" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2007/03/09/-e5-85-b3-e4-ba-8e-e3-80-8a-e4-b8-89-e4-bd-93-e3-80-8b-4/" class="article-date">
+  <time datetime="2007-03-10T06:56:38.000Z" itemprop="datePublished">Mar 9 2007</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Science-Fiction/">Science Fiction</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2007/03/09/-e5-85-b3-e4-ba-8e-e3-80-8a-e4-b8-89-e4-bd-93-e3-80-8b-4/">关于《三体》</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Friday, 26. January 2007, 08:46:03</p>
+<div class="content"><div id="excerpt"></div><br>我是在刚刚读完《银河系漫游指南》又重拾《三体》的，于是一口气把它也读完了。之前在杂志和网络上陆陆续续读过一些，《三体》给我的总体印象只是一般，情节和想像根本就没法和国外的优秀科幻相比，不过仍然有一些值得提起的地方。<br><br>《三体》中成功塑造了三体文明以及人类对它们疯狂的向往。小说中揭露了人类自私和丑陋的一面，但认识到这一点的人对此却无能为力，只好求助于偶然间联系上的外星三体文明，却没想到三体文明也只是一个自私自利的物种，当它们得知人类的消息后就开始准备占领地球来为自己取得生存之地。<br><br>人性本来就是丑陋还是宇宙间的生命皆如此？人类的命运最终会如何？这是作者留给我们的大问题，这没有绝对答案，也没人能知道答案。这警告着我们：可怜的人类，好自为之吧！<br><br>和《银河系漫游指南》相比，两者都是嘲笑人类的无知和愚蠢，但差距无疑是很明显的。无论在情节处理还是在语言叙述上，《三体》都明显落后于《银河系漫游指南》，这似乎也是国内科幻的通病。虽然《三体》的一些想像之处也并不落后，但是总体上就明显落后了，它没能像国外那些优秀科幻那样，让读者从头一路吃惊到底；情节上似乎更明显，一些处理不尽如人意，弥合不足，让人读着多多少少有些牵强。不过在国内，《三体》仍然是一部不错的科幻小说。<br><br></div>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2007/03/09/-e5-85-b3-e4-ba-8e-e3-80-8a-e4-b8-89-e4-bd-93-e3-80-8b-4/" data-id="f64fbx4jmcpi81db" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e8-bf-99-e5-ad-a6-e6-9c-9f-e7-bb-93-e6-9d-9f-e4-ba-86" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2007/03/09/-e8-bf-99-e5-ad-a6-e6-9c-9f-e7-bb-93-e6-9d-9f-e4-ba-86/" class="article-date">
+  <time datetime="2007-03-10T06:44:01.000Z" itemprop="datePublished">Mar 9 2007</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Life/">Life</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2007/03/09/-e8-bf-99-e5-ad-a6-e6-9c-9f-e7-bb-93-e6-9d-9f-e4-ba-86/">这学期结束了</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Wednesday, 17. January 2007, 15:13:32</p>
+<div class="content"><div id="excerpt"></div><br>终于全部考完了！终于可以放松了！这该死的考试总算过去了，终于又可以学自己想学的东西了！真的感觉很轻松啊~！<img src="http://my.opera.com/community/graphics/smilies/cool.gif" alt=":cool:"><br><br>考试完了就意味着马上就要回家了，赶紧做一些临走前的准备。把宿舍里的脏衣物都洗了，晾干的衣服也该收了；把老妈嘱咐了多次的衣服带上，不穿的衣服也整理出来，该留的留，该扔的扔；把期末复习用的书都搁好，复习资料都可以扔了，把寒假要读的书带上……电脑里积累了一个学期的资料，也该备份了，这样带回去也方便。仔细一看，还真不少，刻了整整两张光盘~！<img src="http://my.opera.com/community/graphics/smilies/rolleyes.gif" alt=":rolleyes:"><br><br>也给自己备份个好心情，下学期来了继续学习。回家放松一下，和家人好好过个年，和朋友同学好好聚一聚。<img src="http://my.opera.com/community/graphics/smilies/bigsmile.gif" alt=":D"><br><br>下学期再见吧！<img src="http://my.opera.com/community/graphics/smilies/jester.gif" alt=":jester:"> </div>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2007/03/09/-e8-bf-99-e5-ad-a6-e6-9c-9f-e7-bb-93-e6-9d-9f-e4-ba-86/" data-id="9n5qi0ms8wtnc78a" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e6-8b-bf-e5-88-b0intel-e5-ae-98-e6-96-b9-e6-89-8b-e5-86-8c" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2007/03/09/-e6-8b-bf-e5-88-b0intel-e5-ae-98-e6-96-b9-e6-89-8b-e5-86-8c/" class="article-date">
+  <time datetime="2007-03-10T06:43:50.000Z" itemprop="datePublished">Mar 9 2007</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Life/">Life</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2007/03/09/-e6-8b-bf-e5-88-b0intel-e5-ae-98-e6-96-b9-e6-89-8b-e5-86-8c/">拿到Intel官方手册</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Tuesday, 16. January 2007, 07:41:56</p>
+<p></p><p class="content">哈！今天终于拿到Intel公司寄来的手册啦~！！<img src="http://my.opera.com/community/graphics/smilies/bigsmile.gif" alt=":D"></p>
+<p>上个周五收到Intel客服部门（在印度，外包）的电子邮件，说我订的手册已经开始邮寄了，快递公司是FedEx（联邦快递）。上FedEx公司的网站上一查，发现手册已经开始ship，下周一能到。<img src="http://my.opera.com/community/graphics/smilies/rolleyes.gif" alt=":rolleyes:"> 结果，昨天就接到我们导员的电话，问我是不是从美国Intel公司订过东西，快递公司的人到了我们老校区，让我打过电话去问问。他这么一说我才意识到Intel免费发放的手册到了<img src="http://my.opera.com/community/graphics/smilies/bigeyes.gif" alt=":eyes:"> 。大约三个星期以前，听说Intel公司又开始在全球范围内发放Intel CPU的手册了，我怀着侥幸的心理去Intel公司那里试试订一份看看，结果去真的订到了，免费的！好幸运啊~！<img src="http://my.opera.com/community/graphics/smilies/haha.gif" alt=":lol:"></p>
+<p>不过从昨天接到消息到今天拿到手册，还遇到了一个小麻烦，那就是FedEx西安分公司不在我们大学城这里服务，也就是说我得自己过去拿！<img src="http://my.opera.com/community/graphics/smilies/mad.gif" alt=":mad:"> 给那FedEx公司的人打电话问了一下，他们公司在高薪区，那离我们很远而且公交车很少。我先坐600到了小寨，在那里又转34到了高薪区。结果我在高新路就下车了，害得我走了N站路，问了N个人才找到FedEx公司！真不容易啊~~</p>
+<p>不过进了FedEx公司，里面的服务人员态度不错，最后总算是拿到手册了，打开一看，哈！果然是两本System Programming Guide，爽~~<img src="http://my.opera.com/community/graphics/smilies/pirate.gif" alt=":raider:"> 坐在回去的公交车上，我又看了看包裹上的英文，发现自己居然把地址中的Engineering给错拼成Engeering了！惭愧死了！<img src="http://my.opera.com/community/graphics/smilies/knockout.gif" alt=":ko:"> 不过我回来又看了看邮件，发现包裹上的地址和我当初留的地址还不一样，Intel的客服公司也弄错了，我留的邮编是710121，结果他们弄成了 710021；我写的我们学校的全名Xi’an Institute of Post and Telecommunications，结果他们弄成了Xi’an Institute of Post。<img src="http://my.opera.com/community/graphics/smilies/eek.gif" alt=":eek:"></p>
+<p>书拿到了，以后得好好学习。再批评Intel的时候就得注意点儿了~<img src="http://my.opera.com/community/graphics/smilies/devil.gif" alt=":devil:"></p>
+<p>这个世界是平的~！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2007/03/09/-e6-8b-bf-e5-88-b0intel-e5-ae-98-e6-96-b9-e6-89-8b-e5-86-8c/" data-id="pbvgpeqfebtqgbu3" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e8-b5-b0-e8-bf-91linux-e5-86-85-e6-a0-b8" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2007/03/09/-e8-b5-b0-e8-bf-91linux-e5-86-85-e6-a0-b8/" class="article-date">
+  <time datetime="2007-03-10T06:43:14.000Z" itemprop="datePublished">Mar 9 2007</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux-Kernel/">Linux Kernel</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2007/03/09/-e8-b5-b0-e8-bf-91linux-e5-86-85-e6-a0-b8/">走近Linux内核</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Monday, 15. January 2007, 13:54:04</p>
+<div class="content"><br><div id="excerpt"></div><br><div class="Section1"><br><br># 走近<span lang="EN" xml:lang="EN">Linux</span>内核<br><br><p class="MsoNormal" align="right" style="text-align:right;">作者：王聪<span lang="EN" xml:lang="EN"><br><br>&gt;<a href="mailto:xiyou.wangcong@gmail.com.NO_SPAM" target="_blank" rel="external">xiyou.wangcong@gmail.com</a>&lt;</span><br><br>&gt; <span lang="EN" xml:lang="EN"></span><br>&gt;<br>&gt; <em>不要理会任何一个告诉你内核开发是困难，特别或者不同的人。它是一个大的程序，而且<span lang="EN" xml:lang="EN">bug</span>修复或驱动编写是一个最佳起点。它也没有什么魔力，也不是使用只有留着络腮胡的老手才能读懂的语言编写。<span lang="EN" xml:lang="EN"></span></em><br>&gt;<br>&gt; <em>──Alan Cox</em><br><br><span lang="EN" xml:lang="EN"></span><br><br>## 简介<br><br>这篇文章是专门写给那些对<span lang="EN" xml:lang="EN">Linux</span>内核感兴趣，却又不知道如何着手去读懂那么多代码的内核新手。也许你刚刚了解<span lang="EN" xml:lang="EN">Linux</span>，又急于探索<span lang="EN" xml:lang="EN">Linux</span>的内部秘密；也许你是一个<span lang="EN" xml:lang="EN">Linux</span>开发者，熟悉应用程序的开发，又雄心勃勃准备向内核世界进发。那么这篇文章正是你需要的，它会带你走进内核的世界，伴你渡过危险的沼泽。通过分享我们自己的经历，希望有更多的人能够加入到<span lang="EN" xml:lang="EN">Linux</span>内核开发者行列。<br><br>内核开发向来被视为非常神秘的工作，仿佛只有传说中的留着长长的络腮胡的黑客们才能从事它。其实不然，<span lang="EN" xml:lang="EN">Linux</span>内核的开发和其它大型项目没有多少差别，只不过它的调试确实有点特别，需要一些特别的技巧。不要恐慌（<span lang="EN" xml:lang="EN">Don’t Panic!</span>），只要你下功夫，你也能参与内核的开发，它的确是一件非常好玩的事。<br><br>## 需要准备什么<br><br>当然，你首先要有一台可供支配的电脑，最好装有<span lang="EN" xml:lang="EN">Linux</span>。如果可以，最好再有一台专门供你调试代码的机器，因为没人能保证调试内核的过程中不会让你的文件系统崩溃。或者，至少有一块专门给调试内核使用的硬盘。<br><br>最好还有一个固定的互联网接口，毕竟<span lang="EN" xml:lang="EN">Linux</span>内核开发是在网络上进行的，而且你也会经常在互联网上<span lang="EN" xml:lang="EN"><a href="http://www.google.com" target="_blank" rel="external"><span lang="EN" xml:lang="EN"><span lang="EN" xml:lang="EN">搜索</span></span></a></span>一些有用的信息。<br><br>如果你是一位超级<span lang="EN" xml:lang="EN">geek</span>的话，再准备一根双机串口线，它能帮助你从一台机器上<span lang="EN" xml:lang="EN">“</span>聆听<span lang="EN" xml:lang="EN">”</span>另一台机器上内核运行中的<span lang="EN" xml:lang="EN">“</span>抱怨<span lang="EN" xml:lang="EN">”</span>。嗯，有点像是外科医生给病人听诊，这看起来很酷，不是吗？<br><br>如果你准备在一台非计算机设备上调试你的内核（这没什么奇怪的，<span lang="EN" xml:lang="EN">Linux</span>早已经被移植到千奇百怪的系统上），那么你还需要准备相应的硬件，或者它的模拟器，或者其它一些工具。如果你有在非计算机设备上调试Linux内核的经验，请在这里自由添加相应的内容。<br><br>## 开始<br><br>我们假设上面的东西你都准备好了，整装待发，现在可以正式进军内核了。当然了，如果你对<span lang="EN" xml:lang="EN">Linux</span>上的开发已经很熟悉了，你可以安全地跳过这一节。好了，出发，水手们！<br><br>### <span lang="EN" xml:lang="EN">1. </span>精通<span lang="EN" xml:lang="EN">C</span>语言编程<br><br>不是我们一味推崇<span lang="EN" xml:lang="EN">C</span>语言，而是<span lang="EN" xml:lang="EN">C</span>语言的的确确太适合做内核开发了。<span lang="EN" xml:lang="EN">C</span>语言的诞生源于编写<span lang="EN" xml:lang="EN">Unix</span>内核代码，它精练的设计哲学确实做到了这一点。甚至有人这样评价<span lang="EN" xml:lang="EN">C</span>语言<span lang="EN" xml:lang="EN">──“</span>它联合了汇编的所有威力。<span lang="EN" xml:lang="EN">”</span>如果你还不懂<span lang="EN" xml:lang="EN">C</span>，赶快去学吧。<br><br>如果你是一名编程新手，不推荐用<span lang="EN" xml:lang="EN">C</span>作为你的入门语言，原因如下：<br><br>编程新手最需要了解的是编程的概念和对编程的基本认识，而过多的接触<span lang="EN" xml:lang="EN">C</span>语言往往会把你引出这一目的，会让你把注意力集中到一些奇怪的语言特性上，而不是编程语言本身。<br><br>编程新手往往对计算机了解不够深刻，不清楚计算机的内部结构，而<span lang="EN" xml:lang="EN">C</span>语言恰恰就是和计算机内存<span lang="EN" xml:lang="EN">/</span>编码<span lang="EN" xml:lang="EN">/CPU</span>打交道，最起码，调试那些<span lang="EN" xml:lang="EN">“</span>隐晦<span lang="EN" xml:lang="EN">”</span>的错误时如此。（想想你是不是没有把一个指向指针的指针的指针指向正确的位置。）<br><br>学好<span lang="EN" xml:lang="EN">C</span>语言需要下很大的功夫，最起码不能低于两年。（当然如果你不打算学好那得另说了。）<br><br>所以，最好先学一门比较简单的编程语言作为铺垫。不妨试一下<span lang="EN" xml:lang="EN"><a href="http://www.python.org/" target="_blank" rel="external">Python</a></span>，它比<span lang="EN" xml:lang="EN"><a href="http://www.cn-java.com/" target="_blank" rel="external">Java</a></span>还要简单。当然了，这并非绝对，因人而异。如果你真的决定开始学习<span lang="EN" xml:lang="EN">C</span>语言，那么推荐的入门书籍仍然是<span lang="EN" xml:lang="EN">K&amp;R</span>的<span lang="EN" xml:lang="EN"><a href="http://cm.bell-labs.com/cm/cs/cbook/" target="_blank" rel="external"><span lang="EN" xml:lang="EN"><span lang="EN" xml:lang="EN">《The C Programming Language</span></span><span lang="EN" xml:lang="EN"><span lang="EN" xml:lang="EN">》</span></span></a></span>。过去这么多年了，它仍然被奉为入门的首选，可见其有多么经典。<br><br>不过仅仅了解<span lang="EN" xml:lang="EN">C</span>的语法，能编写一些小的程序是远远不够的。你必须能够熟练地操纵<span lang="EN" xml:lang="EN">C</span>语言，了解它的一些缺陷和陷阱，让它变成你的利器。有句话说得好：<span lang="EN" xml:lang="EN">“C</span>语言就像一把刻刀，简单，锋利，并且在技师手中非常有用。和任何锋利的工具一样，<span lang="EN" xml:lang="EN">C</span>会伤到那些不能驾驭它的人。<span lang="EN" xml:lang="EN">”</span>读一读《<span lang="EN" xml:lang="EN">C<br><br>Traps and Pitfalls</span>》和《<span lang="EN" xml:lang="EN">Expert C Programming</span>》吧，它们能让你有一个大的提升，成为一名<span lang="EN" xml:lang="EN">C</span>语言高手。<br><br>如果碰巧你是一位<span lang="EN" xml:lang="EN">C++</span>的推崇者，那么下面的一些引用或许能说服你开发<span lang="EN" xml:lang="EN">Linux</span>内核不使用<span lang="EN" xml:lang="EN">C++</span>（摘自<span lang="EN" xml:lang="EN">LKML FAQ</span>）。<br><br>&gt; <span lang="EN" xml:lang="EN">Linus</span>在<span lang="EN" xml:lang="EN">2004</span>年说：<span lang="EN" xml:lang="EN"><br>&gt;<br>&gt; In fact, in Linux we did try C++ once already, back in 1992.<br>&gt;<br>&gt; It sucks. Trust me - writing kernel code in C++ is a BLOODY STUPID IDEA.<br>&gt;<br>&gt; </span>他认为：<span lang="EN" xml:lang="EN"><br>&gt;<br>&gt; C++</span>编译器是不可靠的，<span lang="EN" xml:lang="EN">1992</span>年的时候更糟，有一些基础性的东西没有改变：<br>&gt;<br>&gt; （不知道怎么翻译这个词好）的，对内核来说它更是<span lang="EN" xml:lang="EN">broken</span>。<br>&gt;<br>&gt; 任何一个喜欢把内存分配藏到你背后的编译器或者语言，都不是你编写内核的好的选择。<br>&gt;<br>&gt; 你可以用<span lang="EN" xml:lang="EN">C</span>来编写<span lang="EN" xml:lang="EN">OO</span>代码，而不用<span lang="EN" xml:lang="EN">C++</span>的一些<span lang="EN" xml:lang="EN">“</span>废话<span lang="EN" xml:lang="EN">”</span>。<br>&gt;<br>&gt; <span lang="EN" xml:lang="EN">Andrew D. Balsa</span>如是说：<span lang="EN" xml:lang="EN"><br>&gt;<br>&gt; Linux</span>一开始的时候<span lang="EN" xml:lang="EN">gcc</span>还没有很好的<span lang="EN" xml:lang="EN">C++</span>实现，而且当时<span lang="EN" xml:lang="EN">C</span>程序员比<span lang="EN" xml:lang="EN">C++</span>程序员要多。<span lang="EN" xml:lang="EN"><br>&gt;<br>&gt; Richard E. Gooch </span>解释到：<span lang="EN" xml:lang="EN"><br>&gt;<br>&gt; </span>在<span lang="EN" xml:lang="EN">Linux</span>诞生之前，也有内核在<span lang="EN" xml:lang="EN">g++</span>下编译，但是人们抱怨它的性能。据证明，把<span lang="EN" xml:lang="EN">C</span>代码放到<span lang="EN" xml:lang="EN">g++</span>下编译会产生更糟糕的代码。它不应该有差别，但的的确确有！<br><br>### <span lang="EN" xml:lang="EN">2. </span>熟悉常用的工具<br><br>#### 掌握至少一种编辑器<br><br>掌握一种你喜欢的编辑器是非常有必要的，它能为你节省很多时间。在<span lang="EN" xml:lang="EN">Linux</span>上，最著名的编辑器莫过于<span lang="EN" xml:lang="EN"><a href="http://www.emacs.cn/" target="_blank" rel="external">emacs</a></span>和<span lang="EN" xml:lang="EN"><a href="http://www.vim.org/" target="_blank" rel="external">vi</a></span>了。一些内核开发者介绍，他们大多数人就是在使用这两种编辑器中的一种。可能一开始你并不能适应这种环境，没关系，熟练之后你的效率会有质的飞跃。<br><br>&gt;p<strong>vi</strong></p></div><br><p>在内核开发中使用<span lang="EN" xml:lang="EN">vi</span>有如下好处：<span lang="EN" xml:lang="EN"><br><br>1. </span>占用内存少，加载速度快；<span lang="EN" xml:lang="EN"><br><br>2. </span>高度可定制化，经配置的<span lang="EN" xml:lang="EN">vi</span>可以很好地重映射命令按键；<span lang="EN" xml:lang="EN"><br><br>3. </span>可以自动补齐一些函数名和变量名；<span lang="EN" xml:lang="EN"><br><br>4. </span>可以和<span lang="EN" xml:lang="EN">ctags</span>很好地配合使用，通过<span lang="EN" xml:lang="EN">ctrl+]</span>能很快定位函数的定义位置。<span lang="EN" xml:lang="EN"><br><br></span>了解更多的<span lang="EN" xml:lang="EN">vi</span>使用说明，请参考：《Learning the vi Editor, Fifth Edition》<span lang="EN" xml:lang="EN">, L.Lamb, 1990, O’Reilly</span><br><br><strong>emacs</strong><br><br><span lang="EN" xml:lang="EN">emacs</span>的优点如下：<span lang="EN" xml:lang="EN"><br><br>1. Lisp</span>扩展可以大幅度提高效率；<span lang="EN" xml:lang="EN"><br><br>2. </span>和<span lang="EN" xml:lang="EN">etags</span>的良好整合；<span lang="EN" xml:lang="EN"><br><br>3. </span>按键组合更具指导性。<span lang="EN" xml:lang="EN"><br><br></span>更多的<span lang="EN" xml:lang="EN">emacs</span>使用知识请参考：《Learning GNU Emacs, Third Edition<br><br>》<span lang="EN" xml:lang="EN">, Debra Cameron, James Elliott and<br><br>Marc Loy, 2004, O’Reilly</span><br><br>#### 熟悉<span lang="EN" xml:lang="EN">Linux</span>命令行工具<br><br>内核开发者一般都在命令行下面工作，是的，图形界面有时会让事情变得更糟，对内核开发尤为如此。你应该能在命令行下面进行一些简单的工作，比如：编译程序，提交补丁，控制版本，收发邮件等。一些常用的命令行技巧会有帮助，所以也不妨去了解一些<span lang="EN" xml:lang="EN">shell</span>编程知识。下面仅介绍一些常用的：<br><br><strong>gcc</strong><br><br><span lang="EN" xml:lang="EN">gcc</span>是<span lang="EN" xml:lang="EN">GNU</span>提供的优秀的软件之一，其性能不亚于任何商业编译器。它具有惊人的可移植性，而它也号称其最优化功能非常强大，所以<span lang="EN" xml:lang="EN">Linux</span>内核就是采用了<span lang="EN" xml:lang="EN">gcc</span>作为编译器。<span lang="EN" xml:lang="EN">gcc</span>的选项这里无法一一列举，只能介绍一些常用的选项。<span lang="EN" xml:lang="EN"><br><br><em>-o filename</em></span>：这可能是你最常用的一个选项了。它用来产生以指定名字的可执行输出文件。如果不指定文件名，<span lang="EN" xml:lang="EN">gcc</span>产生默认的<span lang="EN" xml:lang="EN">a.out</span>。<span lang="EN" xml:lang="EN"><br><br><em>-c</em>: </span>只编译不链接，产生以<span lang="EN" xml:lang="EN">.o</span>结尾的目标文件。当然它也可以同时编译多个文件。<br><br>&gt; <span lang="EN" xml:lang="EN">$ <span class="GramE">gcc</span> -c hello.c </span><br><br><em><span lang="EN" xml:lang="EN">-I<u>dir</u></span></em><span lang="EN" xml:lang="EN">: </span>要求<span lang="EN" xml:lang="EN">gcc</span>在搜寻头文件时除了默认的目录<span lang="EN" xml:lang="EN">/usr/include</span>，也要到指定的目录<span lang="EN" xml:lang="EN">dir</span>中去找。<span lang="EN" xml:lang="EN"><br><br></span>比如，编译<span lang="EN" xml:lang="EN">test.c</span>时要用到<span lang="EN" xml:lang="EN">/home/myname/test.h</span>，我们可以：<br><br><span lang="EN" xml:lang="EN">$gcc<br><br>-I/home/myname test.c -o test </span><br><br><em><span lang="EN" xml:lang="EN">-O<u>n</u></span></em><span lang="EN" xml:lang="EN">: </span>最优化选项。后面的<span lang="EN" xml:lang="EN">n</span>越大最优化程度越大。一般最常用的是<span lang="EN" xml:lang="EN">-O2</span>。<span lang="EN" xml:lang="EN">-O0</span>是不优化，这也是默认的。<br><br><span lang="EN" xml:lang="EN">$gcc -O2 -o foo<br><br>foo.c </span><br><br><em><span lang="EN" xml:lang="EN">-Wall/-w</span></em><span lang="EN" xml:lang="EN">:<br><br>-Wall</span>将打开所有警告，而<span lang="EN" xml:lang="EN">-w</span>将关闭所有警告。在编译<span lang="EN" xml:lang="EN">C</span>程序时，强烈建议你加上<span lang="EN" xml:lang="EN">-Wall</span>选项，因为<span lang="EN" xml:lang="EN">gcc</span>给出的很多警告都是相当有用的。当然还有折中的选择，具体请参阅<span lang="EN" xml:lang="EN">man</span>手册。<span lang="EN" xml:lang="EN"><br><br><em>-W</em>: </span>打开一些额外的警告。<span lang="EN" xml:lang="EN"><br><br><em>-S</em>:</span>用来产生相应的汇编源文件，默认的文件名是<em><span lang="EN" xml:lang="EN">filename.s</span></em><br><br><strong>make</strong><br><br><span lang="EN" xml:lang="EN">make</span>是一个通用的工程管理工具，它可以<span lang="EN" xml:lang="EN">“</span>自动化编译<span lang="EN" xml:lang="EN">”</span>，极大地提高了软件开发的效率。<span lang="EN" xml:lang="EN">make</span>的使用是根据预先设定的规则来运行的，这些设定的规则记录在一个文件中，即<em><span lang="EN" xml:lang="EN">makefile</span></em>。<span lang="EN" xml:lang="EN"><br><br>make</span>命令的格式是：<br><br>&gt; <span class="GramE"><span lang="EN" xml:lang="EN">make</span></span><span lang="EN" xml:lang="EN"> [ -f makefile ] [ option ] …<br>&gt;<br>&gt; target …</span><br><br><em><span lang="EN" xml:lang="EN">-c dir </span></em>：将指定目录设为<span lang="EN" xml:lang="EN">make</span>开始运行后的工作目录。<span lang="EN" xml:lang="EN"><br><br><em>-f filename </em></span>：将指定的文件作为<span lang="EN" xml:lang="EN">makefile<br><br><em>-k </em></span>：使<span lang="EN" xml:lang="EN">make</span>尽可能地编译，即使命令调用返回一个错误，<span lang="EN" xml:lang="EN">make</span>也不会停止运行。这个功能很有用，例如，当需要移植的时候；你可以创建尽可能多的目标文件，然后可以在不用等待中间文件创建的同时，移植到不能创建的文件处。<span lang="EN" xml:lang="EN"><br><br>makefile</span>的书写规则是一个大的话题，我们在这里难以展开论述。这里<span lang="EN" xml:lang="EN">&gt;<a href="http://www.wlug.org.nz/MakefileHowto" target="_blank" rel="external"><a href="http://www.wlug.org.nz/MakefileHowto" target="_blank">http://www.wlug.org.nz/MakefileHowto</a></a>&lt;</span>有一篇介绍<span lang="EN" xml:lang="EN">makefile</span>书写的<span lang="EN" xml:lang="EN">Howto</span>，不妨仔细读一下。要对<span lang="EN" xml:lang="EN">make</span>进行更深入的了解，请参考<span lang="EN" xml:lang="EN"><a href="http://www.oreilly.com/catalog/make3/" target="_blank" rel="external"><span lang="EN" xml:lang="EN"><span lang="EN" xml:lang="EN">《Managing<br><br>Projects with GNU make</span></span><span lang="EN" xml:lang="EN"><span lang="EN" xml:lang="EN">》</span></span></a></span>一书。<br><br><span lang="EN" xml:lang="EN"></span><br><br><strong>grep</strong><br><br><span lang="EN" xml:lang="EN">grep</span>用来在文件中查找一个给定的字符串模式，比如可以快速定位函数或结构体定义。它还可以自动匹配一些正则表达式，非常强大。比如：你要搜索<span lang="EN" xml:lang="EN">task<em>struct</em></span>的定义， 你可以：<br><br>&gt; <span lang="EN" xml:lang="EN">$grep -r<br>&gt;<br>&gt; task_struct <em> | less </em></span><br><br><span lang="EN" xml:lang="EN">-r</span>选项或许是你需要的，它可以帮你扫描源代码树中的所有源代码文件。查看<span lang="EN" xml:lang="EN">grep</span>的<span lang="EN" xml:lang="EN">man</span>手册来了解更多信息。<br><br><span lang="EN" xml:lang="EN"></span><br><br><em>*<span lang="EN" xml:lang="EN">diff/patch</span></em><br><br>如果你在维护包含很多源文件的一个大型项目，每次更新后都推出完整的源程序是不太可行的，所以最好就用<span lang="EN" xml:lang="EN">patch</span>程序来更新原来的程序。这样，当你的程序升级时，你只要推出源文件对应的<span lang="EN" xml:lang="EN">patch</span>文件，其他人就能通过执行<span lang="EN" xml:lang="EN">patch</span>来使用那个<span lang="EN" xml:lang="EN">patch</span>文件，以获得最新版本的程序。<span lang="EN" xml:lang="EN"><br><br>    </span>比如我们有一个程序<span lang="EN" xml:lang="EN">foo</span>，我们把它更新为<span lang="EN" xml:lang="EN">bar</span>，我们可以用<span lang="EN" xml:lang="EN">diff</span>程序这样产生<span lang="EN" xml:lang="EN">patch</span>文件：<br><br>&gt; <span lang="EN" xml:lang="EN">$diff -u foo bar<br>&gt;<br>&gt; &lt; foo.patch </span>
+
+<span lang="EN" xml:lang="EN">-u</span><em>参数指定使用特殊的<span lang="EN" xml:lang="EN">diff</span>输出格式，否则得到的<span lang="EN" xml:lang="EN">patch</span>格式怪异，一般人都没法看懂。</em><span lang="EN" xml:lang="EN">foo.patch</span><em>就包含了描述<span lang="EN" xml:lang="EN">foo</span>和<span lang="EN" xml:lang="EN">bar</span>不同的信息，我们将用这个文件来更新。<span lang="EN" xml:lang="EN"><br><br></span>提示：一定要注意<span lang="EN" xml:lang="EN">diff</span>命令后面的文件名顺序，一定是旧的文件在前，新的文件在后！<br><br><span lang="EN" xml:lang="EN"><br><br></span>接下来，我们用<span lang="EN" xml:lang="EN">patch</span>来更新：<br><br><span lang="EN" xml:lang="EN">$patch foo &gt;<br><br>foo.patch </span><br><br>使用过某个<span lang="EN" xml:lang="EN">patch</span>文件后，若要再次使用该<span lang="EN" xml:lang="EN">patch</span>文件，<span lang="EN" xml:lang="EN">patch</span>程序会产生警告信息：询问是否以<span lang="EN" xml:lang="EN">-R</span>方式执行，<span lang="EN" xml:lang="EN">-R</span>将还原文件。这样很好，防止进行了误操作。当然，有时你想更新的是整个目录中的所有源文件，比如<span lang="EN" xml:lang="EN">foo</span>和<span lang="EN" xml:lang="EN">bar</span>两个目录，我们可以：<br><br><span lang="EN" xml:lang="EN">$diff -cr foo<br><br>bar &lt;foo.patch<br><br>$patch -p0 &gt; foo.patch</span><br><br><span lang="EN" xml:lang="EN">diff</span>的</em><span lang="EN" xml:lang="EN">-c</span><em>参数表示输出上下文格式，</em><span lang="EN" xml:lang="EN">-r</span><em>参数表示递归的比较两个目录。
+
+</em><span lang="EN" xml:lang="EN">-p0</span><em>告诉<span lang="EN" xml:lang="EN">patch</span>程序被更新的文件的路径名并没改变。<span lang="EN" xml:lang="EN"><br><br>    diffstat</span>是一个很有用的工具，它可以列出<span lang="EN" xml:lang="EN">patch </span>所引起的变更的统计（加入或移出的代码行）。输出关于<span lang="EN" xml:lang="EN">patch</span>的信息，执行：<br><br><span lang="EN" xml:lang="EN">$diffstat -p1<br><br>foo.patch </span><br><br>更多选项请参阅<span lang="EN" xml:lang="EN">patch</span>和<span lang="EN" xml:lang="EN">diff</span>的使用手册。<br><br>### <span lang="EN" xml:lang="EN">3. </span>良好的英文阅读能力和表达能力<br><br>不管是在<span lang="EN" xml:lang="EN">Linux</span>内核中，还是在<span lang="EN" xml:lang="EN">Linux</span>大多数应用程序中，文档基本上都是用英语写成的，到目前为止，大多数还没有对应的汉语翻译。而且<span lang="EN" xml:lang="EN">Linux</span>内核黑客之间也是用英语交流的，虽然他们可能来自世界各地。熟练地驾驭英文肯定让你受益非浅。<br><br>引用<span lang="EN" xml:lang="EN">ESR</span>在<span lang="EN" xml:lang="EN"><a href="http://www.kerneltravel.net/jiqiao/hacker.html" target="_blank" rel="external"><span lang="EN" xml:lang="EN"><span lang="EN" xml:lang="EN">《如何成为一名黑客》</span></span></a></span>一文中的话：<br><br>&gt; <span lang="EN" xml:lang="EN">“</span>当前英语有着比其他语言丰富得多的技术词汇，因此是一个对于工作来说相当好的工具。基于类似的原因，英文技术书籍的翻译通常不令人满意（如果有翻译的话）。<span lang="EN" xml:lang="EN">”<br>&gt;<br>&gt; “Linus Torvalds</span>，一个芬兰人，用英语注释他的代码（很明显这对他来说不是凑巧）。他流利的英语成为他能够管理全球范围的<span lang="EN" xml:lang="EN">Linux</span>开发人员社区的重要因素。这是一个值得学习的例子。<span lang="EN" xml:lang="EN">” </span><br><br>如果你不懂实用性的英语，赶快去学习吧。<br><br>## 进阶<br><br>如果你能来到这里，那说明你已经是一名合格的<span lang="EN" xml:lang="EN">Unix/Linux</span>程序员了。但是，如果你要成为一名内核程序员，还需要下面的一些知识。<br><br>### <span lang="EN" xml:lang="EN">1. </span>理解操作系统原理<br><br>内核是操作系统的核心和灵魂，要理解内核的原理和运作，必须具备基本的操作系统知识。操作系统课上的一些理论性的东西很有帮助，比如信号量的定义和使用，死锁的预防，内存页面的置换等等。列举如下：<br><br>1. 进程管理<br><br>进程的定义和<span lang="EN" xml:lang="EN">PCB</span>，进程和线程的区别，进程的三个基本状态及它们之间的转换关系，进程的同步，竞争和死锁，进程间通信<br><br>2. 内存管理<br><br>分页式管理，分段式管理，虚拟内存的概念，页面置换算法，内存分配算法<br><br>3. 设备管理<br><br>中断的概念，中断处理，I/O控制方式，缓冲区管理，设备驱动，磁盘调度和高速缓存<br><br>4. 文件管理<br><br>文件的概念，文件的管理，文件系统<br><br>5. 系统调用<br><br>系统调用的概念，系统调用的处理，系统调用类型<br><br>关于操作系统理论方面的书籍，推荐<span lang="EN" xml:lang="EN">Andrew S. Tanenbaum</span>编写的《<span lang="EN" xml:lang="EN">Operating Systems: Design and Implementation</span>》一书。<br><br>### <span lang="EN" xml:lang="EN">2. </span>一些硬件知识<br><br>由于内核本身的特殊性，一些时候你不得不和计算机硬件打交道，尤其是<span lang="EN" xml:lang="EN">CPU</span>。以<span lang="EN" xml:lang="EN">i386</span>为例说明：<br><br>常用寄存器，常见指令<br><br>实模式和保护模式<br><br>分段和分页机制<br><br>TSS和任务管理<br><br>中断机制<br><br>时钟机制<br><br>高速缓存<br><br>关于<span lang="EN" xml:lang="EN">Intel CPU</span>最权威的资料莫过于<span lang="EN" xml:lang="EN">Intel</span>的官方手册，它们可以在<span lang="EN" xml:lang="EN">Intel</span>网站上免费下载： <span lang="EN" xml:lang="EN"><a href="http://www.intel.com/products/processor/manuals/index.htm" target="_blank" rel="external"><a href="http://www.intel.com/products/processor/manuals/index.htm" target="_blank">http://www.intel.com/products/processor/manuals/index.htm</a></a></span>。其实你只要读一下<span lang="EN" xml:lang="EN">System Programming Guide</span>就够了。<br><br>如果你在做嵌入式<span lang="EN" xml:lang="EN">Linux</span>或者<span lang="EN" xml:lang="EN">Linux</span>设备驱动，相关的硬件知识更是必须的，可惜这里无法一一列举。<br><br>### <span lang="EN" xml:lang="EN">3. </span>其它<br><br>你还需要足够的耐心和一些运气，毕竟内核调试不像用户程序那么容易，一些<span lang="EN" xml:lang="EN">bug</span>让整个社区好几天都食不甘味了。用户程序的调试经验或许有用，但用处不大。这就更要求你对内核本身有足够多的了解了，实际上，你对内核越是了解，<span lang="EN" xml:lang="EN">bug</span>就越容易清除。<br><br>最后，你可能还需要一些想像力。没错，<span lang="EN" xml:lang="EN">Linux</span>内核开发者有着丰富的想像力，他们经常使用一些<span lang="EN" xml:lang="EN">“</span>神来之笔<span lang="EN" xml:lang="EN">”</span>来解决令旁人苦恼的问题，或者为内核添加一项新奇的功能来让内核运行更流畅。<br><br>## 推荐相关书籍：<br><br>《Linux内核完全剖析》<br><br>讲述<span lang="EN" xml:lang="EN">Linux 0.11</span>版的源代码，是一个不错的起点。<br><br>Understanding the Linux Kernel, 3rd Edition<br><br>中文版是《深入理解Linux内核》，第三版即将上市。第三版主要是讲解<span lang="EN" xml:lang="EN">2.6</span>版的内核，保持了前两版的风格，是深入学习内核的必读书籍。<br><br>_Linux Kernel Development, 2nd Edition</em><br><br>中文版是《<span lang="EN" xml:lang="EN">Linux</span>内核开发》。其内容朴实，风格简练，便于整体把握<span lang="EN" xml:lang="EN">Linux</span>内核架构。当了解操作系统原理后，便可阅读这本书。<br><br><em>The Linux Kernel Primer - A Top Down Approach For x86 and PowerPC Architectures</em><br><br>中文版是《Linux内核编程》，此书最大的特色是能够把<span lang="EN" xml:lang="EN">x86</span>和<span lang="EN" xml:lang="EN">ppc</span>两个平台结合起来讲述内核，从用户程序讲起，深入到内核，而且每章后面还配有练习题。<br><br><em>Linux Device Drivers, 3rd Edition</em><br><br>中文译本是《Linux设备驱动程序》，该书是设备驱动开发的最好工具书。其中的例子对于内核开发者来讲是最好的启蒙教材。<br><br>《Linux操作系统原理与应用》<br><br>陈老师写的一本不错的内核书籍，从原理、设计思想的角度对<span lang="EN" xml:lang="EN">Linux</span>操作系统的核心内容进行全面的阐述。<br><br>《Linux内核情景分析》<br><br>本书采取类似于英语教学中行之有效的情景会话的教学方法，全面深入地剖析了Linux 2.4.0内核源代码，并对Linux核心的独特优点和需要进一步改进的问题作了精辟的评述。 全书分上下两册。<br><br>## 一些有用的链接：<br><br><a href="http://www.kernelnewbies.org" target="_blank" rel="external">KernelNewbies</a><br><br><a href="http://www.kerneltrap.com" target="_blank" rel="external">KernelTrap</a><br><br><a href="http://www.lwn.net" target="_blank" rel="external">Linux Weekly News</a><br><br><a href="http://www.kerneltravel.net" target="_blank" rel="external">Linux内核之旅</a><br><br><a href="http://jungla.dit.upm.es/~jmseyas/linux/kernel/hackers-docs.html" target="_blank" rel="external">Kernel Links</a><br><br><a href="http://kernelbook.sourceforge.net/" target="_blank" rel="external">The Linux Kernel</a><br><br><a href="http://whatisthekernel.blogspot.com/" target="_blank" rel="external">What is the Kernel</a><br><br>## 结束语<br><br>讲了这么多了，现在该轮到你了。如果你对上面的知识还有没全部掌握，那么不妨从你不熟悉的地方入手，一步步去了解和熟悉<span lang="EN" xml:lang="EN">Linux</span>内核。如果你是一位高手，对<span lang="EN" xml:lang="EN">Linux</span>内核有初步的了解和认识，不妨去动手写一些驱动程序或者内核模块，尝试对<span lang="EN" xml:lang="EN">Linux</span>内核做一些自己的修改。如果可以，加入<span lang="EN" xml:lang="EN">Linux</span>内核邮件列表，看看里面的内核黑客在做些什么，试着帮他们测试新的内核，修复一些<span lang="EN" xml:lang="EN">bug</span>。<br><br>祝你在Linux内核世界走得更远！<br><br></p></div>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2007/03/09/-e8-b5-b0-e8-bf-91linux-e5-86-85-e6-a0-b8/" data-id="6nl64wfywm1p5te8" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-my-answers-on-yahoo" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2007/03/09/my-answers-on-yahoo/" class="article-date">
+  <time datetime="2007-03-10T06:42:41.000Z" itemprop="datePublished">Mar 9 2007</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Life/">Life</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2007/03/09/my-answers-on-yahoo/">My answers on yahoo!</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Sunday, 14. January 2007, 14:58:40</p>
+<p></p><p class="content"><br>今天闲来无事，索性去yahoo上回答问题去了。我的解答如下：</p>
+<p>编程入门是学C语言好，还是C++？或者别的？</p>
+<p>都不好！<br>C不适合作入门语言，原因如下：</p>
+<p>· 编程新手最需要了解的是编程的概念和对编程的基本认识，而过多的接触C语言往往会把你引出这一目的，会让你把注意力集中到一些奇怪的语言特性上，而不是编程语言本身。</p>
+<p>· 编程新手往往对计算机了解不够深刻，不清楚计算机的内部结构，而C语言恰恰就是和计算机内存/编码/CPU打交道，最起码，调试那些“隐晦”的错误时如此。（想想你是不是没有把一个指向指针的指针的指针指向正确的位置。）</p>
+<p>· 学好C语言需要下很大的功夫，最起码不能低于两年。（当然如果你不打算学好那得另说了。）</p>
+<p>而C++被奉最难的计算机语言，因为它很大，你不可能一次就把它学完（实际上三次也不够）。</p>
+<p>入门语言不妨试一下Python，它比Java还要简单。当然了，Java也可以。</p>
+<p>C中char *a[8]所占储存空间字节数为什么是32不是8?</p>
+<p>char a[8]才是字符数组，里面的元素都是char类型，所以大小应该是sizeof(char)<em>8=8<br>而你说的char</em> a[8]是字符指针数组，里面的元素是指向char的指针，所以大小是sizeof(char<em>)</em>8。这个结果在32位机器上是32，在64位机器上是64。</p>
+<p>什么叫堆？堆和栈有什么区别？和堆栈有什么区别？</p>
+<p>在计算机科学中，堆（heap）这个词至少有两个意思。在数据结构中，它是一种二叉树，便于排序，便于建立优先队列。在操作系统中，它是内存的一个区域，用来存放全局变量和malloc分配的空间，一般是由低地址向高地址生长。</p>
+<p>而栈（stack）也有两个意思。在数据结构中，栈就是所有先进后出（FILO）的结构，栈和递归密切相关。而栈的另一个意思和上面堆的第二个意思相对应，它也是内存的一个区域，一般是从高地址向低地址生长，用来存放函数的局部变量和函数调用时保存的一些内容。</p>
+<p>二维以上的数组是不是特殊的广义表？一维数组和线性表，广义表有什么关系？？？</p>
+<p>二维数组应该也是一种广义表，你可以把它当成“表的表”，二维以上的类似。广义表是数组上面的一种抽象，数组只是它的一个特例。</p>
+<p>FIFO缓冲区是什么意思？</p>
+<p>FIFO缓冲区是一种先进先出的环行缓冲区，在Linux内核中使用了此数据结构，用于免锁的生产者/消费者任务。在这个算法中，一个生产者将数据放入数组的结尾，而消费者从数组的另一端移走数据。具体实现请参见Linux内核源代码中的include/linux/kfifo.h。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2007/03/09/my-answers-on-yahoo/" data-id="wlvc4olq1v4n66gb" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-google-hacks" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2007/03/09/google-hacks/" class="article-date">
+  <time datetime="2007-03-10T06:42:36.000Z" itemprop="datePublished">Mar 9 2007</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Life/">Life</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2007/03/09/google-hacks/">Google hacks</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Saturday, 13. January 2007, 15:55:10</p>
+<p></p><p class="content">Do you know google hacks?</p>
+<p>Google的一些使用技巧，简单总结一下：</p>
+<p>intext:</p>
+<p>这个就是把网页中的正文内容中的某个字符串做为搜索条件。比如：  intext:西邮 。（注意，冒号后面和前面都没有空格！下面的也是如此。）</p>
+<p>intitle:</p>
+<p>在网页标题里搜索。</p>
+<p>inurl:</p>
+<p>在url中搜索要找的字符串，比如： inurl:xiyou 。</p>
+<p>link:</p>
+<p>搜索指向该链接的网页，比如： link:<a href="http://www.xiyou.edu.cn" target="_blank" rel="external">http://www.xiyou.edu.cn</a> 。</p>
+<p>filetype:</p>
+<p>指定搜索文件的类型，比如我要找mp3歌曲，可以在后面加上filetype:mp3限制。非常好用的一个功能。</p>
+<p>site:</p>
+<p>搜索指定的网站，也非常好用，比如： site:xiyou.edu.cn 。</p>
+<p>movie:</p>
+<p>非常coole的一个功能，可以搜索放映的电影，试试 movie:美丽心灵 。</p>
+<p>上面的组合可以产生更强大的功能，比如我要在西邮网站上搜索doc文件中包含“计算机系”的文件，我可以键入：site:xiyou.edu.cn filetype:doc 计算机系 。</p>
+<p>还有一些操作符也很有用，列举一下：</p>
+<p>+</p>
+<p>把后面的词也纳入搜索范围。</p>
+<p>-</p>
+<p>忽略某个词。</p>
+<p>OR</p>
+<p>两者中的一个。</p>
+<p>“”</p>
+<p>精确匹配，不需要google做自己的解释。对比： 分别google一下{西邮 王聪}和{“西邮 王聪”}看看结果。</p>
+<p>..</p>
+<p>范围操作符，比如2..10就是搜索2到10之间的数字。</p>
+<p>另外，google还可以当计算器使用。 ;-p 比如，输入3+2，google会告诉你结果5，输入sqrt(9)会得到3。</p>
+<p>怎样？Google是不是很cool啊？</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2007/03/09/google-hacks/" data-id="3ls3qkqi0d29cg52" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e5-af-92-e5-81-87-e8-af-bb-e4-b9-a6-e8-ae-a1-e5-88-92" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2007/03/09/-e5-af-92-e5-81-87-e8-af-bb-e4-b9-a6-e8-ae-a1-e5-88-92/" class="article-date">
+  <time datetime="2007-03-10T06:42:27.000Z" itemprop="datePublished">Mar 9 2007</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Life/">Life</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2007/03/09/-e5-af-92-e5-81-87-e8-af-bb-e4-b9-a6-e8-ae-a1-e5-88-92/">寒假读书计划</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Friday, 12. January 2007, 14:49:18</p>
+<div class="content"><br><div id="excerpt"></div><br><p>这次寒假放得时间长，大约放42天。回家也没法经常上网，决定在家潜心学习编程，多读一些书。下面列举一下寒假要读的一些书：<br><br>1. 《Linux设备驱动》<br><br>非常经典的Linux内核入门书籍，决定寒假要把它仔细读完一遍，这样开学来了就可以向内核进军了。<br><br>2. 《Unix编程艺术》<br><br>ESR的经典之作，讲述Unix的历史，文化和艺术，实在是值得收藏，利用寒假这么长的时间把它仔细读完。<br><br>3. 《具体数学》<br><br>DEK的名著，经典之作，想深入了解算法一定得读一下此书，起码可以给你打个良好的数学基础。<br><br>由于寒假还要过年过节，家里事情也很多，所以能读完上面那三本就很不错了，呵呵。下面再列举几本，以备读完了之后无事可做，当然了，下面的这些书也是以后要读的：<br><br>4. 《TCP/IP详解》<br><br>W. Richard Steven的经典之作，详细讲述了TCP/IP协议。不过这书有三卷，能啃完这三本书可真不容易。<br><br>5. 《计算机编程艺术》<br><br>DEK的牛著，算法方面的圣经，不可不读，不过这四卷都很厚，所以也很贵，而且涉及大量数学，只能仰望一下了。<br><br>6. 《FreeBSD设计与实现》<br><br>关于BSD内核方面的经典之作，也是不能错过的优秀书籍。<br><br>7. 《编译器原理──技术与工具》<br><br>编译理论方面入门的超级经典之作，一定要把阅读此书提上日程。<br><br></p></div>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2007/03/09/-e5-af-92-e5-81-87-e8-af-bb-e4-b9-a6-e8-ae-a1-e5-88-92/" data-id="pt821rvfjf3fonp4" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e8-a5-bf-e9-82-ae-e8-ae-a1-e7-ae-97-e6-9c-ba-e7-b3-bb-e7-9a-84-e7-a1-ac-e4-bb-b6-e8-af-be-e7-9c-9f-e5-a4-9a" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2007/03/09/-e8-a5-bf-e9-82-ae-e8-ae-a1-e7-ae-97-e6-9c-ba-e7-b3-bb-e7-9a-84-e7-a1-ac-e4-bb-b6-e8-af-be-e7-9c-9f-e5-a4-9a/" class="article-date">
+  <time datetime="2007-03-10T06:39:26.000Z" itemprop="datePublished">Mar 9 2007</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Life/">Life</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2007/03/09/-e8-a5-bf-e9-82-ae-e8-ae-a1-e7-ae-97-e6-9c-ba-e7-b3-bb-e7-9a-84-e7-a1-ac-e4-bb-b6-e8-af-be-e7-9c-9f-e5-a4-9a/">西邮计算机系的硬件课真多</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Monday, 8. January 2007, 15:24:56</p>
+<div class="content"><br><div id="excerpt"></div><br><p>估计再也没有其它哪个大学的计算机系能像西邮计算机系如此注重硬件。看看我们开的和硬件相关的课程：数字电路，模拟电路，信号与系统，电路基础，通信原理，计算机组成原理，微型计算机原理，用我们Matlab老师的的话说她当年学电子专业开的课我们基本上全开了！<br><br>今天中午看了看MIT的OCW，发现MIT的CS课程也有不少是硬件，不过人家的应该是可选的。总感觉我们的硬件课过多了，想想原因，大概就是因为我们计算机系的弄硬件的老师占多数，微电子教研室和体系结构教研室的老师都是弄硬件的，连软件教研室的老师弄的一些东西都是和硬件相关的，系主任老韩是弄硬件的，两位副主任也都是弄硬件的，所以我们也跟着弄硬件。;-(<br><br>如果硬件课都是计算机系的老师上也就罢了，关键的是很多课都是其它系的老师来上，尤其是电信系的！一说到电信系就来气，里面的恶女狠多！任课老师很BT，板着个脸就像很鄙视我们的样子（拜托~~您教的东西我们不专业好不好？） ；实验室的老师更是BT^2，做个实验只讲个皮毛，其余让我们自己去做，做完了弄不好就是数据不对，重做！！不对再做！！实验报告写得不好，重写！没有误差分析，重写！！KAO！光写实验报告就浪费我N^2个小时！<br><br>我恨硬件，更恨电路，尤其恨模电！！<br><br></p></div>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2007/03/09/-e8-a5-bf-e9-82-ae-e8-ae-a1-e7-ae-97-e6-9c-ba-e7-b3-bb-e7-9a-84-e7-a1-ac-e4-bb-b6-e8-af-be-e7-9c-9f-e5-a4-9a/" data-id="bhvs732ipms5iq0e" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+  
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/archives/page/67/">&laquo; Prev</a><a class="page-number" href="/archives/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/66/">66</a><a class="page-number" href="/archives/page/67/">67</a><span class="page-number current">68</span><a class="page-number" href="/archives/page/69/">69</a><a class="page-number" href="/archives/page/70/">70</a><a class="page-number" href="/archives/page/71/">71</a><a class="extend next" rel="next" href="/archives/page/69/">Next &raquo;</a>
+    </nav>
+  
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Book-Reviews/">Book Reviews</a><span class="category-list-count">18</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/China/">China</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Collection/">Collection</a><span class="category-list-count">25</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">324</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux-Application/">Linux Application</a><span class="category-list-count">73</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux-Kernel/">Linux Kernel</a><span class="category-list-count">64</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Love/">Love</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Movies/">Movies</a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/">Programming</a><span class="category-list-count">152</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Science-Fiction/">Science Fiction</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Travel/">Travel</a><span class="category-list-count">19</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/geek/">geek</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/handling/">handling</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/joke/">joke</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/signal/">signal</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/unix/">unix</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/geek/" style="font-size: NaNpx;">geek</a><a href="/tags/handling/" style="font-size: NaNpx;">handling</a><a href="/tags/joke/" style="font-size: NaNpx;">joke</a><a href="/tags/linux/" style="font-size: NaNpx;">linux</a><a href="/tags/signal/" style="font-size: NaNpx;">signal</a><a href="/tags/unix/" style="font-size: NaNpx;">unix</a><a href="/tags/vim/" style="font-size: NaNpx;">vim</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">August 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">December 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">October 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">September 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">August 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">February 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01/">January 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12/">December 2012</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">November 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">October 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">September 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">August 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/07/">July 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">April 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">March 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">February 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">January 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/12/">December 2011</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">November 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/10/">October 2011</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">September 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08/">August 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/07/">July 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/06/">June 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/05/">May 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04/">April 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03/">March 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/02/">February 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/01/">January 2011</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/12/">December 2010</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/11/">November 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/10/">October 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/09/">September 2010</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08/">August 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07/">July 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06/">June 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05/">May 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04/">April 2010</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03/">March 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02/">February 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01/">January 2010</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12/">December 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11/">November 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10/">October 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09/">September 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08/">August 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07/">July 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/06/">June 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/05/">May 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04/">April 2009</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03/">March 2009</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02/">February 2009</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01/">January 2009</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12/">December 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/11/">November 2008</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/10/">October 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09/">September 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08/">August 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07/">July 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06/">June 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05/">May 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04/">April 2008</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03/">March 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02/">February 2008</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01/">January 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12/">December 2007</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11/">November 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10/">October 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09/">September 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08/">August 2007</a><span class="archive-list-count">31</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07/">July 2007</a><span class="archive-list-count">34</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06/">June 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05/">May 2007</a><span class="archive-list-count">25</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04/">April 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03/">March 2007</a><span class="archive-list-count">50</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02/">February 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01/">January 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12/">December 2006</a><span class="archive-list-count">5</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2014/08/12/linux-e7-bd-91-e7-bb-9c-e6-b5-81-e9-87-8f-e6-8e-a7-e5-88-b6-ef-bc-88-e4-b8-80-ef-bc-89/">Linux 网络流量控制（零）</a>
+          </li>
+        
+          <li>
+            <a href="/2014/08/01/ottawa-linux-symposium/">Ottawa Linux Symposium</a>
+          </li>
+        
+          <li>
+            <a href="/2014/05/31/skbuff-e5-86-85-e5-ad-98-e6-a8-a1-e5-9e-8b/">skbuff 内存模型</a>
+          </li>
+        
+          <li>
+            <a href="/2014/05/06/-e9-95-bf-e6-9c-9f-e6-8f-90-e4-be-9b-twitter-e5-86-85-e6-8e-a8/">长期提供 Twitter 内推</a>
+          </li>
+        
+          <li>
+            <a href="/2014/01/30/-e6-88-91-e7-9a-842013-ef-bc-9a-e6-88-91-e6-9d-a5-e5-88-b0-e4-ba-86-e7-be-8e-e5-9b-bd/">我的2013：我来到了美国</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2015 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+
+  </div>
+</body>
+</html>

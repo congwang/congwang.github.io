@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Linux内核中的红黑树 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Friday, 2. February 2007, 06:07:27
+
+王聪@西邮红黑树是平衡二叉树的一种，它有很好的性质，树中的结点都是有序的，而且因为它本身就是平衡的，所以查找也不会出现非常恶劣的情况，基于二叉树的操作的时间复杂度是O(log(n))。Linux内核在管理vm_area_struct时就是采用了红黑树来维护内存块的。
+先到include/linux/rbtree.h中看一下rb">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux内核中的红黑树">
+<meta property="og:url" content="http://yoursite.com/2007/02/02/linux-e5-86-85-e6-a0-b8-e4-b8-ad-e7-9a-84-e7-ba-a2-e9-bb-91-e6-a0-91-2/">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Friday, 2. February 2007, 06:07:27
+
+王聪@西邮红黑树是平衡二叉树的一种，它有很好的性质，树中的结点都是有序的，而且因为它本身就是平衡的，所以查找也不会出现非常恶劣的情况，基于二叉树的操作的时间复杂度是O(log(n))。Linux内核在管理vm_area_struct时就是采用了红黑树来维护内存块的。
+先到include/linux/rbtree.h中看一下rb">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux内核中的红黑树">
+<meta name="twitter:description" content="Friday, 2. February 2007, 06:07:27
+
+王聪@西邮红黑树是平衡二叉树的一种，它有很好的性质，树中的结点都是有序的，而且因为它本身就是平衡的，所以查找也不会出现非常恶劣的情况，基于二叉树的操作的时间复杂度是O(log(n))。Linux内核在管理vm_area_struct时就是采用了红黑树来维护内存块的。
+先到include/linux/rbtree.h中看一下rb">
+
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-linux-e5-86-85-e6-a0-b8-e4-b8-ad-e7-9a-84-e7-ba-a2-e9-bb-91-e6-a0-91-2" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2007/02/02/linux-e5-86-85-e6-a0-b8-e4-b8-ad-e7-9a-84-e7-ba-a2-e9-bb-91-e6-a0-91-2/" class="article-date">
+  <time datetime="2007-02-03T06:56:58.000Z" itemprop="datePublished">Feb 2 2007</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux-Kernel/">Linux Kernel</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Linux内核中的红黑树
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Friday, 2. February 2007, 06:07:27</p>
+<p></p><p class="content"></p>
+<p></p><p align="right"><span class="alignright">王聪@西邮</span><br>红黑树是平衡二叉树的一种，它有很好的性质，树中的结点都是有序的，而且因为它本身就是平衡的，所以查找也不会出现非常恶劣的情况，基于二叉树的操作的时间复杂度是O(log(n))。Linux内核在管理vm_area_struct时就是采用了红黑树来维护内存块的。</p>
+<p>先到include/linux/rbtree.h中看一下rbtree的定义，如下：</p>
+<pre>
+struct rb_node
+{
+        unsigned long  rb_parent_color;
+#define RB_RED          0
+#define RB_BLACK        1
+        struct rb_node *rb_right;
+        struct rb_node *rb_left;
+} __attribute__((aligned(sizeof(long))));</pre>
+struct rb_root只是struct rb_node*的一个包装，这样做的好处是看起来不用传递二级指针了。不错，很简单。再看一下下面几个重要的宏，细心的你一定会发现，rb_parent_color其实没那么简单，Andrea Arcangeli在这里使用了一个小的技巧，不过非常棒。正如名字所暗示，这个成员其实包含指向parent的指针和此结点的颜色！它是怎么做到的呢？很简单，对齐起了作用。既然是sizeof(long)大小的对齐，那么在IA-32上，任何rb_node结构体的地址的低两位肯定都是零，与其空着不用，还不如用它们表示颜色，反正颜色就两种，其实只要一位就够了（估计此处也是照顾16位的机器）。
+
+这样，提取parent指针只要把rb_parent_color成员的低两位清零即可：
+<pre>
+#define rb_parent(r)   ((struct rb_node *)((r)-
+</pre>
+取颜色只要看最后一位即可：
+<pre>
+#define rb_color(r)   ((r)-
+</pre>
+测试颜色和设置颜色也是水到渠成的事了。需要特别指出的是下面的一个内联函数：
+<pre>
+static inline void rb_link_node(struct rb_node * node, struct rb_node * parent, struct rb_node ** rb_link);</pre>
+它把parent设为node的父结点，并且让rb_link指向node。
+
+我们把重点集中在lib/rbtree.c上，看看一些和红黑树相关的重要算法。开始之前我们一起回忆一下红黑树的规则：
+
+1\. 每个结点要么是红色要么是黑色；
+2\. 根结点必须是黑色；
+3\. 红结点如果有孩子，其孩子必须都是黑色；
+4\. 从根结点到叶子的每条路径必须包含相同数目的黑结点。
+
+这四条规则可以限制一棵排序树是平衡的。
+
+__rb_rotate_left是把以root为根的树中的node结点进行左旋，__rb_rotate_right是进行右旋。这两个函数是为后面的插入和删除服务，而不是为外部提供接口。
+
+新插入的结点都设为叶子，染成红色，插入后如果破坏了上述规则，通过调整颜色和旋转可以恢复，二叉树又重新平衡。插入操作的接口函数是
+<pre>
+void rb_insert_color(struct rb_node *node, struct rb_root *root);</pre>
+它把已确定父结点的node结点融入到以root为根的红黑树中，具体算法的分析可以参考MIT的《算法导论》第14.3节，这里的实现和书中的讲解几乎完全一样！怎么确定node的父结点应该在调用rb_insert_color之前通过手工迭带完成。值得指出的一点是，虽然插入操作需要一个循环迭代，但是总的旋转次数不会超过两次！所以效率还是很乐观的。
+
+删除操作多多少少都有点麻烦，它要先执行像普通二叉查找树的“删除”，然后根据删除结点的颜色来判断是否执行进一步的操作。删除的接口是
+<pre>
+void rb_erase(struct rb_node *node, struct rb_root *root);</pre>
+其实它并没有真正删除node，而只是让它和以root为根的树脱离关系，最后它还要判断是否调用__rb_erase_color来调整。具体算法的讲解看参考《算法导论》13.3和14.4节，__rb_erase_color对应书中的RB-DELETE-FIXUP。此处的实现和书上也基本上一致。
+
+其余的几个接口就比较简单了。
+<pre>
+struct rb_node *rb_first(struct rb_root *root);</pre>
+在以root为根的树中找出并返回最小的那个结点，只要从根结点一直向左走就是了。
+<pre>
+struct rb_node *rb_last(struct rb_root *root);</pre>
+是找出并返回最大的那个，一直向右走。
+<pre>
+struct rb_node *rb_next(struct rb_node *node);</pre>
+返回node在树中的后继，这个稍微复杂一点。如果node的右孩子不为空，它只要返回node的右子树中最小的结点即可；如果为空，它要向上查找，找到迭带结点是其父亲的左孩子的结点，返回父结点。如果一直上述到了根结点，返回NULL。
+<pre>
+struct rb_node *rb_prev(struct rb_node *node);</pre>
+返回node的前驱，和rb_next中的操作对称。
+<pre>
+void rb_replace_node(struct rb_node *victim, struct rb_node *new, struct rb_root *root);</pre>
+用new替换以root为根的树中的victim结点。
+
+红黑树接口使用的一个典型例子如下：
+<pre>
+static inline struct page * rb_search_page_cache(struct inode * inode,
+                                                 unsigned long offset)
+{
+        struct rb_node * n = inode-_
+        struct page * page;
+
+        while (n)
+        {
+                page = rb_entry(n, struct page, rb_page_cache);
+
+                if (offset &gt; page-
+                        n = n-
+                else if (offset &lt; page-
+                        n = n-
+                else
+                        return page;
+        }
+        return NULL;
+}
+
+static inline struct page * __rb_insert_page_cache(struct inode * inode,
+                                                   unsigned long offset,
+                                                   struct rb_node * node)
+{
+        struct rb_node ** p = &amp;inode-<i>
+        struct rb_node * parent = NULL;
+        struct page * page;
+
+        while (*p)
+        {
+                parent = *p;
+                page = rb_entry(parent, struct page, rb_page_cache);
+
+                if (offset &gt; page-
+                        p = &amp;(*p)-
+                else if (offset &lt; page-
+                        p = &amp;(*p)-
+                else
+                        return page;
+        }
+
+        rb_link_node(node, parent, p);
+
+        return NULL;
+}
+
+static inline struct page * rb_insert_page_cache(struct inode * inode,
+                                                 unsigned long offset,
+                                                 struct rb_node * node)
+{
+        struct page * ret;
+        if ((ret = __rb_insert_page_cache(inode, offset, node)))
+                goto out;
+        rb_insert_color(node, &amp;inode-<i>
+ out:
+        return ret;
+}
+_</i></i></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2007/02/02/linux-e5-86-85-e6-a0-b8-e4-b8-ad-e7-9a-84-e7-ba-a2-e9-bb-91-e6-a0-91-2/" data-id="zu92koiq8jeviidk" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2007/02/25/-e4-b8-a4-e4-b8-aa-e5-92-8cgcc-e7-9b-b8-e5-85-b3-e7-9a-84-e8-84-9a-e6-9c-ac-2/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          两个和gcc相关的脚本
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2007/02/02/linux-e8-bf-9b-e7-a8-8b-e7-ae-a1-e7-90-86-e4-b8-ad-e9-98-9f-e5-88-97-e7-9a-84-e4-bd-bf-e7-94-a8-3/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Linux进程管理中队列的使用</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Book-Reviews/">Book Reviews</a><span class="category-list-count">18</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/China/">China</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Collection/">Collection</a><span class="category-list-count">25</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">324</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux-Application/">Linux Application</a><span class="category-list-count">73</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux-Kernel/">Linux Kernel</a><span class="category-list-count">64</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Love/">Love</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Movies/">Movies</a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/">Programming</a><span class="category-list-count">152</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Science-Fiction/">Science Fiction</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Travel/">Travel</a><span class="category-list-count">19</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/geek/">geek</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/handling/">handling</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/joke/">joke</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/signal/">signal</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/unix/">unix</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/geek/" style="font-size: NaNpx;">geek</a><a href="/tags/handling/" style="font-size: NaNpx;">handling</a><a href="/tags/joke/" style="font-size: NaNpx;">joke</a><a href="/tags/linux/" style="font-size: NaNpx;">linux</a><a href="/tags/signal/" style="font-size: NaNpx;">signal</a><a href="/tags/unix/" style="font-size: NaNpx;">unix</a><a href="/tags/vim/" style="font-size: NaNpx;">vim</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">August 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">December 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">October 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">September 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">August 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">February 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01/">January 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12/">December 2012</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">November 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">October 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">September 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">August 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/07/">July 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">April 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">March 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">February 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">January 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/12/">December 2011</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">November 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/10/">October 2011</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">September 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08/">August 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/07/">July 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/06/">June 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/05/">May 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04/">April 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03/">March 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/02/">February 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/01/">January 2011</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/12/">December 2010</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/11/">November 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/10/">October 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/09/">September 2010</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08/">August 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07/">July 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06/">June 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05/">May 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04/">April 2010</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03/">March 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02/">February 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01/">January 2010</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12/">December 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11/">November 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10/">October 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09/">September 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08/">August 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07/">July 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/06/">June 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/05/">May 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04/">April 2009</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03/">March 2009</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02/">February 2009</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01/">January 2009</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12/">December 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/11/">November 2008</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/10/">October 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09/">September 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08/">August 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07/">July 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06/">June 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05/">May 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04/">April 2008</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03/">March 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02/">February 2008</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01/">January 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12/">December 2007</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11/">November 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10/">October 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09/">September 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08/">August 2007</a><span class="archive-list-count">31</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07/">July 2007</a><span class="archive-list-count">34</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06/">June 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05/">May 2007</a><span class="archive-list-count">25</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04/">April 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03/">March 2007</a><span class="archive-list-count">50</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02/">February 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01/">January 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12/">December 2006</a><span class="archive-list-count">5</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2014/08/12/linux-e7-bd-91-e7-bb-9c-e6-b5-81-e9-87-8f-e6-8e-a7-e5-88-b6-ef-bc-88-e4-b8-80-ef-bc-89/">Linux 网络流量控制（零）</a>
+          </li>
+        
+          <li>
+            <a href="/2014/08/01/ottawa-linux-symposium/">Ottawa Linux Symposium</a>
+          </li>
+        
+          <li>
+            <a href="/2014/05/31/skbuff-e5-86-85-e5-ad-98-e6-a8-a1-e5-9e-8b/">skbuff 内存模型</a>
+          </li>
+        
+          <li>
+            <a href="/2014/05/06/-e9-95-bf-e6-9c-9f-e6-8f-90-e4-be-9b-twitter-e5-86-85-e6-8e-a8/">长期提供 Twitter 内推</a>
+          </li>
+        
+          <li>
+            <a href="/2014/01/30/-e6-88-91-e7-9a-842013-ef-bc-9a-e6-88-91-e6-9d-a5-e5-88-b0-e4-ba-86-e7-be-8e-e5-9b-bd/">我的2013：我来到了美国</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2015 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+
+  </div>
+</body>
+</html>

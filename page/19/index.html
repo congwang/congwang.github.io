@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/page/19/">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description">
+
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-elf-extended-numbering" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2010/04/22/elf-extended-numbering/" class="article-date">
+  <time datetime="2010-04-23T05:18:37.000Z" itemprop="datePublished">Apr 22 2010</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux-Kernel/">Linux Kernel</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2010/04/22/elf-extended-numbering/">ELF Extended Numbering</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>ELF格式天生就有个不小的缺陷—— segment 个数最多 65535 个，这是由e_phnum来决定的，其类型是16位的无符号整数。对于一些程序来说，65535是不够的，如果它使用了很多mmap(2)的话。</p>
+<p>要解决这个问题并不容易，e_phnum是用了多年早已定型了的东西，不能随意修改，只能在别的地方想办法去补救，于是下面这个方案就出来乐。这个方案在Solaris上已经使用了长时间了，但 Linux 上一直还没有。其原理是：e_phnum保持不动， 如果 segment 的个数大于等于0xffff时，e_phnum设为0xffff ，同时下标为0的section header中的sh_info被设为真实的 segment 数。而 sh_info 是32位无符号类型，所以它最多能支持4294967295个。使用这个 sh_info 是合理的，因为下标为0的section header平时是没用的，其类型是 SHT_NULL。随之相应改变的还有 sh_size 和 sh_link，它们分别被设为 e_shnum和 e_shstrndx（见<a href="http://docs.sun.com/app/docs/doc/817-1984" target="_blank" rel="external">该文档</a>P215）。</p>
+<p>Daisuke HATAYAMA 提交了Linux上的补丁，主要分为三部分：内核，gdb，和binutils。内核部分补丁不少，但真正起作用的补丁只有一个，其它的都是refactor，见下：</p>
+<pre id="comment_text_4">
+<pre id="comment_text_4">8d9032bbe4671dc481261ccd4e161cd96e54b118 elf coredump: add extended numbering support
+93eb211e6c9ff6054fcf9c5b9e344d8d9ad29175 elf coredump: make offset calculation process and writing process explicit
+1fcccbac89f5bbc5e41aa72086960059fce372da elf coredump: replace ELF_CORE_EXTRA_* macros by functions
+088e7af73a962fcc8883b7a6392544d8342553d6 coredump: move dump_write() and dump_seek() into a header file
+05f47fda9fc5b17bfab189e9d54228025befc996 coredump: unify dump_seek()
+
+gdb 的补丁如下：
+78999a9bcf9d87f72cd67a782e1e859a6a09d9de  * common.h (PN_XNUM): Define.
+cce546478afe296ebbb69f208b708a8b3fe5f7e5 * elfcode.h (elf_swap_ehdr_out): Handle e_phnum &gt; 0xffff.
+
+binutils 的补丁：
+[http://sourceware.org/ml/binutils/2010-01/msg00393.html](http://sourceware.org/ml/binutils/2010-01/msg00393.html)
+
+man-page 补丁：
+[http://permalink.gmane.org/gmane.linux.man/1302](http://permalink.gmane.org/gmane.linux.man/1302)
+</pre>
+</pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2010/04/22/elf-extended-numbering/" data-id="csdkrc87lshb72ys" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e8-87-aa-e5-8a-a8-e7-94-9f-e6-88-90-e5-86-85-e6-a0-b8config" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2010/04/21/-e8-87-aa-e5-8a-a8-e7-94-9f-e6-88-90-e5-86-85-e6-a0-b8config/" class="article-date">
+  <time datetime="2010-04-22T06:16:16.000Z" itemprop="datePublished">Apr 21 2010</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux-Kernel/">Linux Kernel</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2010/04/21/-e8-87-aa-e5-8a-a8-e7-94-9f-e6-88-90-e5-86-85-e6-a0-b8config/">自动生成内核config</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>配置内核的人都清楚要选择内核的配置项是一件比较麻烦的事：要是多选了吧，内核体积可能变大，编译时间会变长；要是选少了吧，恐怕系统连启动都启动不了。所以一般我们的做法是拿过系统提供的 config 来直接make oldconfig。</p>
+<p>但这么做并不是很好，因为发行版通常为了照顾不同配置的机器而选中了很多的模块，这样一来对本机器没有用的东西也会被编译进来，从而导致编译时间变长，这还是次要，关键是模块数量会增多，内核体积也有可能变大。</p>
+<p>理想的情况是我们根据本系统运行时加载的模块来决定到底选中哪些模块。问题就来了，我们怎么才能知道自己的系统需要哪些模块不需要哪些模块呢？</p>
+<p>为了解决这个问题，Steven Rostedt写了一个脚本，叫作<a href="http://rostedt.homelinux.com/code/streamline_config.pl" target="_blank" rel="external">streamline_config.pl</a>，来解决这个问题。而且他已经把此脚本提交到内核，见scripts/kconfig/streamline_config.pl。这样一来，我们就可以通过 make localmodconfig 或 make localyesconfig 来生成我们真正需要的最小的config了。不同的是，后者会把系统正在使用模块编译进内核，而前者不会，它只会保留系统使用的模块而且继续以模块的形式存在。</p>
+<p>这个脚本不复杂，原理也很简单，通过 lsmod 找出正在使用的驱动， 然后通过解析所有的Makefile中的obj-$(CONFIG<em>XXX) += xxx.o模式来找到驱动对应的CONFIG</em>*，不过还要解决依赖性的问题。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2010/04/21/-e8-87-aa-e5-8a-a8-e7-94-9f-e6-88-90-e5-86-85-e6-a0-b8config/" data-id="fpmnbw2oqwfqrzen" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-2010-e4-b8-8a-e5-8d-8a-e5-b9-b4-e6-97-85-e8-a1-8c-e8-ae-a1-e5-88-92" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2010/04/11/2010-e4-b8-8a-e5-8d-8a-e5-b9-b4-e6-97-85-e8-a1-8c-e8-ae-a1-e5-88-92/" class="article-date">
+  <time datetime="2010-04-12T03:39:55.000Z" itemprop="datePublished">Apr 11 2010</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Life/">Life</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2010/04/11/2010-e4-b8-8a-e5-8d-8a-e5-b9-b4-e6-97-85-e8-a1-8c-e8-ae-a1-e5-88-92/">2010上半年旅行计划</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>前一段时间天气比较冷，懒得出去。最近比较宅，不想出门。可是好久不出门旅行浑身难受，每个月总有那么几天……再这么宅下去不行，得出去活动活动了！</p>
+<p>于是乎我制定了下面的近期旅行计划，初步计划，具体时间待定。</p>
+<p>4月17号——19号，内蒙古，库布其沙漠穿越。已定。</p>
+<p>4月底或5月初，苏州，南京，乌镇。本打算去山西平遥，但一想山西那么近，什么时候去都成，没必要在这么好的季节去，还不如趁着春天下江南，更主要的是看看传说中的江南美女！</p>
+<p>5月底或6月份，青海，西藏。待详细计划。</p>
+<p>6月底，大连。</p>
+<p>一直以来都是一个人出门旅行，提前征征旅伴，最起码拍照方便一些。不靠谱人士免谈，极品人士请绕行。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2010/04/11/2010-e4-b8-8a-e5-8d-8a-e5-b9-b4-e6-97-85-e8-a1-8c-e8-ae-a1-e5-88-92/" data-id="3ow1oq7zq1wo753x" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e6-94-b9-e5-8e-bb-e8-a5-bf-e8-97-8f-e4-ba-86" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2010/04/10/-e6-94-b9-e5-8e-bb-e8-a5-bf-e8-97-8f-e4-ba-86/" class="article-date">
+  <time datetime="2010-04-11T03:25:01.000Z" itemprop="datePublished">Apr 10 2010</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Life/">Life</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2010/04/10/-e6-94-b9-e5-8e-bb-e8-a5-bf-e8-97-8f-e4-ba-86/">改去西藏了</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>鉴于地球日益危机，外星人犯我之心不死，不明飞行物频繁光临地球和太阳系，我深刻感觉到2012真的快要来了！同志们，你们的船票买好了吗？我不管了，我的船票已经通过黄牛买到，所以我得赶紧去西藏看看诺亚方舟建得如何了！葡萄牙等到2012过去后我坐诺亚方舟过去！</p>
+<p>以上纯属虚构。真实原因如下。</p>
+<p>感谢国家，贵国的护照除了去一些我都没听说过的国家不需要签证，去哪都需要！所以说就算你只是为了换个好用的护照你也得移民啊！我发现申请去葡萄牙的旅游签证比我想象中的还麻烦，还要搞什么财产证明之类的，就我这点儿财产还不够证明的呢。钱咋就花得这么快捏？反正葡萄牙今年7月份是去不成了，等我什么时候攒够钱了再去吧。决定改去西藏了，一直想去但没机会去的地方。花钱不多，省下的钱还可以买个单反。而且，我现在积攒了大约10天的假期，加上3个周末一共16天，估计去西藏应该差不多了。</p>
+<p>于是从现在开始征旅伴，同去西藏的，估计可能会5月底或者6月去，坐火车。可以见我发起的<a href="http://www.douban.com/event/11622401/" target="_blank" rel="external">豆瓣活动</a>。</p>
+<p>痛定思痛，我深刻反思了一下上面的问题：我的钱到底都花到哪里去了呢？我发现，相当一部分钱交给了国家，交税不说了，还交了根本就没有用的住房公积金（我交一辈子也买不起首都的一个厕所啊！）和基本上是在忽悠人的养老保险金等。剩下拿到手的钱一部分贡献给了贵国的房地产，贵国的水泥盒子租也不便宜啊！其余的钱中，相当一部分花到了旅游、户外以及户外装备上，虽然我在旅途上已经算是很节省的了；一部分钱给了爸妈，这没的说，我又不是富二代，穷二代还倒是差不多；一部分外债，是借给别人的；一部分花在了吃上，穿很少花钱，差不多半年才买一次衣服，而且买的比去动物园买贵不了多少。这么一算心里踏实了，钱虽然花得快但没浪费，也算是持家有道吧。</p>
+<p>下一步就是要买个单反，去西藏之前。有人给我推荐佳能550D，不知道到底怎样。哎，玩单反比玩户外烧钱还厉害，入行有风险，出手须谨慎啊！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2010/04/10/-e6-94-b9-e5-8e-bb-e8-a5-bf-e8-97-8f-e4-ba-86/" data-id="gtnpruhi7r6235ms" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e5-82-bb-e9-80-bc-e4-bb-ac-e7-9a-84-e5-8e-9f-e7-90-86" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2010/04/05/-e5-82-bb-e9-80-bc-e4-bb-ac-e7-9a-84-e5-8e-9f-e7-90-86/" class="article-date">
+  <time datetime="2010-04-06T03:01:48.000Z" itemprop="datePublished">Apr 5 2010</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Life/">Life</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2010/04/05/-e5-82-bb-e9-80-bc-e4-bb-ac-e7-9a-84-e5-8e-9f-e7-90-86/">傻逼们的原理</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://tj.static.photo.sina.com.cn/proxy_mop.php?pic_id=61e44a60x8377275cefbb&amp;type=orignal&amp;v=690" alt="" title="SB"></p>
+<p>傻逼们运行的基本原理是：</p>
+<blockquote>
+<p><strong>你永远不能战胜一个纯傻逼，因为他会把你的智商拉到跟他一个水平，然后用丰富的经验打败你！<br>Do not argue with an idiot. He will drag you down to his level and beat you with experience.</strong><br>所以，没有足够的时间不要跟傻逼们斗。别把他们当正常人看就是了！</p>
+</blockquote>
+<p>某些人就别对号入座了！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2010/04/05/-e5-82-bb-e9-80-bc-e4-bb-ac-e7-9a-84-e5-8e-9f-e7-90-86/" data-id="f4lutdak2y0kef9z" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-bonding-e5-92-8cbridge-e5-af-b9netpoll-e7-9a-84-e6-94-af-e6-8c-81" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2010/04/05/bonding-e5-92-8cbridge-e5-af-b9netpoll-e7-9a-84-e6-94-af-e6-8c-81/" class="article-date">
+  <time datetime="2010-04-06T01:23:17.000Z" itemprop="datePublished">Apr 5 2010</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux-Kernel/">Linux Kernel</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2010/04/05/bonding-e5-92-8cbridge-e5-af-b9netpoll-e7-9a-84-e6-94-af-e6-8c-81/">bonding和bridge对netpoll的支持</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近我在做 netpoll 的东东，具体说是让 bridge 和 bonding 支持 netpoll，这样我们就可以通过 bridge 和 bonding 设备来使用 netconsole 和 netdump 了（注：netdump 已经被遗弃）。三个补丁见这里：</p>
+<p><a href="http://lkml.org/lkml/2010/4/5/13" target="_blank" rel="external">http://lkml.org/lkml/2010/4/5/13</a></p>
+<p><a href="http://lkml.org/lkml/2010/4/5/14" target="_blank" rel="external">http://lkml.org/lkml/2010/4/5/14</a></p>
+<p><a href="http://lkml.org/lkml/2010/4/5/15" target="_blank" rel="external">http://lkml.org/lkml/2010/4/5/15</a></p>
+<p>其实很简单，无非就是实现几个回调函数，传递几个关键的指针。最纠结的地方是 netpoll 的那几个成员变量，一步错了导致后面全错，不过说到底，还是对 net 部分的代码不熟悉。</p>
+<p>最气人的是，不少时候明明是一个成员忘了赋值，结果导致 lockdep 警告，有时甚至连警告都没有直接死掉，非常莫名其妙！所以我就说啊，你遇到 oops，soft lockup 不要紧张，你最起码是已经得到很多错误信息了，真要是一条错误信息都没有，那才紧张呢！你问我这时候怎么办？没什么好办法，只能尝试缩小可疑代码的范围，然后凭直觉去猜问题应该在哪里！比如我这个，我可以通过使用或不使用 netconsole 来判断问题是出在我的补丁上还是原有代码中（不要太迷信原有代码，它们也会有 bug 的），如果是出在我的补丁中，那到底是哪一块，哪个函数。如果没任何信息，系统死掉很可能是因为什么？当然是加锁了！重新检查锁到底有没有用对。如果还不行就老老实实地加 printk 吧！</p>
+<p>还有就是，不要迷恋现象，现象并不一定能正确表明问题所在，它只是问题带来的症状，仅此而已！换句话说，可能是前面的一个小问题引发了后面大的症状，这并不意味着问题就是后面的一个大问题，也不意味着问题就真如症状直接表明的那样。静下心来仔细分析症状的每一个细节，不要轻易下结论说问题应该在哪里。</p>
+<p>赤果果的教训啊！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2010/04/05/bonding-e5-92-8cbridge-e5-af-b9netpoll-e7-9a-84-e6-94-af-e6-8c-81/" data-id="s0xllkem6vl5y9nr" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e5-85-9a-e5-a6-88-e7-9a-84-e5-85-b3-e6-80-80" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2010/04/04/-e5-85-9a-e5-a6-88-e7-9a-84-e5-85-b3-e6-80-80/" class="article-date">
+  <time datetime="2010-04-05T04:39:52.000Z" itemprop="datePublished">Apr 4 2010</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Life/">Life</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2010/04/04/-e5-85-9a-e5-a6-88-e7-9a-84-e5-85-b3-e6-80-80/">党妈的关怀</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://tj.static.photo.sina.com.cn/proxy_mop.php?pic_id=62e941f9x8359f57c33fe&amp;type=orignal&amp;v=690" alt="" title="少儿不宜"></p>
+<p>先上<a href="http://news.qq.com/a/20100403/000840.htm" target="_blank" rel="external">CCAV的新闻</a>：</p>
+<p>山西王家岭矿难救援现场，伴随着营养液传送到井下的，有塞在空矿泉水瓶子里的两封信。</p>
+<p>一封信写道：</p>
+<p>亲爱的工友们：党中央、国务院和全国人民时刻都在关注你们的安危；省委、省政府领导正在现场指挥抢险工作。同志们都为你们传递的生命的信息万分高兴，都在争分夺秒、全力以赴救援。你们一定要坚定信心，坚持到底！坚持就是胜利！</p>
+<p>另一封信写道：</p>
+<p>弟兄们你们好：请耐心等待，地面上国家领导、省领导带领队伍在全力以赴，加管、加泵排水。很快就会排下去的，一定要坚持、坚持、再坚持！！！下面气体、风量情况如何？需要我们做些什么？请回信。山西焦煤汾西救护大队。</p>
+<p>==================关怀的分割线==================</p>
+<p>看完之后我灰常鸡动！我们知道，贵党早在抗战时期就靠书信和地下工作者连络，而如今建国60多年了依然笔耕不辍！对于地下工作者们来说，党妈的关怀比空气，比水，比食物更重要！真是“纵做鬼，也幸福”！</p>
+<p>我只有一个疑问：地下工作者们在下面怎么回信呢？</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2010/04/04/-e5-85-9a-e5-a6-88-e7-9a-84-e5-85-b3-e6-80-80/" data-id="ho22oxmi6f377ku3" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e6-84-9a-e4-ba-ba-e8-8a-82-e7-9a-84-e4-b8-a4-e4-b8-aa-e7-8e-a9-e7-ac-91" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2010/04/02/-e6-84-9a-e4-ba-ba-e8-8a-82-e7-9a-84-e4-b8-a4-e4-b8-aa-e7-8e-a9-e7-ac-91/" class="article-date">
+  <time datetime="2010-04-03T05:54:45.000Z" itemprop="datePublished">Apr 2 2010</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Life/">Life</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2010/04/02/-e6-84-9a-e4-ba-ba-e8-8a-82-e7-9a-84-e4-b8-a4-e4-b8-aa-e7-8e-a9-e7-ac-91/">愚人节的两个玩笑</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>1. 那天 kernel.org 翻了，有图有真相（截图来自linuxtoy）：</p>
+<p><img src="http://linuxtoy.org/images/2010/04/kernelorg_201004021.png" alt="" title="kernel.org"></p>
+<p>看到之后首先就是看其html源代码，你会发现，其实里面的字母也是翻的。怎么说呢？就比如说字母q，翻过来就是b，这个是最简单的，其它的字母就没这么容易了，所以他们就找其它语言里的字母。我估计很可能有俄文，俄文里好多字母感觉就是英文字母翻转的……总之，字母都是这样翻转的。作成一个表格，然后用程序什么的就可以完成了。</p>
+<p>2. LKML 上果然有人故意搞笑。原帖<a href="http://lkml.org/lkml/2010/4/1/128" target="_blank" rel="external">在这里</a>，大体是说，我有两台机器，第一个是赛扬，第二个是四核，这是主要区别，/proc/cpuinfo是只读的，可我想让第一台机器的性能赶上第二个，我能不能在第一台机器上运行：</p>
+<p><pre>echo -n “model name      : Intel(R) Core(TM)2 Quad CPU    Q6600  @<br>2.40GHz” &gt; /proc/cpuinfo<br></pre><br>捏？回复说，chmod +w /proc/cpuinfo就可以啦！</p>
+<p>啧啧，这两个人真有默契。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2010/04/02/-e6-84-9a-e4-ba-ba-e8-8a-82-e7-9a-84-e4-b8-a4-e4-b8-aa-e7-8e-a9-e7-ac-91/" data-id="bckvb67ooe41xzln" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e4-bd-a0-e4-bb-ac-e7-9f-a5-e9-81-93-e7-9a-84-e5-a4-aa-e5-a4-9a-e4-ba-86" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2010/03/18/-e4-bd-a0-e4-bb-ac-e7-9f-a5-e9-81-93-e7-9a-84-e5-a4-aa-e5-a4-9a-e4-ba-86/" class="article-date">
+  <time datetime="2010-03-19T05:48:49.000Z" itemprop="datePublished">Mar 18 2010</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Life/">Life</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2010/03/18/-e4-bd-a0-e4-bb-ac-e7-9f-a5-e9-81-93-e7-9a-84-e5-a4-aa-e5-a4-9a-e4-ba-86/">你们知道的太多了</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>不知道怎么回事，除了我那几个朋友之外，在我这里留言的人几乎每次都在变，每次评论都有不少需要审核的，给我的错觉是怎么这人换了一茬接一茬？你说是不是某些人闲着蛋疼老是换ID捏？</p>
+<p>反正，总体上给我的感觉是这里来的人太多了。</p>
+<p>我有的同事也知道我的博客。我就纳闷了，我又没告诉他们，他们怎么就知道捏？如果万一哪一天我那美国的上司也知道我的博客，然后借助 google translate 来看，那我写着写着估计连奖金都没了！这让我写博客很尴尬——公司的不少事不能写；家里的事想写没啥可写；技术的东西吧，不能老写；写贵国时政的东西吧，这种事又不能写太细！</p>
+<p>写博客这种东西，就像是吸毒，明知道有害你还偏偏上瘾！有百害而无一益！写技术吧，费力又不讨好，写的不好了遭骂遭鄙视，写得好了被转载了半天连出处和作者都找不到的。这还不如稍加润色润色，整理整理，然后投给杂志社什么的，这样还能赚点儿零花。写生活吧，唉，本来就那么点儿糗事这么一说谁都知道了，连从未谋面的人都知道，搞得跟路人皆知似得，很尴尬。爷们儿还好些，关键是姑娘！你说要是哪一天我约一个姑娘出来，人家姑娘第一句话就是：我看你的博客了，我觉得你是一个^%^&amp;#的人……刚见面就被剥了两层皮！情何以堪？而且你说写这玩意儿有啥用！能当饭吃嘛？不能。能当姑娘看嘛？也不能。而且也没见有哪个姑娘说我看了你的博客想认识一下你啊！</p>
+<p>写博客最好的状态是只有你的朋友们知道，写了也是让他们看的，省我电话费。其他人看了就是知道的太多了！</p>
+<p>所以本博即日起决定进行<span style="text-decoration:line-through;">分级</span>分类处理，技术的东西放到一个博客上，生活等其它东西放到另一个博客上。正好，最近空间提供者 cocobear 同学在转移空间，我的博客也需要<span style="text-decoration:line-through;">拆迁</span>搬迁。而且鉴于国内大局域网发展的大好形势，也为了不给党国抹黑，本域名 wangcong.org 已经决定移民人quan环境最差的美利坚。<strong>所以未来几天内，本网站及其博客将处于被维护的状态，开放时间未定，视美利坚信产部备案手续审核时间以及本博主心情而定。重新开放后本博内容将会因此做出调整。</strong></p>
+<p>哦，顺便说一句，我最近心情不好。你懂的。<strong>
+</strong></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2010/03/18/-e4-bd-a0-e4-bb-ac-e7-9f-a5-e9-81-93-e7-9a-84-e5-a4-aa-e5-a4-9a-e4-ba-86/" data-id="ezo41wlz3affwdfl" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e5-b7-a5-e4-bd-9c-e5-92-8c-e7-94-9f-e6-b4-bb" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2010/03/17/-e5-b7-a5-e4-bd-9c-e5-92-8c-e7-94-9f-e6-b4-bb/" class="article-date">
+  <time datetime="2010-03-18T04:28:10.000Z" itemprop="datePublished">Mar 17 2010</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Life/">Life</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2010/03/17/-e5-b7-a5-e4-bd-9c-e5-92-8c-e7-94-9f-e6-b4-bb/">工作和生活</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>有同学说我工作和生活不分，这其实蛮对的。对于一个上班时间打台球，下班回家继续处理邮件的人来说，工作就是生活，生活也是工作！水乳交融。</p>
+<p>可是，比起我们西朝鲜的领导来，我真是太惭愧了！看看日记局韩局长，工作时间在家玩手机，下班后仍然坚持在妇女工作前线，夜深了也要加班加点和女同志在床上讨论工作。这样的领导难道不值得我们学习嘛？这样的精神难道不值得我们提倡嘛？国家有这样的好领导让你先感谢国家咋了！你还有什么不满的呢？有什么不满组织给你解决！</p>
+<p>恩，这个国家我先感谢了，你随意！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2010/03/17/-e5-b7-a5-e4-bd-9c-e5-92-8c-e7-94-9f-e6-b4-bb/" data-id="3xoxfwv5min01doi" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+  
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/page/18/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="page-number" href="/page/18/">18</a><span class="page-number current">19</span><a class="page-number" href="/page/20/">20</a><a class="page-number" href="/page/21/">21</a><span class="space">&hellip;</span><a class="page-number" href="/page/71/">71</a><a class="extend next" rel="next" href="/page/20/">Next &raquo;</a>
+    </nav>
+  
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Book-Reviews/">Book Reviews</a><span class="category-list-count">18</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/China/">China</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Collection/">Collection</a><span class="category-list-count">25</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">324</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux-Application/">Linux Application</a><span class="category-list-count">73</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux-Kernel/">Linux Kernel</a><span class="category-list-count">64</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Love/">Love</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Movies/">Movies</a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/">Programming</a><span class="category-list-count">152</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Science-Fiction/">Science Fiction</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Travel/">Travel</a><span class="category-list-count">19</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/geek/">geek</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/handling/">handling</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/joke/">joke</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/signal/">signal</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/unix/">unix</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/geek/" style="font-size: NaNpx;">geek</a><a href="/tags/handling/" style="font-size: NaNpx;">handling</a><a href="/tags/joke/" style="font-size: NaNpx;">joke</a><a href="/tags/linux/" style="font-size: NaNpx;">linux</a><a href="/tags/signal/" style="font-size: NaNpx;">signal</a><a href="/tags/unix/" style="font-size: NaNpx;">unix</a><a href="/tags/vim/" style="font-size: NaNpx;">vim</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">August 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">December 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">October 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">September 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">August 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">February 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01/">January 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12/">December 2012</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">November 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">October 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">September 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">August 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/07/">July 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">April 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">March 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">February 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">January 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/12/">December 2011</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">November 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/10/">October 2011</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">September 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08/">August 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/07/">July 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/06/">June 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/05/">May 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04/">April 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03/">March 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/02/">February 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/01/">January 2011</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/12/">December 2010</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/11/">November 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/10/">October 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/09/">September 2010</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08/">August 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07/">July 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06/">June 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05/">May 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04/">April 2010</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03/">March 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02/">February 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01/">January 2010</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12/">December 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11/">November 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10/">October 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09/">September 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08/">August 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07/">July 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/06/">June 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/05/">May 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04/">April 2009</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03/">March 2009</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02/">February 2009</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01/">January 2009</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12/">December 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/11/">November 2008</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/10/">October 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09/">September 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08/">August 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07/">July 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06/">June 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05/">May 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04/">April 2008</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03/">March 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02/">February 2008</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01/">January 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12/">December 2007</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11/">November 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10/">October 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09/">September 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08/">August 2007</a><span class="archive-list-count">31</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07/">July 2007</a><span class="archive-list-count">34</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06/">June 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05/">May 2007</a><span class="archive-list-count">25</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04/">April 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03/">March 2007</a><span class="archive-list-count">50</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02/">February 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01/">January 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12/">December 2006</a><span class="archive-list-count">5</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2014/08/12/linux-e7-bd-91-e7-bb-9c-e6-b5-81-e9-87-8f-e6-8e-a7-e5-88-b6-ef-bc-88-e4-b8-80-ef-bc-89/">Linux 网络流量控制（零）</a>
+          </li>
+        
+          <li>
+            <a href="/2014/08/01/ottawa-linux-symposium/">Ottawa Linux Symposium</a>
+          </li>
+        
+          <li>
+            <a href="/2014/05/31/skbuff-e5-86-85-e5-ad-98-e6-a8-a1-e5-9e-8b/">skbuff 内存模型</a>
+          </li>
+        
+          <li>
+            <a href="/2014/05/06/-e9-95-bf-e6-9c-9f-e6-8f-90-e4-be-9b-twitter-e5-86-85-e6-8e-a8/">长期提供 Twitter 内推</a>
+          </li>
+        
+          <li>
+            <a href="/2014/01/30/-e6-88-91-e7-9a-842013-ef-bc-9a-e6-88-91-e6-9d-a5-e5-88-b0-e4-ba-86-e7-be-8e-e5-9b-bd/">我的2013：我来到了美国</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2015 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+
+  </div>
+</body>
+</html>

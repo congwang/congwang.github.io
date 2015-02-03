@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Archives: 2008 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/archives/2008/page/13/">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description">
+
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post--e5-9c-a8emacs-e4-b8-8b-e4-bd-bf-e7-94-a8mew" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2008/02/14/-e5-9c-a8emacs-e4-b8-8b-e4-bd-bf-e7-94-a8mew/" class="article-date">
+  <time datetime="2008-02-14T22:42:26.000Z" itemprop="datePublished">Feb 14 2008</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux-Application/">Linux Application</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2008/02/14/-e5-9c-a8emacs-e4-b8-8b-e4-bd-bf-e7-94-a8mew/">在emacs下使用mew</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>作者： 西邮 王聪</p>
+<p><a href="http://www.mew.org/" target="_blank" rel="external">Mew</a>是emacs里面一款很好很强大的邮件客户端插件，最近因迷恋emacs所以决定要把邮件客户端也换成emacs里面的。</p>
+<p>在这里，我以Fedora和Gmail为例简单说一下配置过程。</p>
+<p>首先需要安装mew，Fedora用户直接</p>
+<h1 id="yum_install_mew">yum install mew</h1>
+<p>就可以了。安装好之后就开始配置，不用担心，其实很简单。需要修改的配置文件就两个，一个是~/.emacs，另一个是Mew专用的~/.mew.el。虽然说这些配置项放哪个文件里都成，但是最好还是人为区分一下，免得弄得~/.emacs里一团糟。;-)</p>
+<p>我在~/.emacs里为Mew添加了下面这些东西：</p>
+<p>(autoload ‘mew “mew” nil t)<br>(autoload ‘mew-send “mew” nil t)<br>(if (boundp ‘read-mail-command)<br>(setq read-mail-command ‘mew))<br>(autoload ‘mew-user-agent-compose “mew” nil t)<br>(if (boundp ‘mail-user-agent)<br>(setq mail-user-agent ‘mew-user-agent))<br>(if (fboundp ‘define-mail-user-agent)<br>(define-mail-user-agent<br>‘mew-user-agent<br>‘mew-user-agent-compose<br>‘mew-draft-send-message<br>‘mew-draft-kill<br>‘mew-send-hook))</p>
+<p>(set-default ‘mew-decode-quoted ‘t)<br>(when (boundp ‘utf-translate-cjk)<br>(setq utf-translate-cjk t)<br>(custom-set-variables<br>‘(utf-translate-cjk t)))<br>(if (fboundp ‘utf-translate-cjk-mode)<br>(utf-translate-cjk-mode 1))<br>(require ‘flyspell)</p>
+<p>然后在编辑~/.mew.el（没有就先创建）。我用的可以<a href="http://wangcong.org/down/dotmew.el" target="_blank" rel="external">在这里下载</a>，我这个是综合了网上各路神仙的配置之后的结果。;-) 然后你根据自己需要把它修改成你自己的就行了。</p>
+<p>配置完成后我们进入mew模式就可以收发邮件了。我再总结一下它的基本使用方法：</p>
+<p>w 写信<br>M-TAB 补齐收信人信息<br>Q 退出mew<br>i 收信<br>g 跳转邮箱<br>o 对邮件进行分类<br>d 把邮件标记为删除</p>
+<ul>
+<li>作星号标记<br>u 清除标记<br>x 对所有标记进行处理<br>a 不带引用的回复，不建议使用<br>A 带引用的回复，推荐<br>f 转发邮件<br>y 保存邮件，会提示是保存整个邮件和是仅保存正文<br>SPACE 阅读邮件<br>ENTER 让阅读的邮件向上滚动一行</li>
+</ul>
+<ul>
+<li>向下滚动一行<br>n 下一封邮件<br>p 前一封邮件<br>j 跳到某一封邮件<br>N 下一封带星号的邮件<br>P 上一封带星号的邮件<br>S 按某个指定项目对邮件排序<br>/ 按指定条件搜索邮件，并进入虚拟模式<br>tt 进入虚拟模式，根据线索查看，普通模式下是不可以的<br>C 如果设置了多个邮箱，用此切换<br>C-cC-m 编辑新邮件，放入草稿中<br>C-cC-c 发送邮件<br>C-cC-q 取消草稿<br>C-cC-a 插入附件<br>C-cTAB 插入签名<br>C-cC-l    转换当前邮件的编码格式<br>C-cC-y 复制部分邮件，带引用前缀<br>C-cC-t 复制部分邮件，不带引用前缀<br>C-cC-a    把当前的发信人加入地址薄<br>C-uC-cC-a 比C-cC-a多加入昵称和名字，推荐</li>
+</ul>
+<p>恩，我就知道这些，但这些也已经足够对付日常使用了。如果需要更多，可查看<a href="http://www.mew.org/release/info/index.html.en" target="_blank" rel="external">mew官方网站上的手册</a>。</p>
+<p>参考资料：</p>
+<p>1. Mew官方手册：<a href="http://www.mew.org/release/info/index.html.en" target="_blank" rel="external">http://www.mew.org/release/info/index.html.en </a></p>
+<p>2. <a href="http://www.zhangw.com/emacs/dotmewel.html" target="_blank" rel="external">http://www.zhangw.com/emacs/dotmewel.html</a></p>
+<p>3. <a href="http://learn.tsinghua.edu.cn:8080/2004211031/publish/GNU/mew.html" target="_blank" rel="external">http://learn.tsinghua.edu.cn:8080/2004211031/publish/GNU/mew.html</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2008/02/14/-e5-9c-a8emacs-e4-b8-8b-e4-bd-bf-e7-94-a8mew/" data-id="1i1wmibnj4erb126" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e6-98-a8-e5-a4-a9-e6-af-94-e8-be-83-e5-80-92-e9-9c-89" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2008/02/14/-e6-98-a8-e5-a4-a9-e6-af-94-e8-be-83-e5-80-92-e9-9c-89/" class="article-date">
+  <time datetime="2008-02-14T19:46:52.000Z" itemprop="datePublished">Feb 14 2008</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Life/">Life</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2008/02/14/-e6-98-a8-e5-a4-a9-e6-af-94-e8-be-83-e5-80-92-e9-9c-89/">昨天比较倒霉</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>事实证明昨天确实很倒霉。</p>
+<p>先是在配置mew时把辛辛苦苦积攒了N个月的邮件存档给弄没了，因为mew默认使用的收件箱是~/Mail/inbox，这个目录它要自动创建，而我的mutt偏偏用的是一个名为~/Mail/inbox的mbox文件！结果就是被直接覆盖。。。妈呀，眼睁睁地看着它就没了！悲伤啊～！</p>
+<p>然后是，晚上睡觉时一不小心把热水袋给踢坏了！结果水都漏了，被子也湿了，实在没法睡了，然后又把老妈叫醒换的新被子。折腾了半天才睡成。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2008/02/14/-e6-98-a8-e5-a4-a9-e6-af-94-e8-be-83-e5-80-92-e9-9c-89/" data-id="fxt48hk1lr7rwvi2" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e5-86-85-e6-a0-b8-e7-b4-a7-e6-80-a5-e5-8d-87-e7-ba-a7" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2008/02/11/-e5-86-85-e6-a0-b8-e7-b4-a7-e6-80-a5-e5-8d-87-e7-ba-a7/" class="article-date">
+  <time datetime="2008-02-12T00:47:58.000Z" itemprop="datePublished">Feb 11 2008</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux-Kernel/">Linux Kernel</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2008/02/11/-e5-86-85-e6-a0-b8-e7-b4-a7-e6-80-a5-e5-8d-87-e7-ba-a7/">内核紧急升级</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>vmsplice(2)惹祸了，爆出了一个安全漏洞，可以很容易提升root权限～！受影响的内核一大片。详细见下面这个bugreport：</p>
+<p><a href="https://bugzilla.redhat.com/show_bug.cgi?id=432229" target="_blank" rel="external">https://bugzilla.redhat.com/show_bug.cgi?id=432229</a></p>
+<p>这个bug很快就被修复：</p>
+<p><a href="http://lkml.org/lkml/2008/2/10/118" target="_blank" rel="external">http://lkml.org/lkml/2008/2/10/118 </a></p>
+<p>stable维护者今天接连推出3个稳定版升级皆是为了修复这个漏洞，见下：</p>
+<p>2.6.24.2<br><a href="http://lkml.org/lkml/2008/2/11/17" target="_blank" rel="external"> http://lkml.org/lkml/2008/2/11/17</a></p>
+<p>2.6.23.16<br><a href="http://lkml.org/lkml/2008/2/11/19" target="_blank" rel="external">http://lkml.org/lkml/2008/2/11/19</a></p>
+<p>2.6.22.18<br><a href="http://lkml.org/lkml/2008/2/11/27" target="_blank" rel="external">http://lkml.org/lkml/2008/2/11/27</a></p>
+<p>Fedora似乎也已经推出了新的kernel package，各位Fedora用户请尽快升级。</p>
+<p>BTW，在Fedora7上试了试那个expliot，怎么不起作用呢？总是段错误～～</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2008/02/11/-e5-86-85-e6-a0-b8-e7-b4-a7-e6-80-a5-e5-8d-87-e7-ba-a7/" data-id="bkowbfn550chs5xn" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-emacs-e7-9a-84-e4-b8-80-e4-ba-9b-e8-ae-be-e7-bd-ae" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2008/02/10/emacs-e7-9a-84-e4-b8-80-e4-ba-9b-e8-ae-be-e7-bd-ae/" class="article-date">
+  <time datetime="2008-02-11T05:46:16.000Z" itemprop="datePublished">Feb 10 2008</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux-Application/">Linux Application</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2008/02/10/emacs-e7-9a-84-e4-b8-80-e4-ba-9b-e8-ae-be-e7-bd-ae/">emacs的一些设置</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在上一篇博客中提到emacs和gnome-terminal在alt键上的冲突，今天在摆弄发现冲突远不止这个。</p>
+<p>最明显的一个就是和scim也有冲突！ctrl+space默认是调出scim输入法，而在emacs里其实是mark（我不想用ctrl+@，因为那要按三个键。;-）。如果在gnome-terminal下面用emacs的话就无法mark了。搜搜了，解决方法是，把mark功能映射到shift+space上，把原来的ctrl+space去了，如下：</p>
+<p>(when window-system<br>(global-unset-key [?C- ])<br>(global-set-key [?S- ] ‘set-mark-command)<br>)</p>
+<p>还有一个就是，emacs默认（最起码在fc7上如此）要在启动时显示一个启动画面，这样每次都得ctrl+l，不爽，去了它。</p>
+<p>(setq inhibit-startup-message t)</p>
+<p>让ctrl+y也可以粘贴来自X粘贴板的内容：</p>
+<p>(setq x-select-enable-clipboard t)</p>
+<p>还没完，gnome-terminal还占用着一些ctrl+*键，比如：ctrl+-，这个虽然也能屏蔽掉，但其它还有一堆。算了算了，我还是换Konsole吧～！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2008/02/10/emacs-e7-9a-84-e4-b8-80-e4-ba-9b-e8-ae-be-e7-bd-ae/" data-id="ssq4yhg47ugx44wh" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e5-85-b3-e4-ba-8emeta-e9-94-ae" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2008/02/09/-e5-85-b3-e4-ba-8emeta-e9-94-ae/" class="article-date">
+  <time datetime="2008-02-10T07:21:23.000Z" itemprop="datePublished">Feb 9 2008</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux-Application/">Linux Application</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2008/02/09/-e5-85-b3-e4-ba-8emeta-e9-94-ae/">关于Meta键</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近在着手使用emacs，难免要和Meta键打交道。可是遇到一个小冲突。那就是，在FC上，Alt键被设置为Meta，而Alt又偏偏正好是某些窗口菜单的快捷键，比如gnome-terminal。这样问题就来了，如果我在gnome-terminal里使用emacs的话，本来是想使用M-b来移动光标，按Alt＋b却调出了gnome-terminal的一个菜单，也就是说这个按键被窗口先于emacs捕捉到了。</p>
+<p>简单搜了搜，没有太合适的方法。最理想的一个方法是把Win键映射成Meta，把Alt键上的Meta去掉。修改了一下~/.Xmodmap，倒是把Win键给映射过去了，但Alt仍然会被窗口捕捉到。估计还要修改xterm的配置，未果。最后找到的一个临时解决方法是，在gnome-terminal的“编辑-&gt;快捷键”里面把快捷键都禁用掉。反正我是基本上不会用Alt键来调用菜单～</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2008/02/09/-e5-85-b3-e4-ba-8emeta-e9-94-ae/" data-id="l8hoy0hef09rlpzp" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e4-b8-80-e6-ae-b5c-e4-bb-a3-e7-a0-81" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2008/02/07/-e4-b8-80-e6-ae-b5c-e4-bb-a3-e7-a0-81/" class="article-date">
+  <time datetime="2008-02-08T00:02:07.000Z" itemprop="datePublished">Feb 7 2008</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Programming/">Programming</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2008/02/07/-e4-b8-80-e6-ae-b5c-e4-bb-a3-e7-a0-81/">那段C代码</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>上次提到了一些C语言的题目，留了两个没解决。其中第8个已经被“木天”解释了，我就不赘述了，有兴趣的看那篇文章下面的评论。还有一个，第26个，今天仔细看了看，其实也很简单。</p>
+<p>[再链接一次原题：<a href="http://www.gowrikumar.com/c/" target="_blank" rel="external">http://www.gowrikumar.com/c/</a>]</p>
+<p>具体原理如下：</p>
+<p>首先，这个程序的作用是，把从第一个命令行参数传递进来的字符串（必须只含字母）用“点阵”打印出来。它必须至少带一个参数，否则就会崩溃。这大概是这个程序的一个瑕疵吧。</p>
+<p>它是怎么做到的呢？很简单，既然是“点阵”，它就肯定要把“字体”存放好，然后读出。“字体”就存放在那个数组里面！ 对比输出，和循环中的代码，我们不难发现，这个点阵是6x6的，因为屏幕输出的原因，必须是从上到下先逐行打印，每行必须是从左到右。而每行有多少个点，在哪个位置有点，这些信息都存放在一个数的比特位中！</p>
+<p>再来看那个数组，一个数字表示一行，6个数就能存在一个字符的字体。所以这个数组也可以6个一组划分开。需要说明的是，A是从下标6开始的。至于前面的那6个0，主要是起保护作用，防止输入字符超出字母的范围时数组越界。</p>
+<p>也是不错的一段代码。Enjoy it!</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2008/02/07/-e4-b8-80-e6-ae-b5c-e4-bb-a3-e7-a0-81/" data-id="3659xib1nadjg8vx" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-2008-e6-96-b0-e5-b9-b4-e5-bf-ab-e4-b9-90-ef-bc-81" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2008/02/06/2008-e6-96-b0-e5-b9-b4-e5-bf-ab-e4-b9-90-ef-bc-81/" class="article-date">
+  <time datetime="2008-02-06T19:21:05.000Z" itemprop="datePublished">Feb 6 2008</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Life/">Life</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2008/02/06/2008-e6-96-b0-e5-b9-b4-e5-bf-ab-e4-b9-90-ef-bc-81/">2008新年快乐！</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>今天就是大年三十了！</p>
+<p>祝各位鼠年快乐！！</p>
+<p>在新的一年里“数钱数到手抽筋，睡觉睡到自然醒”！ ^_^..</p>
+<p><img src="http://www.qycaiyun.com/qy0225.jpg" alt=""></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2008/02/06/2008-e6-96-b0-e5-b9-b4-e5-bf-ab-e4-b9-90-ef-bc-81/" data-id="5hvarow5443zljqs" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e5-8f-88-e7-9c-8b-e4-ba-86-e5-87-a0-e9-83-a8-e7-94-b5-e5-bd-b1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2008/02/05/-e5-8f-88-e7-9c-8b-e4-ba-86-e5-87-a0-e9-83-a8-e7-94-b5-e5-bd-b1/" class="article-date">
+  <time datetime="2008-02-06T06:25:59.000Z" itemprop="datePublished">Feb 5 2008</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Movies/">Movies</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2008/02/05/-e5-8f-88-e7-9c-8b-e4-ba-86-e5-87-a0-e9-83-a8-e7-94-b5-e5-bd-b1/">又看了几部电影</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>快过年了，实在是没心思弄别的东西了，就跟着随便玩玩吧！于是乎，又看了几部电影，简单点评一下。</p>
+<p>《凤凰》： 这个是上次看的，忘了写了。应该是一部老电影了，讲述的是一个古老，经典的爱情故事～～</p>
+<p>《这个男人来自地球》：公子同学鼎力推荐的，不能不看。确实不错，应该算是科幻电影，虽然没有一个科幻镜头。看了之后觉得，哎，读书人啊，都是认死理，一个观点如果驳不倒它就只能被迫接受。如果你知识足够丰富，丰富到没人能揭穿你，那你就可以去撒一个弥天大谎！片中的情节和某一期《科幻世界》中的一个故事很类似，不同的是后者讲的是一个人也是活了上千年，他会也变老，只是变得很慢很慢，然后当他在进行欺骗时遇到了一个正在使用同样手法的同样的女人……</p>
+<p>《耳朵大有福》：范伟演的又一部好电影，相当不错的国产电影！推荐一把。电影讲述的故事太贴近现实了，简直就和真实生活一样。有人评论说是“喜剧的皮包着生活的馅”，太准确了！！</p>
+<p>《罪恶之城》：又是一部以暴力为主的电影。老大说俺是不是有暴力倾向了，当然不是了，俺是听了好几个人给俺推荐之后才决定去看这部电影的。这确实是一部好电影！通过血腥和暴力讲述爱！三个故事虽然都是处处暴力，但却又都是围绕着“爱”这个主题讲述，尤其是最后一个故事，很感人！整个电影的格调和《辛德勒名单》一样以黑白为主，仅有一些女人的衣服和一些流血为红色，还有一个恶人是恶心的黄色！对比太显著了！通过这种方式展示的爱有一种极其悲壮的意味……</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2008/02/05/-e5-8f-88-e7-9c-8b-e4-ba-86-e5-87-a0-e9-83-a8-e7-94-b5-e5-bd-b1/" data-id="rdjsrlf385mlhrfx" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e8-a7-a3-e7-ad-94c-puzzles" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2008/02/04/-e8-a7-a3-e7-ad-94c-puzzles/" class="article-date">
+  <time datetime="2008-02-05T05:56:11.000Z" itemprop="datePublished">Feb 4 2008</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Programming/">Programming</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2008/02/04/-e8-a7-a3-e7-ad-94c-puzzles/">解答 C Puzzles</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>今天看到某人列出了几十个C语言迷题，很有意思。顺手做了一下，发现其实大多数都是来自C Faq，Expert C Programming，和网上出现的一些C语言技巧，一些很好，连我自己都被难住了，一些却又狠简单狠基础。除了第8个和第26个需要进一步理解，剩下的我全都作了简单的解答，不明白的请留言提问。</p>
+<p>题目在这里：<a href="http://www.gowrikumar.com/c/" target="_blank" rel="external">http://www.gowrikumar.com/c/</a></p>
+<p>我的解答如下：</p>
+<p>1. 见ECP第29页，一模一样的例子。</p>
+<p>2. OS_HP-UX_print这不是一个有效的名字。//blush 一开始我也没注意到！</p>
+<p>3. do-while的常识，你应该知道continue到哪里。如果不知道，看看C99第6.8.6.2节。</p>
+<p>4. 常见问题，因为stdout是带缓冲的，如果不换行的话，是会有问题的！</p>
+<p>5. h会被展开，而g不会。见C-FAQ，Question 11.17。</p>
+<p>6. case后面的是字符，不是整数。</p>
+<p>7.  IA-64是RISC，不能访问未对齐的地址。</p>
+<p>8. 感觉没错，但还未发掘出其原理。。。</p>
+<p>9. 直接比较浮点数被认为是有害的，说过多次了。</p>
+<p>10. 常识。如果很喜欢在初始化时用逗号运算符来标新立异，请加括号！</p>
+<p>11. 当然合法！谁还以为printf是void类型？！它返回的是成功输出字符的个数！</p>
+<p>12. duff’s device，是用Tom Duff的名字来命名的。很有名的一个东西，用来优化拷贝的，据说和Rob Pike此牛还有点儿关系～！不过注意，<a href="http://www.lysator.liu.se/c/duffs-device.html" target="_blank" rel="external">原始的duff’s device</a>中的to可是不变的，因为它指向一个映射到内存的寄存器。</p>
+<p>13. 正确，逻辑很简单，每次都保留除最低位置的1之外的1，减去1，依次测试。</p>
+<p>14. 说过N^2次了，int foo()和int foo(void)是不一样滴！</p>
+<p>15. 第二个是把a的内存比特位模式用int来解释。<br>第一个比较有意思，因为类型不匹配，而且float在被压入压出的过程中会被扩展精度，因为IA-32的浮点数寄存器都是80bits的。所以，float会被扩展成double后再当int处理！！</p>
+<p>16. 声明的问题，指针不是数组。</p>
+<p>17. switch嘛，当然会跳过第一个case/default之前的东西，所以初始化就被跳过了。</p>
+<p>18. 切，形参写得再好数组也得退化啊！</p>
+<p>19. format string overflow？！</p>
+<p>20. C99 第7.19.6.2节，第5条。</p>
+<p>21. buffer overflow</p>
+<p>22. sizeof是操作符，编译时决定的，而非运行时。</p>
+<p>23. ECP，第25页。</p>
+<p>24. 等号优先级高于逗号。</p>
+<p>25. 减法和除法错误，减数和被减数反了，除法同理。</p>
+<p>26. 蛮牛的一段代码，还没看出其中的奥妙。以后看懂会另行说明。;-)</p>
+<p>27. 以0开头是8进制，而最后一个是十进制。</p>
+<p>28. scanf返回成功输入的个数。</p>
+<p>29. /和*会被当成注释处理，所以那一行实际上是y=y;</p>
+<p>30. -也要被输入。</p>
+<p>31. &amp;n</p>
+<p>32. 加号优先级高于左移。</p>
+<p>33. 当然不合法，return不能出现在表达式中。</p>
+<p>34. 把for括号里的最后一个i换成n。暂时就想到这一个解法。</p>
+<p>35. 显然ptr2不是指针。</p>
+<p>36. 错误！因为会被0除！</p>
+<p>37. 很明显是8。</p>
+<p>38. free的地址不对。</p>
+<p>39. 很简单，就是把a[n]换成了n[a]，本质上一样。</p>
+<p>40. 字符a前面的所有，见C99 7.19.6.2.12。</p>
+<p>41. 一个是定义，其余是声明。</p>
+<p>42. 取某个成员在其结构体中的偏移。</p>
+<p>43. 就是宏的常见错误，比如：SWAP(a++, ++b)。</p>
+<p>44. 某个表达式及其对应的值。</p>
+<p>45. 参见Python源代码，Objects/intobject.c::int_add。</p>
+<p>46. n/x向上圆整！</p>
+<p>47. c会被自加两次。</p>
+<p>48. 不能一个参数都没有就使用“…”。</p>
+<p>49. 用?:三元操作符。;-)</p>
+<p>50. 把输出字符的个数存入某个变量中，见过。</p>
+<p>51. -_-b</p>
+<p>52. %%</p>
+<p>53. 后一个指针只读，前一个指针指的东西只读。</p>
+<p>54. 前者不能重叠，后者可以。</p>
+<p>55. %lf, %f, %g。就记起来这仨。</p>
+<p>56. 写过N遍了。。。</p>
+<p>57. 厄，看我这个：</p>
+<h1 id="include_&lt;stdio-h&gt;">include &lt;stdio.h&gt;</h1>
+<p>int main(void)<br>{while(printf(“Hello World!”)&lt;0){}}</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2008/02/04/-e8-a7-a3-e7-ad-94c-puzzles/" data-id="2irj0cwuq256sg2t" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e5-be-88-e7-be-8e-e7-9a-84-e4-b8-80-e6-ae-b5-e8-af-8d" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2008/02/02/-e5-be-88-e7-be-8e-e7-9a-84-e4-b8-80-e6-ae-b5-e8-af-8d/" class="article-date">
+  <time datetime="2008-02-02T08:03:11.000Z" itemprop="datePublished">Feb 2 2008</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Life/">Life</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2008/02/02/-e5-be-88-e7-be-8e-e7-9a-84-e4-b8-80-e6-ae-b5-e8-af-8d/">很美的一段词</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>人间离魂多</p>
+<p>添憔悴</p>
+<p>谁记冷香</p>
+<p>终只剩两茫茫</p>
+<p>释然隔江</p>
+<p>既是云鬓染霜</p>
+<p>莫为落花断肠</p>
+<p>————孤单的分割线————</p>
+<p>不知道这段词的作者，在网上搜居然也搜不到任何有用的信息～ ！</p>
+<p>知道的人请吱一声。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2008/02/02/-e5-be-88-e7-be-8e-e7-9a-84-e4-b8-80-e6-ae-b5-e8-af-8d/" data-id="ygxqjkx82vrushex" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+  
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/archives/2008/page/12/">&laquo; Prev</a><a class="page-number" href="/archives/2008/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/2008/page/11/">11</a><a class="page-number" href="/archives/2008/page/12/">12</a><span class="page-number current">13</span><a class="page-number" href="/archives/2008/page/14/">14</a><a class="extend next" rel="next" href="/archives/2008/page/14/">Next &raquo;</a>
+    </nav>
+  
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Book-Reviews/">Book Reviews</a><span class="category-list-count">18</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/China/">China</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Collection/">Collection</a><span class="category-list-count">25</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">324</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux-Application/">Linux Application</a><span class="category-list-count">73</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux-Kernel/">Linux Kernel</a><span class="category-list-count">64</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Love/">Love</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Movies/">Movies</a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/">Programming</a><span class="category-list-count">152</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Science-Fiction/">Science Fiction</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Travel/">Travel</a><span class="category-list-count">19</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/geek/">geek</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/handling/">handling</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/joke/">joke</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/signal/">signal</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/unix/">unix</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/geek/" style="font-size: NaNpx;">geek</a><a href="/tags/handling/" style="font-size: NaNpx;">handling</a><a href="/tags/joke/" style="font-size: NaNpx;">joke</a><a href="/tags/linux/" style="font-size: NaNpx;">linux</a><a href="/tags/signal/" style="font-size: NaNpx;">signal</a><a href="/tags/unix/" style="font-size: NaNpx;">unix</a><a href="/tags/vim/" style="font-size: NaNpx;">vim</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">August 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">December 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">October 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">September 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">August 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">February 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01/">January 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12/">December 2012</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">November 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">October 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">September 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">August 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/07/">July 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">April 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">March 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">February 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">January 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/12/">December 2011</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">November 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/10/">October 2011</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">September 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08/">August 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/07/">July 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/06/">June 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/05/">May 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04/">April 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03/">March 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/02/">February 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/01/">January 2011</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/12/">December 2010</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/11/">November 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/10/">October 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/09/">September 2010</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08/">August 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07/">July 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06/">June 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05/">May 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04/">April 2010</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03/">March 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02/">February 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01/">January 2010</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12/">December 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11/">November 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10/">October 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09/">September 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08/">August 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07/">July 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/06/">June 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/05/">May 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04/">April 2009</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03/">March 2009</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02/">February 2009</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01/">January 2009</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12/">December 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/11/">November 2008</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/10/">October 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09/">September 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08/">August 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07/">July 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06/">June 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05/">May 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04/">April 2008</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03/">March 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02/">February 2008</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01/">January 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12/">December 2007</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11/">November 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10/">October 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09/">September 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08/">August 2007</a><span class="archive-list-count">31</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07/">July 2007</a><span class="archive-list-count">34</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06/">June 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05/">May 2007</a><span class="archive-list-count">25</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04/">April 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03/">March 2007</a><span class="archive-list-count">50</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02/">February 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01/">January 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12/">December 2006</a><span class="archive-list-count">5</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2014/08/12/linux-e7-bd-91-e7-bb-9c-e6-b5-81-e9-87-8f-e6-8e-a7-e5-88-b6-ef-bc-88-e4-b8-80-ef-bc-89/">Linux 网络流量控制（零）</a>
+          </li>
+        
+          <li>
+            <a href="/2014/08/01/ottawa-linux-symposium/">Ottawa Linux Symposium</a>
+          </li>
+        
+          <li>
+            <a href="/2014/05/31/skbuff-e5-86-85-e5-ad-98-e6-a8-a1-e5-9e-8b/">skbuff 内存模型</a>
+          </li>
+        
+          <li>
+            <a href="/2014/05/06/-e9-95-bf-e6-9c-9f-e6-8f-90-e4-be-9b-twitter-e5-86-85-e6-8e-a8/">长期提供 Twitter 内推</a>
+          </li>
+        
+          <li>
+            <a href="/2014/01/30/-e6-88-91-e7-9a-842013-ef-bc-9a-e6-88-91-e6-9d-a5-e5-88-b0-e4-ba-86-e7-be-8e-e5-9b-bd/">我的2013：我来到了美国</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2015 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/page/53/">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description">
+
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post--e6-88-8f-e8-af-b4intel-f00f-bug" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2007/08/26/-e6-88-8f-e8-af-b4intel-f00f-bug/" class="article-date">
+  <time datetime="2007-08-26T08:41:36.000Z" itemprop="datePublished">Aug 26 2007</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux-Kernel/">Linux Kernel</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2007/08/26/-e6-88-8f-e8-af-b4intel-f00f-bug/">戏说Intel f00f Bug</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://www.x86.org/errata/errata_series.gif" alt=""></p>
+<p>f00f是Intel Pentium CPU的一个臭名昭著的bug，就算你不知道它的具体成因但估计也对其大名有所耳闻了。 它影响到了Intel Pentium，Pentium MMX和Pentium OverDrive系列的CPU，属于设计上的缺陷。最早出现在1997年11月，从当时的一些邮件存档来看，这个bug造成了不小的轰动。当然了，Intel自然也不弱（尤其是它的“纠错”和“兼容”技术，对i386稍微有所了解的人都知道），很快就给出了解决方案来应对。当然，在那以后的Intel CPU中就没有这个bug了。</p>
+<p>好了，让我们现在一起来看看f00f bug的原理，恶劣影响，解决方法，以及对应到Linux内核源代码中的实际解决方案。</p>
+<p>还得先从名字说起，这个bug之所以叫这么个名字，是因为它是用来指代f0 0f c7 c8这个16进制数序列，而这个序列是表示一条i386汇编指令，用AT&amp;T语法来表示就是：</p>
+<p><pre><br> lock cmpxchg8b %eax</pre><br>用Intel语法来表示是：</p>
+<p><pre><br> LOCK CMPXCHG8B EAX</pre><br>这条指令明显是错误的，因为：</p>
+<p>1. cmpxchg8b是用来比较两个64bit的数，其中一个是隐含的edx:eax，另一个是由后面的操作数表示的指针来指出。上面那条指令显然违反了这条规则。</p>
+<p>2. lock前缀只能用于基于内存的“读—修改—写”型的指令，而上面的指令同样也不符合这一要求。</p>
+<p>按理说，上面的任何一个错误都会导致invalid opcode的错误。可是意外发生了，当这两种错误按照上面的方式叠加到一起时，CPU会自己锁死！解决方法只有重启！换句话说，我们可以构造这么一个短小的C程序来触发这个bug：</p>
+<p>char x [5] = { 0xf0, 0x0f, 0xc7, 0xc8 };</p>
+<p>int main(void){<br>    void (*f)() = x;<br>    f();<br>    return 0;<br>}</p>
+<p>而且不需要任何特权，任何用户都能使用！这是头一次“崭露头角”的 硬件错误，操作系统对此也无可奈何。这样，我们可以轻易让某台配有此bug的CPU的服务器挂掉！由此可见，这个bug有多么严重！</p>
+<p>这到底是怎么回事？为什么本该是错上加错的指令却酿成大祸？其实是这样，当CPU发现cmpxchg8b %eax是错误的之后，会产生一个invalid opcode的异常，然后寻找其对应的处理函数来处理。当CPU读取这个处理函数的地址时，错误地判断出了LOCK#信号，就对总线进行加锁，然后等待一个对该地址的加锁的写入，但在这中间，CPU是不会有任何写操作的，于是就把自己挂起了！这明显是一个设计上的失误！</p>
+<p>Intel老大马上给出了两套解决方案，都可行，但第一个不怎么聪明，甚至说“和问题本身一样糟糕”；而另一个算是一个聪明的方案。我们一起来看一下第二个，也就是Linux内核使用的这个。</p>
+<p>Intel这样建议：把包含IDT前7项的页面设置为只读，也把CR0的 WP位置为1。现在，当bug发生时，它先会找invalid opcode的异常处理函数，进而产生一个缺页异常，因为CPU企图写一个只读页面。而缺页异常不会被锁住，这样控制权又回到操作系统手中。然后就是要修改缺页异常的处理例程，让它判断，如果异常发生在内核态并且无效地址正好是invalid opcode异常处理函数的地址，那么就是f00f bug了。这时操作系统就应该转入处理invalid opcode异常。</p>
+<p>下面就是Linux内核源代码中的 实际处理方法：</p>
+<p>这是把IDT放到固定映射区域的代码，很明显，设置了只读。<br>(arch/i386/kernel/traps.c)</p>
+<p>void <strong>init trap_init_f00f_bug(void)<br>{
+    </strong>set_fixmap(FIX_F00F_IDT, __pa(&amp;idt_table), PAGE_KERNEL_RO);</p>
+<pre><code><span class="comment">/*
+ * Update the IDT descriptor and reload the IDT so that
+ * it uses the read-only mapped virtual address.
+ */</span>
+idt_descr.<span class="variable">address =</span> fix_to_virt(FIX_F00F_IDT);
+load_idt(&amp;amp;idt_descr);
+</code></pre><p>}</p>
+<p>这里是do_page_fault()，也就是缺页异常处理函数中的部分代码：<br>(arch/i386/mm/fault.c)</p>
+<p>//…<br>    if (boot_cpu_data.f00f_bug) {<br>        unsigned long nr;</p>
+<pre><code>    nr = (address - idt_descr.address) &amp;<span class="keyword">gt</span>;&amp;<span class="keyword">gt</span>; <span class="number">3</span>;
+
+    <span class="keyword">if</span> (nr == <span class="number">6</span>) {
+        do_invalid_op(regs, <span class="number">0</span>);
+        <span class="keyword">return</span>;
+    }
+}
+</code></pre><p>//…</p>
+<p>和上面的Intel的方案完全吻合！</p>
+<p>参考资料：</p>
+<p>[1] Wikipedia, <a href="http://en.wikipedia.org/wiki/F00f" target="_blank" rel="external">http://en.wikipedia.org/wiki/F00f</a><br>[2] x86.org, <a href="http://www.x86.org/errata/dec97/f00fbug.htm" target="_blank" rel="external">http://www.x86.org/errata/dec97/f00fbug.htm</a><br>[3] Understanding the Linux Kernel<br>[4] Intel 64 and IA-32 Architectures Software Developer’s Manual, Volume 3A</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2007/08/26/-e6-88-8f-e8-af-b4intel-f00f-bug/" data-id="z1puwhe9acorioar" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-learn-english-speaking" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2007/08/25/learn-english-speaking/" class="article-date">
+  <time datetime="2007-08-25T07:03:42.000Z" itemprop="datePublished">Aug 25 2007</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Life/">Life</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2007/08/25/learn-english-speaking/">Learn English speaking</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>虽然Coly来西邮时曾建议我要好好练练英语口语，可惜我一直没有重视起来。经过这几天 ，总算才意识到英语口语的重要性。一是过几天可能要去参加Linux World China大会，估计英语是难免了，最起码见了Eugene Teo多多少少都要用到英语；二是以后要应聘外企估计电话面试是难免了，而且80%都得英语吧。</p>
+<p>看来得好好学学英语口语了，我这口语也就能对付我们英语老师的zhaobo（我们英语老师的一口头禅：“知道卜？”，而且zhi和dao连着发音，就是zhaobo）。恩，下了一些VOA慢速，不错，还能听得懂，跟着多练几天。根据Eugene建议，还下了Skype～</p>
+<p>公子以后见了我得说英语，下面就是一段可能的对话：</p>
+<p>GongZi: Long time no see!<br>Me: No see too! How many MMs have you seen in holidays?<br>GongZi: Too many to count.<br>Me: OMG. Then have you broken into your BeiDa?<br>GongZi: Not yet, but I will get it in Jan of 2008.<br>GongZi: (seriously) I think Weiming Lake is as clear as in my dream.<br>Me: (shrug) not true now.<br>GongZi: Why?<br>Me: It is true iff when odd number days. You are forbidden to dream Weiming in even number days.<br>GongZi: (afraid) Why? Why? Why? Why?<br>Me: sigh, you are too out-of-date, how can you be a lawyer? Your ID number is odd, this is new rules for olympic, dont you know?</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2007/08/25/learn-english-speaking/" data-id="yrkek5bsylcjtb1z" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e3-80-8ac-e8-af-ad-e8-a8-80-e7-bc-96-e7-a8-8b-e8-89-ba-e6-9c-af-e3-80-8b-e7-ac-ac-e4-ba-8c-e3-80-81-e4-b8-89-e7-ab-a0-e5-8f-91-e5-b8-83" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2007/08/23/-e3-80-8ac-e8-af-ad-e8-a8-80-e7-bc-96-e7-a8-8b-e8-89-ba-e6-9c-af-e3-80-8b-e7-ac-ac-e4-ba-8c-e3-80-81-e4-b8-89-e7-ab-a0-e5-8f-91-e5-b8-83/" class="article-date">
+  <time datetime="2007-08-24T00:46:39.000Z" itemprop="datePublished">Aug 23 2007</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Programming/">Programming</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2007/08/23/-e3-80-8ac-e8-af-ad-e8-a8-80-e7-bc-96-e7-a8-8b-e8-89-ba-e6-9c-af-e3-80-8b-e7-ac-ac-e4-ba-8c-e3-80-81-e4-b8-89-e7-ab-a0-e5-8f-91-e5-b8-83/">《C语言编程艺术》第二、三章发布</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>经过长期的撰写，《C语言编程艺术》一书的第三章《解读C语言标准（上）》已经初步完善，特公布出来，供大家参考。我不得不承认，写关于标准的东西是件痛苦的事。第二章《关于C的思考》，自从上次公布后又进行了大的修改和完善，也一同公布。</p>
+<p>下载地址如下：</p>
+<p>第二章：<a href="http://wangcong.org/down/chapter2-beta.pdf" target="_blank" rel="external">Chapter2-beta.pdf</a></p>
+<p>第三章：<a href="http://wangcong.org/down/chapter3-beta.pdf" target="_blank" rel="external">Chapter3-beta.pdf</a></p>
+<p>同时，<strong>如果各位在阅读过程中如果发现错误，不论其大小（哪怕一个标点符号错误），都请及时反馈给我！我的邮箱是：xiyou!wangcong()yahoo!com!cn。</strong></p>
+<p>说实话，从上次公布的效果来看，我对大多数人的表现感到失望！一些人下载之后估计连看都不看（因为他后来还问过我里面讲过的一个问题），而一些人是看了之后什么也不说，好也罢，坏也罢，只字不提！我公布它们还能有什么目的？不就是为了能让更多人帮忙查错吗？不就是为了让书最后出来之后能更好么？如果你看了之后什么也不说，什么也不提，不是辜负了我的好意么？让我以后怎么再继续公布？记住：没有人让我非得公布！我完全可以永远不公布这些书的下载版！实际上，出版社巴不得我永远不公布！他们当然希望能有更多人去买他们的书，而我不在乎这个，我只想把自己写的东西尽量写好！</p>
+<p>这也像是做开源软件。做开源的人都是心地善良的人，我们不在乎你是否乐意花钱购买我们的作品，我们需要的是你的反馈和认可，我们想看到的是这个作品会更好更完善。</p>
+<p>仅此而已！毕竟，我们，不是，微软。</p>
+<p>一些人笑了笑，啪啪点了两下之后，继续默默路过！悲哀！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2007/08/23/-e3-80-8ac-e8-af-ad-e8-a8-80-e7-bc-96-e7-a8-8b-e8-89-ba-e6-9c-af-e3-80-8b-e7-ac-ac-e4-ba-8c-e3-80-81-e4-b8-89-e7-ab-a0-e5-8f-91-e5-b8-83/" data-id="b3ezbz248g7o3eze" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e4-bd-99-e9-9f-b3-e7-bb-95-e6-a2-81-ef-bc-8c-e4-b8-89-e6-97-a5-e4-b8-8d-e7-bb-9d" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2007/08/23/-e4-bd-99-e9-9f-b3-e7-bb-95-e6-a2-81-ef-bc-8c-e4-b8-89-e6-97-a5-e4-b8-8d-e7-bb-9d/" class="article-date">
+  <time datetime="2007-08-23T07:57:34.000Z" itemprop="datePublished">Aug 23 2007</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Life/">Life</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2007/08/23/-e4-bd-99-e9-9f-b3-e7-bb-95-e6-a2-81-ef-bc-8c-e4-b8-89-e6-97-a5-e4-b8-8d-e7-bb-9d/">余音绕梁，三日不绝</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://wangcong.org/images/tongli.jpg" alt=""></p>
+<p>偶然间发现竟然如此美妙的歌声，沉醉中不知不觉已夜深。余音绕梁，三日不绝！引用他人之词表达我对它的赞赏：</p>
+<blockquote>
+<p>“聆听成熟韵味和震慑心灵之声。温柔、高贵典雅的人声独特气质，婉约凄迷,悠长悠远的歌声，明快跌宕、古筝音色刚柔并济。旋律起而又伏，绵延不断，优美动听；基调静美，但静中有动。所谓，吴侬软语三日绕梁者，岂之谓乎？”<br>美哉，美哉！</p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2007/08/23/-e4-bd-99-e9-9f-b3-e7-bb-95-e6-a2-81-ef-bc-8c-e4-b8-89-e6-97-a5-e4-b8-8d-e7-bb-9d/" data-id="uook0nqbrc3gwx12" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e5-bd-93-e5-bf-99-e7-a2-8c-e6-88-90-e4-b8-ba-e4-b8-80-e7-a7-8d-e4-b9-a0-e6-83-af" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2007/08/22/-e5-bd-93-e5-bf-99-e7-a2-8c-e6-88-90-e4-b8-ba-e4-b8-80-e7-a7-8d-e4-b9-a0-e6-83-af/" class="article-date">
+  <time datetime="2007-08-22T08:42:55.000Z" itemprop="datePublished">Aug 22 2007</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Life/">Life</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2007/08/22/-e5-bd-93-e5-bf-99-e7-a2-8c-e6-88-90-e4-b8-ba-e4-b8-80-e7-a7-8d-e4-b9-a0-e6-83-af/">当忙碌成为一种习惯</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>今天是很忙碌的一天，写了很多东西，也读了很多东西，还顺带向lkml提交了一个补丁。很久没弄补丁了，手生……</p>
+<p>不知不觉中，发现自己已经习惯了这种整天忙碌的生活。偶尔停下来一两天休息，也感觉特别不对劲，好像少做了点儿什么事似的。也想过几天“颓废”的生活，也想痛痛快快玩上几天，可发现几乎不可能，邮箱要是一天不看就能堆积三四百封邮件，RSS要是一天不读就能积累上百篇文章……看来，忙碌真的成为我的一种习惯，很难戒掉。</p>
+<p>从下学期开始，准备改改这个“毛病”。下学期我应该会逐渐从我们兴趣小组隐退，不想管那些事儿了，现在的年轻人很让人失望的说，他们爱怎么弄就怎么弄吧！这样我也可以抽出更多的时间和朋友同学在一起，也可以有更多的时间去看看闲书，去看看美女（^_^..）。也给自己提一条建议：少上网，多呼吸一下现实世界（虽然现实世界依旧是那么肮脏……），多锻炼身体。</p>
+<p>恩，就这么多吧。暑假眼看就要过完了，新的学期也要开始了，找工作的序幕也要拉开了……不管那么多，能找到看得顺眼的就去，不顺眼的立马拍桌子走人。中国的傻B公司多了去了，去了还不够侮辱智商的呢。大不了俺就回家去种地！俺种地也要种出志气，一边过“农妇，山泉，有点田”的生活，一边种地，还得一边给内核打补丁！够牛B吧？</p>
+<p>走牛B的路，让傻B们去说吧！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2007/08/22/-e5-bd-93-e5-bf-99-e7-a2-8c-e6-88-90-e4-b8-ba-e4-b8-80-e7-a7-8d-e4-b9-a0-e6-83-af/" data-id="4jyo3hocsvtt255y" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e8-ae-bf-e8-b0-88-ef-bc-9a-e8-b0-88-e8-ae-a1-e7-ae-97-e6-9c-ba-e4-b8-93-e4-b8-9a-e7-9a-84-e5-ad-a6-e4-b9-a0" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2007/08/21/-e8-ae-bf-e8-b0-88-ef-bc-9a-e8-b0-88-e8-ae-a1-e7-ae-97-e6-9c-ba-e4-b8-93-e4-b8-9a-e7-9a-84-e5-ad-a6-e4-b9-a0/" class="article-date">
+  <time datetime="2007-08-21T09:14:02.000Z" itemprop="datePublished">Aug 21 2007</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Life/">Life</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2007/08/21/-e8-ae-bf-e8-b0-88-ef-bc-9a-e8-b0-88-e8-ae-a1-e7-ae-97-e6-9c-ba-e4-b8-93-e4-b8-9a-e7-9a-84-e5-ad-a6-e4-b9-a0/">访谈：谈计算机专业的学习</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>&nbsp;</p>
+<blockquote>
+<p>“如果说我看得比别人更远，那是因为我站在巨人的肩上。”</p>
+<p>——艾萨克·牛顿<br>写这篇文章的时候，一年一度的Kernel Summit就要在英国剑桥举行了。中国具体有多少人去参加我不清楚，但据我了解，非常少。这说明两个问题：一是，开源在中国做得还不够，仍然有很长的路要走；二是，国内关心计算机核心技术的人太少了。</p>
+</blockquote>
+<p>而现在，在金钱和就业压力的驱动下，大学校园里到处充斥着“考证”、“培训”、“外包”，越来越少的人能真正地关心计算机科学了，越来越少的人能专心地为开源去奉献自己的力量，越来越少的人能下决心去攻克中国目前最薄弱核心计算机技术：操作系统内核，编译器，数据库等等。科学在慢慢消失，艺术在渐渐褪色……这让我感到非常担心。</p>
+<p>那么，如何才能真正学好计算机科学与技术？在大学四年中究竟应该学一些什么知识？这是我们共同关心的问题。我就这些问题对西邮计算机系的几位校友进行了专访，他们如今都是知名IT公司的程序员。让我们一起来听一下他们自己的经验和建议，以及他们对计算机科学，开放源代码，和在西邮应该怎么学好这个专业的一些看法。希望这会对你们有帮助！</p>
+<p>（注意：这篇文章不仅仅是写给计算机系新生的，计算机系其他学生同样受用。）</p>
+<p>三篇访谈如下：</p>
+<p>1. <font size="4"><a href="http://wangcong.org/articles/interview-with-zhengye.html" target="_blank" rel="external">Interview with Zheng Ye</a></font></p>
+<p>2. <font size="4"><a href="http://wangcong.org/articles/interview-with-zhl.html" target="_blank" rel="external">Interview with Zh Lin</a></font></p>
+<p>3. <font size="4"><a href="http://wangcong.org/articles/interview-with-kanghua.html" target="_blank" rel="external">Interview with Kang Hua</a></font></p>
+<p>感谢以上三位的耐心解答！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2007/08/21/-e8-ae-bf-e8-b0-88-ef-bc-9a-e8-b0-88-e8-ae-a1-e7-ae-97-e6-9c-ba-e4-b8-93-e4-b8-9a-e7-9a-84-e5-ad-a6-e4-b9-a0/" data-id="zpj5zm1vmmfqdatw" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e6-8b-bf-e4-bb-80-e4-b9-88-e6-8b-af-e6-95-91-e4-bd-a0-ef-bc-8c-e6-88-91-e7-9a-84-e7-b3-bb-e7-bb-9f" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2007/08/19/-e6-8b-bf-e4-bb-80-e4-b9-88-e6-8b-af-e6-95-91-e4-bd-a0-ef-bc-8c-e6-88-91-e7-9a-84-e7-b3-bb-e7-bb-9f/" class="article-date">
+  <time datetime="2007-08-20T06:45:00.000Z" itemprop="datePublished">Aug 19 2007</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Life/">Life</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2007/08/19/-e6-8b-bf-e4-bb-80-e4-b9-88-e6-8b-af-e6-95-91-e4-bd-a0-ef-bc-8c-e6-88-91-e7-9a-84-e7-b3-bb-e7-bb-9f/">拿什么拯救你，我的系统</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>经过了几天的准备，今天终于正式开始装FC7了。</p>
+<p>备份也懒得刻光盘了，直接cp到另一块硬盘（hdb）的/home中。拷贝过程中发现，原来自己的用户目录中有很多冗余的文件。过了很久终于复制完毕，然后就复制一些重要的隐藏文件，比如：muttrc，bashrc，vimrc等等，小心翼翼地备份了全部文件。接着就弄FC7的iso文件。第一次从硬盘安装，没什么经验，照网上说的去做。其实也没什么，就是把内核用的两个文件提取出来，在grub里添加它们的路径。grub把它们加载后就准备安装了，安装时选从硬盘，然后找到iso所在目录即可。</p>
+<p>可到我这里就出问题了，本来放到hda的iso居然找不到。只好移动到hdb上，重启。这次很好，进入安装界面，重新格式化分区，然后软件包也选好了，可开始安装时又出问题了！提示说根分区不够！根分区分小了……被迫重启，可是，hda上的系统因为格式化全没了，当然也包括grub和那两个安装文件！hdb在这时候也开起了玩笑，Linux引导不了了，只能进BSD，而BSD又挂不上Linux的分区！就要绝望的时候，想起一个主意，在hda上先装个临时的Linux，把FC7安装程序引导起来就行了。因为手头上只有FC3，所以只好装它了。</p>
+<p>安装FC3时又出问题了，提示内核bug，说是因为hdb引起的……无语，拔了hdb的电源线接着装……过了半个小时，安装完毕，重启后还是进不了！一到grub那里就重启……又用此安装盘急救修复，还是不行，因为grub-install用不上……实在不行了，向刘洋兄求助，借他的Ubuntu安装盘用。</p>
+<p>晚饭拿到光盘后，回来接着装。用Ubuntu的LiveCD，进去后直接用grub，把hdb的MBR一覆盖，果然就好了。先进入hdb上的Linux，提取文件，在其grub中添加FC7安装程序的引导，重启就好了！剩下安装就很顺利了。安装完体验了一把FC7，很爽！！输入法也不用设置，直接用scim，ff也不错，pidgin也很好用，FC5上xmms的最小化bug也没了！hdb上的东西都健在，只要cp回来就可以了。</p>
+<p>天哪！终于把我的系统拯救回来了！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2007/08/19/-e6-8b-bf-e4-bb-80-e4-b9-88-e6-8b-af-e6-95-91-e4-bd-a0-ef-bc-8c-e6-88-91-e7-9a-84-e7-b3-bb-e7-bb-9f/" data-id="sqhxbda0wdlxhqzg" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e8-a5-bf-e6-96-bd-e5-9b-9e-e6-9d-a5-e4-ba-86" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2007/08/18/-e8-a5-bf-e6-96-bd-e5-9b-9e-e6-9d-a5-e4-ba-86/" class="article-date">
+  <time datetime="2007-08-18T18:58:00.000Z" itemprop="datePublished">Aug 18 2007</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Life/">Life</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2007/08/18/-e8-a5-bf-e6-96-bd-e5-9b-9e-e6-9d-a5-e4-ba-86/">西施回来了</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>今天在小吃街看到西施了！她终于又回来了！</p>
+<p>激动万分……西施的到来使我们对西邮小吃街又有了信心，对构建河蟹小吃街必将起重要的作用！</p>
+<p><img src="http://wangcong.org/images/xishi.jpg" alt=""></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2007/08/18/-e8-a5-bf-e6-96-bd-e5-9b-9e-e6-9d-a5-e4-ba-86/" data-id="ewus2zujijkt9zz0" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-slab-slob-slub" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2007/08/17/slab-slob-slub/" class="article-date">
+  <time datetime="2007-08-18T04:14:14.000Z" itemprop="datePublished">Aug 17 2007</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux-Kernel/">Linux Kernel</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2007/08/17/slab-slob-slub/">Slab, Slob, Slub</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Linux内核真是变化太快了，内存管理这块就是一个好例子。</p>
+<p>本来Linux内核只有Slab的，现在好了，Slab多了两个兄弟：Slob和Slub。瞧！这就是内核的命名风格，让你光看名字就糊涂了！这也是我这两天读内核源代码的深刻体会，什么cache啊，cache_cache啊，free_area啊，绕不晕你才怪呢～！</p>
+<p>以前搞不懂这三个到底什么关系，为什么要有这三个 。今天搜了一下，明白了一些。简单的说：Slab是基础，是最早从Sun OS那引进的；Slub是在Slab上进行的改进，在大型机上表现出色（不知道在普通PC上如何），据说还被IA-64作为默认；而Slob是针对小型系统设计的，当然了，主要是嵌入式。相关文章如下：</p>
+<p><a href="http://www.ibm.com/developerworks/cn/linux/l-linux-slab-allocator/index.html" target="_blank" rel="external">Anatomy of the Linux slab allocator</a><br><a href="http://lwn.net/Articles/229984/" target="_blank" rel="external">The SLUB allocator</a><br><a href="http://lwn.net/Articles/157944/" target="_blank" rel="external">The SLOB allocator</a></p>
+<p>这也正好体现了一个Linux内核开发一贯的思想：<strong>提供一种机制，而不是一种策略（Provide mechanism not policy）</strong>。其它软件开发又何尝不是如此呢？</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2007/08/17/slab-slob-slub/" data-id="gxdi024lik5dstyx" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e6-9b-b4-e6-96-b0-e4-ba-86-e4-b8-80-e4-b8-8b-e5-8d-9a-e5-ae-a2" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2007/08/17/-e6-9b-b4-e6-96-b0-e4-ba-86-e4-b8-80-e4-b8-8b-e5-8d-9a-e5-ae-a2/" class="article-date">
+  <time datetime="2007-08-17T09:56:38.000Z" itemprop="datePublished">Aug 17 2007</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Life/">Life</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2007/08/17/-e6-9b-b4-e6-96-b0-e4-ba-86-e4-b8-80-e4-b8-8b-e5-8d-9a-e5-ae-a2/">更新了一下博客</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>加了一个“<a href="http://wangcong.org/blog/?page_id=256" target="_blank" rel="external">友情链接</a>”页面，因为这个主题自带的是默认隐藏，而且还是随机显示，不爽。时间仓促，难免有遗漏。如果你给我做了链接而这里没有，请及时留言指出。希望交换链接的也可以留言。</p>
+<p><strong>提示：链接我的网站时请指向<a href="http://wangcong.org/" target="_blank" rel="external">首页</a>，而不要仅仅是这个博客，谢谢！</strong></p>
+<p>还添加了一个Image Counter，看看到底有多少潜水的人。</p>
+<p>BTW：最近换了个手机，发短信很不方便，恕不及时回你的短信。有事请直接打电话。等手机换回去再说。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2007/08/17/-e6-9b-b4-e6-96-b0-e4-ba-86-e4-b8-80-e4-b8-8b-e5-8d-9a-e5-ae-a2/" data-id="pded6g3mf8bwncmj" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+  
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/page/52/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/51/">51</a><a class="page-number" href="/page/52/">52</a><span class="page-number current">53</span><a class="page-number" href="/page/54/">54</a><a class="page-number" href="/page/55/">55</a><span class="space">&hellip;</span><a class="page-number" href="/page/71/">71</a><a class="extend next" rel="next" href="/page/54/">Next &raquo;</a>
+    </nav>
+  
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Book-Reviews/">Book Reviews</a><span class="category-list-count">18</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/China/">China</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Collection/">Collection</a><span class="category-list-count">25</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">324</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux-Application/">Linux Application</a><span class="category-list-count">73</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux-Kernel/">Linux Kernel</a><span class="category-list-count">64</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Love/">Love</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Movies/">Movies</a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/">Programming</a><span class="category-list-count">152</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Science-Fiction/">Science Fiction</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Travel/">Travel</a><span class="category-list-count">19</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/geek/">geek</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/handling/">handling</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/joke/">joke</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/signal/">signal</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/unix/">unix</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/geek/" style="font-size: NaNpx;">geek</a><a href="/tags/handling/" style="font-size: NaNpx;">handling</a><a href="/tags/joke/" style="font-size: NaNpx;">joke</a><a href="/tags/linux/" style="font-size: NaNpx;">linux</a><a href="/tags/signal/" style="font-size: NaNpx;">signal</a><a href="/tags/unix/" style="font-size: NaNpx;">unix</a><a href="/tags/vim/" style="font-size: NaNpx;">vim</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">August 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">December 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">October 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">September 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">August 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">February 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01/">January 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12/">December 2012</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">November 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">October 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">September 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">August 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/07/">July 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">April 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">March 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">February 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">January 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/12/">December 2011</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">November 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/10/">October 2011</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">September 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08/">August 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/07/">July 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/06/">June 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/05/">May 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04/">April 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03/">March 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/02/">February 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/01/">January 2011</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/12/">December 2010</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/11/">November 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/10/">October 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/09/">September 2010</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08/">August 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07/">July 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06/">June 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05/">May 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04/">April 2010</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03/">March 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02/">February 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01/">January 2010</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12/">December 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11/">November 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10/">October 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09/">September 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08/">August 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07/">July 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/06/">June 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/05/">May 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04/">April 2009</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03/">March 2009</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02/">February 2009</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01/">January 2009</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12/">December 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/11/">November 2008</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/10/">October 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09/">September 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08/">August 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07/">July 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06/">June 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05/">May 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04/">April 2008</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03/">March 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02/">February 2008</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01/">January 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12/">December 2007</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11/">November 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10/">October 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09/">September 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08/">August 2007</a><span class="archive-list-count">31</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07/">July 2007</a><span class="archive-list-count">34</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06/">June 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05/">May 2007</a><span class="archive-list-count">25</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04/">April 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03/">March 2007</a><span class="archive-list-count">50</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02/">February 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01/">January 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12/">December 2006</a><span class="archive-list-count">5</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2014/08/12/linux-e7-bd-91-e7-bb-9c-e6-b5-81-e9-87-8f-e6-8e-a7-e5-88-b6-ef-bc-88-e4-b8-80-ef-bc-89/">Linux 网络流量控制（零）</a>
+          </li>
+        
+          <li>
+            <a href="/2014/08/01/ottawa-linux-symposium/">Ottawa Linux Symposium</a>
+          </li>
+        
+          <li>
+            <a href="/2014/05/31/skbuff-e5-86-85-e5-ad-98-e6-a8-a1-e5-9e-8b/">skbuff 内存模型</a>
+          </li>
+        
+          <li>
+            <a href="/2014/05/06/-e9-95-bf-e6-9c-9f-e6-8f-90-e4-be-9b-twitter-e5-86-85-e6-8e-a8/">长期提供 Twitter 内推</a>
+          </li>
+        
+          <li>
+            <a href="/2014/01/30/-e6-88-91-e7-9a-842013-ef-bc-9a-e6-88-91-e6-9d-a5-e5-88-b0-e4-ba-86-e7-be-8e-e5-9b-bd/">我的2013：我来到了美国</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2015 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+
+  </div>
+</body>
+</html>

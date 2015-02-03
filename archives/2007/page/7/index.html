@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Archives: 2007 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/archives/2007/page/7/">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description">
+
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-unp-e5-8d-b7-e4-b8-80-e8-af-bb-e4-b9-a6-e7-ac-94-e8-ae-b0-ef-bc-88-e4-b8-80-ef-bc-89" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2007/09/18/unp-e5-8d-b7-e4-b8-80-e8-af-bb-e4-b9-a6-e7-ac-94-e8-ae-b0-ef-bc-88-e4-b8-80-ef-bc-89/" class="article-date">
+  <time datetime="2007-09-18T21:54:44.000Z" itemprop="datePublished">Sep 18 2007</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Programming/">Programming</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2007/09/18/unp-e5-8d-b7-e4-b8-80-e8-af-bb-e4-b9-a6-e7-ac-94-e8-ae-b0-ef-bc-88-e4-b8-80-ef-bc-89/">UNP卷一读书笔记（一）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>1. inet_addr()是遗弃的函数，最好不要使用，因为它不能很好地处理错误。ping 255.255.255.255就是由此引发的问题，<br>因为inet_addr()会把255.255.255.255当成-1！</p>
+<p>2. inet_ntoa()使用的是静态缓冲区，因此不是线程安全的函数。而且，inet_ntoa()使用一个结构体类型做参数，而不是指向该结构体的指针。这种情况很少见。</p>
+<p>3. 系统调用被中断的一个例子：当父进程在等待accept()时，收到了子进程死亡的信号SIGCHLD，而转去处理这个信号。<br>此时如果不做处理，系统可能会自动重启这个系统调用，也可能会返回错误EINTR。</p>
+<p>4. SIGKILL和SIGSTOP是不能被捕捉的，也不能被忽略。</p>
+<p>5. UNIX文件中的change time和modification time不是一个概念。 如果我们使用<code>chmod a-w myfile&#39;，这是一个change；如果我们用</code>echo foo &gt;&gt; myfile’，那这是一个modification。change修改的是文件的inode；而modification修改的是文件本身的内容。 文件的modification time也被称为时间戳（timestamp）。只读取文件会改变文件的access time，但不会改变上面提到的两个时间。</p>
+<p>6. POSIX规定，select的第5个参数应该是const的，但Linux并未这样实现。Linux会修改这个struct timeval，来反映没有睡眠的时间。</p>
+<p>7. 收到FIN之后，进程仍然可以向该socket写数据，但会收到一个RST。如果一个进程在收到RST之后，仍然向此socket里写数据，它就会收到一个SIGPIPE信号。该信号的默认处理方式是终止这个进程。所以进程必须能够捕捉到这个信号来避免意外的终止。如果进程捕捉到该信号并返回，或者直接忽略这个信号，写操作会返回一个EPIPE。通过第一次写操作，而不是第二次，是不可能得到SIGPIPE信号的。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2007/09/18/unp-e5-8d-b7-e4-b8-80-e8-af-bb-e4-b9-a6-e7-ac-94-e8-ae-b0-ef-bc-88-e4-b8-80-ef-bc-89/" data-id="jv306nj7l6b24gce" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e8-87-aa-e7-94-b1-e8-bd-af-e4-bb-b6-e6-97-a5-e6-b4-bb-e5-8a-a8-e9-a1-ba-e5-88-a9-e7-bb-93-e6-9d-9f" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2007/09/16/-e8-87-aa-e7-94-b1-e8-bd-af-e4-bb-b6-e6-97-a5-e6-b4-bb-e5-8a-a8-e9-a1-ba-e5-88-a9-e7-bb-93-e6-9d-9f/" class="article-date">
+  <time datetime="2007-09-16T21:56:32.000Z" itemprop="datePublished">Sep 16 2007</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Life/">Life</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2007/09/16/-e8-87-aa-e7-94-b1-e8-bd-af-e4-bb-b6-e6-97-a5-e6-b4-bb-e5-8a-a8-e9-a1-ba-e5-88-a9-e7-bb-93-e6-9d-9f/">自由软件日活动顺利结束</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这本该是昨天的文章，因为昨天拨号没拨上去，只能搁到今天了。</p>
+<p>我们不是CCTV，CCTV整天报道得就像已经进入共产主义社会似的，会议没有不隆重的，闭幕没有不顺利的，领导没有不亲切的……</p>
+<p>虽然两位嘉宾和老师们对这次活动评价都很好，但这里我就不说好的，专挑这次活动的几个不足之处说。毕竟我这是头一次组织这么大型的活动，没任何经验，总结一下不足，以备以后改进。</p>
+<p>最大的不足，我认为，应该是我们对“自由软件”和“开源软件”的区别认识不够，基本上是混为一谈。听了徐继哲先生的讲话后才明白了些许。徐先生对这点表示遗憾，说要不是因为这他还可以把我们这次活动传到FSF上去。</p>
+<p>其次就是发T-shirt，一是发T-shirt时现场过于火爆，场面稍稍失控，主要是低估了那些T-shirt对同学们的诱惑力；二是我们太大公无私了，最后连我们自己都基本上没拿到什么礼物。没事，我们自己做！“自己动手，丰衣足食！”哈哈！</p>
+<p>最后一个不足，应该是<a href="http://blog.sina.com.cn/arthur5933" target="_blank" rel="external">王开源先生</a>的演讲太过官方化，没把他在底下和我们讲时那种气氛弄出来，让不少人失望了，而<a href="http://amankwahly.cn/blog" target="_blank" rel="external">刘洋兄</a>更是乱了阵脚。</p>
+<p>能举办这次活动要感谢很多很多人，抱歉，这里很难一一列举。我只想特别感谢的是杨爽老师，没她的鼎力协助不可能有这次活动！我也没想到她那么厉害，院里的几个领导她都可以帮忙说服，不愧是韩老师的得力助手。这让吾不得不佩服。</p>
+<p>BTW1：我们邻班一个吴姓女生竟然拿到了一个Python的T-shirt，不过过后让我忽悠过来了，代价是让我请她和她男朋友吃顿饭…… 我估计这钱都够我买一件的了……</p>
+<p>BTW2：<a href="http://cocobear.cn/blog/" target="_blank" rel="external">董溥同学</a>好幸运啊，晚上拜访徐继哲先生时，王开源先生一听说我们没拿到T-shirt竟然当场把自己穿的脱给了董溥同学……我当时都愣了……</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2007/09/16/-e8-87-aa-e7-94-b1-e8-bd-af-e4-bb-b6-e6-97-a5-e6-b4-bb-e5-8a-a8-e9-a1-ba-e5-88-a9-e7-bb-93-e6-9d-9f/" data-id="dz2xgq15buchb7ws" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e8-87-aa-e7-94-b1-e8-bd-af-e4-bb-b6-e6-97-a5-e6-b4-bb-e5-8a-a8-e5-b0-86-e5-9c-a8-e8-a5-bf-e9-82-ae-e4-b8-be-e5-8a-9e" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2007/09/14/-e8-87-aa-e7-94-b1-e8-bd-af-e4-bb-b6-e6-97-a5-e6-b4-bb-e5-8a-a8-e5-b0-86-e5-9c-a8-e8-a5-bf-e9-82-ae-e4-b8-be-e5-8a-9e/" class="article-date">
+  <time datetime="2007-09-15T03:22:25.000Z" itemprop="datePublished">Sep 14 2007</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Life/">Life</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2007/09/14/-e8-87-aa-e7-94-b1-e8-bd-af-e4-bb-b6-e6-97-a5-e6-b4-bb-e5-8a-a8-e5-b0-86-e5-9c-a8-e8-a5-bf-e9-82-ae-e4-b8-be-e5-8a-9e/">自由软件日活动将在西邮举办</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>真是无巧不成书。决定在西邮举办西北第一次自由软件日活动完全是一个巧合。我听说自由软件日这个活动也仅仅是在几个月之前，当时只是想在小组内搞一个小的活动庆祝一下。直到到了北京，见到了袁萌老师和王开源先生，无意中向他们透露了我的这个想法，没想到竟然得到了他们那么大的赞同。王开源先生还主动要求自费到西邮来帮助我们组织这个活动，我们也不得不把这活动搞得大一些了。</p>
+<p>现在活动的准备工作基本上已经就绪，感谢计算机系的大力支持，特别是韩老师，杨老师，陈老师，王老师，也非常感谢这几天一直在帮忙宣传的同学！预祝明天的活动成功！</p>
+<p><img src="http://p.blog.csdn.net/images/p_blog_csdn_net/arthur5933/334902/o_sfd_banner.jpg" alt=""></p>
+<p>BTW1：今天西安的天气超级好，能见度特别高，从宿舍里看秦岭特别清晰。难道这就是传说中的秋高气爽？希望明天也会有这么好的天气！</p>
+<p>BTW2：非常喜欢徐继哲先生哲思网上的T-shirt，居然还有美女穿着show一下。特别尤其喜欢那个“人生苦短，我用python”的T-shirt，不知道明天有没有这个，还有俺能不能拿到一件……（流口水……）</p>
+<p>&nbsp;</p>
+<p><img src="http://www.zeuux.org/image/zeuux-babe-python-kuduan-cool.jpg" alt=""></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2007/09/14/-e8-87-aa-e7-94-b1-e8-bd-af-e4-bb-b6-e6-97-a5-e6-b4-bb-e5-8a-a8-e5-b0-86-e5-9c-a8-e8-a5-bf-e9-82-ae-e4-b8-be-e5-8a-9e/" data-id="uz1nznka80slnahg" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e5-bf-bd-e6-82-a0-ef-bc-8c-e6-8e-a5-e7-9d-80-e5-bf-bd-e6-82-a0" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2007/09/12/-e5-bf-bd-e6-82-a0-ef-bc-8c-e6-8e-a5-e7-9d-80-e5-bf-bd-e6-82-a0/" class="article-date">
+  <time datetime="2007-09-13T05:05:38.000Z" itemprop="datePublished">Sep 12 2007</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Life/">Life</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2007/09/12/-e5-bf-bd-e6-82-a0-ef-bc-8c-e6-8e-a5-e7-9d-80-e5-bf-bd-e6-82-a0/">忽悠，接着忽悠</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>本人被中国教育彻底折服，NND，除了人才培养不出来，啥样的奇形怪状的、五颜六色的、五花八门的人都能培养出来！鸟大了什么林子都有！</p>
+<p>我们这垃圾教育根本就不把你当人才培养，除了想法设法地从你身上挣钱外就是忽悠你～！你忽忽悠悠就变成蠢才了！真乃理论上的决杀！绝对不要给人才任何机会！</p>
+<p>“不长”同志，猪撞树上了，你撞猪上了吧？追尾了是不是？</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2007/09/12/-e5-bf-bd-e6-82-a0-ef-bc-8c-e6-8e-a5-e7-9d-80-e5-bf-bd-e6-82-a0/" data-id="68f4opviigsfsfc5" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e5-8c-97-e4-ba-ac-e4-b9-8b-e8-a1-8c-e7-ac-ac-e4-b8-89-e5-a4-a9" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2007/09/10/-e5-8c-97-e4-ba-ac-e4-b9-8b-e8-a1-8c-e7-ac-ac-e4-b8-89-e5-a4-a9/" class="article-date">
+  <time datetime="2007-09-10T22:57:01.000Z" itemprop="datePublished">Sep 10 2007</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Life/">Life</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2007/09/10/-e5-8c-97-e4-ba-ac-e4-b9-8b-e8-a1-8c-e7-ac-ac-e4-b8-89-e5-a4-a9/">北京之行——第三天</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这一天的大会内容似乎更无聊，就更没有心思去听上面讲的东西了。上午刚进入会场时，又见到了王开源，他送给我们了几张光盘和一些GNU的贴纸，并要求到15号西安和我们一起弄自由软件日活动。我们怎么能不欢迎呢，看来我们这活动不办大都不行了。</p>
+<p>开会时估计吴峰光应该到了，便发短信询问，果然，而且他就坐到了我们左边那排。好不容易熬到上午散会，马上和Coly去找吴峰光。吴身体很瘦，话语也不是很多，看起来比想象中要年轻得多，说实话，一点也不像一个准博士，倒特别像我们这种小本科生。</p>
+<p>出会场后约上Yang Rui一起去吃午饭，吃饭时就一直谈kernel，Coly在说他做的ext4方面的工作，吴谈了谈他做kernel开发的经历，他做kernel已经两年多了，而且他自己的第一个patch花了近一年的时间才被接受，真佩服他的耐心。这也道出了维护patch复杂性，我们几个也趁机抱怨了patch如何难弄，吴就向我们一点一点地介绍了他自己的经验。Coly还抱怨丢到lkml的patch经常是无人理会，的确，有时Andrew的邮件也是无人理睬，真不知道那些maintainers是太忙了还是我们的patch对他们来说太不屑了。</p>
+<p>下午的会就更无聊了，进去先睡了一觉。;)熬到四点多的时候，被Coly拉去一起吃饭，因为Novell的人去的多，Alex做东。一起吃饭的还有Intel的陈绪和Yuri等人，还一起合了影。Eugene刚下火车就说来的，结果还是没赶上，很遗憾的说。席间基本上是听Alex和Coly在神侃，我们只是偶尔插句话，因为我和吴靠着，所以还能和他切磋一下kernel的经历，他还送了我5张自己修改过的Knoppix光盘。</p>
+<p>吃完饭Coly就送我到了火车站，踏上了回去的路程。</p>
+<p>这次北京之行收获很多。;)</p>
+<p>BTW：这次拍的照片可以在<a href="http://picasaweb.google.com/xiyou.wangcong/LinuxWorldChina2007" target="_blank" rel="external">我的picasa</a>里看到。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2007/09/10/-e5-8c-97-e4-ba-ac-e4-b9-8b-e8-a1-8c-e7-ac-ac-e4-b8-89-e5-a4-a9/" data-id="y4la3pbns09wn2tr" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e5-8c-97-e4-ba-ac-e4-b9-8b-e8-a1-8c-e7-ac-ac-e4-ba-8c-e5-a4-a9" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2007/09/09/-e5-8c-97-e4-ba-ac-e4-b9-8b-e8-a1-8c-e7-ac-ac-e4-ba-8c-e5-a4-a9/" class="article-date">
+  <time datetime="2007-09-10T06:34:10.000Z" itemprop="datePublished">Sep 9 2007</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Life/">Life</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2007/09/09/-e5-8c-97-e4-ba-ac-e4-b9-8b-e8-a1-8c-e7-ac-ac-e4-ba-8c-e5-a4-a9/">北京之行——第二天</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这天是Linux World China大会的第一天，一大早就起来准备过去，还好有直接到的公交车。到了北京国际饭店后，发现已经有不少人在排队签到了。不过我们也算是早的，也领到了午餐券。</p>
+<p>进去后一些展台已经摆好了，特别是Novell的，还摆放了装着Suse的笔记本让人体验，桌面上放的是魔兽这些游戏，cocobear同学还在那里玩了一把。然后就忙着排队领各个展台的礼物，一开始微软很嚣张，前面排了N长的队，后来到Redhat发纪念品时局势就扭转了。可惜我一直在即时Linux那里，等发现Redhat时队伍已经很长了。大会也要开始了，无奈只好入场了，没领到Redhat的东西。</p>
+<p>进去之前还见到了Yang Rui，以前都是在lkml和zh-kernel上见过他的邮件，见到真人还是头一次。见了面聊了聊Linux和彼此的工作。入场后见他坐第一排，ms还是嘉宾之类的。;)</p>
+<p>大会的内容基本上没什么可说的，基本上那些元老级人物轮流上去讲这个行业的发展，Linux Foundation还来了位领导，他讲的英文我居然都听得懂，不像后来微软的那位，语速太快跟不上。上午最让我们吃惊的是，我们前面居然坐着一个美女！而且貌似还不是记者之流，刘洋同学乐观地猜测她是搞开发的，我看基本上不可能。干我们这行的，基本上整天对着电脑，就是美女来了也得折腾成“霉女”。</p>
+<p>中午吃饭时也吃惊了一把，居然看到袁萌老师了。这位一直都只是在网上的新闻中见到，今天能见到自然不能放过机会，于是就凑过去搭了搭话。最让我们晕倒的是袁老师居然是Ubuntu的超级支持者，一提到Ubuntu话就很多，旁边一个美女过来搭话时他第一句话就问她有没有用过Ubuntu。从他口中得知，中国开源界的三位元老人物都很激进的，而且对微软都是颇有微辞，袁老自己透露他还经常在博客上抨击微软。而微软最近走的是收买策略，时不时地请几位老人去吃饭，让几位老人笔下留情。聊到自由软件日时，袁老又高兴了，他发起的这个节日能得到我们的响应他自然是乐开怀。</p>
+<p>下午的会依旧很无聊，不过貌似有人开始针对微软了，不知道底下微软的人听了感觉如何。出会场时，在Coly的介绍下，认识了Intel OTC的Liu Kent。OTC几乎执国内kernel开发的牛耳，以后能进OTC工作自然是最好了。谈话时居然见到了传说中的王开源，他的出现着实让我们吃惊一把。不过更吃惊的还在后面，因为他和陈老师认识很久了，他就顺便用车把我们送回宾馆，一路上基本都在谈他在北大抗议比尔很多门先生，听他这么坦诚地一说，发现其实很多媒体的报道都是不准确的。到了宾馆他还请我们吃饭，于是又继续聊开源，从Stallman聊到自由软件日，说了很多，感觉他说话非常有意思。</p>
+<p>这一天是在吃惊中度过的，回去自然也睡不着，又和刘洋同学一直聊到夜里2点多。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2007/09/09/-e5-8c-97-e4-ba-ac-e4-b9-8b-e8-a1-8c-e7-ac-ac-e4-ba-8c-e5-a4-a9/" data-id="8tzk3o0ahdeikfmi" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e5-8c-97-e4-ba-ac-e4-b9-8b-e8-a1-8c-e7-ac-ac-e4-b8-80-e5-a4-a9" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2007/09/09/-e5-8c-97-e4-ba-ac-e4-b9-8b-e8-a1-8c-e7-ac-ac-e4-b8-80-e5-a4-a9/" class="article-date">
+  <time datetime="2007-09-10T05:47:44.000Z" itemprop="datePublished">Sep 9 2007</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Life/">Life</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2007/09/09/-e5-8c-97-e4-ba-ac-e4-b9-8b-e8-a1-8c-e7-ac-ac-e4-b8-80-e5-a4-a9/">北京之行——第一天</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>6号上午八点多到了北京，因为还要等陈老师，只好在火车站周围闲逛。从网吧坐了一会儿，又出去接老师。好不容易总算找到了，然后一起坐车去住的地方——机械工业出版社宾馆。这个地方很难找，给当地北京人打听都打听不到，而且地图也标错了，费了很多周折总算在“主人”的带领下找到了。</p>
+<p>进了宾馆就开始收拾自己的东西，准备去吃饭时老师说“主人”请客，于是就跟着去蹭了一顿大餐。中午联系好了Coly，下午就去Novell公司参观。找到Novell公司也依旧不容易，主要是因为刘洋同学错误地指路，害得我们多步行了半个小时。到了Novell，Coly热情地接待了我们，在里面转了一圈，还和Alex几个人坐到一起聊了好长时间。Alex是Coly的头儿，很有个性，还扎着辫子，说话也很有意思。</p>
+<p>从Novell出来后我们几个分开了，我要去北邮找我一个高中同学，他们几个要先去熟悉会场路线。我得先坐地铁再倒公交，因为正好赶上下班，所以地铁超拥挤，赶上我们的600了。到了西直门换公交时差点转晕，不过还好，问路很容易就问到了。到了北邮那等了好长时间终于见到我同学，一年多没见，那家伙变化果然很大，居然还染发了，说话居然也不说家乡话了，一口正宗的普通话。在他的陪同下，在北邮校园里逛了一圈，然后就找个地方吃饭。吃饭聊天时，才发现那娃变化更大，以前见面基本是一起扯淡，现在是一本正经地和我说以后的发展，什么行业吃香，什么专业更容易挣钱……最让我吃惊的应该是吃完后他居然还要求打包带回去！其实我们剩的不多，换我估计就不会这么做，他这举动着实让我感到他的变化，也不怪他，北京物价确实很高，也是无奈。</p>
+<p>回宾馆时下公交找不地方了，又打了个的，到宾馆时都10点半了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2007/09/09/-e5-8c-97-e4-ba-ac-e4-b9-8b-e8-a1-8c-e7-ac-ac-e4-b8-80-e5-a4-a9/" data-id="tm1rf347loyqwzpy" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e5-8d-9a-e5-ae-a2-e6-9a-82-e5-81-9c-e6-9b-b4-e6-96-b0-e4-b8-89-e5-a4-a9" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2007/09/05/-e5-8d-9a-e5-ae-a2-e6-9a-82-e5-81-9c-e6-9b-b4-e6-96-b0-e4-b8-89-e5-a4-a9/" class="article-date">
+  <time datetime="2007-09-05T22:32:16.000Z" itemprop="datePublished">Sep 5 2007</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Life/">Life</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2007/09/05/-e5-8d-9a-e5-ae-a2-e6-9a-82-e5-81-9c-e6-9b-b4-e6-96-b0-e4-b8-89-e5-a4-a9/">博客暂停更新三天</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>由于要去北京参加今年的<a href="http://www.linuxworldchina.com/" target="_blank" rel="external">Linux World China</a>大会，博客暂停更新三天。回来后会把大会情况和照片及时贴到这里。</p>
+<p>感谢<a href="http://crazyfranc.cn/blog/" target="_blank" rel="external">金明洁同学</a>，帮忙借到了数码相机。</p>
+<p>感谢Coly，帮忙买到了回来的火车票。</p>
+<p>答应<a href="http://www.shiyuhang.org/blog/default.asp" target="_blank" rel="external">小公子</a>，如果有时间的话，要去未名湖泡脚。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2007/09/05/-e5-8d-9a-e5-ae-a2-e6-9a-82-e5-81-9c-e6-9b-b4-e6-96-b0-e4-b8-89-e5-a4-a9/" data-id="i3onakm53cm9ebt3" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e5-9c-a8-e6-9c-80-e7-be-8e-e7-9a-84-e6-97-b6-e5-80-99-ef-bc-8c-e4-bd-a0-e9-81-87-e8-a7-81-e4-ba-86-e8-b0-81" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2007/09/04/-e5-9c-a8-e6-9c-80-e7-be-8e-e7-9a-84-e6-97-b6-e5-80-99-ef-bc-8c-e4-bd-a0-e9-81-87-e8-a7-81-e4-ba-86-e8-b0-81/" class="article-date">
+  <time datetime="2007-09-05T06:39:12.000Z" itemprop="datePublished">Sep 4 2007</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Collection/">Collection</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2007/09/04/-e5-9c-a8-e6-9c-80-e7-be-8e-e7-9a-84-e6-97-b6-e5-80-99-ef-bc-8c-e4-bd-a0-e9-81-87-e8-a7-81-e4-ba-86-e8-b0-81/">在最美的时候，你遇见了谁</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>贴一篇很喜欢的文章，细细读来，仍然心有触动。</p>
+<p>=========</p>
+<p>世界上只有两种可以称之为浪漫的情感：一种叫相濡以沫，另一种叫相忘于江湖我们要做的是争取和最爱的人相濡以沫，和次爱的人相忘于江湖</p>
+<p>也许不是不曾心动，不是没有可能，只是有缘无份，情深缘浅，我们爱在不对的时间.</p>
+<p>回首往事的时候，想起那些如流星般划过生命的爱情，我们常常会把彼此的错过归咎为缘份，其实说到底，缘份是那么虚幻抽象的一个概念,真正影响我们的，往往就是那一时三刻相遇与相爱的时机,男女之间的交往，充满了犹疑忐忑的不确定与欲言又止的矜持，一个小小的变数，就可以完全改变选择的方向.</p>
+<p>如果彼此出现早一点,也许就不会和另一个人十指紧扣,又或者相遇的再晚一点,晚到两个人在各自的爱情经历中慢慢地学会了包容与体谅,善待和妥协，也许走到一起的时候,就不会那么轻易的放弃,任性地转身,放走了爱情.</p>
+<p>在你最美丽的时候,你遇见了谁？在你深爱一个人的时候,谁又陪在你身边?爱情到底给了你多少时间？去相遇与分离,去选择与后悔？</p>
+<p>不是不心动,不是不后悔,但已经没有时间再去相拥,如果爱一个人而无法在一起,相爱却无法在适当的时候相遇,如果爱了,却爱在不对的时候,除了珍藏那一滴心底的泪,无言的走远,又能有什么选择？</p>
+<p>要在时间的荒野,没有早一步也没有晚一步,于千万人之中,去邂逅自己的爱人,那是太难得的缘份,更多的时候,我们只是在彼此不断地错过,错过杨花飘风的春,又错过了枫叶瑟索的秋,直到漫天白雪,年华不再,在一次次的心酸感叹之后,才能终于了解——即使真挚,即使亲密,即使两个人都已是心有戚戚,我们的爱,依然需要时间来成全和考验.</p>
+<p>这世界有着太多的这样那样的限制与隐秘的禁忌,又有太多难以预测的变故和身不由已的离合,一个转身,也许就已经一辈子错过,要到很多年以后,才会参透所有的争取与努力,也许还抵不过命运开的一个玩笑,上帝只在云端眨了一眨眼,所有的结局,就都已经完全改变.</p>
+<p>在对的时间，遇见对的人，是一种幸福</p>
+<p>在对的时间，遇见错的人，是一种悲伤</p>
+<p>在错的时间，遇见对的人，是一声叹息</p>
+<p>在错的时间，遇见错的人，是一种无奈</p>
+<p><strong>回忆的花瓣掠过心湖，泛起片片涟漪，爱不是千言万语，也不是朝朝暮暮，爱是每当午夜梦醒时，发现内心牵挂的依然是远方的你.</strong></p>
+<p><img src="http://116.img.pp.sohu.com/images/blog/2007/7/26/20/15/1149be54044.jpg" alt=""></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2007/09/04/-e5-9c-a8-e6-9c-80-e7-be-8e-e7-9a-84-e6-97-b6-e5-80-99-ef-bc-8c-e4-bd-a0-e9-81-87-e8-a7-81-e4-ba-86-e8-b0-81/" data-id="0xirqv4bb2azkyvg" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e8-bf-99-e6-a0-b7-e7-9a-84-e7-94-9f-e6-b4-bb" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2007/09/03/-e8-bf-99-e6-a0-b7-e7-9a-84-e7-94-9f-e6-b4-bb/" class="article-date">
+  <time datetime="2007-09-04T05:35:15.000Z" itemprop="datePublished">Sep 3 2007</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Life/">Life</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2007/09/03/-e8-bf-99-e6-a0-b7-e7-9a-84-e7-94-9f-e6-b4-bb/">这样的生活</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>开学了，一时还不太适应这种作息习惯。这两天有些手忙脚乱，可能是事情比较多原因。慢慢调整吧～！</p>
+<p>貌似这个学期课也不少。有选修，而且还选了一门杨老师的，不太好意思逃她的课；还有限选，因大一没选工程制图，似乎还要再多选一门。</p>
+<p><a href="http://amankwahly.cn/blog/?p=69" target="_blank" rel="external">刘洋同学</a>似乎被生活一下子吓着了，有些胆怯了，希望他能尽快振作起来。生活啊，就是这个熊样！在这样一个肮脏的国度里，社会败落，教育失败，道德沦丧，法制任人践踏……理想基本算是扯淡，做人还是低调些好！</p>
+<p>或许应该像刘若英说的那样：找个自己喜欢的人，这样知足地过一辈子。这又何尝不好呢？</p>
+<p>桃花坞里桃花庵，桃花庵下桃花仙。<br>桃花仙人种桃树，又摘桃花换酒钱。<br>酒醒只在花前坐，酒醉还来花下眠。<br>半醉半醒日复日，花落花开年复年。<br>但愿老死花酒间，不愿鞠躬车马前。<br>车尘马足显者事，酒盏花枝隐士缘。<br>若将显者比隐士，一在平地一在天。<br>若将花酒比车马，彼何碌碌我何闲。<br>别人笑我太疯癫，我笑他人看不穿。<br>不见五陵豪杰墓，无花无酒锄作田。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2007/09/03/-e8-bf-99-e6-a0-b7-e7-9a-84-e7-94-9f-e6-b4-bb/" data-id="buksaguc9pd03378" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+  
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/archives/2007/page/6/">&laquo; Prev</a><a class="page-number" href="/archives/2007/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/2007/page/5/">5</a><a class="page-number" href="/archives/2007/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/archives/2007/page/8/">8</a><a class="page-number" href="/archives/2007/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/archives/2007/page/27/">27</a><a class="extend next" rel="next" href="/archives/2007/page/8/">Next &raquo;</a>
+    </nav>
+  
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Book-Reviews/">Book Reviews</a><span class="category-list-count">18</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/China/">China</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Collection/">Collection</a><span class="category-list-count">25</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">324</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux-Application/">Linux Application</a><span class="category-list-count">73</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux-Kernel/">Linux Kernel</a><span class="category-list-count">64</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Love/">Love</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Movies/">Movies</a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/">Programming</a><span class="category-list-count">152</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Science-Fiction/">Science Fiction</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Travel/">Travel</a><span class="category-list-count">19</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/geek/">geek</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/handling/">handling</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/joke/">joke</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/signal/">signal</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/unix/">unix</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/geek/" style="font-size: NaNpx;">geek</a><a href="/tags/handling/" style="font-size: NaNpx;">handling</a><a href="/tags/joke/" style="font-size: NaNpx;">joke</a><a href="/tags/linux/" style="font-size: NaNpx;">linux</a><a href="/tags/signal/" style="font-size: NaNpx;">signal</a><a href="/tags/unix/" style="font-size: NaNpx;">unix</a><a href="/tags/vim/" style="font-size: NaNpx;">vim</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">August 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">December 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">October 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">September 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">August 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">February 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01/">January 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12/">December 2012</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">November 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">October 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">September 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">August 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/07/">July 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">April 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">March 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">February 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">January 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/12/">December 2011</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">November 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/10/">October 2011</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">September 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08/">August 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/07/">July 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/06/">June 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/05/">May 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04/">April 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03/">March 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/02/">February 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/01/">January 2011</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/12/">December 2010</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/11/">November 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/10/">October 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/09/">September 2010</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08/">August 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07/">July 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06/">June 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05/">May 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04/">April 2010</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03/">March 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02/">February 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01/">January 2010</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12/">December 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11/">November 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10/">October 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09/">September 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08/">August 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07/">July 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/06/">June 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/05/">May 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04/">April 2009</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03/">March 2009</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02/">February 2009</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01/">January 2009</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12/">December 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/11/">November 2008</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/10/">October 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09/">September 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08/">August 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07/">July 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06/">June 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05/">May 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04/">April 2008</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03/">March 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02/">February 2008</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01/">January 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12/">December 2007</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11/">November 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10/">October 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09/">September 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08/">August 2007</a><span class="archive-list-count">31</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07/">July 2007</a><span class="archive-list-count">34</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06/">June 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05/">May 2007</a><span class="archive-list-count">25</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04/">April 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03/">March 2007</a><span class="archive-list-count">50</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02/">February 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01/">January 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12/">December 2006</a><span class="archive-list-count">5</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2014/08/12/linux-e7-bd-91-e7-bb-9c-e6-b5-81-e9-87-8f-e6-8e-a7-e5-88-b6-ef-bc-88-e4-b8-80-ef-bc-89/">Linux 网络流量控制（零）</a>
+          </li>
+        
+          <li>
+            <a href="/2014/08/01/ottawa-linux-symposium/">Ottawa Linux Symposium</a>
+          </li>
+        
+          <li>
+            <a href="/2014/05/31/skbuff-e5-86-85-e5-ad-98-e6-a8-a1-e5-9e-8b/">skbuff 内存模型</a>
+          </li>
+        
+          <li>
+            <a href="/2014/05/06/-e9-95-bf-e6-9c-9f-e6-8f-90-e4-be-9b-twitter-e5-86-85-e6-8e-a8/">长期提供 Twitter 内推</a>
+          </li>
+        
+          <li>
+            <a href="/2014/01/30/-e6-88-91-e7-9a-842013-ef-bc-9a-e6-88-91-e6-9d-a5-e5-88-b0-e4-ba-86-e7-be-8e-e5-9b-bd/">我的2013：我来到了美国</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2015 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>关于 tun/tap 设备 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="长期以来对tun和tap这对兄弟分不太清，今天下定决心研究了一下代码，总算是搞明白了。
+首先它们都是从/dev/net/tun里ioctl出来的虚拟设备，一个是通过IFF_TUN，另一个是 IFF_TAP。最好的例子莫过于vpnc里面的代码了。
+[c]int tun_open(char *dev, enum if_mode_enum mode){        struct ifreq ifr;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于 tun/tap 设备">
+<meta property="og:url" content="http://yoursite.com/2011/06/19/-e5-85-b3-e4-ba-8e-tuntap/">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="长期以来对tun和tap这对兄弟分不太清，今天下定决心研究了一下代码，总算是搞明白了。
+首先它们都是从/dev/net/tun里ioctl出来的虚拟设备，一个是通过IFF_TUN，另一个是 IFF_TAP。最好的例子莫过于vpnc里面的代码了。
+[c]int tun_open(char *dev, enum if_mode_enum mode){        struct ifreq ifr;">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="关于 tun/tap 设备">
+<meta name="twitter:description" content="长期以来对tun和tap这对兄弟分不太清，今天下定决心研究了一下代码，总算是搞明白了。
+首先它们都是从/dev/net/tun里ioctl出来的虚拟设备，一个是通过IFF_TUN，另一个是 IFF_TAP。最好的例子莫过于vpnc里面的代码了。
+[c]int tun_open(char *dev, enum if_mode_enum mode){        struct ifreq ifr;">
+
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post--e5-85-b3-e4-ba-8e-tuntap" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2011/06/19/-e5-85-b3-e4-ba-8e-tuntap/" class="article-date">
+  <time datetime="2011-06-20T06:30:06.000Z" itemprop="datePublished">Jun 19 2011</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux-Application/">Linux Application</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      关于 tun/tap 设备
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>长期以来对tun和tap这对兄弟分不太清，今天下定决心研究了一下代码，总算是搞明白了。</p>
+<p>首先它们都是从/dev/net/tun里ioctl出来的虚拟设备，一个是通过IFF_TUN，另一个是 IFF_TAP。最好的例子莫过于vpnc里面的代码了。</p>
+<p>[c]<br>int tun_open(char *dev, enum if_mode_enum mode)<br>{<br>        struct ifreq ifr;<br>        int fd, err;</p>
+<pre><code>    <span class="keyword">if</span> ((fd <span class="subst">=</span> open(<span class="string">"/dev/net/tun"</span>, O_RDWR)) <span class="subst">&amp;</span><span class="literal">lt</span>; <span class="number">0</span>) {
+            error(<span class="number">0</span>, errno,
+                    <span class="subst">&amp;</span>quot;can<span class="subst">&amp;</span><span class="variable">#039</span>;t open /dev/net/tun, check that it is either device char <span class="number">10</span> <span class="number">200</span> <span class="literal">or</span> (<span class="keyword">with</span> DevFS) a symlink <span class="keyword">to</span> <span class="built_in">..</span>/misc/net/tun (<span class="literal">not</span> misc/net/tun)<span class="subst">&amp;</span>quot;);
+            <span class="keyword">return</span> <span class="subst">-</span><span class="number">1</span>;
+    }
+
+    memset(<span class="subst">&amp;</span>amp;ifr, <span class="number">0</span>, sizeof(ifr));
+    ifr<span class="built_in">.</span>ifr_flags <span class="subst">=</span> ((mode <span class="subst">==</span> IF_MODE_TUN) <span class="subst">?</span> IFF_TUN : IFF_TAP) <span class="subst">|</span> IFF_NO_PI;
+    <span class="keyword">if</span> (<span class="subst">*</span>dev)
+            strncpy(ifr<span class="built_in">.</span>ifr_name, dev, IFNAMSIZ);
+
+    <span class="keyword">if</span> ((err <span class="subst">=</span> ioctl(fd, TUNSETIFF, (<span class="literal">void</span> <span class="subst">*</span>)<span class="subst">&amp;</span>amp;ifr)) <span class="subst">&amp;</span><span class="literal">lt</span>; <span class="number">0</span>) {
+            close(fd);
+            <span class="keyword">return</span> err;
+    }
+    strcpy(dev, ifr<span class="built_in">.</span>ifr_name);
+    <span class="keyword">return</span> fd;
+</code></pre><p>}<br>[/c]</p>
+<p>用的ioctl的命令都是同一个TUNSETIFF。</p>
+<p>虽然是出自一个娘，但它们仍然有大的不同。tun是点对点的设备，而tap是一个普通的以太网卡设备。也就是说，tun设备其实完全不需要有物理地址的！它收到和发出的包不需要arp，也不需要有数据链路层的头！而tap设备则是有完整的物理地址和完整的以太网帧。</p>
+<p>用一个实际的例子来验证一下：</p>
+<pre>
+tap0      Link encap:Ethernet  HWaddr 0E:78:39:78:E7:A7
+          inet addr:192.168.1.109  Bcast:192.168.1.255  Mask:255.255.255.0
+          inet6 addr: fe80::c78:39ff:fe78:e7a7/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:21 overruns:0 carrier:0
+          collisions:0 txqueuelen:500
+          RX bytes:0 (0.0 b)  TX bytes:0 (0.0 b)
+
+tun0      Link encap:UNSPEC  HWaddr 00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+          inet addr:X.X.X.X  P-t-P:X.X.X.X  Mask:255.255.255.255
+          UP POINTOPOINT RUNNING NOARP MULTICAST  MTU:1412  Metric:1
+          RX packets:6 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:6 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:500
+          RX bytes:690 (690.0 b)  TX bytes:402 (402.0 b)
+
+% ethtool -i tun0
+driver: tun
+version: 1.6
+firmware-version: N/A
+bus-info: tun
+% ethtool -i tap0
+driver: tun
+version: 1.6
+firmware-version: N/A
+bus-info: tap
+</pre>
+
+<p>继续回来看代码。还是vpnc的代码 tunip.c，看它发送的时候做了什么处理：</p>
+<p>[c]<br>static int tun_send_ip(struct sa_block <em>s)<br>{<br>        int sent, len;<br>        uint8_t </em>start;</p>
+<pre><code>    start <span class="subst">=</span> s<span class="subst">-&amp;</span><span class="literal">gt</span>;ipsec<span class="built_in">.</span><span class="literal">rx</span><span class="built_in">.</span>buf;
+    len   <span class="subst">=</span> s<span class="subst">-&amp;</span><span class="literal">gt</span>;ipsec<span class="built_in">.</span><span class="literal">rx</span><span class="built_in">.</span>buflen;
+
+    <span class="keyword">if</span> (opt_if_mode <span class="subst">==</span> IF_MODE_TAP) {
+</code></pre><h1 id="ifndef_sun">ifndef <strong>sun</strong></h1>
+<pre><code>            /<span class="keyword">*</span>
+             <span class="keyword">*</span> Add ethernet header before s-&amp;gt;ipsec.rx.buf where
+             <span class="keyword">*</span> at least ETH_HLEN bytes should be available.
+             <span class="keyword">*</span>/
+            struct ether_header <span class="keyword">*</span>eth_hdr = (struct ether_header <span class="keyword">*</span>) (s-&amp;gt;ipsec.rx.buf - ETH_HLEN);
+
+            memcpy(eth_hdr-&amp;gt;ether_dhost, s-&amp;gt;tun_hwaddr, ETH_ALEN);
+            memcpy(eth_hdr-&amp;gt;ether_shost, s-&amp;gt;tun_hwaddr, ETH_ALEN);
+
+            /<span class="keyword">*</span> Use a different MAC as source <span class="keyword">*</span>/
+            eth_hdr-&amp;gt;ether_shost[0] ^= 0x80; /<span class="keyword">*</span> toggle some visible bit <span class="keyword">*</span>/
+            eth_hdr-&amp;gt;ether_type = htons(ETHERTYPE_IP);
+
+            start = (uint8_t <span class="keyword">*</span>) eth_hdr;
+            len += ETH_HLEN;
+</code></pre><h1 id="endif">endif</h1>
+<pre><code>    }
+
+    sent = tun_write(<span class="keyword">s</span>-&amp;gt;tun_fd, start, <span class="built_in">len</span>);
+    <span class="keyword">if</span> (sent != <span class="built_in">len</span>)
+            syslog(LOG_ERR, <span class="string">"truncated in: %d -&amp;gt; %dn"</span>, <span class="built_in">len</span>, sent);
+    hex_dump(<span class="string">"Tx pkt"</span>, start, <span class="built_in">len</span>, NULL);
+    <span class="keyword">return</span> <span class="number">1</span>;
+</code></pre><p>}<br>[/c]</p>
+<p>从上面的代码我们很容易看出：</p>
+<p>1. 所谓发送就是对/dev/net/tun进行写操作。对称的，所谓接收就是读操作。<br>2. 如果是tap设备，发送时还要多加一个以太网的头。</p>
+<p>我们再看内核中对应的代码是怎么处理的，在drivers/net/tun.c 中的 tun_get_user()：</p>
+<p>[c]<br>        switch (tun-&gt;flags &amp; TUN_TYPE_MASK) {<br>        case TUN_TUN_DEV:<br>                if (tun-&gt;flags &amp; TUN_NO_PI) {<br>                //…<br>                }</p>
+<pre><code>            skb_reset_mac_header(skb);
+            skb-&amp;<span class="keyword">gt</span>;protocol = pi.proto;
+            skb-&amp;<span class="keyword">gt</span>;dev = tun-&amp;<span class="keyword">gt</span>;dev;
+            <span class="keyword">break</span>;
+    case TUN_TAP_DEV:
+            skb-&amp;<span class="keyword">gt</span>;protocol = eth_type_trans(skb, tun-&amp;<span class="keyword">gt</span>;dev);
+            <span class="keyword">break</span>;
+</code></pre><p>[/c]</p>
+<p>内核直接忽略了 tun 设备的以太网帧。现在，整个流程我们就已经很清楚了。</p>
+<p>可是，上面只是用vpnc的例子。我们知道，实际中像kvm虚拟机才是tap的使用大户，我们很有必要看一下kvm是怎么使用tap设备的。为了方便起见，我们不看 qemu-kvm，因为它的代码过于复杂，我们看一个简单的kvm tools的实现。</p>
+<p>这部分的主要代码在 virtio/net.c里面，virtio_net__tap_init()是在启动虚拟机时初始化tap设备的，然后启动两个线程分别监控tap设备的收发，代码是virtio_net_rx_thread()和virtio_net_tx_thread()，它们负责把进来的IO操作转换成对/dev/net/tun的读写。可是，IO操作是怎么进来的呢？这是关键。</p>
+<p>顺着代码里的“针”一个个找下去，我们不难发现，IO操作是由kvm模拟出来的。首先它会把CPU指令中对应的IO操作进行转化，这部分在内核中，arch/x86/kvm/emulate.c::x86_emulate_insn()：</p>
+<p>[c]<br>        do_io_in:<br>                c-&gt;dst.bytes = min(c-&gt;dst.bytes, 4u);<br>                if (!emulator_io_permited(ctxt, ops, c-&gt;src.val, c-&gt;dst.bytes)) {<br>                        emulate_gp(ctxt, 0);<br>                        goto done;<br>                }<br>                if (!pio_in_emulated(ctxt, ops, c-&gt;dst.bytes, c-&gt;src.val,<br>                                     &amp;c-&gt;dst.val))<br>                        goto done; /<em> IO is needed </em>/<br>                break;</p>
+<p>[/c]<br>pio_in_emulated() 调用的 emulator_pio_in_emulated() 会进一步触发KVM_EXIT_IO：</p>
+<p>[c]<br>static int emulator_pio_in_emulated(int size, unsigned short port, void <em>val,<br>                             unsigned int count, struct kvm_vcpu </em>vcpu)<br>{<br>        if (vcpu-&gt;arch.pio.count)<br>                goto data_avail;</p>
+<pre><code>    trace_kvm_pio(<span class="number">0</span>, port, size, <span class="number">1</span>);
+
+    vcpu<span class="subst">-&amp;</span><span class="literal">gt</span>;arch<span class="built_in">.</span>pio<span class="built_in">.</span>port <span class="subst">=</span> port;
+    vcpu<span class="subst">-&amp;</span><span class="literal">gt</span>;arch<span class="built_in">.</span>pio<span class="built_in">.</span><span class="keyword">in</span> <span class="subst">=</span> <span class="number">1</span>;
+    vcpu<span class="subst">-&amp;</span><span class="literal">gt</span>;arch<span class="built_in">.</span>pio<span class="built_in">.</span>count  <span class="subst">=</span> count;
+    vcpu<span class="subst">-&amp;</span><span class="literal">gt</span>;arch<span class="built_in">.</span>pio<span class="built_in">.</span>size <span class="subst">=</span> size;
+
+    <span class="keyword">if</span> (<span class="subst">!</span>kernel_pio(vcpu, vcpu<span class="subst">-&amp;</span><span class="literal">gt</span>;arch<span class="built_in">.</span>pio_data)) {
+    data_avail:
+            memcpy(val, vcpu<span class="subst">-&amp;</span><span class="literal">gt</span>;arch<span class="built_in">.</span>pio_data, size <span class="subst">*</span> count);
+            vcpu<span class="subst">-&amp;</span><span class="literal">gt</span>;arch<span class="built_in">.</span>pio<span class="built_in">.</span>count <span class="subst">=</span> <span class="number">0</span>;
+            <span class="keyword">return</span> <span class="number">1</span>;
+    }
+
+    vcpu<span class="subst">-&amp;</span><span class="literal">gt</span>;run<span class="subst">-&amp;</span><span class="literal">gt</span>;exit_reason <span class="subst">=</span> KVM_EXIT_IO;
+    vcpu<span class="subst">-&amp;</span><span class="literal">gt</span>;run<span class="subst">-&amp;</span><span class="literal">gt</span>;io<span class="built_in">.</span>direction <span class="subst">=</span> KVM_EXIT_IO_IN;
+    vcpu<span class="subst">-&amp;</span><span class="literal">gt</span>;run<span class="subst">-&amp;</span><span class="literal">gt</span>;io<span class="built_in">.</span>size <span class="subst">=</span> size;
+    vcpu<span class="subst">-&amp;</span><span class="literal">gt</span>;run<span class="subst">-&amp;</span><span class="literal">gt</span>;io<span class="built_in">.</span>data_offset <span class="subst">=</span> KVM_PIO_PAGE_OFFSET <span class="subst">*</span> PAGE_SIZE;
+    vcpu<span class="subst">-&amp;</span><span class="literal">gt</span>;run<span class="subst">-&amp;</span><span class="literal">gt</span>;io<span class="built_in">.</span>count <span class="subst">=</span> count;
+    vcpu<span class="subst">-&amp;</span><span class="literal">gt</span>;run<span class="subst">-&amp;</span><span class="literal">gt</span>;io<span class="built_in">.</span>port <span class="subst">=</span> port;
+
+    <span class="keyword">return</span> <span class="number">0</span>;
+</code></pre><p>}<br>[/c]</p>
+<p>内核部分结束，转到用户空间，用户空间的 vcpu 会捕捉到这个事件，在 kvm-cpu.c::kvm_cpu__start() 中：</p>
+<p>[c]<br>                case KVM_EXIT_IO: {<br>                        bool ret;</p>
+<pre><code>                    ret = kvm__emulate_io(cpu-&amp;<span class="keyword">gt</span>;kvm,
+                                    cpu-&amp;<span class="keyword">gt</span>;kvm_run-&amp;<span class="keyword">gt</span>;io.port,
+                                    (u8 *)cpu-&amp;<span class="keyword">gt</span>;kvm_run +
+                                    cpu-&amp;<span class="keyword">gt</span>;kvm_run-&amp;<span class="keyword">gt</span>;io.data_offset,
+                                    cpu-&amp;<span class="keyword">gt</span>;kvm_run-&amp;<span class="keyword">gt</span>;io.direction,
+                                    cpu-&amp;<span class="keyword">gt</span>;kvm_run-&amp;<span class="keyword">gt</span>;io.size,
+                                    cpu-&amp;<span class="keyword">gt</span>;kvm_run-&amp;<span class="keyword">gt</span>;io.count);
+
+                    <span class="keyword">if</span> (!ret)
+                            <span class="keyword">goto</span> panic_kvm;
+                    <span class="keyword">break</span>;
+            }
+</code></pre><p>[/c]<br>kvm__emulate_io() 就会调用在 virtio/net.c 注册的 virtio_net_pci_io_in()，数据就这样流向了 tap 网卡了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2011/06/19/-e5-85-b3-e4-ba-8e-tuntap/" data-id="fqoysixjk84nsdsd" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2011/06/23/-e5-90-84-e7-a7-8d-tunnel/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          各种 tunnel
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2011/06/18/-e5-85-b3-e4-ba-8e-loop-device/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">关于 loop device</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Book-Reviews/">Book Reviews</a><span class="category-list-count">18</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/China/">China</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Collection/">Collection</a><span class="category-list-count">25</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">324</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux-Application/">Linux Application</a><span class="category-list-count">73</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux-Kernel/">Linux Kernel</a><span class="category-list-count">64</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Love/">Love</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Movies/">Movies</a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/">Programming</a><span class="category-list-count">152</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Science-Fiction/">Science Fiction</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Travel/">Travel</a><span class="category-list-count">19</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/geek/">geek</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/handling/">handling</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/joke/">joke</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/signal/">signal</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/unix/">unix</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/geek/" style="font-size: NaNpx;">geek</a><a href="/tags/handling/" style="font-size: NaNpx;">handling</a><a href="/tags/joke/" style="font-size: NaNpx;">joke</a><a href="/tags/linux/" style="font-size: NaNpx;">linux</a><a href="/tags/signal/" style="font-size: NaNpx;">signal</a><a href="/tags/unix/" style="font-size: NaNpx;">unix</a><a href="/tags/vim/" style="font-size: NaNpx;">vim</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">August 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">December 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">October 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">September 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">August 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">February 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01/">January 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12/">December 2012</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">November 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">October 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">September 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">August 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/07/">July 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">April 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">March 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">February 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">January 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/12/">December 2011</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">November 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/10/">October 2011</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">September 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08/">August 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/07/">July 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/06/">June 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/05/">May 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04/">April 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03/">March 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/02/">February 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/01/">January 2011</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/12/">December 2010</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/11/">November 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/10/">October 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/09/">September 2010</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08/">August 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07/">July 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06/">June 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05/">May 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04/">April 2010</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03/">March 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02/">February 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01/">January 2010</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12/">December 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11/">November 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10/">October 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09/">September 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08/">August 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07/">July 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/06/">June 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/05/">May 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04/">April 2009</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03/">March 2009</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02/">February 2009</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01/">January 2009</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12/">December 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/11/">November 2008</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/10/">October 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09/">September 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08/">August 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07/">July 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06/">June 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05/">May 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04/">April 2008</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03/">March 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02/">February 2008</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01/">January 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12/">December 2007</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11/">November 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10/">October 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09/">September 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08/">August 2007</a><span class="archive-list-count">31</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07/">July 2007</a><span class="archive-list-count">34</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06/">June 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05/">May 2007</a><span class="archive-list-count">25</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04/">April 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03/">March 2007</a><span class="archive-list-count">50</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02/">February 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01/">January 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12/">December 2006</a><span class="archive-list-count">5</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2014/08/12/linux-e7-bd-91-e7-bb-9c-e6-b5-81-e9-87-8f-e6-8e-a7-e5-88-b6-ef-bc-88-e4-b8-80-ef-bc-89/">Linux 网络流量控制（零）</a>
+          </li>
+        
+          <li>
+            <a href="/2014/08/01/ottawa-linux-symposium/">Ottawa Linux Symposium</a>
+          </li>
+        
+          <li>
+            <a href="/2014/05/31/skbuff-e5-86-85-e5-ad-98-e6-a8-a1-e5-9e-8b/">skbuff 内存模型</a>
+          </li>
+        
+          <li>
+            <a href="/2014/05/06/-e9-95-bf-e6-9c-9f-e6-8f-90-e4-be-9b-twitter-e5-86-85-e6-8e-a8/">长期提供 Twitter 内推</a>
+          </li>
+        
+          <li>
+            <a href="/2014/01/30/-e6-88-91-e7-9a-842013-ef-bc-9a-e6-88-91-e6-9d-a5-e5-88-b0-e4-ba-86-e7-be-8e-e5-9b-bd/">我的2013：我来到了美国</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2015 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+
+  </div>
+</body>
+</html>

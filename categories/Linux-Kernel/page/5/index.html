@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Category: Linux Kernel | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/categories/Linux-Kernel/page/5/">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description">
+
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-git-bisect-e4-bd-bf-e7-94-a8-e4-bd-93-e4-bc-9a" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2008/06/05/git-bisect-e4-bd-bf-e7-94-a8-e4-bd-93-e4-bc-9a/" class="article-date">
+  <time datetime="2008-06-06T00:36:24.000Z" itemprop="datePublished">Jun 5 2008</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux-Kernel/">Linux Kernel</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2008/06/05/git-bisect-e4-bd-bf-e7-94-a8-e4-bd-93-e4-bc-9a/">git-bisect 使用体会</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>今天试着使用了一下git-bisect，收获颇多。总结一下教训：</p>
+<p>1. 不要做git-reset( —hard)，它可能会带来一些很严重的错误，比如：</p>
+<p>fatal: Untracked working tree file ‘drivers/char/hw_random/virtio-rng.c’ would be overwritten by merge.</p>
+<p>这时你只能无奈的重新clone。</p>
+<p>2. 一定要找准good的起点，可以通过git-checkout -b来一个个测试寻找。</p>
+<p>3. 多利用branch，不仅仅是针对bisect，其它场合也适用。</p>
+<p>David Miller用的<a href="http://vger.kernel.org/~davem/cgi-bin/blog.cgi/2008/04/30" target="_blank" rel="external">方法</a>不错，推荐一下。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2008/06/05/git-bisect-e4-bd-bf-e7-94-a8-e4-bd-93-e4-bc-9a/" data-id="6kivdrulx7doriuw" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e5-8f-91-e7-8e-b0-e4-b8-a4-e4-b8-aa-e5-86-85-e6-a0-b8bug" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2008/05/03/-e5-8f-91-e7-8e-b0-e4-b8-a4-e4-b8-aa-e5-86-85-e6-a0-b8bug/" class="article-date">
+  <time datetime="2008-05-04T06:39:44.000Z" itemprop="datePublished">May 3 2008</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux-Kernel/">Linux Kernel</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2008/05/03/-e5-8f-91-e7-8e-b0-e4-b8-a4-e4-b8-aa-e5-86-85-e6-a0-b8bug/">发现两个内核bug</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>两个实实在在的bug，出现在同一个源文件中。</p>
+<p><a href="http://lkml.org/lkml/2008/5/3/102" target="_blank" rel="external">http://lkml.org/lkml/2008/5/3/102</a></p>
+<p><a href="http://lkml.org/lkml/2008/5/3/97" target="_blank" rel="external">http://lkml.org/lkml/2008/5/3/97</a></p>
+<p>我只能说今天运气实在太好了，或许我该出去买张彩票。;-)</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2008/05/03/-e5-8f-91-e7-8e-b0-e4-b8-a4-e4-b8-aa-e5-86-85-e6-a0-b8bug/" data-id="xfvqeok88meugbf1" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e5-85-b3-e4-ba-8elinux-e7-9a-84syslog" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2008/04/05/-e5-85-b3-e4-ba-8elinux-e7-9a-84syslog/" class="article-date">
+  <time datetime="2008-04-06T05:34:34.000Z" itemprop="datePublished">Apr 5 2008</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux-Kernel/">Linux Kernel</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2008/04/05/-e5-85-b3-e4-ba-8elinux-e7-9a-84syslog/">关于Linux的syslog</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>内核中printk发出的消息是这样传递到用户空间的。</p>
+<p>内核留给用户空间的接口是syslog(2)，glibc对它进行了包装，于是就有了klogctl(3)和syslog(3)。</p>
+<p>先由klogd通过klogctl(3)搜集内核消息（见<a href="http://cvs.infodrom.org/sysklogd/klogd.c?rev=1.26" target="_blank" rel="external">sysklogd/klogd.c</a>），并通过自己实现的syslog()（注意：和syslog(2)，syslog(3)都不一样）传递给 syslogd。syslogd根据/etc/syslog.conf的配置情况进行记录。syslogd提供的是一个统一的方式，它不单单记录内核的消息，还包括其它服务器进程的消息，比如Apache，vsftp。</p>
+<p>klogd和syslogd用的syslog()的实现用的是Unix domain socket，如果你看源代码（<a href="http://cvs.infodrom.org/sysklogd/syslog.c?rev=1.6" target="_blank" rel="external">sysklogd/syslog.c</a>）的话很容易就知道这一点。所以，所谓的syslog()/openlog()/closelog()等接口无非就是对这个socket操作的一个包装。这也就清楚了klogd和syslogd之间的通信方式。</p>
+<p>根据syslogd的源代码（<a href="http://cvs.infodrom.org/sysklogd/syslogd.c?rev=1.69" target="_blank" rel="external">sysklogd/syslogd.c</a>）来看，记录日志也可以是发送到远程的，而那个socket就是用的inet socket了。</p>
+<p>多说一句，其实内核给出的oops只是一堆地址，而把地址和相应的符号对应起来也是由klogd完成的。<a href="http://cvs.infodrom.org/sysklogd/ksym.c?rev=1.21" target="_blank" rel="external">sysklogd/ksym.c</a>里有搜索System.map的过程，搜索的顺序是：<br>“/boot/System.map”<br>“/System.map”<br>“/usr/src/linux/System.map”</p>
+<p>这就是最好的证据。一些细心的人或许还会奇怪，我们不是还有/proc/kallsyms么？怎么不用它？我知道的解释是：为了照顾那些没有/proc文件系统的Linux系统。;-)</p>
+<p>我们再来看syslog(3)，即glibc实现的syslog()。看一下glibc中的源代码，我们就会发现glibc中的syslog和sysklogd自己的实现类似，也是用unix domain socket来实现的。具体可以看：glibc/misc/syslog.c。</p>
+<p>这两种实现之所以都能够传递给syslogd，是因为它们的unix domain socket都是用的/dev/log这个文件。</p>
+<p>而我们最常用的查看内核消息的命令dmesg(1)和上面两位守候进程没太大关系，它是直接通过glibc的klogctl(3)函数来读取内核消息的。详细见：util-linux-2.13-pre7/sys-utils/dmesg.c。</p>
+<p>如果想了解更多关于syslogd的东西，可以参考<a href="http://blog.chinaunix.net/u/24390/showart_226830.html" target="_blank" rel="external">这篇文章</a>。</p>
+<p>想了解内核的中对syslog(2)的实现，可以参考内核源代码：kernel/printk.c。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2008/04/05/-e5-85-b3-e4-ba-8elinux-e7-9a-84syslog/" data-id="crq28oxmvhq6qnfn" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e5-85-b3-e4-ba-8ee820" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2008/03/26/-e5-85-b3-e4-ba-8ee820/" class="article-date">
+  <time datetime="2008-03-26T22:44:20.000Z" itemprop="datePublished">Mar 26 2008</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux-Kernel/">Linux Kernel</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2008/03/26/-e5-85-b3-e4-ba-8ee820/">关于e820</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>很久没接触BIOS中断这么陈旧的东西，再次挖出来都有些生疏了。</p>
+<p>e820是和BIOS的一个中断相关的，具体说是int 0x15。之所以叫e820是因为在用这个中断时ax必须是0xe820。这个中断的作用是得到系统的内存布局。因为系统内存会有很多段，每段的类型属性也不一样，所以这个查询是“迭代式”的，每次求得一个段。</p>
+<p>我们看内核源代码。主要涉及两个文件：arch/x86/boot/memory.c和arch/x86/kernel/e820_32.c。我们已经很幸运了，这部分代码已经用C重写过了。你可能会奇怪，启动调用e820时我们还在实模式，怎么能用C呢？答案是，这里用的是16位的C。gcc早已经支持.code16gcc模式了。</p>
+<p>看detect_memory_e820()函数，里面就是e820的本质。它把int 0x15放到一个do-while循环里，每次得到的一个内存段放到struct e820entry里，而struct e820entry的结构正是e820返回结果的结构！而像其它启动时获得的结果一样，最终都会被放到boot_params里，e820被放到了boot_params.e820_map。</p>
+<p>如果你对struct e820entry还有疑问，你可以看一下arch/x86/kernel/e820_32.c::print_memory_map()，看看里面是怎么使用它的。</p>
+<p>当然了，在arch/x86/boot/memory.c里，你还会看到另外两个利用int 0x15查询内存的函数，不过用途不一样了。</p>
+<p>凡是弄过操作系统启动这块的，肯定都有这么一个感慨：我的东西该往哪里放啊！怎么个放法啊！恩，或许Linux这种方式值得我们借鉴，它的虽然很科学，但也很复杂。那有啥办法呢，BIOS这块本来就已经很乱了！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2008/03/26/-e5-85-b3-e4-ba-8ee820/" data-id="5b2q2lpbhk9at32w" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-git-e4-bd-bf-e7-94-a8-e5-b0-8f-e7-bb-93" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2008/02/24/git-e4-bd-bf-e7-94-a8-e5-b0-8f-e7-bb-93/" class="article-date">
+  <time datetime="2008-02-25T04:45:41.000Z" itemprop="datePublished">Feb 24 2008</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux-Kernel/">Linux Kernel</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2008/02/24/git-e4-bd-bf-e7-94-a8-e5-b0-8f-e7-bb-93/">git使用小结</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>1. git-config</p>
+<p>配置git，一般需要配置的是user.name，user.email，有时sendemail.smtpserver也要配置，比如，我使用msmtp：</p>
+<p>git-config —global sendemail.smtpserver /usr/local/bin/msmtp</p>
+<p>如果你仅仅是想给这一个项目配置，把—global选项去掉。查看配置的选项是—list。</p>
+<ol>
+<li>git-pull</li>
+</ol>
+<p>git-pull没必要带后面那长长的url（-_-b 我那么用了好多次，不过我用的是!git-pull）。如果你在给Linux内核这样的项目工作，记得git-pull之前检查是不是在master分支。</p>
+<p>3. git-format-patch</p>
+<p>如果发送多于一个补丁，最好用[PATCH n/m]的形式，加上-n。加signed-off-by那行是-s。指定为几次commit生成补丁，直接加数字，比如，</p>
+<p>$ git-format-patch -3</p>
+<p>检查补丁是—check，最好加上这个。</p>
+<p>4. git-send-email</p>
+<p>如果一次提交补丁比较多，最好用—no-chain-reply-to，因为如果不用的话，在thread嵌套会太深，不利于别人阅读。这个也可以通过选项sendemail.chainreplyto来控制。—signed-off-by-cc，要加上，可以省去手工处理的麻烦。—compose用来编辑[PATCH 0/m]，这个一般是对整个patchset的描述。—smtp-server，如果你不想用git-config指定的话，用它也行。—cc和—to就不用说了。</p>
+<p>5. git-commit</p>
+<p>在git-commit之前最好git-add。git-commit几个常用的选项有：-s 会增加Signed-off-by行，-e编辑commit message，-a表示all，-m是指定commit信息。同样，删除文件是先git-rm。查看commit列表用git-rev-list，查看某个commit用git-show，查看commit的日志用git-log，-p是以补丁的形式查看。</p>
+<p>6. 其它</p>
+<p>git-diff也可以比较不同版本之间的差异，某个版本的某个文件的差异，如：</p>
+<p>$ git-diff v2.6.22<br>$ git diff v2.6.20 init/main.c<br>$ git-diff v2.6.23 v2.6.24-rc1 init/main.c</p>
+<p>git-whatchanged也差不多：</p>
+<p>$ git-whatchanged -p init/main.c</p>
+<p>7.错误提交了commit怎么办？</p>
+<p>a) git-revert</p>
+<p>这个本身就会产生一个commit，如果用得多了会让你的log看起来不那么干净。;-)</p>
+<p>b) git-reset</p>
+<p>用这个要当心，它会把那个commit之后的commit全部删除。一个好的办法是：先建立一个临时的分支，然后再git-reset，再git-rebase，最后再删除临时的分支。 详细可以看<a href="http://git.or.cz/gitwiki/GitTips" target="_blank" rel="external">这里</a>。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2008/02/24/git-e4-bd-bf-e7-94-a8-e5-b0-8f-e7-bb-93/" data-id="96leqwhbib0wv1ht" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e5-86-85-e6-a0-b8-e7-b4-a7-e6-80-a5-e5-8d-87-e7-ba-a7" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2008/02/11/-e5-86-85-e6-a0-b8-e7-b4-a7-e6-80-a5-e5-8d-87-e7-ba-a7/" class="article-date">
+  <time datetime="2008-02-12T00:47:58.000Z" itemprop="datePublished">Feb 11 2008</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux-Kernel/">Linux Kernel</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2008/02/11/-e5-86-85-e6-a0-b8-e7-b4-a7-e6-80-a5-e5-8d-87-e7-ba-a7/">内核紧急升级</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>vmsplice(2)惹祸了，爆出了一个安全漏洞，可以很容易提升root权限～！受影响的内核一大片。详细见下面这个bugreport：</p>
+<p><a href="https://bugzilla.redhat.com/show_bug.cgi?id=432229" target="_blank" rel="external">https://bugzilla.redhat.com/show_bug.cgi?id=432229</a></p>
+<p>这个bug很快就被修复：</p>
+<p><a href="http://lkml.org/lkml/2008/2/10/118" target="_blank" rel="external">http://lkml.org/lkml/2008/2/10/118 </a></p>
+<p>stable维护者今天接连推出3个稳定版升级皆是为了修复这个漏洞，见下：</p>
+<p>2.6.24.2<br><a href="http://lkml.org/lkml/2008/2/11/17" target="_blank" rel="external"> http://lkml.org/lkml/2008/2/11/17</a></p>
+<p>2.6.23.16<br><a href="http://lkml.org/lkml/2008/2/11/19" target="_blank" rel="external">http://lkml.org/lkml/2008/2/11/19</a></p>
+<p>2.6.22.18<br><a href="http://lkml.org/lkml/2008/2/11/27" target="_blank" rel="external">http://lkml.org/lkml/2008/2/11/27</a></p>
+<p>Fedora似乎也已经推出了新的kernel package，各位Fedora用户请尽快升级。</p>
+<p>BTW，在Fedora7上试了试那个expliot，怎么不起作用呢？总是段错误～～</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2008/02/11/-e5-86-85-e6-a0-b8-e7-b4-a7-e6-80-a5-e5-8d-87-e7-ba-a7/" data-id="bkowbfn550chs5xn" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e8-99-9a-e6-8b-9f-e6-9c-ba-e5-95-8a-ef-bc-8c-e8-99-9a-e6-8b-9f-e6-9c-ba-ef-bd-9e-ef-bc-81" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2007/10/28/-e8-99-9a-e6-8b-9f-e6-9c-ba-e5-95-8a-ef-bc-8c-e8-99-9a-e6-8b-9f-e6-9c-ba-ef-bd-9e-ef-bc-81/" class="article-date">
+  <time datetime="2007-10-29T03:07:49.000Z" itemprop="datePublished">Oct 28 2007</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux-Kernel/">Linux Kernel</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2007/10/28/-e8-99-9a-e6-8b-9f-e6-9c-ba-e5-95-8a-ef-bc-8c-e8-99-9a-e6-8b-9f-e6-9c-ba-ef-bd-9e-ef-bc-81/">虚拟机啊，虚拟机～！</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>前一段时间不怎么走运，配了两个虚拟机都没配好，相当郁闷。</p>
+<p>这两天否极泰来。Qemu在Fengguang Wu的指点下终于又跑起来了，原因还是配置内核时一些选项没有设置成y，郁闷。相当不容易啊，这次说什么不能不备份了，也顺便上传到网站上一份，可以在<a href="http://wangcong.org/down/config.bak" target="_blank" rel="external">&lt;-这里-&gt;</a>看到。顺便说一句，FC7自带的虚拟机管理器不错，不过调试内核还是不能用它。没事玩儿的时候用用不错。而且FC7把Xen也给集成了，很强悍，可惜我还不知道怎么用它……</p>
+<p>另一个虚拟机是UML，可能有不少人还不知道它，它其实是在用户空间的运行的Linux，把Linux内核放到一个用户空间进程里来跑。这两天看它的源代码时发现，其实它的中断什么的全都是用用户空间的东西模拟出来的。UML其实不需要多麻烦的配置，关键是我正好赶上UML子系统出问题（我用的是非稳定版内核），去UML用户邮件列表上发了N个邮件问Jeff，然后加了三四个patch之后，UML才总算运行起来。使用当前Linu-tree的同学可以试一下Jeff和Al的补丁[1]，以及Al的另一个补丁[2]，加这三个patch之后UML就可以顺利运行了。</p>
+<p>UML其实挺好用的，而且编译迅速，以后就准备用它来测试内核了。现在一个很关键的问题是，虚拟机和主机之间的通信问题。Qemu以前弄好过，可现在又不是怎么弄了。UML还没有思路。看来又得折腾一阵子了……</p>
+<p>[1] <a href="http://marc.info/?l=linux-kernel&amp;m=119332492222601&amp;q=raw" target="_blank" rel="external">http://marc.info/?l=linux-kernel&amp;m=119332492222601&amp;q=raw</a></p>
+<p>[2] <a href="http://lkml.org/lkml/2007/10/27/253" target="_blank" rel="external">http://lkml.org/lkml/2007/10/27/253</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2007/10/28/-e8-99-9a-e6-8b-9f-e6-9c-ba-e5-95-8a-ef-bc-8c-e8-99-9a-e6-8b-9f-e6-9c-ba-ef-bd-9e-ef-bc-81/" data-id="hxc5bushbjfk1iuz" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e6-b7-b1-e5-85-a5-e7-90-86-e8-a7-a3linux-e5-86-85-e6-a0-b8-e6-9e-84-e5-bb-ba-e7-b3-bb-e7-bb-9f-ef-bc-88-e4-b8-80-ef-bc-89" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2007/10/25/-e6-b7-b1-e5-85-a5-e7-90-86-e8-a7-a3linux-e5-86-85-e6-a0-b8-e6-9e-84-e5-bb-ba-e7-b3-bb-e7-bb-9f-ef-bc-88-e4-b8-80-ef-bc-89/" class="article-date">
+  <time datetime="2007-10-26T02:29:47.000Z" itemprop="datePublished">Oct 25 2007</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux-Kernel/">Linux Kernel</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2007/10/25/-e6-b7-b1-e5-85-a5-e7-90-86-e8-a7-a3linux-e5-86-85-e6-a0-b8-e6-9e-84-e5-bb-ba-e7-b3-bb-e7-bb-9f-ef-bc-88-e4-b8-80-ef-bc-89/">深入理解Linux内核构建系统（一）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>Linux内核编译命令 </strong></p>
+<p>作者：西邮 王聪</p>
+<p>｛做人要厚道，转载请注明出处！｝</p>
+<p>make tags<br>生成tags文件，供浏览代码使用。<br>make cscope<br>生成cscope索引文件，也是为了方便浏览源代码。</p>
+<p>make oldconfig<br>在旧的.config基础上生成新的.config，非常有用。<br>make silentoldconfig<br>同上，但比较安静。;)<br>make defconfig<br>生成包含全部默认选项的.config文件。<br>make allyesconfig<br>生成包含全部选项的.config文件。<br>make allnoconfig<br>拒绝全部选项。<br>make randconfig<br>随机选择一些选项，一般供开发者测试使用。<br>make {config|xconfig|gconfig|menuconfig}<br>手工选择选项，只是用户界面不同，比如xconfig和gconfig都是图形界面的。</p>
+<p>make<br>默认编译。<br>make bzImage<br>编译生成压缩的内核二进制文件，一般你用到的是这个。<br>make vmlinux<br>编译生成纯二进制内核文件。<br>make modules<br>编译生成内核模块。<br>make modules_install<br>安装生成的内核模块。<br>make {bzdisk|fdimage|isoimage}<br>编译生成启动软盘镜像，或光盘镜像。<br>make install<br>安装编译生成的内核文件，包括设置你的Lilo或Grub。<br>make all<br>等价于vmlinux+modules+bzImage。<br>make rpm<br>构建内核rpm包。<br>make foo/bar/foobar.ko<br>编译单个内核源文件。<br>make headers_install<br>安装内核头文件，默认安装到usr目录。<br>make M=some/sub/dir<br>编译一个指定的目录。<br>make O=/path/to/some/dir<br>把编译过程中生成的文件都放到指定目录中去。<br>make C={1|2}<br>用sparse检查内核代码。<br>make V={0|1|2}<br>控制编译过程中输出信息的多少。</p>
+<p>make help<br>列出所有的make目标及其相关描述。<br>make kernelversion<br>输出Makefile里读到的内核版本信息。<br>make kernelrelease<br>输出内核发行标识。</p>
+<p>make {rpm-pkg|deb-pkg|tar-pkg|targz-pkg|tarbz2-pkg}<br>构建{rpm|deb|tar|tar.gz|tar.bz2}格式的内核包。</p>
+<p>make {htmldocs|mandocs|pdfdocs|psdocs|xmldocs}<br>生成{html|man|pdf|ps|xml}格式的内核文档。</p>
+<p>make clean<br>清理生成文件，但会保留.config和一些模块文件。<br>make mrproper<br>清理全部文件，包括.config和一些备份文件。<br>make distclean<br>在make mrproper的基础上还清理编辑器可能生成的备份文件，patch的rej文件等。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2007/10/25/-e6-b7-b1-e5-85-a5-e7-90-86-e8-a7-a3linux-e5-86-85-e6-a0-b8-e6-9e-84-e5-bb-ba-e7-b3-bb-e7-bb-9f-ef-bc-88-e4-b8-80-ef-bc-89/" data-id="p6bkplsus3ptf2ik" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-been-there-done-that" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2007/10/22/been-there-done-that/" class="article-date">
+  <time datetime="2007-10-23T05:19:05.000Z" itemprop="datePublished">Oct 22 2007</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux-Kernel/">Linux Kernel</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2007/10/22/been-there-done-that/">Been there, done that...</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在crquan的帮助下，总算找到了自己所有汇入Linus内核树的补丁了。可以在这里看到：</p>
+<p><a href="http://git.kernel.org/?p=linux%2Fkernel%2Fgit%2Ftorvalds%2Flinux-2.6.git&amp;a=search&amp;h=HEAD&amp;st=author&amp;s=xiyou.wangcong%40gmail.com" target="_blank" rel="external">http://git.kernel.org/?p=linux%2Fkernel%2Fgit%2Ftorvalds%2Flinux-2.6.git&amp;a=search&amp;h=HEAD&amp;st=author&amp;s=xiyou.wangcong%40gmail.com </a></p>
+<p>数了数，才十一个。印象中应该比这多，貌似被Andrew拒了几个，-mm树里似乎没了。看来还得努力啊，以后尽量不做clean up这种工作了。得做点儿实际的东西了～～</p>
+<p>加油～！我们还刚刚开始～！^_^</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2007/10/22/been-there-done-that/" data-id="tiy5v8tzey0lhp14" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e4-b8-80-e6-ae-b5-e7-b2-be-e5-bd-a9-e7-9a-84-e6-b1-87-e7-bc-96-e4-bb-a3-e7-a0-81-ef-bc-81" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2007/10/18/-e4-b8-80-e6-ae-b5-e7-b2-be-e5-bd-a9-e7-9a-84-e6-b1-87-e7-bc-96-e4-bb-a3-e7-a0-81-ef-bc-81/" class="article-date">
+  <time datetime="2007-10-19T06:06:40.000Z" itemprop="datePublished">Oct 18 2007</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux-Kernel/">Linux Kernel</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2007/10/18/-e4-b8-80-e6-ae-b5-e7-b2-be-e5-bd-a9-e7-9a-84-e6-b1-87-e7-bc-96-e4-bb-a3-e7-a0-81-ef-bc-81/">一段精彩的汇编代码！</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>无意间在Linux内核中发现这么一段汇编代码，更准确地说应该是gcc内联汇编，写得很精彩，拿出来和大家分享一下。</p>
+<p>代码是在include/asm-i386/string.h中，是针对i386对memcpy做进一步优化。我们知道，一个简单的memcpy其实和strcpy差不多，区别只是前者检查的是复制的个数，而后者检查的是当前字符是否是’’。</p>
+<p>而这显然还有很大的优化余地，首先像这种非常常用的库函数是可以用汇编重写来提高速度的。当然了，可移植性是降低了，但我们可以针对每个平台写一套汇编。这样速度上的提升还是蛮乐观的。其次，memcpy显然没必要一个一个字节地复制，其实我们最多每次也就复制4个字节（当然是在i386上），但如果复制数量大的话，这种提升还是很明显的。于是下面的汇编就出来乐～！</p>
+<p>&nbsp;</p>
+<p><img src="http://wangcong.org/images/memcpy.jpg" alt=""></p>
+<p>评论如下：</p>
+<p>34~36</p>
+<p>rep=&gt;重复</p>
+<p>movsl=&gt;以long为单位拷贝，从from（%esi）到to（%edi），复制n/4次。别担心，这里是i386。</p>
+<p>37~38</p>
+<p>恩，用n/4去和n相与。</p>
+<p>39</p>
+<p>若n/4个4就是全部则完成，跳转到后面的标号，结束。</p>
+<p>40</p>
+<p>还有剩下的，好，把n%4剩下的一个一个字节地复制。</p>
+<p>41~44</p>
+<p>这里看不懂的就去学gcc的嵌入汇编语法吧！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2007/10/18/-e4-b8-80-e6-ae-b5-e7-b2-be-e5-bd-a9-e7-9a-84-e6-b1-87-e7-bc-96-e4-bb-a3-e7-a0-81-ef-bc-81/" data-id="wub3tis2qkx0swei" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+  
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/categories/Linux-Kernel/page/4/">&laquo; Prev</a><a class="page-number" href="/categories/Linux-Kernel/">1</a><span class="space">&hellip;</span><a class="page-number" href="/categories/Linux-Kernel/page/3/">3</a><a class="page-number" href="/categories/Linux-Kernel/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/categories/Linux-Kernel/page/6/">6</a><a class="page-number" href="/categories/Linux-Kernel/page/7/">7</a><a class="extend next" rel="next" href="/categories/Linux-Kernel/page/6/">Next &raquo;</a>
+    </nav>
+  
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Book-Reviews/">Book Reviews</a><span class="category-list-count">18</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/China/">China</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Collection/">Collection</a><span class="category-list-count">25</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">324</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux-Application/">Linux Application</a><span class="category-list-count">73</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux-Kernel/">Linux Kernel</a><span class="category-list-count">64</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Love/">Love</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Movies/">Movies</a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/">Programming</a><span class="category-list-count">152</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Science-Fiction/">Science Fiction</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Travel/">Travel</a><span class="category-list-count">19</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/geek/">geek</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/handling/">handling</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/joke/">joke</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/signal/">signal</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/unix/">unix</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/geek/" style="font-size: NaNpx;">geek</a><a href="/tags/handling/" style="font-size: NaNpx;">handling</a><a href="/tags/joke/" style="font-size: NaNpx;">joke</a><a href="/tags/linux/" style="font-size: NaNpx;">linux</a><a href="/tags/signal/" style="font-size: NaNpx;">signal</a><a href="/tags/unix/" style="font-size: NaNpx;">unix</a><a href="/tags/vim/" style="font-size: NaNpx;">vim</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">August 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">December 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">October 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">September 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">August 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">February 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01/">January 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12/">December 2012</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">November 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">October 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">September 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">August 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/07/">July 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">April 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">March 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">February 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">January 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/12/">December 2011</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">November 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/10/">October 2011</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">September 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08/">August 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/07/">July 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/06/">June 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/05/">May 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04/">April 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03/">March 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/02/">February 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/01/">January 2011</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/12/">December 2010</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/11/">November 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/10/">October 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/09/">September 2010</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08/">August 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07/">July 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06/">June 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05/">May 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04/">April 2010</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03/">March 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02/">February 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01/">January 2010</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12/">December 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11/">November 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10/">October 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09/">September 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08/">August 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07/">July 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/06/">June 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/05/">May 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04/">April 2009</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03/">March 2009</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02/">February 2009</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01/">January 2009</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12/">December 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/11/">November 2008</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/10/">October 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09/">September 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08/">August 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07/">July 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06/">June 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05/">May 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04/">April 2008</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03/">March 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02/">February 2008</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01/">January 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12/">December 2007</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11/">November 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10/">October 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09/">September 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08/">August 2007</a><span class="archive-list-count">31</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07/">July 2007</a><span class="archive-list-count">34</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06/">June 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05/">May 2007</a><span class="archive-list-count">25</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04/">April 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03/">March 2007</a><span class="archive-list-count">50</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02/">February 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01/">January 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12/">December 2006</a><span class="archive-list-count">5</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2014/08/12/linux-e7-bd-91-e7-bb-9c-e6-b5-81-e9-87-8f-e6-8e-a7-e5-88-b6-ef-bc-88-e4-b8-80-ef-bc-89/">Linux 网络流量控制（零）</a>
+          </li>
+        
+          <li>
+            <a href="/2014/08/01/ottawa-linux-symposium/">Ottawa Linux Symposium</a>
+          </li>
+        
+          <li>
+            <a href="/2014/05/31/skbuff-e5-86-85-e5-ad-98-e6-a8-a1-e5-9e-8b/">skbuff 内存模型</a>
+          </li>
+        
+          <li>
+            <a href="/2014/05/06/-e9-95-bf-e6-9c-9f-e6-8f-90-e4-be-9b-twitter-e5-86-85-e6-8e-a8/">长期提供 Twitter 内推</a>
+          </li>
+        
+          <li>
+            <a href="/2014/01/30/-e6-88-91-e7-9a-842013-ef-bc-9a-e6-88-91-e6-9d-a5-e5-88-b0-e4-ba-86-e7-be-8e-e5-9b-bd/">我的2013：我来到了美国</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2015 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+
+  </div>
+</body>
+</html>

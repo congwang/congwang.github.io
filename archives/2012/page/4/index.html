@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Archives: 2012 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/archives/2012/page/4/">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description">
+
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-dracut-introduction-and-overview" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2012/05/28/dracut-introduction-and-overview/" class="article-date">
+  <time datetime="2012-05-29T03:51:50.000Z" itemprop="datePublished">May 28 2012</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux-Application/">Linux Application</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2012/05/28/dracut-introduction-and-overview/">Dracut: Introduction and Overview</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这是我今年去日本<a href="https://events.linuxfoundation.org/events/linuxcon-japan/wang" target="_blank" rel="external">参加 LinuxCon 要讲的</a>，主要是最近在做的一些和 dracut 相关的东西。</p>
+<p>Slides 可以在这里下载：<a href="http://wangcong2015.files.wordpress.com/2012/05/dracut.pdf" target="_blank" rel="external">dracut.pdf</a></p>
+<p>另外，今年日本 LinuxCon 的会议日程<a href="https://events.linuxfoundation.org/events/linuxcon-japan/schedule" target="_blank" rel="external">在这里</a>。今年没有 Linus 大神了，他去年去参加果然是因为 Linux 20周年的原因。</p>
+<p>抱怨一句：好羡慕 <a href="http://amosk.info/blog/" target="_blank" rel="external">akong</a> 他们部门，公司赞助参加 KVM Forum，光去听就可以。不像我这样，没有要讲的东西连去都去不了；就算有东西要讲，公司也不赞助，费用都是回来找 Linux Foudation 包销；开会三天还不能算工作日……唉，同一个公司的人出去开会差距怎么这么大呢……</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2012/05/28/dracut-introduction-and-overview/" data-id="vizcxbull5m1ujpr" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-floyds-cycle-finding-algorithm" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2012/05/25/floyds-cycle-finding-algorithm/" class="article-date">
+  <time datetime="2012-05-25T18:44:57.000Z" itemprop="datePublished">May 25 2012</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Programming/">Programming</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2012/05/25/floyds-cycle-finding-algorithm/">Floyd&#39;s cycle-finding algorithm</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="http://en.wikipedia.org/wiki/Cycle_detection" target="_blank" rel="external">Floyd’s cycle-finding algorithm</a> 是一个经典的算法，用来检测一个链表中是否有环这种问题。因为它使用了两个指针，快的指针被称为兔子，慢的指针被称为乌龟，所以这个算法又被称为“龟兔算法”。</p>
+<p>Emacs 源代码中有它的一个完美实现，我们可以看 src/eval.c 中的 signal_error()。</p>
+<p>[c]<br>/<em> Signal `error’ with message S, and additional arg ARG.<br>   If ARG is not a genuine list, make it a one-element list.  </em>/</p>
+<p>void<br>signal_error (s, arg)<br>     char *s;<br>     Lisp_Object arg;<br>{<br>  Lisp_Object tortoise, hare;</p>
+<p>  hare = tortoise = arg;<br>  while (CONSP (hare))<br>    {<br>      hare = XCDR (hare);<br>      if (!CONSP (hare))<br>        break;</p>
+<pre><code>  <span class="title">hare</span> = XCDR (hare);
+  <span class="title">tortoise</span> = XCDR (tortoise);
+
+  <span class="title">if</span> (EQ (hare, tortoise))
+    <span class="built_in">break</span>;
+}
+</code></pre><p>  if (!NILP (hare))<br>    arg = Fcons (arg, Qnil);    /<em> Make it a list.  </em>/</p>
+<p>  xsignal (Qerror, Fcons (build_string (s), arg));<br>}<br>[/c]</p>
+<p>上面有一些 lisp “词汇” 可能你看不懂，翻译成你看得懂的代码如下。</p>
+<p>[c]</p>
+<p>bool<br>list_has_cycle(NODE <em>list)<br>{<br>  NODE </em>tortoise, *hare;</p>
+<p>  hare = tortoise = list;<br>  while (hare)<br>    {<br>      hare = hare-&gt;next;<br>      if (!hare)<br>        break;</p>
+<pre><code>  hare = hare-&amp;<span class="keyword">gt</span>;<span class="keyword">next</span>;
+  tortoise = tortoise-&amp;<span class="keyword">gt</span>;<span class="keyword">next</span>;
+
+  <span class="keyword">if</span> (hare == tortoise)
+    <span class="keyword">break</span>;
+}
+</code></pre><p>  if (hare)<br>    return true;</p>
+<p>  return false;<br>}<br>[/c] </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2012/05/25/floyds-cycle-finding-algorithm/" data-id="5xdnp5b7v81ouwow" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e6-95-b4-e6-95-b0-e6-ba-a2-e5-87-ba" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2012/05/23/-e6-95-b4-e6-95-b0-e6-ba-a2-e5-87-ba/" class="article-date">
+  <time datetime="2012-05-23T20:46:25.000Z" itemprop="datePublished">May 23 2012</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Programming/">Programming</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2012/05/23/-e6-95-b4-e6-95-b0-e6-ba-a2-e5-87-ba/">整数溢出</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>整数溢出大家都不陌生，可能陌生的是 gcc 对带符号整数溢出的处理。</p>
+<p>先看标准怎么说，对于无符号整数，标准如此描述：</p>
+<blockquote>
+<p>A computation involving unsigned operands can never overflow,<br>because a result that cannot be represented by the resulting unsigned<br>integer type is reduced modulo the number that is one greater than the<br>largest value that can be represented by the resulting type.</p>
+</blockquote>
+<p>换句话说，无符号整数的溢出总是 wrap 回去的，但依旧在无符号整数的表示范围内。</p>
+<p>对于带符号整数的溢出，标准规定是未定义行为：</p>
+<blockquote>
+<p>If an exceptional condition occurs during the evaluation of an expression (that is, if the<br>result is not mathematically defined or not in the range of representable values for its<br> type), the behavior is undefined.</p>
+</blockquote>
+<p>实际上（使用二进制补码），如果溢出的话，两个正数结果会变成负数，超出了正数本身的范围。wikipedia 中如此说：</p>
+<blockquote>
+<p>Most computers distinguish between two kinds of overflow conditions. A carry occurs when the result of an addition or subtraction, considering the operands and result as unsigned numbers, does not fit in the result. Therefore, it is useful to check the carry flag after adding or subtracting numbers that are interpreted as unsigned values. An overflow proper occurs when the result does not have the sign that one would predict from the signs of the operands (e.g. a negative result when adding two positive numbers). Therefore, it is useful to check the overflow flag after adding or subtracting numbers that are represented in two’s complement form (i.e. they are considered signed numbers).</p>
+</blockquote>
+<p>正是因为“未定义”，所以 gcc 会大胆地做出一些可能令你吃惊的优化。看下面的例子：</p>
+<p>[c]</p>
+<h1 id="include">include</h1>
+<h1 id="include-1">include</h1>
+<p>int wrap(int a) {<br>  return (a + 1 &gt; a);<br>}</p>
+<p>int main(void) {<br>  printf(“%sn”, wrap(INT_MAX) ? “no wrap” : “wrapped”);<br>}<br>[/c]</p>
+<p>很好理解，可是 gcc 完全可以如此生成 wrap() 函数的代码：</p>
+<p>00000000004004f0 :<br>  4004f0:       b8 01 00 00 00          mov    $0x1,%eax<br>  4004f5:       c3                      retq</p>
+<p>因为 gcc 假设了带符号的整数从来不会溢出，所以”a + 1 &gt; a” 总会是真，所以直接返回1！这么做完全符合标准，但不符合我们的期待。我们期望 wrap() 函数能够检测是否会溢出。</p>
+<p>为此，gcc 引入了几个相关的命令行选项：-fwrapv，-fstrict-overflow/-fno-strict-overflow，-Wstrict-overflow。简单地说，-fstrict-overflow 就是告诉编译器，带符号整数溢出是未定义的，你可以假设它不会发生，从而继续做优化。而 -fwrapv 是说，带符号整数的溢出是定义好的，就是 wrap，你按照这个定义来编译。gcc 文档中提到：</p>
+<blockquote>
+<p>Using -fwrapv means that integer signed overflow is fully defined: it wraps.  When -fwrapv is used, there is no difference between -fstrict-overflow and -fno-strict-overflow for integers.  With -fwrapv certain types of overflow are permitted. For example, if the compiler gets an overflow when doing arithmetic on constants, the overflowed value can still be used with fwrapv, but not otherwise.</p>
+</blockquote>
+<p>我们加上 -fno-strict-overflow 之后再去编译上面的代码，结果明显不同：</p>
+<p>00000000004004f0 :<br>  4004f0:       8d 47 01                lea    0x1(%rdi),%eax<br>  4004f3:       39 f8                   cmp    %edi,%eax<br>  4004f5:       0f 9f c0                setg   %al<br>  4004f8:       0f b6 c0                movzbl %al,%eax<br>  4004fb:       c3                      retq</p>
+<p>而对于使用二进制补码的机器来说，-fwrapv 和 -fno-strict-overflow 只有细微的区别： -fno-strict-overflow 只是说不去优化，而-fwrapv 明确地定义了溢出的行为。</p>
+<p>Linux 内核中曾经出现一个<a href="https://lkml.org/lkml/2009/7/12/92" target="_blank" rel="external">相关的 bug</a>，是 Linus 大神出手搞定了，他说道：</p>
+<blockquote>
+<p>It looks like ‘fwrapv’ generates more temporaries (possibly for the code<br>that treies to enforce the exact twos-complement behavior) that then all<br>get optimized back out again. The differences seem to be in the temporary<br>variable numbers etc, not in the actual code.</p>
+<p>So fwrapv really <em>is</em> different from fno-strict-pverflow, and disturbs the<br>code generation more.</p>
+<p>IOW, I’m convinced we should never use fwrapv. It’s clearly a buggy piece<br>of sh*t, as shown by our 4.1.x experiences. We should use<br>-fno-strict-overflow.</p>
+</blockquote>
+<p>所以编译 Linux 内核时使用的是 -fno-strict-overflow。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2012/05/23/-e6-95-b4-e6-95-b0-e6-ba-a2-e5-87-ba/" data-id="y5dfe2ukhtg92cxl" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-red-hat-e5-86-85-e6-a0-b8-e6-b5-8b-e8-af-95-e6-8b-9b-e8-81-98-ef-bc-88-e7-ac-ac-e4-ba-8c-e5-ad-a3-ef-bc-89" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2012/05/19/red-hat-e5-86-85-e6-a0-b8-e6-b5-8b-e8-af-95-e6-8b-9b-e8-81-98-ef-bc-88-e7-ac-ac-e4-ba-8c-e5-ad-a3-ef-bc-89/" class="article-date">
+  <time datetime="2012-05-20T00:45:08.000Z" itemprop="datePublished">May 19 2012</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Life/">Life</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2012/05/19/red-hat-e5-86-85-e6-a0-b8-e6-b5-8b-e8-af-95-e6-8b-9b-e8-81-98-ef-bc-88-e7-ac-ac-e4-ba-8c-e5-ad-a3-ef-bc-89/">Red Hat 内核测试招聘（第二季）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Red Hat 北京的内核测试组正在招人，现有3个实习的职位和5个全职的职位。欢迎来应聘，也欢迎来明年毕业的同学来实习。</p>
+<p>工作地点都是北京中关村。感兴趣的同学可以把你的英文简历直接发给我：xiyou 点 wangcong 在 gmail 点 com，邮件中请注明应聘的是哪个职位。虽然我不在测试组，但我会帮你转发简历。:-)</p>
+<p>详情见下：</p>
+<p>Intern 1:</p>
+<p>Job Description:</p>
+<p>The Quality Engineering team at Red Hat is looking for intern to test<br>Linux kernel. Responsibilities include:</p>
+<ul>
+<li>Testing kernel bugs, areas can be network(protocol, NIC driver,<br>bonding, vlan, bridge, tunnel), file systems(ext4, xfs, btrfs, nfs,<br>autofs), time/clock related, scheduler, infiniband, linux container,<br>etc.</li>
+<li>Writing and executing test cases and analyzing results.</li>
+<li>Debugging software problems.</li>
+<li>Investigating kernel features.</li>
+</ul>
+<p>Requirements:</p>
+<ul>
+<li>Knowledge in general Linux usage</li>
+<li>Decent debugging, troubleshooting, analytical skills.</li>
+<li>Intermediate to advanced scripting skills(Bash, python or equivalent languages).</li>
+<li>Have passion and desire for testing and examining how things work internally.</li>
+<li>Knowledge in network or file systems or time mechanism in kernel are strong plus.</li>
+<li>At least 5 months, at least 3 days per week.</li>
+</ul>
+<p>Keywords: kernel; testing</p>
+<p>Intern 2:</p>
+<p>Job Description:</p>
+<p>The Quality Engineering team at Red Hat is looking for intern to test<br>Linux file system. Responsibilities include:</p>
+<ul>
+<li>Testing file system bugs, including both local file system and network file system.</li>
+<li>Writing and executing test cases and check results.</li>
+<li>Debugging software problems.</li>
+<li>Investigating file system features.</li>
+</ul>
+<p>Requirements:</p>
+<ul>
+<li>Knowledge in general Linux usage</li>
+<li>Decent debugging, troubleshooting, analytical skills.</li>
+<li>Some bash scripting skill.</li>
+<li>Decent knowledge in one or more file systems(ext2/3/4, xfs, btrfs,nfs, cifs, autofs).</li>
+<li>Have passion and desire for testing and examining how things work internally.</li>
+<li>At least 5 months, at least 3 days per week.</li>
+</ul>
+<p>Keywords: kernel; file system; testing</p>
+<p>Intern 3:</p>
+<p>Job Description:</p>
+<p>The Quality Engineering team at Red Hat is looking for intern to test<br>Linux network. Responsibilities include:</p>
+<ul>
+<li>Testing network bugs, including NIC drivers and protocols.</li>
+<li>Writing and executing test cases and check results.</li>
+<li>Debugging software problems.</li>
+</ul>
+<p>Job Requirements:</p>
+<ul>
+<li>Knowledge in general Linux usage</li>
+<li>Decent debugging, troubleshooting, analytical skills.</li>
+<li>Some bash scripting skill.</li>
+<li>Familiar with linux network concept and configurations.</li>
+<li>Familiar with NIC drivers is a strong plus.</li>
+<li>Familiar with network protocols(TCP/UDP/IGMP,etc)</li>
+<li>Have passion and desire for testing and examining how things work internally.</li>
+<li>At least 5 months, at least 3 days per week.</li>
+</ul>
+<p>Keywords: kernel; network; testing</p>
+<p>Regular Job 1:<br>Job Description:<br>The Quality Engineering team at Red Hat is looking for engineer to test<br>linux kernel network, including network protocols, NIC drivers, bonding,<br>vlan, bridge, etc. You need to search for, analyze, report, track kernel<br>network defects and verify bug fixes. You should be a self motivated<br>person and have passion in finding bugs/defects in linux network.</p>
+<p>Responsibilities include:</p>
+<ul>
+<li>Review and test bugs</li>
+<li>Investigate network implementation and new features, write or update test plans</li>
+<li>Write test cases according to test plans or automate bug reproducer</li>
+<li>Execute test cases and analyze result</li>
+<li>Communicate with developer and other stake holder about testing gaps and cover them</li>
+</ul>
+<p>Required Skills:</p>
+<ul>
+<li>Middle or above level of skills and background in Linux.</li>
+<li>Knowledge in network(protocols, NIC driver, bonding, vlan, bridge)<br>implementation, and familiar with network related concepts and<br>operations.</li>
+<li>Must be a flexible self-motivated person who would like to take responsibilities.</li>
+<li>Have passion and desire for testing and examining how things work internally.</li>
+<li>Be willing to coordinate with others.</li>
+</ul>
+<p>Regular Job 2:<br>Job Description:<br>The Quality Engineering team at Red Hat is looking for QE lead for Linux<br>kernel testing. You will test the kernel and communicate/coordinate with<br>developers and other QEs including assigning tasks. We are looking for<br>an experienced QA Engineer with strong technical and coordinating<br>skills . You must be a flexible and self-motivated person who can work<br>under pressure and implement jobs in tight schedule.</p>
+<p>Responsibilities include:</p>
+<ul>
+<li>Review kernel bugs and do initial analysis and assign them to proper QE owners</li>
+<li>Be responsible for certain kernel areas: create/maintain test plans, write test cases, test bugs and automate/write bug reproducers</li>
+<li>Communicate with various teams/stakeholders for technique and coordinating problems</li>
+<li>Communicate with developer and other stakeholders about testing gaps<br>and cover them</li>
+</ul>
+<p>Required Skills:</p>
+<ul>
+<li>A minimum of 2 years of professional experience is required</li>
+<li>Strong skills and background in Linux</li>
+<li>Strong debugging, troubleshooting, analytical skills</li>
+<li>Wide-ranging of linux kernel knowledge</li>
+<li>Must be a flexible self-motivated person who would like to take<br>responsibilities.</li>
+<li>Be willing to communicate and coordinate with others, ability to work<br>collaboratively with multiple teams</li>
+<li>Adapted to flexible working hours</li>
+</ul>
+<p>Regular Job 3:<br>Job Description:<br>The Quality Engineering team at Red Hat is looking for engineer to test<br>linux file systems, including btrfs, xfs, ext4, etc. You need to search<br>for, analyze, report, track kernel file system defects and verify bug<br>fixes. You should be a self motivated person and have passion in finding<br>bugs/defects in linux file systems.</p>
+<p>Responsibilities include:</p>
+<ul>
+<li>Investigate file system implementation and new features, write or update test plans</li>
+<li>Write test cases according to test plans</li>
+<li>Execute test cases and analyze result</li>
+<li>Review and test bugs</li>
+<li>Communicate with developer and other stake holder about testing gaps<br>and cover them</li>
+</ul>
+<p>Required Skills:</p>
+<ul>
+<li>Middle or above level of skills and background in Linux.</li>
+<li>Knowledge in file system(ext2, ext3, ext4, xfs, btrfs) implementation, and familiar with file system related concepts and operations.</li>
+<li>Must be a flexible self-motivated person who would like to take responsibilities.</li>
+<li>Have passion and desire for testing and examining how things work internally.</li>
+<li>Be willing to coordinate with others.</li>
+</ul>
+<p>Regular Job 4:<br>Job Description:<br>The Quality Engineering team at Red Hat is looking for engineers to<br>search for, analyze, report, track defects and verify bug fixes in the<br>Linux kernel. We are looking for an experienced QA Engineer with strong<br>technical skills. You must be a flexible self-starter who can come up to<br>speed quickly with new technologies and can adapt to a growing and<br>evolving team.</p>
+<p>Responsibilities include:</p>
+<ul>
+<li>Review bugs and develop/automate bug reproducers and regression test cases according to the patch(es)</li>
+<li>Run existing test cases and analyze results</li>
+<li>Finding kernel testing gaps and investigate/create test plans for kernel functions</li>
+<li>Investigating new features</li>
+<li>Debugging software problems</li>
+</ul>
+<p>Required Skills:</p>
+<ul>
+<li>Strong skills and background in Linux</li>
+<li>Strong debugging, troubleshooting, analytical skills</li>
+<li>Adequate knowledge in linux kernel</li>
+<li>Familiar with C/shell programming</li>
+<li>Strong passion and desire for testing and examining how things work<br>internally</li>
+<li>Be willing to coordinate with others</li>
+</ul>
+<p>Regular Job 5:<br>Job Description:<br>The Quality Engineering team at Red Hat is looking for engineer to test<br>linux kernel network, including network protocols, NIC drivers, bonding,<br>vlan, bridge, etc. You need to search for, analyze, report, track kernel<br>network defects and verify bug fixes. You should be a self motivated<br>person and have passion in finding bugs/defects in linux network.</p>
+<p>Responsibilities include:</p>
+<ul>
+<li>Review and test network bugs</li>
+<li>Write test cases according to network test plans and automate bug reproducers</li>
+<li>Execute test cases and analyze result</li>
+<li>Investigate network features an create test plans</li>
+<li>Debug software problems and create tools if needed</li>
+</ul>
+<p>Required Skills:</p>
+<ul>
+<li>Middle or above level of skills and background in Linux.</li>
+<li>Familiar with network(protocols, NIC driver, bonding, vlan, bridge) concepts and configurations, knowledge in network implementation is a plus.</li>
+<li>Must be a diligent self-motivated person and be patient with trivial work.</li>
+<li>Be willing to coordinate with others.</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2012/05/19/red-hat-e5-86-85-e6-a0-b8-e6-b5-8b-e8-af-95-e6-8b-9b-e8-81-98-ef-bc-88-e7-ac-ac-e4-ba-8c-e5-ad-a3-ef-bc-89/" data-id="qqz8bxukv97kdlev" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-a-poem-about-division" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2012/05/15/a-poem-about-division/" class="article-date">
+  <time datetime="2012-05-16T02:33:04.000Z" itemprop="datePublished">May 15 2012</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Programming/">Programming</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2012/05/15/a-poem-about-division/">A poem about division</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>From: <a href="http://www.amazon.com/Hackers-Delight-Henry-S-Warren/dp/0201914654?tag=catonmat-20" target="_blank" rel="external">Hacker’s Delight</a> Author: Henry S. Warren</p>
+<p>I think that I shall never envision<br>An op unlovely as division.</p>
+<p>An op whose answer must be guessed<br>And then, through multiply, assessed;</p>
+<p>An op for which we dearly pay,<br>In cycles wasted every day.</p>
+<p>Division code is often hairy;<br>Long division’s downright scary.</p>
+<p>The proofs can overtax your brain,<br>The ceiling and floor may drive you insane.</p>
+<p>Good code to divide takes a Knuthian hero,<br>But even God can’t divide by zero!</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2012/05/15/a-poem-about-division/" data-id="im8e7d7ei511v0kv" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e4-b8-ba-e4-bb-80-e4-b9-88-bool-e5-8f-aa-e6-98-af-e4-b8-80-e4-b8-aa-e5-ae-8f" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2012/05/12/-e4-b8-ba-e4-bb-80-e4-b9-88-bool-e5-8f-aa-e6-98-af-e4-b8-80-e4-b8-aa-e5-ae-8f/" class="article-date">
+  <time datetime="2012-05-12T21:28:08.000Z" itemprop="datePublished">May 12 2012</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Programming/">Programming</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2012/05/12/-e4-b8-ba-e4-bb-80-e4-b9-88-bool-e5-8f-aa-e6-98-af-e4-b8-80-e4-b8-aa-e5-ae-8f/">为什么 bool 只是一个宏</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>可能你也会感到吃惊，在C99/C11标准中，bool 的定义居然是个宏，而不是 typedef 类型！</p>
+<p>C11 第 7.18 节中明确提到： The macro “bool” expands to _Bool.</p>
+<p>而且 false 和 true 也是宏……不过，它下面接着有解释：</p>
+<blockquote>
+<p>Notwithstanding the provisions of 7.1.3, a program may undefine and perhaps then<br>redefine the macros bool, true, and false.</p>
+</blockquote>
+<p>可见之所以把它们定义成宏是为了让用户可以重定义，想必在C99 之前应该有不少C程序都自己定义了 bool，false 和 true 吧！而且第 7.31.9 节中说这个以后会去掉：</p>
+<blockquote>
+<p>The ability to undefine and perhaps then redefine the macros bool, true, and false is<br>an obsolescent feature.</p>
+</blockquote>
+<p>你要是感到不爽，你可以这么做：<br>[c]</p>
+<h1 id="undef_bool">undef bool</h1>
+<h1 id="define_bool_bool">define bool bool</h1>
+<p>typedef _Bool bool;<br>[/c] </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2012/05/12/-e4-b8-ba-e4-bb-80-e4-b9-88-bool-e5-8f-aa-e6-98-af-e4-b8-80-e4-b8-aa-e5-ae-8f/" data-id="ll2k0i1f0q2l77l6" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-seaside-canon-for-douglas-hofstadter" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2012/05/09/seaside-canon-for-douglas-hofstadter/" class="article-date">
+  <time datetime="2012-05-09T15:24:13.000Z" itemprop="datePublished">May 9 2012</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Book-Reviews/">Book Reviews</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2012/05/09/seaside-canon-for-douglas-hofstadter/">SEASIDE CANON</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>From: <a href="http://www.3quarksdaily.com/3quarksdaily/2011/06/a-crab-canon-for-douglas-hofstadter.html" target="_blank" rel="external">http://www.3quarksdaily.com/3quarksdaily/2011/06/a-crab-canon-for-douglas-hofstadter.html</a></p>
+<p>读过<a href="http://book.douban.com/subject/1291204/" target="_blank" rel="external">《集异璧》</a>的同学一定对里面的“卡农”印象深刻，这里有人又专门写了一首“卡农”的诗，窃以为更好。转过来欣赏一下。</p>
+<p>SEASIDE CANON, for Douglas Hofstadter</p>
+<p>by Julia Galef</p>
+<p>~<br>The ocean was still.<br>In an empty sky, two gulls turned lazy arcs, and<br>their keening cries echoed<br>off the cliff and disappeared into the sea.<br>When the child, scrambling up the rocks, slipped<br>out of her parents’ reach,<br>they called to her. She was already<br>so high, but those distant peaks beyond —<br>they called to her.  She was already<br>out of her parents’ reach<br>when the child, scrambling up the rocks, slipped<br>off the cliff and disappeared into the sea.<br>Their keening cries echoed<br>in an empty sky. Two gulls turned lazy arcs, and<br>the ocean was still.<br>~</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2012/05/09/seaside-canon-for-douglas-hofstadter/" data-id="p6jxi90rntd2gzyl" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-a-programmers-poem" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2012/05/04/a-programmers-poem/" class="article-date">
+  <time datetime="2012-05-05T00:39:37.000Z" itemprop="datePublished">May 4 2012</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Programming/">Programming</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2012/05/04/a-programmers-poem/">A Programmer&#39;s Poem</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>From: <a href="http://edweissman.com/53640595" target="_blank" rel="external">http://edweissman.com/53640595</a><br>Author: Ed Weissman</p>
+<p>  My friends all think<br>    that I’m a neb<br>  Cause I spend much time<br>    here on the web</p>
+<p>  The good things here<br>    I do not abuse<br>  Except lots of time<br>    on hacker news</p>
+<p>  I don’t read reddit<br>    I will not digg<br>  I’m not on facebook<br>    My work’s too big</p>
+<p>  I do not text<br>    I do not tweet<br>  I just work on<br>    Things that are neat</p>
+<p>  I check email<br>    throughout the day<br>  But there are no games<br>    that I will play</p>
+<p>  My phone’s on vibrate<br>    I do not chat<br>  My work is really<br>    Where it’s at</p>
+<p>  Knuth and Turing<br>    are my big heroes<br>  I love to move<br>    Ones and zeros</p>
+<p>  My head is down<br>    I’m in the mode<br>  Don’t bother me<br>    I have to code</p>
+<p>  Those who need me<br>    leave voicemail<br>  I’m much too busy<br>    trying not to fail</p>
+<p>  I learn on-line<br>    and from my schools<br>  But I must avoid<br>    all sorts of trolls</p>
+<p>  I can’t believe<br>    I wrote this ode<br>  When I have so much<br>    I have to code</p>
+<p>  I’m not an addict<br>    I have no drug<br>  I’ve got to go<br>    To fix a bug</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2012/05/04/a-programmers-poem/" data-id="jvcvp3dnj25eqk73" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e7-bc-96-e4-ba-86-e5-87-a0-e4-b8-aa-e6-ae-b5-e5-ad-90" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2012/04/29/-e7-bc-96-e4-ba-86-e5-87-a0-e4-b8-aa-e6-ae-b5-e5-ad-90/" class="article-date">
+  <time datetime="2012-04-29T21:08:41.000Z" itemprop="datePublished">Apr 29 2012</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Life/">Life</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2012/04/29/-e7-bc-96-e4-ba-86-e5-87-a0-e4-b8-aa-e6-ae-b5-e5-ad-90/">编了几个段子</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>平时上微博经常看到一些有意思的段子，偶尔也会顺手模仿几个。贴出几个来供大家一乐。</p>
+<p>身为一个Linux程序员，我毫不犹豫地选择了这个叫ELF的Hostel！</p>
+<p>——师爷，写程序最要紧的是什么？<br>——蛋定！<br>——师爷，调试程序最要紧的是什么？<br>——运气！</p>
+<p>三年前我就开始模仿文艺青年：喝星巴克、穿格子装、抽烟喝酒、留长头发、放荡不羁，每天坚持看文艺书刊，出门旅行背一把吉他。现在，我除了唱歌跑调吉他还是只会弹“两只老虎”外，一切都很像文艺青年了。</p>
+<h1 id="出租车司机#他问是程序员吧，我说是；他问是写代码的不是搞测试的吧，我说是；他问是底层系统呢还是上层应用呢，我说都做过现在做底层；他问做OS汇编用的少了吧，我颤声说，嗯，现在用C，忍不住问：你研究这个吗？他面无表情说，我给各大IT公司做过OS；我良久陷入沉默；最后他问，车钱够付吗？">出租车司机#他问是程序员吧，我说是；他问是写代码的不是搞测试的吧，我说是；他问是底层系统呢还是上层应用呢，我说都做过现在做底层；他问做OS汇编用的少了吧，我颤声说，嗯，现在用C，忍不住问：你研究这个吗？他面无表情说，我给各大IT公司做过OS；我良久陷入沉默；最后他问，车钱够付吗？</h1>
+<h1 id="晓松体#_我们这个行业，卖身卖命卖青春，用加班熬夜，献项目完成。从未巧取豪夺，鱼肉乡里，干过什么贪污腐败之事。干好了，谢同事谢项目经理，干砸了，加班加点不成眠。顶三五载虚浮名，挣七八吊养老钱。终归头发掉落，脊椎疼痛。经理总会有新宠，不复念旧人。看在曾带给大家片刻欢娱，能否值回些人间温暖？">晓松体# 我们这个行业，卖身卖命卖青春，用加班熬夜，献项目完成。从未巧取豪夺，鱼肉乡里，干过什么贪污腐败之事。干好了，谢同事谢项目经理，干砸了，加班加点不成眠。顶三五载虚浮名，挣七八吊养老钱。终归头发掉落，脊椎疼痛。经理总会有新宠，不复念旧人。看在曾带给大家片刻欢娱，能否值回些人间温暖？</h1>
+<h1 id="甄嬛体#_“方才在内核里看到一段代码，技巧极为高超，私心想着若是代码让你来写，定可提高你对内核的理解，对你编程能力的提高必是极好的。虽劳费些许精力，倒也不负恩泽。”_“说人话！”_“内核里有个bug，不知道在哪……”">甄嬛体# “方才在内核里看到一段代码，技巧极为高超，私心想着若是代码让你来写，定可提高你对内核的理解，对你编程能力的提高必是极好的。虽劳费些许精力，倒也不负恩泽。” “说人话！” “内核里有个bug，不知道在哪……”</h1>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2012/04/29/-e7-bc-96-e4-ba-86-e5-87-a0-e4-b8-aa-e6-ae-b5-e5-ad-90/" data-id="sz0powow9xt7hfds" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e4-b8-ad-e5-8d-8e-e6-b0-91-e6-97-8f-e5-88-b0-e4-ba-86-e6-9c-80-e5-9d-91-e7-88-b9-e7-9a-84-e6-97-b6-e5-80-99" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2012/04/25/-e4-b8-ad-e5-8d-8e-e6-b0-91-e6-97-8f-e5-88-b0-e4-ba-86-e6-9c-80-e5-9d-91-e7-88-b9-e7-9a-84-e6-97-b6-e5-80-99/" class="article-date">
+  <time datetime="2012-04-25T21:35:23.000Z" itemprop="datePublished">Apr 25 2012</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Life/">Life</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2012/04/25/-e4-b8-ad-e5-8d-8e-e6-b0-91-e6-97-8f-e5-88-b0-e4-ba-86-e6-9c-80-e5-9d-91-e7-88-b9-e7-9a-84-e6-97-b6-e5-80-99/">中华民族到了最坑爹的时候</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>牛奶不能喝了！</p>
+<p>奶粉不能吃了！</p>
+<p>馒头不能吃了！</p>
+<p>食用油不能用了！</p>
+<p>胶囊不能吃了！</p>
+<p>果冻酸奶不能吃了！</p>
+<p>蜜饯不能吃了！</p>
+<p>沙琪玛不能吃了！</p>
+<p>牛肉拉面不能吃了！</p>
+<p>砂锅粥不能吃了！</p>
+<p>可乐不能喝了！</p>
+<p>纯净水不能喝了！</p>
+<p>果粒橙不能喝了！</p>
+<p>雪碧不能喝了！</p>
+<p>绿茶不能喝了！</p>
+<p>……</p>
+<p>起来！不愿做奴隶的人们！把我们的食物铸成我们新的生化武器！中华民族到了，最坑爹的时候！每个人被迫着发出最后的吼声！起来！起来！起来！我们东亚病夫，吃着最毒的食物，前进！吃着最毒的食物， 前进！前进！前进！进！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2012/04/25/-e4-b8-ad-e5-8d-8e-e6-b0-91-e6-97-8f-e5-88-b0-e4-ba-86-e6-9c-80-e5-9d-91-e7-88-b9-e7-9a-84-e6-97-b6-e5-80-99/" data-id="tsmionfqfy51tfav" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+  
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/archives/2012/page/3/">&laquo; Prev</a><a class="page-number" href="/archives/2012/">1</a><a class="page-number" href="/archives/2012/page/2/">2</a><a class="page-number" href="/archives/2012/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/archives/2012/page/5/">5</a><a class="page-number" href="/archives/2012/page/6/">6</a><a class="extend next" rel="next" href="/archives/2012/page/5/">Next &raquo;</a>
+    </nav>
+  
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Book-Reviews/">Book Reviews</a><span class="category-list-count">18</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/China/">China</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Collection/">Collection</a><span class="category-list-count">25</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">324</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux-Application/">Linux Application</a><span class="category-list-count">73</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux-Kernel/">Linux Kernel</a><span class="category-list-count">64</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Love/">Love</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Movies/">Movies</a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/">Programming</a><span class="category-list-count">152</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Science-Fiction/">Science Fiction</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Travel/">Travel</a><span class="category-list-count">19</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/geek/">geek</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/handling/">handling</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/joke/">joke</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/signal/">signal</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/unix/">unix</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/geek/" style="font-size: NaNpx;">geek</a><a href="/tags/handling/" style="font-size: NaNpx;">handling</a><a href="/tags/joke/" style="font-size: NaNpx;">joke</a><a href="/tags/linux/" style="font-size: NaNpx;">linux</a><a href="/tags/signal/" style="font-size: NaNpx;">signal</a><a href="/tags/unix/" style="font-size: NaNpx;">unix</a><a href="/tags/vim/" style="font-size: NaNpx;">vim</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">August 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">December 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">October 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">September 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">August 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">February 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01/">January 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12/">December 2012</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">November 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">October 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">September 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">August 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/07/">July 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">April 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">March 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">February 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">January 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/12/">December 2011</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">November 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/10/">October 2011</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">September 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08/">August 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/07/">July 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/06/">June 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/05/">May 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04/">April 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03/">March 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/02/">February 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/01/">January 2011</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/12/">December 2010</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/11/">November 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/10/">October 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/09/">September 2010</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08/">August 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07/">July 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06/">June 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05/">May 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04/">April 2010</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03/">March 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02/">February 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01/">January 2010</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12/">December 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11/">November 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10/">October 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09/">September 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08/">August 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07/">July 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/06/">June 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/05/">May 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04/">April 2009</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03/">March 2009</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02/">February 2009</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01/">January 2009</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12/">December 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/11/">November 2008</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/10/">October 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09/">September 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08/">August 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07/">July 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06/">June 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05/">May 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04/">April 2008</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03/">March 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02/">February 2008</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01/">January 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12/">December 2007</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11/">November 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10/">October 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09/">September 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08/">August 2007</a><span class="archive-list-count">31</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07/">July 2007</a><span class="archive-list-count">34</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06/">June 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05/">May 2007</a><span class="archive-list-count">25</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04/">April 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03/">March 2007</a><span class="archive-list-count">50</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02/">February 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01/">January 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12/">December 2006</a><span class="archive-list-count">5</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2014/08/12/linux-e7-bd-91-e7-bb-9c-e6-b5-81-e9-87-8f-e6-8e-a7-e5-88-b6-ef-bc-88-e4-b8-80-ef-bc-89/">Linux 网络流量控制（零）</a>
+          </li>
+        
+          <li>
+            <a href="/2014/08/01/ottawa-linux-symposium/">Ottawa Linux Symposium</a>
+          </li>
+        
+          <li>
+            <a href="/2014/05/31/skbuff-e5-86-85-e5-ad-98-e6-a8-a1-e5-9e-8b/">skbuff 内存模型</a>
+          </li>
+        
+          <li>
+            <a href="/2014/05/06/-e9-95-bf-e6-9c-9f-e6-8f-90-e4-be-9b-twitter-e5-86-85-e6-8e-a8/">长期提供 Twitter 内推</a>
+          </li>
+        
+          <li>
+            <a href="/2014/01/30/-e6-88-91-e7-9a-842013-ef-bc-9a-e6-88-91-e6-9d-a5-e5-88-b0-e4-ba-86-e7-be-8e-e5-9b-bd/">我的2013：我来到了美国</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2015 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+
+  </div>
+</body>
+</html>

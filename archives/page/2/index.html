@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Archives | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/archives/page/2/">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description">
+
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post--e4-b8-80-e4-b8-aa-e7-bb-9d-e5-a6-99-e7-9a-84-e5-86-85-e6-a0-b8-exploit" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2013/05/15/-e4-b8-80-e4-b8-aa-e7-bb-9d-e5-a6-99-e7-9a-84-e5-86-85-e6-a0-b8-exploit/" class="article-date">
+  <time datetime="2013-05-16T03:55:48.000Z" itemprop="datePublished">May 15 2013</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux-Kernel/">Linux Kernel</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2013/05/15/-e4-b8-80-e4-b8-aa-e7-bb-9d-e5-a6-99-e7-9a-84-e5-86-85-e6-a0-b8-exploit/">一个绝妙的内核 exploit</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近 Linux 内核爆出了一个严重的安全漏洞，非root用户可以通过该<a href="http://fucksheep.org/~sd/warez/semtex.c" target="_blank" rel="external">漏洞的 exploit</a> 获取root权限。这并不罕见，值得一提的是这个补丁看起来如此平常以至于我们绝大多数人都不会以为这是安全问题。</p>
+<p>先看这个问题的<a href="http://marc.info/?l=linux-kernel&amp;m=136588264507457" target="_blank" rel="external">补丁</a>，就是下面这个：</p>
+<pre>
+  static int perf_swevent_init(struct perf_event *event)
+ {
+-    int event_id = event-&gt;attr.config;
++    u64 event_id = event-&gt;attr.config;
+
+     if (event-&gt;attr.type != PERF_TYPE_SOFTWARE)
+         return -ENOENT;
+</pre>
+我们第一眼的感觉就是这大概只是修复了编译器报的一个小警告吧，怎么会引起如此严重的安全问题呢？
+
+在没打补丁的代码中 event_id 是个**带符号**的整型，而且就在下面不远处的两行代码中只检查了其上界：
+[c]
+        if (event_id &gt;= PERF_COUNT_SW_MAX)
+                return -ENOENT;
+[/c]
+
+而如果传递进来的 event-&gt;attr.config 值正好设置了符号位，那么 event_id 就会变成负值，而且能躲过上面的检查。
+
+负值意味着什么呢？再继续看后面的代码：
+
+[c]
+        if (!event-&gt;parent) {
+                int err;
+
+                err = swevent_hlist_get(event);
+                if (err)
+                        return err;
+
+                atomic_inc(&amp;perf_swevent_enabled[event_id]);
+                event-&gt;destroy = sw_perf_event_destroy;
+        }
+[/c]
+
+意味着数组越界！这时你应该身上开始冒冷汗了。继续，数组 perf_swevent_enabled[] 在 RHEL6 上的定义是：
+[c]
+atomic_t perf_swevent_enabled[PERF_COUNT_SW_MAX];
+[/c]
+
+而 atomic_t 基本上就是int，也就是说 perf_swevent_enabled[] 是整型数组，那么用 event_id 访问该数组时会把 event_id 的值乘以4再加上数组的起始地址。很简单哈！
+
+好，通过 System.map 文件我们可以得到 perf_swevent_enabled 的地址：
+
+<pre>
+ffffffff81f360c0 B perf_swevent_enabled
+</pre>
+
+<p>那么当 event-&gt;attr.config == 0xffffffff （即有符号的-1）时，在 x86_64 上面我们最终会得到：</p>
+<pre>
+0xffffffffffffffff * 4 + 0xffffffff81f360c0 == 0xFFFFFFFF81F360BC
+</pre>
+
+<p>同理，当 event-&gt;attr.config == 0xfffffffe 时我们得到：</p>
+<pre>
+0xfffffffffffffffe * 4 + 0xffffffff81f360c0 == 0xFFFFFFFF81F360B8
+</pre>
+
+<p>所以上述的 atomic_inc() 其实增加的是前面两个地址中存放的值，而这俩地址都指向内核空间（参见 Documentation/x86/x86_64/mm.txt）！这时你应该感到紧张了。。。</p>
+<p>后面更有趣的事情发生在 sw_perf_event_destroy() 函数中，它是在 perf_event_open() 返回的 fd 被关闭时被调用，RHEL6 上其定义如下：</p>
+<p>[c]<br>static void sw_perf_event_destroy(struct perf_event *event)<br>{<br>        u64 event_id = event-&gt;attr.config;</p>
+<pre><code>    <span class="function">WARN_ON</span>(event-&amp;gt;parent);
+
+    <span class="function">atomic_dec</span>(&amp;amp;perf_swevent_enabled<span class="attr_selector">[event_id]</span>);
+    <span class="function">swevent_hlist_put</span>(event);
+</code></pre><p>}<br>[/c]</p>
+<p>很明显的不同是，event_id 这次是<strong>无符号</strong>的类型。那么，同上，当 event-&gt;attr.config == 0xffffffff 时我们得到：</p>
+<pre>
+0xffffffff * 4 + 0xffffffff81f360c0 == 0x0000000381F360BC
+</pre>
+
+<p>当 event-&gt;attr.config == 0xfffffffe 时我们得到：</p>
+<pre>
+0xfffffffe * 4 + 0xffffffff81f360c0 == 0x0000000381F360B8
+</pre>
+
+<p>所以这里的  atomic_dec() 实际上减小的是用户空间地址内的值。</p>
+<p>上面是“基础知识”，带着这些知识我们看 exploit 代码究竟做了什么，代码片段如下：</p>
+<p>[c]</p>
+<h1 id="define_BASE_0x380000000">define BASE  0x380000000</h1>
+<h1 id="define_SIZE_0x010000000">define SIZE  0x010000000</h1>
+<p>  assert((map = mmap((void<em>)BASE, SIZE, 3, 0x32, 0,0)) == (void</em>)BASE);<br>  memset(map, 0, SIZE);<br>  sheep(-1); sheep(-2);    // sheep will just invoke perf_event_open<br>                           // syscall with attr.config set to the param<br>  for (i = 0; i &lt; SIZE/4; i++) if (map[i]) {<br>    assert(map[i+1]);<br>    break;<br>  }<br>[/c]</p>
+<p>它首先会 mmap() 起始地址是 0x380000000 的一块内存区域。然后分别以 attr.config 为 -1 和 -2 调用两次 perf_event_open()。根据前面的计算，它实际上分别增加了 0xFFFFFFFF81F360BC 和 0xFFFFFFFF81F360B8 两处内存的值，减少了 0x0000000381F360BC 和 0x0000000381F360B8 的值。后面的 for 循环则是找出被减少的内存地址，这样一来也就可以算出 perf_swevent_enabled[] 数组的地址（System.map 并不总是存在，如果存在而且可读我们当然可以直接去读这个值）。</p>
+<p>知道这个地址我们就可以操纵内核中某处的32bit的值，把其值加一。正因为如此，作者巧妙地选择了中断描述符表——一个16字节描述符的数组，它的地址可以通过 sidt 指令获取。它其中的描述符结构定义如下：</p>
+<pre>
+Offset     Size     Description
+0     2     Offset low bits (0..15)
+2     2     Selector (Code segment selector)
+4     1     Zero
+5     1     Type and Attributes (same as before)
+6     2     Offset middle bits (16..31)
+8     4     Offset high bits (32..63)
+12     4     Zero
+</pre>
+
+<p>这里最有趣的是 offset 为8 的地方，在 x86_64 上面其值为 0xffffffff。作者选择的中断描述符是 0x4，所以相对于中断描述符表它的偏移实际上是 0x48。现在的任务就成了通过 perf_swevent_enabled[] 来计算出该中断描述符中偏移为8的内存地址，并对其加一！下面的代码就是做的这个工作：</p>
+<p>[c]<br>sheep(-i + (((idt.addr&amp;0xffffffff)-0x80000000)/4) + 16);<br>[/c]</p>
+<p>i 是我们前面在 for 循环中搜到的 perf_swevent_enabled[] 的一个偏移，idt.addr 是中断描述符表的绝对内核地址，取其低32位并减去 0x80000000 是为了得到低28位作为偏移，除以4是因为数组是int，最后加的16就是 0x4 中断描述符中的偏移（4已经除去了），所以最终sheep()里面的参数就是我们想要的偏移，这样以来内核就替我们把 0x4 中断描述符中的偏移为 8 的 0xffffffff 加上了1，也就成了0，也就成了用户空间的地址！所以后面的 int 0x4 其实就会跳转到用户空间早已经设置好的代码！！！</p>
+<p>而这段代码比较生涩，但<a href="http://www.reddit.com/r/netsec/comments/1eb9iw/sdfucksheeporgs_semtexc_local_linux_root_exploit/c9ykrck" target="_blank" rel="external">其意思</a>就是更改当前进程的 uid/gid 为0来提升权限，所以最终取得一个有 root 权限的 shell！整个攻击大功告成！</p>
+<p>注：上面的链接可能不能用，exploit 代码也可以在这里看到：<a href="https://gist.github.com/onemouth/5625174" target="_blank" rel="external">https://gist.github.com/onemouth/5625174</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2013/05/15/-e4-b8-80-e4-b8-aa-e7-bb-9d-e5-a6-99-e7-9a-84-e5-86-85-e6-a0-b8-exploit/" data-id="27jw8fcujc6inges" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e6-b1-82-e6-b5-b7-e5-a4-96-e5-b7-a5-e4-bd-9c-e4-b8-80-e4-bb-bd" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2013/02/18/-e6-b1-82-e6-b5-b7-e5-a4-96-e5-b7-a5-e4-bd-9c-e4-b8-80-e4-bb-bd/" class="article-date">
+  <time datetime="2013-02-19T06:14:15.000Z" itemprop="datePublished">Feb 18 2013</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Life/">Life</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2013/02/18/-e6-b1-82-e6-b5-b7-e5-a4-96-e5-b7-a5-e4-bd-9c-e4-b8-80-e4-bb-bd/">求推荐海外工作一份（长期有效）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>以前没结婚自己怎么过都能凑合，现在结婚了不得不考虑以后的生活。目前国内的情况一天比一天糟，而且它只会变得更糟。我对这个国家的未来不报任何希望，所以决定移民。</p>
+<p>现求推荐海外，尤其是比较容易移民的国家（比如澳大利亚、新西兰、美国、加拿大）的工作，Linux 底层开发相关的即可，最好是内核开发。公司只要提供 relocation 。我给开源项目贡献的补丁见下。</p>
+<p>Linux kernel:<br><a href="http://goo.gl/AfPJw" target="_blank" rel="external">http://goo.gl/AfPJw</a><br><a href="http://goo.gl/NhVg3" target="_blank" rel="external">http://goo.gl/NhVg3</a></p>
+<p>dracut:<br><a href="http://goo.gl/Nj4OI" target="_blank" rel="external">http://goo.gl/Nj4OI</a><br><a href="http://goo.gl/U2sMw" target="_blank" rel="external">http://goo.gl/U2sMw</a></p>
+<p>iproute2:<br><a href="http://goo.gl/W4TX4" target="_blank" rel="external">http://goo.gl/W4TX4</a></p>
+<p>kexec-tools:<br><a href="http://goo.gl/6CzvP" target="_blank" rel="external">http://goo.gl/6CzvP</a><br><a href="http://goo.gl/zgTwV" target="_blank" rel="external">http://goo.gl/zgTwV</a></p>
+<p>util-linux:<br><a href="http://goo.gl/dsOlm" target="_blank" rel="external">http://goo.gl/dsOlm</a></p>
+<p>还有一些零碎的补丁就不献丑了。</p>
+<p>稍微正式的简历可以看<a href="http://www.linkedin.com/pub/cong-wang/b/762/b96" target="_blank" rel="external">我的 linkedin</a>，正式的简历可以发邮件给你。我的邮箱是：xiyou.wangcong@gmail.com。</p>
+<p><strong>国内的猎头就别浪费时间了。</strong></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2013/02/18/-e6-b1-82-e6-b5-b7-e5-a4-96-e5-b7-a5-e4-bd-9c-e4-b8-80-e4-bb-bd/" data-id="hlkq5usdgh2zz099" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e5-9c-a8-openvswitch-e4-b8-8a-e9-85-8d-e7-bd-ae-vxlan" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2013/02/04/-e5-9c-a8-openvswitch-e4-b8-8a-e9-85-8d-e7-bd-ae-vxlan/" class="article-date">
+  <time datetime="2013-02-05T01:40:16.000Z" itemprop="datePublished">Feb 4 2013</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux-Application/">Linux Application</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2013/02/04/-e5-9c-a8-openvswitch-e4-b8-8a-e9-85-8d-e7-bd-ae-vxlan/">在 openvswitch 上配置 VXLAN</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>（<strong>本文讲的是 korg 内核中的 openvswitch，而非 openvswitch.org 上提供的openvswitch模块。</strong>）</p>
+<p>之前讲过<a href="http://wangcong.org/blog/archives/2170" target="_blank" rel="external"> VXLAN</a>，但是一直没有动手实践。其实配置 VXLAN 要比<a href="http://wangcong.org/blog/archives/2163" target="_blank" rel="external">配置 GRE tunnel</a> 简单很多，你所需要做的只要两步：</p>
+<p>1. 添加 VXLAN 设备（需要比较新的 iproute2 和内核支持）：</p>
+<pre>
+# ./ip/ip li add vxlan0 type vxlan id 42 group 239.1.1.1 local 10.16.43.214 mtu 1500 dev eth0
+</pre>
+
+<p>其中，10.16.43.214 是配置在 eth0 （或其它连接两台主机的设备）上的本地IP地址。</p>
+<p>2. 把 vxlan0 添加到 openvswitch 的 bridge 中去：</p>
+<pre>
+# ovs-vsctl add-port ovsbr0 vxlan0
+</pre>
+
+<p>最终的结果如下所示：</p>
+<pre>
+# ./ip/ip -d li show vxlan0
+7: vxlan0:  mtu 1500 qdisc noqueue
+state UNKNOWN mode DEFAULT
+    link/ether d2:93:a2:08:10:1e brd ff:ff:ff:ff:ff:ff
+    vxlan id 42 group 239.1.1.1 local 10.16.43.214 dev eth0 port 32768
+61000 ageing 300
+# ifconfig eth0
+eth0      Link encap:Ethernet  HWaddr AC:16:2D:05:14:3A
+          inet addr:10.16.43.214  Bcast:10.16.47.255  Mask:255.255.248.0
+          inet6 addr: 2620:52:0:102f:ae16:2dff:fe05:143a/64 Scope:Global
+          inet6 addr: fe80::ae16:2dff:fe05:143a/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:386702 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:1505515 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:42804806 (40.8 MiB)  TX bytes:1202562852 (1.1 GiB)
+          Interrupt:20 Memory:fbc00000-fbc20000
+
+# ifconfig vxlan0
+vxlan0    Link encap:Ethernet  HWaddr D2:93:A2:08:10:1E
+          inet6 addr: fe80::d093:a2ff:fe08:101e/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:346746 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:752833 errors:36 dropped:0 overruns:0 carrier:36
+          collisions:0 txqueuelen:0
+          RX bytes:18081642 (17.2 MiB)  TX bytes:1139323399 (1.0 GiB)
+
+# ovs-vsctl show
+2dce25d0-ac18-4626-905d-c4995464785d
+    Bridge "ovsbr0"
+        Port "vnet0"
+            Interface "vnet0"
+        Port "vxlan0"
+            Interface "vxlan0"
+        Port "vnet1"
+            Interface "vnet1"
+        Port "ovsbr0"
+            Interface "ovsbr0"
+                type: internal
+    ovs_version: "1.7.0"
+
+</pre>
+
+<p>另外一台机器上基本上完全相同，结果如下：</p>
+<pre>
+# ./ip/ip -d li show vxlan0
+8: vxlan0:  mtu 1450 qdisc noqueue
+state UNKNOWN mode DEFAULT
+    link/ether 92:8b:0f:8b:31:f1 brd ff:ff:ff:ff:ff:ff
+    vxlan id 42 group 239.1.1.1 local 10.16.43.215 dev eth0 port 32768
+61000 ageing 300
+# ifconfig vxlan0
+vxlan0    Link encap:Ethernet  HWaddr 92:8B:0F:8B:31:F1
+          inet6 addr: fe80::908b:fff:fe8b:31f1/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1450  Metric:1
+          RX packets:752833 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:346770 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:1128783737 (1.0 GiB)  TX bytes:22940562 (21.8 MiB)
+
+# ifconfig eth0
+eth0      Link encap:Ethernet  HWaddr E8:39:35:30:1D:1E
+          inet addr:10.16.43.215  Bcast:10.16.47.255  Mask:255.255.248.0
+          inet6 addr: 2620:52:0:102f:ea39:35ff:fe30:1d1e/64 Scope:Global
+          inet6 addr: fe80::ea39:35ff:fe30:1d1e/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:1535775 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:346951 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:1210625058 (1.1 GiB)  TX bytes:41681835 (39.7 MiB)
+          Interrupt:17
+
+# ovs-vsctl show
+71f0f455-ccc8-4781-88b2-4b663dd48c5f
+    Bridge "ovsbr0"
+        Port "vnet1"
+            Interface "vnet1"
+        Port "ovsbr0"
+            Interface "ovsbr0"
+                type: internal
+        Port "vnet0"
+            Interface "vnet0"
+        Port "vxlan0"
+            Interface "vxlan0"
+    ovs_version: "1.7.0"
+</pre>
+
+<p>配置好了之后，你可以尝试用 tcpdump 在 eth0 上捕捉一下包试试，你会发现 L2 是直接封装到 UDP 包中的：</p>
+<pre>
+05:39:05.107906 IP 10.16.43.215.52908 &gt; 10.16.43.214.otv: UDP, length
+106
+        0x0000:  ac16 2d05 143a e839 3530 1d1e 0800 4500
+        0x0010:  0086 abd0 0000 4011 62ca 0a10 2bd7 0a10
+        0x0020:  2bd6 ceac 2118 0072 0000 0800 0000 0000
+        0x0030:  2a00 5254 00f7 e2e7 5254 0090 5117 0800
+        0x0040:  4500 0054 0000 4000 4001 f152 c0a8 6402
+        0x0050:  c0a8 6403 0800 073c 3e05 0009 ca8f 0f51
+        0x0060:  0000 0000 1102 0900 0000 0000 1011 1213
+        0x0070:  1415 1617 1819 1a1b 1c1d 1e1f 2021 2223
+        0x0080:  2425 2627 2829 2a2b 2c2d 2e2f 3031 3233
+        0x0090:  3435 3637
+</pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2013/02/04/-e5-9c-a8-openvswitch-e4-b8-8a-e9-85-8d-e7-bd-ae-vxlan/" data-id="99rspb6bg22dbhai" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-setuid" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2013/02/03/setuid/" class="article-date">
+  <time datetime="2013-02-04T02:20:30.000Z" itemprop="datePublished">Feb 3 2013</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux-Application/">Linux Application</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2013/02/03/setuid/">setuid</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2013/02/03/setuid/" data-id="6wt1uggmyprsmqyk" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e7-bb-99-e7-a8-8b-e5-ba-8f-e5-91-98-e6-8e-a8-e8-8d-90-e5-87-a0-e9-83-a8-e7-94-b5-e5-bd-b1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2013/01/31/-e7-bb-99-e7-a8-8b-e5-ba-8f-e5-91-98-e6-8e-a8-e8-8d-90-e5-87-a0-e9-83-a8-e7-94-b5-e5-bd-b1/" class="article-date">
+  <time datetime="2013-02-01T03:21:09.000Z" itemprop="datePublished">Jan 31 2013</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Movies/">Movies</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2013/01/31/-e7-bb-99-e7-a8-8b-e5-ba-8f-e5-91-98-e6-8e-a8-e8-8d-90-e5-87-a0-e9-83-a8-e7-94-b5-e5-bd-b1/">给程序员推荐几部电影</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>1. 排在第一位的毫无疑问是《黑客帝国》三部曲。关键词：矩阵。</p>
+<p><a href="http://movie.douban.com/subject/1291843/" target="_blank" rel="external"><img src="http://img3.douban.com/view/photo/raw/public/p1695371272.jpg" alt="" title="黑客帝国"></a></p>
+<p><a href="http://movie.douban.com/subject/1304141/" target="_blank" rel="external"><img src="http://img3.douban.com/view/photo/raw/public/p1854976170.jpg" alt="" title="黑客帝国2：重装上阵"></a></p>
+<p><a href="http://movie.douban.com/subject/1302467/" target="_blank" rel="external"><img src="http://img3.douban.com/view/photo/raw/public/p1695269308.jpg" alt="" title="黑客帝国3：矩阵革命"></a></p>
+<p>2. 《盗梦空间 Inception》。关键词：虚拟化。</p>
+<p><a href="http://movie.douban.com/subject/3541415/" target="_blank" rel="external"><img src="http://img3.douban.com/view/photo/raw/public/p640093961.jpg" alt="" title="盗梦空间 Inception"></a></p>
+<p>3. 《云图 Cloud Atlas》。关键词：并行。</p>
+<p><a href="http://movie.douban.com/subject/3530403/" target="_blank" rel="external"><img src="http://img3.douban.com/view/photo/raw/public/p1719175505.jpg" alt="" title="云图 Cloud Atlas"></a></p>
+<p>4. 《恐怖游轮 Triangle》。关键词：递归。</p>
+<p><a href="http://movie.douban.com/subject/3011051/" target="_blank" rel="external"><img src="http://img3.douban.com/view/photo/raw/public/p1625907757.jpg" alt="" title="恐怖游轮 Triangle"></a></p>
+<p>5. 《源代码 Source Code》。关键词：重入。</p>
+<p><a href="http://movie.douban.com/subject/3075287/" target="_blank" rel="external"><img src="http://img3.douban.com/view/photo/raw/public/p1177872482.jpg" alt="" title="源代码 Source Code"></a></p>
+<p>6. 《二维世界 Flatland》。关键词：二维。</p>
+<p><a href="http://movie.douban.com/subject/3136240/" target="_blank" rel="external"><img src="http://img3.douban.com/lpic/s4226680.jpg" alt="" title="二维世界 Flatland"></a></p>
+<p>我把它们汇总成了<a href="http://movie.douban.com/doulist/1800829/" target="_blank" rel="external">一个豆列</a>，欢迎补充。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2013/01/31/-e7-bb-99-e7-a8-8b-e5-ba-8f-e5-91-98-e6-8e-a8-e8-8d-90-e5-87-a0-e9-83-a8-e7-94-b5-e5-bd-b1/" data-id="57sma8ex3kkdjqg3" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e4-b8-ba-e4-bb-80-e4-b9-88-e8-ae-a1-e6-95-b0-e5-ba-94-e8-af-a5-e4-bb-8e-e9-9b-b6-e5-bc-80-e5-a7-8b-ef-bc-9f" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2013/01/26/-e4-b8-ba-e4-bb-80-e4-b9-88-e8-ae-a1-e6-95-b0-e5-ba-94-e8-af-a5-e4-bb-8e-e9-9b-b6-e5-bc-80-e5-a7-8b-ef-bc-9f/" class="article-date">
+  <time datetime="2013-01-27T06:26:38.000Z" itemprop="datePublished">Jan 26 2013</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Programming/">Programming</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2013/01/26/-e4-b8-ba-e4-bb-80-e4-b9-88-e8-ae-a1-e6-95-b0-e5-ba-94-e8-af-a5-e4-bb-8e-e9-9b-b6-e5-bc-80-e5-a7-8b-ef-bc-9f/">为什么计数应该从零开始？</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>众所周知，C语言数组下标是从0开始，其它很多语言皆如此。而 FORTRAN 则是数组下标从1开始的典范。所以就有数组下标是从1开始好还是从0开始好之争。连《C专家编程》中都如此调侃：</p>
+<blockquote>
+<p>数组的下标应该是从0还是从1开始？我提议的妥协方案是0.5，可惜他们未予认真考虑便一口回绝。—— Stan Kelly-Bootle<br>仔细思考一下这个问题很有意思，建议你不妨自己思考一下再继续往下看。</p>
+</blockquote>
+<p>其实这个问题早在 1982 年就已经由计算机科学领域的大师 Edsger Dijkstra 研究过并得出了一个结论。他手写了一篇名为《<a href="http://www.cs.utexas.edu/users/EWD/ewd08xx/EWD831.PDF" target="_blank" rel="external">Why numbering should start at zero</a>》的论文，关键部分截图和大体翻译如下：</p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2013/02/ewd831-0.png" target="_blank" rel="external"><img src="http://wangcong2015.files.wordpress.com/2013/02/main-qimg-23c584f2f329d840018741971e3ef108.png" alt=""></a><a href="http://wangcong.org/blog/wp-content/uploads/2013/01/ewd-1.png" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2013/01/main-qimg-8d64e51e3ba59e13032d6a360592be1d.png" alt=""></a></p>
+<p>表示一个自然数子序列，比如 2, 3, …, 12，不用中间那三个点，有四种方式可供我们选择：</p>
+<p>a) 2&lt;= i &lt; 13</p>
+<p>b) 1 &lt; i &lt;= 12</p>
+<p>c) 2&lt;= i &lt;= 12</p>
+<p>d) 1 &lt; i &lt; 13</p>
+<p>有什么道理选其中一种而不选别的吗？是的，的确有。观察到 a) 和 b) 的优势是两边的边界值之差正好是子序列的长度。作为一个推论，下面的观察也成立：在它们两个当中，两个子序列是邻接的就意味着一个的上界等于另外一个的下界。这些观察并没有让我们从a) 和 b) 之中做出选择，所以我们从头开始。</p>
+<p>一定存在一个最小的自然数。排除掉下界——就像 b) 和 d) 那样——就会迫使一个从最小的自然数开始的子序列的下界进入非自然数领域。这很难看，所以对于下界我们更喜欢&lt;=，就像 a) 和 c) 那样。现在，考虑一下从最小的自然数开始的子序列：包含上界就会迫后者不那么像自然数（译者注：作者的意思是自然数是一个有下界没有上界的集合），当序列缩小成空序列时。这很难看，所以对于上界我们更喜欢&lt;，就像 a) 和 d) 那样。我们得出结论， a) 是我们最喜欢的。</p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2013/01/ewd-2.png" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2013/01/Selection_022.png" alt=""></a></p>
+<p>当处理长度为 N 的序列时，我们期望通过下标来区分它的元素。下一个令人烦恼的问题就是，我们该给它的第一个元素赋予什么样下标值？坚持 a) 的方式，当下标从1开始时，下标范围为 1&lt;= i &lt; N+1；当下标从0开始时则是更好看的 0&lt;= i &lt; N。所以，让我们的序数从0开始：一个元素的序数（下标）等于序列中在它前面的元素个数。这个故事的寓意是我们最好尊重0最为一个最自然的数——过了这么多个世纪！</p>
+<hr>
+<p>顺便说一句，Python 选择了 a)，所以 range(0,3) 返回的是序列是 0，1，2。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2013/01/26/-e4-b8-ba-e4-bb-80-e4-b9-88-e8-ae-a1-e6-95-b0-e5-ba-94-e8-af-a5-e4-bb-8e-e9-9b-b6-e5-bc-80-e5-a7-8b-ef-bc-9f/" data-id="0l41tsmdmhldpkmi" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e6-99-9a-e5-ae-89-ef-bc-8c-e5-a4-a7-e7-90-86" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2013/01/06/-e6-99-9a-e5-ae-89-ef-bc-8c-e5-a4-a7-e7-90-86/" class="article-date">
+  <time datetime="2013-01-07T06:46:58.000Z" itemprop="datePublished">Jan 6 2013</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Life/">Life</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2013/01/06/-e6-99-9a-e5-ae-89-ef-bc-8c-e5-a4-a7-e7-90-86/">晚安，大理！</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在一个大风的夜里</p>
+<p>走在古城的小巷子里</p>
+<p>推门走进一家客栈</p>
+<p>几个陌生人围坐在一起</p>
+<p>炭火烧得通红</p>
+<p>坐下来喝一杯热茶</p>
+<p>听他们讲自己的故事</p>
+<p>任凭门外风声四起</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2013/01/06/-e6-99-9a-e5-ae-89-ef-bc-8c-e5-a4-a7-e7-90-86/" data-id="6my8hxh2aj00jgot" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e7-bb-93-e5-a9-9a-e5-95-a6-ef-bc-81" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2012/12/23/-e7-bb-93-e5-a9-9a-e5-95-a6-ef-bc-81/" class="article-date">
+  <time datetime="2012-12-24T05:48:41.000Z" itemprop="datePublished">Dec 23 2012</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Life/">Life</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2012/12/23/-e7-bb-93-e5-a9-9a-e5-95-a6-ef-bc-81/">结婚啦！</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="http://wangcong2015.files.wordpress.com/2012/12/img_0311.jpg" target="_blank" rel="external"></a><a href="http://wangcong2015.files.wordpress.com/2012/12/img_0311_2.jpg" target="_blank" rel="external"><img src="http://wangcong2015.files.wordpress.com/2012/12/img_0311_2.jpg?w=1024&amp;h=710" alt="" title="IMG_0311_2"></a></p>
+<p>遇到过一个又一个不靠谱的姑娘，也因为种种原因错过了一个又一个没有缘分的姑娘，终于在合适的时间遇到一个合适而且靠谱的好姑娘！</p>
+<p>和这个姑娘是<a href="http://wangcong.org/blog/archives/1826" target="_blank" rel="external">在云南大理认识</a>的，当时她正好一路搭车从山东来到了云南，而我正好从北京搬去大理常住……我们从那时一直交往到现在，一起去过全国很多地方，走了一圈最后发现还是最喜欢大理，而且很快还要回大理。</p>
+<p>我这个人喜欢四处乱走，最近两年基本上每六个月就要搬一次家。你们搬家最多就是从城西搬到城东，而我搬家基本上是从中国的华北搬到西南…… 我不喜欢住在大城市，我认为城市从来没有让人们的生活变得更美好，只会让人更加迷失自我。而且，我从来没有买房子的打算，在一个地方住上几年不动对于我来说简直难以忍受。所以，和我这样的人在一起是需要很大的勇气的，要是换了别的姑娘早就被吓跑了，就算姑娘不跑也被姑娘的妈妈给拉跑了……</p>
+<p>其实，真正让我感动的不是刚认识就觉得彼此很合适，也不是姑娘她不要钱不要车不要房子，而是，她能为了我一点一点去改变，为了在一起不会轻易就放弃。认识我之前她什么饭都不会做，现在已经鸡鸭鱼肉样样都行了，任性的脾气也改了不少。这比什么都重要。</p>
+<p>我的姑娘就是这个样，就像我们结婚证上的那样，美丽又大方！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2012/12/23/-e7-bb-93-e5-a9-9a-e5-95-a6-ef-bc-81/" data-id="twzv7s68nqfi5u54" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-what-every-programmer-should-know" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2012/12/17/what-every-programmer-should-know/" class="article-date">
+  <time datetime="2012-12-18T00:50:49.000Z" itemprop="datePublished">Dec 17 2012</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Programming/">Programming</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2012/12/17/what-every-programmer-should-know/">What every programmer should know...</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="http://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html" target="_blank" rel="external">What Every Computer Scientist Should Know About Floating-Point Arithmetic</a></p>
+<p><a href="http://www.akkadia.org/drepper/cpumemory.pdf" target="_blank" rel="external">What Every Programmer Should Know About Memory</a></p>
+<p><a href="http://kunststube.net/encoding/" target="_blank" rel="external">What every programmer absolutely, positively needs to know about encodings and character sets to work with text</a></p>
+<p><a href="http://www.eecs.berkeley.edu/~rcs/research/interactive_latency.html" target="_blank" rel="external"> Latency Numbers Every Programmer Should Know</a></p>
+<p><a href="http://unix4lyfe.org/time/?v=1" target="_blank" rel="external">What every programmer should know about time</a></p>
+<p><a href="https://code.google.com/p/thread-sanitizer/wiki/AboutRaces" target="_blank" rel="external"> What Every Programmer Should Know About Races</a></p>
+<p><a href="http://blog.llvm.org/2011/05/what-every-c-programmer-should-know.html" target="_blank" rel="external">What Every C Programmer Should Know About Undefined Behavior</a></p>
+<p><a href="http://www.slideshare.net/iammutex/what-every-data-programmer-needs-to-know-about-disks" target="_blank" rel="external">What every data programmer needs to know about disks</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2012/12/17/what-every-programmer-should-know/" data-id="ewjtx3jllhv0ajo7" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e4-b8-ba-e4-bb-80-e4-b9-88-e7-89-b9-e6-96-af-e6-8b-89-e6-98-af-e5-8f-b2-e4-b8-8a-e6-9c-80-e4-bc-9f-e5-a4-a7-e7-9a-84geek-ef-bc-9f" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2012/12/10/-e4-b8-ba-e4-bb-80-e4-b9-88-e7-89-b9-e6-96-af-e6-8b-89-e6-98-af-e5-8f-b2-e4-b8-8a-e6-9c-80-e4-bc-9f-e5-a4-a7-e7-9a-84geek-ef-bc-9f/" class="article-date">
+  <time datetime="2012-12-10T21:47:39.000Z" itemprop="datePublished">Dec 10 2012</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Collection/">Collection</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2012/12/10/-e4-b8-ba-e4-bb-80-e4-b9-88-e7-89-b9-e6-96-af-e6-8b-89-e6-98-af-e5-8f-b2-e4-b8-8a-e6-9c-80-e4-bc-9f-e5-a4-a7-e7-9a-84geek-ef-bc-9f/">为什么特斯拉是史上最伟大的geek？</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>本文译自：<a href="http://theoatmeal.com/comics/tesla" target="_blank" rel="external">http://theoatmeal.com/comics/tesla</a>，图片均来自此处。也可以参考本人之前写的文章《<a href="http://wangcong.org/blog/archives/1187" target="_blank" rel="external">这些男人来自地球</a>》。</p>
+<p><img src="http://s3.amazonaws.com/theoatmeal-img/comics/tesla/1.jpg" alt=""></p>
+<hr>
+<p><strong>Geek 们熬夜通宵把世界给拆了，这样就可以把添加好的新功能一起装好放回去了。</strong></p>
+<p><strong>他们修补那些没有损坏的东西。</strong></p>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<p>**</p>
+<p>Geek 们放弃了他们周围的世界，因为他们忙于焊接一个新的世界。</p>
+<p>他们痴迷，很多时候，甚至受苦。</p>
+<p>一百多年前，一个塞尔维亚裔美国科学家，名叫<span style="color:#000000;">尼古拉·特斯拉</span>，开始修补一些没有损坏的东西。</p>
+<p>在那个时候，世界上大部分人还在使用蜡烛照明，一个被称为交流电的系统诞生了。到今天，这已经是地球上每个家庭的电力了。</p>
+<p>**</p>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<p><img src="http://s3.amazonaws.com/theoatmeal-img/comics/tesla/2.jpg" alt=""></p>
+<p><strong>把人类带入第二次工业革命，我们应该感谢谁？</strong></p>
+<hr>
+<p><strong>尼古拉·特斯拉。</strong></p>
+<hr>
+<p><strong>可每个人都认为：“<em>我觉得托马斯·爱迪生才是电力时代之父</em>。”</strong></p>
+<hr>
+<p><strong>不！应该是尼古拉·特斯拉！</strong></p>
+<hr>
+<p><strong>当多数人想到托马斯·爱迪生的时候，他们想到的是发明电灯泡的人。</strong></p>
+<hr>
+<p><strong>爱迪生并没有发明电灯泡！他改进了电灯泡的主意，有22 个人在他之前就已经是先驱了。</strong></p>
+<hr>
+<p><strong>爱迪生只是找到了销售电灯泡的方法！</strong></p>
+<p><strong>实际上，特斯拉在他早期的职业生涯中曾经为爱迪生工作。</strong></p>
+<p><strong>爱迪生许诺给他相当于现在的一百万美元的钱，去修复他的直流电发电机和电动机。</strong></p>
+<p><strong>特斯拉修好了爱迪生的机器，当他去要许诺给他的钱时，爱迪生嘲笑他，并且说：</strong></p>
+<p><strong>“特斯拉，你不懂我们的美国式幽默。”</strong></p>
+<p><strong>爱迪生是一个很好的例子，本身不是 geek 却活跃在 geek 领域。</strong></p>
+<p><strong>他相信他的发明的价值可以通过赚的钱来衡量。他既不是数学家，也不是科学家。因为他相信他可以雇用别人来帮他完成。</strong></p>
+<p><strong>他不是 geek，他是 CEO。
+</strong></p>
+<p><img src="http://s3.amazonaws.com/theoatmeal-img/comics/tesla/3.jpg" alt=""></p>
+<p><strong>特斯拉以发现令人惊讶的东西，而且忘了把它们记录下来而闻名。</strong></p>
+<hr>
+<p><strong>爱迪生以只要他的雇员发现了什么东西他就匆忙往专利局去跑而闻名。</strong></p>
+<hr>
+<p><strong>当他和爱迪生闹僵后，特斯拉去忙他的交流电电力系统了。</strong></p>
+<hr>
+<p><strong>这对爱迪生和他之间的仇恨更是火上浇油，因为爱迪生那个时候正在向世界兜售他的直流电系统。</strong></p>
+<hr>
+<p><strong>爱迪生的直流电系统每平方英里就需要一个发电机，而且不能把电力输送很远。交流电用的是更细的电线，更高的电压，能把电力进行远距离传输。</strong></p>
+<hr>
+<p><strong>那爱迪生做了什么？</strong></p>
+<p><strong>在爱迪生实验室附近住的邻居们开始注意到，他们的宠物消失了。这是因为学生们每捉到一只活的狗和猫，爱迪生就付给他们 25 分钱。</strong></p>
+<p><strong>然后他把这些猫和狗放到展览中，然后公开地给它们通特斯拉的交流电。</strong></p>
+<p><strong>他的目标是公开污蔑特斯拉的交流电，从而让公众相信家庭使用太危险了。</strong></p>
+<p><strong>简而言之，爱迪生真正领先的东西是变态。</strong></p>
+<p><strong>
+</strong></p>
+<p><strong>可曾听说过一个叫马可尼的人？</strong></p>
+<p><strong>因为发明了无线电报他获得了诺贝尔物理学奖。</strong></p>
+<p><strong>你可知道他做的所有东西都是基于特斯拉之前做的工作？在马可尼因为发了第一封无线电报而出名以后，特斯拉回复：</strong></p>
+<p><strong>“马可尼是好样的。让他继续吧。他使用了我的17项专利。”</strong></p>
+<p><strong>基本上，特斯拉是最和蔼的发明家。
+</strong></p>
+<p><img src="http://s3.amazonaws.com/theoatmeal-img/comics/tesla/4.jpg" alt=""></p>
+<p><strong>可曾听说过雷达？</strong></p>
+<hr>
+<p><strong>一个名叫沃特森·瓦特的英国科学家被公认为于1935年发明了雷达。</strong></p>
+<hr>
+<p><strong>你能猜猜谁在1917年就有了这个主意？</strong></p>
+<hr>
+<p><strong>尼古拉·特斯拉！</strong></p>
+<p><strong>在第一次世界大战之初，他把它扔给了美国海军，当时世界正被迫屈服于德国的潜水艇的淫威。</strong></p>
+<p><strong>不幸的是，托马斯**</strong>·爱迪生是当时美国海军的研发部领导，他设法让他们相信雷达在战争中没有实际用处。**</p>
+<p><strong>干得好，爱迪生！你这个自负、弄巧成拙的混蛋！</strong></p>
+<p><strong>威廉·伦琴被归功于发现了X射线。</strong></p>
+<p><strong>你能猜一猜哪个留八字胡的发明家比他捷足先登而且没有获得任何功劳？
+</strong></p>
+<p><strong>尼古拉·**</strong>讨厌的·<strong>**特斯拉！</strong></p>
+<p><strong>当X射线被发现之初，人们相信它能治疗失明和其它疾病，而特斯拉警告说X射线可能是危险的，他拒绝将它用于医学试验。</strong></p>
+<p><strong>爱迪生（当黑他的机会就在眼前，我是不会错过的），却在从事X射线的人体试验。他的一个员工，Clarency Dally，接受了太多的放射性以至于为了挽救他的生命不得不对他的胳膊进行截肢。但这没有起作用，他最终还是死于纵隔肿瘤。</strong></p>
+<p><strong>Dally 被认为是第一个死于放射试验的美国人。——最终，爱迪生发明了一些原创的东西！</strong></p>
+<p><strong>除了杀死他的助手，爱迪生自己也近乎失明，因为眼睛反复接受X射线。当后来被问起X射线时，爱迪生如此回答：</strong></p>
+<p><strong>“别和我提X射线，我怕它们。”——**</strong>托马斯·爱迪生<strong>**，1903年</strong></p>
+<p><strong>大傻逼！
+</strong></p>
+<p><img src="http://s3.amazonaws.com/theoatmeal-img/comics/tesla/5.jpg" alt=""></p>
+<p><strong>想知道谁在尼加拉瀑布上建造了第一个水力发电站，从而向世界证明了这种电力是可行的能量来源？</strong></p>
+<p><strong>尼古拉·特斯拉！</strong></p>
+<p><strong>谁在低温工程发明之前的近半个世纪就在试验它？</strong></p>
+<p><strong>特斯拉！</strong></p>
+<p><strong>谁在一百多年前就持有以后发展晶体管用到的专利？
+</strong></p>
+<p><strong>特斯拉！</strong></p>
+<p><strong>谁是第一个记录来自外太空的无线电波的人？</strong></p>
+<p><strong>特斯拉！</strong></p>
+<p><strong>谁发现了地球的共振频率？</strong></p>
+<p><strong>特斯拉！</strong></p>
+<p><img src="http://s3.amazonaws.com/theoatmeal-img/comics/tesla/6.jpg" alt=""></p>
+<p><strong>谁建造了一个地震机当它启动时差点摧毁整个纽约周边地区？</strong></p>
+<p><strong>特斯拉！</strong></p>
+<p><strong>听说过球状闪电？</strong></p>
+<p><strong>它是球形外表的闪电，移动缓慢，徘徊在地面上几英尺。</strong></p>
+<p><strong>它是一种及其稀少的现象，即使是今天也没有一个科学家能在实验室中成功造出它来。</strong></p>
+<p><strong>哦，当然除了特斯拉在19世纪90年代成功了。</strong></p>
+<p><strong>可曾想知道谁发明了远程控制？</strong></p>
+<p><strong>特斯拉！</strong></p>
+<p><strong>氖管照明？</strong></p>
+<p><strong>特斯拉！</strong></p>
+<p><strong>现代发电机？</strong></p>
+<p><strong>特斯拉！</strong></p>
+<p><strong>无线通信？</strong></p>
+<p><strong>特斯拉！</strong></p>
+<p><strong>你知道当你家需要电的时候它怎样能从地球电离层流下来给所有东西进行无线充电？</strong></p>
+<p><strong>好吧，这是特斯拉发明了但没有和外界分享的东西，很可能他怕哪个缺乏创见的混蛋偷走他的专利。
+</strong></p>
+<p><strong>
+</strong></p>
+<p><img src="http://s3.amazonaws.com/theoatmeal-img/comics/tesla/7.jpg" alt=""></p>
+<p><strong>毫无疑问，特斯拉是一个天才。</strong></p>
+<p><strong>他能说八种语言：塞尔维亚语，英语，捷克语，德语，法语，匈牙利语，意大利语和拉丁语。</strong></p>
+<p><strong>（我们多数人只会一种语言，而且也很糟糕）</strong></p>
+<p><strong>他能记住整本书，而且随时能背出来。</strong></p>
+<p><strong>（我们多数人连自己的密码都记不住）</strong></p>
+<p><strong>他能完全在头脑中幻想出机器设备，而且不用写出来就可以建造它们。</strong></p>
+<p><strong>（我们多数人只会花时间去幻想裸体的女人，和油腻的三明治这些东西）
+</strong></p>
+<p><a href="/pl/tesla/geek"><img src="http://s3.amazonaws.com/theoatmeal-img/comics/tesla/8.jpg" alt=""></a></p>
+<p><strong>让人印象更深刻的是，这个男人活到了86岁，一生独身。</strong></p>
+<p><strong>尽管身高两米，而且很受女人欢迎，特斯拉拒绝约会，因为他认为这会打扰他的工作。</strong></p>
+<p><strong>特斯拉（看照片）：一个很帅的伙计，一生拒绝性感，因为他忙着在公寓中制造人造闪电。</strong></p>
+<p><strong>P.S. **</strong>托马斯·爱迪生娶了一个16岁的女孩。**</p>
+<p><strong>P.P.S. 我发誓，这是我在漫画中最后一次黑爱迪生。
+</strong></p>
+<p><img src="http://s3.amazonaws.com/theoatmeal-img/comics/tesla/9.jpg" alt=""></p>
+<p><strong>拥有难以置信的头脑和那么多发明，特斯拉应该很有钱很出名，对吧？</strong></p>
+<p><strong>很不幸，不是！</strong></p>
+<p><strong>特斯拉生活在一个急功近利的时代，当时我们不需要射电天文学，我们需要的是电灯泡和面包烤箱。</strong></p>
+<p><strong>特斯拉的贡献不是添加性的，而是革命性的！</strong></p>
+<p><strong>特斯拉奉献给世界的一个最后的礼物是纽约附近的一座塔楼，可以给整个地球提供无线能源。当了解到没有办法控制这个能源也就无法赚钱后，曾经资助建造这座塔的人关闭了它。</strong></p>
+<p><strong>这种贪得无厌折磨着特斯拉大部分职业生涯，他花了很多精力去应付。并且，特斯拉也经历了混乱时代，我们通常称之为“精神失常”。</strong></p>
+<p><strong>特斯拉时常产生幻觉，有时分不清现实和想象，这也是为什么他多年来一直独自待在实验室，夜以继日地工作。</strong></p>
+<p><strong>特斯拉在孤独和伤心中去世，死于纽约一家宾馆的房间。他曾经以牛奶和国立饼干公司的饼干为生，在他最后的一个采访中，他展示了一个独特的个性：</strong></p>
+<p><strong>“我曾经养过数千只鸽子好几年。但是只有一只鸽子，一只漂亮的鸟，纯白色，翅膀上有一些浅灰色。这只与众不同。它是母的。我发现她出现在所有地方，无论我在哪里她都能找到我。当我想她的时候我只要想一下，叫她，她就会飞向我。她了解我，我也了解她。</strong></p>
+<p><strong>我爱上了那只鸽子。</strong></p>
+<p><strong>我爱她就像一个男人爱一个女人，而且她也爱我。</strong></p>
+<p><strong>当我看到她时，我知道她要告诉我，她快死了。然后，我从她那里得到消息，她眼睛中发出一道光，一道强光。”</strong></p>
+<p><strong>
+</strong></p>
+<p><strong>靠饼干为生而且和一个想象中发出激光的鸽子对话？！</strong></p>
+<p><strong>这就是特斯拉给人类做出的贡献的回报？！
+</strong></p>
+<p><img src="http://s3.amazonaws.com/theoatmeal-img/comics/tesla/10.jpg" alt=""></p>
+<p><strong>亲爱的**</strong>尼古拉·特斯拉<strong>**，</strong></p>
+<p><strong>我很抱歉，</strong></p>
+<p><strong>非常非常抱歉！</strong></p>
+<p><strong>你是生错了时间的人，</strong></p>
+<p><strong>你是史上最伟大的 geek！</strong></p>
+<p><strong>而且，当描述**</strong>托马斯·爱迪生时，英文中没有足够的名词去补充“人渣”这个词，但我会尝试一下：**</p>
+<p><strong>（省略若干脏字）
+</strong></p>
+<p><strong>对于那些专门修补没有损坏的东西的人，考虑一下我的方式：</strong></p>
+<p><strong>谢谢你，**</strong>尼古拉·特斯拉<strong>**！
+</strong></p>
+<p><a href="http://theoatmeal.com/blog/tesla_museum" target="_blank" rel="external"><img src="http://s3.amazonaws.com/theoatmeal-img/comics/tesla/tesla_museum_link.jpg" alt=""></a></p>
+<p><a href="http://theoatmeal.com/blog/tesla_museum" target="_blank" rel="external"><strong>我需要你的帮助！我正在尝试筹款去购买特斯拉的旧实验室，把它变成一个博物馆。</strong></a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2012/12/10/-e4-b8-ba-e4-bb-80-e4-b9-88-e7-89-b9-e6-96-af-e6-8b-89-e6-98-af-e5-8f-b2-e4-b8-8a-e6-9c-80-e4-bc-9f-e5-a4-a7-e7-9a-84geek-ef-bc-9f/" data-id="8dppqqxea6njxzwt" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+  
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/archives/">&laquo; Prev</a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/page/3/">3</a><a class="page-number" href="/archives/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/71/">71</a><a class="extend next" rel="next" href="/archives/page/3/">Next &raquo;</a>
+    </nav>
+  
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Book-Reviews/">Book Reviews</a><span class="category-list-count">18</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/China/">China</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Collection/">Collection</a><span class="category-list-count">25</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">324</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux-Application/">Linux Application</a><span class="category-list-count">73</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux-Kernel/">Linux Kernel</a><span class="category-list-count">64</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Love/">Love</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Movies/">Movies</a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/">Programming</a><span class="category-list-count">152</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Science-Fiction/">Science Fiction</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Travel/">Travel</a><span class="category-list-count">19</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/geek/">geek</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/handling/">handling</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/joke/">joke</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/signal/">signal</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/unix/">unix</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/geek/" style="font-size: NaNpx;">geek</a><a href="/tags/handling/" style="font-size: NaNpx;">handling</a><a href="/tags/joke/" style="font-size: NaNpx;">joke</a><a href="/tags/linux/" style="font-size: NaNpx;">linux</a><a href="/tags/signal/" style="font-size: NaNpx;">signal</a><a href="/tags/unix/" style="font-size: NaNpx;">unix</a><a href="/tags/vim/" style="font-size: NaNpx;">vim</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">August 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">December 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">October 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">September 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">August 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">February 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01/">January 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12/">December 2012</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">November 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">October 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">September 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">August 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/07/">July 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">April 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">March 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">February 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">January 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/12/">December 2011</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">November 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/10/">October 2011</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">September 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08/">August 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/07/">July 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/06/">June 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/05/">May 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04/">April 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03/">March 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/02/">February 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/01/">January 2011</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/12/">December 2010</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/11/">November 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/10/">October 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/09/">September 2010</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08/">August 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07/">July 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06/">June 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05/">May 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04/">April 2010</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03/">March 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02/">February 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01/">January 2010</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12/">December 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11/">November 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10/">October 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09/">September 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08/">August 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07/">July 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/06/">June 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/05/">May 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04/">April 2009</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03/">March 2009</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02/">February 2009</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01/">January 2009</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12/">December 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/11/">November 2008</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/10/">October 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09/">September 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08/">August 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07/">July 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06/">June 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05/">May 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04/">April 2008</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03/">March 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02/">February 2008</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01/">January 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12/">December 2007</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11/">November 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10/">October 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09/">September 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08/">August 2007</a><span class="archive-list-count">31</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07/">July 2007</a><span class="archive-list-count">34</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06/">June 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05/">May 2007</a><span class="archive-list-count">25</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04/">April 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03/">March 2007</a><span class="archive-list-count">50</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02/">February 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01/">January 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12/">December 2006</a><span class="archive-list-count">5</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2014/08/12/linux-e7-bd-91-e7-bb-9c-e6-b5-81-e9-87-8f-e6-8e-a7-e5-88-b6-ef-bc-88-e4-b8-80-ef-bc-89/">Linux 网络流量控制（零）</a>
+          </li>
+        
+          <li>
+            <a href="/2014/08/01/ottawa-linux-symposium/">Ottawa Linux Symposium</a>
+          </li>
+        
+          <li>
+            <a href="/2014/05/31/skbuff-e5-86-85-e5-ad-98-e6-a8-a1-e5-9e-8b/">skbuff 内存模型</a>
+          </li>
+        
+          <li>
+            <a href="/2014/05/06/-e9-95-bf-e6-9c-9f-e6-8f-90-e4-be-9b-twitter-e5-86-85-e6-8e-a8/">长期提供 Twitter 内推</a>
+          </li>
+        
+          <li>
+            <a href="/2014/01/30/-e6-88-91-e7-9a-842013-ef-bc-9a-e6-88-91-e6-9d-a5-e5-88-b0-e4-ba-86-e7-be-8e-e5-9b-bd/">我的2013：我来到了美国</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2015 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+
+  </div>
+</body>
+</html>

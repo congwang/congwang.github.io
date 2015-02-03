@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Archives | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/archives/page/30/">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description">
+
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-auto-ptr-e5-92-8c-shared-ptr" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2009/01/29/auto-ptr-e5-92-8c-shared-ptr/" class="article-date">
+  <time datetime="2009-01-30T04:19:10.000Z" itemprop="datePublished">Jan 29 2009</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Programming/">Programming</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2009/01/29/auto-ptr-e5-92-8c-shared-ptr/">auto_ptr 和 shared_ptr</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>偶然的机会看到boost里还有一个shared_ptr型智能指针，费解，C++标准库里不是有auto_ptr了已经？我们先翻出源代码来看看。</p>
+<p>先看auto_ptr，因为它比较简单。既然它在标准库里，那么我们就在gcc的代码中找，恩，最后确定在libstdc++-v3/include/backward/auto_ptr.h里面。说实话，auto_ptr真是太简单了，里面的私有变量就一个：</p>
+<p>private:<br>  _Tp* _M_ptr;</p>
+<p>其它操作皆是围绕这个进行的，你自己猜都能猜到，看看吧，构造函数中的一个：<br>[cpp]<br>explicit<br>  auto_ptr(element_type<em> <strong>p = 0) throw() : _M_ptr(</strong>p) { }<br>[/cpp]<br>析构函数：<br>[cpp]<br>~auto_ptr() { delete _M_ptr; }<br>[/cpp]<br>重载的赋值运算符：<br>[cpp]<br>      template<br>        auto_ptr&amp;<br>        operator=(auto_ptr&amp; <strong>a) throw()<br>        {<br>          reset(</strong>a.release());<br>          return </em>this;<br>        }<br>[/cpp]<br>调用了自己的reset和release方法，按住不表，下面会介绍。重载的提领运算符：<br>[cpp]<br>      element_type&amp;<br>      operator<em>() const throw()<br>      {<br>        _GLIBCXX_DEBUG_ASSERT(_M_ptr != 0);<br>        return </em>_M_ptr;<br>      }<br>[/cpp]</p>
+<p>成员运算符：<br>[cpp]<br>      element_type*<br>      operator-&gt;() const throw()<br>      {<br>        _GLIBCXX_DEBUG_ASSERT(_M_ptr != 0);<br>        return _M_ptr;<br>      }<br>[/cpp]</p>
+<p>get()方法：</p>
+<p>[cpp]<br>      element_type*<br>      get() const throw() { return _M_ptr; }<br>[/cpp]</p>
+<p>release()方法：<br>[cpp]<br>      element_type<em><br>      release() throw()<br>      {<br>        element_type</em> <strong>tmp = _M_ptr;<br>        _M_ptr = 0;<br>        return </strong>tmp;<br>      }<br>[/cpp]</p>
+<p>reset()方法：<br>[cpp]<br>      void<br>      reset(element_type* <strong>p = 0) throw()<br>      {<br>        if (</strong>p != _M_ptr)<br>          {<br>            delete _M_ptr;<br>            _M_ptr = __p;<br>          }<br>      }<br>[/cpp]</p>
+<p>这些应该没什么难理解的，可能除了那个成员运算符，只说一句：C++会把foo-&gt;bar()翻译成：(foo.operator-&gt;())-&gt;bar()。</p>
+<p>从上面我们可以看出，auto_ptr明显没有计数引用，而shared_ptr和它的最大区别就是它有计数。shared_ptr的源代码在boost/shared_ptr.hpp里。先看它的私有变量：</p>
+<p>  T * px;                     // contained pointer<br>  boost::detail::shared_count pn;    // reference counter</p>
+<p>多了一个引用计数器，是一个boost::detail::shared_count类型，再翻源代码boost/detail/shared_count.hpp，只看用到的三个方法：<br>[cpp]<br>    bool unique() const // nothrow<br>    {<br>        return use_count() == 1;<br>    }</p>
+<pre><code><span class="keyword">void</span> swap(shared_count &amp;amp; r) <span class="comment">// nothrow</span>
+{
+    sp_counted_base * tmp = r.pi_;
+    r.pi_ = pi_;
+    pi_ = tmp;
+}
+
+<span class="keyword">long</span> use_count() <span class="keyword">const</span> <span class="comment">// nothrow</span>
+{
+    <span class="keyword">return</span> pi_ != <span class="number">0</span>? pi_-&amp;gt;use_count(): <span class="number">0</span>;
+}
+</code></pre><p>[/cpp]<br>呃，还有一个不能漏了，赋值运算符：<br>[cpp]<br>    shared<em>count &amp; operator= (shared_count const &amp; r) // nothrow<br>    {<br>        sp_counted_base * tmp = r.pi</em>;</p>
+<pre><code>    <span class="keyword">if</span>( tmp != pi<span class="number">_</span> )
+    {
+        <span class="keyword">if</span>( tmp != <span class="number">0</span> ) tmp-&amp;<span class="keyword">gt</span>;add_ref_copy();
+        <span class="keyword">if</span>( pi<span class="number">_</span> != <span class="number">0</span> ) pi<span class="number">_</span>-&amp;<span class="keyword">gt</span>;release();
+        pi<span class="number">_</span> = tmp;
+    }
+
+    <span class="keyword">return</span> *this;
+}
+</code></pre><p>[/cpp]<br>再回过头去看shared_ptr的源代码：<br>[cpp]<br>    reference operator<em> () const // never throws<br>    {<br>        BOOST_ASSERT(px != 0);<br>        return </em>px;<br>    }</p>
+<pre><code>T * <span class="keyword">operator</span>-&amp;gt; () <span class="keyword">const</span> <span class="comment">// never throws</span>
+{
+    BOOST_ASSERT(px != <span class="number">0</span>);
+    <span class="keyword">return</span> px;
+}
+
+T * get() <span class="keyword">const</span> <span class="comment">// never throws</span>
+{
+    <span class="keyword">return</span> px;
+}
+
+<span class="keyword">bool</span> <span class="keyword">operator</span>! () <span class="keyword">const</span> <span class="comment">// never throws</span>
+{
+    <span class="keyword">return</span> px == <span class="number">0</span>;
+}
+
+<span class="keyword">bool</span> unique() <span class="keyword">const</span> <span class="comment">// never throws</span>
+{
+    <span class="keyword">return</span> pn.unique();
+}
+
+<span class="keyword">long</span> use_count() <span class="keyword">const</span> <span class="comment">// never throws</span>
+{
+    <span class="keyword">return</span> pn.use_count();
+}
+
+<span class="keyword">void</span> swap(<span class="built_in">shared_ptr</span> &amp;amp; other) <span class="comment">// never throws</span>
+{
+    std::swap(px, other.px);
+    pn.swap(other.pn);
+}
+
+<span class="built_in">shared_ptr</span> &amp;amp; <span class="keyword">operator</span>=( <span class="built_in">shared_ptr</span> &amp;amp;&amp;amp; r ) <span class="comment">// never throws</span>
+{
+    this_type( <span class="keyword">static_cast</span>( r ) ).swap( *<span class="keyword">this</span> );
+    <span class="keyword">return</span> *<span class="keyword">this</span>;
+}
+</code></pre><p>[/cpp]</p>
+<p>这样一切都明了了。所以，auto_ptr和shared_ptr在使用上的区别也好理解了，下面的小程序可以展示：</p>
+<p>[cpp]</p>
+<h1 id="include">include</h1>
+<h1 id="include-1">include</h1>
+<h1 id="include-2">include</h1>
+<p>using namespace boost;<br>using std::cout;<br>using std::endl;<br>using std::auto_ptr;</p>
+<p>class A<br>{<br>    public:<br>    void print()<br>    {<br>        cout&lt;&lt;&quot;hello&quot;&lt;&lt;endl;<br>    }<br>};</p>
+<p>int main()<br>{<br>    auto_ptr<a> aptr1(new A);<br>    auto_ptr<a> aptr2;</a></a></p>
+<pre><code>aptr2 <span class="subst">=</span> aptr1;
+aptr2<span class="subst">-&amp;</span><span class="literal">gt</span>;print(); <span class="comment">//Ok</span>
+cout<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span>quot;pointer <span class="keyword">in</span> aptr1 is: <span class="subst">&amp;</span>quot;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;aptr1<span class="built_in">.</span>get()<span class="subst">&amp;</span><span class="literal">lt</span>;print(); <span class="comment">//Wrong!</span>
+
+A <span class="subst">*</span> a <span class="subst">=</span> <span class="literal">new</span> A;
+shared_ptr<span class="subst">&lt;</span>a<span class="subst">&gt;</span> sptr1(a);
+shared_ptr<span class="subst">&lt;</span>a<span class="subst">&gt;</span> sptr2(sptr1); <span class="comment">//alright</span>
+sptr2 <span class="subst">=</span> sptr1;
+sptr2<span class="subst">-&amp;</span><span class="literal">gt</span>;print(); <span class="comment">//ok</span>
+sptr1<span class="subst">-&amp;</span><span class="literal">gt</span>;print(); <span class="comment">//ok</span>
+
+int <span class="subst">*</span> b <span class="subst">=</span> <span class="literal">new</span> int;
+shared_ptr sptr3(b);
+shared_ptr sptr4(b); <span class="comment">//WRONG!!</span>
+
+<span class="keyword">return</span> <span class="number">0</span>;
+</code></pre><p>}<br>[/cpp] </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2009/01/29/auto-ptr-e5-92-8c-shared-ptr/" data-id="1udd9kd9jmv0pjt4" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e7-bc-96-e7-a8-8b-e5-a4-aa-e9-9a-be-ef-bc-8c-e6-88-91-e4-bb-ac-e5-8e-bb-e5-86-99-e8-84-9a-e6-9c-ac-e5-90-a7-ef-bc-81" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2009/01/28/-e7-bc-96-e7-a8-8b-e5-a4-aa-e9-9a-be-ef-bc-8c-e6-88-91-e4-bb-ac-e5-8e-bb-e5-86-99-e8-84-9a-e6-9c-ac-e5-90-a7-ef-bc-81/" class="article-date">
+  <time datetime="2009-01-29T07:23:04.000Z" itemprop="datePublished">Jan 28 2009</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Programming/">Programming</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2009/01/28/-e7-bc-96-e7-a8-8b-e5-a4-aa-e9-9a-be-ef-bc-8c-e6-88-91-e4-bb-ac-e5-8e-bb-e5-86-99-e8-84-9a-e6-9c-ac-e5-90-a7-ef-bc-81/">编程太难，我们去写脚本吧！</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="http://www.perl.com" target="_blank" rel="external">perl.com</a> 上发布了Larry Wall的<a href="http://www.perl.com/pub/a/2007/12/06/soto-11.html" target="_blank" rel="external">一篇文章</a>，题目就是本文的标题，非常有意思。</p>
+<p>文中从脚本语言的历史谈起，提到了脚本语言的一些特征，和设计脚本语言的方方面面。当然了，Larry写这篇文章的目的之一肯定就是鼓吹Perl6了，看来他是力挺Perl6的。总之，推荐读一下这篇文章。</p>
+<p>另，很期待perl6的到来，不知道得等到哪一年的圣诞节啦～～！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2009/01/28/-e7-bc-96-e7-a8-8b-e5-a4-aa-e9-9a-be-ef-bc-8c-e6-88-91-e4-bb-ac-e5-8e-bb-e5-86-99-e8-84-9a-e6-9c-ac-e5-90-a7-ef-bc-81/" data-id="y6ayf61pmhtxjymw" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e5-af-b9-e6-a0-87-e5-87-86-e7-9a-84-e4-b8-80-e6-9d-a1-e8-af-84-e8-ae-ba" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2009/01/27/-e5-af-b9-e6-a0-87-e5-87-86-e7-9a-84-e4-b8-80-e6-9d-a1-e8-af-84-e8-ae-ba/" class="article-date">
+  <time datetime="2009-01-28T05:45:07.000Z" itemprop="datePublished">Jan 27 2009</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Programming/">Programming</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2009/01/27/-e5-af-b9-e6-a0-87-e5-87-86-e7-9a-84-e4-b8-80-e6-9d-a1-e8-af-84-e8-ae-ba/">对标准的一条评论</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>The standard is written in a variant of English sometimes called<br>standardese.  It’s designed (or at least intended) to be<br>absolutely precise and unambiguous, even at the cost of<br>understandability.  It doesn’t always succeed with its intent,<br>but in all cases, precision and a lack of ambiguity have<br>precedence over readability.<br>非常精辟的评价～！来自James Kanze。</p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2009/01/27/-e5-af-b9-e6-a0-87-e5-87-86-e7-9a-84-e4-b8-80-e6-9d-a1-e8-af-84-e8-ae-ba/" data-id="b0cw8zaqqqyt7xsa" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e6-80-bb-e7-bb-9308-ef-bc-8c-e5-b1-95-e6-9c-9b09" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2009/01/25/-e6-80-bb-e7-bb-9308-ef-bc-8c-e5-b1-95-e6-9c-9b09/" class="article-date">
+  <time datetime="2009-01-25T09:43:21.000Z" itemprop="datePublished">Jan 25 2009</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Life/">Life</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2009/01/25/-e6-80-bb-e7-bb-9308-ef-bc-8c-e5-b1-95-e6-9c-9b09/">总结08，展望09</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>今天又是年三十了，我觉得我应该写点什么来总结一下过去的这一年，也算对自己有个交代，以后看起来也方便。</p>
+<p>08年对我来说是内容最丰富的一年。国内发生了那么多事，我也基本上都赶了，反正今年整个国家没消停……</p>
+<p>我也没消停，出了次国，看了看外面的精彩世界，认识了很多外国友人，看到了很多异国风情，可是人家再好也是人家的国家，我的国家依旧如此……</p>
+<p>毕业了，不再是学生了，虽然现在还经常被某些人错认为学生……</p>
+<p>总算是工作了，不光不再花父母的钱了，而且还能给家里寄钱了，很高兴。可是花着自己挣的钱有时真比花父母给的钱还不舍得，虽然我一个月挣得够我爸挣好几年的。</p>
+<p>生活上也不错。越来越喜欢旅游了，今年去了很多很多地方，希望这只是一个开始，以后还要去更多的地方，还要去继续探索这个大千世界……还有就是越来越懂得认真去生活了，工作之余和朋友出去吃个饭，喝个酒，去去酒吧……单身汉的生活就应该是这样吧？女朋友咱没有，钱也可以没有，兄弟们不能没有。:-)</p>
+<p>技术上就不总结了，唉，越来越觉得自己学到的东西太简单，不是我谦虚，我感觉确实如此，感觉别人知道我不知道的东西，哪怕很少我也感觉他/她知道得比我多很多，我知道别人不知道的东西，即使很多我也觉得不过就那样……越学越傻了都……</p>
+<p>总之我对08年挺满意的，希望09年可以更好。我不太喜欢列什么目标，因为我列了我也基本上完不成，不过为了在09年年末时看看自己到底有多少没完成，我还是列出来吧。:-P 09年的目标大体如下，排列分先后：</p>
+<p>1. 找到一份新工作；</p>
+<p>2. 找一个女朋友；</p>
+<p>3. 如果2太难实现，可考虑：认识更多的新朋友；</p>
+<p>4. 到更多的地方去旅游；</p>
+<p>5. 如果因为种种原因4没完成，那么一定要完成这个：学到更多的知识（不可仅限计算机）；</p>
+<p>6. 如果上述目标都tmd完不成，至少至少，一定要完成这个：高高兴兴地生活。</p>
+<p>我想至少最后一个还是比较好完成的，所以这么来看09年似乎可以完成目标。:-)</p>
+<p>P.S. 如果经济很很很危机，找不到工作捏？那我就去卖煎饼果子，就像《血色浪漫》里的钟跃民！哈哈哈！</p>
+<p>P.P.S. 千万别说我是有理想的好青年！我现在最大的理想是以后等有钱了自己去开家咖啡馆，找一个干净安静的小城市，然后知足地过一辈子……哈哈哈哈～！</p>
+<p>=========================新年的分割线=========================</p>
+<p><strong>最后祝各位在新的一年里生活得更好，更开心，向着自己的目标继续奋斗！</strong>（别说心想事成，那太假，没有人能想什么就有什么。）</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2009/01/25/-e6-80-bb-e7-bb-9308-ef-bc-8c-e5-b1-95-e6-9c-9b09/" data-id="e16ye6u8zc55j8m1" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-wine-e4-ba-86-e4-b8-80-e6-8a-8a-e3-80-8a-e7-ba-a2-e8-ad-a62-e3-80-8b" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2009/01/24/wine-e4-ba-86-e4-b8-80-e6-8a-8a-e3-80-8a-e7-ba-a2-e8-ad-a62-e3-80-8b/" class="article-date">
+  <time datetime="2009-01-24T08:33:56.000Z" itemprop="datePublished">Jan 24 2009</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Life/">Life</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2009/01/24/wine-e4-ba-86-e4-b8-80-e6-8a-8a-e3-80-8a-e7-ba-a2-e8-ad-a62-e3-80-8b/">wine 了一把《红警2》</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>昨天和几个哥们出去玩去，本来说打死也不去网吧的结果最后还是跑到网吧去了，到了网吧后我发现我只有《红警》能玩，于是又疯狂了一把。回去后觉得意犹未尽，干脆在linux上装了个wine跑一个来玩，没想到wine 1.1.12对《红警2》支持那么好，图像音效什么的都很棒！就还有两个小问题：1. 速度有点慢；2. 每次鼠标到左上角的时候总是暂时“退出”该窗口，怀疑是个bug……</p>
+<p>唉，想当年上高一的时候我对《红警2》那个疯狂啊～！当时我还搞到一张正版的《红警2》，上面录像很全，我认认真真地看了一遍，而且后来硬是把任务一关一关地都过了一遍。哎，往事不堪回首矣～！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2009/01/24/wine-e4-ba-86-e4-b8-80-e6-8a-8a-e3-80-8a-e7-ba-a2-e8-ad-a62-e3-80-8b/" data-id="1wp1mvbhw9xlxnp5" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-reentrant-ef-bc-8cthread-safe-e5-92-8c-async-signal-safe" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2009/01/21/reentrant-ef-bc-8cthread-safe-e5-92-8c-async-signal-safe/" class="article-date">
+  <time datetime="2009-01-22T07:18:42.000Z" itemprop="datePublished">Jan 21 2009</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Programming/">Programming</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2009/01/21/reentrant-ef-bc-8cthread-safe-e5-92-8c-async-signal-safe/">reentrant，thread-safe 和 async-signal-safe</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>先上定义吧，POSIX对它们的<a href="http://www.opengroup.org/onlinepubs/000095399/basedefs/xbd_chap03.html" target="_blank" rel="external">定义</a>分别是：</p>
+<blockquote>
+<p><strong>Reentrant Function</strong></p>
+<p>A function whose effect, when called by two or more threads, is guaranteed to be as if the threads each executed the function one after another in an undefined order, even if the actual execution is interleaved.</p>
+<p><strong>Thread-Safe</strong></p>
+<p>A function that may be safely invoked concurrently by multiple threads. <em>Each function defined in the System Interfaces volume of IEEE Std 1003.1-2001 is thread-safe unless explicitly stated otherwise.</em></p>
+<p><strong>Async-Signal-Safe Function</strong></p>
+<p>A function that may be invoked, without restriction, from signal-catching functions. <em>No function is async-signal-safe unless explicitly described as such.</em><br>可重入我们都清楚，顾名思义，就是可以重新进入，进一步讲就是，用相同的输入，每次调用函数一定会返回相同的结果。这就是可重入。<a href="http://en.wikipedia.org/wiki/Reentrant_(subroutine" target="_blank" rel="external">wikipedia上</a>)有更严谨的定义：</p>
+<ul>
+<li>Must hold no static (global) non-constant data.</li>
+<li>Must not return the address to static (global) non-constant data.</li>
+<li>Must work only on the data provided to it by the caller.</li>
+<li>Must not rely on locks to singleton resources.</li>
+<li>Must not call non-reentrant computer programs or routines.<br>然后是<a href="http://en.wikipedia.org/wiki/Thread-safety" target="_blank" rel="external">线程安全</a>，从定义上看，它仅要求了可以安全地被线程并发执行。这是一个相对较低的要求，因为它内部可以访问全局变量或静态变量，不过需要加锁，也就是说，只要是在线程可控之中的，每次调用它返回不同的结果也没关系。到这里我们可以看出：<strong>可重入函数一定是线程安全的，而反之未必。</strong>wikipedia上也写道：<br>Therefore, reentrancy is a more fundamental property than thread-safety and by definition, leads to thread-safety: Every reentrant function is thread-safe, however, not every thread-safe function is reentrant.<br>例子，有很多，最出名的莫过于strtok(3)，我们认识可重入这个概念就是从它开始的，它内部适用了静态变量，显然是不可重入的（它的可重入版是strtok_r(3)）。其次应该是malloc(3)，嘿嘿，其实也很明显，我就不多说了。但是，strtok(3)<strong>不是</strong>线程安全的，而malloc(3)是。</li>
+</ul>
+</blockquote>
+<p>还有一个概念我们不常碰到，那就是异步信号安全，它其实也很简单，就是一个函数可以在信号处理函数中被安全地调用。看起来它似乎和线程安全类似，其实不然，我们知道信号是异步产生的，但是，信号处理函数是打断主函数（相对于信号处理函数）后执行，执行完后又返回主函数中去的。也就是说，它<strong>不是</strong>并发的！</p>
+<p>一个函数，它访问了全局变量，那么它就是不可重入的，不过我们可以把它变成线程安全的，加上锁就可以，但是这种方法并不会把它变成异步信号安全的，而几乎可以肯定的是，使用了锁的一定不是信号安全的（除非屏蔽了信号，显然），信号完全可以在锁加上后解开前到来，然后就很可能形成死锁…… <a href="http://www.cocoadev.com/index.pl?SignalSafety" target="_blank" rel="external">这里</a>有个很好的例子。所以，可重入的函数也一定是异步信号安全的，而反之未必。可以参考<a href="http://www.ibm.com/developerworks/linux/library/l-reent.html" target="_blank" rel="external">IBM上一篇不错的文章</a>。</p>
+<p>关于异步信号安全的函数列表可以参考<a href="http://www.kernel.org/doc/man-pages/online/pages/man7/signal.7.html" target="_blank" rel="external">man 7 signal</a>；关于<strong>非</strong>线程安全的函数列表可以参考<a href="http://book.chinaunix.net/special/ebook/addisonWesley/APUE2/0201433079/ch12lev1sec5.html" target="_blank" rel="external">APUE第12.5节</a> ；关于可重入函数列表，可参考<a href="http://book.chinaunix.net/special/ebook/addisonWesley/APUE2/0201433079/ch10lev1sec6.html#ch10lev1sec6" target="_blank" rel="external">APUE第10.6节</a>。另请<a href="http://www.unix.org/whitepapers/reentrant.html" target="_blank" rel="external">参阅</a>。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2009/01/21/reentrant-ef-bc-8cthread-safe-e5-92-8c-async-signal-safe/" data-id="ssb22g3swt16wdpx" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post--e7-94-a8-sigaction2-e7-9a-84-e5-8e-9f-e5-9b-a0" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2009/01/20/-e7-94-a8-sigaction2-e7-9a-84-e5-8e-9f-e5-9b-a0/" class="article-date">
+  <time datetime="2009-01-21T07:41:25.000Z" itemprop="datePublished">Jan 20 2009</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Programming/">Programming</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2009/01/20/-e7-94-a8-sigaction2-e7-9a-84-e5-8e-9f-e5-9b-a0/">用 sigaction(2) 的原因</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Linux <a href="http://www.kernel.org/doc/man-pages/online/pages/man2/signal.2.html" target="_blank" rel="external">man page中</a>提到：</p>
+<blockquote>
+<p>The behavior of signal() varies across Unix versions, and has also varied<br>historically across different versions of Linux.  Avoid its use: use sigaction(2) instead.<br>…<br>The only portable use of signal() is to set a signal’s disposition to SIG_DFL or SIG_IGN. The semantics when using signal() to establish a signal handler vary across systems (and POSIX.1 explicitly permits this variation); do not use it for this purpose.<br>所以signal(2)的可移植性首先就差了一截子。还有就是，signal(2)也不能像sigaction(2)那样去屏蔽信号，<a href="http://www.opengroup.org/onlinepubs/000095399/functions/sigaction.html" target="_blank" rel="external">POSIX中</a>提到：<br>When a signal is caught by a signal-catching function installed by<br>sigaction(), a new signal mask is calculated and installed for the<br>duration of the signal-catching function (or until a call to either<br>sigprocmask() or sigsuspend() is made). This mask is formed by taking<br>the union of the current signal mask and the value of the sa_mask for<br>the signal being delivered unless SA_NODEFER or<br>SA_RESETHAND is set, And then including the signal being<br>delivered. If and when the user’s signal handler returns normally, the<br>original signal mask is restored.</p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2009/01/20/-e7-94-a8-sigaction2-e7-9a-84-e5-8e-9f-e5-9b-a0/" data-id="0mnb6pq2pmj8sif5" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-sparse-e7-9a-84-e4-b8-80-e4-b8-aa-bug" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2009/01/19/sparse-e7-9a-84-e4-b8-80-e4-b8-aa-bug/" class="article-date">
+  <time datetime="2009-01-20T04:02:22.000Z" itemprop="datePublished">Jan 19 2009</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux-Application/">Linux Application</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2009/01/19/sparse-e7-9a-84-e4-b8-80-e4-b8-aa-bug/">sparse 的一个 bug</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>今天用sparse的时候遇到一个bug：</p>
+<p>error: unable to open ‘stddef.h’</p>
+<p>简单地搜了搜，发现debian上已经<a href="http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=505177" target="_blank" rel="external">有人报告</a>，最新的sparse的git树里已经解决了这个问题，可是Fedora还没有。于是只好自己编译，git-clone之后 make &amp;&amp;  make install PREFIX=/usr 就可以了。希望Fedora也尽快更新sparse。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2009/01/19/sparse-e7-9a-84-e4-b8-80-e4-b8-aa-bug/" data-id="n27kn6d5ro381dkw" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-linux-e5-88-86-e5-8c-ba-e4-b8-aa-e6-95-b0-e9-99-90-e5-88-b6" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2009/01/18/linux-e5-88-86-e5-8c-ba-e4-b8-aa-e6-95-b0-e9-99-90-e5-88-b6/" class="article-date">
+  <time datetime="2009-01-18T08:58:18.000Z" itemprop="datePublished">Jan 18 2009</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux-Kernel/">Linux Kernel</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2009/01/18/linux-e5-88-86-e5-8c-ba-e4-b8-aa-e6-95-b0-e9-99-90-e5-88-b6/">Linux分区个数限制</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在linux上，对于IDE硬盘来说，分区个数限制在63个；而对于SCSI硬盘限制在15个。</p>
+<p>我们可以直接在linux内核源代码中找到证据：</p>
+<p>include/linux/ide.h</p>
+<h1 id="define_PARTN_BITS_6_/_number_of_minor_dev_bits_for_partitions_/">define PARTN_BITS      6       /<em> number of minor dev bits for partitions </em>/</h1>
+<p>次设备号也就决定了可挂载的IDE设备不会超过63个（2^6-1，之所以减一是因为hdX本身也会占用一个）。</p>
+<p>SCSI也差不多，见 drivers/scsi/sd.c</p>
+<h1 id="if_!defined(CONFIG_DEBUG_BLOCK_EXT_DEVT)">if !defined(CONFIG_DEBUG_BLOCK_EXT_DEVT)</h1>
+<h1 id="define_SD_MINORS_16">define SD_MINORS       16</h1>
+<h1 id="else">else</h1>
+<h1 id="define_SD_MINORS_0">define SD_MINORS       0</h1>
+<h1 id="endif">endif</h1>
+<p>在内核文档中也可以看到，见Documentation/devices.txt ：</p>
+<p>For partitions, add to the whole disk device number:<br>0 = /dev/hd?          Whole disk<br>1 = /dev/hd?1         First partition<br>2 = /dev/hd?2         Second partition<br>…<br>63 = /dev/hd?63        63rd partition<br>…</p>
+<p>8 block       SCSI disk devices (0-15)</p>
+<p>Partitions are handled in the same way as for IDE<br>disks (see major number 3) except that the limit on<br>partitions is 15.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2009/01/18/linux-e5-88-86-e5-8c-ba-e4-b8-aa-e6-95-b0-e9-99-90-e5-88-b6/" data-id="vzm907l9dbv3kck1" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-ide-ata-scsi-e7-ad-89-e7-ad-89" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2009/01/17/ide-ata-scsi-e7-ad-89-e7-ad-89/" class="article-date">
+  <time datetime="2009-01-18T07:09:10.000Z" itemprop="datePublished">Jan 17 2009</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Programming/">Programming</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2009/01/17/ide-ata-scsi-e7-ad-89-e7-ad-89/">IDE, ATA, SCSI 等等</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>关于硬盘的术语有一大堆，而且和很多别的计算机术语一样，界定不清，含义模糊。在这里简单澄清一下，但我不排除你看了之后会更糊涂。:^)</p>
+<p><strong>IDE</strong>：Integrated Drive Electronics 的缩写。最早的硬盘接口，后来被 ATA 标准所取代，准确地讲应该是 ATA-1。所以有时也被称为 IDE/ATA，可参见<a href="http://www.pcguide.com/ref/hdd/if/ide/over.htm" target="_blank" rel="external">其历史介绍</a>。后来，几乎和ATA-1同时出现的 <strong>EIDE</strong>（Enhanced IDE ）又被规范化为 ATA-2。</p>
+<p><strong>ATA</strong>：Advanced Technology Attachment 的缩写，存储设备（并非仅限硬盘）的接口标准。有时也被称为 IDE。IDE 在 ATA 标准出现之前就有了，所以估计这个也是因为历史原因。不过根据<a href="http://en.wikipedia.org/wiki/AT_Attachment" target="_blank" rel="external">wikipedia记载</a>，这两个术语还是有些许不同之处的：</p>
+<blockquote>
+<p>The terms “integrated drive electronics” (IDE), “enhanced IDE” and “EIDE” have come to be used interchangeably with ATA (now Parallel ATA). However the terms “IDE” and “EIDE” are at best imprecise. Every ATA drive is an “integrated drive electronics” drive, but not every “integrated drive electronics” drive is an ATA drive, as the term also correctly describes SCSI drives: They have the drive controllers on board and present the drive to the host as an array of blocks.<br>后来就都是 ATA 了。又因为 <strong>SATA</strong>（Serial ATA，即 ATA-7）的出现，所以老的 ATA 又都被称为 <strong>PATA</strong>（Parallel ATA）了。</p>
+</blockquote>
+<p><a href="http://en.wikipedia.org/wiki/SCSI" target="_blank" rel="external"><strong>SCSI</strong></a>：Small Computer  System Interface 的缩写，另一个完全不同的标准，定义了内部的命令，协议和接口。SCSI更快，当然也更贵，多用在中，高性能服务器上，不过apple的mac也是最早使用它的计算机之一。新的SCSI标准，<a href="http://en.wikipedia.org/wiki/Serial_Attached_SCSI" target="_blank" rel="external">Serial  Attached SCSI</a>又被简称为<strong>SAS</strong>。</p>
+<p>SCSI 和前面的总起来并列为三个标准：PATA，SATA，SCSI。其中SATA应该是会继续流行的PC机硬盘接口。</p>
+<p><strong>HDD</strong>：Hard Disk Drive 的缩写，就是我们通常所说的硬盘，磁盘。</p>
+<p><strong>SSD</strong>：Solid State Drive 的缩写，通常我们称为固态硬盘。SSD耗电少，抗震性能好，但比起HDD来要贵一些，而且容量通常也不像HDD那么大。</p>
+<p><strong>RAID</strong>：Redundant Array of Independent Disks 的缩写，就是我们通常所说的磁盘阵列。RAID是对多块硬盘的组合，需要硬件支持（貌似也有从文件系统层支持RAID的，btrfs？）。根据不同的组合方式，RAID又分为RAID0到RAID7，详细参考<a href="http://en.wikipedia.org/wiki/RAID" target="_blank" rel="external">这里</a>。</p>
+<p>参考：</p>
+<p><a href="http://www.91wp.com/Article/jswz/200704/350.html" target="_blank" rel="external">http://www.91wp.com/Article/jswz/200704/350.html</a><br><a href="http://www.pcbuyerbeware.co.uk/IDE.htm" target="_blank" rel="external">http://www.pcbuyerbeware.co.uk/IDE.htm</a><br><a href="http://www.pcguide.com/ref/hdd/if/ide/over.htm" target="_blank" rel="external">http://www.pcguide.com/ref/hdd/if/ide/over.htm</a><br><a href="http://en.wikipedia.org/wiki/RAID" target="_blank" rel="external">http://en.wikipedia.org/wiki/RAID</a><br><a href="http://en.wikipedia.org/wiki/SCSI" target="_blank" rel="external">http://en.wikipedia.org/wiki/SCSI</a><br><a href="http://en.wikipedia.org/wiki/AT_Attachment" target="_blank" rel="external">http://en.wikipedia.org/wiki/AT_Attachment</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2009/01/17/ide-ata-scsi-e7-ad-89-e7-ad-89/" data-id="wfhg2nvg2vtdso6t" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+  
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/archives/page/29/">&laquo; Prev</a><a class="page-number" href="/archives/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/28/">28</a><a class="page-number" href="/archives/page/29/">29</a><span class="page-number current">30</span><a class="page-number" href="/archives/page/31/">31</a><a class="page-number" href="/archives/page/32/">32</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/71/">71</a><a class="extend next" rel="next" href="/archives/page/31/">Next &raquo;</a>
+    </nav>
+  
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Book-Reviews/">Book Reviews</a><span class="category-list-count">18</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/China/">China</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Collection/">Collection</a><span class="category-list-count">25</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">324</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux-Application/">Linux Application</a><span class="category-list-count">73</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux-Kernel/">Linux Kernel</a><span class="category-list-count">64</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Love/">Love</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Movies/">Movies</a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/">Programming</a><span class="category-list-count">152</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Science-Fiction/">Science Fiction</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Travel/">Travel</a><span class="category-list-count">19</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/geek/">geek</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/handling/">handling</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/joke/">joke</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/signal/">signal</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/unix/">unix</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/geek/" style="font-size: NaNpx;">geek</a><a href="/tags/handling/" style="font-size: NaNpx;">handling</a><a href="/tags/joke/" style="font-size: NaNpx;">joke</a><a href="/tags/linux/" style="font-size: NaNpx;">linux</a><a href="/tags/signal/" style="font-size: NaNpx;">signal</a><a href="/tags/unix/" style="font-size: NaNpx;">unix</a><a href="/tags/vim/" style="font-size: NaNpx;">vim</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">August 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">December 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">October 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">September 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">August 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">February 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01/">January 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12/">December 2012</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">November 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">October 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">September 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">August 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/07/">July 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">April 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">March 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">February 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">January 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/12/">December 2011</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">November 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/10/">October 2011</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">September 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08/">August 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/07/">July 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/06/">June 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/05/">May 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04/">April 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03/">March 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/02/">February 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/01/">January 2011</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/12/">December 2010</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/11/">November 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/10/">October 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/09/">September 2010</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08/">August 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07/">July 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06/">June 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05/">May 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04/">April 2010</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03/">March 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02/">February 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01/">January 2010</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12/">December 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11/">November 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10/">October 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09/">September 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08/">August 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07/">July 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/06/">June 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/05/">May 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04/">April 2009</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03/">March 2009</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02/">February 2009</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01/">January 2009</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12/">December 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/11/">November 2008</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/10/">October 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09/">September 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08/">August 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07/">July 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06/">June 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05/">May 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04/">April 2008</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03/">March 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02/">February 2008</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01/">January 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12/">December 2007</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11/">November 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10/">October 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09/">September 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08/">August 2007</a><span class="archive-list-count">31</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07/">July 2007</a><span class="archive-list-count">34</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06/">June 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05/">May 2007</a><span class="archive-list-count">25</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04/">April 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03/">March 2007</a><span class="archive-list-count">50</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02/">February 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01/">January 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12/">December 2006</a><span class="archive-list-count">5</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2014/08/12/linux-e7-bd-91-e7-bb-9c-e6-b5-81-e9-87-8f-e6-8e-a7-e5-88-b6-ef-bc-88-e4-b8-80-ef-bc-89/">Linux 网络流量控制（零）</a>
+          </li>
+        
+          <li>
+            <a href="/2014/08/01/ottawa-linux-symposium/">Ottawa Linux Symposium</a>
+          </li>
+        
+          <li>
+            <a href="/2014/05/31/skbuff-e5-86-85-e5-ad-98-e6-a8-a1-e5-9e-8b/">skbuff 内存模型</a>
+          </li>
+        
+          <li>
+            <a href="/2014/05/06/-e9-95-bf-e6-9c-9f-e6-8f-90-e4-be-9b-twitter-e5-86-85-e6-8e-a8/">长期提供 Twitter 内推</a>
+          </li>
+        
+          <li>
+            <a href="/2014/01/30/-e6-88-91-e7-9a-842013-ef-bc-9a-e6-88-91-e6-9d-a5-e5-88-b0-e4-ba-86-e7-be-8e-e5-9b-bd/">我的2013：我来到了美国</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2015 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+
+  </div>
+</body>
+</html>
