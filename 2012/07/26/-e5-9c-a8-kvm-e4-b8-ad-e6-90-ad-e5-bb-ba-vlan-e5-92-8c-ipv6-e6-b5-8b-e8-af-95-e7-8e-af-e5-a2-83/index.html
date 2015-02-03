@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   
-  <title>KVM 中搭建 VLAN 和 IPv6 环境 | Hexo</title>
+  <title>KVM 中搭建 VLAN 和 IPv6 环境 | A Geek&#39;s Page</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="普通的 IPv4 环境很简单，如果你使用 virt-manager 的话它自动都给你搭好了。每个 kvm guest 都在同一个子网内，通过 bridge 连接到一起，然后通过 host 上的 NAT 访问外网，如下所示：
 # brctl showbridge name    bridge id        STP enabled    interfacesvirbr0        8000.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="KVM 中搭建 VLAN 和 IPv6 环境">
-<meta property="og:url" content="http://yoursite.com/2012/07/26/-e5-9c-a8-kvm-e4-b8-ad-e6-90-ad-e5-bb-ba-vlan-e5-92-8c-ipv6-e6-b5-8b-e8-af-95-e7-8e-af-e5-a2-83/">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:url" content="http://wangcong.org/2012/07/26/-e5-9c-a8-kvm-e4-b8-ad-e6-90-ad-e5-bb-ba-vlan-e5-92-8c-ipv6-e6-b5-8b-e8-af-95-e7-8e-af-e5-a2-83/">
+<meta property="og:site_name" content="A Geek's Page">
 <meta property="og:description" content="普通的 IPv4 环境很简单，如果你使用 virt-manager 的话它自动都给你搭好了。每个 kvm guest 都在同一个子网内，通过 bridge 连接到一起，然后通过 host 上的 NAT 访问外网，如下所示：
 # brctl showbridge name    bridge id        STP enabled    interfacesvirbr0        8000.">
 <meta name="twitter:card" content="summary">
@@ -19,7 +19,7 @@
 # brctl showbridge name    bridge id        STP enabled    interfacesvirbr0        8000.">
 
   
-    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -38,7 +38,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
+        <a href="/" id="logo">A Geek&#39;s Page</a>
       </h1>
       
     </div>
@@ -58,7 +58,7 @@
         <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://yoursite.com"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://wangcong.org"></form>
       </div>
     </div>
   </div>
@@ -110,7 +110,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2012/07/26/-e5-9c-a8-kvm-e4-b8-ad-e6-90-ad-e5-bb-ba-vlan-e5-92-8c-ipv6-e6-b5-8b-e8-af-95-e7-8e-af-e5-a2-83/" data-id="dsygogcmi57cj4nn" class="article-share-link">Share</a>
+      <a data-url="http://wangcong.org/2012/07/26/-e5-9c-a8-kvm-e4-b8-ad-e6-90-ad-e5-bb-ba-vlan-e5-92-8c-ipv6-e6-b5-8b-e8-af-95-e7-8e-af-e5-a2-83/" data-id="dsygogcmi57cj4nn" class="article-share-link">Share</a>
       
       
     </footer>
@@ -217,7 +217,7 @@
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2015 John Doe<br>
+      &copy; 2015 Cong Wang<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>

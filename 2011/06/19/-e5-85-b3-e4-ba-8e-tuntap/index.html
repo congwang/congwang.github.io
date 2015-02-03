@@ -3,15 +3,15 @@
 <head>
   <meta charset="utf-8">
   
-  <title>关于 tun/tap 设备 | Hexo</title>
+  <title>关于 tun/tap 设备 | A Geek&#39;s Page</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="长期以来对tun和tap这对兄弟分不太清，今天下定决心研究了一下代码，总算是搞明白了。
 首先它们都是从/dev/net/tun里ioctl出来的虚拟设备，一个是通过IFF_TUN，另一个是 IFF_TAP。最好的例子莫过于vpnc里面的代码了。
 [c]int tun_open(char *dev, enum if_mode_enum mode){        struct ifreq ifr;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关于 tun/tap 设备">
-<meta property="og:url" content="http://yoursite.com/2011/06/19/-e5-85-b3-e4-ba-8e-tuntap/">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:url" content="http://wangcong.org/2011/06/19/-e5-85-b3-e4-ba-8e-tuntap/">
+<meta property="og:site_name" content="A Geek's Page">
 <meta property="og:description" content="长期以来对tun和tap这对兄弟分不太清，今天下定决心研究了一下代码，总算是搞明白了。
 首先它们都是从/dev/net/tun里ioctl出来的虚拟设备，一个是通过IFF_TUN，另一个是 IFF_TAP。最好的例子莫过于vpnc里面的代码了。
 [c]int tun_open(char *dev, enum if_mode_enum mode){        struct ifreq ifr;">
@@ -22,7 +22,7 @@
 [c]int tun_open(char *dev, enum if_mode_enum mode){        struct ifreq ifr;">
 
   
-    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -41,7 +41,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
+        <a href="/" id="logo">A Geek&#39;s Page</a>
       </h1>
       
     </div>
@@ -61,7 +61,7 @@
         <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://yoursite.com"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://wangcong.org"></form>
       </div>
     </div>
   </div>
@@ -239,7 +239,7 @@ bus-info: tap
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2011/06/19/-e5-85-b3-e4-ba-8e-tuntap/" data-id="fqoysixjk84nsdsd" class="article-share-link">Share</a>
+      <a data-url="http://wangcong.org/2011/06/19/-e5-85-b3-e4-ba-8e-tuntap/" data-id="fqoysixjk84nsdsd" class="article-share-link">Share</a>
       
       
     </footer>
@@ -346,7 +346,7 @@ bus-info: tap
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2015 John Doe<br>
+      &copy; 2015 Cong Wang<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>

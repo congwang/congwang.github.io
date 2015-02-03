@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   
-  <title>symlink，chroot 和 mount | Hexo</title>
+  <title>symlink，chroot 和 mount | A Geek&#39;s Page</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="前两天在处理一个关于 selinux 的 bug 时遇到一个比较有意思的问题，顺着仔细往下想了想，发现更多相关的话题，遂整理成一篇文章记录一下。实际上我想到的这几个问题和 selinux 基本上毫无关系，先从简单的谈起，然后顺着我的思路一步步往下走。
 最初的问题是，如果我在一个目录中建立了一个符号链接，那么我 chroot 进去之后会得到什么？这个问题比较简单，如果符号链接的目标文件路径在 chr">
 <meta property="og:type" content="article">
 <meta property="og:title" content="symlink，chroot 和 mount">
-<meta property="og:url" content="http://yoursite.com/2009/12/20/symlink-ef-bc-8cchroot-ef-bc-8cmount/">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:url" content="http://wangcong.org/2009/12/20/symlink-ef-bc-8cchroot-ef-bc-8cmount/">
+<meta property="og:site_name" content="A Geek's Page">
 <meta property="og:description" content="前两天在处理一个关于 selinux 的 bug 时遇到一个比较有意思的问题，顺着仔细往下想了想，发现更多相关的话题，遂整理成一篇文章记录一下。实际上我想到的这几个问题和 selinux 基本上毫无关系，先从简单的谈起，然后顺着我的思路一步步往下走。
 最初的问题是，如果我在一个目录中建立了一个符号链接，那么我 chroot 进去之后会得到什么？这个问题比较简单，如果符号链接的目标文件路径在 chr">
 <meta name="twitter:card" content="summary">
@@ -19,7 +19,7 @@
 最初的问题是，如果我在一个目录中建立了一个符号链接，那么我 chroot 进去之后会得到什么？这个问题比较简单，如果符号链接的目标文件路径在 chr">
 
   
-    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -38,7 +38,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
+        <a href="/" id="logo">A Geek&#39;s Page</a>
       </h1>
       
     </div>
@@ -58,7 +58,7 @@
         <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://yoursite.com"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://wangcong.org"></form>
       </div>
     </div>
   </div>
@@ -107,7 +107,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2009/12/20/symlink-ef-bc-8cchroot-ef-bc-8cmount/" data-id="vbgqsodpkmnp9f0z" class="article-share-link">Share</a>
+      <a data-url="http://wangcong.org/2009/12/20/symlink-ef-bc-8cchroot-ef-bc-8cmount/" data-id="vbgqsodpkmnp9f0z" class="article-share-link">Share</a>
       
       
     </footer>
@@ -214,7 +214,7 @@
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2015 John Doe<br>
+      &copy; 2015 Cong Wang<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>

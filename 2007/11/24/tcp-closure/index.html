@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>TCP Closure | Hexo</title>
+  <title>TCP Closure | A Geek&#39;s Page</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="今天在看TCP的释放时遇到几个问题，查了一下《TCP/IP详解 卷一》和RFC793，也请教了一下Herbert Xu，基本上都解决了。在这里总结一下。
 TCP的释放过程如下图所示（取自《TCP/IP详解 卷一》）：
@@ -11,8 +11,8 @@ TCP的释放过程如下图所示（取自《TCP/IP详解 卷一》）：
 问题1：既然TCP的CLOSE是单工的，那么，一方在收到FIN的ACK之后可能会过很长一段时间才收到对方的FIN。那么如果这个时间里这方已经关闭该进程，谁又来ACK对方的FIN呢？">
 <meta property="og:type" content="article">
 <meta property="og:title" content="TCP Closure">
-<meta property="og:url" content="http://yoursite.com/2007/11/24/tcp-closure/">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:url" content="http://wangcong.org/2007/11/24/tcp-closure/">
+<meta property="og:site_name" content="A Geek's Page">
 <meta property="og:description" content="今天在看TCP的释放时遇到几个问题，查了一下《TCP/IP详解 卷一》和RFC793，也请教了一下Herbert Xu，基本上都解决了。在这里总结一下。
 TCP的释放过程如下图所示（取自《TCP/IP详解 卷一》）：
 
@@ -27,7 +27,7 @@ TCP的释放过程如下图所示（取自《TCP/IP详解 卷一》）：
 问题1：既然TCP的CLOSE是单工的，那么，一方在收到FIN的ACK之后可能会过很长一段时间才收到对方的FIN。那么如果这个时间里这方已经关闭该进程，谁又来ACK对方的FIN呢？">
 
   
-    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -46,7 +46,7 @@ TCP的释放过程如下图所示（取自《TCP/IP详解 卷一》）：
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
+        <a href="/" id="logo">A Geek&#39;s Page</a>
       </h1>
       
     </div>
@@ -66,7 +66,7 @@ TCP的释放过程如下图所示（取自《TCP/IP详解 卷一》）：
         <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://yoursite.com"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://wangcong.org"></form>
       </div>
     </div>
   </div>
@@ -118,7 +118,7 @@ TCP的释放过程如下图所示（取自《TCP/IP详解 卷一》）：
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2007/11/24/tcp-closure/" data-id="8puq1b5c8cj2msof" class="article-share-link">Share</a>
+      <a data-url="http://wangcong.org/2007/11/24/tcp-closure/" data-id="8puq1b5c8cj2msof" class="article-share-link">Share</a>
       
       
     </footer>
@@ -225,7 +225,7 @@ TCP的释放过程如下图所示（取自《TCP/IP详解 卷一》）：
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2015 John Doe<br>
+      &copy; 2015 Cong Wang<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>

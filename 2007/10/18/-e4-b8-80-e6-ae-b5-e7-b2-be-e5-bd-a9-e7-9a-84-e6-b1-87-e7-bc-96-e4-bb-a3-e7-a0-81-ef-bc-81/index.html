@@ -3,15 +3,15 @@
 <head>
   <meta charset="utf-8">
   
-  <title>一段精彩的汇编代码！ | Hexo</title>
+  <title>一段精彩的汇编代码！ | A Geek&#39;s Page</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="无意间在Linux内核中发现这么一段汇编代码，更准确地说应该是gcc内联汇编，写得很精彩，拿出来和大家分享一下。
 代码是在include/asm-i386/string.h中，是针对i386对memcpy做进一步优化。我们知道，一个简单的memcpy其实和strcpy差不多，区别只是前者检查的是复制的个数，而后者检查的是当前字符是否是’’。
 而这显然还有很大的优化余地，首先像这种非常常用的库函数是">
 <meta property="og:type" content="article">
 <meta property="og:title" content="一段精彩的汇编代码！">
-<meta property="og:url" content="http://yoursite.com/2007/10/18/-e4-b8-80-e6-ae-b5-e7-b2-be-e5-bd-a9-e7-9a-84-e6-b1-87-e7-bc-96-e4-bb-a3-e7-a0-81-ef-bc-81/">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:url" content="http://wangcong.org/2007/10/18/-e4-b8-80-e6-ae-b5-e7-b2-be-e5-bd-a9-e7-9a-84-e6-b1-87-e7-bc-96-e4-bb-a3-e7-a0-81-ef-bc-81/">
+<meta property="og:site_name" content="A Geek's Page">
 <meta property="og:description" content="无意间在Linux内核中发现这么一段汇编代码，更准确地说应该是gcc内联汇编，写得很精彩，拿出来和大家分享一下。
 代码是在include/asm-i386/string.h中，是针对i386对memcpy做进一步优化。我们知道，一个简单的memcpy其实和strcpy差不多，区别只是前者检查的是复制的个数，而后者检查的是当前字符是否是’’。
 而这显然还有很大的优化余地，首先像这种非常常用的库函数是">
@@ -23,7 +23,7 @@
 而这显然还有很大的优化余地，首先像这种非常常用的库函数是">
 
   
-    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -42,7 +42,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
+        <a href="/" id="logo">A Geek&#39;s Page</a>
       </h1>
       
     </div>
@@ -62,7 +62,7 @@
         <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://yoursite.com"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://wangcong.org"></form>
       </div>
     </div>
   </div>
@@ -115,7 +115,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2007/10/18/-e4-b8-80-e6-ae-b5-e7-b2-be-e5-bd-a9-e7-9a-84-e6-b1-87-e7-bc-96-e4-bb-a3-e7-a0-81-ef-bc-81/" data-id="wub3tis2qkx0swei" class="article-share-link">Share</a>
+      <a data-url="http://wangcong.org/2007/10/18/-e4-b8-80-e6-ae-b5-e7-b2-be-e5-bd-a9-e7-9a-84-e6-b1-87-e7-bc-96-e4-bb-a3-e7-a0-81-ef-bc-81/" data-id="wub3tis2qkx0swei" class="article-share-link">Share</a>
       
       
     </footer>
@@ -222,7 +222,7 @@
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2015 John Doe<br>
+      &copy; 2015 Cong Wang<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>

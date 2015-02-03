@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>还可以这样利用x86的堆栈 | Hexo</title>
+  <title>还可以这样利用x86的堆栈 | A Geek&#39;s Page</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="原来还能这样“践踏”x86的堆栈，利用push后直接ret，很简单很直接！以前都是利用缓冲区溢出去覆盖～
 我写的用户空间的一段示例代码（注：执行时的段错误是意料之中的）：
@@ -12,8 +12,8 @@ void hello(void){    printf(“hello world!n”);}
 void pushcall(void *call){    asm _volatile(“pushl %%eaxnt”">
 <meta property="og:type" content="article">
 <meta property="og:title" content="还可以这样利用x86的堆栈">
-<meta property="og:url" content="http://yoursite.com/2008/02/26/-e8-bf-98-e5-8f-af-e4-bb-a5-e8-bf-99-e6-a0-b7-e5-88-a9-e7-94-a8x86-e7-9a-84-e5-a0-86-e6-a0-88/">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:url" content="http://wangcong.org/2008/02/26/-e8-bf-98-e5-8f-af-e4-bb-a5-e8-bf-99-e6-a0-b7-e5-88-a9-e7-94-a8x86-e7-9a-84-e5-a0-86-e6-a0-88/">
+<meta property="og:site_name" content="A Geek's Page">
 <meta property="og:description" content="原来还能这样“践踏”x86的堆栈，利用push后直接ret，很简单很直接！以前都是利用缓冲区溢出去覆盖～
 我写的用户空间的一段示例代码（注：执行时的段错误是意料之中的）：
 include
@@ -28,7 +28,7 @@ void hello(void){    printf(“hello world!n”);}
 void pushcall(void *call){    asm _volatile(“pushl %%eaxnt”">
 
   
-    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -47,7 +47,7 @@ void pushcall(void *call){    asm _volatile(“pushl %%eaxnt”">
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
+        <a href="/" id="logo">A Geek&#39;s Page</a>
       </h1>
       
     </div>
@@ -67,7 +67,7 @@ void pushcall(void *call){    asm _volatile(“pushl %%eaxnt”">
         <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://yoursite.com"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://wangcong.org"></form>
       </div>
     </div>
   </div>
@@ -109,7 +109,7 @@ void pushcall(void *call){    asm _volatile(“pushl %%eaxnt”">
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2008/02/26/-e8-bf-98-e5-8f-af-e4-bb-a5-e8-bf-99-e6-a0-b7-e5-88-a9-e7-94-a8x86-e7-9a-84-e5-a0-86-e6-a0-88/" data-id="cl15z8m653350360" class="article-share-link">Share</a>
+      <a data-url="http://wangcong.org/2008/02/26/-e8-bf-98-e5-8f-af-e4-bb-a5-e8-bf-99-e6-a0-b7-e5-88-a9-e7-94-a8x86-e7-9a-84-e5-a0-86-e6-a0-88/" data-id="cl15z8m653350360" class="article-share-link">Share</a>
       
       
     </footer>
@@ -216,7 +216,7 @@ void pushcall(void *call){    asm _volatile(“pushl %%eaxnt”">
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2015 John Doe<br>
+      &copy; 2015 Cong Wang<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>

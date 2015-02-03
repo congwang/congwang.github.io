@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Linux 网络流量控制（零） | Hexo</title>
+  <title>Linux 网络流量控制（零） | A Geek&#39;s Page</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="我会在下周举行的 LinuxCon North America 上讲一下最近在做的 Linux 网络流量控制（traffic control），有机会来参加的朋友欢迎前来捧场！不能参加的朋友也可以在这里看到我的 slides。
 网络流量控制是一个非常大的话题，不可能在一个小时的时间内全部讲完，只能选择其中比较重要的来讲。而且它很重要，直接关乎网络性能，可是讲解这部分代码的书几乎没有，已有的讲 Li">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux 网络流量控制（零）">
-<meta property="og:url" content="http://yoursite.com/2014/08/12/linux-e7-bd-91-e7-bb-9c-e6-b5-81-e9-87-8f-e6-8e-a7-e5-88-b6-ef-bc-88-e4-b8-80-ef-bc-89/">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:url" content="http://wangcong.org/2014/08/12/linux-e7-bd-91-e7-bb-9c-e6-b5-81-e9-87-8f-e6-8e-a7-e5-88-b6-ef-bc-88-e4-b8-80-ef-bc-89/">
+<meta property="og:site_name" content="A Geek's Page">
 <meta property="og:description" content="我会在下周举行的 LinuxCon North America 上讲一下最近在做的 Linux 网络流量控制（traffic control），有机会来参加的朋友欢迎前来捧场！不能参加的朋友也可以在这里看到我的 slides。
 网络流量控制是一个非常大的话题，不可能在一个小时的时间内全部讲完，只能选择其中比较重要的来讲。而且它很重要，直接关乎网络性能，可是讲解这部分代码的书几乎没有，已有的讲 Li">
 <meta name="twitter:card" content="summary">
@@ -19,7 +19,7 @@
 网络流量控制是一个非常大的话题，不可能在一个小时的时间内全部讲完，只能选择其中比较重要的来讲。而且它很重要，直接关乎网络性能，可是讲解这部分代码的书几乎没有，已有的讲 Li">
 
   
-    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -38,7 +38,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
+        <a href="/" id="logo">A Geek&#39;s Page</a>
       </h1>
       
     </div>
@@ -58,7 +58,7 @@
         <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://yoursite.com"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://wangcong.org"></form>
       </div>
     </div>
   </div>
@@ -96,7 +96,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/08/12/linux-e7-bd-91-e7-bb-9c-e6-b5-81-e9-87-8f-e6-8e-a7-e5-88-b6-ef-bc-88-e4-b8-80-ef-bc-89/" data-id="r87mztkuogm8o085" class="article-share-link">Share</a>
+      <a data-url="http://wangcong.org/2014/08/12/linux-e7-bd-91-e7-bb-9c-e6-b5-81-e9-87-8f-e6-8e-a7-e5-88-b6-ef-bc-88-e4-b8-80-ef-bc-89/" data-id="r87mztkuogm8o085" class="article-share-link">Share</a>
       
       
     </footer>
@@ -194,7 +194,7 @@
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2015 John Doe<br>
+      &copy; 2015 Cong Wang<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>

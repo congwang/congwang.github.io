@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   
-  <title>ELF Extended Numbering | Hexo</title>
+  <title>ELF Extended Numbering | A Geek&#39;s Page</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="ELF格式天生就有个不小的缺陷—— segment 个数最多 65535 个，这是由e_phnum来决定的，其类型是16位的无符号整数。对于一些程序来说，65535是不够的，如果它使用了很多mmap(2)的话。
 要解决这个问题并不容易，e_phnum是用了多年早已定型了的东西，不能随意修改，只能在别的地方想办法去补救，于是下面这个方案就出来乐。这个方案在Solaris上已经使用了长时间了，但 Li">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ELF Extended Numbering">
-<meta property="og:url" content="http://yoursite.com/2010/04/22/elf-extended-numbering/">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:url" content="http://wangcong.org/2010/04/22/elf-extended-numbering/">
+<meta property="og:site_name" content="A Geek's Page">
 <meta property="og:description" content="ELF格式天生就有个不小的缺陷—— segment 个数最多 65535 个，这是由e_phnum来决定的，其类型是16位的无符号整数。对于一些程序来说，65535是不够的，如果它使用了很多mmap(2)的话。
 要解决这个问题并不容易，e_phnum是用了多年早已定型了的东西，不能随意修改，只能在别的地方想办法去补救，于是下面这个方案就出来乐。这个方案在Solaris上已经使用了长时间了，但 Li">
 <meta name="twitter:card" content="summary">
@@ -19,7 +19,7 @@
 要解决这个问题并不容易，e_phnum是用了多年早已定型了的东西，不能随意修改，只能在别的地方想办法去补救，于是下面这个方案就出来乐。这个方案在Solaris上已经使用了长时间了，但 Li">
 
   
-    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -38,7 +38,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
+        <a href="/" id="logo">A Geek&#39;s Page</a>
       </h1>
       
     </div>
@@ -58,7 +58,7 @@
         <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://yoursite.com"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://wangcong.org"></form>
       </div>
     </div>
   </div>
@@ -114,7 +114,7 @@ man-page 补丁：
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2010/04/22/elf-extended-numbering/" data-id="csdkrc87lshb72ys" class="article-share-link">Share</a>
+      <a data-url="http://wangcong.org/2010/04/22/elf-extended-numbering/" data-id="csdkrc87lshb72ys" class="article-share-link">Share</a>
       
       
     </footer>
@@ -221,7 +221,7 @@ man-page 补丁：
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2015 John Doe<br>
+      &copy; 2015 Cong Wang<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>

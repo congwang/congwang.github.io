@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   
-  <title>splice(2) considered useful? | Hexo</title>
+  <title>splice(2) considered useful? | A Geek&#39;s Page</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="无意中发现Linux还有splice(2)这么个玩意儿，而且Linus本人对其很是赞赏，还一门心思地给它做广告……那我们就来看看它到底是何方神圣。
 splice(2)绝对比我想象中要难以理解，一开始以为它的功能和dup2(2)差不多，然后觉得不对，似乎和sendfile(2)差不多，后来发现也不对！（否则还加这么一个系统调用干嘛？！）它和sendfile(2)的差别还算是比较大的，后面我们会细谈。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="splice(2) considered useful?">
-<meta property="og:url" content="http://yoursite.com/2008/01/20/splice2-considered-useful/">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:url" content="http://wangcong.org/2008/01/20/splice2-considered-useful/">
+<meta property="og:site_name" content="A Geek's Page">
 <meta property="og:description" content="无意中发现Linux还有splice(2)这么个玩意儿，而且Linus本人对其很是赞赏，还一门心思地给它做广告……那我们就来看看它到底是何方神圣。
 splice(2)绝对比我想象中要难以理解，一开始以为它的功能和dup2(2)差不多，然后觉得不对，似乎和sendfile(2)差不多，后来发现也不对！（否则还加这么一个系统调用干嘛？！）它和sendfile(2)的差别还算是比较大的，后面我们会细谈。">
 <meta name="twitter:card" content="summary">
@@ -19,7 +19,7 @@ splice(2)绝对比我想象中要难以理解，一开始以为它的功能和du
 splice(2)绝对比我想象中要难以理解，一开始以为它的功能和dup2(2)差不多，然后觉得不对，似乎和sendfile(2)差不多，后来发现也不对！（否则还加这么一个系统调用干嘛？！）它和sendfile(2)的差别还算是比较大的，后面我们会细谈。">
 
   
-    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -38,7 +38,7 @@ splice(2)绝对比我想象中要难以理解，一开始以为它的功能和du
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
+        <a href="/" id="logo">A Geek&#39;s Page</a>
       </h1>
       
     </div>
@@ -58,7 +58,7 @@ splice(2)绝对比我想象中要难以理解，一开始以为它的功能和du
         <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://yoursite.com"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://wangcong.org"></form>
       </div>
     </div>
   </div>
@@ -103,7 +103,7 @@ splice(2)绝对比我想象中要难以理解，一开始以为它的功能和du
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2008/01/20/splice2-considered-useful/" data-id="81cylsw5owtaqn4q" class="article-share-link">Share</a>
+      <a data-url="http://wangcong.org/2008/01/20/splice2-considered-useful/" data-id="81cylsw5owtaqn4q" class="article-share-link">Share</a>
       
       
     </footer>
@@ -210,7 +210,7 @@ splice(2)绝对比我想象中要难以理解，一开始以为它的功能和du
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2015 John Doe<br>
+      &copy; 2015 Cong Wang<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>

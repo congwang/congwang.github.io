@@ -3,15 +3,15 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Ingress traffic control | Hexo</title>
+  <title>Ingress traffic control | A Geek&#39;s Page</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="相信很多人都知道 Linux 内核很难做 ingress 流量控制的，毕竟发送方理论上可以无限制地发送包到达网络接口。即使你控制了从网络接口到达协议栈的流量，你也很难从根源上控制这个流量。
 利用 Linux 内核你可以轻松地完成前者，即控制从网络接口到达协议栈的流量。这个是通过一个叫做 ifb 的设备完成的，这个设备如此不起眼以至于很多人不知道它的存在。
 它的使用很简单，加载 ifb 模块后，激活">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Ingress traffic control">
-<meta property="og:url" content="http://yoursite.com/2013/10/22/ingress-traffic-control/">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:url" content="http://wangcong.org/2013/10/22/ingress-traffic-control/">
+<meta property="og:site_name" content="A Geek's Page">
 <meta property="og:description" content="相信很多人都知道 Linux 内核很难做 ingress 流量控制的，毕竟发送方理论上可以无限制地发送包到达网络接口。即使你控制了从网络接口到达协议栈的流量，你也很难从根源上控制这个流量。
 利用 Linux 内核你可以轻松地完成前者，即控制从网络接口到达协议栈的流量。这个是通过一个叫做 ifb 的设备完成的，这个设备如此不起眼以至于很多人不知道它的存在。
 它的使用很简单，加载 ifb 模块后，激活">
@@ -22,7 +22,7 @@
 它的使用很简单，加载 ifb 模块后，激活">
 
   
-    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -41,7 +41,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
+        <a href="/" id="logo">A Geek&#39;s Page</a>
       </h1>
       
     </div>
@@ -61,7 +61,7 @@
         <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://yoursite.com"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://wangcong.org"></form>
       </div>
     </div>
   </div>
@@ -187,7 +187,7 @@ tc filter <span class="keyword">add</span> dev eth0 parent ffff: protocol ip u32
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2013/10/22/ingress-traffic-control/" data-id="wg5kanqizknzo4xb" class="article-share-link">Share</a>
+      <a data-url="http://wangcong.org/2013/10/22/ingress-traffic-control/" data-id="wg5kanqizknzo4xb" class="article-share-link">Share</a>
       
       
     </footer>
@@ -294,7 +294,7 @@ tc filter <span class="keyword">add</span> dev eth0 parent ffff: protocol ip u32
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2015 John Doe<br>
+      &copy; 2015 Cong Wang<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>

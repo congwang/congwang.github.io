@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>assembler的一个hack | Hexo</title>
+  <title>assembler的一个hack | A Geek&#39;s Page</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="如果编译一个relocatable目标文件，你通过反汇编不难发现所有的call指令竟然都是同一个机器码！即：e8 fc ff ff ff。
 我们知道，不同的函数有不同的入口，可这里怎么都会用这么一个奇怪的地址呢？
@@ -11,8 +11,8 @@
 E8 cd">
 <meta property="og:type" content="article">
 <meta property="og:title" content="assembler的一个hack">
-<meta property="og:url" content="http://yoursite.com/2008/04/07/assembler-e7-9a-84-e4-b8-80-e4-b8-aahack/">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:url" content="http://wangcong.org/2008/04/07/assembler-e7-9a-84-e4-b8-80-e4-b8-aahack/">
+<meta property="og:site_name" content="A Geek's Page">
 <meta property="og:description" content="如果编译一个relocatable目标文件，你通过反汇编不难发现所有的call指令竟然都是同一个机器码！即：e8 fc ff ff ff。
 我们知道，不同的函数有不同的入口，可这里怎么都会用这么一个奇怪的地址呢？
 翻一下Intel指令手册，我们很容易就能在3-104 Vol. 2A中找到call指令的各种编码方式。根据这里的opcode为e8我们不难确定这个call是用的下面这种方式：
@@ -25,7 +25,7 @@ E8 cd">
 E8 cd">
 
   
-    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -44,7 +44,7 @@ E8 cd">
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
+        <a href="/" id="logo">A Geek&#39;s Page</a>
       </h1>
       
     </div>
@@ -64,7 +64,7 @@ E8 cd">
         <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://yoursite.com"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://wangcong.org"></form>
       </div>
     </div>
   </div>
@@ -113,7 +113,7 @@ E8 cd">
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2008/04/07/assembler-e7-9a-84-e4-b8-80-e4-b8-aahack/" data-id="941j6409c8kkb67y" class="article-share-link">Share</a>
+      <a data-url="http://wangcong.org/2008/04/07/assembler-e7-9a-84-e4-b8-80-e4-b8-aahack/" data-id="941j6409c8kkb67y" class="article-share-link">Share</a>
       
       
     </footer>
@@ -220,7 +220,7 @@ E8 cd">
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2015 John Doe<br>
+      &copy; 2015 Cong Wang<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>

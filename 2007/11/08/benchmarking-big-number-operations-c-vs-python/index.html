@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Benchmarking big number operations: C vs Python | Hexo</title>
+  <title>Benchmarking big number operations: C vs Python | A Geek&#39;s Page</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="最近在做RSA加密算法，急需要对大数（很大的数，一般来说是十进制500位以上的数字）进行加法和乘法操作。这就需要对如此大的数操作很快才可以。自然而然，我就想到了Python，它天生就支持大数操作。所以我的RSA也是用Python实现的。
 简单地搜了一下网上的一些实现，用C的基本上都采用了gmp库，很牛的一个数字计算的库，接口很方便，而且效率也很乐观。下载一个其中一个还算漂亮的实现，速度超快。相比之">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Benchmarking big number operations: C vs Python">
-<meta property="og:url" content="http://yoursite.com/2007/11/08/benchmarking-big-number-operations-c-vs-python/">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:url" content="http://wangcong.org/2007/11/08/benchmarking-big-number-operations-c-vs-python/">
+<meta property="og:site_name" content="A Geek's Page">
 <meta property="og:description" content="最近在做RSA加密算法，急需要对大数（很大的数，一般来说是十进制500位以上的数字）进行加法和乘法操作。这就需要对如此大的数操作很快才可以。自然而然，我就想到了Python，它天生就支持大数操作。所以我的RSA也是用Python实现的。
 简单地搜了一下网上的一些实现，用C的基本上都采用了gmp库，很牛的一个数字计算的库，接口很方便，而且效率也很乐观。下载一个其中一个还算漂亮的实现，速度超快。相比之">
 <meta name="twitter:card" content="summary">
@@ -19,7 +19,7 @@
 简单地搜了一下网上的一些实现，用C的基本上都采用了gmp库，很牛的一个数字计算的库，接口很方便，而且效率也很乐观。下载一个其中一个还算漂亮的实现，速度超快。相比之">
 
   
-    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -38,7 +38,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
+        <a href="/" id="logo">A Geek&#39;s Page</a>
       </h1>
       
     </div>
@@ -58,7 +58,7 @@
         <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://yoursite.com"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://wangcong.org"></form>
       </div>
     </div>
   </div>
@@ -161,7 +161,7 @@ mpz_clear(p);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2007/11/08/benchmarking-big-number-operations-c-vs-python/" data-id="to3e1moyup17oy8r" class="article-share-link">Share</a>
+      <a data-url="http://wangcong.org/2007/11/08/benchmarking-big-number-operations-c-vs-python/" data-id="to3e1moyup17oy8r" class="article-share-link">Share</a>
       
       
     </footer>
@@ -268,7 +268,7 @@ mpz_clear(p);
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2015 John Doe<br>
+      &copy; 2015 Cong Wang<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>

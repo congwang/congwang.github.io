@@ -3,15 +3,15 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Intel SMM 缓存中毒攻击 | Hexo</title>
+  <title>Intel SMM 缓存中毒攻击 | A Geek&#39;s Page</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="一大早起来上网就看到这么一条劲爆的新闻。其实这个漏洞由来已久，以前至少见过两次对它的介绍，而今天，我们终于看到实实在在的exploit了。
 我把官方的paper和exploit代码通读了一遍，发现这个漏洞的原理其实很简单，大体如此：
 1. 把SMM内存区域设为write-back模式，这需要修改mtrr（/proc/mtrr）。很明显，在linux上这一步是需要root权限的。也就是说，这里也就已">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Intel SMM 缓存中毒攻击">
-<meta property="og:url" content="http://yoursite.com/2009/04/24/intel-smm-e7-bc-93-e5-86-b2-e4-b8-ad-e6-af-92-e6-94-bb-e5-87-bb/">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:url" content="http://wangcong.org/2009/04/24/intel-smm-e7-bc-93-e5-86-b2-e4-b8-ad-e6-af-92-e6-94-bb-e5-87-bb/">
+<meta property="og:site_name" content="A Geek's Page">
 <meta property="og:description" content="一大早起来上网就看到这么一条劲爆的新闻。其实这个漏洞由来已久，以前至少见过两次对它的介绍，而今天，我们终于看到实实在在的exploit了。
 我把官方的paper和exploit代码通读了一遍，发现这个漏洞的原理其实很简单，大体如此：
 1. 把SMM内存区域设为write-back模式，这需要修改mtrr（/proc/mtrr）。很明显，在linux上这一步是需要root权限的。也就是说，这里也就已">
@@ -22,7 +22,7 @@
 1. 把SMM内存区域设为write-back模式，这需要修改mtrr（/proc/mtrr）。很明显，在linux上这一步是需要root权限的。也就是说，这里也就已">
 
   
-    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -41,7 +41,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
+        <a href="/" id="logo">A Geek&#39;s Page</a>
       </h1>
       
     </div>
@@ -61,7 +61,7 @@
         <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://yoursite.com"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://wangcong.org"></form>
       </div>
     </div>
   </div>
@@ -108,7 +108,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2009/04/24/intel-smm-e7-bc-93-e5-86-b2-e4-b8-ad-e6-af-92-e6-94-bb-e5-87-bb/" data-id="nyz4pxqpme2yg0pv" class="article-share-link">Share</a>
+      <a data-url="http://wangcong.org/2009/04/24/intel-smm-e7-bc-93-e5-86-b2-e4-b8-ad-e6-af-92-e6-94-bb-e5-87-bb/" data-id="nyz4pxqpme2yg0pv" class="article-share-link">Share</a>
       
       
     </footer>
@@ -215,7 +215,7 @@
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2015 John Doe<br>
+      &copy; 2015 Cong Wang<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>

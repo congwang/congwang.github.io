@@ -3,15 +3,15 @@
 <head>
   <meta charset="utf-8">
   
-  <title>尾部调用优化 | Hexo</title>
+  <title>尾部调用优化 | A Geek&#39;s Page</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="gcc实在是太聪明了，有时候就会聪明过头，尾部调用优化就是一个很好的例子。:)
 尾部调用其实很好理解，就是在函数的最后调用另外一个函数，一种大的可能就是这个函数和调用函数参数差别很小，那么这时候，gcc会对这个尾部调用进行优化，如果可能，完全可以把调用那个函数时的入栈操作给直接优化掉。这就是尾部调用的优化。我们可以看看下面的例子：
 [c]extern int callee(int a, int b">
 <meta property="og:type" content="article">
 <meta property="og:title" content="尾部调用优化">
-<meta property="og:url" content="http://yoursite.com/2009/03/23/-e5-b0-be-e9-83-a8-e8-b0-83-e7-94-a8-e4-bc-98-e5-8c-96/">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:url" content="http://wangcong.org/2009/03/23/-e5-b0-be-e9-83-a8-e8-b0-83-e7-94-a8-e4-bc-98-e5-8c-96/">
+<meta property="og:site_name" content="A Geek's Page">
 <meta property="og:description" content="gcc实在是太聪明了，有时候就会聪明过头，尾部调用优化就是一个很好的例子。:)
 尾部调用其实很好理解，就是在函数的最后调用另外一个函数，一种大的可能就是这个函数和调用函数参数差别很小，那么这时候，gcc会对这个尾部调用进行优化，如果可能，完全可以把调用那个函数时的入栈操作给直接优化掉。这就是尾部调用的优化。我们可以看看下面的例子：
 [c]extern int callee(int a, int b">
@@ -22,7 +22,7 @@
 [c]extern int callee(int a, int b">
 
   
-    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -41,7 +41,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
+        <a href="/" id="logo">A Geek&#39;s Page</a>
       </h1>
       
     </div>
@@ -61,7 +61,7 @@
         <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://yoursite.com"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://wangcong.org"></form>
       </div>
     </div>
   </div>
@@ -128,7 +128,7 @@ call:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2009/03/23/-e5-b0-be-e9-83-a8-e8-b0-83-e7-94-a8-e4-bc-98-e5-8c-96/" data-id="ybl5a30rp9si76c7" class="article-share-link">Share</a>
+      <a data-url="http://wangcong.org/2009/03/23/-e5-b0-be-e9-83-a8-e8-b0-83-e7-94-a8-e4-bc-98-e5-8c-96/" data-id="ybl5a30rp9si76c7" class="article-share-link">Share</a>
       
       
     </footer>
@@ -235,7 +235,7 @@ call:
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2015 John Doe<br>
+      &copy; 2015 Cong Wang<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>

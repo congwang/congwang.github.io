@@ -3,20 +3,20 @@
 <head>
   <meta charset="utf-8">
   
-  <title>一些信号的处理 | Hexo</title>
+  <title>一些信号的处理 | A Geek&#39;s Page</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="SIGKILL和SIGSTOP都是既不能被捕捉，也不能被忽略的，他们是用来给系统管理用的。鉴于此，一般来说用SIGKILL结束一个进程是一个坏主意，因为受害进程将没有时间来做善后工作。所以，你应该优先考虑SIGTERM，然后才是SIGKILL。这也是为什么kill(1)和killall(1)默认发送SIGTERM的原因。同样，这也是关机时init首先发送SIGTERM，然后发送SIGKILL的原因">
 <meta property="og:type" content="article">
 <meta property="og:title" content="一些信号的处理">
-<meta property="og:url" content="http://yoursite.com/2007/11/04/-e4-b8-80-e4-ba-9b-e4-bf-a1-e5-8f-b7-e7-9a-84-e5-a4-84-e7-90-86/">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:url" content="http://wangcong.org/2007/11/04/-e4-b8-80-e4-ba-9b-e4-bf-a1-e5-8f-b7-e7-9a-84-e5-a4-84-e7-90-86/">
+<meta property="og:site_name" content="A Geek's Page">
 <meta property="og:description" content="SIGKILL和SIGSTOP都是既不能被捕捉，也不能被忽略的，他们是用来给系统管理用的。鉴于此，一般来说用SIGKILL结束一个进程是一个坏主意，因为受害进程将没有时间来做善后工作。所以，你应该优先考虑SIGTERM，然后才是SIGKILL。这也是为什么kill(1)和killall(1)默认发送SIGTERM的原因。同样，这也是关机时init首先发送SIGTERM，然后发送SIGKILL的原因">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一些信号的处理">
 <meta name="twitter:description" content="SIGKILL和SIGSTOP都是既不能被捕捉，也不能被忽略的，他们是用来给系统管理用的。鉴于此，一般来说用SIGKILL结束一个进程是一个坏主意，因为受害进程将没有时间来做善后工作。所以，你应该优先考虑SIGTERM，然后才是SIGKILL。这也是为什么kill(1)和killall(1)默认发送SIGTERM的原因。同样，这也是关机时init首先发送SIGTERM，然后发送SIGKILL的原因">
 
   
-    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -35,7 +35,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
+        <a href="/" id="logo">A Geek&#39;s Page</a>
       </h1>
       
     </div>
@@ -55,7 +55,7 @@
         <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://yoursite.com"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://wangcong.org"></form>
       </div>
     </div>
   </div>
@@ -94,7 +94,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2007/11/04/-e4-b8-80-e4-ba-9b-e4-bf-a1-e5-8f-b7-e7-9a-84-e5-a4-84-e7-90-86/" data-id="igwwjexbxpiwyir4" class="article-share-link">Share</a>
+      <a data-url="http://wangcong.org/2007/11/04/-e4-b8-80-e4-ba-9b-e4-bf-a1-e5-8f-b7-e7-9a-84-e5-a4-84-e7-90-86/" data-id="igwwjexbxpiwyir4" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/handling/">handling</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/signal/">signal</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/unix/">unix</a></li></ul>
@@ -203,7 +203,7 @@
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2015 John Doe<br>
+      &copy; 2015 Cong Wang<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>

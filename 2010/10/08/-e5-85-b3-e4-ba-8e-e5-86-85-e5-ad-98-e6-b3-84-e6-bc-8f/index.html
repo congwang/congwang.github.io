@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   
-  <title>关于内存泄漏 | Hexo</title>
+  <title>关于内存泄漏 | A Geek&#39;s Page</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="不少编写用户空间程序的人都关心内存泄漏到底会造成多少影响。这里简单澄清一下。
 无论用户空间是通过malloc()也好，mmap()也好，最终都是通过Linux内核管理的。只要内核没有bug，这些和这个进程相关的页面都是会被记录的，而且会在进程exit()的时候由Linux内核全部释放掉。所以对于运行时间不长的应用程序，有一些内存泄漏一般是没多大问题的。作为用户程序的编写者，如果释放内存真的很麻烦，">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关于内存泄漏">
-<meta property="og:url" content="http://yoursite.com/2010/10/08/-e5-85-b3-e4-ba-8e-e5-86-85-e5-ad-98-e6-b3-84-e6-bc-8f/">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:url" content="http://wangcong.org/2010/10/08/-e5-85-b3-e4-ba-8e-e5-86-85-e5-ad-98-e6-b3-84-e6-bc-8f/">
+<meta property="og:site_name" content="A Geek's Page">
 <meta property="og:description" content="不少编写用户空间程序的人都关心内存泄漏到底会造成多少影响。这里简单澄清一下。
 无论用户空间是通过malloc()也好，mmap()也好，最终都是通过Linux内核管理的。只要内核没有bug，这些和这个进程相关的页面都是会被记录的，而且会在进程exit()的时候由Linux内核全部释放掉。所以对于运行时间不长的应用程序，有一些内存泄漏一般是没多大问题的。作为用户程序的编写者，如果释放内存真的很麻烦，">
 <meta name="twitter:card" content="summary">
@@ -19,7 +19,7 @@
 无论用户空间是通过malloc()也好，mmap()也好，最终都是通过Linux内核管理的。只要内核没有bug，这些和这个进程相关的页面都是会被记录的，而且会在进程exit()的时候由Linux内核全部释放掉。所以对于运行时间不长的应用程序，有一些内存泄漏一般是没多大问题的。作为用户程序的编写者，如果释放内存真的很麻烦，">
 
   
-    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -38,7 +38,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
+        <a href="/" id="logo">A Geek&#39;s Page</a>
       </h1>
       
     </div>
@@ -58,7 +58,7 @@
         <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://yoursite.com"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://wangcong.org"></form>
       </div>
     </div>
   </div>
@@ -98,7 +98,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2010/10/08/-e5-85-b3-e4-ba-8e-e5-86-85-e5-ad-98-e6-b3-84-e6-bc-8f/" data-id="f7na6afdy6zm1x1g" class="article-share-link">Share</a>
+      <a data-url="http://wangcong.org/2010/10/08/-e5-85-b3-e4-ba-8e-e5-86-85-e5-ad-98-e6-b3-84-e6-bc-8f/" data-id="f7na6afdy6zm1x1g" class="article-share-link">Share</a>
       
       
     </footer>
@@ -205,7 +205,7 @@
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2015 John Doe<br>
+      &copy; 2015 Cong Wang<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
