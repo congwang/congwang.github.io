@@ -1,11 +1,16 @@
-<!DOCTYPE html>
-<html>
+
+  <!DOCTYPE HTML>
+<html >
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   
-  <title>Archives: 2008/7 | A Geek&#39;s Page</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
+    <title>Archives: 2008/7 | A Geek&#39;s Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Cong Wang">
+    
+    
+    <meta name="description">
 <meta property="og:type" content="website">
 <meta property="og:title" content="A Geek's Page">
 <meta property="og:url" content="http://wangcong.org/archives/2008/07/">
@@ -15,582 +20,295 @@
 <meta name="twitter:title" content="A Geek's Page">
 <meta name="twitter:description">
 
-  
-    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" href="/css/style.css" type="text/css">
 
-  
+    
+    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
 
 </head>
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">A Geek&#39;s Page</a>
-      </h1>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-          <a class="main-nav-link" href="/about-2">About</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://wangcong.org"></form>
-      </div>
-    </div>
-  </div>
-</header>
-      <div class="outer">
-        <section id="main">
-  
-    <article id="post--e4-bf-ae-e5-a4-8d-linux-e6-96-87-e4-bb-b6-e5-90-8d-e7-9a-84-e8-84-9a-e6-9c-ac" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2008/07/31/-e4-bf-ae-e5-a4-8d-linux-e6-96-87-e4-bb-b6-e5-90-8d-e7-9a-84-e8-84-9a-e6-9c-ac/" class="article-date">
-  <time datetime="2008-08-01T03:23:20.000Z" itemprop="datePublished">Jul 31 2008</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Programming/">Programming</a>
-  </div>
 
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2008/07/31/-e4-bf-ae-e5-a4-8d-linux-e6-96-87-e4-bb-b6-e5-90-8d-e7-9a-84-e8-84-9a-e6-9c-ac/">修复 Linux 文件名的脚本</a>
-    </h1>
-  
-
+    <body>
+      <header>
+        <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="A Geek&#39;s Page" title="A Geek&#39;s Page"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="A Geek&#39;s Page">A Geek&#39;s Page</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about-2">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:wangcong.org">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
       </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>肯定还有bug，欢迎指正。;-)</p>
-<p>（下面的语法加亮有问题。。。）<br>[bash]</p>
-<h1 id="!/bin/bash">!/bin/bash</h1>
-<p>posix_chars=”a-zA-Z._0-9-“<br>bad_chars=”][|#?&gt;&lt;*$&#039;&quot;(){}&amp;&quot;</p>
-<p>only<em>query=0<br>only_print=0<br>only_posix=0<br>only_whitespace=0<br>replace_char=&#039;</em>&#039;<br>append_chars=&quot;_2&quot;<br>remove_dup_underscores=0<br>allow_recursion=0<br>start_with_dash=0</p>
-<p>function test_name<br>{<br>    if [ $only_posix -eq 0 ]<br>    then<br>        test_chars=&quot;[${bad_chars}]&quot;<br>        ret=0<br>        while(($#!=0))<br>        do<br>            ret=$(($(echo &quot;$1&quot; | wc -l)-1))<br>            echo &quot;$1&quot; | perl -n -l -e &quot;exit 1 if m/[s]/;&quot;<br>            ret=$(($ret+$?))<br>            case &quot;$1&quot; in<br>                &quot;&quot; | -<em> | </em>${test_chars}<em>) ret=$(($ret+1))<br>                ;;
-                </em>&quot;\&quot;<em>) ret=$(($ret+1)) #&#039;&#039; is special !!<br>                ;;<br>            esac<br>            shift<br>        done<br>    else<br>        test_chars=&quot;[!$posix_chars]&quot;<br>        ret=0<br>        while(($#!=0))<br>        do<br>            case &quot;$1&quot; in<br>                &quot;&quot; | -</em> | <em>${test_chars}</em>) ret=$(($ret+1))<br>                ;;<br>            esac<br>            shift<br>        done<br>    fi<br>    return $ret<br>}</p>
-<p>function good<em>name<br>{<br>    rpl=&quot;${2:-</em>}&quot;<br>    tmp=$(echo -n &quot;$1&quot; | tr &#039;[ trn]&#039; &quot;$rpl&quot;)<br>    if [ $only_whitespace -eq 0 ]<br>    then<br>        echo $(echo &quot;$tmp&quot; | sed -e &quot;s/[$bad_chars]/$rpl/g&quot; | sed -e &quot;s/[]/$rpl/g&quot;)<br>    fi<br>}</p>
-<p>function no<em>dup<em>underscore<br>{<br>    echo &quot;$(echo &quot;$1&quot; | sed -e &#039;s/_</em>*/</em>/g&#039;)&quot;<br>}</p>
-<h1 id="assume_in_pwd_directory">assume in pwd directory</h1>
-<h1 id="get_new_name_bad_name_replace_char_append">get_new_name bad_name replace_char append</h1>
-<p>function get_new_name<br>{<br>    if test_name &quot;$1&quot;<br>    then<br>        if [ $remove_dup_underscores -eq 1 ]<br>        then<br>            echo &quot;$(no_dup_underscore &quot;$1&quot;)&quot;<br>        else<br>            echo &quot;$1&quot;<br>        fi<br>        return<br>    fi<br>    apd=&quot;$3&quot;<br>    new_name=&quot;$(good_name &quot;$1&quot; $2)&quot;<br>    if [ $remove_dup_underscores -eq 1 ]<br>    then<br>        new_name=$(no_dup_underscore &quot;${new_name}&quot;)<br>    fi<br>    if [ -e &quot;${new_name}&quot; ]<br>    then<br>        if [ ${new_name##<em>.} = ${new_name} ]<br>        then<br>            echo &quot;${new_name%.</em>}${apd}&quot;<br>        else<br>            echo &quot;${new_name%.<em>}${apd}.${new_name##</em>.}&quot;<br>        fi<br>    else<br>        echo &quot;${new_name}&quot;<br>    fi<br>}</p>
-<p>function print_version<br>{<br>    echo &quot;Copyright (C) WANG Cong, 2008.&quot;<br>    echo &quot;Version 1.5&quot;<br>}</p>
-<p>function print_help<br>{<br>    prog=$(basename $0)<br>    cat &lt;&amp;2<br>            echo &gt;&amp;2<br>            print_help &gt;&amp;2<br>            return 1<br>        fi<br>        test_name “$@”<br>        return $?<br>    else<br>        if [ $only_print -eq 0 ]<br>        then<br>            [ -e “$1” ] || (echo “No such file or directory.” &gt;&amp;2 &amp;&amp; return 2)<br>        fi<br>        last_name=$(get_new_name “$1” “${replace_char}” “${append_chars}”)<br>        if [ $only_print -eq 1 ]<br>        then<br>            if [ $allow_recursion -eq 1 ]<br>            then<br>                echo “-p conflicts with -r.” &gt;&amp;2<br>                print_help &gt;&amp;2<br>                return 3<br>            else<br>                echo “$last_name”<br>            fi<br>        else<br>            [ “$1” != “$last_name” ] &amp;&amp; mv “$1” “$last_name”<br>            if [ $allow_recursion -eq 1 ]<br>            then<br>                if [ ! -d “$last_name” ]<br>                then<br>                    echo “$1”” was not a directory!” &gt;&amp;2<br>                    return 4<br>                fi<br>                (cd “$last_name”<br>                ls | while read file<br>                do<br>                    echo “$file”<br>                    if [ -d “$file” ]<br>                    then<br>                        main “$file”<br>                    else<br>                        allow_recursion=0<br>                        main “$file”<br>                    fi<br>                done)</p>
-<pre><code>        <span class="keyword">fi</span>
-    <span class="keyword">fi</span>
-<span class="keyword">fi</span>
-<span class="keyword">return</span> <span class="number">0</span>
-</code></pre><p>}</p>
-<p>while getopts “rvhsuoqx:a:c:p” var<br>do<br>    case $var in<br>        v)<br>            print_version<br>            exit 0<br>            ;;<br>        h)<br>            print_help<br>            exit 0<br>            ;;<br>        c)<br>            replace_char=$OPTARG<br>            if [ ${#OPTARG} -ne 1 ]<br>            then<br>                echo “-c must be followed by a char.” &gt;&amp;2<br>                print_help<br>                exit 1<br>            fi<br>            ;;<br>        a)<br>            append_chars=$OPTARG<br>            ;;<br>        q)<br>            only_query=1<br>            ;;<br>        p)<br>            only_print=1<br>            ;;<br>        o)<br>            only_posix=1<br>            ;;<br>        r)<br>            allow_recursion=1<br>            ;;<br>        u)<br>            remove_dup_underscores=1<br>            ;;<br>        s)<br>            only_whitespace=1<br>            ;;<br>        x)<br>            start_with_dash=1<br>            tmp=$OPTARG<br>            ;;<br>        *)<br>            echo “Bad options!” &gt;&amp;2<br>            print_help<br>            exit 1<br>    esac<br>done</p>
-<p>shift $(($OPTIND - 1))<br>if [ $start_with_dash -eq 0 ]<br>then<br>    main “$@”<br>else<br>    tmp=$(perl -e ‘$foo=”‘“$tmp”‘“;$bar=$foo;$foo=~s/^-*//;rename(“$bar”, “$foo”);print $foo;’)<br>    main “$tmp”<br>fi<br>exit $?</p>
-<p>[/bash] </p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://wangcong.org/2008/07/31/-e4-bf-ae-e5-a4-8d-linux-e6-96-87-e4-bb-b6-e5-90-8d-e7-9a-84-e8-84-9a-e6-9c-ac/" data-id="kjd0d7xwpt3724y5" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post--e7-9c-9f-e7-9a-84-e8-80-81-e4-ba-86-ef-bc-9f" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2008/07/24/-e7-9c-9f-e7-9a-84-e8-80-81-e4-ba-86-ef-bc-9f/" class="article-date">
-  <time datetime="2008-07-25T01:28:05.000Z" itemprop="datePublished">Jul 24 2008</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Life/">Life</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+      <div id="container">
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2008/07/24/-e7-9c-9f-e7-9a-84-e8-80-81-e4-ba-86-ef-bc-9f/">真的老了？</a>
-    </h1>
-  
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>最近发现自己真的有变老的迹象，证据如下：</p>
-<p>1. 对年轻人越来越有耐心了；<br>2. 越来越感觉自己学到的东西很简单，于是经常自嘲；<br>3. 喜欢上蔡琴的歌了……囧rz；<br>4. 越来越喜欢回忆过去了，感觉过去的很多时光很美好，后悔自己当时不知道珍惜；<br>5. 越来越懂得享受生活了，慢慢地感觉到生活才是最重要的；<br>6. 对感情越来越平淡了，一切顺其自然；<br>7. 越来越不想去计划未来了，走一步算一步；<br>8. 感觉最重要的是要过得快乐，其它什么都不重要；<br>9. 越来越珍惜自己身边的朋友和亲人了；<br>10.人生经历甚丰富了，事情越来越看得开了，烦恼的事能慢慢不放心上了；<br>11.越来越经常地发一些人生感慨。</p>
-<p>恩，一口气列了11条，感觉自己都快成为一个老人了，为了平衡一下心理，再列举几条自己还年轻的证据：</p>
-<p>1. 发现想学的东西越来越多了，计划去学的东西有一大堆；<br>2. 越来越喜欢旅游了，梦想着在有生之年能游历全世界；<br>3. 喜欢聚会，不想自己一个人呆着，尤其是周末；<br>4. 仍然喜欢变着法地折腾，喜欢尝试新奇的东西，喜欢刺激，有挑战性。</p>
-<p>哎，总的来看还是老了……</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://wangcong.org/2008/07/24/-e7-9c-9f-e7-9a-84-e8-80-81-e4-ba-86-ef-bc-9f/" data-id="12knqier86zcttxl" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
+<div class="archive-title" >
+  <h2 class="archive-icon">2008/7</h2>
   
-</article>
-
-
+  <div class="archiveslist archive-float clearfix">
+   <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">Aug 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">Jan 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">Dec 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">Oct 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">Sep 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">Aug 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">Jul 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">Feb 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01/">Jan 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12/">Dec 2012</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">Nov 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">Oct 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">Sep 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">Aug 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/07/">Jul 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">Jun 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">Apr 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">Mar 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">Feb 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">Jan 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/12/">Dec 2011</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">Nov 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/10/">Oct 2011</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">Sep 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08/">Aug 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/07/">Jul 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/06/">Jun 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/05/">May 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04/">Apr 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03/">Mar 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/02/">Feb 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/01/">Jan 2011</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/12/">Dec 2010</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/11/">Nov 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/10/">Oct 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/09/">Sep 2010</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08/">Aug 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07/">Jul 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06/">Jun 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05/">May 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04/">Apr 2010</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03/">Mar 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02/">Feb 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01/">Jan 2010</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12/">Dec 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11/">Nov 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10/">Oct 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09/">Sep 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08/">Aug 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07/">Jul 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/06/">Jun 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/05/">May 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04/">Apr 2009</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03/">Mar 2009</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02/">Feb 2009</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01/">Jan 2009</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12/">Dec 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/11/">Nov 2008</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/10/">Oct 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09/">Sep 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08/">Aug 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07/">Jul 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06/">Jun 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05/">May 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04/">Apr 2008</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03/">Mar 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02/">Feb 2008</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01/">Jan 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12/">Dec 2007</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11/">Nov 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10/">Oct 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09/">Sep 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08/">Aug 2007</a><span class="archive-list-count">31</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07/">Jul 2007</a><span class="archive-list-count">34</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06/">Jun 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05/">May 2007</a><span class="archive-list-count">25</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04/">Apr 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03/">Mar 2007</a><span class="archive-list-count">50</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02/">Feb 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01/">Jan 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12/">Dec 2006</a><span class="archive-list-count">5</span></li></ul>
+ </div>
   
-    <article id="post--e5-88-b0-e8-bf-99-e9-87-8c-e4-b8-80-e4-b8-aa-e6-9c-88-e4-ba-86" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2008/07/20/-e5-88-b0-e8-bf-99-e9-87-8c-e4-b8-80-e4-b8-aa-e6-9c-88-e4-ba-86/" class="article-date">
-  <time datetime="2008-07-20T11:02:28.000Z" itemprop="datePublished">Jul 20 2008</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Life/">Life</a>
-  </div>
+</div>
+<div id="main" class="archive-part clearfix">
+  <div id="archive-page">
 
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
+  <section class="post" itemscope itemprop="blogPost">
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2008/07/20/-e5-88-b0-e8-bf-99-e9-87-8c-e4-b8-80-e4-b8-aa-e6-9c-88-e4-ba-86/">到这里一个月了</a>
-    </h1>
+    <a href="/2008/07/31/-e4-bf-ae-e5-a4-8d-linux-e6-96-87-e4-bb-b6-e5-90-8d-e7-9a-84-e8-84-9a-e6-9c-ac/" title="修复 Linux 文件名的脚本" itemprop="url">
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>不知不觉中到葡国已经一个月了，时间过得太快啦！</p>
-<p>那天还在公交车上和George谈论“how time flies”这个问题，哎，他快要回罗马尼亚了～～说实话，真舍不得让这伙计走，他是个很好的人，又恰巧和我一样是大学刚毕业（人家大学本科读5年，9月才毕业，回去就基本上算是毕业了），所以和他有很多话题。希望他以后能到University of Coimbra来读研究生，这样我们又能见面啦！</p>
-<p>－－－－－－－</p>
-<p>前几天换公寓了，搬到一个山头上去了，我承认，那里景色很美，但是在那里坐公交车上班很麻烦。和我同住的两个同事人家都有自己的车，不过作息时间不一样，不能赶到一起上下班（所以你也可以看出Critical的工作时间有多宽松）。而且暂时还没有无线网络，需要给房东说。最关键的是，不像以前免费了，需要自己交房租，水电费等，哎～～不过还好，相对于其它的房子这个很便宜了。</p>
-<p>－－－－－－－</p>
-<p>我有个大的发现，lady是个无敌的词。在商店里，你可以说某个女售货员是lady；在银行里，你也可以说哪个女接待是lady；在公寓里，你还可以说房东是the lady，说打扫房子的女清洁工为the cleaning lady。不知道我们公司的Fatima能不能被称为“<a href="http://en.wikipedia.org/wiki/Our_Lady_of_Fatima" target="_blank" rel="external">Our Lady of Fatima</a>”？;-)</p>
-<p>－－－－－－－</p>
-<p>有件比较囧的事是，我的名字被同事们普遍念作“wang kong”……我宁愿他们像George那样直接叫我wang。我想原因很简单吧，“c”在英语里都读作/k/或者/s/，而在葡语里基本上就是/k/了，所以估计他们都不会念咱们拼音中的/c/这个音……就像我，很多葡萄牙人的名字我都读不通……期待着去大学里找个葡语课学学，也省得周末没啥事干～～</p>
-<p>－－－－－－－</p>
-<p>昨天又是公司的Beer Lifting和聚餐，又赶到了一起，果真一个月了。这次我们去的是一家意大利餐馆，而且还在某个山头上，老远，搭同事的车过去，路上拐了不下20个弯……头一次吃意大利菜，很好吃，除了感觉牛肉有点儿不熟，甜点很美。这次晚上又是吃到很晚，我回到公寓都一点多了……巨困，躺到床上就睡着了。</p>
-<p>很期待公司两周以后的划船比赛，噢，伟大，万能，无敌的<a href="http://en.wikipedia.org/wiki/Mondego" target="_blank" rel="external">Mondego</a>～～！</p>
-<p>期待着下个月去<a href="http://en.wikipedia.org/wiki/Sintra" target="_blank" rel="external">Sintra</a>的<a href="http://en.wikipedia.org/wiki/Cabo_da_Roca" target="_blank" rel="external">Cabo da Roca</a>！</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://wangcong.org/2008/07/20/-e5-88-b0-e8-bf-99-e9-87-8c-e4-b8-80-e4-b8-aa-e6-9c-88-e4-ba-86/" data-id="lomsy04yu4n6b81q" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
+    <time datetime="2008-08-01T03:23:20.000Z" itemprop="datePublished">Jul 31 2008</time>
 
 
-  
-    <article id="post-figueira-da-foz" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2008/07/20/figueira-da-foz/" class="article-date">
-  <time datetime="2008-07-20T10:14:14.000Z" itemprop="datePublished">Jul 20 2008</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Life/">Life</a>
-  </div>
+    <h1 itemprop="name">修复 Linux 文件名的脚本</h1>
 
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2008/07/20/figueira-da-foz/">Figueira da Foz</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="/images/" alt=""></p>
-<p><a href="http://en.wikipedia.org/wiki/Figueira_da_Foz" target="_blank" rel="external">Figueira da Foz</a>是个很美的海边小镇，也是离Coimbra最近的海边，坐火车一个小时就到（这种火车基本上相当于北京的地铁，每个小站都停）。Coimbra的人们夏天经常去那里度假，因为那里有个很大很大很大的海滩。</p>
-<p>上周周末我们几个人一起去了那里，在去之前我正好买了一个数码相机，<a href="http://www.dpreview.com/reviews/specs/Canon/canon_a720is.asp" target="_blank" rel="external"><span class="content">佳能A720is</span></a>。于是乎我猛拍了不少照片，都放在<a href="http://www.douban.com/photos/album/10919130/" target="_blank" rel="external">&gt;这里&lt;</a>了。</p>
-<p>去海滩之前我们在路上拍了Figueira的不少其它景色，也很漂亮。路上还发现一个“集市”，有很多卖东西的，George买了一些纪念品，准备带回国送朋友；我买了一顶帽子，上面写着“Figueira da Foz”，感觉很酷。8-)</p>
-<p>那里那个沙滩超级大，走不到头。去的那天海边正好风大，结果我和George尝到了真正的“沙尘暴”的滋味，弄得浑身上下全是沙……后来我们找到一个避风的地方，晒了个日光浴，回来发现我被晒黑了……本来想坐晚上8点多的火车回去，结果George建议说看日落，只能坐晚上10点半的火车回去了。不过那的日落确实很美，等了那么久没白等，日落的照片也在上面那个相册里。结果，那天晚上回到公寓已经夜里12点多了……</p>
-<p>总之，如果你来葡萄牙，千万别错过Figueira da Foz！</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://wangcong.org/2008/07/20/figueira-da-foz/" data-id="77f2j6hhpgk1p9mo" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-coimbra-e8-8a-82-e6-97-a5" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2008/07/09/coimbra-e8-8a-82-e6-97-a5/" class="article-date">
-  <time datetime="2008-07-09T12:34:38.000Z" itemprop="datePublished">Jul 9 2008</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Life/">Life</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2008/07/09/coimbra-e8-8a-82-e6-97-a5/">Coimbra节日</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="/images/" alt=""></p>
-<p>上周五是Coimbra的纪念日，全城放假，我和George一起去市中心看了一场极具葡萄牙特色的活动。</p>
-<p>下午4点多的时候，我们先去了Mondego河边的公园，那里都已经搭好舞台了，但是等了几分钟还是没看到有开始的迹象，于是我们去决定去市中心的广场去看看。结果在路上正好遇到表演的队伍向公园挺进。刚看到时很是吃惊，人们穿着各种各样的古装，打扮成各种阶层的人，边走边唱，时而还击掌来伴奏，很有气氛，如果你像我一样站到旁边看的话，你可能也会情不自禁地跟着它们一起击掌。</p>
-<p>我仔细观察了一下，整个队伍分成一个个的小组，不同的组应该是来自Coimbra的不同的小镇，它们都有自己的旗帜或标识，由最前面的小孩举着。小孩们都很可爱，也是打扮成各种各样，有的拿着布娃娃，有的还提着花篮。小孩后面是妇女和成年男子，有年轻的也有年长的。女的头上多顶着各种蔬菜和食物，大概她们劳动时就是这样吧！男的多打扮成绅士或者农夫，和旁边的女的成对出现，因为他们是舞伴。每组中都有一些吹拉弹唱的人，可以看到各种各样的乐器。</p>
-<p>等到整个队伍都到了公园里的舞台后，演出就开始了。舞台下面有一些椅子，不过都是给老年人或者带小孩的人坐的，像我们这种年轻人只能站着看，人们都很自觉。表演刚开始时还不时地从空中飞过一些前来助兴的飞机，结果很多人都被吸引了过去，飞机飞过后然后再回来，然后再过去……说说表演。表演是一个镇一个镇的上，上去时先在台上转一圈，边走边唱，同时把手里拿的或者头上顶的东西全都放到边上，让孩子们坐到边上看，大人们开始表演。表演开始前都会自我介绍自己的小镇，可我除了Mondego和Obrigado啥都听不懂……正式表演都是唱歌和舞蹈，主唱的一般是后面的几个中年妇女，她们站那里专门唱歌，而且声音很是洪亮。吹拉弹唱的站在她们旁边伴奏。最前面的是跳舞的，都是一男一女搭配，他们也会跟着唱歌。看他们跳舞很有意思，时而成对，时而转圈，最让我觉得有意思的是一种男女交叉着走的舞蹈。他们唱的歌词虽然我都听不懂，不过光是听音乐，也能感觉到浓厚的葡萄牙气息。给我印象最深刻的是一首边击掌边唱的歌，听着很带劲，感觉很好听。还好George录了这首歌，所以我还可以回顾回顾。</p>
-<p>到了晚上，在市中心还可以看到各种彩灯，整个街都被装点得很美。路边还有一个很大的彩灯，样子像是一个女神，据说这里的人们都相信Coimbra的美好生活是拜她所赐。</p>
-<p>静静的Mondego河上倒映着这个城市的夜景，在夜色下，它也是那么迷人……</p>
-<p>（P.S. 浏览更多照片请猛击<a href="http://www.douban.com/photos/album/10524009/" target="_blank" rel="external">这里</a>。    P.P.S. 当时看到一个超级可爱的小美女！相册里有！）</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://wangcong.org/2008/07/09/coimbra-e8-8a-82-e6-97-a5/" data-id="e6egsqppuq4uu672" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post--e5-85-a8-e6-96-b0-e7-9a-84fedora-e7-b3-bb-e7-bb-9f" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2008/07/09/-e5-85-a8-e6-96-b0-e7-9a-84fedora-e7-b3-bb-e7-bb-9f/" class="article-date">
-  <time datetime="2008-07-09T11:44:29.000Z" itemprop="datePublished">Jul 9 2008</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Linux-Application/">Linux Application</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2008/07/09/-e5-85-a8-e6-96-b0-e7-9a-84fedora-e7-b3-bb-e7-bb-9f/">全新的Fedora系统</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>这两天对我的Linux进行了大的改造。</p>
-<p>先是花了一个晚上的时间从Fedora 8升级到了Fedora 9。通过网络升级Fedora有两种方式：一种是通过preupgrade，另一种是直接用yum（关于两种升级方式可以参考：<a href="http://www.howtoforge.com/upgrading-fedora8-to-fedora9-with-preupgrade" target="_blank" rel="external">preupgrade</a>，<a href="http://www.ioncannon.net/system-administration/138/upgrading-from-fedora-8-to-fedora-9-with-yum/" target="_blank" rel="external">yum</a>）。我采用了后者，升级过程中遇到了包依赖的错误，解决方法很简单，哪个包缺少依赖的东西就把那个包给删除，升级完再重新安装，然后就是要使劲地yum clean all。</p>
-<p>升级完最让我眼前一亮的是登录界面和Firefox 3，感觉很漂亮。升级后mplayer会出现错误，解决方法是：<a href="http://blog.chinaunix.net/u/8780/showart_421171.html" target="_blank" rel="external">这个</a>。还有一个头疼的问题是gcc 4.3，一些软件编译不过去了，某个2.6.23的内核就是，害得我又修改了内核的Makefile才编译通过的，不知道以后还会有什么，看来得自己编译gcc了。</p>
-<p>另一个大的改造是在Gnome上放弃使用metacity，改用<a href="http://sawfish.wikia.com/wiki/Main_Page" target="_blank" rel="external">sawfish</a>，感觉要轻便一些。不过安装sawfish需要自己编译安装。同时，默认使用<a href="http://fluxbox.sourceforge.net/" target="_blank" rel="external">fluxbox</a>，其次是<a href="http://www.enlightenment.org/" target="_blank" rel="external">enlightenment</a> 16，减少Gnome的使用。用了几天感觉这两个窗口管理器都很简洁，fluxbox更顺手一些，虽然e16更漂亮，但它资料太少（注：e17资料相对还多一些），不知怎么去修改它的配置，所以默认使用fluxbox了。安装它们可以用：yum install fluxbox e16。</p>
-<p>推荐几个关于enlightenment的网址：<a href="http://www1.get-e.org/" target="_blank" rel="external">get-e.org</a>，<a href="http://e17-stuff.org" target="_blank" rel="external">e17-stuff.org</a>，<a href="http://wiki.enlightenment.org/index.php" target="_blank" rel="external">官方wiki</a>，关于fluxbox的网址：<a href="http://fluxbox-wiki.org/index.php/Fluxbox-wiki" target="_blank" rel="external">fluxbox-wiki</a>，<a href="http://fluxbox.org/" target="_blank" rel="external">fluxbox.org</a>。</p>
-<p>顺带体验了一下<a href="http://rox.sourceforge.net/" target="_blank" rel="external">rox</a>，感觉安装很方便，就是用着还不顺手，还是资料太少。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://wangcong.org/2008/07/09/-e5-85-a8-e6-96-b0-e7-9a-84fedora-e7-b3-bb-e7-bb-9f/" data-id="ltz8zw738b234pg9" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post--e7-94-a8-e8-84-9a-e6-9c-ac-e8-a7-a3-e5-86-b3c-e8-af-ad-e8-a8-80-e9-97-ae-e9-a2-98" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2008/07/04/-e7-94-a8-e8-84-9a-e6-9c-ac-e8-a7-a3-e5-86-b3c-e8-af-ad-e8-a8-80-e9-97-ae-e9-a2-98/" class="article-date">
-  <time datetime="2008-07-04T08:32:04.000Z" itemprop="datePublished">Jul 4 2008</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Programming/">Programming</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2008/07/04/-e7-94-a8-e8-84-9a-e6-9c-ac-e8-a7-a3-e5-86-b3c-e8-af-ad-e8-a8-80-e9-97-ae-e9-a2-98/">用脚本解决C语言问题</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><a href="http://vvoody.org/" target="_blank" rel="external">vvoody</a>在<a href="http://groups.google.com/group/xiyoulinux?hl=zh-CN" target="_blank" rel="external">xiyoulinux</a>上提出了<a href="http://groups.google.com/group/xiyoulinux/browse_thread/thread/31149c640d00f165" target="_blank" rel="external">一个C语言的问题</a>，这个问题我之前见过，所以不想自己想了，想让计算机帮我完成。于是费了一番功夫写了个脚本帮我完成。（哎，老了，写代码慢了～～）</p>
-<p>先贴“答案”，应该是总共8个结果（下面的9个中有两个明显是等价的）：</p>
-<p>int <em>i,n=99;main(){for(i=0;i&lt;n;i—){printf(“#”);}}<br>int i,</em>n=99;main(){for(i=0;i&lt;n;i—){printf(“#”);}}<br>int i,n=99;main(){for(i=0;-i&lt;n;i—){printf(“#”);}}<br>int i,n=99;main(){for(i=0;~i&lt;n;i—){printf(“#”);}}<br>int i,n=99;main(){for(i=0;i&lt;&amp;n;i—){printf(“#”);}}<br>int i,n=99;main(){for(i=0;i&lt;n;i—);{printf(“#”);}}<br>int*i,n=99;main(){for(i=0;i&lt;n;i—){printf(“#”);}}<br>int i,n=99;main(){for(i=0;i+n;i—){printf(“#”);}}<br>int i,n=99;main(){for(i=0;i&lt;n;n—){printf(“#”);}}</p>
-<p>用时：</p>
-<p>real    1m3.881s<br>user    0m44.097s<br>sys     0m17.436s</p>
-<p>最让我吃惊的结果是那个溢出的，很巧妙，脚本运行到那里停了大约4，5秒钟的样子。</p>
-<p>最后放脚本，包括两部分，一部分用bash完成，另一部分用Perl完成。其实完全用bash或者完全用Perl都是可行的，而且完全用Perl应该是最快的。</p>
-<p>[bash]</p>
-<h1 id="!/bin/bash">!/bin/bash</h1>
-<p>TEST_VAR=’int i,n=99;main(){for(i=0;i&lt;n;i—){printf(&quot;#&quot;);}}&#039;</p>
-<h1 id="Generated_by_Python_with">Generated by Python with</h1>
-<h1 id="&#039;&#039;-join(map(lambda_x:_&#039;&#039;_if_chr(x)-isupper()_else_chr(x),_range(32,_127)))">&#039;&#039;.join(map(lambda x: &#039;&#039; if chr(x).isupper() else chr(x), range(32, 127)))</h1>
-<h1 id="except_&#039;$&#039;,&#039;(&#039;,&#039;)&#039;,_&#039;{&#039;,&#039;}&#039;,_&#039;[&#039;,_&#039;]&#039;,_&#039;@&#039;,_&quot;`&quot;,_&quot;&quot;&quot;,_&quot;#&quot;,_&quot;&#039;&quot;,_&quot;\&quot;,_&#039;_&#039;">except &#039;$&#039;,&#039;(&#039;,&#039;)&#039;, &#039;{&#039;,&#039;}&#039;, &#039;[&#039;, &#039;]&#039;, &#039;@&#039;, &quot;`&quot;, &quot;&quot;&quot;, &quot;#&quot;, &quot;&#039;&quot;, &quot;\&quot;, &#039; &#039;</h1>
-<p>possible_chars=&#039;!&#039;&quot;%&amp;*+,-./0123456789:;?^_abcdefghijklmnopqrstuvwxyz|~”<br>len=${#TEST_VAR}<br>num_chars=${#possible_chars}<br>tmpfile=$(mktemp /tmp/test-$$.XXXXXXX)<br>outfile=”/tmp/test_sh.out”</p>
-<p>function is_valid_and_ok()<br>{<br>    echo $1 &gt; $tmpfile<br>    if gcc -xc -c -o $outfile.o $tmpfile &amp;&gt;/dev/null;<br>    then<br>        gcc -o $outfile $outfile.o &amp;&gt;/dev/null<br>        if [[ $? -ne 0 ]]; then<br>            return 0<br>        fi</p>
-<pre><code>    #nohup $outfile &amp;gt; $resultfile <span class="number">2</span>&amp;gt; /dev/null &amp;amp;
-    #sleep <span class="number">1</span> &amp;amp;&amp;amp; killall $outfile <span class="number">2</span>&amp;gt; /dev/null
-    n=$(./get_run_result.pl $outfile)
-    echo $n
-    <span class="keyword">if</span> <span class="string">[[ $n -eq 99 ]]</span> || <span class="string">[[ $n -eq 100 ]]</span> || <span class="string">[[ $n -eq 1 ]]</span>
-    <span class="keyword">then</span>
-        <span class="keyword">return</span> <span class="number">1</span>
-    fi
-fi
-<span class="keyword">return</span> <span class="number">0</span>
-</code></pre><p>}</p>
-<h1 id="main">main</h1>
-<p>i=8<br>while(($i $tmp” 1&gt;&amp;2<br>    fi<br>    i=$(($i+1))<br>done;</p>
-<p>i=4<br>while (($i &lt; $len - 14));<br>do<br>    j=0<br>    while(($j $tmp” 1&gt;&amp;2<br>        fi<br>        j=$(($j+1))<br>    done<br>    i=$(($i+1))<br>    if (($i == 11)) ; then<br>        i=17<br>    fi<br>done;</p>
-<p>i=0<br>while(($i&lt;$len - 16));<br>do<br>    j=0<br>    while(($j $tmp” 1&gt;&amp;2<br>        fi<br>        j=$(($j+1))<br>    done<br>    i=$(($i+1))<br>    if (($i == 11)) ; then<br>        i=17<br>    fi<br>done;<br>[/bash]<br>[perl]</p>
-<h1 id="!/usr/bin/perl_-w">!/usr/bin/perl -w</h1>
-<p>use strict;<br>use warnings;</p>
-<p>my $n;<br>my $chars;</p>
-<p>open(my $in_file, “$ARGV[0]|”) or exit 1;<br>$n = read($in_file, $chars, 101);<br>print “$nn”;<br>close $in_file;<br>[/perl] </p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://wangcong.org/2008/07/04/-e7-94-a8-e8-84-9a-e6-9c-ac-e8-a7-a3-e5-86-b3c-e8-af-ad-e8-a8-80-e9-97-ae-e9-a2-98/" data-id="mikza3ug8avhxnta" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post--e5-8f-91-e5-b7-a5-e8-b5-84-e4-ba-86" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2008/07/01/-e5-8f-91-e5-b7-a5-e8-b5-84-e4-ba-86/" class="article-date">
-  <time datetime="2008-07-01T14:06:37.000Z" itemprop="datePublished">Jul 1 2008</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Life/">Life</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2008/07/01/-e5-8f-91-e5-b7-a5-e8-b5-84-e4-ba-86/">发工资了</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>今天是发工资的日子（pay day），比较兴奋，毕竟这是自己的第一份工资。上周就和公司的人力资源同事谈这事了，因为公司发工资不给现金，她还专门带我去银行办了信用卡，顺道带我去中餐馆吃了一顿。:-)</p>
-<p>下午快下班时才收到银行发来的确认邮件，说多少多少钱已经转到你的帐户上。比较囧的是还差点把它当成垃圾邮件处理了，因为它的正文是放到html格式的附件中的。虽然说没有拿到实实在在的钞票，可心里还是很高兴的。</p>
-<p>今天还有比较高兴的事是自己做的“项目”有了大的进展，开始进行下一步了，终于有机会写代码了！T_T 严重感谢公司里的一个老同事，每次当我遇到问题时总是不厌其烦的帮我，哪怕我的问题有多么地弱智。。。他有一点很让我佩服，就是，遇到一个问题，我还没反应问题是什么时他就已经找到答案了！可见他对Linux是多么熟悉！更关键的是，他知识相当渊博，编程他懂得多，很擅长C++；服务器管理他也懂，公司CVS和DHCP服务器就是他管理；硬件他还懂，给我说设计CPU多么多么简单……Orz！上次聚会时我正好坐他旁边，和他聊了很久，给我印象最深的是他的口头语，有两句，是“Oh, shit!”和“…fucking xxxx.”  还有一点让我吃惊的是他居然会4，5种语言（不是计算机编程语言，是人们说的自然语言），而上星期Fatima也告诉我她也会不下4种……Orz。难道这里的人都这么牛？</p>
-<p>厄，还有一件事，就是skype终于可以打电话了。。。T_T 感谢ZC Miao帮我充了skype！刚刚给老妈打了个电话，那边是早上，她还没起床。</p>
-<p>总之今天很高兴，不写了，睡觉去了。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://wangcong.org/2008/07/01/-e5-8f-91-e5-b7-a5-e8-b5-84-e4-ba-86/" data-id="7ics57vhg56mq5f2" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-  
+  </a>
 </section>
-        
-          <aside id="sidebar">
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
-    <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Book-Reviews/">Book Reviews</a><span class="category-list-count">18</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/China/">China</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Collection/">Collection</a><span class="category-list-count">25</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">324</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux-Application/">Linux Application</a><span class="category-list-count">73</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux-Kernel/">Linux Kernel</a><span class="category-list-count">64</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Love/">Love</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Movies/">Movies</a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/">Programming</a><span class="category-list-count">152</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Science-Fiction/">Science Fiction</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Travel/">Travel</a><span class="category-list-count">19</span></li></ul>
-    </div>
-  </div>
 
+  <section class="post" itemscope itemprop="blogPost">
   
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/geek/">geek</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/handling/">handling</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/joke/">joke</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/signal/">signal</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/unix/">unix</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a><span class="tag-list-count">1</span></li></ul>
-    </div>
-  </div>
+    <a href="/2008/07/24/-e7-9c-9f-e7-9a-84-e8-80-81-e4-ba-86-ef-bc-9f/" title="真的老了？" itemprop="url">
+  
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/geek/" style="font-size: NaNpx;">geek</a><a href="/tags/handling/" style="font-size: NaNpx;">handling</a><a href="/tags/joke/" style="font-size: NaNpx;">joke</a><a href="/tags/linux/" style="font-size: NaNpx;">linux</a><a href="/tags/signal/" style="font-size: NaNpx;">signal</a><a href="/tags/unix/" style="font-size: NaNpx;">unix</a><a href="/tags/vim/" style="font-size: NaNpx;">vim</a>
-    </div>
-  </div>
+    <time datetime="2008-07-25T01:28:05.000Z" itemprop="datePublished">Jul 24 2008</time>
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">August 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">December 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">October 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">September 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">August 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">February 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01/">January 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12/">December 2012</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">November 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">October 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">September 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">August 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/07/">July 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">April 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">March 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">February 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">January 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/12/">December 2011</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">November 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/10/">October 2011</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">September 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08/">August 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/07/">July 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/06/">June 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/05/">May 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04/">April 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03/">March 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/02/">February 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/01/">January 2011</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/12/">December 2010</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/11/">November 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/10/">October 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/09/">September 2010</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08/">August 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07/">July 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06/">June 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05/">May 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04/">April 2010</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03/">March 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02/">February 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01/">January 2010</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12/">December 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11/">November 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10/">October 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09/">September 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08/">August 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07/">July 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/06/">June 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/05/">May 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04/">April 2009</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03/">March 2009</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02/">February 2009</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01/">January 2009</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12/">December 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/11/">November 2008</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/10/">October 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09/">September 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08/">August 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07/">July 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06/">June 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05/">May 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04/">April 2008</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03/">March 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02/">February 2008</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01/">January 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12/">December 2007</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11/">November 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10/">October 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09/">September 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08/">August 2007</a><span class="archive-list-count">31</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07/">July 2007</a><span class="archive-list-count">34</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06/">June 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05/">May 2007</a><span class="archive-list-count">25</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04/">April 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03/">March 2007</a><span class="archive-list-count">50</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02/">February 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01/">January 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12/">December 2006</a><span class="archive-list-count">5</span></li></ul>
-    </div>
-  </div>
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recents</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2014/08/12/linux-e7-bd-91-e7-bb-9c-e6-b5-81-e9-87-8f-e6-8e-a7-e5-88-b6-ef-bc-88-e4-b8-80-ef-bc-89/">Linux 网络流量控制（零）</a>
-          </li>
-        
-          <li>
-            <a href="/2014/08/01/ottawa-linux-symposium/">Ottawa Linux Symposium</a>
-          </li>
-        
-          <li>
-            <a href="/2014/05/31/skbuff-e5-86-85-e5-ad-98-e6-a8-a1-e5-9e-8b/">skbuff 内存模型</a>
-          </li>
-        
-          <li>
-            <a href="/2014/05/06/-e9-95-bf-e6-9c-9f-e6-8f-90-e4-be-9b-twitter-e5-86-85-e6-8e-a8/">长期提供 Twitter 内推</a>
-          </li>
-        
-          <li>
-            <a href="/2014/01/30/-e6-88-91-e7-9a-842013-ef-bc-9a-e6-88-91-e6-9d-a5-e5-88-b0-e4-ba-86-e7-be-8e-e5-9b-bd/">我的2013：我来到了美国</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
+    <h1 itemprop="name">真的老了？</h1>
 
+  </a>
+</section>
+
+  <section class="post" itemscope itemprop="blogPost">
   
-</aside>
-        
+    <a href="/2008/07/20/-e5-88-b0-e8-bf-99-e9-87-8c-e4-b8-80-e4-b8-aa-e6-9c-88-e4-ba-86/" title="到这里一个月了" itemprop="url">
+  
+
+    <time datetime="2008-07-20T11:02:28.000Z" itemprop="datePublished">Jul 20 2008</time>
+
+
+    <h1 itemprop="name">到这里一个月了</h1>
+
+  </a>
+</section>
+
+  <section class="post" itemscope itemprop="blogPost">
+  
+    <a href="/2008/07/20/figueira-da-foz/" title="Figueira da Foz" itemprop="url">
+  
+
+    <time datetime="2008-07-20T10:14:14.000Z" itemprop="datePublished">Jul 20 2008</time>
+
+
+    <h1 itemprop="name">Figueira da Foz</h1>
+
+  </a>
+</section>
+
+  <section class="post" itemscope itemprop="blogPost">
+  
+    <a href="/2008/07/09/coimbra-e8-8a-82-e6-97-a5/" title="Coimbra节日" itemprop="url">
+  
+
+    <time datetime="2008-07-09T12:34:38.000Z" itemprop="datePublished">Jul 9 2008</time>
+
+
+    <h1 itemprop="name">Coimbra节日</h1>
+
+  </a>
+</section>
+
+  <section class="post" itemscope itemprop="blogPost">
+  
+    <a href="/2008/07/09/-e5-85-a8-e6-96-b0-e7-9a-84fedora-e7-b3-bb-e7-bb-9f/" title="全新的Fedora系统" itemprop="url">
+  
+
+    <time datetime="2008-07-09T11:44:29.000Z" itemprop="datePublished">Jul 9 2008</time>
+
+
+    <h1 itemprop="name">全新的Fedora系统</h1>
+
+  </a>
+</section>
+
+  <section class="post" itemscope itemprop="blogPost">
+  
+    <a href="/2008/07/04/-e7-94-a8-e8-84-9a-e6-9c-ac-e8-a7-a3-e5-86-b3c-e8-af-ad-e8-a8-80-e9-97-ae-e9-a2-98/" title="用脚本解决C语言问题" itemprop="url">
+  
+
+    <time datetime="2008-07-04T08:32:04.000Z" itemprop="datePublished">Jul 4 2008</time>
+
+
+    <h1 itemprop="name">用脚本解决C语言问题</h1>
+
+  </a>
+</section>
+
+  <section class="post" itemscope itemprop="blogPost">
+  
+    <a href="/2008/07/01/-e5-8f-91-e5-b7-a5-e8-b5-84-e4-ba-86/" title="发工资了" itemprop="url">
+  
+
+    <time datetime="2008-07-01T14:06:37.000Z" itemprop="datePublished">Jul 1 2008</time>
+
+
+    <h1 itemprop="name">发工资了</h1>
+
+  </a>
+</section>
+
+
+  </div>
+</div>
+
       </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2015 Cong Wang<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
+      <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Larry Page in Google. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2015 
+		
+		<a href="http://wangcong.org/about" target="_blank" title="Cong Wang">Cong Wang</a>
+		
+		</p>
+</div>
 </footer>
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-    <a href="/about-2" class="mobile-nav-link">About</a>
-  
-</nav>
-    
+      <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
 
 
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
-
-  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
 
 
 
-<script src="/js/script.js" type="text/javascript"></script>
 
 
-  </div>
-</body>
-</html>
+
+
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+    </body>
+   </html>

@@ -1,11 +1,16 @@
-<!DOCTYPE html>
-<html>
+
+  <!DOCTYPE HTML>
+<html >
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   
-  <title>Archives: 2012 | A Geek&#39;s Page</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
+    <title>Archives: 2012 | A Geek&#39;s Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Cong Wang">
+    
+    
+    <meta name="description">
 <meta property="og:type" content="website">
 <meta property="og:title" content="A Geek's Page">
 <meta property="og:url" content="http://wangcong.org/archives/2012/page/3/">
@@ -15,1040 +20,325 @@
 <meta name="twitter:title" content="A Geek's Page">
 <meta name="twitter:description">
 
-  
-    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" href="/css/style.css" type="text/css">
 
-  
+    
+    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
 
 </head>
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">A Geek&#39;s Page</a>
-      </h1>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-          <a class="main-nav-link" href="/about-2">About</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://wangcong.org"></form>
-      </div>
-    </div>
-  </div>
-</header>
-      <div class="outer">
-        <section id="main">
-  
-    <article id="post--e5-9c-a8-kvm-e4-b8-ad-e6-90-ad-e5-bb-ba-vlan-e5-92-8c-ipv6-e6-b5-8b-e8-af-95-e7-8e-af-e5-a2-83" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2012/07/26/-e5-9c-a8-kvm-e4-b8-ad-e6-90-ad-e5-bb-ba-vlan-e5-92-8c-ipv6-e6-b5-8b-e8-af-95-e7-8e-af-e5-a2-83/" class="article-date">
-  <time datetime="2012-07-27T05:37:11.000Z" itemprop="datePublished">Jul 26 2012</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Linux-Application/">Linux Application</a>
-  </div>
 
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2012/07/26/-e5-9c-a8-kvm-e4-b8-ad-e6-90-ad-e5-bb-ba-vlan-e5-92-8c-ipv6-e6-b5-8b-e8-af-95-e7-8e-af-e5-a2-83/">KVM 中搭建 VLAN 和 IPv6 环境</a>
-    </h1>
-  
-
+    <body>
+      <header>
+        <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="A Geek&#39;s Page" title="A Geek&#39;s Page"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="A Geek&#39;s Page">A Geek&#39;s Page</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about-2">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:wangcong.org">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
       </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>普通的 IPv4 环境很简单，如果你使用 virt-manager 的话它自动都给你搭好了。每个 kvm guest 都在同一个子网内，通过 bridge 连接到一起，然后通过 host 上的 NAT 访问外网，如下所示：</p>
-<p><pre># brctl show<br>bridge name    bridge id        STP enabled    interfaces<br>virbr0        8000.5254002e2392    yes        virbr0-nic<br>                            vnet0<br>                            vnet1</pre></p>
-<h1 id="iptables_-L_-t_nat">iptables -L -t nat</h1>
-<p>Chain PREROUTING (policy ACCEPT)<br>target     prot opt source               destination</p>
-<p>Chain INPUT (policy ACCEPT)<br>target     prot opt source               destination</p>
-<p>Chain OUTPUT (policy ACCEPT)<br>target     prot opt source               destination</p>
-<p>Chain POSTROUTING (policy ACCEPT)<br>target     prot opt source               destination<br>MASQUERADE  tcp  —  192.168.122.0/24    !192.168.122.0/24     masq ports: 1024-65535<br>MASQUERADE  udp  —  192.168.122.0/24    !192.168.122.0/24     masq ports: 1024-65535<br>MASQUERADE  all  —  192.168.122.0/24    !192.168.122.0/24<br>稍微有点儿困难的是在此基础上搭建 VLAN 和 IPv6 环境。</p>
-<p>先看VLAN，虽然我们现在还没有 openvswitch，我们可以通过 bridge 设置一个简单的 vlan 局域网。因为 virt-manager 默认使用的是 192.168.122.0/24，我为VLAN单独开了一个 192.168.1.0/24，有两台机器 A 和 B，A 上运行此VLAN的 DHCP 服务，B 就可以直接动态获取地址了。</p>
-<p>机器 A 上运行：</p>
-<p><pre>vconfig add eth0 2<br>ifconfig eth0.2 192.168.1.1<br>dnsmasq —listen-address=192.168.1.1 -i eth0.2 —dhcp-range=192.168.1.2,192.168.1.240</pre><br>机器 B 上运行：</p>
-<p><pre>vconfig add eth0 2<br>dhclient eth0.2</pre><br>注：vconfig 已经过时了，现在都使用 ip，我之所以还使用它是因为整个命令比较短。;-)</p>
-<p>再来看 IPv6，因为我对 IPv6 不熟悉，所以折腾了好长时间最后还是不得不使用 sit tunnel，而且 IP 地址也是静态手工设置的。还是假设 A 和 B 两台机器，先让 IPv4 在上面跑起来，然后在两台机器上分别运行下面的命令：</p>
-<p><pre>echo 1 &gt; /proc/sys/net/ipv4/conf/all/forwarding<br>echo 1 &gt; /proc/sys/net/ipv6/conf/all/forwarding<br>ip tunnel add sit1 mode sit local ${SELF} remote ${REMOTE} dev eth0<br>ip -6 addr add fd00:1:2:3::2/64 dev sit1<br>ip -6 route add fd00:1:2:3::1/64 dev sit1<br>ifconfig sit1 up</pre><br>${SELF} 为自己的IPv4地址；${REMOTE}为对方的IPv4地址，即在A上面为B的地址，B上面为A的地址。他们的IPv6地址分别是fd00:1:2:3::1 和 fd00:1:2:3::2。</p>
-<p>Update：如果使用 libvirt 的话，可以用 virsh net-edit &lt;NET&gt; 编辑网络配置，添加下面两行：</p>
-<p>&lt;ip family=’ipv6’ address=’fd00:1:2:3::1’ prefix=’64’&gt;<br>&lt;/ip&gt;</p>
-<p>可参考<a href="http://libvirt.org/formatnetwork.html#elementsAddress" target="_blank" rel="external">这里</a>。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://wangcong.org/2012/07/26/-e5-9c-a8-kvm-e4-b8-ad-e6-90-ad-e5-bb-ba-vlan-e5-92-8c-ipv6-e6-b5-8b-e8-af-95-e7-8e-af-e5-a2-83/" data-id="dsygogcmi57cj4nn" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post--e5-8e-bb-e5-b0-bc-e7-8e-9b-e7-9a-84-e7-8e-b0-e5-ae-9e-e5-a5-bd-e4-b9-88-ef-bc-81" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2012/07/20/-e5-8e-bb-e5-b0-bc-e7-8e-9b-e7-9a-84-e7-8e-b0-e5-ae-9e-e5-a5-bd-e4-b9-88-ef-bc-81/" class="article-date">
-  <time datetime="2012-07-20T22:53:33.000Z" itemprop="datePublished">Jul 20 2012</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Life/">Life</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+      <div id="container">
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2012/07/20/-e5-8e-bb-e5-b0-bc-e7-8e-9b-e7-9a-84-e7-8e-b0-e5-ae-9e-e5-a5-bd-e4-b9-88-ef-bc-81/">去尼玛的现实好么！</a>
-    </h1>
-  
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>时间过得真快，离开大理已经四个多月了。早就开始各种怀念在大理的日子了，尤其是在这么炎热的夏天，一想到大理现在那只有20多度的气温就恨不得买张机票马上飞过去。可是很无奈，现实中有各种各样的事儿让我无法回到大理。</p>
-<p>仿佛离开大理之后再也回不到那种无忧无虑的日子了。在大理的时候每天都那么悠闲，喝喝茶、晒晒太阳、摆摆地摊，从来不用为现在为将来发愁，因为来大理的人们大多数也都是这个状态。似乎也只有在大理这种地方，你才能活在当下，不为前途顾虑，不为现实烦恼，无所事事地活在当下……</p>
-<p>仔细想想人这一生：小时候不太懂事，可以毫无顾虑地去玩，这应该是人生最快乐的时光；长大了上了学就开始顾虑各种考试；好不容易挨到高中毕业，上了大学又开始顾虑找工作，找对象；大学毕业了又开始顾虑工作薪水，买车买房子，结婚生孩子；有了孩子顾虑就更多了，一直到孩子长大成人，可那时候我们也已经老了，然后又不得不顾虑自己的身体健康……</p>
-<p>你看看，我们这一辈子能够完完全全只为自己活着的时间能有多少？这其中，能够完完全全活在当下，不去考虑将来的时间更是少之又少！更何况，有些时候为了自己活着和为了别人活着会有很大的冲突，我们不得不在两者之间放弃一个。人这样活着能不累么！</p>
-<p>有时候真想竖起中指对现实说：去尼玛的现实好么！去尼玛的前途好么！老子只想活在当下！</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/07/1135817454.1783079362.jpg" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://wangcong.org/2012/07/20/-e5-8e-bb-e5-b0-bc-e7-8e-9b-e7-9a-84-e7-8e-b0-e5-ae-9e-e5-a5-bd-e4-b9-88-ef-bc-81/" data-id="foqwom4miyq78f12" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
+<div class="archive-title" >
+  <h2 class="archive-icon">2012</h2>
   
-</article>
-
-
+  <div class="archiveslist archive-float clearfix">
+   <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">Aug 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">Jan 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">Dec 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">Oct 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">Sep 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">Aug 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">Jul 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">Feb 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01/">Jan 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12/">Dec 2012</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">Nov 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">Oct 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">Sep 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">Aug 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/07/">Jul 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">Jun 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">Apr 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">Mar 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">Feb 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">Jan 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/12/">Dec 2011</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">Nov 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/10/">Oct 2011</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">Sep 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08/">Aug 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/07/">Jul 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/06/">Jun 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/05/">May 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04/">Apr 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03/">Mar 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/02/">Feb 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/01/">Jan 2011</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/12/">Dec 2010</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/11/">Nov 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/10/">Oct 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/09/">Sep 2010</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08/">Aug 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07/">Jul 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06/">Jun 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05/">May 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04/">Apr 2010</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03/">Mar 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02/">Feb 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01/">Jan 2010</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12/">Dec 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11/">Nov 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10/">Oct 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09/">Sep 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08/">Aug 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07/">Jul 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/06/">Jun 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/05/">May 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04/">Apr 2009</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03/">Mar 2009</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02/">Feb 2009</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01/">Jan 2009</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12/">Dec 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/11/">Nov 2008</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/10/">Oct 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09/">Sep 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08/">Aug 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07/">Jul 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06/">Jun 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05/">May 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04/">Apr 2008</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03/">Mar 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02/">Feb 2008</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01/">Jan 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12/">Dec 2007</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11/">Nov 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10/">Oct 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09/">Sep 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08/">Aug 2007</a><span class="archive-list-count">31</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07/">Jul 2007</a><span class="archive-list-count">34</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06/">Jun 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05/">May 2007</a><span class="archive-list-count">25</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04/">Apr 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03/">Mar 2007</a><span class="archive-list-count">50</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02/">Feb 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01/">Jan 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12/">Dec 2006</a><span class="archive-list-count">5</span></li></ul>
+ </div>
   
-    <article id="post-parallelism-concurrency" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2012/07/16/parallelism-concurrency/" class="article-date">
-  <time datetime="2012-07-17T01:13:23.000Z" itemprop="datePublished">Jul 16 2012</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Programming/">Programming</a>
-  </div>
+</div>
+<div id="main" class="archive-part clearfix">
+  <div id="archive-page">
 
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
+  <section class="post" itemscope itemprop="blogPost">
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2012/07/16/parallelism-concurrency/">Parallelism != Concurrency</a>
-    </h1>
+    <a href="/2012/07/26/-e5-9c-a8-kvm-e4-b8-ad-e6-90-ad-e5-bb-ba-vlan-e5-92-8c-ipv6-e6-b5-8b-e8-af-95-e7-8e-af-e5-a2-83/" title="KVM 中搭建 VLAN 和 IPv6 环境" itemprop="url">
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Parallelism，中文一般翻译成“并行”；Concurrency，中文一般翻译成“并发”。这两个词往往被混淆使用，即使在英文资料中，中文翻译使得这种情况变得更糟糕。其实这两个词的含义是完全不同的，这里并不是在咬文嚼字，而是想说明它们本质上确实有不同。为了表达方便，下文一律使用英文中的原词。</p>
-<p>Wikipedia 上对 <a href="http://en.wikipedia.org/wiki/Concurrent_programming" target="_blank" rel="external">Concurrency 的定义</a>如下：</p>
-<blockquote>
-<p>Concurrent computing is a form of computing in which programs are designed as collections of <strong>interacting</strong> computational processes that <strong>may be</strong> executed in parallel. Concurrent programs (processes or threads) <strong>can be executed on a single processor</strong> by interleaving the execution steps of each in a time-slicing way, or can be executed in parallel by assigning each computational process to one of a set of processors that may be close or distributed across a network.<br>可见，concurrency 并不意味着一定是 parallelism，它是把多个互相作用的计算过程（注：<strong>上文第一句中的 processes 不是进程的意思！</strong>）组合起来的一种计算形式。为了完成一个大的任务，我们可以把它切割成几个独立的几个步骤，然后把每个步骤交给单独的线程去完成，那么在 UP 上 concurrency 看起来就像是这样：</p>
-</blockquote>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/07/concurrent.gif" target="_blank" rel="external"><img src="/images/" alt="" title="Concurrenncy"></a></p>
-<p><a href="http://en.wikipedia.org/wiki/Parallel_computing" target="_blank" rel="external">Parallelism 的定义</a>如下：</p>
-<blockquote>
-<p>Parallel computing is a form of computation in which many calculations are carried out <strong>simultaneously</strong>, operating on the principle that large problems can often be divided into smaller ones, which are then solved concurrently (“in parallel”).<br>也就是多个计算同时执行，在 SMP 上如下图所示：</p>
-</blockquote>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/07/parallelism.gif" target="_blank" rel="external"><img src="/images/" alt="" title="Parallelism"></a></p>
-<p>这里需要注意的是：广义上 parallelism 并不总是指 SMP，广义的 parallelism 也可以发生在指令上，比如支持 SIMD 的 CPU，像 Intel 的 SSE 指令；也可以发生在 CPU 内部的<a href="http://en.wikipedia.org/wiki/Instruction_pipeline" target="_blank" rel="external">指令 pipeline</a> 上。请结合上下文去理解。</p>
-<p>考虑到现在流行的操作系统都是多任务的，那么 UP 也可以达到 SMP 的效果，对于用户空间的程序来说，多任务操作系统即使运行在 UP 上也是和 SMP 上一样的。<strong><em>因此下文中我们将不再区分 UP 和 SMP，并且假设操作系统就是多任务的，即所有多线程的程序都是并行运行的。</em></strong></p>
-<p>这时候，另一个问题随之而来：有 parallelism 的程序一定是 concurrent 的么？未必！根据上面 concurrency 的定义，不同的处理步骤之间需要是互相作用的（interacting），我们完全可以写一个多线程程序，线程之间没有任何互相的作用：比如我们要处理 [1 ~ 40000] 这个数组，我们可以启动4个线程，让它们分别处理 [1 ~ 10000]、[10000 ~ 20000]、[20000 ~ 30000]、[30000 ~ 40000]，最后主线程把 4 个结果汇总成一个。这个多线程程序显然可以做到 parallelism，但它没有 concurrency！</p>
-<p><a href="http://www.linux-mag.com/id/7411/" target="_blank" rel="external">有人这么认为</a>，说 concurrency 是程序的属性；而 parallelism 程序执行时机器的属性。现在我们可以知道，这是<strong>不严格的</strong>。只有当 parallel 的程序的线程之间有了互相作用之后才会有 concurrency！concurrency 比 parallelism 要难得多。</p>
-<p>Rob Pike 大牛是这么<a href="http://concur.rspace.googlecode.com/hg/talk/concur.html#title-slide" target="_blank" rel="external">概括</a>它们的区别的：</p>
-<blockquote>
-<p><strong>Concurrency is a way to structure a program by breaking it into pieces that can be executed independently. Communication is the means to coordinate the independent executions.</strong><br>所以，concurrency 和 parallelism 的本质区别是，<strong>多个线程/进程（或程序的多个部分）之间有没有互相作用和交流</strong>。这种交流分两种：一种是共享内存，一种是消息传递。前者我们很熟悉，我们最常用的锁（<a href="http://en.wikipedia.org/wiki/Lock_(computer_science" target="_blank" rel="external">Lock</a>)）或者信号量（<a href="http://en.wikipedia.org/wiki/Semaphore_%28programming%29" target="_blank" rel="external">Semaphore</a>）就属于共享内存的一种。</p>
-</blockquote>
-<p>另外，需要说明的是，并不是所有的 paraellel 的程序都使用多线程/进程，它们也可以使用 <a href="http://en.wikipedia.org/wiki/Coroutine" target="_blank" rel="external">coroutine</a>，使用 events。一言以蔽之，parallelism 是建立在同步（synchronous ）代码的基础上，同步代码同时运行；而把一个程序分成几个同步的部分，它们之间允许进行 communication 就有 concurrency 了！</p>
-<p>借用 Rob Pike 使用的图来说明一下就是：</p>
-<p><strong>Original Program</strong></p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/07/gophersimple1.jpg" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
-<p><strong>Parallel Program</strong></p>
-<p><strong><a href="http://wangcong.org/blog/wp-content/uploads/2012/07/gophersimple4.jpg" target="_blank" rel="external"><img src="/images/" alt=""></a>
-</strong></p>
-<p><strong>Concurrent Program</strong></p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/07/gophercomplex0.jpg" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
-<p>从图中我们可以一目了然地看出两者之间并没有直接的关系。最后，在《<a href="http://existentialtype.wordpress.com/2011/03/17/parallelism-is-not-concurrency/" target="_blank" rel="external">Parallelism is not concurrency</a>》一文中对此有更精辟的概括：</p>
-<blockquote>
-<p>Concurrency is concerned with nondeterministic composition of programs (or their components).  Parallelism is concerned with asymptotic efficiency of programs with deterministic behavior.  Concurrency is all about managing the unmanageable[… ] Parallelism, on the other hand, is all about dependencies among the subcomputations of a deterministic computation.<br>参考资料：</p>
-</blockquote>
-<p>1. <a href="http://stackoverflow.com/questions/1050222/concurrency-vs-parallelism-what-is-the-difference" target="_blank" rel="external">http://stackoverflow.com/questions/1050222/concurrency-vs-parallelism-what-is-the-difference</a><br>2. <a href="http://existentialtype.wordpress.com/2011/03/17/parallelism-is-not-concurrency/" target="_blank" rel="external">http://existentialtype.wordpress.com/2011/03/17/parallelism-is-not-concurrency/</a><br>3. <a href="http://ghcmutterings.wordpress.com/2009/10/06/parallelism-concurrency/" target="_blank" rel="external">http://ghcmutterings.wordpress.com/2009/10/06/parallelism-concurrency/</a><br>4. <a href="http://stackoverflow.com/questions/1897993/difference-between-concurrent-programming-and-parallel-programming" target="_blank" rel="external">http://stackoverflow.com/questions/1897993/difference-between-concurrent-programming-and-parallel-programming</a><br>5. <a href="http://concur.rspace.googlecode.com/hg/talk/concur.html#title-slide" target="_blank" rel="external">http://concur.rspace.googlecode.com/hg/talk/concur.html#title-slide</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://wangcong.org/2012/07/16/parallelism-concurrency/" data-id="x092wgly8pnnakrl" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
+    <time datetime="2012-07-27T05:37:11.000Z" itemprop="datePublished">Jul 26 2012</time>
 
 
-  
-    <article id="post-linux-kernel-memory-model" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2012/07/12/linux-kernel-memory-model/" class="article-date">
-  <time datetime="2012-07-12T20:39:19.000Z" itemprop="datePublished">Jul 12 2012</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Linux-Kernel/">Linux Kernel</a>
-  </div>
+    <h1 itemprop="name">KVM 中搭建 VLAN 和 IPv6 环境</h1>
 
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2012/07/12/linux-kernel-memory-model/">Linux kernel memory model</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>稍微了解 Linux 内核的人都知道，在 x86 上内核中所有的 struct page 是放在一个数组中管理的，它就是 mem_map，通过它我们就可以用 pfn 作为 index 来找到对应的 struct page 了：</p>
-<p>[c]</p>
-<h1 id="define___pfn_to_page(pfn)_(mem_map_+_((pfn)_-_ARCH_PFN_OFFSET))">define __pfn_to_page(pfn)      (mem_map + ((pfn) - ARCH_PFN_OFFSET))</h1>
-<h1 id="define___page_to_pfn(page)_((unsigned_long)((page)_-_mem_map)_+">define __page_to_pfn(page)     ((unsigned long)((page) - mem_map) +</h1>
-<pre><code>                             ARCH_PFN_OFFSET)
-</code></pre><p>[/c]</p>
-<p>这是以前旧的 memory model（这个词很流行，你应该在很多地方见过，比如 C/C++标准），现在情况变了。</p>
-<p>因为对 NUMA 和内存热插拔（memory hot-plug）的支持，Linux 内核中现在又引入两个新的 memory model，之前那个旧的被称为 Flat memory，新的两个被称为 Discontiguous memory 和 Sparse memory。它们对应的选项是：CONFIG_FLATMEM，CONFIG_DISCONTIGMEM，CONFIG_SPARSEMEM。让我们来看看这两个新的 memory model。</p>
-<p>顺便多说两句，NUMA 和内存热插拔并没有直接的联系，NUMA 系统不一定支持内存的热插拔，而可以进行内存热插拔的系统也不一定是 NUMA 的！NUMA 支持对应的选项是 CONFIG_NUMA，而内存热插拔对应的选项是 CONFIG_MEMORY_HOTPLUG 和 CONFIG_MEMORY_HOTREMOVE。由此也可以看出 Linux 内核配置是多么灵活，你可以任意搭配你需要的选项。</p>
-<p><strong>CONFIG_DISCONTIGMEM</strong></p>
-<p>mm/Kconfig 中对它的介绍是：</p>
-<blockquote>
-<p>This option provides enhanced support for discontiguous memory systems, over FLATMEM. These systems have holes in their physical address spaces, and this option provides more efficient handling of these holes.  However, the vast          majority of hardware has quite flat address spaces, and can have degraded performance from the extra overhead that this option imposes.</p>
-<p>Many NUMA configurations will have this as the only option.<br>Discontiguous memory 其实很简单，它上从 flat memory 的基础上对 NUMA 进行扩展得出来的。每一个 node 都有一个 struct pglist_data，对于 discontiguous memory 其中记录了每个 node 的 node_start_pfn、node_spanned_pages、node_mem_map，分别表示该 node 的起始页的 PFN、物理页的数量、这些页面的 mem_map。我们可以看 alloc_node_mem_map() 是如何初始化这几个值的：</p>
-</blockquote>
-<p>[c]<br>static void __init_refok alloc_node_mem_map(struct pglist_data <em>pgdat)<br>{<br>        /</em> Skip empty nodes */<br>        if (!pgdat-&gt;node_spanned_pages)<br>                return;</p>
-<h1 id="ifdef_CONFIG_FLAT_NODE_MEM_MAP">ifdef CONFIG_FLAT_NODE_MEM_MAP</h1>
-<pre><code>    <span class="comment">/* ia64 gets its own node_mem_map, before this, without bootmem */</span>
-    if (!pgdat-&amp;gt;node_mem_map) {
-            unsigned long size, <span class="operator"><span class="keyword">start</span>, <span class="keyword">end</span>;</span>
-            struct page *map;
-
-            <span class="comment">/*
-             * The zone's endpoints aren't required to be MAX_ORDER
-             * aligned but the node_mem_map endpoints must be in order
-             * for the buddy allocator to function correctly.
-             */</span>
-            <span class="operator"><span class="keyword">start</span> = pgdat-&amp;gt;</span>node_start_pfn &amp;amp; ~(MAX_ORDER_NR_PAGES - 1);
-            <span class="operator"><span class="keyword">end</span> = pgdat-&amp;gt;</span>node_start_pfn + pgdat-&amp;gt;node_spanned_pages;
-            <span class="operator"><span class="keyword">end</span> = ALIGN(<span class="keyword">end</span>, MAX_ORDER_NR_PAGES);</span>
-            size =  (<span class="operator"><span class="keyword">end</span> - <span class="keyword">start</span>) * sizeof(struct page);</span>
-            map = alloc_remap(pgdat-&amp;gt;node_id, size);
-            if (!map)
-                    map = alloc_bootmem_node_nopanic(pgdat, size);
-            pgdat-&amp;gt;node_mem_map = map + (pgdat-&amp;gt;node_start_pfn - <span class="operator"><span class="keyword">start</span>);</span>
-    }
-    //....
-</code></pre><p>}<br>[/c]</p>
-<p>所以，它对应的 <strong>pfn_to_page() 和 </strong>page_to_pfn() 定义如下：</p>
-<p>[c]</p>
-<h1 id="define_arch_local_page_offset(pfn,_nid)">define arch_local_page_offset(pfn, nid)</h1>
-<pre><code>    <span class="list">(<span class="list">(<span class="title">pfn</span>)</span> - NODE_DATA<span class="list">(<span class="title">nid</span>)</span>-<span class="keyword">&amp;gt</span><span class="comment">;node_start_pfn)</span></span>
-</code></pre><h1 id="define___pfn_to_page(pfn)">define __pfn_to_page(pfn)</h1>
-<p>({      unsigned long <strong>pfn = (pfn);<br>        unsigned long </strong>nid = arch_pfn_to_nid(<strong>pfn);<br>        NODE_DATA(</strong>nid)-&gt;node_mem_map + arch_local_page_offset(<strong>pfn, </strong>nid);<br>})</p>
-<h1 id="define___page_to_pfn(pg)">define __page_to_pfn(pg)</h1>
-<p>({      const struct page <em>__pg = (pg);<br>        struct pglist_data </em><strong>pgdat = NODE_DATA(page_to_nid(</strong>pg));<br>        (unsigned long)(<strong>pg - </strong>pgdat-&gt;node_mem_map) +<br>         __pgdat-&gt;node_start_pfn;<br>})<br>[/c]</p>
-<p>两个 node 之间的内存未必是连续的，中间可能有内存空洞，空洞的单位是 64M，但整个内存依然是 flat 的：</p>
-<p>[c]<br>/*</p>
-<ul>
-<li>generic node memory support, the following assumptions apply:<br>*</li>
-<li>1) memory comes in 64Mb contiguous chunks which are either present or not</li>
-<li>2) we will not have more than 64Gb in total<br>*</li>
-<li>for now assume that 64Gb is max amount of RAM for whole system</li>
-<li>64Gb / 4096bytes/page = 16777216 pages<br>*/<h1 id="define_MAX_NR_PAGES_16777216">define MAX_NR_PAGES 16777216</h1>
-<h1 id="define_MAX_SECTIONS_1024">define MAX_SECTIONS 1024</h1>
-<h1 id="define_PAGES_PER_SECTION_(MAX_NR_PAGES/MAX_SECTIONS)">define PAGES_PER_SECTION (MAX_NR_PAGES/MAX_SECTIONS)</h1>
-</li>
-</ul>
-<p>extern s8 physnode_map[];</p>
-<p>static inline int pfn_to_nid(unsigned long pfn)<br>{</p>
-<h1 id="ifdef_CONFIG_NUMA">ifdef CONFIG_NUMA</h1>
-<pre><code>    <span class="keyword">return</span>((<span class="keyword">int</span>) physnode_map[(pfn) / PAGES_PER_SECTION]);
-</code></pre><h1 id="else">else</h1>
-<pre><code>    <span class="keyword">return</span> <span class="number">0</span>;
-</code></pre><h1 id="endif">endif</h1>
-<p>}<br>[/c]</p>
-<p><strong>CONFIG_SPARSEMEM</strong></p>
-<p>Sparse memory 是一个相对比较复杂的模型。mm/Kconfig 中对它的介绍是：</p>
-<blockquote>
-<p>This will be the only option for some systems, including memory hotplug systems. This is normal. For many other systems, this will be an alternative to “Discontiguous Memory”.  This option provides some potential performance benefits, along with decreased code complexity, but it is newer, and more experimental.</p>
-</blockquote>
-<p>它主要是因为支持内存热插拔引入的。对于支持内存热插拔的系统，系统中的某一个部分内存可以随时被移除和添加，这就是得原本连续的内存空间变得稀疏。这个内存模型是把所有的内存空间划分成一个个 section，每个 section 都是同样大小的，可以进行热插拔的内存大小就是以 section 为单位的。在 x86_64 上面，每个 section 是 128M：</p>
-<p>[c]</p>
-<h1 id="ifdef_CONFIG_X86_32">ifdef CONFIG_X86_32</h1>
-<h1 id="ifdef_CONFIG_X86_PAE">ifdef CONFIG_X86_PAE</h1>
-<h1 id="define_SECTION_SIZE_BITS_29">define SECTION_SIZE_BITS     29</h1>
-<h1 id="define_MAX_PHYSADDR_BITS_36">define MAX_PHYSADDR_BITS     36</h1>
-<h1 id="define_MAX_PHYSMEM_BITS_36">define MAX_PHYSMEM_BITS      36</h1>
-<h1 id="else-1">else</h1>
-<h1 id="define_SECTION_SIZE_BITS_26">define SECTION_SIZE_BITS     26</h1>
-<h1 id="define_MAX_PHYSADDR_BITS_32">define MAX_PHYSADDR_BITS     32</h1>
-<h1 id="define_MAX_PHYSMEM_BITS_32">define MAX_PHYSMEM_BITS      32</h1>
-<h1 id="endif-1">endif</h1>
-<h1 id="else_/_CONFIG_X86_32_/">else /<em> CONFIG_X86_32 </em>/</h1>
-<h1 id="define_SECTION_SIZE_BITS_27_/_matt_-_128_is_convenient_right_now_/">define SECTION_SIZE_BITS      27 /<em> matt - 128 is convenient right now </em>/</h1>
-<h1 id="define_MAX_PHYSADDR_BITS_44">define MAX_PHYSADDR_BITS      44</h1>
-<h1 id="define_MAX_PHYSMEM_BITS_46">define MAX_PHYSMEM_BITS       46</h1>
-<h1 id="endif-2">endif</h1>
-<p>[/c]</p>
-<p>每个 section 有自己的 mem_map，所以其 __pfn_to_page 的定义如下：</p>
-<p>[c]<br>/*</p>
-<ul>
-<li>Note: section’s mem_map is encorded to reflect its start_pfn.</li>
-<li>section[i].section_mem_map == mem_map’s address - start_pfn;<br>*/<h1 id="define___page_to_pfn(pg)-1">define __page_to_pfn(pg)</h1>
-({      const struct page *__pg = (pg);                         <pre><code> <span class="keyword">int</span> __sec = page_to_section(__pg);                      
- (<span class="keyword">unsigned</span> <span class="keyword">long</span>)(__pg - __section_mem_map_addr(__nr_to_section(__sec))); 
-</code></pre>})</li>
-</ul>
-<h1 id="define___pfn_to_page(pfn)-1">define __pfn_to_page(pfn)</h1>
-<p>({      unsigned long <strong>pfn = (pfn);<br>        struct mem_section *</strong>sec = <strong>pfn_to_section(</strong>pfn);<br>        <strong>section_mem_map_addr(</strong>sec) + __pfn;<br>})<br>[/c]</p>
-<p>Sparse memory 还有两个变异：SPARSEMEM_EXTREME 和 SPARSEMEM_VMEMMAP，前者是对更稀疏的内存做了优化，采用了两层 memory section，即二维数组：</p>
-<p>[c]</p>
-<h1 id="ifdef_CONFIG_SPARSEMEM_EXTREME">ifdef CONFIG_SPARSEMEM_EXTREME</h1>
-<h1 id="define_SECTIONS_PER_ROOT_(PAGE_SIZE_/_sizeof_(struct_mem_section))">define SECTIONS_PER_ROOT       (PAGE_SIZE / sizeof (struct mem_section))</h1>
-<h1 id="else-2">else</h1>
-<h1 id="define_SECTIONS_PER_ROOT_1">define SECTIONS_PER_ROOT       1</h1>
-<h1 id="endif-3">endif</h1>
-<h1 id="define_SECTION_NR_TO_ROOT(sec)_((sec)_/_SECTIONS_PER_ROOT)">define SECTION_NR_TO_ROOT(sec) ((sec) / SECTIONS_PER_ROOT)</h1>
-<h1 id="define_NR_SECTION_ROOTS_DIV_ROUND_UP(NR_MEM_SECTIONS,_SECTIONS_PER_ROOT)">define NR_SECTION_ROOTS        DIV_ROUND_UP(NR_MEM_SECTIONS, SECTIONS_PER_ROOT)</h1>
-<h1 id="define_SECTION_ROOT_MASK_(SECTIONS_PER_ROOT_-_1)">define SECTION_ROOT_MASK       (SECTIONS_PER_ROOT - 1)</h1>
-<h1 id="ifdef_CONFIG_SPARSEMEM_EXTREME-1">ifdef CONFIG_SPARSEMEM_EXTREME</h1>
-<p>extern struct mem_section *mem_section[NR_SECTION_ROOTS];</p>
-<h1 id="else-3">else</h1>
-<p>extern struct mem_section mem_section[NR_SECTION_ROOTS][SECTIONS_PER_ROOT];</p>
-<h1 id="endif-4">endif</h1>
-<p>static inline struct mem_section *__nr_to_section(unsigned long nr)<br>{<br>        if (!mem_section[SECTION_NR_TO_ROOT(nr)])<br>                return NULL;<br>        return &amp;mem_section[SECTION_NR_TO_ROOT(nr)][nr &amp; SECTION_ROOT_MASK];<br>}<br>[/c]</p>
-<p>后者是针对 x86_64 这种虚拟地址空间比较大的平台做了速度的优化，把 mem_map 里所有 struct page 的地址一一映射进 vmemmap 地址中去，这样它们的虚拟地址就是连续的了：</p>
-<p>[c]</p>
-<h1 id="define_VMEMMAP_START__AC(0xffffea0000000000,_UL)">define VMEMMAP_START    _AC(0xffffea0000000000, UL)</h1>
-<h1 id="define_vmemmap_((struct_page_*)VMEMMAP_START)">define vmemmap ((struct page *)VMEMMAP_START)</h1>
-<p>/<em> memmap is virtually contiguous.  </em>/</p>
-<h1 id="define___pfn_to_page(pfn)_(vmemmap_+_(pfn))">define __pfn_to_page(pfn)      (vmemmap + (pfn))</h1>
-<h1 id="define___page_to_pfn(page)_(unsigned_long)((page)_-_vmemmap)">define __page_to_pfn(page)     (unsigned long)((page) - vmemmap)</h1>
-<p>[/c]</p>
-<p>不过额外的代价就是初始化的时候要对每一个 struct page 做 populate，参见 sparse_mem_map_populate() 函数。另外可参考内存热插拔代码中函数 <strong>add_section() 和 </strong>remove_section() 的实现。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://wangcong.org/2012/07/12/linux-kernel-memory-model/" data-id="dtq73fugwnm1gaec" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-treap" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2012/07/06/treap/" class="article-date">
-  <time datetime="2012-07-06T22:38:56.000Z" itemprop="datePublished">Jul 6 2012</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Programming/">Programming</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2012/07/06/treap/">treap</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><a href="http://en.wikipedia.org/wiki/Treap" target="_blank" rel="external">treap</a> 是一个很有意思的数据结构，从名字也能看得出来，它是 tree 和 heap 的混合产物。为什么会有这么一个数据结构还得从二叉树（BST）说起。</p>
-<p>我们都知道，普通的二叉树是不平衡的，在某些情况下进行插入删除操作可以导致时间复杂度从 O(logN) 下降到 O(N)。为了解决平衡的问题，有很多新的二叉树被引入，比如大家熟知的一些：Linux 内核中 CFS 使用到的<a href="http://en.wikipedia.org/wiki/Red%E2%80%93black_tree" target="_blank" rel="external">红黑树（Red-black tree）</a>，数据结构课上都会讲到的<a href="http://en.wikipedia.org/wiki/AVL_tree" target="_blank" rel="external"> AVL 树</a>。这些树都因为要进行复杂的旋转操作而不容易实现。</p>
-<p>那么有没有一个实现容易的平衡二叉树呢？Treap 就是一个。普通的二叉树节点只有 key，而 treap 又多了一个 priority，这里的 priority 就是 heap （优先队列）中的 priority。这样， treap 既可以利用二叉树的特性，又可以利用 heap 的特性了。</p>
-<p>看它是怎么利用的，以 Perl 的 <a href="http://cpansearch.perl.org/src/DHARD/Statistics-Descriptive-Weighted-0.6/lib/Tree/Treap.pm" target="_blank" rel="external">Tree::Treap 模块</a>为例。</p>
-<p>1) 对于搜索，使用二叉树的 key 即可，和普通二叉树没有区别：</p>
-<p>[perl]<br>sub _get_node {<br>    my $self = shift;<br>    my $key  = shift;<br>    while(!$self-&gt;_is_empty() and $self-&gt;ne($key)){<br>        $self = $self-&gt;{$self-&gt;lt($key)?”left”:”right”}<br>    }<br>    return $self-&gt;_is_empty() ? 0 : $self;<br>}<br>[/perl]</p>
-<p>2) 插入一个新的节点 key=x 时，随机一个整数值 y 作为 priority，利用二叉树搜索 x，在它应该出现的位置创建一个新的节点，只要 x 不是根节点而且优先级高于它的父节点，那么旋转这个节点使其和其父节点交换位置。</p>
-<p>[perl]<br>sub insert {<br>    my $self = shift;<br>    my $key  = shift;<br>    my $data = shift;<br>    $data = defined($data)? $data : $key;<br>    my $priority = shift() || rand();</p>
-<pre><code><span class="keyword">if</span>(<span class="variable">$self</span><span class="subst">-&amp;</span><span class="literal">gt</span>;_is_empty()) {
-    <span class="variable">$self</span><span class="subst">-&amp;</span><span class="literal">gt</span>;{priority} <span class="subst">=</span> <span class="variable">$priority</span>,
-    <span class="variable">$self</span><span class="subst">-&amp;</span><span class="literal">gt</span>;{key}      <span class="subst">=</span> <span class="variable">$key</span>;
-    <span class="variable">$self</span><span class="subst">-&amp;</span><span class="literal">gt</span>;{<span class="built_in">data</span>}     <span class="subst">=</span> <span class="variable">$data</span>;
-    <span class="variable">$self</span><span class="subst">-&amp;</span><span class="literal">gt</span>;{left}     <span class="subst">=</span> <span class="variable">$self</span><span class="subst">-&amp;</span><span class="literal">gt</span>;<span class="literal">new</span>(<span class="variable">$self</span><span class="subst">-&amp;</span><span class="literal">gt</span>;{cmp});
-    <span class="variable">$self</span><span class="subst">-&amp;</span><span class="literal">gt</span>;{right}    <span class="subst">=</span> <span class="variable">$self</span><span class="subst">-&amp;</span><span class="literal">gt</span>;<span class="literal">new</span>(<span class="variable">$self</span><span class="subst">-&amp;</span><span class="literal">gt</span>;{cmp});
-    <span class="keyword">return</span> <span class="variable">$self</span>;
-}
-
-<span class="keyword">if</span>(<span class="variable">$self</span><span class="subst">-&amp;</span><span class="literal">gt</span>;<span class="literal">gt</span>(<span class="variable">$key</span>)){
-    <span class="variable">$self</span><span class="subst">-&amp;</span><span class="literal">gt</span>;{right}<span class="subst">-&amp;</span><span class="literal">gt</span>;insert(<span class="variable">$key</span>,<span class="variable">$data</span>,<span class="variable">$priority</span>);
-    <span class="keyword">if</span>(<span class="variable">$self</span><span class="subst">-&amp;</span><span class="literal">gt</span>;{right}<span class="subst">-&amp;</span><span class="literal">gt</span>;{priority} <span class="subst">&amp;</span><span class="literal">gt</span>; <span class="variable">$self</span><span class="subst">-&amp;</span><span class="literal">gt</span>;{priority}){
-        <span class="variable">$self</span><span class="subst">-&amp;</span><span class="literal">gt</span>;_rotate_left();
-    }
-}elsif(<span class="variable">$self</span><span class="subst">-&amp;</span><span class="literal">gt</span>;<span class="literal">lt</span>(<span class="variable">$key</span>)){
-    <span class="variable">$self</span><span class="subst">-&amp;</span><span class="literal">gt</span>;{left}<span class="subst">-&amp;</span><span class="literal">gt</span>;insert(<span class="variable">$key</span>,<span class="variable">$data</span>,<span class="variable">$priority</span>);
-    <span class="keyword">if</span>(<span class="variable">$self</span><span class="subst">-&amp;</span><span class="literal">gt</span>;{left}<span class="subst">-&amp;</span><span class="literal">gt</span>;{priority} <span class="subst">&amp;</span><span class="literal">gt</span>; <span class="variable">$self</span><span class="subst">-&amp;</span><span class="literal">gt</span>;{priority}){
-        <span class="variable">$self</span><span class="subst">-&amp;</span><span class="literal">gt</span>;_rotate_right();
-    }
-
-}<span class="keyword">else</span>{
-    <span class="variable">$self</span><span class="subst">-&amp;</span><span class="literal">gt</span>;_delete_node();
-    <span class="variable">$self</span><span class="subst">-&amp;</span><span class="literal">gt</span>;insert(<span class="variable">$key</span>,<span class="variable">$data</span>,<span class="variable">$priority</span>);
-}
-<span class="keyword">return</span> <span class="variable">$self</span>;
-</code></pre><p>}<br>[/perl]</p>
-<p>从代码可以看出，旋转就是为了保持 heap 的属性，优先级高的节点在上层。</p>
-<p>3) 删除一个节点相对比较麻烦：如果要删除的节点 x 是一个叶子，直接删掉即可；如果 x 有一个孩子节点 z，把 x 删掉，然后把 z 作为 x 父亲的孩子；如果 x 有两个孩子节点，则把 x 和它的下一个节点（successor）交换，然后进行相应的旋转。实现是递归实现的，很容易理解。注意：这里实现删除时并没有进行实质的删除操作，而只是把优先级设为了最低的 -100，这也使得代码变得比上面的理论更简单。</p>
-<p>[perl]<br>sub delete {<br>    my $self = shift;<br>    my $key  = shift;<br>    return 0 unless $self = $self-&gt;_get_node($key);<br>    $self-&gt;_delete_node();<br>}</p>
-<p>sub _delete_node {<br>    my $self = shift;<br>    if($self-&gt;_is_leaf()) {<br>        %$self = (priority =&gt; -100, cmp =&gt; $self-&gt;{cmp});<br>    } elsif ($self-&gt;{left}-&gt;{priority} &gt; $self-&gt;{right}-&gt;{priority}) {<br>        $self-&gt;_rotate_right();<br>        $self-&gt;{right}-&gt;_delete_node();<br>    } else {<br>        $self-&gt;_rotate_left();<br>        $self-&gt;{left}-&gt;_delete_node();<br>    }<br>}<br>[/perl]</p>
-<p>这里的两个旋转操作很容易实现：</p>
-<p>[perl]<br>sub _clone_node  {<br>    my $self  = shift;<br>    my $other = shift;<br>    %$self = %$other;<br>}</p>
-<p>sub _rotate_left {<br>    my $self = shift;<br>    my $tmp = $self-&gt;new($self-&gt;{cmp});<br>    $tmp-&gt;_clone_node($self);<br>    $self-&gt;_clone_node($self-&gt;{right});<br>    $tmp-&gt;{right} = $self-&gt;{left};<br>    $self-&gt;{left} = $tmp;</p>
-<p>}</p>
-<p>sub _rotate_right {<br>    my $self = shift;<br>    my $tmp = $self-&gt;new($self-&gt;{cmp});<br>    $tmp-&gt;_clone_node($self);<br>    $self-&gt;_clone_node($self-&gt;{left});<br>    $tmp-&gt;{left} = $self-&gt;{right};<br>    $self-&gt;{right} = $tmp;<br>}<br>[/perl]</p>
-<p>或者借助于这个图来理解右旋：</p>
-<pre>
-      B            A
-     /           / 
-    A   2   --&gt;  0   B
-   /               / 
-  0   1            1   2
-</pre>
-
-<p>参考：<br>1. <a href="http://acs.lbl.gov/~aragon/treaps.html" target="_blank" rel="external">http://acs.lbl.gov/~aragon/treaps.html</a><br>2. <a href="http://www.perlmonks.org/?node_id=289584" target="_blank" rel="external">http://www.perlmonks.org/?node_id=289584</a><br>3. C 语言实现：<a href="http://www.canonware.com/trp/" target="_blank" rel="external">http://www.canonware.com/trp/</a><br>4. Python 实现：<a href="http://stromberg.dnsalias.org/~strombrg/python-tree-and-heap-comparison/" target="_blank" rel="external">http://stromberg.dnsalias.org/~strombrg/python-tree-and-heap-comparison/</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://wangcong.org/2012/07/06/treap/" data-id="0zv1gp0mm5wzzl89" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post--e6-88-91-e7-9a-84-e5-86-85-e6-a0-b8-e9-85-8d-e7-bd-ae-e6-96-87-e4-bb-b6" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2012/07/01/-e6-88-91-e7-9a-84-e5-86-85-e6-a0-b8-e9-85-8d-e7-bd-ae-e6-96-87-e4-bb-b6/" class="article-date">
-  <time datetime="2012-07-01T21:08:52.000Z" itemprop="datePublished">Jul 1 2012</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Linux-Kernel/">Linux Kernel</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2012/07/01/-e6-88-91-e7-9a-84-e5-86-85-e6-a0-b8-e9-85-8d-e7-bd-ae-e6-96-87-e4-bb-b6/">我的内核配置文件</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>我们知道，在KVM里测试内核会碰到一个很严重的问题：那就是在 host 编译的内核不能直接在 guest 里使用。有两个原因：一是 host 和 guest 的硬件可能不一样，所以需要的 config 不一样；二是内核模块即便是安装进了 initramfs 也仍有很多需要安装到 /lib/modules/<code>uname -r</code>。</p>
-<p>有三种解决办法：</p>
-<p>1. host 和 guest 都使用发行版自带的 config，这个 config 是可以在很多机器上运行，所以基本上一定可以在你的guest 里使用，然后用 guestfish 把编译的内核模块拷贝进 guest；这么做的好处是 host 和 guest 都使用同一个 config；坏处也显然，需要进行太多host =&gt; guest 拷贝操作。</p>
-<p>2. 在 1) 的基础上进行改进，把 host 作为 build server，为 guest 提供 PXE，NFS 服务，这样 guest 里就可以直接使用编译好的内核以及内核模块。这个方法的缺点是，需要一些系统管理技巧，我暂时还没有时间折腾；优点是，如果你的 build server 搭建得比较好，你甚至可以给其它机器（非虚拟）提供服务。</p>
-<p>3. guest 使用和 host 不同的 config，guest 的 config 是经过专门定制的，只编译本机器所需要的内核特性和模块，并且把所有的模块都编译进内核（builtin），这样我们甚至不需要 initramfs！优点是，config 很少，即使重新编译花费时间也很少；缺点也很显然，config 很难用于别的机器，尤其是非虚拟化的机器。需要特别注意：<strong>如果你的系统用了 LVM 那么它将无法使用！因为内核无法自己检测 LVM！</strong>另外，编译进内核的模块和不像单独加载的模块那样灵活，比如 netconsole 模块，我们通常是通过模块参数来指定其功能，而一旦变成 builtin 我们就不得不通过 configfs 来进行操作了，也就是说测试脚本就得重写了。</p>
-<p>为了定制上述 3) 中专门的 config，我花了不少时间把我的 config 精简到最少，但同时又包含了 KVM 里需要功能以及我调试用到的选项，我把最终的 config 放到了 github 上进行管理：</p>
-<p><a href="https://github.com/congwang/kernelconfig/blob/master/kvm-mini-config" target="_blank" rel="external">https://github.com/congwang/kernelconfig/blob/master/kvm-mini-config</a></p>
-<p>我的目标是让它可以在<strong>尽可能多</strong>的 KVM guest 上可以运行（显然不可能保证所有），同时尽量不破坏用户空间的程序比如 systemd（取决于发行版），当然还要保持编译出的内核可能的小。欢迎帮忙测试。:-)</p>
-<p>下一步是尝试实现第2种方法，我们需要搭建一个集编译内核、PXE服务器、NFS服务器于一身的服务器，准备弄一个新的 github 项目去搞一下。</p>
-<p>当然，如果你有其它更好的主意，希望不吝赐教！</p>
-<p>附我常用的一些内核调试选项：</p>
-<p>一定要有的：<br>CONFIG_DEBUG_KERNEL=y</p>
-<p>内存相关：<br>CONFIG_SLUB_DEBUG=y<br>CONFIG_DEBUG_VM=y<br>CONFIG_DEBUG_LIST=y</p>
-<p>内核加锁相关：<br>CONFIG_DEBUG_ATOMIC_SLEEP=y<br>CONFIG_LOCKDEP=y<br>CONFIG_DEBUG_SPINLOCK=y<br>CONFIG_DEBUG_MUTEXES=y<br>CONFIG_DEBUG_LOCK_ALLOC=y<br>CONFIG_PROVE_LOCKING=y<br>CONFIG_PROVE_RCU=y</p>
-<p>ftrace 相关：<br>CONFIG_FTRACE=y<br>CONFIG_FUNCTION_TRACER=y</p>
-<p>锁死检测：<br>CONFIG_LOCKUP_DETECTOR=y<br>CONFIG_HARDLOCKUP_DETECTOR=y<br>CONFIG_BOOTPARAM_HARDLOCKUP_PANIC=y<br>CONFIG_BOOTPARAM_HARDLOCKUP_PANIC_VALUE=1<br>CONFIG_BOOTPARAM_SOFTLOCKUP_PANIC=y<br>CONFIG_BOOTPARAM_SOFTLOCKUP_PANIC_VALUE=1<br>CONFIG_DETECT_HUNG_TASK=y<br>CONFIG_DEFAULT_HUNG_TASK_TIMEOUT=300</p>
-<p>kdump 相关：<br>CONFIG_KEXEC=y<br>CONFIG_CRASH_DUMP=y<br>CONFIG_PHYSICAL_START=0x1000000<br>CONFIG_RELOCATABLE=y</p>
-<p>netconsole 相关：<br>CONFIG_NETCONSOLE=y<br>CONFIG_NETCONSOLE_DYNAMIC=y<br>CONFIG_NETPOLL=y</p>
-<p>kprobe，jump label 相关：<br>CONFIG_KPROBES=y<br>CONFIG_JUMP_LABEL=y</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://wangcong.org/2012/07/01/-e6-88-91-e7-9a-84-e5-86-85-e6-a0-b8-e9-85-8d-e7-bd-ae-e6-96-87-e4-bb-b6/" data-id="71k1zh0u009oywj8" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-perfbook-e8-af-bb-e4-b9-a6-e7-ac-94-e8-ae-b0-ef-bc-9anon-blocking-synchronization" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2012/06/20/perfbook-e8-af-bb-e4-b9-a6-e7-ac-94-e8-ae-b0-ef-bc-9anon-blocking-synchronization/" class="article-date">
-  <time datetime="2012-06-20T21:08:16.000Z" itemprop="datePublished">Jun 20 2012</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Programming/">Programming</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2012/06/20/perfbook-e8-af-bb-e4-b9-a6-e7-ac-94-e8-ae-b0-ef-bc-9anon-blocking-synchronization/">perfbook 读书笔记：Non-Blocking Synchronization</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>perfbook 中对 <a href="http://en.wikipedia.org/wiki/Non-blocking_synchronization" target="_blank" rel="external">NBS</a> 这一节的描述尚未完成。我来简单补充一下。</p>
-<p>Non-Blocking 其实很简单，它和 Blocking 相反，也就是非阻塞的意思。阻塞大家都知道，典型的 mutex，semaphore 就是阻塞型的锁，如果其它线程持有锁，该线程会进入阻塞状态，直到它可以获取锁。</p>
-<p>非阻塞型的锁就是竞争时不会阻塞的锁，最典型的就是家喻户晓的自旋锁了，在竞争的情况下它会一直自旋，即忙等（busy wait），而不是阻塞。所以 spin lock 是 NBS 的一种。</p>
-<p>NBS 的另一类比较高级的形式是 lock-free，从名字上也很容易看出，就是无锁。判断 lock-free 的一个标准是：如果正在进行操作的线程休眠了，别的线程依旧可以进来照常操作。这样就直接把 spin lock 给排除在外了。lock-free 通常使用的是 RMW （read-modify-write）原语，由硬件来支持，它最常见的一种实现是 CAS，即 Compare And Swap，在 x86 上对应的是 cmpxchg 指令。Linux 内核中把 cmpxchg 给封装成了一个通用的函数。第一次看到这个函数感觉有些别扭，估计是出于性能的考虑最新的内核代码中的实现还不如之前的实现容易让人读懂，下面是 2.6.32 中它 generic 的实现：</p>
-<p>[c]<br>static inline unsigned long __cmpxchg(volatile unsigned long *m,<br>                                      unsigned long old, unsigned long new)<br>{<br>        unsigned long retval;<br>        unsigned long flags;</p>
-<pre><code>    local_irq_save(<span class="keyword">flags</span>);
-    retval = *m;
-    <span class="keyword">if</span> (retval == <span class="keyword">old</span>)
-            *m = <span class="keyword">new</span>;
-    local_irq_restore(<span class="keyword">flags</span>);
-    return retval;
-</code></pre><p>}<br>[/c]</p>
-<p>比较新的 gcc 中有和它对应的一个<a href="http://gcc.gnu.org/onlinedocs/gcc-4.1.2/gcc/Atomic-Builtins.html" target="_blank" rel="external">内置原子函数</a> __sync_bool_compare_and_swap()。cmpxchg 一个典型的用例是 lockless list 的实现，见其插入操作的实现：</p>
-<p>[c]<br>static inline bool llist_add(struct llist_node <em>new, struct llist_head </em>head)<br>{<br>        struct llist_node <em>entry, </em>old_entry;</p>
-<pre><code>    entry = head-&amp;gt;first;
-    <span class="keyword">for</span> (;;) {
-            old_entry = entry;
-            <span class="keyword">new</span>-&amp;gt;<span class="keyword">next</span> = entry;
-            entry = cmpxchg(&amp;amp;head-&amp;gt;first, old_entry, <span class="keyword">new</span>);
-            <span class="keyword">if</span> (entry == old_entry)
-                    <span class="keyword">break</span>;
-    }
-
-    <span class="keyword">return</span> old_entry == <span class="keyword">NULL</span>;
-</code></pre><p>}<br>[/c]</p>
-<p>我们可以看出，它虽然是 lock-free 的，但是避免不了等待（wait），因为这种 cmpxchg 一般都套在一个循环中直到操作成功才会退出，不成功就会一直尝试。不运行的话你根本不会知道它到底会尝试多少次才能成功。</p>
-<p>另外一种更加高级的 NBS 就是 wait-free 了，这个可以说是大家梦寐以求的东西，它不阻塞，不用忙等，连等待都不用，也可以避免竞争！减少了很多 CPU 的浪费！显然 wait-free 一定是 lock-free 的，它们之间最大的区别是：等待的次数是否有上限。Wait-free 要求每个线程都可以在有限的步骤之内完成操作，不管其它线程如何！无奈这个太难实现，而且一般都比较复杂，即使实现了它的 overhead 也未必就比等价的 lock-free 的小。网上有很多相关的资料，你可以自行搜索一下。</p>
-<p>参考资料：</p>
-<p>1. <a href="http://julien.benoist.name/lockfree.html" target="_blank" rel="external">http://julien.benoist.name/lockfree.html</a><br>2. <a href="http://audidude.com/?p=363" target="_blank" rel="external">http://audidude.com/?p=363</a><br>3. <a href="http://burtleburtle.net/bob/hash/lockfree.html" target="_blank" rel="external">http://burtleburtle.net/bob/hash/lockfree.html</a><br>4. <a href="http://en.wikipedia.org/wiki/Non-blocking_synchronization" target="_blank" rel="external">http://en.wikipedia.org/wiki/Non-blocking_synchronization</a><br>5. <a href="http://en.wikipedia.org/wiki/Lock-free_and_wait-free_algorithms" target="_blank" rel="external">http://en.wikipedia.org/wiki/Lock-free_and_wait-free_algorithms</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://wangcong.org/2012/06/20/perfbook-e8-af-bb-e4-b9-a6-e7-ac-94-e8-ae-b0-ef-bc-9anon-blocking-synchronization/" data-id="cj10brlw08pwbsmq" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-python-heapq-e6-a8-a1-e5-9d-97-e7-9a-84-e5-ae-9e-e7-8e-b0" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2012/06/10/python-heapq-e6-a8-a1-e5-9d-97-e7-9a-84-e5-ae-9e-e7-8e-b0/" class="article-date">
-  <time datetime="2012-06-11T05:07:01.000Z" itemprop="datePublished">Jun 10 2012</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Programming/">Programming</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2012/06/10/python-heapq-e6-a8-a1-e5-9d-97-e7-9a-84-e5-ae-9e-e7-8e-b0/">Python heapq 模块的实现</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>无意间看了一下 Python heapq 模块的源代码，发现里面的源代码写得很棒，忍不住拿出来和大家分享一下。:)</p>
-<p>heapq 的意思是 heap queue，也就是基于 heap 的 <a href="http://en.wikipedia.org/wiki/Priority_queue" target="_blank" rel="external">priority queue</a>。说到 priority queue，忍不住吐槽几句。我上学的时候学优先级队列的时候就没有碰到像 wikipedia 上那样透彻的解释，priority queue 并不是具体的某一个数据结构，而是对一类数据结构的概括！比如栈就可以看作是后进入的优先级总是大于先进入的，而队列就可以看成是先进入的优先级一定高于后进来的！这还没完！如果我们是用一个无序的数组实现一个priority queue，对它进行出队操作尼玛不就是选择排序么！尼玛用有序数组实现入队操作尼玛不就是插入排序么！尼玛用堆实现（即本文要介绍的）就是堆排序啊！用二叉树实现就是二叉树排序啊！数据结构课学的这些东西基本上都出来了啊！T_T</p>
-<p><a href="http://hg.python.org/cpython/file/2.7/Lib/heapq.py" target="_blank" rel="external">heapq 的代码</a>也是用 Python 写的，用到了一些其它 Python 模块，如果你对 itertools 不熟悉，在阅读下面的代码之前<a href="http://docs.python.org/library/itertools.html" target="_blank" rel="external">请先读文档</a>。heapq 模块主要有5个函数：heappush()，把一个元素放入堆中；heappop()，从堆中取出一个元素；heapify()，把一个列表变成一个堆；nlargest() 和 nsmallest() 分别提供列表中最大或最小的N个元素。</p>
-<p>先从简单的看起：</p>
-<p>[python]<br>def heappush(heap, item):<br>    “””Push item onto heap, maintaining the heap invariant.”””<br>    heap.append(item)<br>    _siftdown(heap, 0, len(heap)-1)</p>
-<p>def heappop(heap):<br>    “””Pop the smallest item off the heap, maintaining the heap invariant.”””<br>    lastelt = heap.pop()    # raises appropriate IndexError if heap is empty<br>    if heap:<br>        returnitem = heap[0]<br>        heap[0] = lastelt<br>        _siftup(heap, 0)<br>    else:<br>        returnitem = lastelt<br>    return returnitem<br>[/python]</p>
-<p>从源代码我们不难看出，这个堆也是用数组实现的，而且是最小堆，即 a[k] &lt;= a[2*k+1] and a[k]  startpos:<br>        parentpos = (pos - 1) &gt;&gt; 1<br>        parent = heap[parentpos]<br>        if cmp_lt(newitem, parent):<br>            heap[pos] = parent<br>            pos = parentpos<br>            continue<br>        break<br>    heap[pos] = newitem</p>
-<p>def _siftup(heap, pos):<br>    endpos = len(heap)<br>    startpos = pos<br>    newitem = heap[pos]</p>
-<pre><code><span class="comment"># Bubble up the smaller child until hitting a leaf.</span>
-childpos = <span class="number">2</span>*<span class="keyword">pos</span> + <span class="number">1</span>    <span class="comment"># leftmost child position</span>
-<span class="keyword">while</span> childpos &amp;<span class="keyword">lt</span>; endpos:
-    <span class="comment"># Set childpos to index of smaller child.</span>
-    rightpos = childpos + <span class="number">1</span>
-    <span class="keyword">if</span> rightpos &amp;<span class="keyword">lt</span>; endpos <span class="keyword">and</span> <span class="keyword">not</span> cmp_lt(heap[childpos], heap[rightpos]):
-        childpos = rightpos
-    <span class="comment"># Move the smaller child up.</span>
-    heap[<span class="keyword">pos</span>] = heap[childpos]
-    <span class="keyword">pos</span> = childpos
-    childpos = <span class="number">2</span>*<span class="keyword">pos</span> + <span class="number">1</span>
-<span class="comment"># The leaf at pos is empty now.  Put newitem there, and bubble it up</span>
-<span class="comment"># to its final resting place (by sifting its parents down).</span>
-heap[<span class="keyword">pos</span>] = newitem
-_siftdown(heap, startpos, <span class="keyword">pos</span>)
-</code></pre><p>[/python]</p>
-<p>上面的代码加上注释很容易理解，不是吗？在此基础上实现 heapify() 就很容易了：</p>
-<p>[python]<br>def heapify(x):<br>    &quot;&quot;&quot;Transform list into a heap, in-place, in O(len(x)) time.&quot;&quot;&quot;<br>    n = len(x)</p>
-<pre><code># Transform bottom-up.  The largest <span class="keyword">index</span> there&amp;<span class="string">#039</span>;s any point <span class="keyword">to</span> looking at
-# <span class="keyword">is</span> the largest <span class="keyword">with</span> a child <span class="keyword">index</span> <span class="keyword">in</span>-range, so must have <span class="number">2</span>*i + <span class="number">1</span> &amp;lt; n,
-# <span class="keyword">or</span> i &amp;lt; (n-<span class="number">1</span>)/<span class="number">2</span>\.  <span class="keyword">If</span> n <span class="keyword">is</span> even = <span class="number">2</span>*j, this <span class="keyword">is</span> (<span class="number">2</span>*j-<span class="number">1</span>)/<span class="number">2</span> = j-<span class="number">1</span>/<span class="number">2</span> so
-# j-<span class="number">1</span> <span class="keyword">is</span> the largest, which <span class="keyword">is</span> n<span class="comment">//2 - 1\.  If n is odd = 2*j+1, this is</span>
-# (<span class="number">2</span>*j+<span class="number">1</span>-<span class="number">1</span>)/<span class="number">2</span> = j so j-<span class="number">1</span> <span class="keyword">is</span> the largest, <span class="keyword">and</span> that&amp;<span class="string">#039</span>;s again n<span class="comment">//2-1.</span>
-<span class="keyword">for</span> i <span class="keyword">in</span> reversed(xrange(n<span class="comment">//2)):</span>
-    _siftup(x, i)
-</code></pre><p>[/python]<br>这里用了一个技巧，正如注释中所说，其实只要 siftup 后面一半就可以了，前面的一半自然就是一个heap了。heappushpop() 也可以用它来实现了，而且用不着调用 heappush()+heappop()：</p>
-<p>[python]<br>def heappushpop(heap, item):<br>    &quot;&quot;&quot;Fast version of a heappush followed by a heappop.&quot;&quot;&quot;<br>    if heap and cmp_lt(heap[0], item):<br>        item, heap[0] = heap[0], item<br>        _siftup(heap, 0)<br>    return item<br>[/python]</p>
-<p>第一眼看到这个函数可能觉得它放进去一个再取出来一个有什么意思嘛！仔细想想它很有用，尤其是在后面实现 nlargest() 的时候：</p>
-<p>[python]<br>def nlargest(n, iterable):<br>    &quot;&quot;&quot;Find the n largest elements in a dataset.</p>
-<pre><code><span class="type">Equivalent</span> to:  sorted(iterable, reverse=<span class="type">True</span>)[:n]
-&amp;quot;&amp;quot;&amp;quot;
-<span class="keyword">if</span> n &amp;lt; <span class="number">0</span>:
-    <span class="keyword">return</span> []
-it = iter(iterable)
-<span class="literal">result</span> = list(islice(it, n))
-<span class="keyword">if</span> <span class="keyword">not</span> <span class="literal">result</span>:
-    <span class="keyword">return</span> <span class="literal">result</span>
-heapify(<span class="literal">result</span>)
-_heappushpop = heappushpop
-<span class="keyword">for</span> elem <span class="keyword">in</span> it:
-    _heappushpop(<span class="literal">result</span>, elem)
-<span class="literal">result</span>.sort(reverse=<span class="type">True</span>)
-<span class="keyword">return</span> <span class="literal">result</span>
-</code></pre><p>[/python]</p>
-<p>先从 list 中取出 N 个元素来，然后把这个 list 转化成 heap，把原先的 list 中的所有元素在此 heap 上进行 heappushpop() 操作，最后剩下的一定是最大的！因为你每次 push 进去的不一定是最大的，但你 pop 出来的一定是最小的啊！</p>
-<p>但 nsmallest() 的实现就截然不同了：</p>
-<p>[python]<br>def nsmallest(n, iterable):<br>    &quot;&quot;&quot;Find the n smallest elements in a dataset.</p>
-<pre><code><span class="type">Equivalent</span> to:  sorted(iterable)[:n]
-&amp;quot;&amp;quot;&amp;quot;
-<span class="keyword">if</span> n &amp;lt; <span class="number">0</span>:
-    <span class="keyword">return</span> []
-<span class="keyword">if</span> hasattr(iterable, &amp;<span class="comment">#039;__len__&amp;#039;) and n * 10  Largest of the nsmallest</span>
-    <span class="keyword">for</span> elem <span class="keyword">in</span> it:
-        <span class="keyword">if</span> cmp_lt(elem, los):
-            insort(<span class="literal">result</span>, elem)
-            pop()
-            los = <span class="literal">result</span>[-<span class="number">1</span>]
-    <span class="keyword">return</span> <span class="literal">result</span>
-<span class="comment"># An alternative approach manifests the whole iterable in memory but</span>
-<span class="comment"># saves comparisons by heapifying all at once.  Also, saves time</span>
-<span class="comment"># over bisect.insort() which has O(n) data movement time for every</span>
-<span class="comment"># insertion.  Finding the n smallest of an m length iterable requires</span>
-<span class="comment">#    O(m) + O(n log m) comparisons.</span>
-h = list(iterable)
-heapify(h)
-<span class="keyword">return</span> map(heappop, repeat(h, min(n, len(h))))
-</code></pre><p>[/python]</p>
-<p>这里做了一个优化，如果 N 小于 list 长度的1/10的话，就直接用插入排序（因为之前就是有序的，所以很快）。如果 N 比较大的话，就用 heap 来实现了，把整个 list 作成一个堆，然后 heappop() 出来的前 N 个就是最后的结果了！不得不说最后一行代码写得太精炼了！</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://wangcong.org/2012/06/10/python-heapq-e6-a8-a1-e5-9d-97-e7-9a-84-e5-ae-9e-e7-8e-b0/" data-id="71mlelnrbgs6ofai" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-python-memoize-decorator" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2012/06/04/python-memoize-decorator/" class="article-date">
-  <time datetime="2012-06-05T01:05:20.000Z" itemprop="datePublished">Jun 4 2012</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Programming/">Programming</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2012/06/04/python-memoize-decorator/">Python memoize decorator</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>偶然看 Python 代码，看到这么一个叫memoize decorator 的东西，你会发现它非常有用。</p>
-<p>看下面的例子，我们最常见的 fibonacci 数列的递归实现。</p>
-<pre>
-~% python
-&gt;&gt;&gt; def fib(n):
-...     if n in (0, 1):
-...             return n
-...     else:
-...             return fib(n-1)+fib(n-2)
-...
-&gt;&gt;&gt; import timeit
-&gt;&gt;&gt; timeit.timeit("fib(5)", "from __main__ import fib")
-3.946546792984009
-&gt;&gt;&gt; timeit.timeit("fib(7)", "from __main__ import fib")
-10.944302082061768
-</pre>
-
-<p>很慢，不是么？你当然可以把它的实现改成迭代，但是，如果前提是我们不对fib()函数本身做任何代码修改的话，我们还有别的方法去改进它。</p>
-<p>我们注意到，fib(n-1) 和 fib(n-2) 实际上重复计算了很多结果，根本没必要，一个自然而然的想法就是把这些结果缓存起来，于是就有了下面的：</p>
-<pre>
-&gt;&gt;&gt; def memoize(f):
-...     memo = {}
-...     def wrapper(x):
-...         if x not in memo:
-...             memo[x] = f(x)
-...         return memo[x]
-...     return wrapper
-...
-&gt;&gt;&gt;
-&gt;&gt;&gt; def fib(n):
-...     if n in (0, 1):
-...         return n
-...     else:
-...         return fib(n-1) + fib(n-2)
-...
-&gt;&gt;&gt; fib = memoize(fib)
-&gt;&gt;&gt; import timeit
-&gt;&gt;&gt; timeit.timeit("fib(7)", "from __main__ import fib")
-0.35535502433776855
-</pre>
-
-<p>还不够，Python 还有自己的解决办法，那就是用 decorator</p>
-<p>[python]<br>def memoize(function):<br>  memo = {}<br>  def wrapper(<em>args):<br>    if args in memo:<br>      return memo[args]<br>    else:<br>      rv = function(</em>args)<br>      memo[args] = rv<br>      return rv<br>  return wrapper</p>
-<p>@memoize<br>def fib(n):<br>   if n in (0, 1):<br>      return n<br>   return fib(n-1) + fib(n-2)<br>[/python]</p>
-<p>为此，在 Python3 中还专门引入了一个<a href="http://docs.python.org/py3k/library/functools.html#functools.lru_cache" target="_blank" rel="external"> lru_cache</a>。</p>
-<p>这个东西的牛逼之处在于，有了它你可以放心地去写递归的代码，不用为了效率去把它改成迭代形式，你也知道，有些时候递归代码比迭代代码更容易理解。这样可读性有了，效率也提升了，不用修改函数的实现，直接让它从次方级降到了线性级。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://wangcong.org/2012/06/04/python-memoize-decorator/" data-id="fq773q5azmm5mnsm" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post--e4-b8-ba-e4-bb-80-e4-b9-88linux-e5-86-85-e6-a0-b8-e4-b8-8d-e5-85-81-e8-ae-b8-e5-9c-a8-e4-b8-ad-e6-96-ad-e4-b8-ad-e4-bc-91-e7-9c-a0-ef-bc-9f" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2012/06/01/-e4-b8-ba-e4-bb-80-e4-b9-88linux-e5-86-85-e6-a0-b8-e4-b8-8d-e5-85-81-e8-ae-b8-e5-9c-a8-e4-b8-ad-e6-96-ad-e4-b8-ad-e4-bc-91-e7-9c-a0-ef-bc-9f/" class="article-date">
-  <time datetime="2012-06-01T19:31:45.000Z" itemprop="datePublished">Jun 1 2012</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Linux-Kernel/">Linux Kernel</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2012/06/01/-e4-b8-ba-e4-bb-80-e4-b9-88linux-e5-86-85-e6-a0-b8-e4-b8-8d-e5-85-81-e8-ae-b8-e5-9c-a8-e4-b8-ad-e6-96-ad-e4-b8-ad-e4-bc-91-e7-9c-a0-ef-bc-9f/">为什么Linux内核不允许在中断中休眠？</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>我以前一直以为 Linux 内核之所以不允许在中断中休眠是因为中断上下文中无法获取 thread_info，task_struct 等进程相关的结构体，从而无法调度。</p>
-<p>今天又重新看了一下相关的代码，发现实际上不是。在最新的代码中，x86 32 使用的 irq stack 中也保存了thread_info，我们可以看 execute_on_irq_stack() 的定义：</p>
-<p>[c]<br>union irq<em>ctx {<br>        struct thread<em>info      tinfo;<br>        u32                     stack[THREAD_SIZE/sizeof(u32)];<br>} __attribute</em></em>((aligned(THREAD_SIZE)));</p>
-<p>static inline int<br>execute_on_irq_stack(int overflow, struct irq_desc <em>desc, int irq)<br>{<br>        union irq_ctx </em>curctx, <em>irqctx;<br>        u32 </em>isp, arg1, arg2;</p>
-<pre><code>    curctx <span class="subst">=</span> (union irq_ctx <span class="subst">*</span>) current_thread_info();
-    irqctx <span class="subst">=</span> __this_cpu_read(hardirq_ctx);
-
-    <span class="comment">/*
-     * this is where we switch to the IRQ stack. However, if we are
-     * already using the IRQ stack (because we interrupted a hardirq
-     * handler) we can't do that and just have to keep using the
-     * current stack (which is the irq stack already after all)
-     */</span>
-    <span class="keyword">if</span> (unlikely(curctx <span class="subst">==</span> irqctx))
-            <span class="keyword">return</span> <span class="number">0</span>;
-
-    <span class="comment">/* build the stack frame on the IRQ stack */</span>
-    isp <span class="subst">=</span> (u32 <span class="subst">*</span>) ((char <span class="subst">*</span>)irqctx <span class="subst">+</span> sizeof(<span class="subst">*</span>irqctx));
-    irqctx<span class="subst">-&amp;</span><span class="literal">gt</span>;tinfo<span class="built_in">.</span>task <span class="subst">=</span> curctx<span class="subst">-&amp;</span><span class="literal">gt</span>;tinfo<span class="built_in">.</span>task;
-    irqctx<span class="subst">-&amp;</span><span class="literal">gt</span>;tinfo<span class="built_in">.</span>previous_esp <span class="subst">=</span> current_stack_pointer;
-
-    <span class="comment">/* Copy the preempt_count so that the [soft]irq checks work. */</span>
-    irqctx<span class="subst">-&amp;</span><span class="literal">gt</span>;tinfo<span class="built_in">.</span>preempt_count <span class="subst">=</span> curctx<span class="subst">-&amp;</span><span class="literal">gt</span>;tinfo<span class="built_in">.</span>preempt_count;
-
-    <span class="keyword">if</span> (unlikely(overflow))
-            call_on_stack(print_stack_overflow, isp);
-
-    asm volatile(<span class="string">"xchgl     %%ebx,%%esp     n"</span>
-                 <span class="string">"call      *%%edi          n"</span>
-                 <span class="string">"movl      %%ebx,%%esp     n"</span>
-                 : <span class="string">"=a"</span> (arg1), <span class="string">"=d"</span> (arg2), <span class="string">"=b"</span> (isp)
-                 :  <span class="string">"0"</span> (irq),   <span class="string">"1"</span> (desc),  <span class="string">"2"</span> (isp),
-                    <span class="string">"D"</span> (desc<span class="subst">-&amp;</span><span class="literal">gt</span>;handle_irq)
-                 : <span class="string">"memory"</span>, <span class="string">"cc"</span>, <span class="string">"ecx"</span>);
-    <span class="keyword">return</span> <span class="number">1</span>;
-</code></pre><p>}<br>[/c]</p>
-<p>（注：x86 都已经使用 irq stack 了，和进程的内核栈独立开了，这样即使 irq 处理函数中占用了很多栈也不会影响外面的了。）</p>
-<p>所以这不是问题。也就是说，技术上我们完全可以做到在中断中休眠。Linux 内核之所以没有这么做是出于设计上的原因。</p>
-<p>如果这还不足以说明问题的话，还有个例子：do_page_fault() 也是在中断上下文中调用的（注：此处更严格的讲是 trap，而非 interrupt，但无论哪个都肯定不是普通的进程上下文，相对而言还算是中断上下文），但是它是可能休眠的，至少它明显调用了可能休眠的函数 down_read() 。</p>
-<p>为什么要这么设计呢？因为在 Linux 内核中能让 do_page_fault() 休眠的地方基本上只有copy_from_user()，copy_to_user()（其它地方触发 page fault 会导致 oops），它们在使用用户空间的页面时可能会因为对应的页面不在物理内存中而触发 swap 等，即 handle_mm_fault() 所做的。这种情况下休眠是合理的，因为调用 copy_from_user() 的进程本身就是需要等待这个资源。休眠不就是为了等待资源吗？</p>
-<p>为什么其它中断（注：此处是指 IRQ，或者严格意义上的 interrupt，非 trap）不能休眠？假设 CPU 上正在执行的是某个高优先级的进程 A，它本身没有使用任何网络通信，突然网卡中断来了，它被中断而且被休眠了，那么，这看起来就像是进程 A 本身在等待某网络资源，而实际上根本不是。</p>
-<p>换句话说，如果在 IRQ 中休眠，被打断的当前进程很可能不是需要等待的进程，更进一步讲，在中断中我们根本无法知道到底是哪个进程需要休眠。更何况，这里还没有考虑到在某个中断中休眠会不会影响下一个中断之类的更复杂的问题。由此可见，如果真允许在中断中休眠的话，那么设计将会是很复杂的。</p>
-<p>因此，这完全是一个设计的问题。中断中休眠技术上可实现，但设计上不好。</p>
-<p>另外，Linux 内核中很多会休眠的函数会调用 might_sleep()，它是用来检测是否在中断上下文中，如果是就是触发一个警告 “BUG: sleeping function called from invalid context”。可是为什么 do_page_fault() 中的函数没有呢？这是因为普通的 IRQ 在进入处理函数之前都会调用 irq_enter()，它里面改变了进程的 preempt 的值：</p>
-<p>[c]</p>
-<h1 id="define___irq_enter()">define __irq_enter()</h1>
-<pre><code>    <span class="operator"><span class="keyword">do</span> {                                            
-            account_system_vtime(<span class="keyword">current</span>);</span>          
-            add_preempt_count(HARDIRQ_OFFSET);      
-            trace_hardirq_enter();                  
-    } while (0)
-</code></pre><p>void irq_enter(void)<br>{<br>        int cpu = smp_processor_id();</p>
-<pre><code>    <span class="function">rcu_irq_enter</span>();
-    if (<span class="function">is_idle_task</span>(current) &amp;amp;&amp;amp; !<span class="function">in_interrupt</span>()) {
-            <span class="comment">/*
-             * Prevent raise_softirq from needlessly waking up ksoftirqd
-             * here, as softirq will be serviced on return from interrupt.
-             */</span>
-            <span class="function">local_bh_disable</span>();
-            <span class="function">tick_check_idle</span>(cpu);
-            _<span class="function">local_bh_enable</span>();
-    }
-
-    __<span class="function">irq_enter</span>();
-</code></pre><p>}<br>[/c]</p>
-<p>而 page fault 的话不会经过这个流程。这也从另一面证明了这是个设计的问题。</p>
-<p>顺便说一句，比较新的 Linux 内核中已经支持中断线程化了：</p>
-<p>[c]<br>int request_threaded_irq(unsigned int irq, irq_handler_t handler,<br>                         irq_handler_t thread_fn, unsigned long irqflags,<br>                         const char <em>devname, void </em>dev_id)<br>[/c]</p>
-<p>所以一部分中断处理可以在进程上下文中完成了。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://wangcong.org/2012/06/01/-e4-b8-ba-e4-bb-80-e4-b9-88linux-e5-86-85-e6-a0-b8-e4-b8-8d-e5-85-81-e8-ae-b8-e5-9c-a8-e4-b8-ad-e6-96-ad-e4-b8-ad-e4-bc-91-e7-9c-a0-ef-bc-9f/" data-id="2fz7n59wlo1ku43n" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-  
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/2012/page/2/">&laquo; Prev</a><a class="page-number" href="/archives/2012/">1</a><a class="page-number" href="/archives/2012/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/archives/2012/page/4/">4</a><a class="page-number" href="/archives/2012/page/5/">5</a><a class="page-number" href="/archives/2012/page/6/">6</a><a class="extend next" rel="next" href="/archives/2012/page/4/">Next &raquo;</a>
-    </nav>
-  
+  </a>
 </section>
-        
-          <aside id="sidebar">
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
-    <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Book-Reviews/">Book Reviews</a><span class="category-list-count">18</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/China/">China</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Collection/">Collection</a><span class="category-list-count">25</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">324</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux-Application/">Linux Application</a><span class="category-list-count">73</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux-Kernel/">Linux Kernel</a><span class="category-list-count">64</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Love/">Love</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Movies/">Movies</a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/">Programming</a><span class="category-list-count">152</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Science-Fiction/">Science Fiction</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Travel/">Travel</a><span class="category-list-count">19</span></li></ul>
-    </div>
-  </div>
 
+  <section class="post" itemscope itemprop="blogPost">
   
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/geek/">geek</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/handling/">handling</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/joke/">joke</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/signal/">signal</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/unix/">unix</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a><span class="tag-list-count">1</span></li></ul>
-    </div>
-  </div>
+    <a href="/2012/07/20/-e5-8e-bb-e5-b0-bc-e7-8e-9b-e7-9a-84-e7-8e-b0-e5-ae-9e-e5-a5-bd-e4-b9-88-ef-bc-81/" title="去尼玛的现实好么！" itemprop="url">
+  
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/geek/" style="font-size: NaNpx;">geek</a><a href="/tags/handling/" style="font-size: NaNpx;">handling</a><a href="/tags/joke/" style="font-size: NaNpx;">joke</a><a href="/tags/linux/" style="font-size: NaNpx;">linux</a><a href="/tags/signal/" style="font-size: NaNpx;">signal</a><a href="/tags/unix/" style="font-size: NaNpx;">unix</a><a href="/tags/vim/" style="font-size: NaNpx;">vim</a>
-    </div>
-  </div>
+    <time datetime="2012-07-20T22:53:33.000Z" itemprop="datePublished">Jul 20 2012</time>
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">August 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">December 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">October 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">September 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">August 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">February 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01/">January 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12/">December 2012</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">November 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">October 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">September 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">August 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/07/">July 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">April 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">March 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">February 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">January 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/12/">December 2011</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">November 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/10/">October 2011</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">September 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08/">August 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/07/">July 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/06/">June 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/05/">May 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04/">April 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03/">March 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/02/">February 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/01/">January 2011</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/12/">December 2010</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/11/">November 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/10/">October 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/09/">September 2010</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08/">August 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07/">July 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06/">June 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05/">May 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04/">April 2010</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03/">March 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02/">February 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01/">January 2010</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12/">December 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11/">November 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10/">October 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09/">September 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08/">August 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07/">July 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/06/">June 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/05/">May 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04/">April 2009</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03/">March 2009</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02/">February 2009</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01/">January 2009</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12/">December 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/11/">November 2008</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/10/">October 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09/">September 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08/">August 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07/">July 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06/">June 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05/">May 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04/">April 2008</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03/">March 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02/">February 2008</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01/">January 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12/">December 2007</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11/">November 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10/">October 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09/">September 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08/">August 2007</a><span class="archive-list-count">31</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07/">July 2007</a><span class="archive-list-count">34</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06/">June 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05/">May 2007</a><span class="archive-list-count">25</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04/">April 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03/">March 2007</a><span class="archive-list-count">50</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02/">February 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01/">January 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12/">December 2006</a><span class="archive-list-count">5</span></li></ul>
-    </div>
-  </div>
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recents</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2014/08/12/linux-e7-bd-91-e7-bb-9c-e6-b5-81-e9-87-8f-e6-8e-a7-e5-88-b6-ef-bc-88-e4-b8-80-ef-bc-89/">Linux 网络流量控制（零）</a>
-          </li>
-        
-          <li>
-            <a href="/2014/08/01/ottawa-linux-symposium/">Ottawa Linux Symposium</a>
-          </li>
-        
-          <li>
-            <a href="/2014/05/31/skbuff-e5-86-85-e5-ad-98-e6-a8-a1-e5-9e-8b/">skbuff 内存模型</a>
-          </li>
-        
-          <li>
-            <a href="/2014/05/06/-e9-95-bf-e6-9c-9f-e6-8f-90-e4-be-9b-twitter-e5-86-85-e6-8e-a8/">长期提供 Twitter 内推</a>
-          </li>
-        
-          <li>
-            <a href="/2014/01/30/-e6-88-91-e7-9a-842013-ef-bc-9a-e6-88-91-e6-9d-a5-e5-88-b0-e4-ba-86-e7-be-8e-e5-9b-bd/">我的2013：我来到了美国</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
+    <h1 itemprop="name">去尼玛的现实好么！</h1>
 
+  </a>
+</section>
+
+  <section class="post" itemscope itemprop="blogPost">
   
-</aside>
-        
+    <a href="/2012/07/16/parallelism-concurrency/" title="Parallelism != Concurrency" itemprop="url">
+  
+
+    <time datetime="2012-07-17T01:13:23.000Z" itemprop="datePublished">Jul 16 2012</time>
+
+
+    <h1 itemprop="name">Parallelism != Concurrency</h1>
+
+  </a>
+</section>
+
+  <section class="post" itemscope itemprop="blogPost">
+  
+    <a href="/2012/07/12/linux-kernel-memory-model/" title="Linux kernel memory model" itemprop="url">
+  
+
+    <time datetime="2012-07-12T20:39:19.000Z" itemprop="datePublished">Jul 12 2012</time>
+
+
+    <h1 itemprop="name">Linux kernel memory model</h1>
+
+  </a>
+</section>
+
+  <section class="post" itemscope itemprop="blogPost">
+  
+    <a href="/2012/07/06/treap/" title="treap" itemprop="url">
+  
+
+    <time datetime="2012-07-06T22:38:56.000Z" itemprop="datePublished">Jul 6 2012</time>
+
+
+    <h1 itemprop="name">treap</h1>
+
+  </a>
+</section>
+
+  <section class="post" itemscope itemprop="blogPost">
+  
+    <a href="/2012/07/01/-e6-88-91-e7-9a-84-e5-86-85-e6-a0-b8-e9-85-8d-e7-bd-ae-e6-96-87-e4-bb-b6/" title="我的内核配置文件" itemprop="url">
+  
+
+    <time datetime="2012-07-01T21:08:52.000Z" itemprop="datePublished">Jul 1 2012</time>
+
+
+    <h1 itemprop="name">我的内核配置文件</h1>
+
+  </a>
+</section>
+
+  <section class="post" itemscope itemprop="blogPost">
+  
+    <a href="/2012/06/20/perfbook-e8-af-bb-e4-b9-a6-e7-ac-94-e8-ae-b0-ef-bc-9anon-blocking-synchronization/" title="perfbook 读书笔记：Non-Blocking Synchronization" itemprop="url">
+  
+
+    <time datetime="2012-06-20T21:08:16.000Z" itemprop="datePublished">Jun 20 2012</time>
+
+
+    <h1 itemprop="name">perfbook 读书笔记：Non-Blocking Synchronization</h1>
+
+  </a>
+</section>
+
+  <section class="post" itemscope itemprop="blogPost">
+  
+    <a href="/2012/06/10/python-heapq-e6-a8-a1-e5-9d-97-e7-9a-84-e5-ae-9e-e7-8e-b0/" title="Python heapq 模块的实现" itemprop="url">
+  
+
+    <time datetime="2012-06-11T05:07:01.000Z" itemprop="datePublished">Jun 10 2012</time>
+
+
+    <h1 itemprop="name">Python heapq 模块的实现</h1>
+
+  </a>
+</section>
+
+  <section class="post" itemscope itemprop="blogPost">
+  
+    <a href="/2012/06/04/python-memoize-decorator/" title="Python memoize decorator" itemprop="url">
+  
+
+    <time datetime="2012-06-05T01:05:20.000Z" itemprop="datePublished">Jun 4 2012</time>
+
+
+    <h1 itemprop="name">Python memoize decorator</h1>
+
+  </a>
+</section>
+
+  <section class="post" itemscope itemprop="blogPost">
+  
+    <a href="/2012/06/01/-e4-b8-ba-e4-bb-80-e4-b9-88linux-e5-86-85-e6-a0-b8-e4-b8-8d-e5-85-81-e8-ae-b8-e5-9c-a8-e4-b8-ad-e6-96-ad-e4-b8-ad-e4-bc-91-e7-9c-a0-ef-bc-9f/" title="为什么Linux内核不允许在中断中休眠？" itemprop="url">
+  
+
+    <time datetime="2012-06-01T19:31:45.000Z" itemprop="datePublished">Jun 1 2012</time>
+
+
+    <h1 itemprop="name">为什么Linux内核不允许在中断中休眠？</h1>
+
+  </a>
+</section>
+
+
+  <nav id="page-nav" class="clearfix archive-nav">
+    <a class="extend prev" rel="prev" href="/archives/2012/page/2/"><span></span>Prev</a><a class="page-number" href="/archives/2012/">1</a><a class="page-number" href="/archives/2012/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/archives/2012/page/4/">4</a><a class="page-number" href="/archives/2012/page/5/">5</a><a class="page-number" href="/archives/2012/page/6/">6</a><a class="extend next" rel="next" href="/archives/2012/page/4/">Next<span></span></a>
+  </nav>
+
+  </div>
+</div>
+
       </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2015 Cong Wang<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
+      <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Larry Page in Google. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2015 
+		
+		<a href="http://wangcong.org/about" target="_blank" title="Cong Wang">Cong Wang</a>
+		
+		</p>
+</div>
 </footer>
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-    <a href="/about-2" class="mobile-nav-link">About</a>
-  
-</nav>
-    
+      <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
 
 
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
-
-  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
 
 
 
-<script src="/js/script.js" type="text/javascript"></script>
 
 
-  </div>
-</body>
-</html>
+
+
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+    </body>
+   </html>

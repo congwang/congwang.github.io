@@ -1,11 +1,16 @@
-<!DOCTYPE html>
-<html>
+
+  <!DOCTYPE HTML>
+<html >
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   
-  <title>Archives: 2012/10 | A Geek&#39;s Page</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
+    <title>Archives: 2012/10 | A Geek&#39;s Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Cong Wang">
+    
+    
+    <meta name="description">
 <meta property="og:type" content="website">
 <meta property="og:title" content="A Geek's Page">
 <meta property="og:url" content="http://wangcong.org/archives/2012/10/">
@@ -15,465 +20,256 @@
 <meta name="twitter:title" content="A Geek's Page">
 <meta name="twitter:description">
 
-  
-    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" href="/css/style.css" type="text/css">
 
-  
+    
+    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
 
 </head>
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">A Geek&#39;s Page</a>
-      </h1>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-          <a class="main-nav-link" href="/about-2">About</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://wangcong.org"></form>
-      </div>
-    </div>
-  </div>
-</header>
-      <div class="outer">
-        <section id="main">
-  
-    <article id="post-accept-ra-e7-9a-84-e4-b8-80-e4-b8-aa-e4-be-8b-e5-ad-90" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2012/10/30/accept-ra-e7-9a-84-e4-b8-80-e4-b8-aa-e4-be-8b-e5-ad-90/" class="article-date">
-  <time datetime="2012-10-30T23:55:22.000Z" itemprop="datePublished">Oct 30 2012</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Linux-Kernel/">Linux Kernel</a>
-  </div>
 
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2012/10/30/accept-ra-e7-9a-84-e4-b8-80-e4-b8-aa-e4-be-8b-e5-ad-90/">accept_ra 的一个例子</a>
-    </h1>
-  
-
+    <body>
+      <header>
+        <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="A Geek&#39;s Page" title="A Geek&#39;s Page"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="A Geek&#39;s Page">A Geek&#39;s Page</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about-2">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:wangcong.org">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
       </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在 IPv6 中，Router Advertisement （简称 RA）是很关键的一个 ICMP 包，stateless autoconf 就是靠 RA 配置 IP 地址的，主机发送Router Solicitation（RS）广播，有点类似于 IPv4 中的 DHCP request，路由器就会回应 RA，类似于 DHCP reply。不同的是，DHCP 是 stateful 的，因为 DHCP 服务器必须维持一个地址表，而 IPv6 的路由器却不需要，所以是无状态的，而且 RA 的广播是周期性的。</p>
-<p>以上是技术背景。显然，一般情况下你是要接受这个包的。而我遇到一种情况却不得不禁止掉这个选项。</p>
-<p>情况是这样的，两台主机通过一个交换机连接，现在我们修改两台主机以及交换机的 MTU 为 9000，来发送大小为 8000 的 <a href="http://en.wikipedia.org/wiki/Jumbo_frame" target="_blank" rel="external">Jumbo Frame</a>，IPv4 一切正常，可是到了 IPv6 下面却不行了，会收到 ICMPV6_PKT_TOOBIG。</p>
-<p>在这里，需要指出 IPv6 和 IPv4 一个重要的区别是，包的分片（fragmentation）是在主机上完成的，而不是由 router 完成。<a href="http://en.wikipedia.org/wiki/IP_fragmentation" target="_blank" rel="external">wikipedia</a> 上说：</p>
-<blockquote>
-<p>In IPv4, routers perform fragmentation, whereas in IPv6, routers do not fragment, but drop the packets that are larger than the MTU.<br>而我这里所谓的主机完成是指 PMTU 的计算是由主机完成的：既然 IPv6 的 router 不进行分片，那么主机必须在发送之前知道整个 path 上最小的 MTU，即 PMTU。</p>
-</blockquote>
-<p>好了，既然我们修改了主机的 MTU，那么 PMTU 也需要更新，尤其是 IPv6 路由表中的 MTU。幸运的是，这个是由内核自动完成的，通过 NETDEV_CHANGEMTU 这个异步通知完成。<code>ip -6 r s</code> 也可以看出对应的 MTU 确实变成了 9000，但是，不一会儿我就发现该 MTU 还会自动变会成之前的 1500。这很奇怪，然后我就捕捉一些包看看，发现原来每当收到 RA 的时候这个 MTU 就会变化！不用看代码你也能马上理解，RA 里肯定也包含了一个 router 的 MTU，这个 MTU 是 1500，所以 PMTU 才会跳回到 1500！</p>
-<p>可是我们不是已经修改交换机的 MTU 了，为什么它还会发出 RA (MTU=1500) 的广播？连接上交换机一看，jumbo MTU 确实是改成了 9000，但 routing MTU 依旧是 1500，而且无法修改成 9000，毕竟千兆网卡还没有普及。所以现在的问题就是，这个配置其实是对的，8000 字节的包明显在<strong>物理上</strong>也是可以发送出去的，但 IPv6 就因为交换机的 routing MTU 是 1500 而无法发送，这种情况下我们就不得不禁止掉 accept_ra 这个选项了，地址的获取用 DHCPv6 了。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://wangcong.org/2012/10/30/accept-ra-e7-9a-84-e4-b8-80-e4-b8-aa-e4-be-8b-e5-ad-90/" data-id="izpy7yzpcatq4q4t" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-an-overview-of-openvswitch-implementation" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2012/10/20/an-overview-of-openvswitch-implementation/" class="article-date">
-  <time datetime="2012-10-20T17:09:46.000Z" itemprop="datePublished">Oct 20 2012</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Linux-Kernel/">Linux Kernel</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+      <div id="container">
         
+
+<div class="archive-title" >
+  <h2 class="archive-icon">2012/10</h2>
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2012/10/20/an-overview-of-openvswitch-implementation/">An overview of Openvswitch implementation</a>
-    </h1>
+  <div class="archiveslist archive-float clearfix">
+   <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">Aug 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">Jan 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">Dec 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">Oct 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">Sep 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">Aug 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">Jul 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">Feb 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01/">Jan 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12/">Dec 2012</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">Nov 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">Oct 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">Sep 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">Aug 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/07/">Jul 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">Jun 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">Apr 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">Mar 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">Feb 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">Jan 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/12/">Dec 2011</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">Nov 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/10/">Oct 2011</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">Sep 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08/">Aug 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/07/">Jul 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/06/">Jun 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/05/">May 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04/">Apr 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03/">Mar 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/02/">Feb 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/01/">Jan 2011</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/12/">Dec 2010</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/11/">Nov 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/10/">Oct 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/09/">Sep 2010</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08/">Aug 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07/">Jul 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06/">Jun 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05/">May 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04/">Apr 2010</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03/">Mar 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02/">Feb 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01/">Jan 2010</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12/">Dec 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11/">Nov 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10/">Oct 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09/">Sep 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08/">Aug 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07/">Jul 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/06/">Jun 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/05/">May 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04/">Apr 2009</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03/">Mar 2009</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02/">Feb 2009</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01/">Jan 2009</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12/">Dec 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/11/">Nov 2008</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/10/">Oct 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09/">Sep 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08/">Aug 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07/">Jul 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06/">Jun 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05/">May 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04/">Apr 2008</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03/">Mar 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02/">Feb 2008</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01/">Jan 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12/">Dec 2007</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11/">Nov 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10/">Oct 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09/">Sep 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08/">Aug 2007</a><span class="archive-list-count">31</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07/">Jul 2007</a><span class="archive-list-count">34</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06/">Jun 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05/">May 2007</a><span class="archive-list-count">25</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04/">Apr 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03/">Mar 2007</a><span class="archive-list-count">50</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02/">Feb 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01/">Jan 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12/">Dec 2006</a><span class="archive-list-count">5</span></li></ul>
+ </div>
   
+</div>
+<div id="main" class="archive-part clearfix">
+  <div id="archive-page">
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--         @page { margin: 2cm }         P { margin-bottom: 0.21cm }         H1 { margin-bottom: 0.21cm }         H1.western { font-family: "Liberation Sans", sans-serif; font-size: 16pt }         H1.cjk { font-family: "WenQuanYi Zen Hei"; font-size: 16pt }         H1.ctl { font-family: "Lohit Devanagari"; font-size: 16pt }         A:link { so-language: zxx } -->
-
-<p><strong>Author: Cong Wang &lt;xiyou.wangcong@gmail.com&gt;</strong></p>
-<p>This is NOT a tutorial on how to use openvswitch, this is for developers who want to know the implementation details of openvswitch project, thus, I assume you at least know the basic concepts of openvswitch and know how to use it. If not, see <a href="http://www.openvswitch.org/" target="_blank" rel="external">www.openvswitch.org</a> to get some documents or slides.</p>
-<p>Let’s start from the user-space part. Openvswitch user-space contains several components: they are a few daemons which actually implements the switch and the flow table, the core of openvswitch, and several utilities to manage the switch, the database, and even talk to the kernel directly.</p>
-<p>There are three daemons started by openvswitch service: ovs-vswitchd, which is the core implementation of the switch; ovsdb-server, which manipulates the database of the vswitch configuration and flows; and ovs-brcompatd which keeps the compatibility with the traditional bridges (that is the one you create with ‘brctl’ command) .</p>
-<p>Their relationship is shown in the picture below:</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/10/openvswitch1.jpg" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
-<p><!--         @page { margin: 2cm }         P { margin-bottom: 0.21cm } -->Obviously, the most important one is ovs-vswitchd, it implements the switch, it directly talks with kernel via netlink protocol (we will see the details later). And ovs-vsctl is the utility used primarily to manage the switch, which of course needs to talk with ovs-vswitchd. Ovs-vswitchd saves and changes the switch configuration into a database, which is directly managed by ovsdb-server, therefore, ovs-vswitchd will need to talk to ovsdb-server too, via Unix domain socket, in order to retrieve or save the configuration information. This is also why your openvswitch configuration  could survive from reboot even you are not using ifcfg* files.</p>
-<p>Ovs-brcompatd is omitted here, we are not very interested in it now.</p>
-<p>Ovs-vsctl can do lots of things for you, so most of time, you will use ovs-vsctl to manage openvswitch. Ovs-appctl is also available to manage the ovs-vswitchd itself, it sends some internal commands to ovs-vswitchd daemon to change some configurations.</p>
-<p>However, sometimes you may need to manage the datapath in the kernel directly by yourself, in this case, assume ovs-vswitchd is not running, you can invoke ovs-dpctl to let ovs-vswitchd to manage the datapath in the kernel space directly, without database.</p>
-<p>And, when you need to talk with ovsdb-server directly, to do some database operation, you can run ovsdb-client, or you want to manipulate the database directly without ovsdb-server, ovsdb-tool is handy too.</p>
-<p>What’s more, openvswitch can be also administered and monitored by a remote controller. This is why we could define the network by software! sFlow is a protocol for packet sampling and monitoring, while OpenFlow is a protocol to manage the flow table of a switch, bridge, or device. Openvswitch supports both OpenFlow and sFlow. With ovs-ofctl, you can use OpenFlow to connect to the switch and do some monitoring and administering in the remote. sFlowTrend, which is not a part of openvswitch package, is the one that is capable for sFlow.</p>
-<p>Now, let’s take a look at the kernel part.</p>
-<p>As mentioned previously, the user-space communicates with the kernel-space via netlink protocol, generic netlink is used in this case. So there are several groups of genl commands defined by the kernel, they are used to get/set/add/delete some datapath/flow/vport and execute some actions on a specific packet.</p>
-<p>The ones used to control datapatch are:</p>
-<p>enum ovs_datapath_cmd {</p>
-<p>OVS_DP_CMD_UNSPEC,</p>
-<p>OVS_DP_CMD_NEW,</p>
-<p>OVS_DP_CMD_DEL,</p>
-<p>OVS_DP_CMD_GET,</p>
-<p>OVS_DP_CMD_SET</p>
-<p>};</p>
-<p>and there are corresponding kernel functions which does the job:</p>
-<p>ovs_dp_cmd_new()</p>
-<p>ovs_dp_cmd_del()</p>
-<p>ovs_dp_cmd_get()</p>
-<p>ovs_dp_cmd_set()</p>
-<p>Similar functions are defined for vport and flow commands too.</p>
-<p>Before we talk about the details of the data structures, let’s see how a packet is sent out or received from a port of an ovs bridge. When is packet is send out from the ovs bridge, an internal device defined by openvswitch module, which is viewed, by the kernel, as a struct vport too. The packet will be finally passed to internal_dev_xmit(), which in turn “receives” the packet. Now, the kernel needs to look at the flow table, to see if there is any “cache” for how to forward this packet. This is done by function ovs_flow_tbl_lookup(), which needs a key. The key is extracted by ovs_flow_extract() which briefly collects the details of the packet (L2~L4) and then constructs a unique key for this flow. Assume this is the first packet going out after we create the ovs bridge, so, there is no “cache” in the kernel, and the kernel doesn’t know how to handle this packet! Then it will pass it to the user-space with “upcall” which uses genl too. The user-space daemon, ovs-vswitchd, will check the database and see which is the destination port for this packet, and will response to the kernel with OVS_ACTION_ATTR_OUTPUT to tell kernel which is the port it should forward to, in this case let’s assume it is eth0. and finally a  OVS_PACKET_CMD_EXECUTE command is to let the kernel execute the action we just set. That is, the kernel will execute this genl command in function do_execute_actions() and finally forward the packet to the port “eth0” with do_output(). Then it goes to outside!</p>
-<p><!--         @page { margin: 2cm }         P { margin-bottom: 0.21cm } -->The receiving side is similar. The openvswitch module registers an rx_handler for the underlying  (non-internal) devices, it is netdev_frame_hook(), so once the underlying device receives packets on wire, openvswitch will forward it to user-space to check where it should goes, and what actions it needs to execute on it. For example, if this is a VLAN packet, the VLAN tag should be removed from the packet first, and then forwarded to a right port. The user-space could learn that which is the right port to forward a given packet.</p>
-<p><!--         @page { margin: 2cm }         P { margin-bottom: 0.21cm } -->The internal devices are special, when a packet is sent to an internal device, it is be immediately sent up to openvswitch to decide where it should go, instead of really sending it out. There is actually no way out of an internal device directly.</p>
-<p>Besides OVS_ACTION_ATTR_OUTPUT, the kernel also defines some other actions:</p>
-<p>OVS_ACTION_ATTR_USERSPACE, which tells the kernel to pass the packet to user-space</p>
-<p>OVS_ACTION_ATTR_SET:  Modify the header of the packet</p>
-<p>OVS_ACTION_ATTR_PUSH_VLAN: Insert a vlan tag into the packet</p>
-<p>OVS_ACTION_ATTR_POP_VLAN: Remove the vlan tag from the packet</p>
-<p>OVS_ACTION_ATTR_SAMPLE: Do sampling</p>
-<p>With these commands combined, the user-space could implement some different policies, like a bridge, a bond or a VLAN device etc. GRE tunnel is not currently in upstream, so we don’t care about it now.</p>
-<p>So far, you already know how the packets are handled by openvswitch module. There are much more details, especially about the flow and datapath mentioned previously. A flow in kernel is represented as struct sw_flow, and datapath is defined as struct datapath, and the actions on a flow is defined as struct sw_flow_actions, and plus the one we mentioned, struct vport. These structures are the most important ones for openvswitch kernel module, their relationship is demonstrated in this picture:</p>
-<p><a href="http://wangcong2015.files.wordpress.com/2012/10/openvswitch-kernel.jpg" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
-<p>The most important one needs to mention is each struct sk_buff is associated with a struct sw_flow, which is via a pointer in ovs control block. And the above actions is associated with each flow, every time when a packet passed to openvswitch module, it first needs to lookup the flow table which is contained in a datapath which in turn either contains in a struct vport or in a global linked-list, with the key we mentioned. If a flow is found, the corresponding actions will be executed. Remember that datapath, flow, vport, all could be changed by the user-space with some specific genl command.</p>
-<p>As you can see, the kernel part only implements a mechanism and the fast path (except the first packet), and the user-space implements different policies upon the mechanism provided by the kernel, the slow path. The user-space is much more complicated, so I will not cover its details here.</p>
-<p>Update: Ben, one of the most active developers for openvswitch, pointed out some mistakes in the previous version, I updated this article as he suggested. Thanks to Ben!</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://wangcong.org/2012/10/20/an-overview-of-openvswitch-implementation/" data-id="x33xxx5s0w53vr0x" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
+  <section class="post" itemscope itemprop="blogPost">
   
-</article>
-
-
-  
-    <article id="post--e4-bb-8e-ipv4-e5-88-b0-ipv6" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2012/10/15/-e4-bb-8e-ipv4-e5-88-b0-ipv6/" class="article-date">
-  <time datetime="2012-10-15T07:00:06.000Z" itemprop="datePublished">Oct 15 2012</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Linux-Kernel/">Linux Kernel</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2012/10/15/-e4-bb-8e-ipv4-e5-88-b0-ipv6/">从 IPv4 到 IPv6</a>
-    </h1>
+    <a href="/2012/10/30/accept-ra-e7-9a-84-e4-b8-80-e4-b8-aa-e4-be-8b-e5-ad-90/" title="accept_ra 的一个例子" itemprop="url">
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>稍微熟悉 IPv6 的人都知道，IPv6 相对于 IPv4 并不只是简单地把地址从 32 位扩展到了 128 位，它同时还修复了 IPv4 协议设计中的一些不足。正如地址空间一样，当然设计 IPv4 时的不足已经逐渐凸显，理解这些 IPv4 的不足以及 IPv6 对它的改进对于深入理解 IPv6 至关重要。我在学习 IPv6 的时候就特别想找一个这样的文档，可惜一直没有发现，所以在这里简单总结一下，以方便初学 IPv6 的人。</p>
-<p><strong>1. 地址空间的划分</strong></p>
-<p>从 32 位一下子扩展到 128 位一个最明显的变化是，你很可能再也无法用脑子记住一个 IP 地址（除了 ::1 这种简单的地址）。玩笑。:-)</p>
-<p>言归正传，IPv4 中的 A、B、C 类地址划分在 IPv6 中不存在了，这种死板的分配方式问题多多，本身就属于设计的不合理，连 IPv4 自己都已经舍弃它改用 Classless Inter-Domain Routing 了。所以，IPv6 的一个显著的变化是没了网络掩码（mask），而改用前缀（prefix）了，这样可以完全通过前缀决定网络了。同时，网络掩码的中间可以包含0，可它几乎没有什么用处，但前缀却是直接指定前x位含1，直接避免了含0的可能性，简化了设计。</p>
-<p>在功能上，IPv4 中的地址分为三类：单播（unicast）、多播（multicast）和广播（broadcast），而 IPv6 中不再有广播地址，反而多了一个任播（ anycast）。<a href="http://en.wikipedia.org/wiki/Anycast" target="_blank" rel="external">wikipedia 上</a>有一幅图可以很好的解释它们的区别：</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/10/Selection_039.png" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
-<p>但是，任播地址是直接从单播地址上拿出来，并没有单独分类，IPv6 协议这么写的：</p>
-<blockquote>
-<p>Anycast addresses are allocated from the unicast address space, using any of the defined unicast address formats.  Thus, anycast addresses are syntactically indistinguishable from unicast addresses.  When a unicast address is assigned to more than one interface, thus turning it into an anycast address, the nodes to which the address is assigned must be explicitly  configured to know that it is an anycast address.<br>更详细的信息可见 <a href="http://www.ietf.org/rfc/rfc2373.txt" target="_blank" rel="external">RFC2373</a>。好了，那么单播和多播地址又是如何划分的呢？这一点和 IPv4 一样，也是根据地址中的头几位来区分：</p>
-</blockquote>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/10/Selection_040.png" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
-<p>（图片来自《TCP/IP guide》）</p>
-<p>从这里你可以看到了，单播地址还有多了一个非常重要的概念：约束（scope）。虽然在 IPv4 中 192.168.<em>.</em> 这种地址被用于私有地址，不应该出现在互联网上，但是，这种保证仅仅取决于路由，而非协议本身。而 IPv6 直接从协议规范上禁止了私有地址（其实叫 link-local 和 site-local ）被转发到互联网，它为不同的地址划分了不同的范围，一个范围内的地址只能在这个范围内使用。</p>
-<p>如上图，IPv6 规定了三种约束：link-local，site-local，和 global。link-local 的可达范围是本地物理连接的网络，任何路由都不能转发目的地址为这种地址的包（它是给 <a href="http://en.wikipedia.org/wiki/Neighbor_Discovery_Protocol" target="_blank" rel="external">neighbour discovery</a> 使用的）；site-local 的可达范围是整个组织、站点，组织内部的路由可以转发这种包，但是绝对不能把它们转发到互联网上；global 就是可以在互联网上使用的地址。一个设备可以有多个 IPv6 地址，比如一个 link-local 的地址和一个 site-local 的。</p>
-<p>多播地址的划分和 IPv4 类似，故此省略。</p>
-<p><strong>2. IPv6 头</strong></p>
-<p>让我们对比一下 IPv4 和 IPv6 的头部：</p>
-<p><a href="http://wangcong2015.files.wordpress.com/2012/10/ipv4_ipv6.jpg" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
-<p>（图片来自<a href="http://samirkhoury.com/image/Cisco/ipv4_ipv6.jpg" target="_blank" rel="external">这里</a>）</p>
-<p>不难发现，IPv6 的头部结构明显简单了一些：</p>
-<p>第一个最明显的改变是没有了 header checksum，这个是没有必要的，因为 checksum 完全可以由上层的 TCP，UDP 协议来做，在 IP 层再做一次是浪费。当然 IPv4 UDP 中的 checksum 可以不做，而到了 IPv6 UDP 中的 checksum 就是必须的了。给 IP 头做 checksum 的另一个缺点是，每次 TTL 改变的时候都需要重新计算 checksum。</p>
-<p>第二个改变是没有了 IP options，因此也就没有了 Ip Header Length，因此 IPv6 头部也就是固定的大小，40 个字节。IPv6 之所以这么做一是因为它使用了 next header，使得这个没有必要；二是，这可以提高  IP 头的解析速度。</p>
-<p>第三个改变是多了一个 Next Header，正如刚才提到的，如果你对网络比较熟悉的话，你不难发现这个设计的灵感来自于 IPSec，Next Header 是指向下一个头，有点儿类似于单链表。下一个头可以是一个 option（所以IP option没有必要）头，比如 Hop-by-Hop，也可以上一层的协议头，比如 TCP，UDP。这种灵活的设计使得 IPv6 头部可“链接”多个头部。</p>
-<p>第四个改变是，IPv6 不再有 Fragment Offset 和 ID，这是因为分片（fragment）的 IPv6 包可以用 Next Header 来表示（知道它强大了吧？），而且 IPv6 协议已经禁止在中间的 router 上进行分片，如果需要分片必须在 host 上完成（PMTU），这可以大大提高路由的速度。其实 IP 包分片性能很差，IPv4 包分片的问题多多：ID 的生成是个问题，在对端把分段的包进行组装又是一个头疼的问题（该预留多少内存？中间少了几个分片怎么办？收到重复的分片怎么办？），所以能尽量避免分片就避免。</p>
-<p><strong>3. 邻居发现（ <a href="http://en.wikipedia.org/wiki/Neighbor_Discovery_Protocol" target="_blank" rel="external">Neighbour Discovery</a>）</strong></p>
-<p>IPv6 相比 IPv4 另一个显著的变化是没有了 ARP 协议，邻居发现协议使用的是 ICMPv6。ARP 协议是一个尴尬的存在，它处于第三层，但又不像 ICMP 协议那样基于 IP，而是和 IP 并列，从它的头部就可以看出：</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/10/arp_en.png" target="_blank" rel="external"><img src="/images/" alt="" title="arp_en"></a>（图片来自<a href="http://sid.rstack.org/arp-sk/figs/arp_en.png" target="_blank" rel="external">这里</a>）</p>
-<p>这种设计使得 OSI 分层模式变得含糊。而 IPv6 使用的 ICMPv6 则完全基于 IP 之上，无须设计另外一个并列于 IP 层的协议。正如前面提到，邻居发现协议使用的是 link-local 地址，所以不会造成更大链路范围上的影响。link-local 地址是根据 MAC 地址自动生成的（协议规定的算法），因此有了 link-local 地址就可以马上和路由器进行通信了，因此也就有了 IP 地址自动分配的功能，即类似于 IPv4 的 DHCP，在 IPv6 上这被称为自动配置（Stateless Address Autoconfiguration）。</p>
-<p>当然了，因为没有广播地址，邻居发现协议使用的是多播地址。具体协议的细节可以参考 ICMPv6 协议的定义，和 ICMP 并无显著的差别，故省略。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://wangcong.org/2012/10/15/-e4-bb-8e-ipv4-e5-88-b0-ipv6/" data-id="rvwn7qaok42lft4z" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
+    <time datetime="2012-10-30T23:55:22.000Z" itemprop="datePublished">Oct 30 2012</time>
 
 
-  
-    <article id="post--e7-94-a8-scapy-e5-8f-91-e9-80-81-vlan-e5-8c-85-e7-9a-84-e4-be-8b-e5-ad-90" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2012/10/11/-e7-94-a8-scapy-e5-8f-91-e9-80-81-vlan-e5-8c-85-e7-9a-84-e4-be-8b-e5-ad-90/" class="article-date">
-  <time datetime="2012-10-11T22:21:14.000Z" itemprop="datePublished">Oct 11 2012</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Linux-Application/">Linux Application</a>
-  </div>
+    <h1 itemprop="name">accept_ra 的一个例子</h1>
 
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2012/10/11/-e7-94-a8-scapy-e5-8f-91-e9-80-81-vlan-e5-8c-85-e7-9a-84-e4-be-8b-e5-ad-90/">用 scapy 发送 vlan 包的例子</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><a href="http://www.secdev.org/projects/scapy/" target="_blank" rel="external">scapy</a> 绝对是你应该学习的一大利器，功能十分强大，把 Python 的优势发挥的淋漓尽致。用它发送定制的数据包比你用C写快好几个数量级。。。</p>
-<p>下面是我在测试前面文章中的 vlan 问题时发送带指定 vlan tag 的 arp request，不到10行代码就可以搞定！</p>
-<p>[python]</p>
-<h1 id="!/usr/bin/python">!/usr/bin/python</h1>
-<p>import sys<br>from scapy.all import *</p>
-<p>mac=”52:54:00:2E:23:92”<br>eth=Ether(src=mac,type=0x8100)/Dot1Q(vlan=int(sys.argv[1]), prio=5)<br>arp=ARP(hwtype=0x0001,ptype=0x0800,op=0x0001,hwsrc=mac,psrc=’192.168.122.1’,pdst=’192.168.122.74’)<br>a=eth/arp<br>a.show()<br>sendp(a, iface=”virbr0”)</p>
-<p>[/python] </p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://wangcong.org/2012/10/11/-e7-94-a8-scapy-e5-8f-91-e9-80-81-vlan-e5-8c-85-e7-9a-84-e4-be-8b-e5-ad-90/" data-id="f2zh980sgiikeiqh" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-rp-filter-e7-9a-84-e4-b8-80-e4-b8-aa-e4-be-8b-e5-ad-90" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2012/10/10/rp-filter-e7-9a-84-e4-b8-80-e4-b8-aa-e4-be-8b-e5-ad-90/" class="article-date">
-  <time datetime="2012-10-10T20:56:42.000Z" itemprop="datePublished">Oct 10 2012</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Linux-Kernel/">Linux Kernel</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2012/10/10/rp-filter-e7-9a-84-e4-b8-80-e4-b8-aa-e4-be-8b-e5-ad-90/">rp_filter 的一个例子</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>我们都知道 Linux 反向路由查询，它的原理很简单，检查流入本机的 IP 地址是否合法，是否可能路由进来，是否是最佳路由。但是像多数网络问题，理论很简单，代码你看了也能懂，可实际情况往往比较复杂。之前一直没有碰到过实际中的例子，最近总算碰到一个。</p>
-<p>情况是这样的，我有两个 vlan 设备，eth0.7 和 eth0.9，都是经过 vconfig 创建的虚拟网卡，eth0 硬件本身不能处理 vlan tag。现在的问题是，我给这两个网卡配置了同一个 IP 地址，192.168.122.74。你也许会感觉奇怪，但这是可行的，毕竟 eth0.7 和 eth0.9 不在同一个 vlan！你可以想象成它们的网线接在不同的局域网中。好了，问题出来了，现在我们在另外一台机器，物理上连接着 eth0，上面分别发送 vlan tag 是 7 和 9 的两个 arp request，结果是只有先被 ifup 起来的那个网卡回应！为什么？</p>
-<p>我一开始的想法这可能是内核的bug，毕竟 vlan 那一部分经常出现一些问题。但经过人肉跟踪 vlan tag 的处理流程，发现基本上不太可能是内核的问题，至少不是内核 vlan 处理代码的问题。其实，这部分内核代码经过重写之后还是很清晰的，推荐你有时间阅读一下。</p>
-<p>所以问题一定是在 arp 处理的代码中，所以最后锁定到了 arp_process()。分析一下里面的代码你不难看到里面调用了 ip_route_input_noref()，所以路由有可能是其中一个因素。所以我们看一下路由表：</p>
-<h1 id="ip_r_s">ip r s</h1>
-<p>default via 192.168.122.1 dev eth0<br>192.168.122.0/24 dev eth0.7  proto kernel  scope link  src 192.168.122.74<br>192.168.122.0/24 dev eth0.9  proto kernel  scope link  src 192.168.122.74</p>
-<p>然后尝试换一个顺序对 eth0.7 和 eth0.9 进行 ifup，你会发现其实是路由的顺序决定了你能得到哪个 arp reply！这时你应该能明白了，是 rp_filter 在起作用。查看一下它们的 /proc/sys/net/ipv4/conf/X/rp_filter 设置，果然都是1，那么在这种情况下，eth0.9 因为不是最佳路由，因此发送给它的 arp request 就被丢弃了。我们也可以把  /proc/sys/net/ipv4/conf/eth0.9/log_martians 打开，很容易看到下面的log：</p>
-<p>[87317.980514] IPv4: martian source 192.168.122.74 from 192.168.122.1, on dev eth0.9<br>[87317.998162] ll header: 00000000: ff ff ff ff ff ff 52 54 00 2e 23 92 08 06 00 01  ……RT..#…..<br>[87318.015159] ll header: 00000010: 08 00                                            ..</p>
-<p>另外，分析过程中用到的两条相关的 tcpdump 命令：</p>
-<h1 id="tcpdump_arp_-xx_-ni_eth0">tcpdump arp -xx -ni eth0</h1>
-<h1 id="tcpdump_-xx_-ni_eth0_vlan">tcpdump -xx -ni eth0 vlan</h1>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://wangcong.org/2012/10/10/rp-filter-e7-9a-84-e4-b8-80-e4-b8-aa-e4-be-8b-e5-ad-90/" data-id="uxkhjmziuwkl01fd" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-  
+  </a>
 </section>
-        
-          <aside id="sidebar">
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
-    <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Book-Reviews/">Book Reviews</a><span class="category-list-count">18</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/China/">China</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Collection/">Collection</a><span class="category-list-count">25</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">324</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux-Application/">Linux Application</a><span class="category-list-count">73</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux-Kernel/">Linux Kernel</a><span class="category-list-count">64</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Love/">Love</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Movies/">Movies</a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/">Programming</a><span class="category-list-count">152</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Science-Fiction/">Science Fiction</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Travel/">Travel</a><span class="category-list-count">19</span></li></ul>
-    </div>
-  </div>
 
+  <section class="post" itemscope itemprop="blogPost">
   
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/geek/">geek</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/handling/">handling</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/joke/">joke</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/signal/">signal</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/unix/">unix</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a><span class="tag-list-count">1</span></li></ul>
-    </div>
-  </div>
+    <a href="/2012/10/20/an-overview-of-openvswitch-implementation/" title="An overview of Openvswitch implementation" itemprop="url">
+  
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/geek/" style="font-size: NaNpx;">geek</a><a href="/tags/handling/" style="font-size: NaNpx;">handling</a><a href="/tags/joke/" style="font-size: NaNpx;">joke</a><a href="/tags/linux/" style="font-size: NaNpx;">linux</a><a href="/tags/signal/" style="font-size: NaNpx;">signal</a><a href="/tags/unix/" style="font-size: NaNpx;">unix</a><a href="/tags/vim/" style="font-size: NaNpx;">vim</a>
-    </div>
-  </div>
+    <time datetime="2012-10-20T17:09:46.000Z" itemprop="datePublished">Oct 20 2012</time>
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">August 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">December 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">October 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">September 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">August 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">February 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01/">January 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12/">December 2012</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">November 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">October 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">September 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">August 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/07/">July 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">April 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">March 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">February 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">January 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/12/">December 2011</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">November 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/10/">October 2011</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">September 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08/">August 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/07/">July 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/06/">June 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/05/">May 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04/">April 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03/">March 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/02/">February 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/01/">January 2011</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/12/">December 2010</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/11/">November 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/10/">October 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/09/">September 2010</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08/">August 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07/">July 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06/">June 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05/">May 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04/">April 2010</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03/">March 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02/">February 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01/">January 2010</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12/">December 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11/">November 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10/">October 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09/">September 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08/">August 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07/">July 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/06/">June 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/05/">May 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04/">April 2009</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03/">March 2009</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02/">February 2009</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01/">January 2009</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12/">December 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/11/">November 2008</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/10/">October 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09/">September 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08/">August 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07/">July 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06/">June 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05/">May 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04/">April 2008</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03/">March 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02/">February 2008</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01/">January 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12/">December 2007</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11/">November 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10/">October 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09/">September 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08/">August 2007</a><span class="archive-list-count">31</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07/">July 2007</a><span class="archive-list-count">34</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06/">June 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05/">May 2007</a><span class="archive-list-count">25</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04/">April 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03/">March 2007</a><span class="archive-list-count">50</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02/">February 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01/">January 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12/">December 2006</a><span class="archive-list-count">5</span></li></ul>
-    </div>
-  </div>
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recents</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2014/08/12/linux-e7-bd-91-e7-bb-9c-e6-b5-81-e9-87-8f-e6-8e-a7-e5-88-b6-ef-bc-88-e4-b8-80-ef-bc-89/">Linux 网络流量控制（零）</a>
-          </li>
-        
-          <li>
-            <a href="/2014/08/01/ottawa-linux-symposium/">Ottawa Linux Symposium</a>
-          </li>
-        
-          <li>
-            <a href="/2014/05/31/skbuff-e5-86-85-e5-ad-98-e6-a8-a1-e5-9e-8b/">skbuff 内存模型</a>
-          </li>
-        
-          <li>
-            <a href="/2014/05/06/-e9-95-bf-e6-9c-9f-e6-8f-90-e4-be-9b-twitter-e5-86-85-e6-8e-a8/">长期提供 Twitter 内推</a>
-          </li>
-        
-          <li>
-            <a href="/2014/01/30/-e6-88-91-e7-9a-842013-ef-bc-9a-e6-88-91-e6-9d-a5-e5-88-b0-e4-ba-86-e7-be-8e-e5-9b-bd/">我的2013：我来到了美国</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
+    <h1 itemprop="name">An overview of Openvswitch implementation</h1>
 
+  </a>
+</section>
+
+  <section class="post" itemscope itemprop="blogPost">
   
-</aside>
-        
+    <a href="/2012/10/15/-e4-bb-8e-ipv4-e5-88-b0-ipv6/" title="从 IPv4 到 IPv6" itemprop="url">
+  
+
+    <time datetime="2012-10-15T07:00:06.000Z" itemprop="datePublished">Oct 15 2012</time>
+
+
+    <h1 itemprop="name">从 IPv4 到 IPv6</h1>
+
+  </a>
+</section>
+
+  <section class="post" itemscope itemprop="blogPost">
+  
+    <a href="/2012/10/11/-e7-94-a8-scapy-e5-8f-91-e9-80-81-vlan-e5-8c-85-e7-9a-84-e4-be-8b-e5-ad-90/" title="用 scapy 发送 vlan 包的例子" itemprop="url">
+  
+
+    <time datetime="2012-10-11T22:21:14.000Z" itemprop="datePublished">Oct 11 2012</time>
+
+
+    <h1 itemprop="name">用 scapy 发送 vlan 包的例子</h1>
+
+  </a>
+</section>
+
+  <section class="post" itemscope itemprop="blogPost">
+  
+    <a href="/2012/10/10/rp-filter-e7-9a-84-e4-b8-80-e4-b8-aa-e4-be-8b-e5-ad-90/" title="rp_filter 的一个例子" itemprop="url">
+  
+
+    <time datetime="2012-10-10T20:56:42.000Z" itemprop="datePublished">Oct 10 2012</time>
+
+
+    <h1 itemprop="name">rp_filter 的一个例子</h1>
+
+  </a>
+</section>
+
+
+  </div>
+</div>
+
       </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2015 Cong Wang<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
+      <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Larry Page in Google. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2015 
+		
+		<a href="http://wangcong.org/about" target="_blank" title="Cong Wang">Cong Wang</a>
+		
+		</p>
+</div>
 </footer>
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-    <a href="/about-2" class="mobile-nav-link">About</a>
-  
-</nav>
-    
+      <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
 
 
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
-
-  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
 
 
 
-<script src="/js/script.js" type="text/javascript"></script>
 
 
-  </div>
-</body>
-</html>
+
+
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+    </body>
+   </html>

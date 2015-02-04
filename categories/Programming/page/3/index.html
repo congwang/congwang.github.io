@@ -1,11 +1,16 @@
-<!DOCTYPE html>
-<html>
+
+  <!DOCTYPE HTML>
+<html >
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   
-  <title>Category: Programming | A Geek&#39;s Page</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
+    <title>Category: Programming | A Geek&#39;s Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Cong Wang">
+    
+    
+    <meta name="description">
 <meta property="og:type" content="website">
 <meta property="og:title" content="A Geek's Page">
 <meta property="og:url" content="http://wangcong.org/categories/Programming/page/3/">
@@ -15,762 +20,321 @@
 <meta name="twitter:title" content="A Geek's Page">
 <meta name="twitter:description">
 
-  
-    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" href="/css/style.css" type="text/css">
 
-  
+    
+    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
 
 </head>
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">A Geek&#39;s Page</a>
-      </h1>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-          <a class="main-nav-link" href="/about-2">About</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://wangcong.org"></form>
-      </div>
-    </div>
-  </div>
-</header>
-      <div class="outer">
-        <section id="main">
-  
-    <article id="post--e6-98-be-e7-a4-ba-shell-e5-87-bd-e6-95-b0-e5-ae-9a-e4-b9-89" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2011/12/01/-e6-98-be-e7-a4-ba-shell-e5-87-bd-e6-95-b0-e5-ae-9a-e4-b9-89/" class="article-date">
-  <time datetime="2011-12-01T21:44:02.000Z" itemprop="datePublished">Dec 1 2011</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Programming/">Programming</a>
-  </div>
 
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2011/12/01/-e6-98-be-e7-a4-ba-shell-e5-87-bd-e6-95-b0-e5-ae-9a-e4-b9-89/">显示 shell 函数定义</a>
-    </h1>
-  
-
+    <body>
+      <header>
+        <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="A Geek&#39;s Page" title="A Geek&#39;s Page"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="A Geek&#39;s Page">A Geek&#39;s Page</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about-2">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:wangcong.org">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
       </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>我们知道在 bash/zsh 中可以用 “typeset -f” 来显示某个函数的定义。如果不用这个内置命令的话我们应该怎么显示函数定义呢？</p>
-<p>下面这个技巧就可以用来显示函数定义：<br>[bash]</p>
-<h1 id="!/bin/bash">!/bin/bash</h1>
-<p>def() {<br>  eval “$1() $2”<br>  eval “function_$1=”$1() $2””<br>}</p>
-<p>def foo ‘{<br>  echo bar<br>}’<br>[/bash]</p>
-<p>其中 foo 是定义的函数，$function_foo 是函数 foo 的定义。不过缺点也很明显，每次定义函数必须使用”def”，而且后面用的单引号也是个问题。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://wangcong.org/2011/12/01/-e6-98-be-e7-a4-ba-shell-e5-87-bd-e6-95-b0-e5-ae-9a-e4-b9-89/" data-id="i014deypq346ggxs" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post--e4-b8-80-e4-b8-aa-e5-ae-8f-e6-8a-80-e5-b7-a7" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2011/11/24/-e4-b8-80-e4-b8-aa-e5-ae-8f-e6-8a-80-e5-b7-a7/" class="article-date">
-  <time datetime="2011-11-25T07:32:15.000Z" itemprop="datePublished">Nov 24 2011</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Programming/">Programming</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+      <div id="container">
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2011/11/24/-e4-b8-80-e4-b8-aa-e5-ae-8f-e6-8a-80-e5-b7-a7/">又一个宏技巧</a>
-    </h1>
-  
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>（本文为《C语言编程艺术》的一部分。）</p>
-<p>这个技巧是从 Nick Bowler 的一封邮件中看来的，非常有意思，分享一下。</p>
-<p>情况是这样的：在 Linux 内核中，有一个函数 kmap_atomic()，它之前带两个参数，而现在，它的第二个参数已经名存实亡了，可以<a href="https://lkml.org/lkml/2011/11/27/3" target="_blank" rel="external">直接去掉</a>。所以问题就出来了，如何警告使用 kmap_atomic() 的人带有两个参数的形式是过时的？换句话说，怎么才能在用两个参数调用 kmap_atomic() 时发出警告而用一个参数调用时就没有警告？</p>
-<p>所以下面的技巧就出来了。</p>
-<p>[c]</p>
-<h1 id="define_PASTE(a,_b)_a_##_b">define PASTE(a, b) a ## b</h1>
-<h1 id="define_PASTE2(a,_b)_PASTE(a,_b)">define PASTE2(a, b) PASTE(a, b)</h1>
-<h1 id="define_NARG_(_2,__1,_n,_…)_n">define NARG_(_2, _1, n, …) n</h1>
-<h1 id="define_NARG(…)_NARG(_VA_ARGS,_2,_1,_:)">define NARG(…) NARG<em>(<em>_VA_ARGS</em></em>, 2, 1, :)</h1>
-<p>static inline void <em>kmap_atomic(struct page </em>page)<br>{<br>    return __kmap_atomic(page);<br>}</p>
-<p>static inline void __deprecated <em>kmap_atomic_deprecated(struct page </em>page,<br>                                                        enum km_type km)<br>{<br>        return kmap_atomic(page);<br>}</p>
-<h1 id="define_kmapatomic1(…)_kmapatomic(__VA_ARGS)">define kmap<em>atomic1(…) kmap<em>atomic(__VA_ARGS</em></em>)</h1>
-<h1 id="define_kmapatomic2(…)_kmapatomic_deprecated(__VA_ARGS)">define kmap<em>atomic2(…) kmap<em>atomic_deprecated(__VA_ARGS</em></em>)</h1>
-<h1 id="define_kmapatomic(…)_PASTE2(kmapatomic,_NARG(VA_ARGS)(__VA_ARGS))">define kmap<em>atomic(…) PASTE2(kmap<em>atomic, NARG(<strong>VA_ARGS</strong>)(__VA_ARGS</em></em>))</h1>
-<p>[/c]</p>
-<p>这里最精妙的地方当属 NARGS 这个宏的定义，它通过参数个数来决定返回值，进而通过 PASTE2 来选择是 kmap_atomic1，还是 kmap_atomic2，而后者是过期的。如果用户用了两个参数，他就会得到类似下面的编译警告：</p>
-<p>drivers/block/drbd/drbd_bitmap.c:973:3: warning: ‘kmap_atomic_deprecated’ is deprecated (declared at /home/wangcong/linux-2.6/include/linux/highmem.h:124)</p>
-<p>非常聪明，不是吗？ :)</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://wangcong.org/2011/11/24/-e4-b8-80-e4-b8-aa-e5-ae-8f-e6-8a-80-e5-b7-a7/" data-id="40qjlbr7uop1dj0v" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
+<div class="archive-title" >
+  <h2 class="category-icon">Programming</h2>
   
-</article>
+</div>
+<div id="main" class="archive-part clearfix">
+  <div id="archive-page">
 
-
+  <section class="post" itemscope itemprop="blogPost">
   
-    <article id="post--e6-8e-a8-e8-8d-90-e4-b8-a4-e6-9c-ac-e5-b9-b6-e8-a1-8c-e7-bc-96-e7-a8-8b-e7-9a-84-e4-b9-a6" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2011/10/26/-e6-8e-a8-e8-8d-90-e4-b8-a4-e6-9c-ac-e5-b9-b6-e8-a1-8c-e7-bc-96-e7-a8-8b-e7-9a-84-e4-b9-a6/" class="article-date">
-  <time datetime="2011-10-27T00:40:01.000Z" itemprop="datePublished">Oct 26 2011</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Programming/">Programming</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2011/10/26/-e6-8e-a8-e8-8d-90-e4-b8-a4-e6-9c-ac-e5-b9-b6-e8-a1-8c-e7-bc-96-e7-a8-8b-e7-9a-84-e4-b9-a6/">推荐两本并行编程的书</a>
-    </h1>
+    <a href="/2011/12/01/-e6-98-be-e7-a4-ba-shell-e5-87-bd-e6-95-b0-e5-ae-9a-e4-b9-89/" title="显示 shell 函数定义" itemprop="url">
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>1. 入门的，《The Little Book of Semaphores》</p>
-<blockquote>
-<p>The Little Book of Semaphores is a free textbook that introduces the principles of synchronization for concurrent programming.</p>
-<p>The approach of this book is to identify patterns that are useful for a variety of synchronization problems and then show how they can be assembled into solutions. After each problem, the book offers a hint before showing a solution, giving students a better chance of discovering solutions on their own.</p>
-<p>The book covers the classical problems, including “Readers-writers,” “Producer-consumer”, and “Dining Philosophers.” In addition, it collects a number of not-so-classical problems, some written by the author and some by other teachers and textbook writers.<br>可以在它的官方网站下载：<a href="http://greenteapress.com/semaphores/" target="_blank" rel="external">http://greenteapress.com/semaphores/</a></p>
-</blockquote>
-<p>2. RCU 的作者，大牛 Paul E. McKenney 写的书，《Is Parallel Programming Hard, And, If So, What Can You Do About It?》。这个比较猛，我还没时间看。它也是免费的，英文版可以在这里下载：</p>
-<p>git://git.kernel.org/pub/scm/linux/kernel/git/paulmck/perfbook.git</p>
-<p>现在已经被翻译成中文了，叫《深入理解并行编程》：</p>
-<p><a href="http://download.csdn.net/detail/xiebaoyou/3552357" target="_blank" rel="external">http://download.csdn.net/detail/xiebaoyou/3552357</a></p>
-<p>我在南京和布拉格的时候见过 Paul E. McKenney，他是一个非常和蔼、热心的人，没有一点儿牛人的架子。:-)</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://wangcong.org/2011/10/26/-e6-8e-a8-e8-8d-90-e4-b8-a4-e6-9c-ac-e5-b9-b6-e8-a1-8c-e7-bc-96-e7-a8-8b-e7-9a-84-e4-b9-a6/" data-id="i4xariuwlj8lurca" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
+    <time datetime="2011-12-01T21:44:02.000Z" itemprop="datePublished">Dec 1 2011</time>
 
 
-  
-    <article id="post-shell-e9-87-8d-e5-ae-9a-e5-90-91-e7-9a-84-e4-b8-80-e5-a4-84-e5-a6-99-e7-94-a8" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2011/10/18/shell-e9-87-8d-e5-ae-9a-e5-90-91-e7-9a-84-e4-b8-80-e5-a4-84-e5-a6-99-e7-94-a8/" class="article-date">
-  <time datetime="2011-10-18T18:41:30.000Z" itemprop="datePublished">Oct 18 2011</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Programming/">Programming</a>
-  </div>
+    <h1 itemprop="name">显示 shell 函数定义</h1>
 
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2011/10/18/shell-e9-87-8d-e5-ae-9a-e5-90-91-e7-9a-84-e4-b8-80-e5-a4-84-e5-a6-99-e7-94-a8/">shell 重定向的一处妙用</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>偶然在 dracut 的代码中发现一个使用重定向很巧妙的地方。见 modules.d/90kernel-modules/module-setup.sh 文件。</p>
-<p>之前的老代码是这样的：</p>
-<p>[bash]</p>
-<h1 id="#">#</h1>
-<pre><code>         local _f
-         <span class="keyword">while</span> <span class="built_in">read</span> _f; <span class="keyword">do</span> <span class="keyword">case</span> <span class="string">"<span class="variable">$_f</span>"</span> <span class="keyword">in</span>
-             *.ko)    [[ $(&amp;lt;         <span class="variable">$_f</span>) =~ <span class="variable">$_blockfuncs</span> ]] &amp;amp;&amp;amp; <span class="built_in">echo</span> &amp;quot;<span class="variable">$_f</span>&amp;quot; ;;
-             *.ko.gz) [[ $(gzip -dc &amp;lt;<span class="variable">$_f</span>) =~ <span class="variable">$_blockfuncs</span> ]] &amp;amp;&amp;amp; <span class="built_in">echo</span> &amp;quot;<span class="variable">$_f</span>&amp;quot; ;;
-             <span class="keyword">esac</span>
-         <span class="keyword">done</span>
-</code></pre><p>[/bash]</p>
-<p>意思很清楚吧？就是在内核模块（注意是二进制格式）中匹配一些函数（字符串）。这样会很慢，因为 bash 要在庞大的二进制文件流中匹配一些指定字符串。</p>
-<p>于是，就有人想了一个方法加速这个处理过程，把原来的单个数据流分成两个并行的数据流，同时进行匹配！很巧妙！</p>
-<p>[bash]</p>
-<h1 id="#-1">#</h1>
-<pre><code>         function <span class="function"><span class="title">bmf1</span></span>() {
-             local _f
-             <span class="keyword">while</span> <span class="built_in">read</span> _f; <span class="keyword">do</span> <span class="keyword">case</span> &amp;quot;<span class="variable">$_f</span>&amp;quot; <span class="keyword">in</span>
-                 *.ko)    [[ $(&amp;lt;         <span class="variable">$_f</span>) =~ <span class="variable">$_blockfuncs</span> ]] &amp;amp;&amp;amp; <span class="built_in">echo</span> &amp;quot;<span class="variable">$_f</span>&amp;quot; ;;
-                 *.ko.gz) [[ $(gzip -dc &amp;amp;<span class="variable">${side2}</span>; <span class="keyword">fi</span>
-             <span class="keyword">done</span> 
-             | bmf1     <span class="number">1</span>&amp;gt;&amp;amp;<span class="variable">${merge}</span>    ) {side2}&amp;gt;&amp;amp;<span class="number">1</span> 
-             | bmf1  )      {merge}&amp;gt;&amp;amp;<span class="number">1</span>
-</code></pre><p>[/bash]</p>
-<p>经过 refactor 之后的或许更好理解一些：</p>
-<p>[bash]</p>
-<pre><code>        <span class="comment"># subfunctions inherit following FDs</span>
-        local _merge=<span class="number">8</span> _side2=<span class="number">9</span>
-        function <span class="function"><span class="title">bmf1</span></span>() {
-            local _f
-            <span class="keyword">while</span> <span class="built_in">read</span> _f; <span class="keyword">do</span> <span class="keyword">case</span> <span class="string">"<span class="variable">$_f</span>"</span> <span class="keyword">in</span>
-                *.ko)    [[ $(&amp;lt;         <span class="variable">$_f</span>) =~ <span class="variable">$_blockfuncs</span> ]] &amp;amp;&amp;amp; <span class="built_in">echo</span> &amp;quot;<span class="variable">$_f</span>&amp;quot; ;;
-                *.ko.gz) [[ $(gzip -dc &amp;amp;<span class="variable">${_side2}</span>
-                <span class="keyword">fi</span>
-            <span class="keyword">done</span> | bmf1 <span class="number">1</span>&amp;gt;&amp;amp;<span class="variable">${_merge}</span>
-        }
-        <span class="comment"># Use two parallel streams to filter alternating modules.</span>
-        <span class="built_in">eval</span> <span class="string">"( ( rotor ) <span class="variable">${_side2}</span>&amp;gt;&amp;amp;1 | bmf1 ) <span class="variable">${_merge}</span>&amp;gt;&amp;amp;1"</span>
-</code></pre><p>[/bash] </p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://wangcong.org/2011/10/18/shell-e9-87-8d-e5-ae-9a-e5-90-91-e7-9a-84-e4-b8-80-e5-a4-84-e5-a6-99-e7-94-a8/" data-id="iyjs6r8ssv6inmks" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-sleep-sort" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2011/06/16/sleep-sort/" class="article-date">
-  <time datetime="2011-06-17T06:28:41.000Z" itemprop="datePublished">Jun 16 2011</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Programming/">Programming</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2011/06/16/sleep-sort/">Sleep sort</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>4chan BBS 上一个排序的程序火了，它叫<a href="http://dis.4chan.org/read/prog/1295544154/" target="_blank" rel="external">休眠排序</a>，很有意思。</p>
-<p>[bash]</p>
-<h1 id="!/bin/bash">!/bin/bash</h1>
-<p>function f() {<br>    sleep “$1”<br>    echo “$1”<br>}<br>while [ -n “$1” ]<br>do<br>    f “$1” &amp;<br>    shift<br>done<br>wait</p>
-<p>[/bash]</p>
-<p>其实它的原理很简单，就是，要对N个整数进行排序的话，启动N个进程（线程），每个进程休眠对应的整数指定的秒数，然后再打印该数，最后你在终端上看到的肯定是排序之后的结果了……看了之后你会不会也觉得这太坑爹了？！可是，它就是能工作，而且占用CPU很少！</p>
-<p>值得一提的是底下回复中给出的OpenMP版本（如果要尝试的话需要安装openmpi）和Perl版本。</p>
-<p>[c]<br>/*</p>
-<ul>
-<li>@file sleepsort.c</li>
-<li>@brief sorts numbers<br>*</li>
-<li>@compile gcc sleepsort.c -fopenmp -o sleepsort<br>*</li>
-<li>@author Gerald Jay Sussman (Massachvsetts Institvte of Technology)<br>*/</li>
-</ul>
-<h1 id="include">include</h1>
-<h1 id="include-1">include</h1>
-<h1 id="include-2">include</h1>
-<p>int main(int argc, char **argv) {<br>  int i;</p>
-<p>  omp_set_num_threads(argc);</p>
-<h1 id="pragma_omp_parallel_for">pragma omp parallel for</h1>
-<p>  for (i = 0; i &lt; argc - 1; i++) {<br>    long int this = atol(argv[i+1]);</p>
-<pre><code>sleep(<span class="keyword">this</span>);
-
-printf(&amp;quot;%ldn&amp;quot;, <span class="keyword">this</span>);
-fflush(<span class="keyword">stdout</span>);
-</code></pre><p>  }</p>
-<p>  return 0;<br>}</p>
-<p>[/c]<br>[perl]<br>fork and sleep $_, say, last for @ARGV; 1 while 1  -wait<br>[/perl]</p>
-<p>除了不能对浮点数和负数进行排序，它还有一个缺点，那就是其中某个进程需要睡眠最大的那个数指定的时间，然后才能得出最后结果。下面有人提出了改进，我试了试，没有一个完美的。理想的情况下它应该能够对正负整数、浮点数进行排序，而且最坏也不要花太多时间，感兴趣的同学可以自己改进一下。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://wangcong.org/2011/06/16/sleep-sort/" data-id="af4cy9i0rjpxl7ty" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post--e5-8f-88-e5-88-b0-e6-84-9a-e4-ba-ba-e8-8a-82" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2011/04/01/-e5-8f-88-e5-88-b0-e6-84-9a-e4-ba-ba-e8-8a-82/" class="article-date">
-  <time datetime="2011-04-02T05:21:23.000Z" itemprop="datePublished">Apr 1 2011</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Programming/">Programming</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2011/04/01/-e5-8f-88-e5-88-b0-e6-84-9a-e4-ba-ba-e8-8a-82/">又到愚人节</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>每年愚人节技术 geek 们都要一本正经的恶搞一次，所以每年的这天我都特别留意有没有一些新的恶搞。今年也没有失望。</p>
-<p>1) LKML 上有人<a href="https://lkml.org/lkml/2011/4/1/233" target="_blank" rel="external">发了一个补丁</a>，说引入一个新的布尔类型，除了“真”与“假”之外还定义了一个“或许”，其值为1/2。<br>[c]<br>enum _Wool {<br>    w_false    = 0,<br>    w_true    = 1,<br>    w_maybe    = 1 / 2,<br>};<br>[/c]</p>
-<p>2) 鉴于 IPv6 就要来临，可 IPv6 还是有不少问题，于是有人提出<a href="http://packetlife.net/blog/2011/apr/1/alternative-ipv6-works/" target="_blank" rel="external">引入 IPv4.1</a>，把原来的4字节IP地址扩展为5字节，而且保证完全向后兼容 IPv4。以后再不够了再扩展 IPv4.2 就可以啦！我觉得这个主意不错，希望贵国早日把这拿来一本正经地搞一搞！再申请个专利什么的！搞啥子 IPv9 哟！</p>
-<p>3) StackOverflow 上<a href="http://stackoverflow.com/questions/5508110/why-is-this-program-erroneously-rejected-by-three-c-compilers" target="_blank" rel="external">有人提问</a>，为啥子我这个C++的 Hello world 程序连编译都通不过？我已经把C++标准全部读了两遍。更搞笑的是，底下还有人一本正经地给出解决方法，其中一个最牛逼了：</p>
-<h1 id="include_&lt;ChuckNorris&gt;">include &lt;ChuckNorris&gt;</h1>
-<p>绝对可以解决一切通不过编译的程序！</p>
-<p>4) Debain、ArchLinux、Gentoo等将合并为<a href="http://www.debian.org/News/2011/20110401" target="_blank" rel="external">超级发行版Canterbury</a>！</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://wangcong.org/2011/04/01/-e5-8f-88-e5-88-b0-e6-84-9a-e4-ba-ba-e8-8a-82/" data-id="kjbvjb1qapawgai9" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-api-e4-b8-8e-abi" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2011/03/25/api-e4-b8-8e-abi/" class="article-date">
-  <time datetime="2011-03-26T06:29:16.000Z" itemprop="datePublished">Mar 25 2011</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Programming/">Programming</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2011/03/25/api-e4-b8-8e-abi/">API 与 ABI</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>（本文亦是《C语言编程艺术》中的一部分，所以请勿用于商业用途。）</p>
-<p>一些程序员居然对API和ABI这两个概念都不清楚，我感到有些惊讶。这里以 Linux 内核为例简单解释一下。</p>
-<p>API，顾名思义，是<a href="http://en.wikipedia.org/wiki/Application_programming_interface" target="_blank" rel="external">编程的接口</a>，换句话说也就是你编写“应用程序”时候调用的函数之类的东西。对于内核来说，它的“应用程序”有两种：一种是在它之上的，用户空间的真正的应用程序，内核给它们提供的是系统调用这种接口，比如 read(2)，write(2)；另一种就是内核模块了，它们和内核处于同一层，内核给它们提供的是导出的内核函数，比如 kmalloc()，printk()。这些接口都是你可以在<strong>编写</strong>程序的时候直接看到的，可以直接拿来用的。</p>
-<p>而 ABI 是另一种形式的接口，<a href="http://en.wikipedia.org/wiki/Application_binary_interface" target="_blank" rel="external">二进制接口</a>。除非你直接使用汇编语言，这种接口一般是不能直接拿来用的。比如，内核系统调用用哪些寄存器或者干脆用堆栈来传递参数，返回值又是通过哪个寄存器传递回去，内核里面定义的某个结构体的某个字段偏移是多少等等，这些都是二进制层面上的接口。这些接口是直接给<strong>编译好的</strong>二进制用的。换句话说，如果 ABI 保持稳定的话，你在之前版本上编译好的二进制应用程序、内核模块，完全可以无须重新编译直接在新版本上运行。另一种比较特殊的 ABI 是像 /proc，/sys 目录下面导出的文件，它们虽然不是直接的二进制形式，但也会影响编译出来的二进制，如果它里面使用到它们的话，因此这些“接口”也是一种 ABI。</p>
-<p>你平时看到的什么 POSIX 标准啊，C99 标准啊，都是对 API 的规定。而规定 ABI 的标准就不多，而且也没那么强势，Linux 上面的 ABI 标准似乎只有 Linux Foundation 提供的<a href="http://refspecs.freestandards.org/lsb.shtml" target="_blank" rel="external">一些标准</a>。</p>
-<p>好了，从上面我们可以看出，其实保持一个稳定的 ABI 要比保持稳定的 API 要难得多。比如，在内核中 int register_netdevice(struct net_device *dev) 这个内核函数原型基本上是不会变的，所以保持这个 API 稳定是很简单的，但它的 ABI 就未必了，就算是这个函数定义本身没变，即 API 没变，而 struct net_device 的定义变了，里面多了或者少了某一个字段，它的 ABI 就变了，你之前编译好的二进制模块就很可能会出错了，必须重新编译才行。</p>
-<p>你可能会感到意外，上游的 Linux 内核其实不光不保持稳定的 ABI，它就连稳定的 API 都不会保持！而且还牛逼哄哄地写了一个文档，叫 stable_api_nonsense.txt。这么做的道理是，内核一直在向前推进，而且速度很快，内核开发者们并不想因为 API 的限制而阻碍前进的脚步！毕竟我们不想成为下一个 Windows！:-)</p>
-<p>所以，你的驱动在不同版本的内核上不经修改直接运行那几乎是不太可能的，就算是你允许重新编译也未必就能不经修改编译成功。即使在同一个大版本的不同发行版上也可能不行。</p>
-<p>那你应该怎么办？最好的办法莫过于把你的驱动贡献到社区，汇入内核源代码树中，这样一旦内核的 API 有改动，改动这个 API 的人就<strong>有义务</strong>替你修改你的驱动的代码，你只需要 review 一下（或者这个也会有人帮你），也省去你不少时间，何乐而不为呢？另一种办法就是基于某个提供稳定 ABI 的内核，比如红帽的 RHEL （认为这是广告的人请使用 CentOS，谢谢！），红帽的企业版内核保证有稳定的 ABI，只要你没有跨大的版本，因为我们的源代码里会检测 ABI 的变化，为此我们实在付出了不少努力。</p>
-<p>当然了，如何<a href="http://ispras.linuxfoundation.org/index.php/ABI_compliance_checker" target="_blank" rel="external">检查 ABI 变化</a>那就是另一个有意思的话题了，以后有机会慢慢说这个问题。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://wangcong.org/2011/03/25/api-e4-b8-8e-abi/" data-id="pnuo49igou9tnlfe" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-gcc-e5-a4-aa-e8-81-aa-e6-98-8e-e4-ba-86-ef-bc-81" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2010/10/14/gcc-e5-a4-aa-e8-81-aa-e6-98-8e-e4-ba-86-ef-bc-81/" class="article-date">
-  <time datetime="2010-10-15T06:17:32.000Z" itemprop="datePublished">Oct 14 2010</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Programming/">Programming</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2010/10/14/gcc-e5-a4-aa-e8-81-aa-e6-98-8e-e4-ba-86-ef-bc-81/">gcc 太聪明了！</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>gcc 越来越聪明了，有时候为了故意不让它优化某一部分代码（但同时还要开启-O！）我真可是费尽了心思。</p>
-<p>举两个简单的例子来说明一下。一个是exp()的问题，<strong>不带</strong>-lm编译下面这段代码：</p>
-<p>[c]</p>
-<h1 id="include">include</h1>
-<h1 id="include-1">include</h1>
-<p>int main(void)<br>{<br>        printf(“%lf”, exp(4.0));<br>        return 0;<br>}<br>[/c]</p>
-<p>你会发现可以得出正确的结果，没任何链接错误。它被预处理掉了吗?gcc -E告诉我们没有。那到底怎么回事呢？看一下生成的汇编，你会发现里面根本就没有call exp这样的指令！也就是说它被gcc在编译的时候处理了！这是因为像exp(4.0)这样的常量表达式是可以在编译的时候优化的，它的结果是个常量，所以gcc编译的时候就已经把这个值计算出来了，并把计算结果作为一个常量放到那个位置去了！为我们省去了一个函数调用！:-) 所以，如果你把上面的4.0换成一个double变量传递给exp()，你就会得到链接错误了。</p>
-<p>另外一个例子是一个非常真实的例子。我们知道内核中有个著名的结构体叫struct skbuff，而我们公司内部的一个补丁中在某个函数中错误地把skbuff拼写成了skbuf！但编译和运行没任何问题！这个问题是后来别人在code review的时候才发现的！为什么呢？这明明应该通不过编译啊！我花费了不少时间去追踪这个问题，最后发现了问题的根源。为了方便叙述，我把问题的关键部分抽象成了下面的代码：</p>
-<p>[c]<br>int foo(struct non_exist *n)<br>{<br>    if (n)<br>        return 0;<br>    else<br>        return 1;<br>}<br>[/c]</p>
-<p>我们这么编译：gcc -c foo.c，你会发现我们只有警告，没有错误！警告我们可以忽略，因为我们只关心为什么不会有错误，换句话说，为什么gcc依旧可以成功地编译出代码来？仔细想一下你会明白，其实在foo()里面，我们根本就不用关心n到底是一个什么样的指针，只要知道它是一个指针就可以了！因为我们一没有对它进行dereference操作，二没有进行++或者—运算！而所有指针在特定的机器上长度是一定的。这正是为什么它可以通得过编译，但警告是肯定不会少的。;-)</p>
-<p>如果你读过-O（或以上）生成的汇编的话，你还会发现一大坨gcc优化的例子，这可苦了我这种读汇编的人了，每次都得去猜gcc到底做了那些优化，不过这也相当有乐趣！</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://wangcong.org/2010/10/14/gcc-e5-a4-aa-e8-81-aa-e6-98-8e-e4-ba-86-ef-bc-81/" data-id="i8lxsewqzxzl5s2t" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post--e5-85-b3-e4-ba-8e-e5-86-85-e5-ad-98-e6-b3-84-e6-bc-8f" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2010/10/08/-e5-85-b3-e4-ba-8e-e5-86-85-e5-ad-98-e6-b3-84-e6-bc-8f/" class="article-date">
-  <time datetime="2010-10-09T03:08:40.000Z" itemprop="datePublished">Oct 8 2010</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Programming/">Programming</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2010/10/08/-e5-85-b3-e4-ba-8e-e5-86-85-e5-ad-98-e6-b3-84-e6-bc-8f/">关于内存泄漏</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>不少编写用户空间程序的人都关心内存泄漏到底会造成多少影响。这里简单澄清一下。</p>
-<p>无论用户空间是通过malloc()也好，mmap()也好，最终都是通过Linux内核管理的。只要内核没有bug，这些和这个进程相关的页面都是会被记录的，而且会在进程exit()的时候由Linux内核全部释放掉。所以对于运行时间不长的应用程序，有一些内存泄漏一般是没多大问题的。作为用户程序的编写者，如果释放内存真的很麻烦，或者说会让你的某一块代码变得很难读，你完全可以直接exit()。虽然很多时候我并不建议你这么做，道理很简单，因为你申请了资源就应该自己去释放，这不光是资源浪费的问题，而且是你代码逻辑和你作为开发者职责的问题。</p>
-<p>实际上，Linux内核根本就不会注意到用户空间的泄漏不泄漏，它只关心你申请的这个页面有没有被它记录，所以进程退出时所有和此相关的内存页面都会被内核释放掉，管你是因为泄漏留下的还是用作其它用途的。</p>
-<p>但是，你也知道，有些进程是不会主动退出的，那就是后台进程。这样的程序要是存在内存泄漏的话，还是可能会很浪费系统的内存资源的，因为内核没机会去释放这些页面，而且对用户空间的泄漏情况完全不知，它只会不停地给用户空间分配内存，直到用户空间地址耗尽或者物理内存趋近用完。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://wangcong.org/2010/10/08/-e5-85-b3-e4-ba-8e-e5-86-85-e5-ad-98-e6-b3-84-e6-bc-8f/" data-id="f7na6afdy6zm1x1g" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-gcc-trampoline" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2010/09/27/gcc-trampoline/" class="article-date">
-  <time datetime="2010-09-28T06:21:28.000Z" itemprop="datePublished">Sep 27 2010</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Programming/">Programming</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2010/09/27/gcc-trampoline/">Gcc Trampoline</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>gcc对<a href="http://gcc.gnu.org/onlinedocs/gccint/Trampolines.html" target="_blank" rel="external">trampoline的定义</a>如下：</p>
-<p>A trampoline is a small piece of code that is created at run time when the address of a nested function is taken. It normally resides on the stack, in the stack frame of the containing function.</p>
-<p>trampoline是因nested function应运而生的。其基本原理描述如下：</p>
-<p>The instructions in the trampoline must do two things: load a constant address into the static chain register, and jump to the real address of the nested function. On CISC machines such as the m68k, this requires two instructions, a move immediate and a jump. Then the two addresses exist in the trampoline as word-long immediate operands. On RISC machines, it is often necessary to load each address into a register in two parts. Then pieces of each address form separate immediate operands.</p>
-<p>下面我们来看看它具体是怎么工作的。看<a href="http://www.technovelty.org/code/c/trampoline.html" target="_blank" rel="external">这个例子</a>：<br>[c]</p>
-<h1 id="include">include</h1>
-<p>int function(int arg) {</p>
-<pre><code>    <span class="keyword">int</span> nested_function(<span class="keyword">int</span> nested_arg) {
-            <span class="keyword">return</span> arg + nested_arg;
-    }
-
-    <span class="keyword">return</span> nested_function(arg);
-</code></pre><p>}</p>
-<p>int main(void)<br>{<br>        printf(“%dn”, function(10));<br>}<br>[/c]<br>很明显我们使用到了一个nested function，但是我们看gcc生成的汇编：<br>[asm]<br>00000000004004c4 :<br>  4004c4:       55                      push   %rbp<br>  4004c5:       48 89 e5                mov    %rsp,%rbp<br>  4004c8:       89 7d fc                mov    %edi,-0x4(%rbp)<br>  4004cb:       4c 89 d0                mov    %r10,%rax<br>  4004ce:       8b 00                   mov    (%rax),%eax<br>  4004d0:       03 45 fc                add    -0x4(%rbp),%eax<br>  4004d3:       c9                      leaveq<br>  4004d4:       c3                      retq</p>
-<p>00000000004004d5 :<br>  4004d5:       55                      push   %rbp<br>  4004d6:       48 89 e5                mov    %rsp,%rbp<br>  4004d9:       48 83 ec 10             sub    $0x10,%rsp<br>  4004dd:       89 f8                   mov    %edi,%eax<br>  4004df:       89 45 f0                mov    %eax,-0x10(%rbp)<br>  4004e2:       8b 45 f0                mov    -0x10(%rbp),%eax<br>  4004e5:       48 8d 55 f0             lea    -0x10(%rbp),%rdx<br>  4004e9:       49 89 d2                mov    %rdx,%r10<br>  4004ec:       89 c7                   mov    %eax,%edi<br>  4004ee:       e8 d1 ff ff ff          callq  4004c4<br>  4004f3:       c9                      leaveq<br>  4004f4:       c3                      retq<br>[/asm]</p>
-<p>很明显这和普通的函数调用没什么区别嘛！（当然，除了汇编中的nest_function()的名字改变了。）没trampoline什么事。这是因为这时候还没必要使用trampoline，gcc优化还是很聪明的，它不到万不得已不会做一点儿额外的工作。</p>
-<p>下面我们就取一下它的地址：<br>[c]</p>
-<h1 id="include-1">include</h1>
-<p>int function(int arg) {</p>
-<pre><code>    <span class="keyword">int</span> nested_function(<span class="keyword">int</span> nested_arg) {
-            <span class="keyword">return</span> arg + nested_arg;
-    }
-
-    <span class="keyword">return</span> nested_function(arg);
-</code></pre><p>}</p>
-<p>int function2(int arg) {</p>
-<pre><code>    <span class="keyword">int</span> nested_function(<span class="keyword">int</span> nested_arg) {
-            <span class="keyword">return</span> arg + nested_arg;
-    }
-
-    <span class="keyword">int</span> (*function_pointer)(<span class="keyword">int</span> arg) = nested_function;
-
-    <span class="keyword">return</span> function_pointer(arg);
-</code></pre><p>}</p>
-<p>int main(void)<br>{<br>        printf(“%dn”, function(10));<br>        printf(“%dn”, function2(10));<br>        return 0;<br>}<br>[/c]<br>这时trampoline就产生了，因为我们对它取了地址，这个地址在栈上，而且nested function()的栈必须被设为外面function2()的栈。<br>[asm]<br>00000000004004f5 :<br>  4004f5:       55                      push   %rbp<br>  4004f6:       48 89 e5                mov    %rsp,%rbp<br>  4004f9:       89 7d fc                mov    %edi,-0x4(%rbp)<br>  4004fc:       4c 89 d0                mov    %r10,%rax<br>  4004ff:       8b 00                   mov    (%rax),%eax<br>  400501:       03 45 fc                add    -0x4(%rbp),%eax<br>  400504:       c9                      leaveq<br>  400505:       c3                      retq</p>
-<p>0000000000400506 :<br>  400506:       55                      push   %rbp<br>  400507:       48 89 e5                mov    %rsp,%rbp<br>  40050a:       48 83 ec 30             sub    $0x30,%rsp<br>  40050e:       89 f8                   mov    %edi,%eax<br>  400510:       89 45 d0                mov    %eax,-0x30(%rbp)<br>  400513:       48 8d 45 d0             lea    -0x30(%rbp),%rax<br>  400517:       48 83 c0 04             add    $0x4,%rax<br>  40051b:       48 8d 55 d0             lea    -0x30(%rbp),%rdx<br>  40051f:       b9 f5 04 40 00          mov    $0x4004f5,%ecx<br>  400524:       66 c7 00 41 bb          movw   $0xbb41,(%rax)<br>  400529:       89 48 02                mov    %ecx,0x2(%rax)<br>  40052c:       66 c7 40 06 49 ba       movw   $0xba49,0x6(%rax)<br>  400532:       48 89 50 08             mov    %rdx,0x8(%rax)<br>  400536:       c7 40 10 49 ff e3 90    movl   $0x90e3ff49,0x10(%rax)<br>  40053d:       48 8d 45 d0             lea    -0x30(%rbp),%rax<br>  400541:       48 83 c0 04             add    $0x4,%rax<br>  400545:       48 89 45 f8             mov    %rax,-0x8(%rbp)<br>  400549:       8b 45 d0                mov    -0x30(%rbp),%eax<br>  40054c:       48 8b 55 f8             mov    -0x8(%rbp),%rdx<br>  400550:       89 c7                   mov    %eax,%edi<br>  400552:       ff d2                   callq  *%rdx<br>  400554:       c9                      leaveq<br>  400555:       c3                      retq<br>[/asm]<br>读生成的汇编，我们可以看出堆栈大体这样：</p>
-<p><pre><br>[  xxx     ] &lt;-rsp<br>[  eax     ]<br>[  0xbb41  ]<br>[  addr    ]<br>[  0xba49  ]<br>[   rsp    ]<br>[0x90e3ff49]<br>…<br>[ xxx      ] &lt;- rbp<br></pre><br>其中addr是指nested_function.2079的地址。这里最让我们困惑的应该那三个常数，它们是什么？根据上面的定义你应该可以猜出，是指令！到底是什么指令呢？我们手工反汇编一下：<br>[c]<br>unsigned short arrary[] = {0xbb41, 0xffff, 0xffff};<br>unsigned short array2[] = {0xba49, 0xffff, 0xffff};<br>unsigned short arrary3 [] = {0xff49, 0x90e3};<br>[/c]<br>其中0xffff仅仅是用作标记。把此文件保存为decode.c，然后：</p>
-<p><pre><br>cr0% gcc -c decode.c<br>cr0% objdump -D decode.o<br></pre><br>我们可以得到，它们大体就是下面三条指令：</p>
-<p><pre><br>movl $nested_function.2079,%r11<br>movl %rsp, %r10<br>jmp *%r11<br>nop<br></pre><br>根据nested_function.2079里的代码，我们可以看出%r10传递的是参数的地址，然后就直接jmp到nested_function.2079里去了。这就是传说中的trampoline！</p>
-<p>注：此时的stack必须是可执行的，因为有代码放在了里面，查看其maps可以看出：</p>
-<p>bfebe000-bfed3000 rwxp 00000000 00:00 0          [stack]</p>
-<p>提到nested function，不能不提一个trick，就是用nested function<a href="http://gcc.gnu.org/ml/gcc-help/2010-08/msg00229.html" target="_blank" rel="external">来实现C的lambda</a>！如下：<br>[c]</p>
-<h1 id="define_lambda(l_ret_type,_l_arguments,_l_body)">define lambda(l_ret_type, l_arguments, l_body)</h1>
-<pre><code>({                                                           
-  l_ret_type l_anonymous_functions_name l_arguments          
-    l_body                                                   
-  &amp;amp;l_anonymous_functions_name;                               
-})
-
-qsort (<span class="built_in">array</span>, <span class="keyword">sizeof</span> (<span class="built_in">array</span>) / <span class="keyword">sizeof</span> (<span class="built_in">array</span>[<span class="number">0</span>]), <span class="keyword">sizeof</span> (<span class="built_in">array</span>[<span class="number">0</span>]),
-       lambda (<span class="keyword">int</span>, (<span class="keyword">const</span> <span class="keyword">void</span> *a, <span class="keyword">const</span> <span class="keyword">void</span> *b),
-               {
-                 dump ();
-                 <span class="built_in">printf</span> (<span class="string">"Comparison %d: %d and %dn"</span>,
-                         ++ comparison,
-                         *(<span class="keyword">const</span> <span class="keyword">int</span> *) a, *(<span class="keyword">const</span> <span class="keyword">int</span> *) b);
-                 <span class="keyword">return</span> *(<span class="keyword">const</span> <span class="keyword">int</span> *) a - *(<span class="keyword">const</span> <span class="keyword">int</span> *) b;
-               }));
-</code></pre><p>[/c]<br>怎么样？很有意思吧。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://wangcong.org/2010/09/27/gcc-trampoline/" data-id="obq01pamxcuew13f" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-  
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/categories/Programming/page/2/">&laquo; Prev</a><a class="page-number" href="/categories/Programming/">1</a><a class="page-number" href="/categories/Programming/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/categories/Programming/page/4/">4</a><a class="page-number" href="/categories/Programming/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/categories/Programming/page/16/">16</a><a class="extend next" rel="next" href="/categories/Programming/page/4/">Next &raquo;</a>
-    </nav>
-  
+  </a>
 </section>
-        
-          <aside id="sidebar">
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
-    <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Book-Reviews/">Book Reviews</a><span class="category-list-count">18</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/China/">China</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Collection/">Collection</a><span class="category-list-count">25</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">324</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux-Application/">Linux Application</a><span class="category-list-count">73</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux-Kernel/">Linux Kernel</a><span class="category-list-count">64</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Love/">Love</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Movies/">Movies</a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/">Programming</a><span class="category-list-count">152</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Science-Fiction/">Science Fiction</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Travel/">Travel</a><span class="category-list-count">19</span></li></ul>
-    </div>
-  </div>
 
+  <section class="post" itemscope itemprop="blogPost">
   
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/geek/">geek</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/handling/">handling</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/joke/">joke</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/signal/">signal</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/unix/">unix</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a><span class="tag-list-count">1</span></li></ul>
-    </div>
-  </div>
+    <a href="/2011/11/24/-e4-b8-80-e4-b8-aa-e5-ae-8f-e6-8a-80-e5-b7-a7/" title="又一个宏技巧" itemprop="url">
+  
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/geek/" style="font-size: NaNpx;">geek</a><a href="/tags/handling/" style="font-size: NaNpx;">handling</a><a href="/tags/joke/" style="font-size: NaNpx;">joke</a><a href="/tags/linux/" style="font-size: NaNpx;">linux</a><a href="/tags/signal/" style="font-size: NaNpx;">signal</a><a href="/tags/unix/" style="font-size: NaNpx;">unix</a><a href="/tags/vim/" style="font-size: NaNpx;">vim</a>
-    </div>
-  </div>
+    <time datetime="2011-11-25T07:32:15.000Z" itemprop="datePublished">Nov 24 2011</time>
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">August 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">December 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">October 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">September 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">August 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">February 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01/">January 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12/">December 2012</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">November 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">October 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">September 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">August 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/07/">July 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">April 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">March 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">February 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">January 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/12/">December 2011</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">November 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/10/">October 2011</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">September 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08/">August 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/07/">July 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/06/">June 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/05/">May 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04/">April 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03/">March 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/02/">February 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/01/">January 2011</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/12/">December 2010</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/11/">November 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/10/">October 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/09/">September 2010</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08/">August 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07/">July 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06/">June 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05/">May 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04/">April 2010</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03/">March 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02/">February 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01/">January 2010</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12/">December 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11/">November 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10/">October 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09/">September 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08/">August 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07/">July 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/06/">June 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/05/">May 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04/">April 2009</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03/">March 2009</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02/">February 2009</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01/">January 2009</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12/">December 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/11/">November 2008</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/10/">October 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09/">September 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08/">August 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07/">July 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06/">June 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05/">May 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04/">April 2008</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03/">March 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02/">February 2008</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01/">January 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12/">December 2007</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11/">November 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10/">October 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09/">September 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08/">August 2007</a><span class="archive-list-count">31</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07/">July 2007</a><span class="archive-list-count">34</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06/">June 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05/">May 2007</a><span class="archive-list-count">25</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04/">April 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03/">March 2007</a><span class="archive-list-count">50</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02/">February 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01/">January 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12/">December 2006</a><span class="archive-list-count">5</span></li></ul>
-    </div>
-  </div>
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recents</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2014/08/12/linux-e7-bd-91-e7-bb-9c-e6-b5-81-e9-87-8f-e6-8e-a7-e5-88-b6-ef-bc-88-e4-b8-80-ef-bc-89/">Linux 网络流量控制（零）</a>
-          </li>
-        
-          <li>
-            <a href="/2014/08/01/ottawa-linux-symposium/">Ottawa Linux Symposium</a>
-          </li>
-        
-          <li>
-            <a href="/2014/05/31/skbuff-e5-86-85-e5-ad-98-e6-a8-a1-e5-9e-8b/">skbuff 内存模型</a>
-          </li>
-        
-          <li>
-            <a href="/2014/05/06/-e9-95-bf-e6-9c-9f-e6-8f-90-e4-be-9b-twitter-e5-86-85-e6-8e-a8/">长期提供 Twitter 内推</a>
-          </li>
-        
-          <li>
-            <a href="/2014/01/30/-e6-88-91-e7-9a-842013-ef-bc-9a-e6-88-91-e6-9d-a5-e5-88-b0-e4-ba-86-e7-be-8e-e5-9b-bd/">我的2013：我来到了美国</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
+    <h1 itemprop="name">又一个宏技巧</h1>
 
+  </a>
+</section>
+
+  <section class="post" itemscope itemprop="blogPost">
   
-</aside>
-        
+    <a href="/2011/10/26/-e6-8e-a8-e8-8d-90-e4-b8-a4-e6-9c-ac-e5-b9-b6-e8-a1-8c-e7-bc-96-e7-a8-8b-e7-9a-84-e4-b9-a6/" title="推荐两本并行编程的书" itemprop="url">
+  
+
+    <time datetime="2011-10-27T00:40:01.000Z" itemprop="datePublished">Oct 26 2011</time>
+
+
+    <h1 itemprop="name">推荐两本并行编程的书</h1>
+
+  </a>
+</section>
+
+  <section class="post" itemscope itemprop="blogPost">
+  
+    <a href="/2011/10/18/shell-e9-87-8d-e5-ae-9a-e5-90-91-e7-9a-84-e4-b8-80-e5-a4-84-e5-a6-99-e7-94-a8/" title="shell 重定向的一处妙用" itemprop="url">
+  
+
+    <time datetime="2011-10-18T18:41:30.000Z" itemprop="datePublished">Oct 18 2011</time>
+
+
+    <h1 itemprop="name">shell 重定向的一处妙用</h1>
+
+  </a>
+</section>
+
+  <section class="post" itemscope itemprop="blogPost">
+  
+    <a href="/2011/06/16/sleep-sort/" title="Sleep sort" itemprop="url">
+  
+
+    <time datetime="2011-06-17T06:28:41.000Z" itemprop="datePublished">Jun 16 2011</time>
+
+
+    <h1 itemprop="name">Sleep sort</h1>
+
+  </a>
+</section>
+
+  <section class="post" itemscope itemprop="blogPost">
+  
+    <a href="/2011/04/01/-e5-8f-88-e5-88-b0-e6-84-9a-e4-ba-ba-e8-8a-82/" title="又到愚人节" itemprop="url">
+  
+
+    <time datetime="2011-04-02T05:21:23.000Z" itemprop="datePublished">Apr 1 2011</time>
+
+
+    <h1 itemprop="name">又到愚人节</h1>
+
+  </a>
+</section>
+
+  <section class="post" itemscope itemprop="blogPost">
+  
+    <a href="/2011/03/25/api-e4-b8-8e-abi/" title="API 与 ABI" itemprop="url">
+  
+
+    <time datetime="2011-03-26T06:29:16.000Z" itemprop="datePublished">Mar 25 2011</time>
+
+
+    <h1 itemprop="name">API 与 ABI</h1>
+
+  </a>
+</section>
+
+  <section class="post" itemscope itemprop="blogPost">
+  
+    <a href="/2010/10/14/gcc-e5-a4-aa-e8-81-aa-e6-98-8e-e4-ba-86-ef-bc-81/" title="gcc 太聪明了！" itemprop="url">
+  
+
+    <time datetime="2010-10-15T06:17:32.000Z" itemprop="datePublished">Oct 14 2010</time>
+
+
+    <h1 itemprop="name">gcc 太聪明了！</h1>
+
+  </a>
+</section>
+
+  <section class="post" itemscope itemprop="blogPost">
+  
+    <a href="/2010/10/08/-e5-85-b3-e4-ba-8e-e5-86-85-e5-ad-98-e6-b3-84-e6-bc-8f/" title="关于内存泄漏" itemprop="url">
+  
+
+    <time datetime="2010-10-09T03:08:40.000Z" itemprop="datePublished">Oct 8 2010</time>
+
+
+    <h1 itemprop="name">关于内存泄漏</h1>
+
+  </a>
+</section>
+
+  <section class="post" itemscope itemprop="blogPost">
+  
+    <a href="/2010/09/27/gcc-trampoline/" title="Gcc Trampoline" itemprop="url">
+  
+
+    <time datetime="2010-09-28T06:21:28.000Z" itemprop="datePublished">Sep 27 2010</time>
+
+
+    <h1 itemprop="name">Gcc Trampoline</h1>
+
+  </a>
+</section>
+
+
+  <nav id="page-nav" class="clearfix archive-nav">
+    <a class="extend prev" rel="prev" href="/categories/Programming/page/2/"><span></span>Prev</a><a class="page-number" href="/categories/Programming/">1</a><a class="page-number" href="/categories/Programming/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/categories/Programming/page/4/">4</a><a class="page-number" href="/categories/Programming/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/categories/Programming/page/16/">16</a><a class="extend next" rel="next" href="/categories/Programming/page/4/">Next<span></span></a>
+  </nav>
+
+  </div>
+</div>
+
       </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2015 Cong Wang<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
+      <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Larry Page in Google. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2015 
+		
+		<a href="http://wangcong.org/about" target="_blank" title="Cong Wang">Cong Wang</a>
+		
+		</p>
+</div>
 </footer>
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-    <a href="/about-2" class="mobile-nav-link">About</a>
-  
-</nav>
-    
+      <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
 
 
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
-
-  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
 
 
 
-<script src="/js/script.js" type="text/javascript"></script>
 
 
-  </div>
-</body>
-</html>
+
+
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+    </body>
+   </html>

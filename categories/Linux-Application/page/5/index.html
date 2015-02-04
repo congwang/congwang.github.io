@@ -1,11 +1,16 @@
-<!DOCTYPE html>
-<html>
+
+  <!DOCTYPE HTML>
+<html >
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   
-  <title>Category: Linux Application | A Geek&#39;s Page</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
+    <title>Category: Linux Application | A Geek&#39;s Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Cong Wang">
+    
+    
+    <meta name="description">
 <meta property="og:type" content="website">
 <meta property="og:title" content="A Geek's Page">
 <meta property="og:url" content="http://wangcong.org/categories/Linux-Application/page/5/">
@@ -15,639 +20,321 @@
 <meta name="twitter:title" content="A Geek's Page">
 <meta name="twitter:description">
 
-  
-    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" href="/css/style.css" type="text/css">
 
-  
+    
+    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
 
 </head>
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">A Geek&#39;s Page</a>
-      </h1>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-          <a class="main-nav-link" href="/about-2">About</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://wangcong.org"></form>
-      </div>
-    </div>
-  </div>
-</header>
-      <div class="outer">
-        <section id="main">
-  
-    <article id="post--e5-85-b3-e4-ba-8emount-e7-9a-84-e4-b8-a4-e4-b8-aa-e9-94-99-e8-af-af" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2008/09/23/-e5-85-b3-e4-ba-8emount-e7-9a-84-e4-b8-a4-e4-b8-aa-e9-94-99-e8-af-af/" class="article-date">
-  <time datetime="2008-09-24T05:32:04.000Z" itemprop="datePublished">Sep 23 2008</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Linux-Application/">Linux Application</a>
-  </div>
 
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2008/09/23/-e5-85-b3-e4-ba-8emount-e7-9a-84-e4-b8-a4-e4-b8-aa-e9-94-99-e8-af-af/">关于mount的两个错误</a>
-    </h1>
-  
-
+    <body>
+      <header>
+        <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="A Geek&#39;s Page" title="A Geek&#39;s Page"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="A Geek&#39;s Page">A Geek&#39;s Page</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about-2">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:wangcong.org">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
       </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>1. mount: could not find any free loop device</p>
-<p>解决方法：losetup -d /dev/loop7</p>
-<p>2. <code>umount: device is busy</code></p>
-<p>解决方法一：</p>
-<p><code>kill $(``/sbin/fuser -m /dev/sda3 2&amp;gt;/dev/null)</code></p>
-<p>解决方法二：</p>
-<p>umount -f /dev/sda3</p>
-<p>umount -l /dev/sda3</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://wangcong.org/2008/09/23/-e5-85-b3-e4-ba-8emount-e7-9a-84-e4-b8-a4-e4-b8-aa-e9-94-99-e8-af-af/" data-id="sf8le5poguyl49vu" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-dns-e6-bc-8f-e6-b4-9e" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2008/08/14/dns-e6-bc-8f-e6-b4-9e/" class="article-date">
-  <time datetime="2008-08-15T00:30:45.000Z" itemprop="datePublished">Aug 14 2008</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Linux-Application/">Linux Application</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+      <div id="container">
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2008/08/14/dns-e6-bc-8f-e6-b4-9e/">DNS漏洞</a>
-    </h1>
-  
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>最近DNS漏洞狠火啊！！搞得沸沸扬扬，鸡犬不宁的～</p>
-<p>我仔细看了一下这个漏洞的原理，发现其实很简单。我这里说简单并不是事后诸葛，而是指相对于其它互联网协议的漏洞，比如 <a href="http://tools.ietf.org/html/rfc4987" target="_blank" rel="external">SYN Flood</a>，它早在1994年就被发现了。我觉得这个DNS漏洞也应该被发现得更早才对，没想到直到现在才暴露出来。</p>
-<p>说到底，这个DNS漏洞的成因是因为QID计算过于简单，只是简单地加一，这导致猜解很容易，可“屋漏偏逢连夜雨”，偏偏DNS server的实现中发送DNS请求的UDP端口又是不变的，这就造成了本次“全球DNS变暖”的问题。而且，不光光是BIND，其它很多实现都是这样，恩哼，那么这个问题就很严重了。解决方法也很简单，随机QID和UDP端口，注意，光随机QID似乎仍然是不够的。</p>
-<p>好了，现在我们反思一下为啥这个DNS漏洞这么简单却到现在才暴露出来？我觉得（停顿），是因为DNS太普通以至于几乎没人重视它了（too to 结构）。想想啊，我们似乎都觉得敲入一个域名就理应得到相应的主机，以至于连其IP是什么都看不到，也没必要看到（绝大多数情况）。这不光是普通用户的心态，连很多程序员也是，因为gethostbyname(3)替我们完成了这个工作。总之，几乎人人觉得这是理所应当的，所以几乎没人重视DNS问题，除了DNS服务器管理员和某些geek到家的人，而<a href="http://www.comsharp.com/GetKnowledge/zh-CN/TeamBlogTimothyPage_K455.aspx" target="_blank" rel="external">Dan Kaminsky</a>就是后者中的一个。当然了，Dan的人品也是很好的，他充分估计到了这件事的严重性，不光自己没利用它做啥坏事，而且最初的保密工作也做得很好！</p>
-<p>这件事再次提醒我们，不管什么事情做得很细了都很可怕。牛人就是这样炼成的！</p>
-<p>快打上补丁吧，哼哼哈兮～！</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://wangcong.org/2008/08/14/dns-e6-bc-8f-e6-b4-9e/" data-id="8a736o6nu9tbgysa" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
+<div class="archive-title" >
+  <h2 class="category-icon">Linux Application</h2>
   
-</article>
+</div>
+<div id="main" class="archive-part clearfix">
+  <div id="archive-page">
 
-
+  <section class="post" itemscope itemprop="blogPost">
   
-    <article id="post-join-e5-91-bd-e4-bb-a4" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2008/08/13/join-e5-91-bd-e4-bb-a4/" class="article-date">
-  <time datetime="2008-08-14T04:23:06.000Z" itemprop="datePublished">Aug 13 2008</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Linux-Application/">Linux Application</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2008/08/13/join-e5-91-bd-e4-bb-a4/">join命令</a>
-    </h1>
+    <a href="/2008/09/23/-e5-85-b3-e4-ba-8emount-e7-9a-84-e4-b8-a4-e4-b8-aa-e9-94-99-e8-af-af/" title="关于mount的两个错误" itemprop="url">
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>哎，以前居然不知道还有这么个强悍的命令。记之～～！</p>
-<p>$ join -t: &lt;(head -24 /proc/cpuinfo) &lt;(tail -24 /proc/cpuinfo)<br>processor       : 0: 1<br>vendor_id       : GenuineIntel: GenuineIntel<br>cpu family      : 6: 6<br>model           : 14: 14<br>model name      : Intel(R) Core(TM) Duo CPU      T2450  @ 2.00GHz: Intel(R) Core<br>(TM) Duo CPU      T2450  @ 2.00GHz<br>stepping        : 12: 12<br>cpu MHz         : 2000.000: 2000.000<br>cache size      : 2048 KB: 2048 KB<br>physical id     : 0: 0<br>siblings        : 2: 2<br>core id         : 0: 1<br>cpu cores       : 2: 2<br>fdiv_bug        : no: no<br>hlt_bug         : no: no<br>f00f_bug        : no: no<br>coma_bug        : no: no<br>fpu             : yes: yes<br>fpu_exception   : yes: yes<br>cpuid level     : 10: 10<br>wp              : yes: yes<br>flags           : fpu vme de pse tsc msr pae mce cx8 apic mtrr pge mca cmov pat<br>clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe nx constant_tsc arch_perfmon bts<br>pni monitor est tm2 xtpr: fpu vme de pse tsc msr pae mce cx8 apic mtrr pge mca<br>cmov pat clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe nx constant_tsc arch_pe<br>rfmon bts pni monitor est tm2 xtpr<br>bogomips        : 4003.80: 3999.98<br>clflush size    : 64: 64</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://wangcong.org/2008/08/13/join-e5-91-bd-e4-bb-a4/" data-id="gjoa56pj7kqdmyuj" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
+    <time datetime="2008-09-24T05:32:04.000Z" itemprop="datePublished">Sep 23 2008</time>
 
 
-  
-    <article id="post--e5-85-a8-e6-96-b0-e7-9a-84fedora-e7-b3-bb-e7-bb-9f" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2008/07/09/-e5-85-a8-e6-96-b0-e7-9a-84fedora-e7-b3-bb-e7-bb-9f/" class="article-date">
-  <time datetime="2008-07-09T11:44:29.000Z" itemprop="datePublished">Jul 9 2008</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Linux-Application/">Linux Application</a>
-  </div>
+    <h1 itemprop="name">关于mount的两个错误</h1>
 
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2008/07/09/-e5-85-a8-e6-96-b0-e7-9a-84fedora-e7-b3-bb-e7-bb-9f/">全新的Fedora系统</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>这两天对我的Linux进行了大的改造。</p>
-<p>先是花了一个晚上的时间从Fedora 8升级到了Fedora 9。通过网络升级Fedora有两种方式：一种是通过preupgrade，另一种是直接用yum（关于两种升级方式可以参考：<a href="http://www.howtoforge.com/upgrading-fedora8-to-fedora9-with-preupgrade" target="_blank" rel="external">preupgrade</a>，<a href="http://www.ioncannon.net/system-administration/138/upgrading-from-fedora-8-to-fedora-9-with-yum/" target="_blank" rel="external">yum</a>）。我采用了后者，升级过程中遇到了包依赖的错误，解决方法很简单，哪个包缺少依赖的东西就把那个包给删除，升级完再重新安装，然后就是要使劲地yum clean all。</p>
-<p>升级完最让我眼前一亮的是登录界面和Firefox 3，感觉很漂亮。升级后mplayer会出现错误，解决方法是：<a href="http://blog.chinaunix.net/u/8780/showart_421171.html" target="_blank" rel="external">这个</a>。还有一个头疼的问题是gcc 4.3，一些软件编译不过去了，某个2.6.23的内核就是，害得我又修改了内核的Makefile才编译通过的，不知道以后还会有什么，看来得自己编译gcc了。</p>
-<p>另一个大的改造是在Gnome上放弃使用metacity，改用<a href="http://sawfish.wikia.com/wiki/Main_Page" target="_blank" rel="external">sawfish</a>，感觉要轻便一些。不过安装sawfish需要自己编译安装。同时，默认使用<a href="http://fluxbox.sourceforge.net/" target="_blank" rel="external">fluxbox</a>，其次是<a href="http://www.enlightenment.org/" target="_blank" rel="external">enlightenment</a> 16，减少Gnome的使用。用了几天感觉这两个窗口管理器都很简洁，fluxbox更顺手一些，虽然e16更漂亮，但它资料太少（注：e17资料相对还多一些），不知怎么去修改它的配置，所以默认使用fluxbox了。安装它们可以用：yum install fluxbox e16。</p>
-<p>推荐几个关于enlightenment的网址：<a href="http://www1.get-e.org/" target="_blank" rel="external">get-e.org</a>，<a href="http://e17-stuff.org" target="_blank" rel="external">e17-stuff.org</a>，<a href="http://wiki.enlightenment.org/index.php" target="_blank" rel="external">官方wiki</a>，关于fluxbox的网址：<a href="http://fluxbox-wiki.org/index.php/Fluxbox-wiki" target="_blank" rel="external">fluxbox-wiki</a>，<a href="http://fluxbox.org/" target="_blank" rel="external">fluxbox.org</a>。</p>
-<p>顺带体验了一下<a href="http://rox.sourceforge.net/" target="_blank" rel="external">rox</a>，感觉安装很方便，就是用着还不顺手，还是资料太少。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://wangcong.org/2008/07/09/-e5-85-a8-e6-96-b0-e7-9a-84fedora-e7-b3-bb-e7-bb-9f/" data-id="ltz8zw738b234pg9" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post--e5-a5-87-e6-80-aa-e7-9a-84-e6-97-a0-e7-ba-bf-e9-97-ae-e9-a2-98" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2008/06/20/-e5-a5-87-e6-80-aa-e7-9a-84-e6-97-a0-e7-ba-bf-e9-97-ae-e9-a2-98/" class="article-date">
-  <time datetime="2008-06-20T13:21:51.000Z" itemprop="datePublished">Jun 20 2008</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Linux-Application/">Linux Application</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2008/06/20/-e5-a5-87-e6-80-aa-e7-9a-84-e6-97-a0-e7-ba-bf-e9-97-ae-e9-a2-98/">奇怪的无线问题</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>很奇怪，前几天一直都不能正常使用NetworkManager，今天居然可以了。。。无缘无故！</p>
-<p>难道是我人品的问题？？</p>
-<p>终于可以摆脱有线了。严重感谢George，帮了我很多忙，起码我现在知道在Linux上怎么使用无线了（以前从来没用过）。</p>
-<p>恩，简单总结一下，基本用iwconfig和iwlist就可以了：</p>
-<p>/sbin/iwconfig wlan0 essid “YOUR_ID” key s:YOUR_PASS mode Managed channel 6 rate auto</p>
-<p>然后再dhclient就完了。这边的网络都是用DHCP的，在公司也是，不过公司用的是有线。</p>
-<p>图形界面直接用NetworkManager就可以了，要开启NetworkManager和NetworkManagerDispatcher两项服务。其中遇到的一个问题是提示输入密钥环密码，不知所云为何，我简单尝试了一下，安装gnome-keyring-manager之后把login那个密钥环删掉就行了。</p>
-<p>现在比较郁闷的另一个问题是内核。在公司得用vmware，需要内核模块，于是又下了个新内核编译完装上，但是无线和声卡驱动似乎没弄好，不能用。而在Fedora自带的内核中，又不能用vmware。这是个问题，得想办法解决掉～！</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://wangcong.org/2008/06/20/-e5-a5-87-e6-80-aa-e7-9a-84-e6-97-a0-e7-ba-bf-e9-97-ae-e9-a2-98/" data-id="ei421g62ii6cn09g" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-time-e5-b1-85-e7-84-b6-e6-98-afbashzsh-e7-9a-84-e5-85-b3-e9-94-ae-e5-ad-97" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2008/05/06/time-e5-b1-85-e7-84-b6-e6-98-afbashzsh-e7-9a-84-e5-85-b3-e9-94-ae-e5-ad-97/" class="article-date">
-  <time datetime="2008-05-07T02:19:58.000Z" itemprop="datePublished">May 6 2008</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Linux-Application/">Linux Application</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2008/05/06/time-e5-b1-85-e7-84-b6-e6-98-afbashzsh-e7-9a-84-e5-85-b3-e9-94-ae-e5-ad-97/">time居然是bash/zsh的关键字</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>哎，没想到自己的知识还有这么个大的疏漏！</p>
-<p>我们平时最常用的time竟然是bash/zsh的一个关键字！！一直以为time就是/usr/bin/time！</p>
-<p>$ builtin time<br>bash: builtin: time: not a shell builtin<br>$ type time<br>time is a shell keyword</p>
-<p>% builtin time<br>zsh: no such builtin: time<br>% type time<br>time is a reserved word</p>
-<p>用strace也可以，strace一下看看有没有搜索PATH的过程就知道。</p>
-<p>$ strace /bin/bash -c ‘time &gt; /dev/null’</p>
-<p>也可以证实time确实不是外部命令，不过它无法告诉我们到底是内置命令还是关键字。排除time是内置命令的另一个方法是看man手册，shell builtins里面并没有time。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://wangcong.org/2008/05/06/time-e5-b1-85-e7-84-b6-e6-98-afbashzsh-e7-9a-84-e5-85-b3-e9-94-ae-e5-ad-97/" data-id="hifkkkvl9ktdktpk" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post--e6-84-9f-e8-a7-89-jed-e4-b8-8d-e9-94-99" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2008/05/03/-e6-84-9f-e8-a7-89-jed-e4-b8-8d-e9-94-99/" class="article-date">
-  <time datetime="2008-05-04T03:01:53.000Z" itemprop="datePublished">May 3 2008</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Linux-Application/">Linux Application</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2008/05/03/-e6-84-9f-e8-a7-89-jed-e4-b8-8d-e9-94-99/">感觉 jed 不错</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>无意间遇到了jed这个编辑器，试着用了用，感觉很爽，它模拟的emacs模式很好，关键是比起emacs来轻巧多了，甚至比MicroEmacs还要轻巧。很多键和emacs都一样，无须调整。特别适合在alpine或mutt中使用。</p>
-<p>（Update： Fedora用户可以直接用yum安装。）</p>
-<p>不过jed的配置文件有自己的语法，和emacs差别甚大。这需要慢慢熟悉。</p>
-<p><a href="http://www.jedsoft.org/jed/index.html" target="_blank" rel="external">jed主页</a></p>
-<p><a href="http://www.cs.cmu.edu/~jeliza/work/jed-intro.html" target="_blank" rel="external">Jed Quick Reference</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://wangcong.org/2008/05/03/-e6-84-9f-e8-a7-89-jed-e4-b8-8d-e9-94-99/" data-id="vz94mlb1u285eb9d" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-gcc-gdb-e4-bd-9c-e5-bc-8a-e6-89-8b-e5-86-8c" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2008/04/30/gcc-gdb-e4-bd-9c-e5-bc-8a-e6-89-8b-e5-86-8c/" class="article-date">
-  <time datetime="2008-05-01T05:15:43.000Z" itemprop="datePublished">Apr 30 2008</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Linux-Application/">Linux Application</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2008/04/30/gcc-gdb-e4-bd-9c-e5-bc-8a-e6-89-8b-e5-86-8c/">GCC GDB 作弊手册</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>If you want to pass, cheat. If you want to learn, research.<br>因哲思的需要，这两天内忙着赶制了GCC和GDB的手册，如下：</p>
-</blockquote>
-<p><a href="http://wangcong.org/articles/learning-gcc.cn.html" target="_blank" rel="external">http://wangcong.org/articles/learning-gcc.cn.html</a><br><a href="http://wangcong.org/articles/learning-gdb.cn.html" target="_blank" rel="external">http://wangcong.org/articles/learning-gdb.cn.html</a></p>
-<p>pdf 版本（直接用firefox转成的）：<br><a href="http://wangcong.org/down/gcc-cheat-sheet-cn.pdf" target="_blank" rel="external">http://wangcong.org/down/gcc-cheat-sheet-cn.pdf</a><br><a href="http://wangcong.org/down/gdb-cheat-sheet-cn.pdf" target="_blank" rel="external">http://wangcong.org/down/gdb-cheat-sheet-cn.pdf</a></p>
-<p>哲思叫它们“速查手册”，我更喜欢叫它们“作弊手册”（cheat sheet）。;-)</p>
-<p>PS1：firefox生成的ps很不错了，以前记得很烂的，进步很大啊，呵呵～</p>
-<p>PS2：劳动节快乐！</p>
-<p>（Update：firefox生成的是ps，不过我又通过ps2pdf转换好了，所以上面的下载正确。感谢crquan指出。）</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://wangcong.org/2008/04/30/gcc-gdb-e4-bd-9c-e5-bc-8a-e6-89-8b-e5-86-8c/" data-id="aehzsbf7uj7w0o8a" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post--e4-bd-93-e9-aa-8calpine" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2008/04/27/-e4-bd-93-e9-aa-8calpine/" class="article-date">
-  <time datetime="2008-04-28T04:32:15.000Z" itemprop="datePublished">Apr 27 2008</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Linux-Application/">Linux Application</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2008/04/27/-e4-bd-93-e9-aa-8calpine/">体验Alpine</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>家里有两台电脑，这给使用POP收邮件带来一些麻烦，因为要在两台机器之间互相同步邮件存档。决定换IMAP试试，于是就找上alpine了。</p>
-<p>alpine也是命令行下的邮件客户端，由华盛顿大学开发，据说Linus本人就是用的这个。</p>
-<p>alpine的配置其实相当简单，相对于mutt来说，但对于习惯了POP的用户来说，alpine的“困难”在于IMAP而不在于alpine本身。所以在使用alpine之前熟悉一下IMAP是很有必要的。</p>
-<p>这里就不赘述IMAP的概念了，只说一下我的配置。首先你先要把gmail的设置改成支持IMAP，然后要通过gmail自带的过滤器和标签来配合IMAP对邮件进行分类。然后在你的~/.pinerc里修改下面几项：</p>
-<p>personal-name=Your Name</p>
-<p>user-domain=gmail.com</p>
-<p>smtp-server=smtp.gmail.com/submit/user=YOUR_NAME@gmail.com/novalidate-cert</p>
-<p>inbox-path={imap.gmail.com/user=YOUR_NAME@gmail.com/ssl/novalidate-cert}Inbox</p>
-<p>还有很多其它配置项，你根据自己的喜好进行选择。</p>
-<p>alpine的优点很明显，直接在服务器上进行操作，无需下载到本地，方便在不同机器上使用同一个email帐号。缺点，我认为，就是保存到本地不方便，至少对于gmail来说，因为gmail并没有提供Linux/Unix上的命令行操作接口（或者是有而我不知道？）。还有，alpine并不像mew那样提供邮件编码转换，不是指定的编码一律都是乱码。</p>
-<p>最后，如果gmail的过滤器再好一点儿就完美了。;-)</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://wangcong.org/2008/04/27/-e4-bd-93-e9-aa-8calpine/" data-id="9lcl94ag4dmvtbst" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-emacs-e6-8a-80-e5-b7-a7" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2008/04/25/emacs-e6-8a-80-e5-b7-a7/" class="article-date">
-  <time datetime="2008-04-25T22:19:01.000Z" itemprop="datePublished">Apr 25 2008</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Linux-Application/">Linux Application</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2008/04/25/emacs-e6-8a-80-e5-b7-a7/">emacs技巧</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>收集的一些emacs tricks，和大家分享。;-)</p>
-<p><a href="http://www.emacswiki.org/cgi-bin/wiki/EmacsNiftyTricks" target="_blank" rel="external">http://www.emacswiki.org/cgi-bin/wiki/EmacsNiftyTricks
-</a><br><a href="http://geosoft.no/development/emacs.html" target="_blank" rel="external">http://geosoft.no/development/emacs.html</a></p>
-<p><a href="http://infolab.stanford.edu/~manku/dotemacs.html" target="_blank" rel="external">http://infolab.stanford.edu/~manku/dotemacs.html</a></p>
-<p><a href="http://blog.carduner.net/my-emacs-tricks/" target="_blank" rel="external">http://blog.carduner.net/my-emacs-tricks/</a></p>
-<p><a href="http://blog.outint.de/index.php/category/emacs/" target="_blank" rel="external">http://blog.outint.de/index.php/category/emacs/</a></p>
-<p><a href="http://verify.stanford.edu/satyaki/emacs/EmacsTricks.html" target="_blank" rel="external">http://verify.stanford.edu/satyaki/emacs/EmacsTricks.html</a></p>
-<p><a href="http://jfm3-repl.blogspot.com/2006/06/emacs-tricks-1-completion.html" target="_blank" rel="external">http://jfm3-repl.blogspot.com/2006/06/emacs-tricks-1-completion.html</a></p>
-<p>注：gfw抽风了，blogspot时而能上，时而不能上，梯子请自备！！</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://wangcong.org/2008/04/25/emacs-e6-8a-80-e5-b7-a7/" data-id="n2e1m745iefkfzx8" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-  
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/categories/Linux-Application/page/4/">&laquo; Prev</a><a class="page-number" href="/categories/Linux-Application/">1</a><span class="space">&hellip;</span><a class="page-number" href="/categories/Linux-Application/page/3/">3</a><a class="page-number" href="/categories/Linux-Application/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/categories/Linux-Application/page/6/">6</a><a class="page-number" href="/categories/Linux-Application/page/7/">7</a><a class="page-number" href="/categories/Linux-Application/page/8/">8</a><a class="extend next" rel="next" href="/categories/Linux-Application/page/6/">Next &raquo;</a>
-    </nav>
-  
+  </a>
 </section>
-        
-          <aside id="sidebar">
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
-    <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Book-Reviews/">Book Reviews</a><span class="category-list-count">18</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/China/">China</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Collection/">Collection</a><span class="category-list-count">25</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">324</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux-Application/">Linux Application</a><span class="category-list-count">73</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux-Kernel/">Linux Kernel</a><span class="category-list-count">64</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Love/">Love</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Movies/">Movies</a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/">Programming</a><span class="category-list-count">152</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Science-Fiction/">Science Fiction</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Travel/">Travel</a><span class="category-list-count">19</span></li></ul>
-    </div>
-  </div>
 
+  <section class="post" itemscope itemprop="blogPost">
   
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/geek/">geek</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/handling/">handling</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/joke/">joke</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/signal/">signal</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/unix/">unix</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a><span class="tag-list-count">1</span></li></ul>
-    </div>
-  </div>
+    <a href="/2008/08/14/dns-e6-bc-8f-e6-b4-9e/" title="DNS漏洞" itemprop="url">
+  
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/geek/" style="font-size: NaNpx;">geek</a><a href="/tags/handling/" style="font-size: NaNpx;">handling</a><a href="/tags/joke/" style="font-size: NaNpx;">joke</a><a href="/tags/linux/" style="font-size: NaNpx;">linux</a><a href="/tags/signal/" style="font-size: NaNpx;">signal</a><a href="/tags/unix/" style="font-size: NaNpx;">unix</a><a href="/tags/vim/" style="font-size: NaNpx;">vim</a>
-    </div>
-  </div>
+    <time datetime="2008-08-15T00:30:45.000Z" itemprop="datePublished">Aug 14 2008</time>
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">August 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">December 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">October 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">September 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">August 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">February 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01/">January 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12/">December 2012</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">November 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">October 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">September 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">August 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/07/">July 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">April 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">March 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">February 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">January 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/12/">December 2011</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">November 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/10/">October 2011</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">September 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08/">August 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/07/">July 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/06/">June 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/05/">May 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04/">April 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03/">March 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/02/">February 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/01/">January 2011</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/12/">December 2010</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/11/">November 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/10/">October 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/09/">September 2010</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08/">August 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07/">July 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06/">June 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05/">May 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04/">April 2010</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03/">March 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02/">February 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01/">January 2010</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12/">December 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11/">November 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10/">October 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09/">September 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08/">August 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07/">July 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/06/">June 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/05/">May 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04/">April 2009</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03/">March 2009</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02/">February 2009</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01/">January 2009</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12/">December 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/11/">November 2008</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/10/">October 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09/">September 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08/">August 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07/">July 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06/">June 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05/">May 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04/">April 2008</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03/">March 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02/">February 2008</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01/">January 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12/">December 2007</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11/">November 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10/">October 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09/">September 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08/">August 2007</a><span class="archive-list-count">31</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07/">July 2007</a><span class="archive-list-count">34</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06/">June 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05/">May 2007</a><span class="archive-list-count">25</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04/">April 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03/">March 2007</a><span class="archive-list-count">50</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02/">February 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01/">January 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12/">December 2006</a><span class="archive-list-count">5</span></li></ul>
-    </div>
-  </div>
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recents</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2014/08/12/linux-e7-bd-91-e7-bb-9c-e6-b5-81-e9-87-8f-e6-8e-a7-e5-88-b6-ef-bc-88-e4-b8-80-ef-bc-89/">Linux 网络流量控制（零）</a>
-          </li>
-        
-          <li>
-            <a href="/2014/08/01/ottawa-linux-symposium/">Ottawa Linux Symposium</a>
-          </li>
-        
-          <li>
-            <a href="/2014/05/31/skbuff-e5-86-85-e5-ad-98-e6-a8-a1-e5-9e-8b/">skbuff 内存模型</a>
-          </li>
-        
-          <li>
-            <a href="/2014/05/06/-e9-95-bf-e6-9c-9f-e6-8f-90-e4-be-9b-twitter-e5-86-85-e6-8e-a8/">长期提供 Twitter 内推</a>
-          </li>
-        
-          <li>
-            <a href="/2014/01/30/-e6-88-91-e7-9a-842013-ef-bc-9a-e6-88-91-e6-9d-a5-e5-88-b0-e4-ba-86-e7-be-8e-e5-9b-bd/">我的2013：我来到了美国</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
+    <h1 itemprop="name">DNS漏洞</h1>
 
+  </a>
+</section>
+
+  <section class="post" itemscope itemprop="blogPost">
   
-</aside>
-        
+    <a href="/2008/08/13/join-e5-91-bd-e4-bb-a4/" title="join命令" itemprop="url">
+  
+
+    <time datetime="2008-08-14T04:23:06.000Z" itemprop="datePublished">Aug 13 2008</time>
+
+
+    <h1 itemprop="name">join命令</h1>
+
+  </a>
+</section>
+
+  <section class="post" itemscope itemprop="blogPost">
+  
+    <a href="/2008/07/09/-e5-85-a8-e6-96-b0-e7-9a-84fedora-e7-b3-bb-e7-bb-9f/" title="全新的Fedora系统" itemprop="url">
+  
+
+    <time datetime="2008-07-09T11:44:29.000Z" itemprop="datePublished">Jul 9 2008</time>
+
+
+    <h1 itemprop="name">全新的Fedora系统</h1>
+
+  </a>
+</section>
+
+  <section class="post" itemscope itemprop="blogPost">
+  
+    <a href="/2008/06/20/-e5-a5-87-e6-80-aa-e7-9a-84-e6-97-a0-e7-ba-bf-e9-97-ae-e9-a2-98/" title="奇怪的无线问题" itemprop="url">
+  
+
+    <time datetime="2008-06-20T13:21:51.000Z" itemprop="datePublished">Jun 20 2008</time>
+
+
+    <h1 itemprop="name">奇怪的无线问题</h1>
+
+  </a>
+</section>
+
+  <section class="post" itemscope itemprop="blogPost">
+  
+    <a href="/2008/05/06/time-e5-b1-85-e7-84-b6-e6-98-afbashzsh-e7-9a-84-e5-85-b3-e9-94-ae-e5-ad-97/" title="time居然是bash/zsh的关键字" itemprop="url">
+  
+
+    <time datetime="2008-05-07T02:19:58.000Z" itemprop="datePublished">May 6 2008</time>
+
+
+    <h1 itemprop="name">time居然是bash/zsh的关键字</h1>
+
+  </a>
+</section>
+
+  <section class="post" itemscope itemprop="blogPost">
+  
+    <a href="/2008/05/03/-e6-84-9f-e8-a7-89-jed-e4-b8-8d-e9-94-99/" title="感觉 jed 不错" itemprop="url">
+  
+
+    <time datetime="2008-05-04T03:01:53.000Z" itemprop="datePublished">May 3 2008</time>
+
+
+    <h1 itemprop="name">感觉 jed 不错</h1>
+
+  </a>
+</section>
+
+  <section class="post" itemscope itemprop="blogPost">
+  
+    <a href="/2008/04/30/gcc-gdb-e4-bd-9c-e5-bc-8a-e6-89-8b-e5-86-8c/" title="GCC GDB 作弊手册" itemprop="url">
+  
+
+    <time datetime="2008-05-01T05:15:43.000Z" itemprop="datePublished">Apr 30 2008</time>
+
+
+    <h1 itemprop="name">GCC GDB 作弊手册</h1>
+
+  </a>
+</section>
+
+  <section class="post" itemscope itemprop="blogPost">
+  
+    <a href="/2008/04/27/-e4-bd-93-e9-aa-8calpine/" title="体验Alpine" itemprop="url">
+  
+
+    <time datetime="2008-04-28T04:32:15.000Z" itemprop="datePublished">Apr 27 2008</time>
+
+
+    <h1 itemprop="name">体验Alpine</h1>
+
+  </a>
+</section>
+
+  <section class="post" itemscope itemprop="blogPost">
+  
+    <a href="/2008/04/25/emacs-e6-8a-80-e5-b7-a7/" title="emacs技巧" itemprop="url">
+  
+
+    <time datetime="2008-04-25T22:19:01.000Z" itemprop="datePublished">Apr 25 2008</time>
+
+
+    <h1 itemprop="name">emacs技巧</h1>
+
+  </a>
+</section>
+
+
+  <nav id="page-nav" class="clearfix archive-nav">
+    <a class="extend prev" rel="prev" href="/categories/Linux-Application/page/4/"><span></span>Prev</a><a class="page-number" href="/categories/Linux-Application/">1</a><span class="space">&hellip;</span><a class="page-number" href="/categories/Linux-Application/page/3/">3</a><a class="page-number" href="/categories/Linux-Application/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/categories/Linux-Application/page/6/">6</a><a class="page-number" href="/categories/Linux-Application/page/7/">7</a><a class="page-number" href="/categories/Linux-Application/page/8/">8</a><a class="extend next" rel="next" href="/categories/Linux-Application/page/6/">Next<span></span></a>
+  </nav>
+
+  </div>
+</div>
+
       </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2015 Cong Wang<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
+      <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Larry Page in Google. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2015 
+		
+		<a href="http://wangcong.org/about" target="_blank" title="Cong Wang">Cong Wang</a>
+		
+		</p>
+</div>
 </footer>
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-    <a href="/about-2" class="mobile-nav-link">About</a>
-  
-</nav>
-    
+      <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
 
 
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
-
-  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
 
 
 
-<script src="/js/script.js" type="text/javascript"></script>
 
 
-  </div>
-</body>
-</html>
+
+
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+    </body>
+   </html>
