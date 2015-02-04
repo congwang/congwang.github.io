@@ -29,6 +29,7 @@ define __range_not_ok(addr, size)
 <meta name="twitter:description" content="在 arch/x86/include/asm/uaccess.h 中有这么一段代码：
 define __range_not_ok(addr, size)
 ({unsigned long flag, roksum;__chk_user_ptr(addr);asm(“add %3,%1 ; sbb %0,%0 ; cmp %1,%4 ; sbb $0,%0”: “=&amp;r” (flag), “=">
+<meta name="twitter:creator" content="@bitstream">
 
 
     
@@ -255,15 +256,14 @@ define __range_not_ok(addr, size)
 	</div>
 	
 	
-	<section class="info">
-		<p> Hello ,I&#39;m Larry Page in Google. <br/>
-			This is my blog,believe it or not.</p>
-	</section>
-	 
 	<div class="social-font" class="clearfix">
 		
 		
+		<a href="https://github.com/congwang" target="_blank" class="icon-github" title="github"></a>
 		
+		
+		
+		<a href="https://twitter.com/bitstream" target="_blank" class="icon-twitter" title="twitter"></a>
 		
 		
 		

@@ -29,6 +29,7 @@
 <meta name="twitter:description" content="无意间在Linux内核中发现这么一段汇编代码，更准确地说应该是gcc内联汇编，写得很精彩，拿出来和大家分享一下。
 代码是在include/asm-i386/string.h中，是针对i386对memcpy做进一步优化。我们知道，一个简单的memcpy其实和strcpy差不多，区别只是前者检查的是复制的个数，而后者检查的是当前字符是否是’’。
 而这显然还有很大的优化余地，首先像这种非常常用的库函数是">
+<meta name="twitter:creator" content="@bitstream">
 
 
     
@@ -267,15 +268,14 @@
 	</div>
 	
 	
-	<section class="info">
-		<p> Hello ,I&#39;m Larry Page in Google. <br/>
-			This is my blog,believe it or not.</p>
-	</section>
-	 
 	<div class="social-font" class="clearfix">
 		
 		
+		<a href="https://github.com/congwang" target="_blank" class="icon-github" title="github"></a>
 		
+		
+		
+		<a href="https://twitter.com/bitstream" target="_blank" class="icon-twitter" title="twitter"></a>
 		
 		
 		

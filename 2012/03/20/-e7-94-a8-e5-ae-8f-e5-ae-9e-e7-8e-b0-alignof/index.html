@@ -28,6 +28,7 @@ define AlignOf(type) (offsetof(struct { char c; type t; }, t))
 <meta name="twitter:description" content="我们知道在C2011标准中引入了 alignof 操作符，但是在 gcc 和 glibc 完全支持 C2011 之前，我们仍然不能使用它。其实我们可以自己用宏实现一个（出自c.l.c）：
 define AlignOf(type) (offsetof(struct { char c; type t; }, t))
 它巧妙地把参数指定的类型放入一个结构体中，在此结构体的最前面镶入一个 char 类型，">
+<meta name="twitter:creator" content="@bitstream">
 
 
     
@@ -264,15 +265,14 @@ define AlignOf(type) (offsetof(struct { char c; type t; }, t))
 	</div>
 	
 	
-	<section class="info">
-		<p> Hello ,I&#39;m Larry Page in Google. <br/>
-			This is my blog,believe it or not.</p>
-	</section>
-	 
 	<div class="social-font" class="clearfix">
 		
 		
+		<a href="https://github.com/congwang" target="_blank" class="icon-github" title="github"></a>
 		
+		
+		
+		<a href="https://twitter.com/bitstream" target="_blank" class="icon-twitter" title="twitter"></a>
 		
 		
 		

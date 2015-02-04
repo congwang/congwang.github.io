@@ -28,6 +28,7 @@ priva">
 <meta name="twitter:description" content="偶然的机会看到boost里还有一个shared_ptr型智能指针，费解，C++标准库里不是有auto_ptr了已经？我们先翻出源代码来看看。
 先看auto_ptr，因为它比较简单。既然它在标准库里，那么我们就在gcc的代码中找，恩，最后确定在libstdc++-v3/include/backward/auto_ptr.h里面。说实话，auto_ptr真是太简单了，里面的私有变量就一个：
 priva">
+<meta name="twitter:creator" content="@bitstream">
 
 
     
@@ -347,15 +348,14 @@ shared_ptr sptr4(b); <span class="comment">//WRONG!!</span>
 	</div>
 	
 	
-	<section class="info">
-		<p> Hello ,I&#39;m Larry Page in Google. <br/>
-			This is my blog,believe it or not.</p>
-	</section>
-	 
 	<div class="social-font" class="clearfix">
 		
 		
+		<a href="https://github.com/congwang" target="_blank" class="icon-github" title="github"></a>
 		
+		
+		
+		<a href="https://twitter.com/bitstream" target="_blank" class="icon-twitter" title="twitter"></a>
 		
 		
 		

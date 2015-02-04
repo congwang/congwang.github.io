@@ -29,6 +29,7 @@
 <meta name="twitter:description" content="长期以来对tun和tap这对兄弟分不太清，今天下定决心研究了一下代码，总算是搞明白了。
 首先它们都是从/dev/net/tun里ioctl出来的虚拟设备，一个是通过IFF_TUN，另一个是 IFF_TAP。最好的例子莫过于vpnc里面的代码了。
 [c]int tun_open(char *dev, enum if_mode_enum mode){        struct ifreq ifr;">
+<meta name="twitter:creator" content="@bitstream">
 
 
     
@@ -392,15 +393,14 @@ bus-info: tap
 	</div>
 	
 	
-	<section class="info">
-		<p> Hello ,I&#39;m Larry Page in Google. <br/>
-			This is my blog,believe it or not.</p>
-	</section>
-	 
 	<div class="social-font" class="clearfix">
 		
 		
+		<a href="https://github.com/congwang" target="_blank" class="icon-github" title="github"></a>
 		
+		
+		
+		<a href="https://twitter.com/bitstream" target="_blank" class="icon-twitter" title="twitter"></a>
 		
 		
 		

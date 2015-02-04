@@ -25,6 +25,7 @@
 <meta name="twitter:title" content="How TSQ works">
 <meta name="twitter:description" content="通常看到 TCP Small Queue （简称 TSQ）之后第一问题是，既然我们已经有 tcp_wmem 了，为何还需要一个新的 sysctl？
 这个问题是理解 TSQ 的关键，其实 tcp_wmem 仅仅是从 TCP socket 层限制队列（或 buffer）中最多可以 queue 多少数据包，而实际上，一个包从 TCP 层发出到最后到达网卡，中间还经历了很多个 queue，TCP sock">
+<meta name="twitter:creator" content="@bitstream">
 
 
     
@@ -299,15 +300,14 @@
 	</div>
 	
 	
-	<section class="info">
-		<p> Hello ,I&#39;m Larry Page in Google. <br/>
-			This is my blog,believe it or not.</p>
-	</section>
-	 
 	<div class="social-font" class="clearfix">
 		
 		
+		<a href="https://github.com/congwang" target="_blank" class="icon-github" title="github"></a>
 		
+		
+		
+		<a href="https://twitter.com/bitstream" target="_blank" class="icon-twitter" title="twitter"></a>
 		
 		
 		

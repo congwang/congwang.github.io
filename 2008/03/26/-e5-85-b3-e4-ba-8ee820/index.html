@@ -28,6 +28,7 @@ e820是和BIOS的一个中断相关的，具体说是int 0x15。之所以叫e820
 <meta name="twitter:description" content="很久没接触BIOS中断这么陈旧的东西，再次挖出来都有些生疏了。
 e820是和BIOS的一个中断相关的，具体说是int 0x15。之所以叫e820是因为在用这个中断时ax必须是0xe820。这个中断的作用是得到系统的内存布局。因为系统内存会有很多段，每段的类型属性也不一样，所以这个查询是“迭代式”的，每次求得一个段。
 我们看内核源代码。主要涉及两个文件：arch/x86/boot/memory.c和">
+<meta name="twitter:creator" content="@bitstream">
 
 
     
@@ -256,15 +257,14 @@ e820是和BIOS的一个中断相关的，具体说是int 0x15。之所以叫e820
 	</div>
 	
 	
-	<section class="info">
-		<p> Hello ,I&#39;m Larry Page in Google. <br/>
-			This is my blog,believe it or not.</p>
-	</section>
-	 
 	<div class="social-font" class="clearfix">
 		
 		
+		<a href="https://github.com/congwang" target="_blank" class="icon-github" title="github"></a>
 		
+		
+		
+		<a href="https://twitter.com/bitstream" target="_blank" class="icon-twitter" title="twitter"></a>
 		
 		
 		
