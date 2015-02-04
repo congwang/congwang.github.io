@@ -91,11 +91,11 @@
       
         <p>众所周知，Quicksort是大牛<a href="http://en.wikipedia.org/wiki/C._A._R._Hoare" target="_blank" rel="external">C.A.R. Hoare</a>于1962年发明的（wikipedia上说是1960，但paper上写的是1962），当时他那篇paper现在可以<a href="http://portal.acm.org/book_gateway.cfm?id=63445&amp;type=pdf&amp;bookpath=%2F70000%2F63445%2Fcb-p19-hoare.pdf&amp;coll=GUIDE&amp;dl=&amp;CFID=15151515&amp;CFTOKEN=6184618" target="_blank" rel="external">免费下载</a>了。短短12页（其实是11页，而且每页利用率不高）就把quick sort分析得详详细细，头头是道了。其实这个算法只不过是这位牛人职业生涯中最琐碎的贡献，他的主要贡献还是Algol60。那个时候可是牛人辈出的年代，Ken Thompson牛当年可是用汇编写操作系统和编译器的，搁到现在连想都不敢想啊！偶滴神啊！咳咳，不好意思，跑题了……</p>
 <p>现在，凡是一本和“数据结构” 或者“算法”靠边的书就必然会提到Quicksort，很多还给出自己的实现。无奈，绝大多数代码都很丑陋（如果不能说非常丑陋的话）。好不容易，我在BWK的牛著《The Practice of Programming》中找到了一个简洁的实现。请欣赏：</p>
-<p><img src="http://wangcong.org/images/quicksort.jpg" alt=""></p>
+<p><img src="/images/" alt=""></p>
 <p> 接下来我们谈谈Binary Search。1946年，第一个Binary Search算法出现；1962年，第一个“正确”的Binary Search算法出现，最前面十八个都错了。1986年，Jon Bentley在课堂上和《Programming Pearls》这本书中，说明了这么简单的演算法(1962版)可以犯下多少的bug。2006年，书中那个大众引用的程式被<a href="http://googleresearch.blogspot.com/2006/06/extra-extra-read-all-about-it-nearly.html" target="_blank" rel="external">抓到integer overflow bug</a>。这个bug是出在这个该死的语句上：</p>
 <p><pre>int mid =(low + high) / 2;</pre><br>您看出哪里错来了么？其实是low+high超出int表示的正数范围时就会变成负数，这时mid也跟着错了，而后面用mid取数组元素自然也不对了。修补就很简单了：</p>
 <p><pre>int mid = low + ((high - low) / 2);</pre><br>下面是《Practice of Programming》中的Binary Search，不那么通用，而且也存在上面说的bug！把它修改成通用（模仿一下标准C库函数bsearch(3)）而且bug-free的代码就留给您作为课后作业了。</p>
-<p><img src="http://wangcong.org/images/binsearch.jpg" alt=""></p>
+<p><img src="/images/" alt=""></p>
 <p>BTW：<a href="http://blog.csdn.net/drzhouweiming/archive/2007/04/12/1562717.aspx" target="_blank" rel="external">这里</a>有篇小文章，分析了为什么90%的程序员写不出bug-free的binary search。里面确实道出了很多程序员的无奈，用某牛的话说就是我们只能证明bug的存在，而不能证明其不存在，代码越多越是如此！</p>
 
       
@@ -156,7 +156,7 @@
 <p><span class="content">（点评：王聪版：是爷们就去未名湖泡妞，另一个版本是：是爷们就去未名湖泡茶，还有：是爷们就去未名湖泡酒。点评的点评：人家未名湖招你们惹你们了？！</span> ）</p>
 <p>4.  黄沙百战穿金甲，不破北大终不还！</p>
 <p>（点评：我们明儿给您老定做一套黄金甲！）</p>
-<p><img src="http://wangcong.org/images/meiyong.jpg" alt=""></p>
+<p><img src="/images/" alt=""></p>
 
       
     </div>
@@ -200,7 +200,7 @@
         <p>哎，今天不能不说一下<a href="http://amankwahly.cn/blog/" target="_blank" rel="external">刘洋兄</a>了！我彻底被他折服了！大家可能不知道，刘洋兄的拖拉能力是非常惊人的！</p>
 <p>刘洋兄其人虽胖，但肢体行动还不迟缓，踢球从来都不掉队，可没想到做起事来是如此拖拖拉拉。有时，分配给他的一些事，按他的能力本来一天搞定不成什么问题，可我们一天后几乎总是看不出他有什么搞定的迹象，甚至两三天之后仍然看不到！实在忍无可忍时就发邮件问问他到底在干嘛？！可他总是不急不慢，斯斯文文地回答：“这些天我有事没去实验室。”或者“哎，别提了！又帮同学＆＃％＠去了！”我不得不承认，这种回答非常巧妙！想说他几句吧，可人家确实有事，你也不好说什么！不说吧，可他拖得我们实在不爽，让我们在这干着急！这一招太狠了，让我们进退两难，欲说不能，欲言又止！不服不行！</p>
 <p>哎，刘洋啊，刘洋……我该说你什么好呢？</p>
-<p><img src="http://upload.cnool.net/files2006/20060724/2006072408434603643.jpg" alt=""></p>
+<p><img src="/images/" alt=""></p>
 
       
     </div>
@@ -444,7 +444,7 @@ n-=<span class="number">1</span>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="http://wangcong.org/images/jihe.jpg" alt=""></p>
+        <p><img src="/images/" alt=""></p>
 <p> 如上图， ABDC为正方形，边长为12，E是中点。求黑色三角形BEF面积。</p>
 <p>一看好像是我弟弟寒假作业中的一道题，当时用的是重叠面积法做的。后来发现根本不是一个题，思路都不一样，这道题是用传说中的……来做。</p>
 <p>不会做的人就继续路过吧！小公子肯定以低调的名义表示不会做，很假，公子您的调再低点儿就成韩红了！而某位给初中生当家教的同学不知道对这道初中生的题感觉如何？人家那娃要是问您这道题您该咋回答呢？</p>
@@ -491,7 +491,7 @@ n-=<span class="number">1</span>
         <p>因为篇幅原因和某些不可抗拒的因素，在这里只能公布我们网络0404~06班的下学期的课表。看来下学期还是和<a href="http://www.shiyuhang.org/blog/" target="_blank" rel="external">小公子</a>，<a href="http://amankwahly.cn/blog/" target="_blank" rel="external">刘洋兄</a>一起上课。让我感到很爽的是周一第一节居然没课，挖哈哈哈……</p>
 <p>这次没有任课老师的名字，貌似还没排出来。星期几没贴出来，每天四行，自己算就是了。同级同专业的其它班课程内容一样，只是顺序和教室不一样。其它班的同学如需，请留言索取。</p>
 <p>感谢张老师！</p>
-<p><img src="http://wangcong.org/images/kebiao.jpg" alt=""></p>
+<p><img src="/images/" alt=""></p>
 
       
     </div>
@@ -590,7 +590,7 @@ n-=<span class="number">1</span>
 <blockquote>
 <p>Hey<br>You know what paradise is<br>It’s a lie<br>A fantasy we create about people<br>And places as we’d like them to be<br>But you know what truth is<br>It’s that little baby you’re holding<br>And it’s that man you fought with this morning<br>The same one you’re going to make love with tonight<br>That’s truth<br>That’s love<br>另一首是三位帅妞唱的，叫《Nothing in the world》，不多说了，自己听听看就知道。</p>
 </blockquote>
-<p><img src="http://www.atomickitten.com/gallery/group_009.jpg" alt=""></p>
+<p><img src="/images/" alt=""></p>
 
       
     </div>

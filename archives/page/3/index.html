@@ -221,7 +221,7 @@
 <p><strong>一，GRE tunnel 的不足</strong></p>
 <p>网络很多介绍 VXLAN 的文章都没有直接告诉你相比较 GRE tunnel，VXLAN 的优势在哪里，或者说 GRE tunnel 的不足在哪里。为了更好的了解 VXLAN，我们有必要看一下 GRE tunnel 的不足。</p>
 <p>在我前面写的介绍 GRE tunnel 的文章中，其实并不容易看出 GRE tunnel 的不足之处。根本原因是图中给出的例子不太好，只有两个网络的话 GRE tunnel 的不足凸显不出来，让我们看看有三个网络的情况如何用 GRE tunnel 互联，如下图所示：</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/11/gre_vs_vxlan.jpg" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2012/11/gre_vs_vxlan.jpg" alt=""></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/11/gre_vs_vxlan.jpg" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
 <p>这下子就很明显了，要让这三个网络互联，我们需要建立三个 GRE tunnel。如果网络数量再增长，那么需要的 tunnel 数量更多。换句话说，GRE tunnel 的扩展性太差，从根本上讲还是因为它只是一个 point to point 的 tunnel。</p>
 <p><strong>二，VLAN 的不足</strong></p>
 <p>其实 VLAN 在某种程度上也可以看作一个 L2 over L2 的 tunnel，只不过它多了一个新的 VLAN header，这其中有12 bit 是 VLAN tag。所以 VLAN 的第一个不足之处就是它最多只支持 4096 个 VLAN 网络（当然这还要除去几个预留的），对于大型数据中心的来说，这个数量是远远不够的。</p>
@@ -233,7 +233,7 @@
 <p>VXLAN 的配置可以参考内核文档 Documentation/networking/vxlan.txt，本人目前还没有环境测试，所以只能做一些代码分析了。</p>
 <p>Linux 内核中对 VXLAN 的实现是在 drivers/net/vxlan.c 源文件中，是由 Stephen Hemminger （iproute2 的维护者）完成的。代码质量相当高，所以可读性也很好，强烈推荐阅读一下。</p>
 <p>看代码之前先看 VXLAN 的头是一个怎样的结构，如下图所示（图片来自参考资料4）：</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/11/VXLAN-Headers1.png" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2012/11/VXLAN-Headers1.png" alt=""></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/11/VXLAN-Headers1.png" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
 <p>好了，现在我们可以看代码了。先看发送端，vxlan_xmit() 函数。首先需要说的是发送之前内核会检查目的地址，如果是L2 multicast，那么应该发送到 VXLAN group 组播地址，否则，如果 MAC 地址是已知的，直接单播到对应的 IP；如果未知，则广播到组播地址。代码如下，比文档还要好读。:-)</p>
 <p>[c]<br>static __be32 vxlan_find_dst(struct vxlan_dev <em>vxlan, struct sk_buff </em>skb)<br>{<br>        const struct ethhdr <em>eth = (struct ethhdr </em>) skb-&gt;data;<br>        const struct vxlan_fdb *f;</p>
 <pre><code>    <span class="keyword">if</span> (is_multicast_ether_addr(eth-&amp;<span class="keyword">gt</span>;h_dest))
@@ -388,7 +388,7 @@ ovs-vsctl add-port br0 gre0 -- set interface gre0 type=gre options:remote_ip=192
 
 <p>本文想谈的显然不是这个。因为 upstream 内核（指 Linus tree）中的 openvswitch 是不支持 GRE tunnel 的，那我们如何在 upstream 内核中上使用 GRE tunnel 呢？</p>
 <p>其实也不难，我们可以创建一个普通的 GRE tunnel，然后把它添加到 openvswitch bridge 中去就可以了。至少这在理论上是可行的，而实际操作中却有一些问题，你可以动手试一试。我们假设网络环境如下图所示：</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/11/openvswitch-gre.jpg" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2012/11/openvswitch-gre.jpg" alt=""></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/11/openvswitch-gre.jpg" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
 <p>我们的目标是让 HOST1 上面的两个 VM 和 HOST2 上面的两个 VM 通过 GRE tunnel 实现通信。因为两边的配置是对称的，所以下面只说明 HOST2 上是如何配置的，HOST1 上以此类推即可。</p>
 <p>在这个环境中，一个很可能的错误是把 HOST2 上的 uplink，即 eth0 也加入到 openvswitch 的 bridge 中，这是不对的，需要加入仅仅的是 GRE tunnel 设备，即 gre1 （你当然也可以把它命名为其它名字）。</p>
 <p>剩下的一个最重要的问题是，GRE tunnel 是无法回应 ARP 的，因为它是一个 point to point 的设备（ip addr add 192.168.2.1/24 peer 192.168.1.1/24 dev gre1），所以很明显设置了 NOARP。这个问题是这里的关键。因为这个的缘故，即使你在 VM1 上也无法 ping HOST2 上的 gre1。所以这里需要一个技巧，<strong>就是要给 bridge 本身配置一个 IP 地址，然后让 bridge 做一个 ARP proxy</strong>！</p>
@@ -489,11 +489,11 @@ rtt min/avg/max/mdev = 0.669/140.860/561.275/242.726 ms
     <div class="article-entry" itemprop="articleBody">
       
         <p>我以前写过一篇<a href="http://wangcong.org/blog/archives/1683" target="_blank" rel="external">介绍 tunnel 的文章</a>，只是做了大体的介绍。里面多数 tunnel 是很容易理解的，因为它们多是一对一的，换句话说，是直接从一端到另一端。比如 IPv6 over IPv4 的 tunnel，也就是 SIT，它的原理如下图所示：</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/11/sit_tunnel1.jpg" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2012/11/sit_tunnel1.jpg" alt=""></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/11/sit_tunnel1.jpg" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
 <p>显然，除了端点的 host A 和 host B之外，中间经过的任何设备都是看不到里面的 IPv6 的头，对于它们来说，经过 sit 发出的包和其它的 IPv4 的包没有任何区别。</p>
 <p><a href="http://en.wikipedia.org/wiki/Generic_Routing_Encapsulation" target="_blank" rel="external">GRE tunnel</a> 却不一样了，它的原理从根本上和 sit，ipip 这样的 tunnel 就不一样。除了外层的 IP 头和内层的 IP 头之间多了一个 GRE 头之外，它最大的不同是，<strong>tunnel 不是建立在最终的 host 上，而是在中间的 router 上</strong>！换句话说，对于端点 host A 和 host B 来说，该 tunnel 是透明的（对比上面的 sit tunnel）。这是网上很多教程里没有直接告诉你的。理解这一点非常关键，正是因为它这么设计的，所以它才能解决 ipip tunnel 解决不了的问题。</p>
 <p>所以，经过 GRE tunnel 发送的包（从 host A 发送到 host B）大体过程是这样子的（仍然借用了<a href="http://lartc.org/howto/lartc.tunnel.gre.html" target="_blank" rel="external"> LARTC 中的例子</a>）：</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/11/gre_tunnel1.jpg" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2012/11/gre_tunnel1.jpg" alt=""></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/11/gre_tunnel1.jpg" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
 <p>我们可以看出，从 host A 发出的包其实就是一个很普通的 IP 包，除了目的地址不直接可达外。该 GRE tunnel 的一端是建立在 router A上，另一段是建立在 router B上，所以添加外部的 IP 头是在 router A 上完成的，而去掉外面的 IP 头是在 router B上完成的，两个端点的 host 上几乎什么都不用做（除了配置路由，把发送到 10.0.2.0 的包路由到 router A）！</p>
 <p>这么设计的好处也就很容易看出来了，ipip tunnel 是端对端的，通信也就只能是点对点的，而 GRE tunnel 却可以进行多播。</p>
 <p>现在让我们看看Linux内核是怎么实现的，我们必须假设 router A 和 B 上都是运行的 Linux，而 host A 和 B上运行什么是无所谓的。</p>
@@ -504,9 +504,9 @@ rtt min/avg/max/mdev = 0.669/140.860/561.275/242.726 ms
 <p>所以真正处理这个包的函数是 ipgre_rcv() 。ipgre_rcv() 所做的工作是：通过外层IP 头找到对应的 tunnel，然后剥去外层 IP 头，把这个“新的”包重新交给 IP 栈去处理，像接收到普通 IP 包一样。到了这里，“新的”包处理和其它普通的 IP 包已经没有什么两样了：根据 IP 头中目的地址转发给相应的 host。注意：这里我所谓的“新的”包其实并不新，内核用的还是同一个copy，只是skbuff 里相应的指针变了。</p>
 <p>以上就是Linux 内核对 GRE tunnel 的整个处理过程。另外，GRE 的头如下所示（图片来自<a href="http://packetlife.net/blog/2012/feb/27/gre-vs-ipip-tunneling/" target="_blank" rel="external">这里</a>）：</p>
 <p>IP header in GRE tunnel</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/11/gre_encapsulation.png" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2012/11/gre_encapsulation.png" alt=""></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/11/gre_encapsulation.png" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
 <p>GRE header</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/11/gre_header.png" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2012/11/gre_header.png" alt=""></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/11/gre_header.png" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
 
       
     </div>
@@ -696,7 +696,7 @@ rtt min/avg/max/mdev = 0.669/140.860/561.275/242.726 ms
 <p>Let’s start from the user-space part. Openvswitch user-space contains several components: they are a few daemons which actually implements the switch and the flow table, the core of openvswitch, and several utilities to manage the switch, the database, and even talk to the kernel directly.</p>
 <p>There are three daemons started by openvswitch service: ovs-vswitchd, which is the core implementation of the switch; ovsdb-server, which manipulates the database of the vswitch configuration and flows; and ovs-brcompatd which keeps the compatibility with the traditional bridges (that is the one you create with ‘brctl’ command) .</p>
 <p>Their relationship is shown in the picture below:</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/10/openvswitch1.jpg" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2012/10/openvswitch1.jpg" alt=""></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/10/openvswitch1.jpg" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
 <p><!--         @page { margin: 2cm }         P { margin-bottom: 0.21cm } -->Obviously, the most important one is ovs-vswitchd, it implements the switch, it directly talks with kernel via netlink protocol (we will see the details later). And ovs-vsctl is the utility used primarily to manage the switch, which of course needs to talk with ovs-vswitchd. Ovs-vswitchd saves and changes the switch configuration into a database, which is directly managed by ovsdb-server, therefore, ovs-vswitchd will need to talk to ovsdb-server too, via Unix domain socket, in order to retrieve or save the configuration information. This is also why your openvswitch configuration  could survive from reboot even you are not using ifcfg* files.</p>
 <p>Ovs-brcompatd is omitted here, we are not very interested in it now.</p>
 <p>Ovs-vsctl can do lots of things for you, so most of time, you will use ovs-vsctl to manage openvswitch. Ovs-appctl is also available to manage the ovs-vswitchd itself, it sends some internal commands to ovs-vswitchd daemon to change some configurations.</p>
@@ -730,7 +730,7 @@ rtt min/avg/max/mdev = 0.669/140.860/561.275/242.726 ms
 <p>OVS_ACTION_ATTR_SAMPLE: Do sampling</p>
 <p>With these commands combined, the user-space could implement some different policies, like a bridge, a bond or a VLAN device etc. GRE tunnel is not currently in upstream, so we don’t care about it now.</p>
 <p>So far, you already know how the packets are handled by openvswitch module. There are much more details, especially about the flow and datapath mentioned previously. A flow in kernel is represented as struct sw_flow, and datapath is defined as struct datapath, and the actions on a flow is defined as struct sw_flow_actions, and plus the one we mentioned, struct vport. These structures are the most important ones for openvswitch kernel module, their relationship is demonstrated in this picture:</p>
-<p><a href="http://wangcong2015.files.wordpress.com/2012/10/openvswitch-kernel.jpg" target="_blank" rel="external"><img src="http://wangcong2015.files.wordpress.com/2012/10/openvswitch-kernel.jpg" alt=""></a></p>
+<p><a href="http://wangcong2015.files.wordpress.com/2012/10/openvswitch-kernel.jpg" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
 <p>The most important one needs to mention is each struct sk_buff is associated with a struct sw_flow, which is via a pointer in ovs control block. And the above actions is associated with each flow, every time when a packet passed to openvswitch module, it first needs to lookup the flow table which is contained in a datapath which in turn either contains in a struct vport or in a global linked-list, with the key we mentioned. If a flow is found, the corresponding actions will be executed. Remember that datapath, flow, vport, all could be changed by the user-space with some specific genl command.</p>
 <p>As you can see, the kernel part only implements a mechanism and the fast path (except the first packet), and the user-space implements different policies upon the mechanism provided by the kernel, the slow path. The user-space is much more complicated, so I will not cover its details here.</p>
 <p>Update: Ben, one of the most active developers for openvswitch, pointed out some mistakes in the previous version, I updated this article as he suggested. Thanks to Ben!</p>
@@ -779,19 +779,19 @@ rtt min/avg/max/mdev = 0.669/140.860/561.275/242.726 ms
 <p>从 32 位一下子扩展到 128 位一个最明显的变化是，你很可能再也无法用脑子记住一个 IP 地址（除了 ::1 这种简单的地址）。玩笑。:-)</p>
 <p>言归正传，IPv4 中的 A、B、C 类地址划分在 IPv6 中不存在了，这种死板的分配方式问题多多，本身就属于设计的不合理，连 IPv4 自己都已经舍弃它改用 Classless Inter-Domain Routing 了。所以，IPv6 的一个显著的变化是没了网络掩码（mask），而改用前缀（prefix）了，这样可以完全通过前缀决定网络了。同时，网络掩码的中间可以包含0，可它几乎没有什么用处，但前缀却是直接指定前x位含1，直接避免了含0的可能性，简化了设计。</p>
 <p>在功能上，IPv4 中的地址分为三类：单播（unicast）、多播（multicast）和广播（broadcast），而 IPv6 中不再有广播地址，反而多了一个任播（ anycast）。<a href="http://en.wikipedia.org/wiki/Anycast" target="_blank" rel="external">wikipedia 上</a>有一幅图可以很好的解释它们的区别：</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/10/Selection_039.png" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2012/10/Selection_039.png" alt=""></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/10/Selection_039.png" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
 <p>但是，任播地址是直接从单播地址上拿出来，并没有单独分类，IPv6 协议这么写的：</p>
 <blockquote>
 <p>Anycast addresses are allocated from the unicast address space, using any of the defined unicast address formats.  Thus, anycast addresses are syntactically indistinguishable from unicast addresses.  When a unicast address is assigned to more than one interface, thus turning it into an anycast address, the nodes to which the address is assigned must be explicitly  configured to know that it is an anycast address.<br>更详细的信息可见 <a href="http://www.ietf.org/rfc/rfc2373.txt" target="_blank" rel="external">RFC2373</a>。好了，那么单播和多播地址又是如何划分的呢？这一点和 IPv4 一样，也是根据地址中的头几位来区分：</p>
 </blockquote>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/10/Selection_040.png" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2012/10/Selection_040.png" alt=""></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/10/Selection_040.png" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
 <p>（图片来自《TCP/IP guide》）</p>
 <p>从这里你可以看到了，单播地址还有多了一个非常重要的概念：约束（scope）。虽然在 IPv4 中 192.168.<em>.</em> 这种地址被用于私有地址，不应该出现在互联网上，但是，这种保证仅仅取决于路由，而非协议本身。而 IPv6 直接从协议规范上禁止了私有地址（其实叫 link-local 和 site-local ）被转发到互联网，它为不同的地址划分了不同的范围，一个范围内的地址只能在这个范围内使用。</p>
 <p>如上图，IPv6 规定了三种约束：link-local，site-local，和 global。link-local 的可达范围是本地物理连接的网络，任何路由都不能转发目的地址为这种地址的包（它是给 <a href="http://en.wikipedia.org/wiki/Neighbor_Discovery_Protocol" target="_blank" rel="external">neighbour discovery</a> 使用的）；site-local 的可达范围是整个组织、站点，组织内部的路由可以转发这种包，但是绝对不能把它们转发到互联网上；global 就是可以在互联网上使用的地址。一个设备可以有多个 IPv6 地址，比如一个 link-local 的地址和一个 site-local 的。</p>
 <p>多播地址的划分和 IPv4 类似，故此省略。</p>
 <p><strong>2. IPv6 头</strong></p>
 <p>让我们对比一下 IPv4 和 IPv6 的头部：</p>
-<p><a href="http://wangcong2015.files.wordpress.com/2012/10/ipv4_ipv6.jpg" target="_blank" rel="external"><img src="http://wangcong2015.files.wordpress.com/2012/10/ipv4_ipv6.jpg" alt=""></a></p>
+<p><a href="http://wangcong2015.files.wordpress.com/2012/10/ipv4_ipv6.jpg" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
 <p>（图片来自<a href="http://samirkhoury.com/image/Cisco/ipv4_ipv6.jpg" target="_blank" rel="external">这里</a>）</p>
 <p>不难发现，IPv6 的头部结构明显简单了一些：</p>
 <p>第一个最明显的改变是没有了 header checksum，这个是没有必要的，因为 checksum 完全可以由上层的 TCP，UDP 协议来做，在 IP 层再做一次是浪费。当然 IPv4 UDP 中的 checksum 可以不做，而到了 IPv6 UDP 中的 checksum 就是必须的了。给 IP 头做 checksum 的另一个缺点是，每次 TTL 改变的时候都需要重新计算 checksum。</p>
@@ -800,7 +800,7 @@ rtt min/avg/max/mdev = 0.669/140.860/561.275/242.726 ms
 <p>第四个改变是，IPv6 不再有 Fragment Offset 和 ID，这是因为分片（fragment）的 IPv6 包可以用 Next Header 来表示（知道它强大了吧？），而且 IPv6 协议已经禁止在中间的 router 上进行分片，如果需要分片必须在 host 上完成（PMTU），这可以大大提高路由的速度。其实 IP 包分片性能很差，IPv4 包分片的问题多多：ID 的生成是个问题，在对端把分段的包进行组装又是一个头疼的问题（该预留多少内存？中间少了几个分片怎么办？收到重复的分片怎么办？），所以能尽量避免分片就避免。</p>
 <p><strong>3. 邻居发现（ <a href="http://en.wikipedia.org/wiki/Neighbor_Discovery_Protocol" target="_blank" rel="external">Neighbour Discovery</a>）</strong></p>
 <p>IPv6 相比 IPv4 另一个显著的变化是没有了 ARP 协议，邻居发现协议使用的是 ICMPv6。ARP 协议是一个尴尬的存在，它处于第三层，但又不像 ICMP 协议那样基于 IP，而是和 IP 并列，从它的头部就可以看出：</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/10/arp_en.png" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2012/10/arp_en.png" alt="" title="arp_en"></a>（图片来自<a href="http://sid.rstack.org/arp-sk/figs/arp_en.png" target="_blank" rel="external">这里</a>）</p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/10/arp_en.png" target="_blank" rel="external"><img src="/images/" alt="" title="arp_en"></a>（图片来自<a href="http://sid.rstack.org/arp-sk/figs/arp_en.png" target="_blank" rel="external">这里</a>）</p>
 <p>这种设计使得 OSI 分层模式变得含糊。而 IPv6 使用的 ICMPv6 则完全基于 IP 之上，无须设计另外一个并列于 IP 层的协议。正如前面提到，邻居发现协议使用的是 link-local 地址，所以不会造成更大链路范围上的影响。link-local 地址是根据 MAC 地址自动生成的（协议规定的算法），因此有了 link-local 地址就可以马上和路由器进行通信了，因此也就有了 IP 地址自动分配的功能，即类似于 IPv4 的 DHCP，在 IPv6 上这被称为自动配置（Stateless Address Autoconfiguration）。</p>
 <p>当然了，因为没有广播地址，邻居发现协议使用的是多播地址。具体协议的细节可以参考 ICMPv6 协议的定义，和 ICMP 并无显著的差别，故省略。</p>
 

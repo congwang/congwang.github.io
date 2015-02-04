@@ -176,13 +176,13 @@
       
         <p>如何在程序中通过函数直接获取本机IP一直是讨论比较多的话题。我在做XylFTP项目的时候，碰巧编写了客户端和服务器端两边的获取本地IP的函数（方法）。</p>
 <p>服务器端在处理PASV命令时，需要回复自己的IP和进行数据连接的端口。由于服务器端是用C语言编写，所以可以使用底层的操作来实现。具体代码如下：</p>
-<p><img src="http://wangcong.org/images/getip1.jpg" alt=""></p>
+<p><img src="/images/" alt=""></p>
 <p>它使用了ioctl这个系统调用，主要是针对网卡驱动来使用。它的优点是即使本机有多个网卡，也可以正常工作。缺点是如果网卡驱动不支持ioctl操作，此函数则会失败。</p>
 <p>客户端在发送PORT命令时，也需要带上自己的IP。由于客户端是用Java编写，所以不方便使用底层的方法，幸运的是Java的Socket类为我们提供了一个getLocalAddress()方法。具体代码如下：</p>
-<p><img src="http://wangcong.org/images/getip2.jpg" alt=""></p>
+<p><img src="/images/" alt=""></p>
 <p>用这个方法获得IP的优点是简单，代码只有数行，但是它要求必须先建立Socket，否则得到的只是127.0.0.1。如果我们想不建立连接就获取IP，此法就不适用了。</p>
 <p>后来，在和<a href="http://amankwahly.cn/blog/" target="_blank" rel="external">刘洋同学</a>商量此问题时，见到了另一种在Java中获取本机IP的方法，用的是Java包装的NetworkInterface类，具体代码如下：</p>
-<p><img src="http://wangcong.org/images/getip3.jpg" alt=""></p>
+<p><img src="/images/" alt=""></p>
 <p>这种方法相对比较麻烦，和最上面的用C实现的方法有相似之处。但在合适的条件下，仍然可以选择使用。</p>
 <p>还有没有其它方法？当然有！不过这些方法只能针对具体环境，比如，在局域网的UDP通信环境中如何不用NetworkInterface获得本机IP？一种可能的解决方法（仅仅理论，未实践）是：先在局域网内进行广播，让接受者接到广播包后获取源IP，并把此IP当作数据发送到广播主机，这样可以获取广播主机自己的IP。另一种方法是通过RARP，不过前提是此局域网里有一台RARP服务器。</p>
 
@@ -313,10 +313,10 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>简单地说，如果把关系看作一张表，那么一个元组就是这张表的一行，一个属性就是一列；元组的数目称为势，属性的数目称作度；域是值的集合，关系中属性的值取自域。</p>
-<p><img src="http://wangcong.org/images/relation.jpg" alt=""></p>
+<p><img src="/images/" alt=""></p>
 <p>关系变量分两种类型：基本关系变量和视图（也分别称为实的和虚的关系变量）。SQL中的域不是类型；SQL中的表（基本的或其他的）不是关系，因为（ a）它们允许重复的行；（ b）它们的 列有从左到右的次序。实际上，它们甚至可以有两个或多个相同名字的列（对基本表或视图名，SQL中是不允许重名的） 。</p>
 <p>基本关系代数的8个操作符：<br>选择：返回一个关系，其中的元组来自指定关系中所有满足指定条件的元组。<br>投影：返回一个关系，由去掉若干属性列后的指定关系中剩余的所有（子）元组组成。<br>积：返回一个关系，包含任意两个分别来自两个指定关系的元组组合的所有可能的元组。<br>并：返回的关系由两个指定关系中所有的元组构成。<br>交：返回关系由同时出现在两个指定关系中的元组构成。<br>差：返回的关系由那些属于第一个关系却不属于第二个关系的元组构成。<br>连接： 返回关系中的元组是两个元组的结合，这两个元组分别来自两个指定的关系，需<br>满足的条件是此两个关系存在相同的属性，且在相同属性上有相同的值（在结果元组中，共同的值只出现一次，而不是两次） 。<br>除：此操作是在两个单目关系和一个双目关系上，返回关系的元组满足以下条件：这些<br>元组来自一个单目关系，其在双目关系中的对应元组能与另一个单目关系中的所有元组相匹配。</p>
-<p><img src="http://wangcong.org/images/operations.jpg" alt=""></p>
+<p><img src="/images/" alt=""></p>
 <p>A根据C除以B（其中A是被除数， B是除数，C是中间数）<br>也可以粗略地说，结果关系包含A中满足如下条件的 X值：在C中对应的Y值包含B中的所有Y值。</p>
 
       
@@ -366,9 +366,9 @@
 <p>(1) 数据共享( 2) 减少冗余 (3) 避免不一致 (4) 提供事务支持 (5) 保持完整性 (6) 增强安全性 (7) 平衡相互冲突的请求 (8) 加强标准化</p>
 <p>ANSI/SPARC体系结构分为三层：即内模式、概念模式和外模式。广义地讲：</p>
 <p>• 内模式（存储模式）是最接近物理存储的—也就是，数据的物理存储方式；<br>• 外模式（用户模式）是最接近用户的—也就是，用户所看到的数据视图；<br>• 概念模式（公共逻辑模式，或有时称逻辑模式）是介于前两者之间的间接的层次。</p>
-<p><img src="http://wangcong.org/images/model.jpeg" alt=""></p>
+<p><img src="/images/" alt=""></p>
 <p>“外部视图”（即外模式）会有许许多多，每一个都或多或少地抽象表示整个数据库的某一部分，而“概念视图” （概念模式）只有一个，它包含对现实世界数据库的抽象表示。 大多数用户只对整个数据库的某一部分感兴趣）。同样，“内部视图”（即内模式）也只有一个，表示数据库的物理存储。</p>
-<p><img src="http://wangcong.org/images/structure.jpeg" alt=""></p>
+<p><img src="/images/" alt=""></p>
 <p>直观地说，关系系统是这样的系统：<br>1) 结构化方面：数据库中的数据对用户来说是表，并且只是表；<br>2) 完整性方面：数据库中的这些表满足一定的完整性约束（在本节最后讨论）；<br>3) 操纵性方面：用户可以使用用于表操作的操作符。</p>
 <p>从一个表导出另一个表的操作符。其中，选择、投影和连接这三种尤为重要。<br>• 选择操作是从表中提取特定的几行。<br>• 投影操作是从表中提取特定的几列。<br>• 连接操作是根据某一列的值将两个表连接起来。</p>
 <p>事务：事务是一个逻辑工作单元，通常包括几个数据库操作，并指出当不同的操作处于同一事务中时，用户要通知系统。 BEGIN TRANSACTION、COMMIT 和ROLLBACK操作就是基于这一考虑提出的。</p>
@@ -416,7 +416,7 @@
       
         <p>本文基于<a href="http://en.wikipedia.org/wiki/Christopher_J._Date" target="_blank" rel="external">Christopher J. Date</a>所著的<a href="http://www.china-pub.com/computers/common/info.asp?id=28267" target="_blank" rel="external">《An Introduction to Database Systems》</a>的中文翻译版。这本书是数据库领域的经典书籍，现在都出到第8版了，可见作者是多么认真负责。本文也可以看作是此书的读书笔记。</p>
 <p>在正式开始之前，我们先来八卦一下传说中的E.F.Codd——关系模型的发明者，关系型数据库的奠基人。E.F.Codd的全名是<a href="http://en.wikipedia.org/wiki/Edgar_F._Codd" target="_blank" rel="external">Edgar Frank “Ted” Codd</a>。1970年，当时E.F.Codd还是加利福尼亚的圣何塞研究中心的年轻的IBM程序员，他就在ACM上发了一篇paper，名为<a href="http://www.acm.org/classics/nov95/toc.html" target="_blank" rel="external">A Relational Model of Data for Large Shared Data Banks</a>，里面提出了数据应该按照基于关系原理的不同种类来组织。也就是这篇论文，成了关系型数据库的开山之作，成了计算机科学界的经典论文之一。随后，Codd又连续发了几篇论文，为关系型数据库奠定了坚实的理论基础。Codd也因此获得了1981年的图灵奖。你可能不知道的是，Codd其实是英国人，而不是美国人，他1923年生于英格兰的Portland。2003年4月18日，他在佛罗里达州的威廉姆斯岛的家中离开了人世，但Codd的理论长留你我心中了。</p>
-<p><img src="http://wangcong.org/images/Edgar_F_Codd.jpg" alt=""></p>
+<p><img src="/images/" alt=""></p>
 <p>(Edgar F. Codd)</p>
 
       

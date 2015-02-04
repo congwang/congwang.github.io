@@ -140,7 +140,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>以前分析都是用df和du，突然间发现了一个巨好用的图形化工具——磁盘使用分析器，英文名叫Baobab。看看下面的截图就知道它有多么友好。</p>
-<p><img src="http://wangcong.org/images/df.png" alt=""></p>
+<p><img src="/images/" alt=""></p>
 <p>经过仔细分析，发现/tmp目录下的某些cscope文件居然占据了很多空间，马上rm -rf掉。结果根分区的使用率一下从74%下降到60%。妈呀，虚惊一场。</p>
 
       
@@ -332,7 +332,7 @@
 <p>代码是在include/asm-i386/string.h中，是针对i386对memcpy做进一步优化。我们知道，一个简单的memcpy其实和strcpy差不多，区别只是前者检查的是复制的个数，而后者检查的是当前字符是否是’’。</p>
 <p>而这显然还有很大的优化余地，首先像这种非常常用的库函数是可以用汇编重写来提高速度的。当然了，可移植性是降低了，但我们可以针对每个平台写一套汇编。这样速度上的提升还是蛮乐观的。其次，memcpy显然没必要一个一个字节地复制，其实我们最多每次也就复制4个字节（当然是在i386上），但如果复制数量大的话，这种提升还是很明显的。于是下面的汇编就出来乐～！</p>
 <p>&nbsp;</p>
-<p><img src="http://wangcong.org/images/memcpy.jpg" alt=""></p>
+<p><img src="/images/" alt=""></p>
 <p>评论如下：</p>
 <p>34~36</p>
 <p>rep=&gt;重复</p>
@@ -432,9 +432,9 @@
       
         <p>从vm_area找到其映射的struct page那叫mapping，反过来，从一个struct page找到所有映射上来的vm_area就叫reverse mapping。</p>
 <p>对于匿名映射，情况是这样的：</p>
-<p><img src="http://wangcong.org/images/reverse-mapping.jpg" alt=""></p>
+<p><img src="/images/" alt=""></p>
 <p>而对于非匿名映射，应该这样：</p>
-<p><img src="http://wangcong.org/images/reverse-mapping2.gif" alt=""></p>
+<p><img src="/images/" alt=""></p>
 <p>前者的技巧是加了anon_vma链表，而后者是加了一个layer——address_space。瞧～这名字起得多好，如果你第一次见绝对会把你绕晕～！</p>
 <p>上面的图片也清楚地向我们展示了这么一个结论：C语言编程其实就是Find a Needle in the Haystack～～！怎样？这次你信了吧～！</p>
 

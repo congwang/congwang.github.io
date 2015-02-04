@@ -1,0 +1,591 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">  
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>落梅如雪的博客</title>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<meta name="description" content="落梅如雪的博客"/>
+<meta name="keywords" content="落梅如雪,落梅如雪的博客,落梅如雪博客网,bokee.com"/>
+<meta name="author" content="落梅如雪"/>
+<base target="_blank" />
+<link rel="Shortcut Icon" href="http://avatar.blogchina.com/HeadPic/11ef8f68adf6eeb5458021ccea5c590e!small">
+<link rel="icon" href="http://avatar.blogchina.com/HeadPic/11ef8f68adf6eeb5458021ccea5c590e!small">
+<link href="http://js.bokee.com/newbokee_home/default/css/style.css" type="text/css" rel="stylesheet"/>
+<link href="http://js.bokee.com/newbokee_home/default/css/index.css" type="text/css" rel="stylesheet"/>
+<link href="http://js.bokee.com/newbokee_home/default/css/wap.css" type="text/css" rel="stylesheet"/> 
+<script src="http://js.bokee.com/newbokee_home/default/script/common.js" type="text/javascript"></script> 
+<script src="http://js.bokee.com/newbokee_home/default/jslib/sea.js" type="text/javascript"></script>
+<script type="text/javascript">
+		seajs.use("http://js.bokee.com/newbokee_home/default/script/index",function(index){
+				index.initIndex();
+		});
+		//alert("\u9650\u91cf,\u6e05\u4ed3,\u9996\u53d1,\u6ee1\u51cf,\u6ee1\u8d60,\u76f4\u964d,\u65b0\u54c1,\u72ec\u5bb6,\u4eba\u6c14,\u70ed\u5356");
+</script>
+<script src="http://cbjs.baidu.com/js/m.js" type="text/javascript"></script>
+
+</head>
+<body class="body_opacity">
+<span itemscope itemtype="http://schema.org/Article">
+
+<!--[if lte IE 6]>
+<style type="text/css">
+/* styling specific to Internet Explorer IE5.5 and IE6. Yet to see if IE7 handles li:hover */
+/* Get rid of any default table style */
+table {
+border-collapse:collapse;
+margin:0; 
+padding:0;
+}
+/* ignore the link used by 'other browsers' */
+.menu_lst ul li a.hide_a, .menu_lst ul li a:visited.hide_a {
+display:none;
+}
+/* set the background and foreground color of the main menu_lst link on hover */
+.menu_lst ul li a {
+width:80px;
+height:40px;
+padding:0 20px 0 0;
+background:url(../images/lst_bottom.png) no-repeat right center;
+
+}
+/* set the background and foreground color of the main menu_lst link on hover */
+.menu_lst ul li a:hover {
+color:#333333;
+text-decoration:none;
+height:40px;
+padding:0 20px 0 0;
+background:url(../images/lst_up.png) no-repeat right center #e6e6e6;
+
+}
+/* make the sub menu_lst ul visible and position it beneath the main menu_lst list item */
+.menu_lst ul li a:hover ul {
+display:block; 
+position:absolute; 
+top:40px; 
+right:0; 
+
+}
+/* style the background and foreground color of the submenu_lst links */
+.menu_lst ul li a:hover ul li a {
+background:#e6e6e6;
+width:100px;
+padding:0;
+color:#333333;
+border-top:1px solid #fff;
+}
+/* style the background and forground colors of the links on hover */
+.menu_lst ul li a:hover ul li a:hover {
+background:#bfbfbf;
+color:#fff;
+font-weight:bold;
+}
+</style>
+<![endif]-->
+
+<div class="header_top">
+  <div class="header_all"><a href="http://www.bokee.com/"><img src="http://js.bokee.com/newbokee_user/default/images/admin_img/gl_fixed_pic/logo.jpg"></a>
+    <div class="no_login">
+      <button class="zc" id="regist" tabindex="5">注册</button>
+      <button class="dl" id="login" tabindex="4">登录</button>
+      <span>记住我</span>
+      <input class="jzw" name="" type="checkbox" value="" id="rememberme" checked="checked" tabindex="3">
+      <span id="replaceC"><input value="密码:" class="mm" id="password" tabindex="2"/></span>
+      <span id="replaceU"><input value="用户名:" class="yhm" id="username" tabindex="1"/></span>
+    </div>
+    <div class="login" style="display:none;">
+      <button></button>
+      <input/>
+      <div class="menu_lst">
+        <ul>
+          <li><a class="hide_a" href="javascript:void(0)" id="myblog2"></a> 
+            <!--[if lte IE 6]>
+<a class="hide_a" href="javascript:void(0)" id="myblog2"></a>
+<table><tr><td>
+<![endif]-->
+            <ul>
+              <li><a href="http://uhome.bokee.com/user/basics.action?origin=b">个人中心</a></li>
+              <li><a href="" title="Styling forms" id="huabao">画报</a></li>
+              <li><a href="" id="mymanage">博文管理</a></li>
+              <li><a href="" id="myphoto">图样</a></li>
+              <li><a href="javascript:void(0)" id="quit">退出</a></li>
+            </ul>
+            <!--[if lte IE 6]>
+</td></tr></table>
+</a>
+<![endif]--> 
+          </li>
+        </ul>
+      </div>
+      <!--  <span><img src="http://js.bokee.com/newbokee_user/default/images/admin_img/gl_fixed_pic/hjmd.jpg"></span>-->
+      <strong id="writetuyang"></strong>
+      <strong id="writeblog"></strong>
+      <!--  <strong id="writehuabao"></strong>-->
+    </div>
+  </div>
+</div>
+
+<div class="header">
+  <div class="header_lt left"> <span class="user_name"><a href="http://xueluowuyin.bokee.com"><span itemprop="name">落梅如雪<strong>的博客</strong></span></a></span><br/>
+    <span class="web_url"><a itemprop="url" href="http://xueluowuyin.bokee.com">http://xueluowuyin.bokee.com</a></span></div>
+  <div class="nav right">
+    <ul>
+      <li target="_self" class="current"><a target="_self" href="http://xueluowuyin.bokee.com">首页</a></li> 
+      <li><a target="_self" href="http://xueluowuyin.bokee.com/graphic/1">画报</a><span class="new"></span></li>
+    
+      <li><a target="_self" href="http://xueluowuyin.bokee.com/newest/1">博文</a></li>
+      <li><a target="_self" href="http://tuyang.bokee.com/method/visitor/photosList/254097">图样</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="main_shadow">
+  <div class="main">
+    <div class="main_lt left">
+      <h2><span class="xc_current"><a href="http://xueluowuyin.bokee.com">首页</a></span>
+      	  <!--<span><a href="http://xueluowuyin.bokee.com/graphic/1">画报</a></span>-->
+	  </h2>
+
+      <div class="advert1">
+      <!-- ad通栏前导代码 -->
+      <script src="http://rmtx.ra.icast.cn/b.js" type="text/javascript"></script>
+      
+      
+      <script type="text/javascript">BAIDU_CLB_fillSlot("653814");</script>
+      <!--  
+      <a href=""><img src="http://js.bokee.com/newbokee_home/default/testImgs/ad1.jpg"/></a>
+      -->
+      </div>  
+     
+       <div id="photo"></div>
+     
+     
+      <!--  -->      
+            <div class="content">
+        <div class="top"> 
+        <!--  -->
+        <span>
+        <a href="http://xueluowuyin.bokee.com/7002390.html" target="_self">
+        
+        世博之夜        </a>
+        </span>
+       	  <span id="edit_del_7002390"></span>
+          <div class="tag">
+          <span>作者：<a href="http://xueluowuyin.bokee.com"><span itemprop="author" itemscope itemtype="http://schema.org/Person">
+<span itemprop="name">梅雪飘飘</span></span></a></span><span itemprop="datePublished" content="2011-04-04 12:19">2011-04-04 12:19</span><span>分类：<a href="http://xueluowuyin.bokee.com/category/0/1">默认分类</a></span><span>标签：
+                    </span>
+          </div>
+        </div>
+        <div class="cnt">
+         	<!--  -->
+          	<div class="txt"><span itemprop="articleBody">
+                      	</span></div>
+        </div>
+        <div itemprop="articleSection" class="bt">
+          <ul>
+            <li class="li_one"><a href="http://xueluowuyin.bokee.com/7002390.html" target="_self">点击<span id="click_7002390">(0)</span></a></li>
+            <li class="li_two"><a href="http://xueluowuyin.bokee.com/7002390.html" target="_self">评论<span id="comment_7002390">(0)</span></a></li>
+            <li class="li_three"><a href="http://xueluowuyin.bokee.com/7002390.html" target="_self">支持<span id="support_7002390">(0)</span></a></li>
+          </ul>
+        </div>
+        <input type="hidden" name="hidden_bid_0" id="hidden_bid_0" value="7002390" />
+      </div>	  
+            <div class="content">
+        <div class="top"> 
+        <!--  -->
+        <span>
+        <a href="http://xueluowuyin.bokee.com/6888962.html" target="_self">
+        
+        飘梅落雪        </a>
+        </span>
+       	  <span id="edit_del_6888962"></span>
+          <div class="tag">
+          <span>作者：<a href="http://xueluowuyin.bokee.com"><span itemprop="author" itemscope itemtype="http://schema.org/Person">
+<span itemprop="name">梅雪飘飘</span></span></a></span><span itemprop="datePublished" content="2009-05-05 22:03">2009-05-05 22:03</span><span>分类：<a href="http://xueluowuyin.bokee.com/category/0/1">默认分类</a></span><span>标签：
+                    </span>
+          </div>
+        </div>
+        <div class="cnt">
+         	<!--  -->
+          	<div class="txt"><span itemprop="articleBody">
+            &lt; body=&quot;&quot; /&gt;          	</span></div>
+        </div>
+        <div itemprop="articleSection" class="bt">
+          <ul>
+            <li class="li_one"><a href="http://xueluowuyin.bokee.com/6888962.html" target="_self">点击<span id="click_6888962">(0)</span></a></li>
+            <li class="li_two"><a href="http://xueluowuyin.bokee.com/6888962.html" target="_self">评论<span id="comment_6888962">(0)</span></a></li>
+            <li class="li_three"><a href="http://xueluowuyin.bokee.com/6888962.html" target="_self">支持<span id="support_6888962">(0)</span></a></li>
+          </ul>
+        </div>
+        <input type="hidden" name="hidden_bid_1" id="hidden_bid_1" value="6888962" />
+      </div>	  
+            <div class="content">
+        <div class="top"> 
+        <!--  -->
+        <span>
+        <a href="http://xueluowuyin.bokee.com/6887968.html" target="_self">
+        
+        残荷挽歌        </a>
+        </span>
+       	  <span id="edit_del_6887968"></span>
+          <div class="tag">
+          <span>作者：<a href="http://xueluowuyin.bokee.com"><span itemprop="author" itemscope itemtype="http://schema.org/Person">
+<span itemprop="name">梅雪飘飘</span></span></a></span><span itemprop="datePublished" content="2009-05-01 08:43">2009-05-01 08:43</span><span>分类：<a href="http://xueluowuyin.bokee.com/category/0/1">默认分类</a></span><span>标签：
+                    </span>
+          </div>
+        </div>
+        <div class="cnt">
+         	<!--  -->
+          	<div class="txt"><span itemprop="articleBody">
+                      	</span></div>
+        </div>
+        <div itemprop="articleSection" class="bt">
+          <ul>
+            <li class="li_one"><a href="http://xueluowuyin.bokee.com/6887968.html" target="_self">点击<span id="click_6887968">(0)</span></a></li>
+            <li class="li_two"><a href="http://xueluowuyin.bokee.com/6887968.html" target="_self">评论<span id="comment_6887968">(0)</span></a></li>
+            <li class="li_three"><a href="http://xueluowuyin.bokee.com/6887968.html" target="_self">支持<span id="support_6887968">(0)</span></a></li>
+          </ul>
+        </div>
+        <input type="hidden" name="hidden_bid_2" id="hidden_bid_2" value="6887968" />
+      </div>	  
+            <div class="content">
+        <div class="top"> 
+        <!--  -->
+        <span>
+        <a href="http://xueluowuyin.bokee.com/6704701.html" target="_self">
+        
+        尽在不言中        </a>
+        </span>
+       	  <span id="edit_del_6704701"></span>
+          <div class="tag">
+          <span>作者：<a href="http://xueluowuyin.bokee.com"><span itemprop="author" itemscope itemtype="http://schema.org/Person">
+<span itemprop="name">梅雪飘飘</span></span></a></span><span itemprop="datePublished" content="2008-05-06 21:27">2008-05-06 21:27</span><span>分类：<a href="http://xueluowuyin.bokee.com/category/0/1">默认分类</a></span><span>标签：
+                    </span>
+          </div>
+        </div>
+        <div class="cnt">
+         	<!--  -->
+          	<div class="txt"><span itemprop="articleBody">
+            when you say nothing at all（尽在不言中）It's amazing how you can speak right to my heartWithout saying a word, you can light up the darkTry as I may, I could never explainWhat I hear when you don't say a thing Krauss AlisonThe smile on your face lets me know that you need meThere's a truth in your eyes saying you'll never leave meThe touch of your hand says you'll catch me if ever I fallYou say it best when you say nothing at allAll day long I can hear people talking out loudBut when you hold me near, you drown out the crowdOld Mr. Webster could never defineThe smile on your face lets me know that you need meThere's a truth in your eyes saying you'll never leave meThe touch of your hand says you'll catch me if ever I fallYou say it best when you say nothing at allThe smile on your face lets me know that you need meThere's a truth in your eyes saying you'll never leave meThe touch of your hand says you'll catch me if ever I fallYou say it best when you say nothing at all2008-03          	</span></div>
+        </div>
+        <div itemprop="articleSection" class="bt">
+          <ul>
+            <li class="li_one"><a href="http://xueluowuyin.bokee.com/6704701.html" target="_self">点击<span id="click_6704701">(0)</span></a></li>
+            <li class="li_two"><a href="http://xueluowuyin.bokee.com/6704701.html" target="_self">评论<span id="comment_6704701">(0)</span></a></li>
+            <li class="li_three"><a href="http://xueluowuyin.bokee.com/6704701.html" target="_self">支持<span id="support_6704701">(0)</span></a></li>
+          </ul>
+        </div>
+        <input type="hidden" name="hidden_bid_3" id="hidden_bid_3" value="6704701" />
+      </div>	  
+            <div class="content">
+        <div class="top"> 
+        <!--  -->
+        <span>
+        <a href="http://xueluowuyin.bokee.com/6621278.html" target="_self">
+        
+        西湖雪        </a>
+        </span>
+       	  <span id="edit_del_6621278"></span>
+          <div class="tag">
+          <span>作者：<a href="http://xueluowuyin.bokee.com"><span itemprop="author" itemscope itemtype="http://schema.org/Person">
+<span itemprop="name">梅雪飘飘</span></span></a></span><span itemprop="datePublished" content="2008-02-05 14:54">2008-02-05 14:54</span><span>分类：<a href="http://xueluowuyin.bokee.com/category/0/1">默认分类</a></span><span>标签：
+                    </span>
+          </div>
+        </div>
+        <div class="cnt">
+         	<!--  -->
+          	<div class="txt"><span itemprop="articleBody">
+            图片点击可在新窗口打开查看[1]图片点击可在新窗口打开查看[2]图片点击可在新窗口打开查看[3]　　　          	</span></div>
+        </div>
+        <div itemprop="articleSection" class="bt">
+          <ul>
+            <li class="li_one"><a href="http://xueluowuyin.bokee.com/6621278.html" target="_self">点击<span id="click_6621278">(0)</span></a></li>
+            <li class="li_two"><a href="http://xueluowuyin.bokee.com/6621278.html" target="_self">评论<span id="comment_6621278">(0)</span></a></li>
+            <li class="li_three"><a href="http://xueluowuyin.bokee.com/6621278.html" target="_self">支持<span id="support_6621278">(0)</span></a></li>
+          </ul>
+        </div>
+        <input type="hidden" name="hidden_bid_4" id="hidden_bid_4" value="6621278" />
+      </div>	  
+            <div class="content">
+        <div class="top"> 
+        <!--  -->
+        <span>
+        <a href="http://xueluowuyin.bokee.com/6597612.html" target="_self">
+        
+        天禅        </a>
+        </span>
+       	  <span id="edit_del_6597612"></span>
+          <div class="tag">
+          <span>作者：<a href="http://xueluowuyin.bokee.com"><span itemprop="author" itemscope itemtype="http://schema.org/Person">
+<span itemprop="name">梅雪飘飘</span></span></a></span><span itemprop="datePublished" content="2008-01-09 19:50">2008-01-09 19:50</span><span>分类：<a href="http://xueluowuyin.bokee.com/category/0/1">默认分类</a></span><span>标签：
+                    </span>
+          </div>
+        </div>
+        <div class="cnt">
+         	<!--  -->
+          	<div class="txt"><span itemprop="articleBody">
+                      	</span></div>
+        </div>
+        <div itemprop="articleSection" class="bt">
+          <ul>
+            <li class="li_one"><a href="http://xueluowuyin.bokee.com/6597612.html" target="_self">点击<span id="click_6597612">(0)</span></a></li>
+            <li class="li_two"><a href="http://xueluowuyin.bokee.com/6597612.html" target="_self">评论<span id="comment_6597612">(0)</span></a></li>
+            <li class="li_three"><a href="http://xueluowuyin.bokee.com/6597612.html" target="_self">支持<span id="support_6597612">(0)</span></a></li>
+          </ul>
+        </div>
+        <input type="hidden" name="hidden_bid_5" id="hidden_bid_5" value="6597612" />
+      </div>	  
+            <div class="content">
+        <div class="top"> 
+        <!--  -->
+        <span>
+        <a href="http://xueluowuyin.bokee.com/6580194.html" target="_self">
+        
+        新月        </a>
+        </span>
+       	  <span id="edit_del_6580194"></span>
+          <div class="tag">
+          <span>作者：<a href="http://xueluowuyin.bokee.com"><span itemprop="author" itemscope itemtype="http://schema.org/Person">
+<span itemprop="name">梅雪飘飘</span></span></a></span><span itemprop="datePublished" content="2007-12-25 23:04">2007-12-25 23:04</span><span>分类：<a href="http://xueluowuyin.bokee.com/category/0/1">默认分类</a></span><span>标签：
+                    </span>
+          </div>
+        </div>
+        <div class="cnt">
+         	<!--  -->
+          	<div class="txt"><span itemprop="articleBody">
+            (image)[1]          	</span></div>
+        </div>
+        <div itemprop="articleSection" class="bt">
+          <ul>
+            <li class="li_one"><a href="http://xueluowuyin.bokee.com/6580194.html" target="_self">点击<span id="click_6580194">(0)</span></a></li>
+            <li class="li_two"><a href="http://xueluowuyin.bokee.com/6580194.html" target="_self">评论<span id="comment_6580194">(0)</span></a></li>
+            <li class="li_three"><a href="http://xueluowuyin.bokee.com/6580194.html" target="_self">支持<span id="support_6580194">(0)</span></a></li>
+          </ul>
+        </div>
+        <input type="hidden" name="hidden_bid_6" id="hidden_bid_6" value="6580194" />
+      </div>	  
+            <div class="content">
+        <div class="top"> 
+        <!--  -->
+        <span>
+        <a href="http://xueluowuyin.bokee.com/6501314.html" target="_self">
+        
+        梅花诗--梅魂        </a>
+        </span>
+       	  <span id="edit_del_6501314"></span>
+          <div class="tag">
+          <span>作者：<a href="http://xueluowuyin.bokee.com"><span itemprop="author" itemscope itemtype="http://schema.org/Person">
+<span itemprop="name">梅雪飘飘</span></span></a></span><span itemprop="datePublished" content="2007-10-21 09:55">2007-10-21 09:55</span><span>分类：<a href="http://xueluowuyin.bokee.com/category/0/1">默认分类</a></span><span>标签：
+                    </span>
+          </div>
+        </div>
+        <div class="cnt">
+         	<!--  -->
+          	<div class="txt"><span itemprop="articleBody">
+                      	</span></div>
+        </div>
+        <div itemprop="articleSection" class="bt">
+          <ul>
+            <li class="li_one"><a href="http://xueluowuyin.bokee.com/6501314.html" target="_self">点击<span id="click_6501314">(0)</span></a></li>
+            <li class="li_two"><a href="http://xueluowuyin.bokee.com/6501314.html" target="_self">评论<span id="comment_6501314">(0)</span></a></li>
+            <li class="li_three"><a href="http://xueluowuyin.bokee.com/6501314.html" target="_self">支持<span id="support_6501314">(0)</span></a></li>
+          </ul>
+        </div>
+        <input type="hidden" name="hidden_bid_7" id="hidden_bid_7" value="6501314" />
+      </div>	  
+            <div class="content">
+        <div class="top"> 
+        <!--  -->
+        <span>
+        <a href="http://xueluowuyin.bokee.com/6486214.html" target="_self">
+        
+        海之媚        </a>
+        </span>
+       	  <span id="edit_del_6486214"></span>
+          <div class="tag">
+          <span>作者：<a href="http://xueluowuyin.bokee.com"><span itemprop="author" itemscope itemtype="http://schema.org/Person">
+<span itemprop="name">梅雪飘飘</span></span></a></span><span itemprop="datePublished" content="2007-10-09 12:54">2007-10-09 12:54</span><span>分类：<a href="http://xueluowuyin.bokee.com/category/0/1">默认分类</a></span><span>标签：
+                    </span>
+          </div>
+        </div>
+        <div class="cnt">
+         	<!--  -->
+          	<div class="txt"><span itemprop="articleBody">
+            在南国生活，对大海早已不陌生了，但是一直以来非常想往去趟天之涯海之角。。      四月，一个阳光明媚的日子，我踏上了旅程。重温这些宛如童话般美丽的景色，又一次倘佯在无尽的椰风海韵之中。。。。。。        怎样的润色也描绘不出那真实的美奂美仑, 贴出来再赏之...                                                2007-9-1 10:47:00          	</span></div>
+        </div>
+        <div itemprop="articleSection" class="bt">
+          <ul>
+            <li class="li_one"><a href="http://xueluowuyin.bokee.com/6486214.html" target="_self">点击<span id="click_6486214">(0)</span></a></li>
+            <li class="li_two"><a href="http://xueluowuyin.bokee.com/6486214.html" target="_self">评论<span id="comment_6486214">(0)</span></a></li>
+            <li class="li_three"><a href="http://xueluowuyin.bokee.com/6486214.html" target="_self">支持<span id="support_6486214">(0)</span></a></li>
+          </ul>
+        </div>
+        <input type="hidden" name="hidden_bid_8" id="hidden_bid_8" value="6486214" />
+      </div>	  
+            <div class="content">
+        <div class="top"> 
+        <!--  -->
+        <span>
+        <a href="http://xueluowuyin.bokee.com/6410669.html" target="_self">
+        
+        洛夫诗选        </a>
+        </span>
+       	  <span id="edit_del_6410669"></span>
+          <div class="tag">
+          <span>作者：<a href="http://xueluowuyin.bokee.com"><span itemprop="author" itemscope itemtype="http://schema.org/Person">
+<span itemprop="name">梅雪飘飘</span></span></a></span><span itemprop="datePublished" content="2007-08-11 16:02">2007-08-11 16:02</span><span>分类：<a href="http://xueluowuyin.bokee.com/category/0/1">默认分类</a></span><span>标签：
+                    </span>
+          </div>
+        </div>
+        <div class="cnt">
+         	<!--  -->
+          	<div class="txt"><span itemprop="articleBody">
+            图片点击可在新窗口打开查看  湖南大雪 昔我往矣 杨柳依依 今我来思 雨雪霏霏君问归期归期早已写在晚唐的雨中巴山的雨中而载我渡我的雨啊奔腾了两千年才凝成这场大雪落在洞庭湖上落在岳麓山上落在你未眠的窗前雪落着一种复杂而单纯的沉默沉默亦如你案头熠熠延客的烛光......图片点击可在新窗口打开查看烟之外在涛声中唤你的名字而你的名字已在千帆之外潮来潮去左边的鞋印才下午右边的鞋印已黄昏了六月原是一本很感伤的书结局如此之凄美——落日西沉你依然凝视那人眼中展示的一片纯白他跪向你向昨日那朵美了整个下午的云海哟，为何在众灯之中独点亮那一盏茫然还能抓住什么呢？你那曾被称为云的眸子现有人叫作烟 图片点击可在新窗口打开查看风雨之夕 风雨凄迟递过你的缆来吧我是一只没有翅膀的小船递过你的臂来吧我要进你的          	</span></div>
+        </div>
+        <div itemprop="articleSection" class="bt">
+          <ul>
+            <li class="li_one"><a href="http://xueluowuyin.bokee.com/6410669.html" target="_self">点击<span id="click_6410669">(0)</span></a></li>
+            <li class="li_two"><a href="http://xueluowuyin.bokee.com/6410669.html" target="_self">评论<span id="comment_6410669">(0)</span></a></li>
+            <li class="li_three"><a href="http://xueluowuyin.bokee.com/6410669.html" target="_self">支持<span id="support_6410669">(0)</span></a></li>
+          </ul>
+        </div>
+        <input type="hidden" name="hidden_bid_9" id="hidden_bid_9" value="6410669" />
+      </div>	  
+            <!--  -->
+      
+      
+      <div class="page_turn" id="page_turn">
+       <!-- <ul>
+          <li class="page_current"><a href="">1</a></li>
+          <li><a href="">2</a></li>
+          <li><a href="">3</a></li>
+          <li><a href="">4</a></li>
+          <li><a href="">5</a></li>
+          <li>…</li>
+          <li><a href="">尾页</a></li>
+        </ul> -->
+      </div>
+    </div>
+    <div class="main_rt_opacity"></div>
+    <div class="main_rt right">
+      <div class="user_par">
+        <div class="tp"><a href="http://xueluowuyin.bokee.com"><img src="http://avatar.blogchina.com/HeadPic/11ef8f68adf6eeb5458021ccea5c590e!big" onerror="this.src='http://js.bokee.com/newbokee_home/default/images/bokee_default_avatar.png'" title="落梅如雪" alt="落梅如雪" /></a></div>
+        <h2><a href="http://xueluowuyin.bokee.com">落梅如雪</a></h2>
+        <ul>
+          <li>文章总数：<span id="allartnum">0</span></li> 
+          <li>画报总数：<span class="articlenum">0</span></li>
+          <li>画报点击数：<span class="clicknum">0</span></li> 
+          <li>文章点击数：<span id="allartclicknum">0</span></li>
+         <!-- <li>评论数：<span id="allartcommentnum">0</span></li>
+          <li>支持数：<span id="allartsupport">0</span></li>
+          <li>反对数：<span id="allartoppose">0</span></li>-->
+        </ul>
+      </div>
+      <div class="advert3">
+      <div class="advert3_bor">
+      <script src="http://rmtx.ra.icast.cn/p.js" type="text/javascript"></script>
+      
+      <script type="text/javascript">BAIDU_CLB_fillSlot("653819");</script>
+      </div>
+      <!-- 
+      <a href=""><img src="http://js.bokee.com/newbokee_home/default/testImgs/ad3.jpg"/></a>
+      -->
+      </div>
+      <div class="grph">
+        <div id="rank">  <span class="left">个人排行</span>
+          <ul class="right" >
+
+				<li><a href="#tabCc1" rel="http://home.bokee.com/home.php/blog/rank/uname/xueluowuyin/type/click">点击</a></li>
+	            <li><a href="#tabCc2" rel="http://home.bokee.com/home.php/blog/rank/uname/xueluowuyin/type/support">支持</a></li>
+	            <li><a href="#tabCc3" rel="http://home.bokee.com/home.php/blog/rank/uname/xueluowuyin/type/comment">评论</a></li>
+
+          </ul>
+        </div>
+        <ul id="tabCc1"></ul><ul id="tabCc2"></ul><ul id="tabCc3"></ul>
+      </div>
+      <div class="advert4">
+      <div class="advert4_bor">
+      <script type="text/javascript">BAIDU_CLB_fillSlot("653820");</script>
+      </div>
+      <!-- 
+      <a href=""><img src="http://js.bokee.com/newbokee_home/default/testImgs/ad4.jpg"/></a>
+       -->
+      </div>
+      
+      <div class="zjlf"> <span class="left">最近来访<em id="footprintnum">(0)</em></span><strong class="right"><!--<a href="">更多</a>--></strong>
+        <ul id="footprint">
+        </ul>
+        
+      </div>
+      
+      <div id="sliderFix">
+	      <div class="bwfl"> <span>博文分类</span>
+	      <span id="manage">
+	      </span>
+	        <ul id="category">
+	        <li>· <a target="_self" href="http://xueluowuyin.bokee.com/newest/1" >全部博文<span id="allblognum">(0)</span></a></li>
+	        </ul>
+	      </div>
+	      <div class="rqgd" id="archive"> <span>日期归档</span>
+	      </div>
+      </div>
+      
+    </div>
+  </div>
+</div></span><!-- span with top  span not delete  -->
+<input name="hidden_uname" id="hidden_uname" type="hidden" value="xueluowuyin" />
+<input name="autoPageCur" id="autoPageCur" type="hidden" value="0" />
+<input name="autoPageCnt" id="autoPageCnt" type="hidden" value="85" />
+<input name="autoPageUrl" id="autoPageUrl" type="hidden" value="http://xueluowuyin.bokee.com/" />
+<input name="autoPagePer" id="autoPagePer" type="hidden" value="10" />
+<div class="footer">
+  <div>&copy;Copyright 2001 - 2014 bokee.com, All Rights Reserved<br/>
+    增值电信业务经营许可证编号：B2-20100256　　京ICP证050706　　客户服务热线：15110263473<br/><span><a href="http://www.blogchina.com/"><img src="http://js.bokee.com/newbokee_home/default/images/footer_pic_bkzg.jpg" /></a></span><span><a href="http://www.blogdriver.com 
+"><img src="http://js.bokee.com/newbokee_home/default/images/footer_pic_bkdl.jpg" /></a></span>
+   <br/>
+  </div>
+</div>
+
+<script type="text/javascript">
+document.write(unescape("%3Cscript src='http://js.bokee.com/newbokee_home/default/script/stac.js' type='text/javascript'%3E%3C/script%3E")); 
+</script>
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F698ffb0e86c543f5fc637583352e6387' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<!--宽通代码：-->
+<!--SmartMedia Begin:-->
+<!--<script src="http://smjs.allyes.com/sm.js" type="text/javascript"></script>
+<script src="http://smjs.allyes.com/bokee++inpage++sm++show.js" type="text/javascript"></script>-->
+<!--SmartMedia End-->
+
+
+<!--易传媒代码：-->
+<script type="text/javascript">//<![CDATA[
+ac_as_id = 39639;
+ac_click_track_url = "";
+ac_format = 0;
+ac_mode = 1;
+ac_width = 280;
+ac_height = 210;
+//]]></script>
+<script src="http://static.acs86.com/g.js" type="text/javascript"></script> 
+
+
+<script type="text/javascript">//<![CDATA[
+ac_as_id = 75582;
+ac_click_track_url = "";ac_format = 0;ac_mode = 1;
+ac_width = 280;ac_height = 210;
+//]]></script>
+<script src="http://static.acs86.com/g.js" type="text/javascript"></script>
+
+<!-- 互动通代码 -->
+<script src="http://cast.ra.icast.cn/p/?id=3240" type="text/javascript"></script>
+<script src="http://cast.ra.icast.cn/p/?id=3237" type="text/javascript"></script>
+<script src="http://cast.ra.icast.cn/p/?id=1101" type="text/javascript"></script>
+ 
+
+</body>
+</html>
+
+

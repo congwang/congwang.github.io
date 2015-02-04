@@ -23,8 +23,8 @@
 
 前者的技巧是加了anon_vma链表，而后者是加了一个layer——address_space。瞧～这名字起得多好，如果你第一次见绝对会把你绕晕～！
 上面的图片">
-<meta property="og:image" content="http://wangcong.org/images/reverse-mapping.jpg">
-<meta property="og:image" content="http://wangcong.org/images/reverse-mapping2.gif">
+<meta property="og:image" content="/images/">
+<meta property="og:image" content="/images/">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Reverse Mapping in Linux kernel">
 <meta name="twitter:description" content="从vm_area找到其映射的struct page那叫mapping，反过来，从一个struct page找到所有映射上来的vm_area就叫reverse mapping。
@@ -109,9 +109,9 @@
       
         <p>从vm_area找到其映射的struct page那叫mapping，反过来，从一个struct page找到所有映射上来的vm_area就叫reverse mapping。</p>
 <p>对于匿名映射，情况是这样的：</p>
-<p><img src="http://wangcong.org/images/reverse-mapping.jpg" alt=""></p>
+<p><img src="/images/" alt=""></p>
 <p>而对于非匿名映射，应该这样：</p>
-<p><img src="http://wangcong.org/images/reverse-mapping2.gif" alt=""></p>
+<p><img src="/images/" alt=""></p>
 <p>前者的技巧是加了anon_vma链表，而后者是加了一个layer——address_space。瞧～这名字起得多好，如果你第一次见绝对会把你绕晕～！</p>
 <p>上面的图片也清楚地向我们展示了这么一个结论：C语言编程其实就是Find a Needle in the Haystack～～！怎样？这次你信了吧～！</p>
 

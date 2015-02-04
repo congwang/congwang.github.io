@@ -138,7 +138,7 @@
 <p>数组的下标应该是从0还是从1开始？我提议的妥协方案是0.5，可惜他们未予认真考虑便一口回绝。—— Stan Kelly-Bootle<br>仔细思考一下这个问题很有意思，建议你不妨自己思考一下再继续往下看。</p>
 </blockquote>
 <p>其实这个问题早在 1982 年就已经由计算机科学领域的大师 Edsger Dijkstra 研究过并得出了一个结论。他手写了一篇名为《<a href="http://www.cs.utexas.edu/users/EWD/ewd08xx/EWD831.PDF" target="_blank" rel="external">Why numbering should start at zero</a>》的论文，关键部分截图和大体翻译如下：</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2013/02/ewd831-0.png" target="_blank" rel="external"><img src="http://wangcong2015.files.wordpress.com/2013/02/main-qimg-23c584f2f329d840018741971e3ef108.png" alt=""></a><a href="http://wangcong.org/blog/wp-content/uploads/2013/01/ewd-1.png" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2013/01/main-qimg-8d64e51e3ba59e13032d6a360592be1d.png" alt=""></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2013/02/ewd831-0.png" target="_blank" rel="external"><img src="/images/" alt=""></a><a href="http://wangcong.org/blog/wp-content/uploads/2013/01/ewd-1.png" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
 <p>表示一个自然数子序列，比如 2, 3, …, 12，不用中间那三个点，有四种方式可供我们选择：</p>
 <p>a) 2&lt;= i &lt; 13</p>
 <p>b) 1 &lt; i &lt;= 12</p>
@@ -146,7 +146,7 @@
 <p>d) 1 &lt; i &lt; 13</p>
 <p>有什么道理选其中一种而不选别的吗？是的，的确有。观察到 a) 和 b) 的优势是两边的边界值之差正好是子序列的长度。作为一个推论，下面的观察也成立：在它们两个当中，两个子序列是邻接的就意味着一个的上界等于另外一个的下界。这些观察并没有让我们从a) 和 b) 之中做出选择，所以我们从头开始。</p>
 <p>一定存在一个最小的自然数。排除掉下界——就像 b) 和 d) 那样——就会迫使一个从最小的自然数开始的子序列的下界进入非自然数领域。这很难看，所以对于下界我们更喜欢&lt;=，就像 a) 和 c) 那样。现在，考虑一下从最小的自然数开始的子序列：包含上界就会迫后者不那么像自然数（译者注：作者的意思是自然数是一个有下界没有上界的集合），当序列缩小成空序列时。这很难看，所以对于上界我们更喜欢&lt;，就像 a) 和 d) 那样。我们得出结论， a) 是我们最喜欢的。</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2013/01/ewd-2.png" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2013/01/Selection_022.png" alt=""></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2013/01/ewd-2.png" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
 <p>当处理长度为 N 的序列时，我们期望通过下标来区分它的元素。下一个令人烦恼的问题就是，我们该给它的第一个元素赋予什么样下标值？坚持 a) 的方式，当下标从1开始时，下标范围为 1&lt;= i &lt; N+1；当下标从0开始时则是更好看的 0&lt;= i &lt; N。所以，让我们的序数从0开始：一个元素的序数（下标）等于序列中在它前面的元素个数。这个故事的寓意是我们最好尊重0最为一个最自然的数——过了这么多个世纪！</p>
 <hr>
 <p>顺便说一句，Python 选择了 a)，所以 range(0,3) 返回的是序列是 0，1，2。</p>
@@ -393,12 +393,12 @@
 <blockquote>
 <p>Concurrent computing is a form of computing in which programs are designed as collections of <strong>interacting</strong> computational processes that <strong>may be</strong> executed in parallel. Concurrent programs (processes or threads) <strong>can be executed on a single processor</strong> by interleaving the execution steps of each in a time-slicing way, or can be executed in parallel by assigning each computational process to one of a set of processors that may be close or distributed across a network.<br>可见，concurrency 并不意味着一定是 parallelism，它是把多个互相作用的计算过程（注：<strong>上文第一句中的 processes 不是进程的意思！</strong>）组合起来的一种计算形式。为了完成一个大的任务，我们可以把它切割成几个独立的几个步骤，然后把每个步骤交给单独的线程去完成，那么在 UP 上 concurrency 看起来就像是这样：</p>
 </blockquote>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/07/concurrent.gif" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2012/07/concurrent.gif" alt="" title="Concurrenncy"></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/07/concurrent.gif" target="_blank" rel="external"><img src="/images/" alt="" title="Concurrenncy"></a></p>
 <p><a href="http://en.wikipedia.org/wiki/Parallel_computing" target="_blank" rel="external">Parallelism 的定义</a>如下：</p>
 <blockquote>
 <p>Parallel computing is a form of computation in which many calculations are carried out <strong>simultaneously</strong>, operating on the principle that large problems can often be divided into smaller ones, which are then solved concurrently (“in parallel”).<br>也就是多个计算同时执行，在 SMP 上如下图所示：</p>
 </blockquote>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/07/parallelism.gif" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2012/07/parallelism.gif" alt="" title="Parallelism"></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/07/parallelism.gif" target="_blank" rel="external"><img src="/images/" alt="" title="Parallelism"></a></p>
 <p>这里需要注意的是：广义上 parallelism 并不总是指 SMP，广义的 parallelism 也可以发生在指令上，比如支持 SIMD 的 CPU，像 Intel 的 SSE 指令；也可以发生在 CPU 内部的<a href="http://en.wikipedia.org/wiki/Instruction_pipeline" target="_blank" rel="external">指令 pipeline</a> 上。请结合上下文去理解。</p>
 <p>考虑到现在流行的操作系统都是多任务的，那么 UP 也可以达到 SMP 的效果，对于用户空间的程序来说，多任务操作系统即使运行在 UP 上也是和 SMP 上一样的。<strong><em>因此下文中我们将不再区分 UP 和 SMP，并且假设操作系统就是多任务的，即所有多线程的程序都是并行运行的。</em></strong></p>
 <p>这时候，另一个问题随之而来：有 parallelism 的程序一定是 concurrent 的么？未必！根据上面 concurrency 的定义，不同的处理步骤之间需要是互相作用的（interacting），我们完全可以写一个多线程程序，线程之间没有任何互相的作用：比如我们要处理 [1 ~ 40000] 这个数组，我们可以启动4个线程，让它们分别处理 [1 ~ 10000]、[10000 ~ 20000]、[20000 ~ 30000]、[30000 ~ 40000]，最后主线程把 4 个结果汇总成一个。这个多线程程序显然可以做到 parallelism，但它没有 concurrency！</p>
@@ -410,12 +410,12 @@
 <p>另外，需要说明的是，并不是所有的 paraellel 的程序都使用多线程/进程，它们也可以使用 <a href="http://en.wikipedia.org/wiki/Coroutine" target="_blank" rel="external">coroutine</a>，使用 events。一言以蔽之，parallelism 是建立在同步（synchronous ）代码的基础上，同步代码同时运行；而把一个程序分成几个同步的部分，它们之间允许进行 communication 就有 concurrency 了！</p>
 <p>借用 Rob Pike 使用的图来说明一下就是：</p>
 <p><strong>Original Program</strong></p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/07/gophersimple1.jpg" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2012/07/gophersimple1.jpg" alt=""></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/07/gophersimple1.jpg" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
 <p><strong>Parallel Program</strong></p>
-<p><strong><a href="http://wangcong.org/blog/wp-content/uploads/2012/07/gophersimple4.jpg" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2012/07/gophersimple4.jpg" alt=""></a>
+<p><strong><a href="http://wangcong.org/blog/wp-content/uploads/2012/07/gophersimple4.jpg" target="_blank" rel="external"><img src="/images/" alt=""></a>
 </strong></p>
 <p><strong>Concurrent Program</strong></p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/07/gophercomplex0.jpg" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2012/07/gophercomplex0.jpg" alt=""></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/07/gophercomplex0.jpg" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
 <p>从图中我们可以一目了然地看出两者之间并没有直接的关系。最后，在《<a href="http://existentialtype.wordpress.com/2011/03/17/parallelism-is-not-concurrency/" target="_blank" rel="external">Parallelism is not concurrency</a>》一文中对此有更精辟的概括：</p>
 <blockquote>
 <p>Concurrency is concerned with nondeterministic composition of programs (or their components).  Parallelism is concerned with asymptotic efficiency of programs with deterministic behavior.  Concurrency is all about managing the unmanageable[… ] Parallelism, on the other hand, is all about dependencies among the subcomputations of a deterministic computation.<br>参考资料：</p>

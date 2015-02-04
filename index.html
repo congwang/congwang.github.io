@@ -135,7 +135,7 @@
 <p>它是每年一度在加拿大渥太华（也不总是在这里）举行的偏学术性质技术会议，要求参加会议的演讲者都要提交一篇论文，而不是 slides，会后汇总到一起发表。我收到过两次邀请，但都没机会参加，因为一是去加拿大的签证不那么好办，需要准备很多材料；二是我没读过硕士和博士，写论文水平很差。Linux 社区相关的会议多数是偏技术的，这和社区的黑客文化也有关，能有这么一个偏学术的会议实属难得。</p>
 <p>光说没用，你可以去读一下之前在这个会议上发表的论文：<a href="https://www.kernel.org/doc/ols/" target="_blank" rel="external">https://www.kernel.org/doc/ols/</a> 去感受一下它的含金量。</p>
 <p>今年，Linux 研讨会的发起者遇到了资金的困难，<a href="http://lwn.net/Articles/606917/" target="_blank" rel="external">需要大家的资助</a>。反正我是不忍心看到这么好的一个会议停办，果断捐了 50 加元尽自己的一份力。希望喜欢这个会议的朋友也可以伸出援助之手，帮助这个会议继续开下去。当然，要是能有哪个土豪公司赞助那就再好不过了。:)</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/08/Selection_014.png" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2014/08/Selection_014.png" alt="" title="Selection_014"></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/08/Selection_014.png" target="_blank" rel="external"><img src="/images/" alt="" title="Selection_014"></a></p>
 
       
     </div>
@@ -178,10 +178,10 @@
       
         <p>众所周知，struct sk_buff 是 Linux 内核网络子系统中最重要的一个结构体，它是内核对网络数据包的一个抽象表示。要了解 Linux 网络子系统除了了解网络协议之外，了解内核如何表示和操作数据包也是至关重要的。Linux 内核中的 struct sk_buff （以下简称 skb）提供了一套非常复杂的内存模型，也对它进行了大量的优化，这也是为什么 Linux 网络如此高效。</p>
 <p>我们从最简单的开始，分配一个最普通的 skb：</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/06/skb_alloc.png" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2014/06/skb_alloc.png" alt="" title="skb_alloc"></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/06/skb_alloc.png" target="_blank" rel="external"><img src="/images/" alt="" title="skb_alloc"></a></p>
 <p>内核分配 skb 的函数是 __alloc_skb()，它有很多种包装供不同的场景使用。如上图所示，在这里我们分配了两部分内存：1) skb struct 本身，也叫元数据（ meta data）；2) 实际存放网络数据包的内存。这里你可以把 skb 看作是一堆指针，这些指针指向一块内存的不同区域。下面我们会看到，很多时候我们都是对指针本身进行操作。</p>
 <p><strong>注意：其实严格的说上图中所示的指针并不一定都是指针，Linux 内核进行了优化。在 64 位系统上，一个指针也是64位，储存指针的开销太大。而数据包本身不可能太大（以太网 MTU 是 1500 字节，就算是 jumbo frame 也才 9000 字节），因此 Linux 内核仅仅把 head 和 data 保存为指针，其它的只要存储相对于它们的偏移即可。下面的所有图中把它们表示为指针仅仅是为了方便。</strong></p>
-<p><strong><a href="http://wangcong.org/blog/wp-content/uploads/2014/06/skb1.png" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2014/06/skb1.png" alt="" title="skb"></a>
+<p><strong><a href="http://wangcong.org/blog/wp-content/uploads/2014/06/skb1.png" target="_blank" rel="external"><img src="/images/" alt="" title="skb"></a>
 </strong></p>
 <p>而一个完整的网络数据包在内存中的表示通常有四个部分：</p>
 <p>1) head room，位于 skb-&gt;head 和 skb-&gt;data 之间，也就是存放网络协议头的地方，比如 TCP，IP 头，以太网头都是位于此；</p>
@@ -189,31 +189,31 @@
 <p>3) tail room，介于 skb-&gt;tail 和 skb-&gt;end 之间，这部分是内核在用户数据后面填充的一部分；</p>
 <p>4) skb-&gt;end 之后存放的是一个特殊的结构体 struct skb_shared_info，下面会讲到它。</p>
 <p>刚分配出来的 skb 除了 skb-&gt;end 指向末尾的 struct skb_shared_info，其它指针都指向了开始处。通常第一步就是初始化 head room，调用 skb_reserve() 这个函数，如下图所示：</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/06/skb_reserve.png" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2014/06/skb_reserve.png" alt="" title="skb_reserve"></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/06/skb_reserve.png" target="_blank" rel="external"><img src="/images/" alt="" title="skb_reserve"></a></p>
 <p>比如 TCP 层要发送一个数据包，head room 至少要是 tcphdr + iphdr + ethhdr。然后在协议头的后面开始预留数据区，调用的函数是 skb_put()，如下图所示：</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/06/skb_put.png" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2014/06/skb_put.png" alt="" title="skb_put"></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/06/skb_put.png" target="_blank" rel="external"><img src="/images/" alt="" title="skb_put"></a></p>
 <p>到此为止，前面提到的四个部分才全部初始化完毕，通常情况下，这些操作要么是由传输层完成（发送），要么是由网卡驱动完成（接收）。一点一点往里填充数据或者向外读取数据则是各层协议的事情。数据包入栈时（即接收），数据是一层一层往里读取，协议头是一层一层剥掉。数据包出栈时（发送），协议头则是一层一层往外填写。</p>
 <p>内核提供的剥掉协议头的操作函数是 skb_pull()，如名字所示，它是往下拉 skb-&gt;data：</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/06/skb_pull.png" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2014/06/skb_pull.png" alt="" title="skb_pull"></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/06/skb_pull.png" target="_blank" rel="external"><img src="/images/" alt="" title="skb_pull"></a></p>
 <p>类似地，往外推 skb-&gt;data 的操作叫做 skb_push()：</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/06/skb_push.png" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2014/06/skb_push.png" alt="" title="skb_push"></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/06/skb_push.png" target="_blank" rel="external"><img src="/images/" alt="" title="skb_push"></a></p>
 <p>很形象吧？</p>
 <p>好，终于到前面一直默默无闻的 skb_shared_info 出场了。想象这么一种常见的情况：我们用 tcpdump 捕捉一个网卡收到的数据包。此时数据包入栈后会有两个部分同时进行读：一是协议栈本身，另一个就是 tcpdump 了。这种情况下要不要完全复制一份 skb 呢？没有必要，因为两部分都是读，网络数据本身是不变的，变的只是 strcut sk_buff 里面的指针，也就是说，我们只要复制一份 skb 让它指向同样的内存区域就行了！这正是 skb_clone() 所做的：</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/06/skb_clone.png" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2014/06/skb_clone.png" alt="" title="skb_clone"></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/06/skb_clone.png" target="_blank" rel="external"><img src="/images/" alt="" title="skb_clone"></a></p>
 <p>如图所示，skb_shared_info 此时记录了一些变化，dataref 变成了2，代表有两个 skb 同时指向这块内存区域。由此可见，skb_shared_info 保存的是多个 skb 之间共享的，但又不属于网络数据的数据（也就是不会被传输的数据），所以才放在 skb-&gt;end 之后啊。</p>
 <p>这还没完，Linux 内核开发者觉得还不够，每次 clone 都还要分配一个 skb 结构体，对于要 clone 很多次的情形还可以进行优化——使用 fast clone（缩写为fclone）。fclone 很有技巧性，它在分配 skb 的 cache 里做了手脚，每次分配 skb 时，它都是分配一对，一个<strong>紧紧地</strong>跟在另一个后面，如下图所示：</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/05/skb_fclone.png" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2014/05/skb_fclone.png" alt="" title="skb_fclone"></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/05/skb_fclone.png" target="_blank" rel="external"><img src="/images/" alt="" title="skb_fclone"></a></p>
 <p>不用的时候你完全看不到它，用的时候通过 skb+1 就能找得到！当然了，它需要在 skb 结构体里保存一些状态信息表明这部分到底有没有用到。</p>
 <p>在写的情况下我们还是要完全拷贝 skb 及其数据的，调用 skb_copy() ：</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/05/skb_copy.png" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2014/05/skb_copy-1024x753.png" alt="" title="skb_copy"></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/05/skb_copy.png" target="_blank" rel="external"><img src="/images/" alt="" title="skb_copy"></a></p>
 <p>到此为止都比较简单，我们假设了所有的数据都是放在 skb-&gt;head 和 skb-&gt;end 之间，也就是所谓的线性（linear）。世界要是这么简单就好了，可惜现实远比这复杂。内核至少还提供了另外三种非线性的 skb 模型。</p>
 <p>一种是网卡驱动常用的模型，数据存放在物理页面的不同位置，skb_shared_info 里有一个数组，存放一组 (页面、偏移、大小) 的信息，用来记录这些数据：</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/05/skb_fill_page_desc.png" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2014/05/skb_fill_page_desc.png" alt="" title="skb_fill_page_desc"></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/05/skb_fill_page_desc.png" target="_blank" rel="external"><img src="/images/" alt="" title="skb_fill_page_desc"></a></p>
 <p>另一种是组装 IP 数据包分片（fragment）时用到的 frag_list 模型：</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/05/skb_frag_add_head.png" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2014/05/skb_frag_add_head-1024x646.png" alt="" title="skb_frag_add_head"></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/05/skb_frag_add_head.png" target="_blank" rel="external"><img src="/images/" alt="" title="skb_frag_add_head"></a></p>
 <p>分片的数据有各自的 skb 结构体，它们通过 skb-&gt;next 链接成一个单链表，表头是第一个 skb 的 shared_info 中的 frag_list。</p>
 <p>最后一种是 GSO 进行分段（segmentation）用到的一种模型，当一个大的 TCP 数据包被切割成几个 MTU 大小的数据时，它们也是通过 skb-&gt;next 链接到一起的：</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/05/skb_segment.png" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2014/05/skb_segment.png" alt="" title="skb_segment"></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/05/skb_segment.png" target="_blank" rel="external"><img src="/images/" alt="" title="skb_segment"></a></p>
 <p>与分片不同的是，相关的信息是记录在最前面一个 skb 的 skb_shared_info 里面的 gso_segs 和 gso_size 里。</p>
 <p>正因为存在以上各种复杂的模型，很多 skb API 的实现（比如 skb_segment()）非常复杂，其大部分代码都是用来处理非线性的这几种情况，这使得 skbuff.c 里的很多代码都不容易读懂。希望本文能够对你理解这部分代码有所帮助。</p>
 <p>参考资料：</p>
@@ -531,7 +531,7 @@ tc filter <span class="keyword">add</span> dev eth0 parent ffff: protocol ip u32
       
         <p>最近很忙一直没有时间写博客，一半是因为工作时间没得闲，即使在大理这种休闲安逸的地方我也难得在工作时间偷个懒出去看看对面的明哥今天有没有新把的妹子；一半是因为我们准备去万恶的美帝体验水深火热去了。要准备的东西实在太多，毕竟我天朝物产极大丰富，去美帝这种大农村必须做好长期吃苦的准备，看了我媳妇收拾的东西你会觉得我们简直是要去非洲打猎……</p>
 <p>半年多前我发了<a href="http://wangcong.org/blog/archives/2259" target="_blank" rel="external">一篇求职的博客</a>，之后收到好几个朋友的邮件邀请，但因为种种原因都没去成，人艰不拆，其实悲催到了连面试的机会都没有。好在后来我自己偶然间看到了下面一个让人眼前一亮的招聘：</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2013/09/Selection_046.png" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2013/09/Selection_046.png" alt=""></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2013/09/Selection_046.png" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
 <p>身为一个逼格稍高的伪 geek，怎么能不被这逼格如此高的 JD 感动得潸然泪下？！没错，这就是 Twitter 招聘的一个内核开发职位。</p>
 <p>再后来，心惊胆颤地经过一轮又一轮的面试，好不容易拿到 offer，然后又碰上了几年一遇的美帝万恶的 H-1b 抽签。好在之前快用光的运气原地满血复活了，我侥幸抽中，之后去成都领事馆面签也都挺顺利的。所以，我早就说过，找工作其实和找媳妇是一样一样的：你追的女神追了很久还是跟高富帅走了，正当你累感不爱的时候，你突然发现，其实有一个把你当男神的妹纸正在暗恋你。这都是靠缘分啊！</p>
 <p>Twitter 给的待遇相当厚道，起码我算着够养活我和我媳妇两个人的。而且提供的 relocation 服务也相当好：搬家给提供一个集装箱，运一张床过去也足够了。机票给订好，到了旧金山之后提供临时住处，还有人专门带你去看要租的房子…… 至少这一点比红帽公司要厚道很多。</p>
@@ -582,10 +582,10 @@ tc filter <span class="keyword">add</span> dev eth0 parent ffff: protocol ip u32
       
         <p>看了最近的新闻，心情久久不能平静……自己看吧，不多说了，说多了都是泪！我就想问：现在蓝翔技校还招人吗？</p>
 <p>来自：<a href="http://www.zhihu.com/question/19684217/answer/17977765" target="_blank" rel="external">http://www.zhihu.com/question/19684217/answer/17977765</a></p>
-<p><a href="http://wangcong2015.files.wordpress.com/2013/08/selection_036.png" target="_blank" rel="external"><img src="http://wangcong2015.files.wordpress.com/2013/08/selection_036.png" alt=""></a><br>来自：<a href="http://hzdaily.hangzhou.com.cn/dskb/html/2013-08/01/content_1547781.htm" target="_blank" rel="external">http://hzdaily.hangzhou.com.cn/dskb/html/2013-08/01/content_1547781.htm</a></p>
-<p><a href="http://wangcong2015.files.wordpress.com/2013/08/selection_037.png" target="_blank" rel="external"><img src="http://wangcong2015.files.wordpress.com/2013/08/selection_037.png" alt=""></a></p>
+<p><a href="http://wangcong2015.files.wordpress.com/2013/08/selection_036.png" target="_blank" rel="external"><img src="/images/" alt=""></a><br>来自：<a href="http://hzdaily.hangzhou.com.cn/dskb/html/2013-08/01/content_1547781.htm" target="_blank" rel="external">http://hzdaily.hangzhou.com.cn/dskb/html/2013-08/01/content_1547781.htm</a></p>
+<p><a href="http://wangcong2015.files.wordpress.com/2013/08/selection_037.png" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
 <p>来自<a href="http://www.weibo.com/u/2166787813" target="_blank" rel="external">新浪微博</a>：</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2013/08/Selection_038.png" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2013/08/Selection_038.png" alt=""></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2013/08/Selection_038.png" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
 
       
     </div>

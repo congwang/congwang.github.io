@@ -15,8 +15,8 @@
 <meta property="og:description" content="VXLAN 是非常新的一个 tunnel 技术，它是一个 L2 tunnel。Linux 内核的 upstream 中也刚刚加入 VXLAN 的实现。相比 GRE tunnel 它有着很的扩展性，同时解决了很多其它问题。
 一，GRE tunnel 的不足
 网络很多介绍 VXLAN 的文章都没有直接告诉你相比较 GRE tunnel，VXLAN 的优势在哪里，或者说 GRE tunnel 的不足在哪">
-<meta property="og:image" content="http://wangcong.org/blog/wp-content/uploads/2012/11/gre_vs_vxlan.jpg">
-<meta property="og:image" content="http://wangcong.org/blog/wp-content/uploads/2012/11/VXLAN-Headers1.png">
+<meta property="og:image" content="/images/">
+<meta property="og:image" content="/images/">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入理解 VXLAN">
 <meta name="twitter:description" content="VXLAN 是非常新的一个 tunnel 技术，它是一个 L2 tunnel。Linux 内核的 upstream 中也刚刚加入 VXLAN 的实现。相比 GRE tunnel 它有着很的扩展性，同时解决了很多其它问题。
@@ -99,7 +99,7 @@
 <p><strong>一，GRE tunnel 的不足</strong></p>
 <p>网络很多介绍 VXLAN 的文章都没有直接告诉你相比较 GRE tunnel，VXLAN 的优势在哪里，或者说 GRE tunnel 的不足在哪里。为了更好的了解 VXLAN，我们有必要看一下 GRE tunnel 的不足。</p>
 <p>在我前面写的介绍 GRE tunnel 的文章中，其实并不容易看出 GRE tunnel 的不足之处。根本原因是图中给出的例子不太好，只有两个网络的话 GRE tunnel 的不足凸显不出来，让我们看看有三个网络的情况如何用 GRE tunnel 互联，如下图所示：</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/11/gre_vs_vxlan.jpg" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2012/11/gre_vs_vxlan.jpg" alt=""></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/11/gre_vs_vxlan.jpg" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
 <p>这下子就很明显了，要让这三个网络互联，我们需要建立三个 GRE tunnel。如果网络数量再增长，那么需要的 tunnel 数量更多。换句话说，GRE tunnel 的扩展性太差，从根本上讲还是因为它只是一个 point to point 的 tunnel。</p>
 <p><strong>二，VLAN 的不足</strong></p>
 <p>其实 VLAN 在某种程度上也可以看作一个 L2 over L2 的 tunnel，只不过它多了一个新的 VLAN header，这其中有12 bit 是 VLAN tag。所以 VLAN 的第一个不足之处就是它最多只支持 4096 个 VLAN 网络（当然这还要除去几个预留的），对于大型数据中心的来说，这个数量是远远不够的。</p>
@@ -111,7 +111,7 @@
 <p>VXLAN 的配置可以参考内核文档 Documentation/networking/vxlan.txt，本人目前还没有环境测试，所以只能做一些代码分析了。</p>
 <p>Linux 内核中对 VXLAN 的实现是在 drivers/net/vxlan.c 源文件中，是由 Stephen Hemminger （iproute2 的维护者）完成的。代码质量相当高，所以可读性也很好，强烈推荐阅读一下。</p>
 <p>看代码之前先看 VXLAN 的头是一个怎样的结构，如下图所示（图片来自参考资料4）：</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/11/VXLAN-Headers1.png" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2012/11/VXLAN-Headers1.png" alt=""></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/11/VXLAN-Headers1.png" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
 <p>好了，现在我们可以看代码了。先看发送端，vxlan_xmit() 函数。首先需要说的是发送之前内核会检查目的地址，如果是L2 multicast，那么应该发送到 VXLAN group 组播地址，否则，如果 MAC 地址是已知的，直接单播到对应的 IP；如果未知，则广播到组播地址。代码如下，比文档还要好读。:-)</p>
 <p>[c]<br>static __be32 vxlan_find_dst(struct vxlan_dev <em>vxlan, struct sk_buff </em>skb)<br>{<br>        const struct ethhdr <em>eth = (struct ethhdr </em>) skb-&gt;data;<br>        const struct vxlan_fdb *f;</p>
 <pre><code>    <span class="keyword">if</span> (is_multicast_ether_addr(eth-&amp;<span class="keyword">gt</span>;h_dest))

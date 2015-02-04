@@ -133,10 +133,10 @@
       
         <p>众所周知，struct sk_buff 是 Linux 内核网络子系统中最重要的一个结构体，它是内核对网络数据包的一个抽象表示。要了解 Linux 网络子系统除了了解网络协议之外，了解内核如何表示和操作数据包也是至关重要的。Linux 内核中的 struct sk_buff （以下简称 skb）提供了一套非常复杂的内存模型，也对它进行了大量的优化，这也是为什么 Linux 网络如此高效。</p>
 <p>我们从最简单的开始，分配一个最普通的 skb：</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/06/skb_alloc.png" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2014/06/skb_alloc.png" alt="" title="skb_alloc"></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/06/skb_alloc.png" target="_blank" rel="external"><img src="/images/" alt="" title="skb_alloc"></a></p>
 <p>内核分配 skb 的函数是 __alloc_skb()，它有很多种包装供不同的场景使用。如上图所示，在这里我们分配了两部分内存：1) skb struct 本身，也叫元数据（ meta data）；2) 实际存放网络数据包的内存。这里你可以把 skb 看作是一堆指针，这些指针指向一块内存的不同区域。下面我们会看到，很多时候我们都是对指针本身进行操作。</p>
 <p><strong>注意：其实严格的说上图中所示的指针并不一定都是指针，Linux 内核进行了优化。在 64 位系统上，一个指针也是64位，储存指针的开销太大。而数据包本身不可能太大（以太网 MTU 是 1500 字节，就算是 jumbo frame 也才 9000 字节），因此 Linux 内核仅仅把 head 和 data 保存为指针，其它的只要存储相对于它们的偏移即可。下面的所有图中把它们表示为指针仅仅是为了方便。</strong></p>
-<p><strong><a href="http://wangcong.org/blog/wp-content/uploads/2014/06/skb1.png" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2014/06/skb1.png" alt="" title="skb"></a>
+<p><strong><a href="http://wangcong.org/blog/wp-content/uploads/2014/06/skb1.png" target="_blank" rel="external"><img src="/images/" alt="" title="skb"></a>
 </strong></p>
 <p>而一个完整的网络数据包在内存中的表示通常有四个部分：</p>
 <p>1) head room，位于 skb-&gt;head 和 skb-&gt;data 之间，也就是存放网络协议头的地方，比如 TCP，IP 头，以太网头都是位于此；</p>
@@ -144,31 +144,31 @@
 <p>3) tail room，介于 skb-&gt;tail 和 skb-&gt;end 之间，这部分是内核在用户数据后面填充的一部分；</p>
 <p>4) skb-&gt;end 之后存放的是一个特殊的结构体 struct skb_shared_info，下面会讲到它。</p>
 <p>刚分配出来的 skb 除了 skb-&gt;end 指向末尾的 struct skb_shared_info，其它指针都指向了开始处。通常第一步就是初始化 head room，调用 skb_reserve() 这个函数，如下图所示：</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/06/skb_reserve.png" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2014/06/skb_reserve.png" alt="" title="skb_reserve"></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/06/skb_reserve.png" target="_blank" rel="external"><img src="/images/" alt="" title="skb_reserve"></a></p>
 <p>比如 TCP 层要发送一个数据包，head room 至少要是 tcphdr + iphdr + ethhdr。然后在协议头的后面开始预留数据区，调用的函数是 skb_put()，如下图所示：</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/06/skb_put.png" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2014/06/skb_put.png" alt="" title="skb_put"></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/06/skb_put.png" target="_blank" rel="external"><img src="/images/" alt="" title="skb_put"></a></p>
 <p>到此为止，前面提到的四个部分才全部初始化完毕，通常情况下，这些操作要么是由传输层完成（发送），要么是由网卡驱动完成（接收）。一点一点往里填充数据或者向外读取数据则是各层协议的事情。数据包入栈时（即接收），数据是一层一层往里读取，协议头是一层一层剥掉。数据包出栈时（发送），协议头则是一层一层往外填写。</p>
 <p>内核提供的剥掉协议头的操作函数是 skb_pull()，如名字所示，它是往下拉 skb-&gt;data：</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/06/skb_pull.png" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2014/06/skb_pull.png" alt="" title="skb_pull"></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/06/skb_pull.png" target="_blank" rel="external"><img src="/images/" alt="" title="skb_pull"></a></p>
 <p>类似地，往外推 skb-&gt;data 的操作叫做 skb_push()：</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/06/skb_push.png" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2014/06/skb_push.png" alt="" title="skb_push"></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/06/skb_push.png" target="_blank" rel="external"><img src="/images/" alt="" title="skb_push"></a></p>
 <p>很形象吧？</p>
 <p>好，终于到前面一直默默无闻的 skb_shared_info 出场了。想象这么一种常见的情况：我们用 tcpdump 捕捉一个网卡收到的数据包。此时数据包入栈后会有两个部分同时进行读：一是协议栈本身，另一个就是 tcpdump 了。这种情况下要不要完全复制一份 skb 呢？没有必要，因为两部分都是读，网络数据本身是不变的，变的只是 strcut sk_buff 里面的指针，也就是说，我们只要复制一份 skb 让它指向同样的内存区域就行了！这正是 skb_clone() 所做的：</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/06/skb_clone.png" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2014/06/skb_clone.png" alt="" title="skb_clone"></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/06/skb_clone.png" target="_blank" rel="external"><img src="/images/" alt="" title="skb_clone"></a></p>
 <p>如图所示，skb_shared_info 此时记录了一些变化，dataref 变成了2，代表有两个 skb 同时指向这块内存区域。由此可见，skb_shared_info 保存的是多个 skb 之间共享的，但又不属于网络数据的数据（也就是不会被传输的数据），所以才放在 skb-&gt;end 之后啊。</p>
 <p>这还没完，Linux 内核开发者觉得还不够，每次 clone 都还要分配一个 skb 结构体，对于要 clone 很多次的情形还可以进行优化——使用 fast clone（缩写为fclone）。fclone 很有技巧性，它在分配 skb 的 cache 里做了手脚，每次分配 skb 时，它都是分配一对，一个<strong>紧紧地</strong>跟在另一个后面，如下图所示：</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/05/skb_fclone.png" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2014/05/skb_fclone.png" alt="" title="skb_fclone"></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/05/skb_fclone.png" target="_blank" rel="external"><img src="/images/" alt="" title="skb_fclone"></a></p>
 <p>不用的时候你完全看不到它，用的时候通过 skb+1 就能找得到！当然了，它需要在 skb 结构体里保存一些状态信息表明这部分到底有没有用到。</p>
 <p>在写的情况下我们还是要完全拷贝 skb 及其数据的，调用 skb_copy() ：</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/05/skb_copy.png" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2014/05/skb_copy-1024x753.png" alt="" title="skb_copy"></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/05/skb_copy.png" target="_blank" rel="external"><img src="/images/" alt="" title="skb_copy"></a></p>
 <p>到此为止都比较简单，我们假设了所有的数据都是放在 skb-&gt;head 和 skb-&gt;end 之间，也就是所谓的线性（linear）。世界要是这么简单就好了，可惜现实远比这复杂。内核至少还提供了另外三种非线性的 skb 模型。</p>
 <p>一种是网卡驱动常用的模型，数据存放在物理页面的不同位置，skb_shared_info 里有一个数组，存放一组 (页面、偏移、大小) 的信息，用来记录这些数据：</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/05/skb_fill_page_desc.png" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2014/05/skb_fill_page_desc.png" alt="" title="skb_fill_page_desc"></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/05/skb_fill_page_desc.png" target="_blank" rel="external"><img src="/images/" alt="" title="skb_fill_page_desc"></a></p>
 <p>另一种是组装 IP 数据包分片（fragment）时用到的 frag_list 模型：</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/05/skb_frag_add_head.png" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2014/05/skb_frag_add_head-1024x646.png" alt="" title="skb_frag_add_head"></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/05/skb_frag_add_head.png" target="_blank" rel="external"><img src="/images/" alt="" title="skb_frag_add_head"></a></p>
 <p>分片的数据有各自的 skb 结构体，它们通过 skb-&gt;next 链接成一个单链表，表头是第一个 skb 的 shared_info 中的 frag_list。</p>
 <p>最后一种是 GSO 进行分段（segmentation）用到的一种模型，当一个大的 TCP 数据包被切割成几个 MTU 大小的数据时，它们也是通过 skb-&gt;next 链接到一起的：</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/05/skb_segment.png" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2014/05/skb_segment.png" alt="" title="skb_segment"></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/05/skb_segment.png" target="_blank" rel="external"><img src="/images/" alt="" title="skb_segment"></a></p>
 <p>与分片不同的是，相关的信息是记录在最前面一个 skb 的 skb_shared_info 里面的 gso_segs 和 gso_size 里。</p>
 <p>正因为存在以上各种复杂的模型，很多 skb API 的实现（比如 skb_segment()）非常复杂，其大部分代码都是用来处理非线性的这几种情况，这使得 skbuff.c 里的很多代码都不容易读懂。希望本文能够对你理解这部分代码有所帮助。</p>
 <p>参考资料：</p>
@@ -596,7 +596,7 @@ Offset     Size     Description
 <p><strong>一，GRE tunnel 的不足</strong></p>
 <p>网络很多介绍 VXLAN 的文章都没有直接告诉你相比较 GRE tunnel，VXLAN 的优势在哪里，或者说 GRE tunnel 的不足在哪里。为了更好的了解 VXLAN，我们有必要看一下 GRE tunnel 的不足。</p>
 <p>在我前面写的介绍 GRE tunnel 的文章中，其实并不容易看出 GRE tunnel 的不足之处。根本原因是图中给出的例子不太好，只有两个网络的话 GRE tunnel 的不足凸显不出来，让我们看看有三个网络的情况如何用 GRE tunnel 互联，如下图所示：</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/11/gre_vs_vxlan.jpg" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2012/11/gre_vs_vxlan.jpg" alt=""></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/11/gre_vs_vxlan.jpg" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
 <p>这下子就很明显了，要让这三个网络互联，我们需要建立三个 GRE tunnel。如果网络数量再增长，那么需要的 tunnel 数量更多。换句话说，GRE tunnel 的扩展性太差，从根本上讲还是因为它只是一个 point to point 的 tunnel。</p>
 <p><strong>二，VLAN 的不足</strong></p>
 <p>其实 VLAN 在某种程度上也可以看作一个 L2 over L2 的 tunnel，只不过它多了一个新的 VLAN header，这其中有12 bit 是 VLAN tag。所以 VLAN 的第一个不足之处就是它最多只支持 4096 个 VLAN 网络（当然这还要除去几个预留的），对于大型数据中心的来说，这个数量是远远不够的。</p>
@@ -608,7 +608,7 @@ Offset     Size     Description
 <p>VXLAN 的配置可以参考内核文档 Documentation/networking/vxlan.txt，本人目前还没有环境测试，所以只能做一些代码分析了。</p>
 <p>Linux 内核中对 VXLAN 的实现是在 drivers/net/vxlan.c 源文件中，是由 Stephen Hemminger （iproute2 的维护者）完成的。代码质量相当高，所以可读性也很好，强烈推荐阅读一下。</p>
 <p>看代码之前先看 VXLAN 的头是一个怎样的结构，如下图所示（图片来自参考资料4）：</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/11/VXLAN-Headers1.png" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2012/11/VXLAN-Headers1.png" alt=""></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/11/VXLAN-Headers1.png" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
 <p>好了，现在我们可以看代码了。先看发送端，vxlan_xmit() 函数。首先需要说的是发送之前内核会检查目的地址，如果是L2 multicast，那么应该发送到 VXLAN group 组播地址，否则，如果 MAC 地址是已知的，直接单播到对应的 IP；如果未知，则广播到组播地址。代码如下，比文档还要好读。:-)</p>
 <p>[c]<br>static __be32 vxlan_find_dst(struct vxlan_dev <em>vxlan, struct sk_buff </em>skb)<br>{<br>        const struct ethhdr <em>eth = (struct ethhdr </em>) skb-&gt;data;<br>        const struct vxlan_fdb *f;</p>
 <pre><code>    <span class="keyword">if</span> (is_multicast_ether_addr(eth-&amp;<span class="keyword">gt</span>;h_dest))
@@ -757,11 +757,11 @@ skb<span class="subst">-&amp;</span><span class="literal">gt</span>;ip_summed <s
     <div class="article-entry" itemprop="articleBody">
       
         <p>我以前写过一篇<a href="http://wangcong.org/blog/archives/1683" target="_blank" rel="external">介绍 tunnel 的文章</a>，只是做了大体的介绍。里面多数 tunnel 是很容易理解的，因为它们多是一对一的，换句话说，是直接从一端到另一端。比如 IPv6 over IPv4 的 tunnel，也就是 SIT，它的原理如下图所示：</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/11/sit_tunnel1.jpg" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2012/11/sit_tunnel1.jpg" alt=""></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/11/sit_tunnel1.jpg" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
 <p>显然，除了端点的 host A 和 host B之外，中间经过的任何设备都是看不到里面的 IPv6 的头，对于它们来说，经过 sit 发出的包和其它的 IPv4 的包没有任何区别。</p>
 <p><a href="http://en.wikipedia.org/wiki/Generic_Routing_Encapsulation" target="_blank" rel="external">GRE tunnel</a> 却不一样了，它的原理从根本上和 sit，ipip 这样的 tunnel 就不一样。除了外层的 IP 头和内层的 IP 头之间多了一个 GRE 头之外，它最大的不同是，<strong>tunnel 不是建立在最终的 host 上，而是在中间的 router 上</strong>！换句话说，对于端点 host A 和 host B 来说，该 tunnel 是透明的（对比上面的 sit tunnel）。这是网上很多教程里没有直接告诉你的。理解这一点非常关键，正是因为它这么设计的，所以它才能解决 ipip tunnel 解决不了的问题。</p>
 <p>所以，经过 GRE tunnel 发送的包（从 host A 发送到 host B）大体过程是这样子的（仍然借用了<a href="http://lartc.org/howto/lartc.tunnel.gre.html" target="_blank" rel="external"> LARTC 中的例子</a>）：</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/11/gre_tunnel1.jpg" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2012/11/gre_tunnel1.jpg" alt=""></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/11/gre_tunnel1.jpg" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
 <p>我们可以看出，从 host A 发出的包其实就是一个很普通的 IP 包，除了目的地址不直接可达外。该 GRE tunnel 的一端是建立在 router A上，另一段是建立在 router B上，所以添加外部的 IP 头是在 router A 上完成的，而去掉外面的 IP 头是在 router B上完成的，两个端点的 host 上几乎什么都不用做（除了配置路由，把发送到 10.0.2.0 的包路由到 router A）！</p>
 <p>这么设计的好处也就很容易看出来了，ipip tunnel 是端对端的，通信也就只能是点对点的，而 GRE tunnel 却可以进行多播。</p>
 <p>现在让我们看看Linux内核是怎么实现的，我们必须假设 router A 和 B 上都是运行的 Linux，而 host A 和 B上运行什么是无所谓的。</p>
@@ -772,9 +772,9 @@ skb<span class="subst">-&amp;</span><span class="literal">gt</span>;ip_summed <s
 <p>所以真正处理这个包的函数是 ipgre_rcv() 。ipgre_rcv() 所做的工作是：通过外层IP 头找到对应的 tunnel，然后剥去外层 IP 头，把这个“新的”包重新交给 IP 栈去处理，像接收到普通 IP 包一样。到了这里，“新的”包处理和其它普通的 IP 包已经没有什么两样了：根据 IP 头中目的地址转发给相应的 host。注意：这里我所谓的“新的”包其实并不新，内核用的还是同一个copy，只是skbuff 里相应的指针变了。</p>
 <p>以上就是Linux 内核对 GRE tunnel 的整个处理过程。另外，GRE 的头如下所示（图片来自<a href="http://packetlife.net/blog/2012/feb/27/gre-vs-ipip-tunneling/" target="_blank" rel="external">这里</a>）：</p>
 <p>IP header in GRE tunnel</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/11/gre_encapsulation.png" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2012/11/gre_encapsulation.png" alt=""></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/11/gre_encapsulation.png" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
 <p>GRE header</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/11/gre_header.png" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2012/11/gre_header.png" alt=""></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/11/gre_header.png" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
 
       
     </div>

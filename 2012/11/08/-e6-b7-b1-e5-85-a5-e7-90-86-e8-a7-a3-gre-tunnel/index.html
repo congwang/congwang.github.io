@@ -15,10 +15,10 @@
 <meta property="og:description" content="我以前写过一篇介绍 tunnel 的文章，只是做了大体的介绍。里面多数 tunnel 是很容易理解的，因为它们多是一对一的，换句话说，是直接从一端到另一端。比如 IPv6 over IPv4 的 tunnel，也就是 SIT，它的原理如下图所示：
 
 显然，除了端点的 host A 和 host B之外，中间经过的任何设备都是看不到里面的 IPv6 的头，对于它们来说，经过 sit 发出的包和其它的">
-<meta property="og:image" content="http://wangcong.org/blog/wp-content/uploads/2012/11/sit_tunnel1.jpg">
-<meta property="og:image" content="http://wangcong.org/blog/wp-content/uploads/2012/11/gre_tunnel1.jpg">
-<meta property="og:image" content="http://wangcong.org/blog/wp-content/uploads/2012/11/gre_encapsulation.png">
-<meta property="og:image" content="http://wangcong.org/blog/wp-content/uploads/2012/11/gre_header.png">
+<meta property="og:image" content="/images/">
+<meta property="og:image" content="/images/">
+<meta property="og:image" content="/images/">
+<meta property="og:image" content="/images/">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入理解 GRE tunnel">
 <meta name="twitter:description" content="我以前写过一篇介绍 tunnel 的文章，只是做了大体的介绍。里面多数 tunnel 是很容易理解的，因为它们多是一对一的，换句话说，是直接从一端到另一端。比如 IPv6 over IPv4 的 tunnel，也就是 SIT，它的原理如下图所示：
@@ -98,11 +98,11 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>我以前写过一篇<a href="http://wangcong.org/blog/archives/1683" target="_blank" rel="external">介绍 tunnel 的文章</a>，只是做了大体的介绍。里面多数 tunnel 是很容易理解的，因为它们多是一对一的，换句话说，是直接从一端到另一端。比如 IPv6 over IPv4 的 tunnel，也就是 SIT，它的原理如下图所示：</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/11/sit_tunnel1.jpg" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2012/11/sit_tunnel1.jpg" alt=""></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/11/sit_tunnel1.jpg" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
 <p>显然，除了端点的 host A 和 host B之外，中间经过的任何设备都是看不到里面的 IPv6 的头，对于它们来说，经过 sit 发出的包和其它的 IPv4 的包没有任何区别。</p>
 <p><a href="http://en.wikipedia.org/wiki/Generic_Routing_Encapsulation" target="_blank" rel="external">GRE tunnel</a> 却不一样了，它的原理从根本上和 sit，ipip 这样的 tunnel 就不一样。除了外层的 IP 头和内层的 IP 头之间多了一个 GRE 头之外，它最大的不同是，<strong>tunnel 不是建立在最终的 host 上，而是在中间的 router 上</strong>！换句话说，对于端点 host A 和 host B 来说，该 tunnel 是透明的（对比上面的 sit tunnel）。这是网上很多教程里没有直接告诉你的。理解这一点非常关键，正是因为它这么设计的，所以它才能解决 ipip tunnel 解决不了的问题。</p>
 <p>所以，经过 GRE tunnel 发送的包（从 host A 发送到 host B）大体过程是这样子的（仍然借用了<a href="http://lartc.org/howto/lartc.tunnel.gre.html" target="_blank" rel="external"> LARTC 中的例子</a>）：</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/11/gre_tunnel1.jpg" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2012/11/gre_tunnel1.jpg" alt=""></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/11/gre_tunnel1.jpg" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
 <p>我们可以看出，从 host A 发出的包其实就是一个很普通的 IP 包，除了目的地址不直接可达外。该 GRE tunnel 的一端是建立在 router A上，另一段是建立在 router B上，所以添加外部的 IP 头是在 router A 上完成的，而去掉外面的 IP 头是在 router B上完成的，两个端点的 host 上几乎什么都不用做（除了配置路由，把发送到 10.0.2.0 的包路由到 router A）！</p>
 <p>这么设计的好处也就很容易看出来了，ipip tunnel 是端对端的，通信也就只能是点对点的，而 GRE tunnel 却可以进行多播。</p>
 <p>现在让我们看看Linux内核是怎么实现的，我们必须假设 router A 和 B 上都是运行的 Linux，而 host A 和 B上运行什么是无所谓的。</p>
@@ -113,9 +113,9 @@
 <p>所以真正处理这个包的函数是 ipgre_rcv() 。ipgre_rcv() 所做的工作是：通过外层IP 头找到对应的 tunnel，然后剥去外层 IP 头，把这个“新的”包重新交给 IP 栈去处理，像接收到普通 IP 包一样。到了这里，“新的”包处理和其它普通的 IP 包已经没有什么两样了：根据 IP 头中目的地址转发给相应的 host。注意：这里我所谓的“新的”包其实并不新，内核用的还是同一个copy，只是skbuff 里相应的指针变了。</p>
 <p>以上就是Linux 内核对 GRE tunnel 的整个处理过程。另外，GRE 的头如下所示（图片来自<a href="http://packetlife.net/blog/2012/feb/27/gre-vs-ipip-tunneling/" target="_blank" rel="external">这里</a>）：</p>
 <p>IP header in GRE tunnel</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/11/gre_encapsulation.png" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2012/11/gre_encapsulation.png" alt=""></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/11/gre_encapsulation.png" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
 <p>GRE header</p>
-<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/11/gre_header.png" target="_blank" rel="external"><img src="http://wangcong.org/blog/wp-content/uploads/2012/11/gre_header.png" alt=""></a></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/11/gre_header.png" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
 
       
     </div>
