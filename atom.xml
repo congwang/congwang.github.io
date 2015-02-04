@@ -1,0 +1,1006 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title><![CDATA[A Geek's Page]]></title>
+  
+  <link href="/atom.xml" rel="self"/>
+  <link href="http://wangcong.org/"/>
+  <updated>2015-02-04T06:14:49.750Z</updated>
+  <id>http://wangcong.org/</id>
+  
+  <author>
+    <name><![CDATA[Cong Wang]]></name>
+    
+  </author>
+  
+  <generator uri="http://zespia.tw/hexo/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Linux 网络流量控制（零）]]></title>
+    <link href="http://wangcong.org/2014/08/12/linux-e7-bd-91-e7-bb-9c-e6-b5-81-e9-87-8f-e6-8e-a7-e5-88-b6-ef-bc-88-e4-b8-80-ef-bc-89/"/>
+    <id>http://wangcong.org/2014/08/12/linux-e7-bd-91-e7-bb-9c-e6-b5-81-e9-87-8f-e6-8e-a7-e5-88-b6-ef-bc-88-e4-b8-80-ef-bc-89/</id>
+    <published>2014-08-13T03:10:54.000Z</published>
+    <updated>2015-02-04T05:49:06.000Z</updated>
+    <content type="html"><![CDATA[<p>我会在下周举行的 <a href="http://events.linuxfoundation.org/events/linuxcon-north-america" target="_blank" rel="external">LinuxCon North America</a> 上讲一下最近在做的 Linux 网络流量控制（traffic control），有机会来参加的朋友欢迎<a href="http://sched.co/1kq0EDh" target="_blank" rel="external">前来捧场</a>！不能参加的朋友也可以<a href="http://wangcong2015.files.wordpress.com/2014/08/linux_traffic_control.pdf" target="_blank" rel="external">在这里</a>看到我的 slides。</p>
+<p>网络流量控制是一个非常大的话题，不可能在一个小时的时间内全部讲完，只能选择其中比较重要的来讲。而且它很重要，直接关乎网络性能，可是讲解这部分代码的书几乎没有，已有的讲 Linux 内核网络的书基本上都跳过了这一个部分，所以我也会陆续在这里详细分析一下这些代码，一是弥补这个缺口，二是弥补讲稿中的不足。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>我会在下周举行的 <a href="http://events.linuxfoundation.org/events/linuxcon-north-america" target="_blank" rel="external">LinuxCon North America<]]>
+    </summary>
+    
+      <category term="Linux Kernel" scheme="http://wangcong.org/categories/Linux-Kernel/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Ottawa Linux Symposium]]></title>
+    <link href="http://wangcong.org/2014/08/01/ottawa-linux-symposium/"/>
+    <id>http://wangcong.org/2014/08/01/ottawa-linux-symposium/</id>
+    <published>2014-08-01T19:36:16.000Z</published>
+    <updated>2015-02-04T05:49:06.000Z</updated>
+    <content type="html"><![CDATA[<p>提起 LinuxCon，Kernel Summit 可能大家都知道，<a href="http://en.wikipedia.org/wiki/Linux_Symposium" target="_blank" rel="external">Linux 研讨会</a>相比却不是那么知名。至少在我看来，Linux 研讨会的技术含量比我经常参加的LinuxCon 要高。虽然我一次还没参加过，但时常在搜索 Linux 内核的相关的东西时会搜到在这个会议上发布的一些论文。</p>
+<p>它是每年一度在加拿大渥太华（也不总是在这里）举行的偏学术性质技术会议，要求参加会议的演讲者都要提交一篇论文，而不是 slides，会后汇总到一起发表。我收到过两次邀请，但都没机会参加，因为一是去加拿大的签证不那么好办，需要准备很多材料；二是我没读过硕士和博士，写论文水平很差。Linux 社区相关的会议多数是偏技术的，这和社区的黑客文化也有关，能有这么一个偏学术的会议实属难得。</p>
+<p>光说没用，你可以去读一下之前在这个会议上发表的论文：<a href="https://www.kernel.org/doc/ols/" target="_blank" rel="external">https://www.kernel.org/doc/ols/</a> 去感受一下它的含金量。</p>
+<p>今年，Linux 研讨会的发起者遇到了资金的困难，<a href="http://lwn.net/Articles/606917/" target="_blank" rel="external">需要大家的资助</a>。反正我是不忍心看到这么好的一个会议停办，果断捐了 50 加元尽自己的一份力。希望喜欢这个会议的朋友也可以伸出援助之手，帮助这个会议继续开下去。当然，要是能有哪个土豪公司赞助那就再好不过了。:)</p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/08/Selection_014.png" target="_blank" rel="external"><img src="/images/" alt="" title="Selection_014"></a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>提起 LinuxCon，Kernel Summit 可能大家都知道，<a href="http://en.wikipedia.org/wiki/Linux_Symposium" target="_blank" rel="external">Linux 研讨会</a>相比却不]]>
+    </summary>
+    
+      <category term="Life" scheme="http://wangcong.org/categories/Life/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[skbuff 内存模型]]></title>
+    <link href="http://wangcong.org/2014/05/31/skbuff-e5-86-85-e5-ad-98-e6-a8-a1-e5-9e-8b/"/>
+    <id>http://wangcong.org/2014/05/31/skbuff-e5-86-85-e5-ad-98-e6-a8-a1-e5-9e-8b/</id>
+    <published>2014-05-31T19:54:06.000Z</published>
+    <updated>2015-02-04T05:49:06.000Z</updated>
+    <content type="html"><![CDATA[<p>众所周知，struct sk_buff 是 Linux 内核网络子系统中最重要的一个结构体，它是内核对网络数据包的一个抽象表示。要了解 Linux 网络子系统除了了解网络协议之外，了解内核如何表示和操作数据包也是至关重要的。Linux 内核中的 struct sk_buff （以下简称 skb）提供了一套非常复杂的内存模型，也对它进行了大量的优化，这也是为什么 Linux 网络如此高效。</p>
+<p>我们从最简单的开始，分配一个最普通的 skb：</p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/06/skb_alloc.png" target="_blank" rel="external"><img src="/images/" alt="" title="skb_alloc"></a></p>
+<p>内核分配 skb 的函数是 __alloc_skb()，它有很多种包装供不同的场景使用。如上图所示，在这里我们分配了两部分内存：1) skb struct 本身，也叫元数据（ meta data）；2) 实际存放网络数据包的内存。这里你可以把 skb 看作是一堆指针，这些指针指向一块内存的不同区域。下面我们会看到，很多时候我们都是对指针本身进行操作。</p>
+<p><strong>注意：其实严格的说上图中所示的指针并不一定都是指针，Linux 内核进行了优化。在 64 位系统上，一个指针也是64位，储存指针的开销太大。而数据包本身不可能太大（以太网 MTU 是 1500 字节，就算是 jumbo frame 也才 9000 字节），因此 Linux 内核仅仅把 head 和 data 保存为指针，其它的只要存储相对于它们的偏移即可。下面的所有图中把它们表示为指针仅仅是为了方便。</strong></p>
+<p><strong><a href="http://wangcong.org/blog/wp-content/uploads/2014/06/skb1.png" target="_blank" rel="external"><img src="/images/" alt="" title="skb"></a>
+</strong></p>
+<p>而一个完整的网络数据包在内存中的表示通常有四个部分：</p>
+<p>1) head room，位于 skb-&gt;head 和 skb-&gt;data 之间，也就是存放网络协议头的地方，比如 TCP，IP 头，以太网头都是位于此；</p>
+<p>2) 用户数据，通常由应用层通过系统调用填充，介于 skb-&gt;data 和 skb-&gt;tail 之间；</p>
+<p>3) tail room，介于 skb-&gt;tail 和 skb-&gt;end 之间，这部分是内核在用户数据后面填充的一部分；</p>
+<p>4) skb-&gt;end 之后存放的是一个特殊的结构体 struct skb_shared_info，下面会讲到它。</p>
+<p>刚分配出来的 skb 除了 skb-&gt;end 指向末尾的 struct skb_shared_info，其它指针都指向了开始处。通常第一步就是初始化 head room，调用 skb_reserve() 这个函数，如下图所示：</p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/06/skb_reserve.png" target="_blank" rel="external"><img src="/images/" alt="" title="skb_reserve"></a></p>
+<p>比如 TCP 层要发送一个数据包，head room 至少要是 tcphdr + iphdr + ethhdr。然后在协议头的后面开始预留数据区，调用的函数是 skb_put()，如下图所示：</p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/06/skb_put.png" target="_blank" rel="external"><img src="/images/" alt="" title="skb_put"></a></p>
+<p>到此为止，前面提到的四个部分才全部初始化完毕，通常情况下，这些操作要么是由传输层完成（发送），要么是由网卡驱动完成（接收）。一点一点往里填充数据或者向外读取数据则是各层协议的事情。数据包入栈时（即接收），数据是一层一层往里读取，协议头是一层一层剥掉。数据包出栈时（发送），协议头则是一层一层往外填写。</p>
+<p>内核提供的剥掉协议头的操作函数是 skb_pull()，如名字所示，它是往下拉 skb-&gt;data：</p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/06/skb_pull.png" target="_blank" rel="external"><img src="/images/" alt="" title="skb_pull"></a></p>
+<p>类似地，往外推 skb-&gt;data 的操作叫做 skb_push()：</p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/06/skb_push.png" target="_blank" rel="external"><img src="/images/" alt="" title="skb_push"></a></p>
+<p>很形象吧？</p>
+<p>好，终于到前面一直默默无闻的 skb_shared_info 出场了。想象这么一种常见的情况：我们用 tcpdump 捕捉一个网卡收到的数据包。此时数据包入栈后会有两个部分同时进行读：一是协议栈本身，另一个就是 tcpdump 了。这种情况下要不要完全复制一份 skb 呢？没有必要，因为两部分都是读，网络数据本身是不变的，变的只是 strcut sk_buff 里面的指针，也就是说，我们只要复制一份 skb 让它指向同样的内存区域就行了！这正是 skb_clone() 所做的：</p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/06/skb_clone.png" target="_blank" rel="external"><img src="/images/" alt="" title="skb_clone"></a></p>
+<p>如图所示，skb_shared_info 此时记录了一些变化，dataref 变成了2，代表有两个 skb 同时指向这块内存区域。由此可见，skb_shared_info 保存的是多个 skb 之间共享的，但又不属于网络数据的数据（也就是不会被传输的数据），所以才放在 skb-&gt;end 之后啊。</p>
+<p>这还没完，Linux 内核开发者觉得还不够，每次 clone 都还要分配一个 skb 结构体，对于要 clone 很多次的情形还可以进行优化——使用 fast clone（缩写为fclone）。fclone 很有技巧性，它在分配 skb 的 cache 里做了手脚，每次分配 skb 时，它都是分配一对，一个<strong>紧紧地</strong>跟在另一个后面，如下图所示：</p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/05/skb_fclone.png" target="_blank" rel="external"><img src="/images/" alt="" title="skb_fclone"></a></p>
+<p>不用的时候你完全看不到它，用的时候通过 skb+1 就能找得到！当然了，它需要在 skb 结构体里保存一些状态信息表明这部分到底有没有用到。</p>
+<p>在写的情况下我们还是要完全拷贝 skb 及其数据的，调用 skb_copy() ：</p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/05/skb_copy.png" target="_blank" rel="external"><img src="/images/" alt="" title="skb_copy"></a></p>
+<p>到此为止都比较简单，我们假设了所有的数据都是放在 skb-&gt;head 和 skb-&gt;end 之间，也就是所谓的线性（linear）。世界要是这么简单就好了，可惜现实远比这复杂。内核至少还提供了另外三种非线性的 skb 模型。</p>
+<p>一种是网卡驱动常用的模型，数据存放在物理页面的不同位置，skb_shared_info 里有一个数组，存放一组 (页面、偏移、大小) 的信息，用来记录这些数据：</p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/05/skb_fill_page_desc.png" target="_blank" rel="external"><img src="/images/" alt="" title="skb_fill_page_desc"></a></p>
+<p>另一种是组装 IP 数据包分片（fragment）时用到的 frag_list 模型：</p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/05/skb_frag_add_head.png" target="_blank" rel="external"><img src="/images/" alt="" title="skb_frag_add_head"></a></p>
+<p>分片的数据有各自的 skb 结构体，它们通过 skb-&gt;next 链接成一个单链表，表头是第一个 skb 的 shared_info 中的 frag_list。</p>
+<p>最后一种是 GSO 进行分段（segmentation）用到的一种模型，当一个大的 TCP 数据包被切割成几个 MTU 大小的数据时，它们也是通过 skb-&gt;next 链接到一起的：</p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2014/05/skb_segment.png" target="_blank" rel="external"><img src="/images/" alt="" title="skb_segment"></a></p>
+<p>与分片不同的是，相关的信息是记录在最前面一个 skb 的 skb_shared_info 里面的 gso_segs 和 gso_size 里。</p>
+<p>正因为存在以上各种复杂的模型，很多 skb API 的实现（比如 skb_segment()）非常复杂，其大部分代码都是用来处理非线性的这几种情况，这使得 skbuff.c 里的很多代码都不容易读懂。希望本文能够对你理解这部分代码有所帮助。</p>
+<p>参考资料：</p>
+<p>1. <a href="http://vger.kernel.org/~davem/skb_data.html" target="_blank" rel="external">http://vger.kernel.org/~davem/skb_data.html</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>众所周知，struct sk_buff 是 Linux 内核网络子系统中最重要的一个结构体，它是内核对网络数据包的一个抽象表示。要了解 Linux 网络子系统除了了解网络协议之外，了解内核如何表示和操作数据包也是至关重要的。Linux 内核中的 struct sk_buff]]>
+    </summary>
+    
+      <category term="Linux Kernel" scheme="http://wangcong.org/categories/Linux-Kernel/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[长期提供 Twitter 内推]]></title>
+    <link href="http://wangcong.org/2014/05/06/-e9-95-bf-e6-9c-9f-e6-8f-90-e4-be-9b-twitter-e5-86-85-e6-8e-a8/"/>
+    <id>http://wangcong.org/2014/05/06/-e9-95-bf-e6-9c-9f-e6-8f-90-e4-be-9b-twitter-e5-86-85-e6-8e-a8/</id>
+    <published>2014-05-06T18:30:51.000Z</published>
+    <updated>2015-02-04T05:49:06.000Z</updated>
+    <content type="html"><![CDATA[<p>今年断断续续收到不少求内推的邮件，在这里干脆直接写清楚好了，免得每次都得回邮件说明。</p>
+<p>任何人都可以找我内推，无论是不是程序员，你只要把你感兴趣的职位链接和你的英文简历发到我的邮箱（xiyou 点 wangcong 在 gmail 点 com）即可。Cover letter 可有可无，你自己掌握。Twitter 公司的空缺职位在这里：<a href="https://about.twitter.com/careers" target="_blank" rel="external">https://about.twitter.com/careers</a>，国内需翻墙，因为众所周知的原因。</p>
+<p>我不提供修改简历服务，你发给我什么我就上传什么，也不会告诉你简历好不好之类的，那是 HR 的工作，不是我的。另外，网上教你写英文简历的文章一大把，我没义务更没时间告诉你怎么写。如果非得说应聘 Twitter 有何特殊要求，你不觉得简历里有一个你的推特帐号会更好么？:-)</p>
+<p>因为 <a href="http://en.wikipedia.org/wiki/H-1B_visa" target="_blank" rel="external">H-1b 签证</a>的原因，国内的应聘者最好在每年的1月份到3月份之间应聘，或者更提前一些。根据这几年的情况来看，H-1b 配额4月份一出来就会被用光，不光如此还得抽签。所以4月份之后根本没戏，除非当年美国经济很差，H-1b 用不完了（这意味着职位空缺也少）。当然了，已经在美国本土的不受此限制。</p>
+<p>在 Twitter 工作比较轻松，公司提供免费的三餐，工作时间自由，带薪休假理论上无上限（只要你的上司批准），在这里工作的中国人也很多。欢迎投简历！</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>今年断断续续收到不少求内推的邮件，在这里干脆直接写清楚好了，免得每次都得回邮件说明。</p>
+<p>任何人都可以找我内推，无论是不是程序员，你只要把你感兴趣的职位链接和你的英文简历发到我的邮箱（xiyou 点 wangcong 在 gmail 点 com）即可。Cover ]]>
+    </summary>
+    
+      <category term="Life" scheme="http://wangcong.org/categories/Life/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[我的2013：我来到了美国]]></title>
+    <link href="http://wangcong.org/2014/01/30/-e6-88-91-e7-9a-842013-ef-bc-9a-e6-88-91-e6-9d-a5-e5-88-b0-e4-ba-86-e7-be-8e-e5-9b-bd/"/>
+    <id>http://wangcong.org/2014/01/30/-e6-88-91-e7-9a-842013-ef-bc-9a-e6-88-91-e6-9d-a5-e5-88-b0-e4-ba-86-e7-be-8e-e5-9b-bd/</id>
+    <published>2014-01-30T20:52:01.000Z</published>
+    <updated>2015-02-04T05:49:06.000Z</updated>
+    <content type="html"><![CDATA[<p>对我来说，2013 年有两件大事：一是不顾我爸的反对把婚结了；二是终于肉身翻墙了，而且是到了之前都没想过的美国硅谷，进了更没想过的 Twitter。</p>
+<p>我认为结婚是两个人的事，父母当然有权利过问，但无权干涉，尤其是以一个荒唐的理由：她没有工作。我甚至都不好意思在这里写，可这就是我爸反对的理由，难以置信。别怪我没尝试和父母沟通，只是你不会理解和坚持认为周末上班才是正常的人沟通起来是有多么困难。</p>
+<p>在很多中国人眼里，我这是不孝。我不这么认为，我觉得任何人首先是为自己活着，孝顺父母当然重要，但是再重要也不如自己的自由重要。生命是父母所给，但自由是上天所赐。如果他们愿意拿走我的生命，我绝对毫无怨言，可是我只要还活着一天，我都不能交出我的自由，尤其是选择我自己幸福的自由。古今中外，自古以来，永远都是歌颂爱情，从来没听说过歌颂父母干涉婚姻的。其实这是也我为什么打算要移民的一个最重要原因。</p>
+<p>能来美国完全是靠运气，不是我谦虚，真的如此。我在2月份的时候张罗着找国外的工作机会，澳大利亚、加拿大、美国等都在考虑的范围之中，简历也在 linkedin 上投了不少，也有朋友在看到我的博客后帮我推荐的，无奈很多都是没有消息，最后基本上只收到了 Twitter 的回复。Twitter 的 HR 是我见过的效率最高的，没有之一。电话面试基本上当天就能收到结果，因为时差的原因我在美国西海岸时间晚上12点多还在和 HR 聊天。幸运的是所有面试我都通过了。</p>
+<p>更幸运的是我在 H-1b 签证配额被抢光之前就拿到了 offer 并且提交了签证申请。因为今年美国经济复苏的缘故，工作机会特别多，也就是说全球申请 H-1b 的人特别多，多到超出配额一倍，所以只好进行抽签。更更幸运的是我被抽中了。更更更幸运的是我还赶在了 Twitter 上市之前到了。所以这完全归结于人品爆发的原因。</p>
+<p>从9月底登陆美国到现在基本上4个月了，过了所谓的“新鲜期”，我想可以谈谈我对美国的感受了。美国其实没有什么伟大的，无非就是把人性的自由释放出来了，虽然它做得还是不够好，但是世界上比它做得更好的国家还真屈指可数，尤其是比起摸着石头过河的国家来说真是好太多了。</p>
+<p>我们都知道不少在美国自由成功的故事，来到这里我也不可避免地在街上看到了很多自由失败的人——流浪汉。或许我在《<a href="http://book.douban.com/subject/6743298/" target="_blank" rel="external">经济为什么会崩溃</a>》一书中读到的一句话最能够概括，“<strong>无法自由地失败，也就是无法自由地成功。</strong>”这一句的另一种读法就是，自由的代价就是允许你自由的失败。很多别有用心的人喜欢故意夸大自由的代价来让你相信自由多么可怕，可是我们要记得，天下没有免费的午餐，自由也不是天生完美的。</p>
+<p>加州税高，但是缴的每一笔税我都清楚，把税交给一个民主透明的政府更让我感到放心，尤其是看到 <a href="http://www.usatoday.com/story/news/nation/2013/11/15/batkid-san-francisco/3588173/" target="_blank" rel="external">Batkid这种故事 </a>的时候，生平第一次感受到纳税纳得这么值！湾区虽然房价高，但是比起北京来，显然是一个码农可以承受得起的。</p>
+<p>真心希望更多的中国人能亲自到美国来感受一下这究竟是一个怎样的国家，而不是受电视上的新闻报道（不管是好的还是坏的）所干扰。美国的强大不是说它是一个完美的国家，这个星球上没有哪个国家是完美的，甚至也不是说它的国父们设立的制度多么好，而是它有一种纠错能力，不管犯过多大的错误都能改正，尽管可能需要很多年。<strong>资本主义的罪恶是显而易见的，人们都能看到并且有自由去纠正它；共产主义的罪恶是欺骗性的、制度性的，它足以扼杀任何企图纠正它的人，无论地位高低。</strong></p>
+<p>自由，对于我来说，更主要的选择自己想过的生活不被别人说三道四的自由。相信很多像我这样的年轻人过年回家都有体会，你结婚生孩子的自由在你父母和亲戚们说三道四面前荡然无存，所以一个宽容的社会环境比允许你上街游行或许对于大多人来说在生活中更重要。在这一点上我很欣赏美国的父母们，我也认为孩子成年以后就是独立的个体，如果成年了还需要我们指手画脚地指导，那就是做父母的失败。</p>
+<p>我想要移民的理由或许千百条，唯独没有的就是一定要以后的孩子去读名牌大学。虽然我们也会尽力让孩子接受好的教育，但是就算孩子以后高中毕业了选择去做清洁工，只要他/她做得开心，对社会无害，我们也绝对支持。美国的宽容社会至少不让人觉得做清洁工是丢人的一件事，并且还能有保障自己生活的收入，这就已经很足够了。我们甚至还想过，他/她如果是个同性恋，把自己的男朋友/女朋友带回家，我们就当又多了一个儿子或女儿，有何不好？</p>
+<p>这才是自由的味道。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>对我来说，2013 年有两件大事：一是不顾我爸的反对把婚结了；二是终于肉身翻墙了，而且是到了之前都没想过的美国硅谷，进了更没想过的 Twitter。</p>
+<p>我认为结婚是两个人的事，父母当然有权利过问，但无权干涉，尤其是以一个荒唐的理由：她没有工作。我甚至都不好意思在]]>
+    </summary>
+    
+      <category term="Life" scheme="http://wangcong.org/categories/Life/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[libnl 项目需要你的帮助……]]></title>
+    <link href="http://wangcong.org/2013/12/04/libnl-e9-a1-b9-e7-9b-ae-e9-9c-80-e8-a6-81-e4-bd-a0-e7-9a-84-e5-b8-ae-e5-8a-a9/"/>
+    <id>http://wangcong.org/2013/12/04/libnl-e9-a1-b9-e7-9b-ae-e9-9c-80-e8-a6-81-e4-bd-a0-e7-9a-84-e5-b8-ae-e5-8a-a9/</id>
+    <published>2013-12-04T20:50:08.000Z</published>
+    <updated>2015-02-04T05:49:06.000Z</updated>
+    <content type="html"><![CDATA[<p>libnl 是用户空间对 netlink 包装的一个库，有了它使用 netlink 变得很方便了。你熟悉的 NetworkManager 就使用了它。它的官方网站是：<a href="http://www.infradead.org/~tgr/libnl/" target="_blank" rel="external">http://www.infradead.org/~tgr/libnl/</a></p>
+<p>对比内核已经实现的 TC classifier 和 TC action，你会发现 libnl 实现了不到其中一半，所以还有不少东西需要做。如果非要我写一个 list 的话，下面几个是优先级比较高的：</p>
+<p>1) 添加 skbedit action 的支持；<br>2) 添加 cgroup classifier 的支持；<br>3) 添加 tun/tap 设备的支持；<br>4) 添加 gre tunnel 设备的支持。</p>
+<p>通过 libnl 你可以深入了解 netlink，以及内核中的这些 netlink 接口设计，当然了还有 traffic control 的一些东西。感兴趣的话可以联系我：xiyou.wangcong &lt;AT&gt; gmail.com。如果你能直接去贡献补丁，那当然是再好不过了。:)</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>libnl 是用户空间对 netlink 包装的一个库，有了它使用 netlink 变得很方便了。你熟悉的 NetworkManager 就使用了它。它的官方网站是：<a href="http://www.infradead.org/~tgr/libnl/" target=]]>
+    </summary>
+    
+      <category term="Programming" scheme="http://wangcong.org/categories/Programming/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Ingress traffic control]]></title>
+    <link href="http://wangcong.org/2013/10/22/ingress-traffic-control/"/>
+    <id>http://wangcong.org/2013/10/22/ingress-traffic-control/</id>
+    <published>2013-10-22T20:54:53.000Z</published>
+    <updated>2015-02-04T05:49:06.000Z</updated>
+    <content type="html"><![CDATA[<p>相信很多人都知道 Linux 内核很难做 ingress 流量控制的，毕竟发送方理论上可以无限制地发送包到达网络接口。即使你控制了从网络接口到达协议栈的流量，你也很难从根源上控制这个流量。</p>
+<p>利用 Linux 内核你可以轻松地完成前者，即控制从网络接口到达协议栈的流量。这个是通过一个叫做 ifb 的设备完成的，这个设备如此不起眼以至于很多人不知道它的存在。</p>
+<p>它的使用很简单，加载 ifb 模块后，激活 ifbX 设备：</p>
+<pre><code>modprobe ifb numifbs=1
+ip link <span class="operator"><span class="keyword">set</span> dev ifb0 up # ifb1, ifb2, ... 操作相同
+<span class="string">`&lt;/pre&gt;
+
+然后就要通过 ingress tc filter 把流入某个网络接口的流量 redirect 到 ifbX 上：
+&lt;pre&gt;`</span>tc qdisc <span class="keyword">add</span> dev eth0 handle ffff: ingress
+tc filter <span class="keyword">add</span> dev eth0 parent ffff: protocol ip u32 <span class="keyword">match</span> u32 <span class="number">0</span> <span class="number">0</span> <span class="keyword">action</span> mirred egress redirect dev ifb0</span>
+</code></pre><p>ingress 这个 qdisc 是不能加 class，但是我们这里使用了 ifb0，所以就可以在 ifb0 设备上添加各种 tc class，这样就和 egress 没有多少区别了。</p>
+<p>ifb 的实现其实很简单，因为流入网络接口的流量是无法直接控制的，那么我们必须要把流入的包导入（通过 tc action）到一个中间的队列，该队列在 ifb 设备上，然后让这些包重走 tc 层，最后流入的包再重新入栈，流出的包重新出栈。看代码一目了然：</p>
+<p>[c]</p>
+<pre><code>    <span class="keyword">while</span> ((skb = __skb_dequeue(&amp;amp;dp-&amp;<span class="keyword">gt</span>;tq)) != NULL) {
+            u32 from = G_TC_FROM(skb-&amp;<span class="keyword">gt</span>;tc_verd);
+
+            skb-&amp;<span class="keyword">gt</span>;tc_verd = <span class="number">0</span>;
+            skb-&amp;<span class="keyword">gt</span>;tc_verd = SET_TC_NCLS(skb-&amp;<span class="keyword">gt</span>;tc_verd);
+
+            u64_stats_update_begin(&amp;amp;dp-&amp;<span class="keyword">gt</span>;tsync);
+            dp-&amp;<span class="keyword">gt</span>;tx_packets++;
+            dp-&amp;<span class="keyword">gt</span>;tx_bytes += skb-&amp;<span class="keyword">gt</span>;len;
+            u64_stats_update_end(&amp;amp;dp-&amp;<span class="keyword">gt</span>;tsync);
+
+            rcu_read_lock();
+            skb-&amp;<span class="keyword">gt</span>;dev = dev_get_by_index_rcu(dev_net(_dev), skb-&amp;<span class="keyword">gt</span>;skb_iif);
+            <span class="keyword">if</span> (!skb-&amp;<span class="keyword">gt</span>;dev) {
+                    rcu_read_unlock();
+                    dev_kfree_skb(skb);
+                    _dev-&amp;<span class="keyword">gt</span>;stats.tx_dropped++;
+                    <span class="keyword">if</span> (skb_queue_len(&amp;amp;dp-&amp;<span class="keyword">gt</span>;tq) != <span class="number">0</span>)
+                            <span class="keyword">goto</span> resched;
+                    <span class="keyword">break</span>;
+            }
+            rcu_read_unlock();
+            skb-&amp;<span class="keyword">gt</span>;skb_iif = _dev-&amp;<span class="keyword">gt</span>;ifindex;
+
+            <span class="keyword">if</span> (from &amp;amp; AT_EGRESS) {
+                    dev_queue_xmit(skb);
+            } <span class="keyword">else</span> <span class="keyword">if</span> (from &amp;amp; AT_INGRESS) {
+                    skb_pull(skb, skb-&amp;<span class="keyword">gt</span>;dev-&amp;<span class="keyword">gt</span>;hard_header_len);
+                    netif_receive_skb(skb);
+            } <span class="keyword">else</span>
+                    BUG();
+    }
+</code></pre><p>[/c]</p>
+<p>这里有两个不太明显的地方值得注意：</p>
+<p>1) 不论流入还是流出，tc 层的代码都是工作在 L2 的，也就是说代码是可以重入的，尤其是 skb 里的一些 header pointer；</p>
+<p>2) 网络设备上的 ingress 队列只有一个，这也是为啥 ingress qdisc 只能做 filter 的原因，可以看下面的代码：</p>
+<p>[c]<br>static int ing_filter(struct sk_buff <em>skb, struct netdev_queue </em>rxq)<br>{<br>        struct net_device <em>dev = skb-&gt;dev;<br>        u32 ttl = G_TC_RTTL(skb-&gt;tc_verd);<br>        int result = TC_ACT_OK;<br>        struct Qdisc </em>q;</p>
+<pre><code>    <span class="keyword">if</span> (unlikely(MAX_RED_LOOP <span class="comment">%d)n",</span>
+                                 skb-&amp;gt;skb_iif, dev-&amp;gt;ifindex);
+            <span class="keyword">return</span> TC_ACT_SHOT;
+    }
+
+    skb-&amp;gt;tc_verd = SET_TC_RTTL(skb-&amp;gt;tc_verd, ttl);
+    skb-&amp;gt;tc_verd = SET_TC_AT(skb-&amp;gt;tc_verd, AT_INGRESS);
+
+    q = rxq-&amp;gt;qdisc;
+    <span class="keyword">if</span> (q != &amp;amp;noop_qdisc) <span class="cell">{
+            spin_lock(qdisc_lock(q));
+            if (likely(!test_bit(__QDISC_STATE_DEACTIVATED, &amp;amp;q-&amp;gt;state)))
+                    result = qdisc_enqueue_root(skb, q);
+            spin_unlock(qdisc_lock(q));
+    }
+
+    return result;</span>
+</code></pre><p>}</p>
+<p>static inline struct sk_buff <em>handle_ing(struct sk_buff </em>skb,<br>                                         struct packet_type <em>*pt_prev,<br>                                         int </em>ret, struct net_device <em>orig_dev)<br>{<br>        struct netdev_queue </em>rxq = rcu_dereference(skb-&gt;dev-&gt;ingress_queue);</p>
+<pre><code>    <span class="keyword">if</span> (!rx<span class="string">q ||</span> rxq-&amp;<span class="keyword">gt</span>;qdisc == &amp;amp;noop_qdisc)
+            <span class="keyword">goto</span> out;
+
+    <span class="keyword">if</span> (*pt_prev) {
+            *ret = deliver_skb(skb, *pt_prev, orig_dev);
+            *pt_prev = NULL;
+    }
+
+    switch (ing_filter(skb, rxq)) {
+    case TC_ACT_SHOT:
+    case TC_ACT_STOLEN:
+            kfree_skb(skb);
+            <span class="keyword">return</span> NULL;
+    }
+</code></pre><p>out:<br>        skb-&gt;tc_verd = 0;<br>        return skb;<br>}<br>[/c]</p>
+<p>而经过 tc action 后是导入到了 ifb 设备的发送队列，见 net/sched/act_mirred.c 的 tcf_mirred() 函数：</p>
+<p>[c]<br>//…<br>        skb2-&gt;skb_iif = skb-&gt;dev-&gt;ifindex;<br>        skb2-&gt;dev = dev;<br>        err = dev_queue_xmit(skb2);<br>[/c]</p>
+<p>也就是说这样就会有多个队列了，可以添加 class 了。:) 这大体也是 ingress traffic control 如何工作的了，可见 ifb 的存在既简单又巧妙地粘合了 egress 上的流量控制。</p>
+<p>正如本文一开始讲到的，即使用 ifb 我们所做的流量控制仍然有限，很难从根本上控制发送方的速率。如果双方是通过交换机连接的话，或许通过 L2 上的一些协议可以控制速率，而如果中间经过路由器，那么所能做的就更加有限，只能期待传输层的协议进行控制，而不是靠传输层自身感受到丢包的多少去自动调整速率，因为这可能会花很长时间。</p>
+<p>参考资料：</p>
+<p>1. <a href="http://serverfault.com/questions/350023/tc-ingress-policing-and-ifb-mirroring" target="_blank" rel="external">http://serverfault.com/questions/350023/tc-ingress-policing-and-ifb-mirroring</a><br>2. <a href="http://stackoverflow.com/questions/15881921/why-tc-cannot-do-ingress-shaping-does-ingress-shaping-make-sense" target="_blank" rel="external">http://stackoverflow.com/questions/15881921/why-tc-cannot-do-ingress-shaping-does-ingress-shaping-make-sense</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>相信很多人都知道 Linux 内核很难做 ingress 流量控制的，毕竟发送方理论上可以无限制地发送包到达网络接口。即使你控制了从网络接口到达协议栈的流量，你也很难从根源上控制这个流量。</p>
+<p>利用 Linux 内核你可以轻松地完成前者，即控制从网络接口到达协议栈]]>
+    </summary>
+    
+      <category term="Linux Kernel" scheme="http://wangcong.org/categories/Linux-Kernel/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[人生就是Moving On……]]></title>
+    <link href="http://wangcong.org/2013/09/21/-e4-ba-ba-e7-94-9f-e5-b0-b1-e6-98-afmoving-on/"/>
+    <id>http://wangcong.org/2013/09/21/-e4-ba-ba-e7-94-9f-e5-b0-b1-e6-98-afmoving-on/</id>
+    <published>2013-09-22T05:23:39.000Z</published>
+    <updated>2015-02-04T05:49:06.000Z</updated>
+    <content type="html"><![CDATA[<p>最近很忙一直没有时间写博客，一半是因为工作时间没得闲，即使在大理这种休闲安逸的地方我也难得在工作时间偷个懒出去看看对面的明哥今天有没有新把的妹子；一半是因为我们准备去万恶的美帝体验水深火热去了。要准备的东西实在太多，毕竟我天朝物产极大丰富，去美帝这种大农村必须做好长期吃苦的准备，看了我媳妇收拾的东西你会觉得我们简直是要去非洲打猎……</p>
+<p>半年多前我发了<a href="http://wangcong.org/blog/archives/2259" target="_blank" rel="external">一篇求职的博客</a>，之后收到好几个朋友的邮件邀请，但因为种种原因都没去成，人艰不拆，其实悲催到了连面试的机会都没有。好在后来我自己偶然间看到了下面一个让人眼前一亮的招聘：</p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2013/09/Selection_046.png" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
+<p>身为一个逼格稍高的伪 geek，怎么能不被这逼格如此高的 JD 感动得潸然泪下？！没错，这就是 Twitter 招聘的一个内核开发职位。</p>
+<p>再后来，心惊胆颤地经过一轮又一轮的面试，好不容易拿到 offer，然后又碰上了几年一遇的美帝万恶的 H-1b 抽签。好在之前快用光的运气原地满血复活了，我侥幸抽中，之后去成都领事馆面签也都挺顺利的。所以，我早就说过，找工作其实和找媳妇是一样一样的：你追的女神追了很久还是跟高富帅走了，正当你累感不爱的时候，你突然发现，其实有一个把你当男神的妹纸正在暗恋你。这都是靠缘分啊！</p>
+<p>Twitter 给的待遇相当厚道，起码我算着够养活我和我媳妇两个人的。而且提供的 relocation 服务也相当好：搬家给提供一个集装箱，运一张床过去也足够了。机票给订好，到了旧金山之后提供临时住处，还有人专门带你去看要租的房子…… 至少这一点比红帽公司要厚道很多。</p>
+<p>本月 25 号将会是我在红帽的最后一天，这么算下来一共待了4年4个月零21天。刚去的时候是做比较 general 的东西，说白了就是啥脏活累活都干，之后就开始做 kdump，最近一年多开始转做内核网络。这些年来用公司的邮箱一共给 Linux 内核提交了<a href="http://goo.gl/AfPJw" target="_blank" rel="external"> 323 个补丁</a>。当然，我也跟红帽的大牛们学到很多很多的东西，技术上的和非技术上的。虽然很悲伤地发现自己现在依然不是大牛，但至少我认为我在成为大牛的路上，哪怕未来路途依旧遥远……总的来说，红帽在中国的待遇可能不是很好，但做的东西绝对是 Linux 内核领域最好的，至少我在的这个内核网络 team 如此。那些能够潜心做技术的同学还是很值得来试试的。</p>
+<p>当然，也非常感谢我在红帽的两个美国经理，允许我长期在云南大理工作，免去了在北京忍受污染空气之毒。这是你给我再高的薪水也换不来的，我自认为至少在这一点上我比你们很多人明白什么更重要。:-) 我对比别人多活几年不感兴趣，我只是不想以后痛苦地死于肺癌，仅次而已。</p>
+<p>在大理的这一年多的时间是我人生最好的时光之一，除了邂逅了我现在的媳妇，还有那“生命终究难舍蓝蓝的白云天”。虽然大理现在人也越来越多，但毫无疑问，大理依旧是我在国内可以找到的最适合居住的小城，没有之一！我也始终相信我的好运很大程度上是拜大理这个神奇的地方所赐。</p>
+<p>27 号就要飞旧金山了，希望加州的阳光会像大理的一样灿烂！我们这次走得比较仓促，走之前无法和所有朋友见面一一道别，所以在此衷心祝愿国内的各位朋友，愿你们可以活得像梦一样自由！</p>
+<p>P.S. 我的 twitter ：<a href="https://twitter.com/bitstream" target="_blank" rel="external">https://twitter.com/bitstream</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>最近很忙一直没有时间写博客，一半是因为工作时间没得闲，即使在大理这种休闲安逸的地方我也难得在工作时间偷个懒出去看看对面的明哥今天有没有新把的妹子；一半是因为我们准备去万恶的美帝体验水深火热去了。要准备的东西实在太多，毕竟我天朝物产极大丰富，去美帝这种大农村必须做好长期吃苦的]]>
+    </summary>
+    
+      <category term="Life" scheme="http://wangcong.org/categories/Life/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[学你妹的计算机！]]></title>
+    <link href="http://wangcong.org/2013/08/03/-e5-ad-a6-e4-bd-a0-e5-a6-b9-e7-9a-84-e8-ae-a1-e7-ae-97-e6-9c-ba-ef-bc-81/"/>
+    <id>http://wangcong.org/2013/08/03/-e5-ad-a6-e4-bd-a0-e5-a6-b9-e7-9a-84-e8-ae-a1-e7-ae-97-e6-9c-ba-ef-bc-81/</id>
+    <published>2013-08-04T02:20:11.000Z</published>
+    <updated>2015-02-04T05:49:06.000Z</updated>
+    <content type="html"><![CDATA[<p>看了最近的新闻，心情久久不能平静……自己看吧，不多说了，说多了都是泪！我就想问：现在蓝翔技校还招人吗？</p>
+<p>来自：<a href="http://www.zhihu.com/question/19684217/answer/17977765" target="_blank" rel="external">http://www.zhihu.com/question/19684217/answer/17977765</a></p>
+<p><a href="http://wangcong2015.files.wordpress.com/2013/08/selection_036.png" target="_blank" rel="external"><img src="/images/" alt=""></a><br>来自：<a href="http://hzdaily.hangzhou.com.cn/dskb/html/2013-08/01/content_1547781.htm" target="_blank" rel="external">http://hzdaily.hangzhou.com.cn/dskb/html/2013-08/01/content_1547781.htm</a></p>
+<p><a href="http://wangcong2015.files.wordpress.com/2013/08/selection_037.png" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
+<p>来自<a href="http://www.weibo.com/u/2166787813" target="_blank" rel="external">新浪微博</a>：</p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2013/08/Selection_038.png" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>看了最近的新闻，心情久久不能平静……自己看吧，不多说了，说多了都是泪！我就想问：现在蓝翔技校还招人吗？</p>
+<p>来自：<a href="http://www.zhihu.com/question/19684217/answer/17977765" target="_b]]>
+    </summary>
+    
+      <category term="Life" scheme="http://wangcong.org/categories/Life/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[关于 OVS GRE tunnel]]></title>
+    <link href="http://wangcong.org/2013/07/08/-e5-85-b3-e4-ba-8e-ovs-gre-tunnel/"/>
+    <id>http://wangcong.org/2013/07/08/-e5-85-b3-e4-ba-8e-ovs-gre-tunnel/</id>
+    <published>2013-07-08T22:23:09.000Z</published>
+    <updated>2015-02-04T05:49:06.000Z</updated>
+    <content type="html"><![CDATA[<p>在 korg 内核的 openvswitch 支持 GRE 之前，我们都是<a href="http://wangcong.org/blog/archives/2163" target="_blank" rel="external">用内核原生的 GRE tunnel 来配置</a>，而现在， korg 内核中的 openvswitch 也已经支持 GRE tunnel 了。有兴趣的可以看 <a href="https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7d5437c709ded4f152cb8b305d17972d6707f20c" target="_blank" rel="external">openvswitch: Add tunneling interface.</a> 和   <a href="https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=aa310701e787087dbfbccf1409982a96e16c57a6" target="_blank" rel="external">openvswitch: Add gre tunnel support.</a> 这两个 commit。</p>
+<p>其实在 OVS 中添加 GRE 很简单，它无非就是把对 GRE 头和外部 IP 头的一些操作从原来的代码中抽象出来，做成内核“库函数”的形式，然后 OVS 中就可以直接调用它们了。难的是要从旧的 ip_gre 模块代码中抽象出这些“库函数”。详见 <a href="https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=c54419321455631079c7d6e60bc732dd0c5914c5" target="_blank" rel="external">GRE: Refactor GRE tunneling code.</a></p>
+<p>值得注意的是，OVS GRE tunnel 没有注册网络设备，也就是说你无法通过 <code>ip link</code> 看到它，它只是一个 vport 而已，所以能通过 ovs-vsctl show 可以看到。这是故意这么设计的，虽然这简化了用户的操作，但刚注意到时难免会感觉有些奇怪。</p>
+<p>网上最流行的一篇讲解 OVS GRE tunnel 配置的教程是<a href="http://blog.scottlowe.org/2013/05/07/using-gre-tunnels-with-open-vswitch/" target="_blank" rel="external">这篇文章</a>，根据它我做了如下配置：</p>
+<p><pre>ovs-vsctl add-br grebr0<br>ovs-vsctl add-br phybr0<br>ovs-vsctl add-port phybr0 p1p1<br>ovs-vsctl add-port phybr0 tep0 — set Interface tep0 type=internal<br>ifconfig tep0 192.168.88.1/24<br>ifconfig p1p1 0.0.0.0<br>ovs-vsctl add-port grebr0 vnet0<br>ovs-vsctl add-port grebr0 gre1 — set Interface gre1 type=gre options:remote_ip=192.168.88.2</pre><br>但是仔细分析一下，其实完全没有必要使用两个 bridge，通过 gre1 的包其实可以直接进入 p1p1，即最后的物理网卡。所以优化后的配置如下：</p>
+<p><pre>ovs-vsctl add-br grebr0<br>ifconfig p1p1 192.168.88.1/24<br>ovs-vsctl add-port grebr0 vnet0<br>ovs-vsctl add-port grebr0 gre1 — set Interface gre1 type=gre options:remote_ip=192.168.88.2</pre><br>通过 GRE tunnel 的包是重新注入网络栈中的，所以它们会直接流向 p1p1，最终流向物理层。</p>
+<p>注意，这并没有结束。虽然通过这个配置你已经可以 ping 通对方 host 上的 VM 了，但是，如果你运行 netperf 测试的话，你会发现吞吐量非常低。这也是网络上的教程没有提到的地方。</p>
+<p>这里的原因是从 vnet0 里出来数据包很多是 MTU 的大小，我这里是1500。而经过 GRE tunnel 后外面又添加了 GRE 头和外层的 IP 头，所以包就会大于 1500。而物理网卡的 MTU 也是 1500！并且，这些包本身并不是 GSO 的，所以这些包最终会被 IP 层分片（fragment），所以性能非常差！</p>
+<p>这里有两种解决方法：</p>
+<p>1) 把 VM 里的网卡 MTU 调小，比如 1400，这样 host 上的 GRE 加上额外的头也不会超过 1500；</p>
+<p>2) 让 VM 里发出来的包依旧维持 GSO，这样 host 上收到的包也是 GSO，它们最终会被分段（segment），而不是分片（fragment）。这个可以通过给 qemu 传递 vnet_hdr=on 来完成（我没有试过，仅分析了源代码）。</p>
+<p>关于这个问题的进一步讨论可以看<a href="http://marc.info/?l=linux-netdev&amp;m=137331558900547&amp;w=2" target="_blank" rel="external">我提的问题</a>。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>在 korg 内核的 openvswitch 支持 GRE 之前，我们都是<a href="http://wangcong.org/blog/archives/2163" target="_blank" rel="external">用内核原生的 GRE tunnel 来配]]>
+    </summary>
+    
+      <category term="Linux Kernel" scheme="http://wangcong.org/categories/Linux-Kernel/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[一个绝妙的内核 exploit]]></title>
+    <link href="http://wangcong.org/2013/05/15/-e4-b8-80-e4-b8-aa-e7-bb-9d-e5-a6-99-e7-9a-84-e5-86-85-e6-a0-b8-exploit/"/>
+    <id>http://wangcong.org/2013/05/15/-e4-b8-80-e4-b8-aa-e7-bb-9d-e5-a6-99-e7-9a-84-e5-86-85-e6-a0-b8-exploit/</id>
+    <published>2013-05-16T03:55:48.000Z</published>
+    <updated>2015-02-04T05:49:06.000Z</updated>
+    <content type="html"><![CDATA[<p>最近 Linux 内核爆出了一个严重的安全漏洞，非root用户可以通过该<a href="http://fucksheep.org/~sd/warez/semtex.c" target="_blank" rel="external">漏洞的 exploit</a> 获取root权限。这并不罕见，值得一提的是这个补丁看起来如此平常以至于我们绝大多数人都不会以为这是安全问题。</p>
+<p>先看这个问题的<a href="http://marc.info/?l=linux-kernel&amp;m=136588264507457" target="_blank" rel="external">补丁</a>，就是下面这个：</p>
+<pre>
+  static int perf_swevent_init(struct perf_event *event)
+ {
+-    int event_id = event-&gt;attr.config;
++    u64 event_id = event-&gt;attr.config;
+
+     if (event-&gt;attr.type != PERF_TYPE_SOFTWARE)
+         return -ENOENT;
+</pre>
+我们第一眼的感觉就是这大概只是修复了编译器报的一个小警告吧，怎么会引起如此严重的安全问题呢？
+
+在没打补丁的代码中 event_id 是个**带符号**的整型，而且就在下面不远处的两行代码中只检查了其上界：
+[c]
+        if (event_id &gt;= PERF_COUNT_SW_MAX)
+                return -ENOENT;
+[/c]
+
+而如果传递进来的 event-&gt;attr.config 值正好设置了符号位，那么 event_id 就会变成负值，而且能躲过上面的检查。
+
+负值意味着什么呢？再继续看后面的代码：
+
+[c]
+        if (!event-&gt;parent) {
+                int err;
+
+                err = swevent_hlist_get(event);
+                if (err)
+                        return err;
+
+                atomic_inc(&amp;perf_swevent_enabled[event_id]);
+                event-&gt;destroy = sw_perf_event_destroy;
+        }
+[/c]
+
+意味着数组越界！这时你应该身上开始冒冷汗了。继续，数组 perf_swevent_enabled[] 在 RHEL6 上的定义是：
+[c]
+atomic_t perf_swevent_enabled[PERF_COUNT_SW_MAX];
+[/c]
+
+而 atomic_t 基本上就是int，也就是说 perf_swevent_enabled[] 是整型数组，那么用 event_id 访问该数组时会把 event_id 的值乘以4再加上数组的起始地址。很简单哈！
+
+好，通过 System.map 文件我们可以得到 perf_swevent_enabled 的地址：
+
+<pre>
+ffffffff81f360c0 B perf_swevent_enabled
+</pre>
+
+<p>那么当 event-&gt;attr.config == 0xffffffff （即有符号的-1）时，在 x86_64 上面我们最终会得到：</p>
+<pre>
+0xffffffffffffffff * 4 + 0xffffffff81f360c0 == 0xFFFFFFFF81F360BC
+</pre>
+
+<p>同理，当 event-&gt;attr.config == 0xfffffffe 时我们得到：</p>
+<pre>
+0xfffffffffffffffe * 4 + 0xffffffff81f360c0 == 0xFFFFFFFF81F360B8
+</pre>
+
+<p>所以上述的 atomic_inc() 其实增加的是前面两个地址中存放的值，而这俩地址都指向内核空间（参见 Documentation/x86/x86_64/mm.txt）！这时你应该感到紧张了。。。</p>
+<p>后面更有趣的事情发生在 sw_perf_event_destroy() 函数中，它是在 perf_event_open() 返回的 fd 被关闭时被调用，RHEL6 上其定义如下：</p>
+<p>[c]<br>static void sw_perf_event_destroy(struct perf_event *event)<br>{<br>        u64 event_id = event-&gt;attr.config;</p>
+<pre><code>    <span class="function">WARN_ON</span>(event-&amp;gt;parent);
+
+    <span class="function">atomic_dec</span>(&amp;amp;perf_swevent_enabled<span class="attr_selector">[event_id]</span>);
+    <span class="function">swevent_hlist_put</span>(event);
+</code></pre><p>}<br>[/c]</p>
+<p>很明显的不同是，event_id 这次是<strong>无符号</strong>的类型。那么，同上，当 event-&gt;attr.config == 0xffffffff 时我们得到：</p>
+<pre>
+0xffffffff * 4 + 0xffffffff81f360c0 == 0x0000000381F360BC
+</pre>
+
+<p>当 event-&gt;attr.config == 0xfffffffe 时我们得到：</p>
+<pre>
+0xfffffffe * 4 + 0xffffffff81f360c0 == 0x0000000381F360B8
+</pre>
+
+<p>所以这里的  atomic_dec() 实际上减小的是用户空间地址内的值。</p>
+<p>上面是“基础知识”，带着这些知识我们看 exploit 代码究竟做了什么，代码片段如下：</p>
+<p>[c]</p>
+<h1 id="define_BASE_0x380000000">define BASE  0x380000000</h1>
+<h1 id="define_SIZE_0x010000000">define SIZE  0x010000000</h1>
+<p>  assert((map = mmap((void<em>)BASE, SIZE, 3, 0x32, 0,0)) == (void</em>)BASE);<br>  memset(map, 0, SIZE);<br>  sheep(-1); sheep(-2);    // sheep will just invoke perf_event_open<br>                           // syscall with attr.config set to the param<br>  for (i = 0; i &lt; SIZE/4; i++) if (map[i]) {<br>    assert(map[i+1]);<br>    break;<br>  }<br>[/c]</p>
+<p>它首先会 mmap() 起始地址是 0x380000000 的一块内存区域。然后分别以 attr.config 为 -1 和 -2 调用两次 perf_event_open()。根据前面的计算，它实际上分别增加了 0xFFFFFFFF81F360BC 和 0xFFFFFFFF81F360B8 两处内存的值，减少了 0x0000000381F360BC 和 0x0000000381F360B8 的值。后面的 for 循环则是找出被减少的内存地址，这样一来也就可以算出 perf_swevent_enabled[] 数组的地址（System.map 并不总是存在，如果存在而且可读我们当然可以直接去读这个值）。</p>
+<p>知道这个地址我们就可以操纵内核中某处的32bit的值，把其值加一。正因为如此，作者巧妙地选择了中断描述符表——一个16字节描述符的数组，它的地址可以通过 sidt 指令获取。它其中的描述符结构定义如下：</p>
+<pre>
+Offset     Size     Description
+0     2     Offset low bits (0..15)
+2     2     Selector (Code segment selector)
+4     1     Zero
+5     1     Type and Attributes (same as before)
+6     2     Offset middle bits (16..31)
+8     4     Offset high bits (32..63)
+12     4     Zero
+</pre>
+
+<p>这里最有趣的是 offset 为8 的地方，在 x86_64 上面其值为 0xffffffff。作者选择的中断描述符是 0x4，所以相对于中断描述符表它的偏移实际上是 0x48。现在的任务就成了通过 perf_swevent_enabled[] 来计算出该中断描述符中偏移为8的内存地址，并对其加一！下面的代码就是做的这个工作：</p>
+<p>[c]<br>sheep(-i + (((idt.addr&amp;0xffffffff)-0x80000000)/4) + 16);<br>[/c]</p>
+<p>i 是我们前面在 for 循环中搜到的 perf_swevent_enabled[] 的一个偏移，idt.addr 是中断描述符表的绝对内核地址，取其低32位并减去 0x80000000 是为了得到低28位作为偏移，除以4是因为数组是int，最后加的16就是 0x4 中断描述符中的偏移（4已经除去了），所以最终sheep()里面的参数就是我们想要的偏移，这样以来内核就替我们把 0x4 中断描述符中的偏移为 8 的 0xffffffff 加上了1，也就成了0，也就成了用户空间的地址！所以后面的 int 0x4 其实就会跳转到用户空间早已经设置好的代码！！！</p>
+<p>而这段代码比较生涩，但<a href="http://www.reddit.com/r/netsec/comments/1eb9iw/sdfucksheeporgs_semtexc_local_linux_root_exploit/c9ykrck" target="_blank" rel="external">其意思</a>就是更改当前进程的 uid/gid 为0来提升权限，所以最终取得一个有 root 权限的 shell！整个攻击大功告成！</p>
+<p>注：上面的链接可能不能用，exploit 代码也可以在这里看到：<a href="https://gist.github.com/onemouth/5625174" target="_blank" rel="external">https://gist.github.com/onemouth/5625174</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>最近 Linux 内核爆出了一个严重的安全漏洞，非root用户可以通过该<a href="http://fucksheep.org/~sd/warez/semtex.c" target="_blank" rel="external">漏洞的 exploit</a> 获取ro]]>
+    </summary>
+    
+      <category term="Linux Kernel" scheme="http://wangcong.org/categories/Linux-Kernel/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[求推荐海外工作一份（长期有效）]]></title>
+    <link href="http://wangcong.org/2013/02/18/-e6-b1-82-e6-b5-b7-e5-a4-96-e5-b7-a5-e4-bd-9c-e4-b8-80-e4-bb-bd/"/>
+    <id>http://wangcong.org/2013/02/18/-e6-b1-82-e6-b5-b7-e5-a4-96-e5-b7-a5-e4-bd-9c-e4-b8-80-e4-bb-bd/</id>
+    <published>2013-02-19T06:14:15.000Z</published>
+    <updated>2015-02-04T05:49:06.000Z</updated>
+    <content type="html"><![CDATA[<p>以前没结婚自己怎么过都能凑合，现在结婚了不得不考虑以后的生活。目前国内的情况一天比一天糟，而且它只会变得更糟。我对这个国家的未来不报任何希望，所以决定移民。</p>
+<p>现求推荐海外，尤其是比较容易移民的国家（比如澳大利亚、新西兰、美国、加拿大）的工作，Linux 底层开发相关的即可，最好是内核开发。公司只要提供 relocation 。我给开源项目贡献的补丁见下。</p>
+<p>Linux kernel:<br><a href="http://goo.gl/AfPJw" target="_blank" rel="external">http://goo.gl/AfPJw</a><br><a href="http://goo.gl/NhVg3" target="_blank" rel="external">http://goo.gl/NhVg3</a></p>
+<p>dracut:<br><a href="http://goo.gl/Nj4OI" target="_blank" rel="external">http://goo.gl/Nj4OI</a><br><a href="http://goo.gl/U2sMw" target="_blank" rel="external">http://goo.gl/U2sMw</a></p>
+<p>iproute2:<br><a href="http://goo.gl/W4TX4" target="_blank" rel="external">http://goo.gl/W4TX4</a></p>
+<p>kexec-tools:<br><a href="http://goo.gl/6CzvP" target="_blank" rel="external">http://goo.gl/6CzvP</a><br><a href="http://goo.gl/zgTwV" target="_blank" rel="external">http://goo.gl/zgTwV</a></p>
+<p>util-linux:<br><a href="http://goo.gl/dsOlm" target="_blank" rel="external">http://goo.gl/dsOlm</a></p>
+<p>还有一些零碎的补丁就不献丑了。</p>
+<p>稍微正式的简历可以看<a href="http://www.linkedin.com/pub/cong-wang/b/762/b96" target="_blank" rel="external">我的 linkedin</a>，正式的简历可以发邮件给你。我的邮箱是：xiyou.wangcong@gmail.com。</p>
+<p><strong>国内的猎头就别浪费时间了。</strong></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>以前没结婚自己怎么过都能凑合，现在结婚了不得不考虑以后的生活。目前国内的情况一天比一天糟，而且它只会变得更糟。我对这个国家的未来不报任何希望，所以决定移民。</p>
+<p>现求推荐海外，尤其是比较容易移民的国家（比如澳大利亚、新西兰、美国、加拿大）的工作，Linux 底层开]]>
+    </summary>
+    
+      <category term="Life" scheme="http://wangcong.org/categories/Life/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[在 openvswitch 上配置 VXLAN]]></title>
+    <link href="http://wangcong.org/2013/02/04/-e5-9c-a8-openvswitch-e4-b8-8a-e9-85-8d-e7-bd-ae-vxlan/"/>
+    <id>http://wangcong.org/2013/02/04/-e5-9c-a8-openvswitch-e4-b8-8a-e9-85-8d-e7-bd-ae-vxlan/</id>
+    <published>2013-02-05T01:40:16.000Z</published>
+    <updated>2015-02-04T05:49:06.000Z</updated>
+    <content type="html"><![CDATA[<p>（<strong>本文讲的是 korg 内核中的 openvswitch，而非 openvswitch.org 上提供的openvswitch模块。</strong>）</p>
+<p>之前讲过<a href="http://wangcong.org/blog/archives/2170" target="_blank" rel="external"> VXLAN</a>，但是一直没有动手实践。其实配置 VXLAN 要比<a href="http://wangcong.org/blog/archives/2163" target="_blank" rel="external">配置 GRE tunnel</a> 简单很多，你所需要做的只要两步：</p>
+<p>1. 添加 VXLAN 设备（需要比较新的 iproute2 和内核支持）：</p>
+<pre>
+# ./ip/ip li add vxlan0 type vxlan id 42 group 239.1.1.1 local 10.16.43.214 mtu 1500 dev eth0
+</pre>
+
+<p>其中，10.16.43.214 是配置在 eth0 （或其它连接两台主机的设备）上的本地IP地址。</p>
+<p>2. 把 vxlan0 添加到 openvswitch 的 bridge 中去：</p>
+<pre>
+# ovs-vsctl add-port ovsbr0 vxlan0
+</pre>
+
+<p>最终的结果如下所示：</p>
+<pre>
+# ./ip/ip -d li show vxlan0
+7: vxlan0:  mtu 1500 qdisc noqueue
+state UNKNOWN mode DEFAULT
+    link/ether d2:93:a2:08:10:1e brd ff:ff:ff:ff:ff:ff
+    vxlan id 42 group 239.1.1.1 local 10.16.43.214 dev eth0 port 32768
+61000 ageing 300
+# ifconfig eth0
+eth0      Link encap:Ethernet  HWaddr AC:16:2D:05:14:3A
+          inet addr:10.16.43.214  Bcast:10.16.47.255  Mask:255.255.248.0
+          inet6 addr: 2620:52:0:102f:ae16:2dff:fe05:143a/64 Scope:Global
+          inet6 addr: fe80::ae16:2dff:fe05:143a/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:386702 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:1505515 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:42804806 (40.8 MiB)  TX bytes:1202562852 (1.1 GiB)
+          Interrupt:20 Memory:fbc00000-fbc20000
+
+# ifconfig vxlan0
+vxlan0    Link encap:Ethernet  HWaddr D2:93:A2:08:10:1E
+          inet6 addr: fe80::d093:a2ff:fe08:101e/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:346746 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:752833 errors:36 dropped:0 overruns:0 carrier:36
+          collisions:0 txqueuelen:0
+          RX bytes:18081642 (17.2 MiB)  TX bytes:1139323399 (1.0 GiB)
+
+# ovs-vsctl show
+2dce25d0-ac18-4626-905d-c4995464785d
+    Bridge "ovsbr0"
+        Port "vnet0"
+            Interface "vnet0"
+        Port "vxlan0"
+            Interface "vxlan0"
+        Port "vnet1"
+            Interface "vnet1"
+        Port "ovsbr0"
+            Interface "ovsbr0"
+                type: internal
+    ovs_version: "1.7.0"
+
+</pre>
+
+<p>另外一台机器上基本上完全相同，结果如下：</p>
+<pre>
+# ./ip/ip -d li show vxlan0
+8: vxlan0:  mtu 1450 qdisc noqueue
+state UNKNOWN mode DEFAULT
+    link/ether 92:8b:0f:8b:31:f1 brd ff:ff:ff:ff:ff:ff
+    vxlan id 42 group 239.1.1.1 local 10.16.43.215 dev eth0 port 32768
+61000 ageing 300
+# ifconfig vxlan0
+vxlan0    Link encap:Ethernet  HWaddr 92:8B:0F:8B:31:F1
+          inet6 addr: fe80::908b:fff:fe8b:31f1/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1450  Metric:1
+          RX packets:752833 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:346770 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:1128783737 (1.0 GiB)  TX bytes:22940562 (21.8 MiB)
+
+# ifconfig eth0
+eth0      Link encap:Ethernet  HWaddr E8:39:35:30:1D:1E
+          inet addr:10.16.43.215  Bcast:10.16.47.255  Mask:255.255.248.0
+          inet6 addr: 2620:52:0:102f:ea39:35ff:fe30:1d1e/64 Scope:Global
+          inet6 addr: fe80::ea39:35ff:fe30:1d1e/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:1535775 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:346951 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:1210625058 (1.1 GiB)  TX bytes:41681835 (39.7 MiB)
+          Interrupt:17
+
+# ovs-vsctl show
+71f0f455-ccc8-4781-88b2-4b663dd48c5f
+    Bridge "ovsbr0"
+        Port "vnet1"
+            Interface "vnet1"
+        Port "ovsbr0"
+            Interface "ovsbr0"
+                type: internal
+        Port "vnet0"
+            Interface "vnet0"
+        Port "vxlan0"
+            Interface "vxlan0"
+    ovs_version: "1.7.0"
+</pre>
+
+<p>配置好了之后，你可以尝试用 tcpdump 在 eth0 上捕捉一下包试试，你会发现 L2 是直接封装到 UDP 包中的：</p>
+<pre>
+05:39:05.107906 IP 10.16.43.215.52908 &gt; 10.16.43.214.otv: UDP, length
+106
+        0x0000:  ac16 2d05 143a e839 3530 1d1e 0800 4500
+        0x0010:  0086 abd0 0000 4011 62ca 0a10 2bd7 0a10
+        0x0020:  2bd6 ceac 2118 0072 0000 0800 0000 0000
+        0x0030:  2a00 5254 00f7 e2e7 5254 0090 5117 0800
+        0x0040:  4500 0054 0000 4000 4001 f152 c0a8 6402
+        0x0050:  c0a8 6403 0800 073c 3e05 0009 ca8f 0f51
+        0x0060:  0000 0000 1102 0900 0000 0000 1011 1213
+        0x0070:  1415 1617 1819 1a1b 1c1d 1e1f 2021 2223
+        0x0080:  2425 2627 2829 2a2b 2c2d 2e2f 3031 3233
+        0x0090:  3435 3637
+</pre>]]></content>
+    <summary type="html">
+    <![CDATA[<p>（<strong>本文讲的是 korg 内核中的 openvswitch，而非 openvswitch.org 上提供的openvswitch模块。</strong>）</p>
+<p>之前讲过<a href="http://wangcong.org/blog/archive]]>
+    </summary>
+    
+      <category term="Linux Application" scheme="http://wangcong.org/categories/Linux-Application/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[setuid]]></title>
+    <link href="http://wangcong.org/2013/02/03/setuid/"/>
+    <id>http://wangcong.org/2013/02/03/setuid/</id>
+    <published>2013-02-04T02:20:30.000Z</published>
+    <updated>2015-02-04T05:49:06.000Z</updated>
+    <content type="html"><![CDATA[]]></content>
+    <summary type="html">
+    <![CDATA[]]>
+    </summary>
+    
+      <category term="Linux Application" scheme="http://wangcong.org/categories/Linux-Application/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[给程序员推荐几部电影]]></title>
+    <link href="http://wangcong.org/2013/01/31/-e7-bb-99-e7-a8-8b-e5-ba-8f-e5-91-98-e6-8e-a8-e8-8d-90-e5-87-a0-e9-83-a8-e7-94-b5-e5-bd-b1/"/>
+    <id>http://wangcong.org/2013/01/31/-e7-bb-99-e7-a8-8b-e5-ba-8f-e5-91-98-e6-8e-a8-e8-8d-90-e5-87-a0-e9-83-a8-e7-94-b5-e5-bd-b1/</id>
+    <published>2013-02-01T03:21:09.000Z</published>
+    <updated>2015-02-04T05:49:06.000Z</updated>
+    <content type="html"><![CDATA[<p>1. 排在第一位的毫无疑问是《黑客帝国》三部曲。关键词：矩阵。</p>
+<p><a href="http://movie.douban.com/subject/1291843/" target="_blank" rel="external"><img src="/images/" alt="" title="黑客帝国"></a></p>
+<p><a href="http://movie.douban.com/subject/1304141/" target="_blank" rel="external"><img src="/images/" alt="" title="黑客帝国2：重装上阵"></a></p>
+<p><a href="http://movie.douban.com/subject/1302467/" target="_blank" rel="external"><img src="/images/" alt="" title="黑客帝国3：矩阵革命"></a></p>
+<p>2. 《盗梦空间 Inception》。关键词：虚拟化。</p>
+<p><a href="http://movie.douban.com/subject/3541415/" target="_blank" rel="external"><img src="/images/" alt="" title="盗梦空间 Inception"></a></p>
+<p>3. 《云图 Cloud Atlas》。关键词：并行。</p>
+<p><a href="http://movie.douban.com/subject/3530403/" target="_blank" rel="external"><img src="/images/" alt="" title="云图 Cloud Atlas"></a></p>
+<p>4. 《恐怖游轮 Triangle》。关键词：递归。</p>
+<p><a href="http://movie.douban.com/subject/3011051/" target="_blank" rel="external"><img src="/images/" alt="" title="恐怖游轮 Triangle"></a></p>
+<p>5. 《源代码 Source Code》。关键词：重入。</p>
+<p><a href="http://movie.douban.com/subject/3075287/" target="_blank" rel="external"><img src="/images/" alt="" title="源代码 Source Code"></a></p>
+<p>6. 《二维世界 Flatland》。关键词：二维。</p>
+<p><a href="http://movie.douban.com/subject/3136240/" target="_blank" rel="external"><img src="/images/" alt="" title="二维世界 Flatland"></a></p>
+<p>我把它们汇总成了<a href="http://movie.douban.com/doulist/1800829/" target="_blank" rel="external">一个豆列</a>，欢迎补充。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>1. 排在第一位的毫无疑问是《黑客帝国》三部曲。关键词：矩阵。</p>
+<p><a href="http://movie.douban.com/subject/1291843/" target="_blank" rel="external"><img src="/image]]>
+    </summary>
+    
+      <category term="Movies" scheme="http://wangcong.org/categories/Movies/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[为什么计数应该从零开始？]]></title>
+    <link href="http://wangcong.org/2013/01/26/-e4-b8-ba-e4-bb-80-e4-b9-88-e8-ae-a1-e6-95-b0-e5-ba-94-e8-af-a5-e4-bb-8e-e9-9b-b6-e5-bc-80-e5-a7-8b-ef-bc-9f/"/>
+    <id>http://wangcong.org/2013/01/26/-e4-b8-ba-e4-bb-80-e4-b9-88-e8-ae-a1-e6-95-b0-e5-ba-94-e8-af-a5-e4-bb-8e-e9-9b-b6-e5-bc-80-e5-a7-8b-ef-bc-9f/</id>
+    <published>2013-01-27T06:26:38.000Z</published>
+    <updated>2015-02-04T05:49:06.000Z</updated>
+    <content type="html"><![CDATA[<p>众所周知，C语言数组下标是从0开始，其它很多语言皆如此。而 FORTRAN 则是数组下标从1开始的典范。所以就有数组下标是从1开始好还是从0开始好之争。连《C专家编程》中都如此调侃：</p>
+<blockquote>
+<p>数组的下标应该是从0还是从1开始？我提议的妥协方案是0.5，可惜他们未予认真考虑便一口回绝。—— Stan Kelly-Bootle<br>仔细思考一下这个问题很有意思，建议你不妨自己思考一下再继续往下看。</p>
+</blockquote>
+<p>其实这个问题早在 1982 年就已经由计算机科学领域的大师 Edsger Dijkstra 研究过并得出了一个结论。他手写了一篇名为《<a href="http://www.cs.utexas.edu/users/EWD/ewd08xx/EWD831.PDF" target="_blank" rel="external">Why numbering should start at zero</a>》的论文，关键部分截图和大体翻译如下：</p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2013/02/ewd831-0.png" target="_blank" rel="external"><img src="/images/" alt=""></a><a href="http://wangcong.org/blog/wp-content/uploads/2013/01/ewd-1.png" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
+<p>表示一个自然数子序列，比如 2, 3, …, 12，不用中间那三个点，有四种方式可供我们选择：</p>
+<p>a) 2&lt;= i &lt; 13</p>
+<p>b) 1 &lt; i &lt;= 12</p>
+<p>c) 2&lt;= i &lt;= 12</p>
+<p>d) 1 &lt; i &lt; 13</p>
+<p>有什么道理选其中一种而不选别的吗？是的，的确有。观察到 a) 和 b) 的优势是两边的边界值之差正好是子序列的长度。作为一个推论，下面的观察也成立：在它们两个当中，两个子序列是邻接的就意味着一个的上界等于另外一个的下界。这些观察并没有让我们从a) 和 b) 之中做出选择，所以我们从头开始。</p>
+<p>一定存在一个最小的自然数。排除掉下界——就像 b) 和 d) 那样——就会迫使一个从最小的自然数开始的子序列的下界进入非自然数领域。这很难看，所以对于下界我们更喜欢&lt;=，就像 a) 和 c) 那样。现在，考虑一下从最小的自然数开始的子序列：包含上界就会迫后者不那么像自然数（译者注：作者的意思是自然数是一个有下界没有上界的集合），当序列缩小成空序列时。这很难看，所以对于上界我们更喜欢&lt;，就像 a) 和 d) 那样。我们得出结论， a) 是我们最喜欢的。</p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2013/01/ewd-2.png" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
+<p>当处理长度为 N 的序列时，我们期望通过下标来区分它的元素。下一个令人烦恼的问题就是，我们该给它的第一个元素赋予什么样下标值？坚持 a) 的方式，当下标从1开始时，下标范围为 1&lt;= i &lt; N+1；当下标从0开始时则是更好看的 0&lt;= i &lt; N。所以，让我们的序数从0开始：一个元素的序数（下标）等于序列中在它前面的元素个数。这个故事的寓意是我们最好尊重0最为一个最自然的数——过了这么多个世纪！</p>
+<hr>
+<p>顺便说一句，Python 选择了 a)，所以 range(0,3) 返回的是序列是 0，1，2。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>众所周知，C语言数组下标是从0开始，其它很多语言皆如此。而 FORTRAN 则是数组下标从1开始的典范。所以就有数组下标是从1开始好还是从0开始好之争。连《C专家编程》中都如此调侃：</p>
+<blockquote>
+<p>数组的下标应该是从0还是从1开始？我提议的妥协方案]]>
+    </summary>
+    
+      <category term="Programming" scheme="http://wangcong.org/categories/Programming/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[晚安，大理！]]></title>
+    <link href="http://wangcong.org/2013/01/06/-e6-99-9a-e5-ae-89-ef-bc-8c-e5-a4-a7-e7-90-86/"/>
+    <id>http://wangcong.org/2013/01/06/-e6-99-9a-e5-ae-89-ef-bc-8c-e5-a4-a7-e7-90-86/</id>
+    <published>2013-01-07T06:46:58.000Z</published>
+    <updated>2015-02-04T05:49:06.000Z</updated>
+    <content type="html"><![CDATA[<p>在一个大风的夜里</p>
+<p>走在古城的小巷子里</p>
+<p>推门走进一家客栈</p>
+<p>几个陌生人围坐在一起</p>
+<p>炭火烧得通红</p>
+<p>坐下来喝一杯热茶</p>
+<p>听他们讲自己的故事</p>
+<p>任凭门外风声四起</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>在一个大风的夜里</p>
+<p>走在古城的小巷子里</p>
+<p>推门走进一家客栈</p>
+<p>几个陌生人围坐在一起</p>
+<p>炭火烧得通红</p>
+<p>坐下来喝一杯热茶</p>
+<p>听他们讲自己的故事</p>
+<p>任凭门外风声四起</p>
+]]>
+    </summary>
+    
+      <category term="Life" scheme="http://wangcong.org/categories/Life/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[结婚啦！]]></title>
+    <link href="http://wangcong.org/2012/12/23/-e7-bb-93-e5-a9-9a-e5-95-a6-ef-bc-81/"/>
+    <id>http://wangcong.org/2012/12/23/-e7-bb-93-e5-a9-9a-e5-95-a6-ef-bc-81/</id>
+    <published>2012-12-24T05:48:41.000Z</published>
+    <updated>2015-02-04T05:49:06.000Z</updated>
+    <content type="html"><![CDATA[<p><a href="http://wangcong2015.files.wordpress.com/2012/12/img_0311.jpg" target="_blank" rel="external"></a><a href="http://wangcong2015.files.wordpress.com/2012/12/img_0311_2.jpg" target="_blank" rel="external"><img src="/images/" alt="" title="IMG_0311_2"></a></p>
+<p>遇到过一个又一个不靠谱的姑娘，也因为种种原因错过了一个又一个没有缘分的姑娘，终于在合适的时间遇到一个合适而且靠谱的好姑娘！</p>
+<p>和这个姑娘是<a href="http://wangcong.org/blog/archives/1826" target="_blank" rel="external">在云南大理认识</a>的，当时她正好一路搭车从山东来到了云南，而我正好从北京搬去大理常住……我们从那时一直交往到现在，一起去过全国很多地方，走了一圈最后发现还是最喜欢大理，而且很快还要回大理。</p>
+<p>我这个人喜欢四处乱走，最近两年基本上每六个月就要搬一次家。你们搬家最多就是从城西搬到城东，而我搬家基本上是从中国的华北搬到西南…… 我不喜欢住在大城市，我认为城市从来没有让人们的生活变得更美好，只会让人更加迷失自我。而且，我从来没有买房子的打算，在一个地方住上几年不动对于我来说简直难以忍受。所以，和我这样的人在一起是需要很大的勇气的，要是换了别的姑娘早就被吓跑了，就算姑娘不跑也被姑娘的妈妈给拉跑了……</p>
+<p>其实，真正让我感动的不是刚认识就觉得彼此很合适，也不是姑娘她不要钱不要车不要房子，而是，她能为了我一点一点去改变，为了在一起不会轻易就放弃。认识我之前她什么饭都不会做，现在已经鸡鸭鱼肉样样都行了，任性的脾气也改了不少。这比什么都重要。</p>
+<p>我的姑娘就是这个样，就像我们结婚证上的那样，美丽又大方！</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p><a href="http://wangcong2015.files.wordpress.com/2012/12/img_0311.jpg" target="_blank" rel="external"></a><a href="http://wangcong2015.fi]]>
+    </summary>
+    
+      <category term="Life" scheme="http://wangcong.org/categories/Life/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[What every programmer should know...]]></title>
+    <link href="http://wangcong.org/2012/12/17/what-every-programmer-should-know/"/>
+    <id>http://wangcong.org/2012/12/17/what-every-programmer-should-know/</id>
+    <published>2012-12-18T00:50:49.000Z</published>
+    <updated>2015-02-04T05:49:06.000Z</updated>
+    <content type="html"><![CDATA[<p><a href="http://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html" target="_blank" rel="external">What Every Computer Scientist Should Know About Floating-Point Arithmetic</a></p>
+<p><a href="http://www.akkadia.org/drepper/cpumemory.pdf" target="_blank" rel="external">What Every Programmer Should Know About Memory</a></p>
+<p><a href="http://kunststube.net/encoding/" target="_blank" rel="external">What every programmer absolutely, positively needs to know about encodings and character sets to work with text</a></p>
+<p><a href="http://www.eecs.berkeley.edu/~rcs/research/interactive_latency.html" target="_blank" rel="external"> Latency Numbers Every Programmer Should Know</a></p>
+<p><a href="http://unix4lyfe.org/time/?v=1" target="_blank" rel="external">What every programmer should know about time</a></p>
+<p><a href="https://code.google.com/p/thread-sanitizer/wiki/AboutRaces" target="_blank" rel="external"> What Every Programmer Should Know About Races</a></p>
+<p><a href="http://blog.llvm.org/2011/05/what-every-c-programmer-should-know.html" target="_blank" rel="external">What Every C Programmer Should Know About Undefined Behavior</a></p>
+<p><a href="http://www.slideshare.net/iammutex/what-every-data-programmer-needs-to-know-about-disks" target="_blank" rel="external">What every data programmer needs to know about disks</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p><a href="http://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html" target="_blank" rel="external">What Every Computer Scientist Sho]]>
+    </summary>
+    
+      <category term="Programming" scheme="http://wangcong.org/categories/Programming/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[为什么特斯拉是史上最伟大的geek？]]></title>
+    <link href="http://wangcong.org/2012/12/10/-e4-b8-ba-e4-bb-80-e4-b9-88-e7-89-b9-e6-96-af-e6-8b-89-e6-98-af-e5-8f-b2-e4-b8-8a-e6-9c-80-e4-bc-9f-e5-a4-a7-e7-9a-84geek-ef-bc-9f/"/>
+    <id>http://wangcong.org/2012/12/10/-e4-b8-ba-e4-bb-80-e4-b9-88-e7-89-b9-e6-96-af-e6-8b-89-e6-98-af-e5-8f-b2-e4-b8-8a-e6-9c-80-e4-bc-9f-e5-a4-a7-e7-9a-84geek-ef-bc-9f/</id>
+    <published>2012-12-10T21:47:39.000Z</published>
+    <updated>2015-02-04T05:49:06.000Z</updated>
+    <content type="html"><![CDATA[<p>本文译自：<a href="http://theoatmeal.com/comics/tesla" target="_blank" rel="external">http://theoatmeal.com/comics/tesla</a>，图片均来自此处。也可以参考本人之前写的文章《<a href="http://wangcong.org/blog/archives/1187" target="_blank" rel="external">这些男人来自地球</a>》。</p>
+<p><img src="/images/" alt=""></p>
+<hr>
+<p><strong>Geek 们熬夜通宵把世界给拆了，这样就可以把添加好的新功能一起装好放回去了。</strong></p>
+<p><strong>他们修补那些没有损坏的东西。</strong></p>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<p>**</p>
+<p>Geek 们放弃了他们周围的世界，因为他们忙于焊接一个新的世界。</p>
+<p>他们痴迷，很多时候，甚至受苦。</p>
+<p>一百多年前，一个塞尔维亚裔美国科学家，名叫<span style="color:#000000;">尼古拉·特斯拉</span>，开始修补一些没有损坏的东西。</p>
+<p>在那个时候，世界上大部分人还在使用蜡烛照明，一个被称为交流电的系统诞生了。到今天，这已经是地球上每个家庭的电力了。</p>
+<p>**</p>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<p><img src="/images/" alt=""></p>
+<p><strong>把人类带入第二次工业革命，我们应该感谢谁？</strong></p>
+<hr>
+<p><strong>尼古拉·特斯拉。</strong></p>
+<hr>
+<p><strong>可每个人都认为：“<em>我觉得托马斯·爱迪生才是电力时代之父</em>。”</strong></p>
+<hr>
+<p><strong>不！应该是尼古拉·特斯拉！</strong></p>
+<hr>
+<p><strong>当多数人想到托马斯·爱迪生的时候，他们想到的是发明电灯泡的人。</strong></p>
+<hr>
+<p><strong>爱迪生并没有发明电灯泡！他改进了电灯泡的主意，有22 个人在他之前就已经是先驱了。</strong></p>
+<hr>
+<p><strong>爱迪生只是找到了销售电灯泡的方法！</strong></p>
+<p><strong>实际上，特斯拉在他早期的职业生涯中曾经为爱迪生工作。</strong></p>
+<p><strong>爱迪生许诺给他相当于现在的一百万美元的钱，去修复他的直流电发电机和电动机。</strong></p>
+<p><strong>特斯拉修好了爱迪生的机器，当他去要许诺给他的钱时，爱迪生嘲笑他，并且说：</strong></p>
+<p><strong>“特斯拉，你不懂我们的美国式幽默。”</strong></p>
+<p><strong>爱迪生是一个很好的例子，本身不是 geek 却活跃在 geek 领域。</strong></p>
+<p><strong>他相信他的发明的价值可以通过赚的钱来衡量。他既不是数学家，也不是科学家。因为他相信他可以雇用别人来帮他完成。</strong></p>
+<p><strong>他不是 geek，他是 CEO。
+</strong></p>
+<p><img src="/images/" alt=""></p>
+<p><strong>特斯拉以发现令人惊讶的东西，而且忘了把它们记录下来而闻名。</strong></p>
+<hr>
+<p><strong>爱迪生以只要他的雇员发现了什么东西他就匆忙往专利局去跑而闻名。</strong></p>
+<hr>
+<p><strong>当他和爱迪生闹僵后，特斯拉去忙他的交流电电力系统了。</strong></p>
+<hr>
+<p><strong>这对爱迪生和他之间的仇恨更是火上浇油，因为爱迪生那个时候正在向世界兜售他的直流电系统。</strong></p>
+<hr>
+<p><strong>爱迪生的直流电系统每平方英里就需要一个发电机，而且不能把电力输送很远。交流电用的是更细的电线，更高的电压，能把电力进行远距离传输。</strong></p>
+<hr>
+<p><strong>那爱迪生做了什么？</strong></p>
+<p><strong>在爱迪生实验室附近住的邻居们开始注意到，他们的宠物消失了。这是因为学生们每捉到一只活的狗和猫，爱迪生就付给他们 25 分钱。</strong></p>
+<p><strong>然后他把这些猫和狗放到展览中，然后公开地给它们通特斯拉的交流电。</strong></p>
+<p><strong>他的目标是公开污蔑特斯拉的交流电，从而让公众相信家庭使用太危险了。</strong></p>
+<p><strong>简而言之，爱迪生真正领先的东西是变态。</strong></p>
+<p><strong>
+</strong></p>
+<p><strong>可曾听说过一个叫马可尼的人？</strong></p>
+<p><strong>因为发明了无线电报他获得了诺贝尔物理学奖。</strong></p>
+<p><strong>你可知道他做的所有东西都是基于特斯拉之前做的工作？在马可尼因为发了第一封无线电报而出名以后，特斯拉回复：</strong></p>
+<p><strong>“马可尼是好样的。让他继续吧。他使用了我的17项专利。”</strong></p>
+<p><strong>基本上，特斯拉是最和蔼的发明家。
+</strong></p>
+<p><img src="/images/" alt=""></p>
+<p><strong>可曾听说过雷达？</strong></p>
+<hr>
+<p><strong>一个名叫沃特森·瓦特的英国科学家被公认为于1935年发明了雷达。</strong></p>
+<hr>
+<p><strong>你能猜猜谁在1917年就有了这个主意？</strong></p>
+<hr>
+<p><strong>尼古拉·特斯拉！</strong></p>
+<p><strong>在第一次世界大战之初，他把它扔给了美国海军，当时世界正被迫屈服于德国的潜水艇的淫威。</strong></p>
+<p><strong>不幸的是，托马斯**</strong>·爱迪生是当时美国海军的研发部领导，他设法让他们相信雷达在战争中没有实际用处。**</p>
+<p><strong>干得好，爱迪生！你这个自负、弄巧成拙的混蛋！</strong></p>
+<p><strong>威廉·伦琴被归功于发现了X射线。</strong></p>
+<p><strong>你能猜一猜哪个留八字胡的发明家比他捷足先登而且没有获得任何功劳？
+</strong></p>
+<p><strong>尼古拉·**</strong>讨厌的·<strong>**特斯拉！</strong></p>
+<p><strong>当X射线被发现之初，人们相信它能治疗失明和其它疾病，而特斯拉警告说X射线可能是危险的，他拒绝将它用于医学试验。</strong></p>
+<p><strong>爱迪生（当黑他的机会就在眼前，我是不会错过的），却在从事X射线的人体试验。他的一个员工，Clarency Dally，接受了太多的放射性以至于为了挽救他的生命不得不对他的胳膊进行截肢。但这没有起作用，他最终还是死于纵隔肿瘤。</strong></p>
+<p><strong>Dally 被认为是第一个死于放射试验的美国人。——最终，爱迪生发明了一些原创的东西！</strong></p>
+<p><strong>除了杀死他的助手，爱迪生自己也近乎失明，因为眼睛反复接受X射线。当后来被问起X射线时，爱迪生如此回答：</strong></p>
+<p><strong>“别和我提X射线，我怕它们。”——**</strong>托马斯·爱迪生<strong>**，1903年</strong></p>
+<p><strong>大傻逼！
+</strong></p>
+<p><img src="/images/" alt=""></p>
+<p><strong>想知道谁在尼加拉瀑布上建造了第一个水力发电站，从而向世界证明了这种电力是可行的能量来源？</strong></p>
+<p><strong>尼古拉·特斯拉！</strong></p>
+<p><strong>谁在低温工程发明之前的近半个世纪就在试验它？</strong></p>
+<p><strong>特斯拉！</strong></p>
+<p><strong>谁在一百多年前就持有以后发展晶体管用到的专利？
+</strong></p>
+<p><strong>特斯拉！</strong></p>
+<p><strong>谁是第一个记录来自外太空的无线电波的人？</strong></p>
+<p><strong>特斯拉！</strong></p>
+<p><strong>谁发现了地球的共振频率？</strong></p>
+<p><strong>特斯拉！</strong></p>
+<p><img src="/images/" alt=""></p>
+<p><strong>谁建造了一个地震机当它启动时差点摧毁整个纽约周边地区？</strong></p>
+<p><strong>特斯拉！</strong></p>
+<p><strong>听说过球状闪电？</strong></p>
+<p><strong>它是球形外表的闪电，移动缓慢，徘徊在地面上几英尺。</strong></p>
+<p><strong>它是一种及其稀少的现象，即使是今天也没有一个科学家能在实验室中成功造出它来。</strong></p>
+<p><strong>哦，当然除了特斯拉在19世纪90年代成功了。</strong></p>
+<p><strong>可曾想知道谁发明了远程控制？</strong></p>
+<p><strong>特斯拉！</strong></p>
+<p><strong>氖管照明？</strong></p>
+<p><strong>特斯拉！</strong></p>
+<p><strong>现代发电机？</strong></p>
+<p><strong>特斯拉！</strong></p>
+<p><strong>无线通信？</strong></p>
+<p><strong>特斯拉！</strong></p>
+<p><strong>你知道当你家需要电的时候它怎样能从地球电离层流下来给所有东西进行无线充电？</strong></p>
+<p><strong>好吧，这是特斯拉发明了但没有和外界分享的东西，很可能他怕哪个缺乏创见的混蛋偷走他的专利。
+</strong></p>
+<p><strong>
+</strong></p>
+<p><img src="/images/" alt=""></p>
+<p><strong>毫无疑问，特斯拉是一个天才。</strong></p>
+<p><strong>他能说八种语言：塞尔维亚语，英语，捷克语，德语，法语，匈牙利语，意大利语和拉丁语。</strong></p>
+<p><strong>（我们多数人只会一种语言，而且也很糟糕）</strong></p>
+<p><strong>他能记住整本书，而且随时能背出来。</strong></p>
+<p><strong>（我们多数人连自己的密码都记不住）</strong></p>
+<p><strong>他能完全在头脑中幻想出机器设备，而且不用写出来就可以建造它们。</strong></p>
+<p><strong>（我们多数人只会花时间去幻想裸体的女人，和油腻的三明治这些东西）
+</strong></p>
+<p><a href="/pl/tesla/geek"><img src="/images/" alt=""></a></p>
+<p><strong>让人印象更深刻的是，这个男人活到了86岁，一生独身。</strong></p>
+<p><strong>尽管身高两米，而且很受女人欢迎，特斯拉拒绝约会，因为他认为这会打扰他的工作。</strong></p>
+<p><strong>特斯拉（看照片）：一个很帅的伙计，一生拒绝性感，因为他忙着在公寓中制造人造闪电。</strong></p>
+<p><strong>P.S. **</strong>托马斯·爱迪生娶了一个16岁的女孩。**</p>
+<p><strong>P.P.S. 我发誓，这是我在漫画中最后一次黑爱迪生。
+</strong></p>
+<p><img src="/images/" alt=""></p>
+<p><strong>拥有难以置信的头脑和那么多发明，特斯拉应该很有钱很出名，对吧？</strong></p>
+<p><strong>很不幸，不是！</strong></p>
+<p><strong>特斯拉生活在一个急功近利的时代，当时我们不需要射电天文学，我们需要的是电灯泡和面包烤箱。</strong></p>
+<p><strong>特斯拉的贡献不是添加性的，而是革命性的！</strong></p>
+<p><strong>特斯拉奉献给世界的一个最后的礼物是纽约附近的一座塔楼，可以给整个地球提供无线能源。当了解到没有办法控制这个能源也就无法赚钱后，曾经资助建造这座塔的人关闭了它。</strong></p>
+<p><strong>这种贪得无厌折磨着特斯拉大部分职业生涯，他花了很多精力去应付。并且，特斯拉也经历了混乱时代，我们通常称之为“精神失常”。</strong></p>
+<p><strong>特斯拉时常产生幻觉，有时分不清现实和想象，这也是为什么他多年来一直独自待在实验室，夜以继日地工作。</strong></p>
+<p><strong>特斯拉在孤独和伤心中去世，死于纽约一家宾馆的房间。他曾经以牛奶和国立饼干公司的饼干为生，在他最后的一个采访中，他展示了一个独特的个性：</strong></p>
+<p><strong>“我曾经养过数千只鸽子好几年。但是只有一只鸽子，一只漂亮的鸟，纯白色，翅膀上有一些浅灰色。这只与众不同。它是母的。我发现她出现在所有地方，无论我在哪里她都能找到我。当我想她的时候我只要想一下，叫她，她就会飞向我。她了解我，我也了解她。</strong></p>
+<p><strong>我爱上了那只鸽子。</strong></p>
+<p><strong>我爱她就像一个男人爱一个女人，而且她也爱我。</strong></p>
+<p><strong>当我看到她时，我知道她要告诉我，她快死了。然后，我从她那里得到消息，她眼睛中发出一道光，一道强光。”</strong></p>
+<p><strong>
+</strong></p>
+<p><strong>靠饼干为生而且和一个想象中发出激光的鸽子对话？！</strong></p>
+<p><strong>这就是特斯拉给人类做出的贡献的回报？！
+</strong></p>
+<p><img src="/images/" alt=""></p>
+<p><strong>亲爱的**</strong>尼古拉·特斯拉<strong>**，</strong></p>
+<p><strong>我很抱歉，</strong></p>
+<p><strong>非常非常抱歉！</strong></p>
+<p><strong>你是生错了时间的人，</strong></p>
+<p><strong>你是史上最伟大的 geek！</strong></p>
+<p><strong>而且，当描述**</strong>托马斯·爱迪生时，英文中没有足够的名词去补充“人渣”这个词，但我会尝试一下：**</p>
+<p><strong>（省略若干脏字）
+</strong></p>
+<p><strong>对于那些专门修补没有损坏的东西的人，考虑一下我的方式：</strong></p>
+<p><strong>谢谢你，**</strong>尼古拉·特斯拉<strong>**！
+</strong></p>
+<p><a href="http://theoatmeal.com/blog/tesla_museum" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
+<p><a href="http://theoatmeal.com/blog/tesla_museum" target="_blank" rel="external"><strong>我需要你的帮助！我正在尝试筹款去购买特斯拉的旧实验室，把它变成一个博物馆。</strong></a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>本文译自：<a href="http://theoatmeal.com/comics/tesla" target="_blank" rel="external">http://theoatmeal.com/comics/tesla</a>，图片均来自此处。也可以参考本人之前]]>
+    </summary>
+    
+      <category term="Collection" scheme="http://wangcong.org/categories/Collection/"/>
+    
+  </entry>
+  
+</feed>
