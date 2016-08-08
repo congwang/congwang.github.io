@@ -25,7 +25,7 @@
 <meta name="twitter:title" content="关于内存泄漏">
 <meta name="twitter:description" content="不少编写用户空间程序的人都关心内存泄漏到底会造成多少影响。这里简单澄清一下。
 无论用户空间是通过malloc()也好，mmap()也好，最终都是通过Linux内核管理的。只要内核没有bug，这些和这个进程相关的页面都是会被记录的，而且会在进程exit()的时候由Linux内核全部释放掉。所以对于运行时间不长的应用程序，有一些内存泄漏一般是没多大问题的。作为用户程序的编写者，如果释放内存真的很麻烦，">
-<meta name="twitter:creator" content="@bitstream">
+<meta name="twitter:creator" content="@conglinux">
 
 
     
@@ -259,7 +259,7 @@
 		
 		
 		
-		<a href="https://twitter.com/bitstream" target="_blank" class="icon-twitter" title="twitter"></a>
+		<a href="https://twitter.com/conglinux" target="_blank" class="icon-twitter" title="twitter"></a>
 		
 		
 		
@@ -268,7 +268,7 @@
 		
 		
 	</div>
-		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2015 
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2016 
 		
 		<a href="http://wangcong.org/about" target="_blank" title="Cong Wang">Cong Wang</a>
 		

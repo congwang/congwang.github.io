@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://wangcong.org/"/>
-  <updated>2015-02-24T05:06:59.205Z</updated>
+  <updated>2016-08-08T05:36:06.015Z</updated>
   <id>http://wangcong.org/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://wangcong.org/2014/08/12/linux-e7-bd-91-e7-bb-9c-e6-b5-81-e9-87-8f-e6-8e-a7-e5-88-b6-ef-bc-88-e4-b8-80-ef-bc-89/"/>
     <id>http://wangcong.org/2014/08/12/linux-e7-bd-91-e7-bb-9c-e6-b5-81-e9-87-8f-e6-8e-a7-e5-88-b6-ef-bc-88-e4-b8-80-ef-bc-89/</id>
     <published>2014-08-13T03:10:54.000Z</published>
-    <updated>2015-02-04T05:49:06.000Z</updated>
+    <updated>2016-08-08T05:35:23.000Z</updated>
     <content type="html"><![CDATA[<p>我会在下周举行的 <a href="http://events.linuxfoundation.org/events/linuxcon-north-america" target="_blank" rel="external">LinuxCon North America</a> 上讲一下最近在做的 Linux 网络流量控制（traffic control），有机会来参加的朋友欢迎<a href="http://sched.co/1kq0EDh" target="_blank" rel="external">前来捧场</a>！不能参加的朋友也可以<a href="http://wangcong2015.files.wordpress.com/2014/08/linux_traffic_control.pdf" target="_blank" rel="external">在这里</a>看到我的 slides。</p>
 <p>网络流量控制是一个非常大的话题，不可能在一个小时的时间内全部讲完，只能选择其中比较重要的来讲。而且它很重要，直接关乎网络性能，可是讲解这部分代码的书几乎没有，已有的讲 Linux 内核网络的书基本上都跳过了这一个部分，所以我也会陆续在这里详细分析一下这些代码，一是弥补这个缺口，二是弥补讲稿中的不足。</p>
 ]]></content>
@@ -36,7 +36,7 @@
     <link href="http://wangcong.org/2014/08/01/ottawa-linux-symposium/"/>
     <id>http://wangcong.org/2014/08/01/ottawa-linux-symposium/</id>
     <published>2014-08-01T19:36:16.000Z</published>
-    <updated>2015-02-04T05:49:06.000Z</updated>
+    <updated>2016-08-08T05:35:23.000Z</updated>
     <content type="html"><![CDATA[<p>提起 LinuxCon，Kernel Summit 可能大家都知道，<a href="http://en.wikipedia.org/wiki/Linux_Symposium" target="_blank" rel="external">Linux 研讨会</a>相比却不是那么知名。至少在我看来，Linux 研讨会的技术含量比我经常参加的LinuxCon 要高。虽然我一次还没参加过，但时常在搜索 Linux 内核的相关的东西时会搜到在这个会议上发布的一些论文。</p>
 <p>它是每年一度在加拿大渥太华（也不总是在这里）举行的偏学术性质技术会议，要求参加会议的演讲者都要提交一篇论文，而不是 slides，会后汇总到一起发表。我收到过两次邀请，但都没机会参加，因为一是去加拿大的签证不那么好办，需要准备很多材料；二是我没读过硕士和博士，写论文水平很差。Linux 社区相关的会议多数是偏技术的，这和社区的黑客文化也有关，能有这么一个偏学术的会议实属难得。</p>
 <p>光说没用，你可以去读一下之前在这个会议上发表的论文：<a href="https://www.kernel.org/doc/ols/" target="_blank" rel="external">https://www.kernel.org/doc/ols/</a> 去感受一下它的含金量。</p>
@@ -56,7 +56,7 @@
     <link href="http://wangcong.org/2014/05/31/skbuff-e5-86-85-e5-ad-98-e6-a8-a1-e5-9e-8b/"/>
     <id>http://wangcong.org/2014/05/31/skbuff-e5-86-85-e5-ad-98-e6-a8-a1-e5-9e-8b/</id>
     <published>2014-05-31T19:54:06.000Z</published>
-    <updated>2015-02-04T05:49:06.000Z</updated>
+    <updated>2016-08-08T05:35:23.000Z</updated>
     <content type="html"><![CDATA[<p>众所周知，struct sk_buff 是 Linux 内核网络子系统中最重要的一个结构体，它是内核对网络数据包的一个抽象表示。要了解 Linux 网络子系统除了了解网络协议之外，了解内核如何表示和操作数据包也是至关重要的。Linux 内核中的 struct sk_buff （以下简称 skb）提供了一套非常复杂的内存模型，也对它进行了大量的优化，这也是为什么 Linux 网络如此高效。</p>
 <p>我们从最简单的开始，分配一个最普通的 skb：</p>
 <p><a href="http://wangcong.org/blog/wp-content/uploads/2014/06/skb_alloc.png" target="_blank" rel="external"><img src="/images/" alt="" title="skb_alloc"></a></p>
@@ -113,7 +113,7 @@
     <link href="http://wangcong.org/2014/05/06/-e9-95-bf-e6-9c-9f-e6-8f-90-e4-be-9b-twitter-e5-86-85-e6-8e-a8/"/>
     <id>http://wangcong.org/2014/05/06/-e9-95-bf-e6-9c-9f-e6-8f-90-e4-be-9b-twitter-e5-86-85-e6-8e-a8/</id>
     <published>2014-05-06T18:30:51.000Z</published>
-    <updated>2015-02-04T05:49:06.000Z</updated>
+    <updated>2016-08-08T05:35:23.000Z</updated>
     <content type="html"><![CDATA[<p>今年断断续续收到不少求内推的邮件，在这里干脆直接写清楚好了，免得每次都得回邮件说明。</p>
 <p>任何人都可以找我内推，无论是不是程序员，你只要把你感兴趣的职位链接和你的英文简历发到我的邮箱（xiyou 点 wangcong 在 gmail 点 com）即可。Cover letter 可有可无，你自己掌握。Twitter 公司的空缺职位在这里：<a href="https://about.twitter.com/careers" target="_blank" rel="external">https://about.twitter.com/careers</a>，国内需翻墙，因为众所周知的原因。</p>
 <p>我不提供修改简历服务，你发给我什么我就上传什么，也不会告诉你简历好不好之类的，那是 HR 的工作，不是我的。另外，网上教你写英文简历的文章一大把，我没义务更没时间告诉你怎么写。如果非得说应聘 Twitter 有何特殊要求，你不觉得简历里有一个你的推特帐号会更好么？:-)</p>
@@ -134,7 +134,7 @@
     <link href="http://wangcong.org/2014/01/30/-e6-88-91-e7-9a-842013-ef-bc-9a-e6-88-91-e6-9d-a5-e5-88-b0-e4-ba-86-e7-be-8e-e5-9b-bd/"/>
     <id>http://wangcong.org/2014/01/30/-e6-88-91-e7-9a-842013-ef-bc-9a-e6-88-91-e6-9d-a5-e5-88-b0-e4-ba-86-e7-be-8e-e5-9b-bd/</id>
     <published>2014-01-30T20:52:01.000Z</published>
-    <updated>2015-02-04T05:49:06.000Z</updated>
+    <updated>2016-08-08T05:35:23.000Z</updated>
     <content type="html"><![CDATA[<p>对我来说，2013 年有两件大事：一是不顾我爸的反对把婚结了；二是终于肉身翻墙了，而且是到了之前都没想过的美国硅谷，进了更没想过的 Twitter。</p>
 <p>我认为结婚是两个人的事，父母当然有权利过问，但无权干涉，尤其是以一个荒唐的理由：她没有工作。我甚至都不好意思在这里写，可这就是我爸反对的理由，难以置信。别怪我没尝试和父母沟通，只是你不会理解和坚持认为周末上班才是正常的人沟通起来是有多么困难。</p>
 <p>在很多中国人眼里，我这是不孝。我不这么认为，我觉得任何人首先是为自己活着，孝顺父母当然重要，但是再重要也不如自己的自由重要。生命是父母所给，但自由是上天所赐。如果他们愿意拿走我的生命，我绝对毫无怨言，可是我只要还活着一天，我都不能交出我的自由，尤其是选择我自己幸福的自由。古今中外，自古以来，永远都是歌颂爱情，从来没听说过歌颂父母干涉婚姻的。其实这是也我为什么打算要移民的一个最重要原因。</p>
@@ -162,7 +162,7 @@
     <link href="http://wangcong.org/2013/12/04/libnl-e9-a1-b9-e7-9b-ae-e9-9c-80-e8-a6-81-e4-bd-a0-e7-9a-84-e5-b8-ae-e5-8a-a9/"/>
     <id>http://wangcong.org/2013/12/04/libnl-e9-a1-b9-e7-9b-ae-e9-9c-80-e8-a6-81-e4-bd-a0-e7-9a-84-e5-b8-ae-e5-8a-a9/</id>
     <published>2013-12-04T20:50:08.000Z</published>
-    <updated>2015-02-04T05:49:06.000Z</updated>
+    <updated>2016-08-08T05:35:23.000Z</updated>
     <content type="html"><![CDATA[<p>libnl 是用户空间对 netlink 包装的一个库，有了它使用 netlink 变得很方便了。你熟悉的 NetworkManager 就使用了它。它的官方网站是：<a href="http://www.infradead.org/~tgr/libnl/" target="_blank" rel="external">http://www.infradead.org/~tgr/libnl/</a></p>
 <p>对比内核已经实现的 TC classifier 和 TC action，你会发现 libnl 实现了不到其中一半，所以还有不少东西需要做。如果非要我写一个 list 的话，下面几个是优先级比较高的：</p>
 <p>1) 添加 skbedit action 的支持；<br>2) 添加 cgroup classifier 的支持；<br>3) 添加 tun/tap 设备的支持；<br>4) 添加 gre tunnel 设备的支持。</p>
@@ -181,7 +181,7 @@
     <link href="http://wangcong.org/2013/10/22/ingress-traffic-control/"/>
     <id>http://wangcong.org/2013/10/22/ingress-traffic-control/</id>
     <published>2013-10-22T20:54:53.000Z</published>
-    <updated>2015-02-04T05:49:06.000Z</updated>
+    <updated>2016-08-08T05:35:23.000Z</updated>
     <content type="html"><![CDATA[<p>相信很多人都知道 Linux 内核很难做 ingress 流量控制的，毕竟发送方理论上可以无限制地发送包到达网络接口。即使你控制了从网络接口到达协议栈的流量，你也很难从根源上控制这个流量。</p>
 <p>利用 Linux 内核你可以轻松地完成前者，即控制从网络接口到达协议栈的流量。这个是通过一个叫做 ifb 的设备完成的，这个设备如此不起眼以至于很多人不知道它的存在。</p>
 <p>它的使用很简单，加载 ifb 模块后，激活 ifbX 设备：</p>
@@ -287,7 +287,7 @@ tc filter <span class="keyword">add</span> dev eth0 parent ffff: protocol ip u32
     <link href="http://wangcong.org/2013/09/21/-e4-ba-ba-e7-94-9f-e5-b0-b1-e6-98-afmoving-on/"/>
     <id>http://wangcong.org/2013/09/21/-e4-ba-ba-e7-94-9f-e5-b0-b1-e6-98-afmoving-on/</id>
     <published>2013-09-22T05:23:39.000Z</published>
-    <updated>2015-02-04T05:49:06.000Z</updated>
+    <updated>2016-08-08T05:35:23.000Z</updated>
     <content type="html"><![CDATA[<p>最近很忙一直没有时间写博客，一半是因为工作时间没得闲，即使在大理这种休闲安逸的地方我也难得在工作时间偷个懒出去看看对面的明哥今天有没有新把的妹子；一半是因为我们准备去万恶的美帝体验水深火热去了。要准备的东西实在太多，毕竟我天朝物产极大丰富，去美帝这种大农村必须做好长期吃苦的准备，看了我媳妇收拾的东西你会觉得我们简直是要去非洲打猎……</p>
 <p>半年多前我发了<a href="http://wangcong.org/blog/archives/2259" target="_blank" rel="external">一篇求职的博客</a>，之后收到好几个朋友的邮件邀请，但因为种种原因都没去成，人艰不拆，其实悲催到了连面试的机会都没有。好在后来我自己偶然间看到了下面一个让人眼前一亮的招聘：</p>
 <p><a href="http://wangcong.org/blog/wp-content/uploads/2013/09/Selection_046.png" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
@@ -298,7 +298,7 @@ tc filter <span class="keyword">add</span> dev eth0 parent ffff: protocol ip u32
 <p>当然，也非常感谢我在红帽的两个美国经理，允许我长期在云南大理工作，免去了在北京忍受污染空气之毒。这是你给我再高的薪水也换不来的，我自认为至少在这一点上我比你们很多人明白什么更重要。:-) 我对比别人多活几年不感兴趣，我只是不想以后痛苦地死于肺癌，仅次而已。</p>
 <p>在大理的这一年多的时间是我人生最好的时光之一，除了邂逅了我现在的媳妇，还有那“生命终究难舍蓝蓝的白云天”。虽然大理现在人也越来越多，但毫无疑问，大理依旧是我在国内可以找到的最适合居住的小城，没有之一！我也始终相信我的好运很大程度上是拜大理这个神奇的地方所赐。</p>
 <p>27 号就要飞旧金山了，希望加州的阳光会像大理的一样灿烂！我们这次走得比较仓促，走之前无法和所有朋友见面一一道别，所以在此衷心祝愿国内的各位朋友，愿你们可以活得像梦一样自由！</p>
-<p>P.S. 我的 twitter ：<a href="https://twitter.com/bitstream" target="_blank" rel="external">https://twitter.com/bitstream</a></p>
+<p>P.S. 我的 twitter ：<a href="https://twitter.com/conglinux" target="_blank" rel="external">https://twitter.com/congwang</a></p>
 ]]></content>
     <summary type="html">
     <![CDATA[<p>最近很忙一直没有时间写博客，一半是因为工作时间没得闲，即使在大理这种休闲安逸的地方我也难得在工作时间偷个懒出去看看对面的明哥今天有没有新把的妹子；一半是因为我们准备去万恶的美帝体验水深火热去了。要准备的东西实在太多，毕竟我天朝物产极大丰富，去美帝这种大农村必须做好长期吃苦的]]>
@@ -313,7 +313,7 @@ tc filter <span class="keyword">add</span> dev eth0 parent ffff: protocol ip u32
     <link href="http://wangcong.org/2013/08/03/-e5-ad-a6-e4-bd-a0-e5-a6-b9-e7-9a-84-e8-ae-a1-e7-ae-97-e6-9c-ba-ef-bc-81/"/>
     <id>http://wangcong.org/2013/08/03/-e5-ad-a6-e4-bd-a0-e5-a6-b9-e7-9a-84-e8-ae-a1-e7-ae-97-e6-9c-ba-ef-bc-81/</id>
     <published>2013-08-04T02:20:11.000Z</published>
-    <updated>2015-02-04T05:49:06.000Z</updated>
+    <updated>2016-08-08T05:35:23.000Z</updated>
     <content type="html"><![CDATA[<p>看了最近的新闻，心情久久不能平静……自己看吧，不多说了，说多了都是泪！我就想问：现在蓝翔技校还招人吗？</p>
 <p>来自：<a href="http://www.zhihu.com/question/19684217/answer/17977765" target="_blank" rel="external">http://www.zhihu.com/question/19684217/answer/17977765</a></p>
 <p><a href="http://wangcong2015.files.wordpress.com/2013/08/selection_036.png" target="_blank" rel="external"><img src="/images/" alt=""></a><br>来自：<a href="http://hzdaily.hangzhou.com.cn/dskb/html/2013-08/01/content_1547781.htm" target="_blank" rel="external">http://hzdaily.hangzhou.com.cn/dskb/html/2013-08/01/content_1547781.htm</a></p>
@@ -335,7 +335,7 @@ tc filter <span class="keyword">add</span> dev eth0 parent ffff: protocol ip u32
     <link href="http://wangcong.org/2013/07/08/-e5-85-b3-e4-ba-8e-ovs-gre-tunnel/"/>
     <id>http://wangcong.org/2013/07/08/-e5-85-b3-e4-ba-8e-ovs-gre-tunnel/</id>
     <published>2013-07-08T22:23:09.000Z</published>
-    <updated>2015-02-04T05:49:06.000Z</updated>
+    <updated>2016-08-08T05:35:23.000Z</updated>
     <content type="html"><![CDATA[<p>在 korg 内核的 openvswitch 支持 GRE 之前，我们都是<a href="http://wangcong.org/blog/archives/2163" target="_blank" rel="external">用内核原生的 GRE tunnel 来配置</a>，而现在， korg 内核中的 openvswitch 也已经支持 GRE tunnel 了。有兴趣的可以看 <a href="https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7d5437c709ded4f152cb8b305d17972d6707f20c" target="_blank" rel="external">openvswitch: Add tunneling interface.</a> 和   <a href="https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=aa310701e787087dbfbccf1409982a96e16c57a6" target="_blank" rel="external">openvswitch: Add gre tunnel support.</a> 这两个 commit。</p>
 <p>其实在 OVS 中添加 GRE 很简单，它无非就是把对 GRE 头和外部 IP 头的一些操作从原来的代码中抽象出来，做成内核“库函数”的形式，然后 OVS 中就可以直接调用它们了。难的是要从旧的 ip_gre 模块代码中抽象出这些“库函数”。详见 <a href="https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=c54419321455631079c7d6e60bc732dd0c5914c5" target="_blank" rel="external">GRE: Refactor GRE tunneling code.</a></p>
 <p>值得注意的是，OVS GRE tunnel 没有注册网络设备，也就是说你无法通过 <code>ip link</code> 看到它，它只是一个 vport 而已，所以能通过 ovs-vsctl show 可以看到。这是故意这么设计的，虽然这简化了用户的操作，但刚注意到时难免会感觉有些奇怪。</p>
@@ -362,7 +362,7 @@ tc filter <span class="keyword">add</span> dev eth0 parent ffff: protocol ip u32
     <link href="http://wangcong.org/2013/05/15/-e4-b8-80-e4-b8-aa-e7-bb-9d-e5-a6-99-e7-9a-84-e5-86-85-e6-a0-b8-exploit/"/>
     <id>http://wangcong.org/2013/05/15/-e4-b8-80-e4-b8-aa-e7-bb-9d-e5-a6-99-e7-9a-84-e5-86-85-e6-a0-b8-exploit/</id>
     <published>2013-05-16T03:55:48.000Z</published>
-    <updated>2015-02-04T05:49:06.000Z</updated>
+    <updated>2016-08-08T05:35:23.000Z</updated>
     <content type="html"><![CDATA[<p>最近 Linux 内核爆出了一个严重的安全漏洞，非root用户可以通过该<a href="http://fucksheep.org/~sd/warez/semtex.c" target="_blank" rel="external">漏洞的 exploit</a> 获取root权限。这并不罕见，值得一提的是这个补丁看起来如此平常以至于我们绝大多数人都不会以为这是安全问题。</p>
 <p>先看这个问题的<a href="http://marc.info/?l=linux-kernel&amp;m=136588264507457" target="_blank" rel="external">补丁</a>，就是下面这个：</p>
 <pre>
@@ -478,7 +478,7 @@ Offset     Size     Description
     <link href="http://wangcong.org/2013/02/18/-e6-b1-82-e6-b5-b7-e5-a4-96-e5-b7-a5-e4-bd-9c-e4-b8-80-e4-bb-bd/"/>
     <id>http://wangcong.org/2013/02/18/-e6-b1-82-e6-b5-b7-e5-a4-96-e5-b7-a5-e4-bd-9c-e4-b8-80-e4-bb-bd/</id>
     <published>2013-02-19T06:14:15.000Z</published>
-    <updated>2015-02-04T05:49:06.000Z</updated>
+    <updated>2016-08-08T05:35:23.000Z</updated>
     <content type="html"><![CDATA[<p>以前没结婚自己怎么过都能凑合，现在结婚了不得不考虑以后的生活。目前国内的情况一天比一天糟，而且它只会变得更糟。我对这个国家的未来不报任何希望，所以决定移民。</p>
 <p>现求推荐海外，尤其是比较容易移民的国家（比如澳大利亚、新西兰、美国、加拿大）的工作，Linux 底层开发相关的即可，最好是内核开发。公司只要提供 relocation 。我给开源项目贡献的补丁见下。</p>
 <p>Linux kernel:<br><a href="http://goo.gl/AfPJw" target="_blank" rel="external">http://goo.gl/AfPJw</a><br><a href="http://goo.gl/NhVg3" target="_blank" rel="external">http://goo.gl/NhVg3</a></p>
@@ -504,7 +504,7 @@ Offset     Size     Description
     <link href="http://wangcong.org/2013/02/04/-e5-9c-a8-openvswitch-e4-b8-8a-e9-85-8d-e7-bd-ae-vxlan/"/>
     <id>http://wangcong.org/2013/02/04/-e5-9c-a8-openvswitch-e4-b8-8a-e9-85-8d-e7-bd-ae-vxlan/</id>
     <published>2013-02-05T01:40:16.000Z</published>
-    <updated>2015-02-04T05:49:06.000Z</updated>
+    <updated>2016-08-08T05:35:23.000Z</updated>
     <content type="html"><![CDATA[<p>（<strong>本文讲的是 korg 内核中的 openvswitch，而非 openvswitch.org 上提供的openvswitch模块。</strong>）</p>
 <p>之前讲过<a href="http://wangcong.org/blog/archives/2170" target="_blank" rel="external"> VXLAN</a>，但是一直没有动手实践。其实配置 VXLAN 要比<a href="http://wangcong.org/blog/archives/2163" target="_blank" rel="external">配置 GRE tunnel</a> 简单很多，你所需要做的只要两步：</p>
 <p>1. 添加 VXLAN 设备（需要比较新的 iproute2 和内核支持）：</p>
@@ -636,7 +636,7 @@ eth0      Link encap:Ethernet  HWaddr E8:39:35:30:1D:1E
     <link href="http://wangcong.org/2013/02/03/setuid/"/>
     <id>http://wangcong.org/2013/02/03/setuid/</id>
     <published>2013-02-04T02:20:30.000Z</published>
-    <updated>2015-02-04T05:49:06.000Z</updated>
+    <updated>2016-08-08T05:35:23.000Z</updated>
     <content type="html"><![CDATA[]]></content>
     <summary type="html">
     <![CDATA[]]>
@@ -651,7 +651,7 @@ eth0      Link encap:Ethernet  HWaddr E8:39:35:30:1D:1E
     <link href="http://wangcong.org/2013/01/31/-e7-bb-99-e7-a8-8b-e5-ba-8f-e5-91-98-e6-8e-a8-e8-8d-90-e5-87-a0-e9-83-a8-e7-94-b5-e5-bd-b1/"/>
     <id>http://wangcong.org/2013/01/31/-e7-bb-99-e7-a8-8b-e5-ba-8f-e5-91-98-e6-8e-a8-e8-8d-90-e5-87-a0-e9-83-a8-e7-94-b5-e5-bd-b1/</id>
     <published>2013-02-01T03:21:09.000Z</published>
-    <updated>2015-02-04T05:49:06.000Z</updated>
+    <updated>2016-08-08T05:35:23.000Z</updated>
     <content type="html"><![CDATA[<p>1. 排在第一位的毫无疑问是《黑客帝国》三部曲。关键词：矩阵。</p>
 <p><a href="http://movie.douban.com/subject/1291843/" target="_blank" rel="external"><img src="/images/" alt="" title="黑客帝国"></a></p>
 <p><a href="http://movie.douban.com/subject/1304141/" target="_blank" rel="external"><img src="/images/" alt="" title="黑客帝国2：重装上阵"></a></p>
@@ -682,7 +682,7 @@ eth0      Link encap:Ethernet  HWaddr E8:39:35:30:1D:1E
     <link href="http://wangcong.org/2013/01/26/-e4-b8-ba-e4-bb-80-e4-b9-88-e8-ae-a1-e6-95-b0-e5-ba-94-e8-af-a5-e4-bb-8e-e9-9b-b6-e5-bc-80-e5-a7-8b-ef-bc-9f/"/>
     <id>http://wangcong.org/2013/01/26/-e4-b8-ba-e4-bb-80-e4-b9-88-e8-ae-a1-e6-95-b0-e5-ba-94-e8-af-a5-e4-bb-8e-e9-9b-b6-e5-bc-80-e5-a7-8b-ef-bc-9f/</id>
     <published>2013-01-27T06:26:38.000Z</published>
-    <updated>2015-02-04T05:49:06.000Z</updated>
+    <updated>2016-08-08T05:35:23.000Z</updated>
     <content type="html"><![CDATA[<p>众所周知，C语言数组下标是从0开始，其它很多语言皆如此。而 FORTRAN 则是数组下标从1开始的典范。所以就有数组下标是从1开始好还是从0开始好之争。连《C专家编程》中都如此调侃：</p>
 <blockquote>
 <p>数组的下标应该是从0还是从1开始？我提议的妥协方案是0.5，可惜他们未予认真考虑便一口回绝。—— Stan Kelly-Bootle<br>仔细思考一下这个问题很有意思，建议你不妨自己思考一下再继续往下看。</p>
@@ -716,7 +716,7 @@ eth0      Link encap:Ethernet  HWaddr E8:39:35:30:1D:1E
     <link href="http://wangcong.org/2013/01/06/-e6-99-9a-e5-ae-89-ef-bc-8c-e5-a4-a7-e7-90-86/"/>
     <id>http://wangcong.org/2013/01/06/-e6-99-9a-e5-ae-89-ef-bc-8c-e5-a4-a7-e7-90-86/</id>
     <published>2013-01-07T06:46:58.000Z</published>
-    <updated>2015-02-04T05:49:06.000Z</updated>
+    <updated>2016-08-08T05:35:23.000Z</updated>
     <content type="html"><![CDATA[<p>在一个大风的夜里</p>
 <p>走在古城的小巷子里</p>
 <p>推门走进一家客栈</p>
@@ -747,7 +747,7 @@ eth0      Link encap:Ethernet  HWaddr E8:39:35:30:1D:1E
     <link href="http://wangcong.org/2012/12/23/-e7-bb-93-e5-a9-9a-e5-95-a6-ef-bc-81/"/>
     <id>http://wangcong.org/2012/12/23/-e7-bb-93-e5-a9-9a-e5-95-a6-ef-bc-81/</id>
     <published>2012-12-24T05:48:41.000Z</published>
-    <updated>2015-02-04T05:49:06.000Z</updated>
+    <updated>2016-08-08T05:35:23.000Z</updated>
     <content type="html"><![CDATA[<p><a href="http://wangcong2015.files.wordpress.com/2012/12/img_0311.jpg" target="_blank" rel="external"></a><a href="http://wangcong2015.files.wordpress.com/2012/12/img_0311_2.jpg" target="_blank" rel="external"><img src="/images/" alt="" title="IMG_0311_2"></a></p>
 <p>遇到过一个又一个不靠谱的姑娘，也因为种种原因错过了一个又一个没有缘分的姑娘，终于在合适的时间遇到一个合适而且靠谱的好姑娘！</p>
 <p>和这个姑娘是<a href="http://wangcong.org/blog/archives/1826" target="_blank" rel="external">在云南大理认识</a>的，当时她正好一路搭车从山东来到了云南，而我正好从北京搬去大理常住……我们从那时一直交往到现在，一起去过全国很多地方，走了一圈最后发现还是最喜欢大理，而且很快还要回大理。</p>
@@ -768,7 +768,7 @@ eth0      Link encap:Ethernet  HWaddr E8:39:35:30:1D:1E
     <link href="http://wangcong.org/2012/12/17/what-every-programmer-should-know/"/>
     <id>http://wangcong.org/2012/12/17/what-every-programmer-should-know/</id>
     <published>2012-12-18T00:50:49.000Z</published>
-    <updated>2015-02-04T05:49:06.000Z</updated>
+    <updated>2016-08-08T05:35:23.000Z</updated>
     <content type="html"><![CDATA[<p><a href="http://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html" target="_blank" rel="external">What Every Computer Scientist Should Know About Floating-Point Arithmetic</a></p>
 <p><a href="http://www.akkadia.org/drepper/cpumemory.pdf" target="_blank" rel="external">What Every Programmer Should Know About Memory</a></p>
 <p><a href="http://kunststube.net/encoding/" target="_blank" rel="external">What every programmer absolutely, positively needs to know about encodings and character sets to work with text</a></p>
@@ -791,7 +791,7 @@ eth0      Link encap:Ethernet  HWaddr E8:39:35:30:1D:1E
     <link href="http://wangcong.org/2012/12/10/-e4-b8-ba-e4-bb-80-e4-b9-88-e7-89-b9-e6-96-af-e6-8b-89-e6-98-af-e5-8f-b2-e4-b8-8a-e6-9c-80-e4-bc-9f-e5-a4-a7-e7-9a-84geek-ef-bc-9f/"/>
     <id>http://wangcong.org/2012/12/10/-e4-b8-ba-e4-bb-80-e4-b9-88-e7-89-b9-e6-96-af-e6-8b-89-e6-98-af-e5-8f-b2-e4-b8-8a-e6-9c-80-e4-bc-9f-e5-a4-a7-e7-9a-84geek-ef-bc-9f/</id>
     <published>2012-12-10T21:47:39.000Z</published>
-    <updated>2015-02-04T05:49:06.000Z</updated>
+    <updated>2016-08-08T05:35:23.000Z</updated>
     <content type="html"><![CDATA[<p>本文译自：<a href="http://theoatmeal.com/comics/tesla" target="_blank" rel="external">http://theoatmeal.com/comics/tesla</a>，图片均来自此处。也可以参考本人之前写的文章《<a href="http://wangcong.org/blog/archives/1187" target="_blank" rel="external">这些男人来自地球</a>》。</p>
 <p><img src="/images/" alt=""></p>
 <hr>
