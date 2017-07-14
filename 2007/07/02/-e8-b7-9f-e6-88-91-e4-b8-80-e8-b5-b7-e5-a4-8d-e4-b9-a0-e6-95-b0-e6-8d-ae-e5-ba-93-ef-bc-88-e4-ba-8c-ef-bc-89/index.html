@@ -1,129 +1,71 @@
-
- <!DOCTYPE HTML>
-<html >
+<!DOCTYPE HTML>
+<html>
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   
-    <title>跟我一起复习数据库（二） | A Geek&#39;s Page</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
-    
-    <meta name="author" content="Cong Wang">
-    
-    <meta name="description" content="下面是一些重要的概念和解释，均摘选自原书。
+  <title>跟我一起复习数据库（二） | A Geek&#39;s Page</title>
+  <meta name="author" content="Cong Wang">
+  
+  <meta name="description" content="下面是一些重要的概念和解释，均摘选自原书。
 数据库：
 数据库系统是指一个计算机存储记录的系统，即，它是一个计算机系统，该系统的目标是存储信息并支持用户检索和更新所需要的信息。
 数据模型：数据模型 是对对象、操作等的一个抽象的、自包含的逻辑定义，这些定义合起来构成了一个面对用户的抽象机。
 数据库方法的">
-    
-    
-    <meta name="description" content="下面是一些重要的概念和解释，均摘选自原书。
-数据库：
-数据库系统是指一个计算机存储记录的系统，即，它是一个计算机系统，该系统的目标是存储信息并支持用户检索和更新所需要的信息。
-数据模型：数据模型 是对对象、操作等的一个抽象的、自包含的逻辑定义，这些定义合起来构成了一个面对用户的抽象机。
-数据库方法的优点：
-(1) 数据共享( 2) 减少冗余 (3) 避免不一致 (4) 提供事务支持 (5) 保持完">
-<meta property="og:type" content="article">
-<meta property="og:title" content="跟我一起复习数据库（二）">
-<meta property="og:url" content="http://wangcong.org/2007/07/02/-e8-b7-9f-e6-88-91-e4-b8-80-e8-b5-b7-e5-a4-8d-e4-b9-a0-e6-95-b0-e6-8d-ae-e5-ba-93-ef-bc-88-e4-ba-8c-ef-bc-89/">
-<meta property="og:site_name" content="A Geek's Page">
-<meta property="og:description" content="下面是一些重要的概念和解释，均摘选自原书。
-数据库：
-数据库系统是指一个计算机存储记录的系统，即，它是一个计算机系统，该系统的目标是存储信息并支持用户检索和更新所需要的信息。
-数据模型：数据模型 是对对象、操作等的一个抽象的、自包含的逻辑定义，这些定义合起来构成了一个面对用户的抽象机。
-数据库方法的优点：
-(1) 数据共享( 2) 减少冗余 (3) 避免不一致 (4) 提供事务支持 (5) 保持完">
-<meta property="og:image" content="/images/">
-<meta property="og:image" content="/images/">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="跟我一起复习数据库（二）">
-<meta name="twitter:description" content="下面是一些重要的概念和解释，均摘选自原书。
-数据库：
-数据库系统是指一个计算机存储记录的系统，即，它是一个计算机系统，该系统的目标是存储信息并支持用户检索和更新所需要的信息。
-数据模型：数据模型 是对对象、操作等的一个抽象的、自包含的逻辑定义，这些定义合起来构成了一个面对用户的抽象机。
-数据库方法的优点：
-(1) 数据共享( 2) 减少冗余 (3) 避免不一致 (4) 提供事务支持 (5) 保持完">
-<meta name="twitter:creator" content="@conglinux">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
+  <meta property="og:title" content="跟我一起复习数据库（二）"/>
+  <meta property="og:site_name" content="A Geek&#39;s Page"/>
 
-    
-    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
-    
-    
-    <link rel="icon" href="/img/favicon.ico">
-    
-    
-    <link rel="apple-touch-icon" href="/img/jacman.jpg">
-    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
-    
-    <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
 
 </head>
 
-  <body>
-    <header>
-      <div>
-		
-			<div id="imglogo">
-				<a href="/"><img src="/img/logo.png" alt="A Geek&#39;s Page" title="A Geek&#39;s Page"/></a>
-			</div>
-			
-			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="A Geek&#39;s Page">A Geek&#39;s Page</a></h1>
-				<h2 class="blog-motto"></h2>
-			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
-			</a></div>
-			<nav class="animated">
-				<ul>
-					<ul>
-					 
-						<li><a href="/">Home</a></li>
-					
-						<li><a href="/archives">Archives</a></li>
-					
-						<li><a href="/about-2">About</a></li>
-					
-					<li>
- 					
-					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
-						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
-						<input type="hidden" name="q" value="site:wangcong.org">
-					</form>
-					
-					</li>
-				</ul>
-			</nav>			
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">A Geek&#39;s Page</a></h1>
+  <h2><a href="/"></a></h2>
 </div>
-    </header>
-    <div id="container">
-      <div id="main" class="post" itemscope itemprop="blogPost">
-  
-	<article itemprop="articleBody"> 
-		<header class="article-info clearfix">
-  <h1 itemprop="name">
+<nav id="main-nav" class="alignright">
+  <ul>
     
-      <a href="/2007/07/02/-e8-b7-9f-e6-88-91-e4-b8-80-e8-b5-b7-e5-a4-8d-e4-b9-a0-e6-95-b0-e6-8d-ae-e5-ba-93-ef-bc-88-e4-ba-8c-ef-bc-89/" title="跟我一起复习数据库（二）" itemprop="url">跟我一起复习数据库（二）</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2007-07-02T17:16:33.000Z" itemprop="datePublished"> Published Jul 2 2007</time>
+      <li><a href="/">Home</a></li>
     
-  </p>
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
 </header>
-	<div class="article-content">
-		
-		<div id="toc" class="toc-article">
-			<strong class="toc-title">Contents</strong>
-		
-			
-		
-		</div>
-		
-		<p>下面是一些重要的概念和解释，<strong>均摘选自原书</strong>。</p>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-07-02T17:16:33.000Z"><a href="/2007/07/02/-e8-b7-9f-e6-88-91-e4-b8-80-e8-b5-b7-e5-a4-8d-e4-b9-a0-e6-95-b0-e6-8d-ae-e5-ba-93-ef-bc-88-e4-ba-8c-ef-bc-89/">Jul 2 2007</a></time>
+      
+      
+  
+    <h1 class="title">跟我一起复习数据库（二）</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>下面是一些重要的概念和解释，<strong>均摘选自原书</strong>。</p>
 <p>数据库：</p>
 <p>数据库系统是指一个计算机存储记录的系统，即，它是一个计算机系统，该系统的目标是存储信息并支持用户检索和更新所需要的信息。</p>
 <p>数据模型：<br>数据模型 是对对象、操作等的一个抽象的、自包含的逻辑定义，这些定义合起来构成了一个面对用户的抽象机。</p>
@@ -139,289 +81,130 @@
 <p>事务：事务是一个逻辑工作单元，通常包括几个数据库操作，并指出当不同的操作处于同一事务中时，用户要通知系统。 BEGIN TRANSACTION、COMMIT 和ROLLBACK操作就是基于这一考虑提出的。</p>
 <p>注意以下几点问题：<br>1) 要保证事务的原子性 ，也就是说，即使系统在处理中发生故障，也要保证（从逻辑的<br>观点）事务中的操作要么都做，要么都不做。<br>2) 要保证事务的持续性 ，一旦事务成功地执行了 COMMIT，即使随后系统发生故障，也<br>要确保它的更新写入数据库中。注意：本质上，是事务的持续性保证了数据库中数据<br>的持久性。<br>3) 要保证事务的隔离性，事务 T1对数据库的更新操作对任何不同的事务 T2来说是不可见<br>的，直到或除非 T1成功执行 COMMIT。COMMIT使事务的更新对其他事务来说是可见<br>的；这些更新已经提交，并且要保证不能取消。若事务执行了ROLLBACK，所有事务<br>的更新操作都要取消（回滚） 。对后一种情况，其结果应该就像事务一开始就没有执行<br>一样。<br>4) 要保证一组并发事务的交叉执行（通常）是可串行的，即其结果与按某一未指明的次<br>序串行地执行时的结果相同。</p>
 <p>基本关系变量和视图的不同在于：<br>• 基本关系变量是“真实存在”，意味着它们所表示的数据真正存在于数据库中。<br>• 相反，视图并不“真实存在”，只是提供了观察“真实数据”的各种方式。</p>
+
+      
+    </div>
+    <footer>
+      
+        
   
-	</div>
-		<footer class="article-footer clearfix">
-<div class="article-catetags">
+  <div class="categories">
+    <a href="/categories/Programming/">Programming</a>
+  </div>
 
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Programming/">Programming</a>
-</div>
+        
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
 
-
-</div>
-
-
-
-	<div class="article-share" id="share">
-	
-	  <div data-url="http://wangcong.org/2007/07/02/-e8-b7-9f-e6-88-91-e4-b8-80-e8-b5-b7-e5-a4-8d-e4-b9-a0-e6-95-b0-e6-8d-ae-e5-ba-93-ef-bc-88-e4-ba-8c-ef-bc-89/" data-title="跟我一起复习数据库（二） | A Geek&#39;s Page" data-tsina="null" class="share clearfix">
-	  </div>
-	
-	</div>
-
-
-</footer>
-
-   	       
-	</article>
-	
-<nav class="article-nav clearfix">
- 
- <div class="prev" >
- <a href="/2007/07/03/-e8-b7-9f-e6-88-91-e4-b8-80-e8-b5-b7-e5-a4-8d-e4-b9-a0-e6-95-b0-e6-8d-ae-e5-ba-93-ef-bc-88-e4-b8-89-ef-bc-89/" title="跟我一起复习数据库（三）">
-  <strong>上一篇：</strong><br/>
-  <span>
-  跟我一起复习数据库（三）</span>
-</a>
-</div>
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
 
 
-<div class="next">
-<a href="/2007/07/02/-e8-b7-9f-e6-88-91-e4-b8-80-e8-b5-b7-e5-a4-8d-e4-b9-a0-e6-95-b0-e6-8d-ae-e5-ba-93-ef-bc-88-e4-b8-80-ef-bc-89/"  title="跟我一起复习数据库（一）">
- <strong>下一篇：</strong><br/> 
- <span>跟我一起复习数据库（一）
-</span>
-</a>
-</div>
+<section id="comment">
+  <h1 class="title">Comments</h1>
 
-</nav>
-
-	
-
-<section id="comments" class="comment">
+  
   <div id="disqus_thread">
     <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
   </div>
+  
 </section>
 
-</div>  
-      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
-
-  <div id="toc" class="toc-aside">
-  <strong class="toc-title">Contents</strong>
- 
- 
- 
-  </div>
-
-<div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
-<aside class="clearfix">
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:wangcong.org">
+  </form>
+</div>
 
   
-<div class="categorieslist">
-	<p class="asidetitle">Categories</p>
-		<ul>
-		
-			<li><a href="/categories/Book-Reviews/" title="Book Reviews">Book Reviews<sup>18</sup></a></li>
-		
-			<li><a href="/categories/China/" title="China">China<sup>2</sup></a></li>
-		
-			<li><a href="/categories/Collection/" title="Collection">Collection<sup>25</sup></a></li>
-		
-			<li><a href="/categories/Life/" title="Life">Life<sup>324</sup></a></li>
-		
-			<li><a href="/categories/Linux-Application/" title="Linux Application">Linux Application<sup>73</sup></a></li>
-		
-			<li><a href="/categories/Linux-Kernel/" title="Linux Kernel">Linux Kernel<sup>64</sup></a></li>
-		
-			<li><a href="/categories/Love/" title="Love">Love<sup>6</sup></a></li>
-		
-			<li><a href="/categories/Movies/" title="Movies">Movies<sup>19</sup></a></li>
-		
-			<li><a href="/categories/Programming/" title="Programming">Programming<sup>152</sup></a></li>
-		
-			<li><a href="/categories/Science-Fiction/" title="Science Fiction">Science Fiction<sup>8</sup></a></li>
-		
-			<li><a href="/categories/Travel/" title="Travel">Travel<sup>19</sup></a></li>
-		
-		</ul>
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Book-Reviews/">Book Reviews</a><small>18</small></li>
+  
+    <li><a href="/categories/China/">China</a><small>2</small></li>
+  
+    <li><a href="/categories/Collection/">Collection</a><small>25</small></li>
+  
+    <li><a href="/categories/Life/">Life</a><small>324</small></li>
+  
+    <li><a href="/categories/Linux-Application/">Linux Application</a><small>73</small></li>
+  
+    <li><a href="/categories/Linux-Kernel/">Linux Kernel</a><small>64</small></li>
+  
+    <li><a href="/categories/Love/">Love</a><small>6</small></li>
+  
+    <li><a href="/categories/Movies/">Movies</a><small>19</small></li>
+  
+    <li><a href="/categories/Programming/">Programming</a><small>152</small></li>
+  
+    <li><a href="/categories/Science-Fiction/">Science Fiction</a><small>8</small></li>
+  
+    <li><a href="/categories/Travel/">Travel</a><small>19</small></li>
+  
+  </ul>
 </div>
 
 
   
-<div class="tagslist">
-	<p class="asidetitle">Tags</p>
-		<ul class="clearfix">
-		
-			<li><a href="/tags/vim/" title="vim">vim<sup>1</sup></a></li>
-		
-			<li><a href="/tags/joke/" title="joke">joke<sup>1</sup></a></li>
-		
-			<li><a href="/tags/geek/" title="geek">geek<sup>1</sup></a></li>
-		
-			<li><a href="/tags/unix/" title="unix">unix<sup>1</sup></a></li>
-		
-			<li><a href="/tags/signal/" title="signal">signal<sup>1</sup></a></li>
-		
-			<li><a href="/tags/linux/" title="linux">linux<sup>1</sup></a></li>
-		
-			<li><a href="/tags/handling/" title="handling">handling<sup>1</sup></a></li>
-		
-		</ul>
-</div>
-
-
-  <div class="linkslist">
-  <p class="asidetitle">Links</p>
-    <ul>
-        
-    </ul>
-</div>
-
-  <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/geek/">geek</a><small>1</small></li>
+  
+    <li><a href="/tags/handling/">handling</a><small>1</small></li>
+  
+    <li><a href="/tags/joke/">joke</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/tags/signal/">signal</a><small>1</small></li>
+  
+    <li><a href="/tags/unix/">unix</a><small>1</small></li>
+  
+    <li><a href="/tags/vim/">vim</a><small>1</small></li>
+  
+  </ul>
 </div>
 
 </aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2017 Cong Wang
+  
 </div>
-    </div>
-    <footer><div id="footer" >
-	
-	
-	<div class="social-font" class="clearfix">
-		
-		
-		<a href="https://github.com/congwang" target="_blank" class="icon-github" title="github"></a>
-		
-		
-		
-		<a href="https://twitter.com/conglinux" target="_blank" class="icon-twitter" title="twitter"></a>
-		
-		
-		
-		
-		
-		
-		
-	</div>
-		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2016 
-		
-		<a href="http://wangcong.org/about" target="_blank" title="Cong Wang">Cong Wang</a>
-		
-		</p>
-</div>
-</footer>
-    <script src="/js/jquery-2.0.3.min.js"></script>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 <script src="/js/jquery.imagesloaded.min.js"></script>
 <script src="/js/gallery.js"></script>
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.navbar').click(function(){
-    $('header nav').toggleClass('shownav');
-  });
-  var myWidth = 0;
-  function getSize(){
-    if( typeof( window.innerWidth ) == 'number' ) {
-      myWidth = window.innerWidth;
-    } else if( document.documentElement && document.documentElement.clientWidth) {
-      myWidth = document.documentElement.clientWidth;
-    };
-  };
-  var m = $('#main'),
-      a = $('#asidepart'),
-      c = $('.closeaside'),
-      o = $('.openaside');
-  $(window).resize(function(){
-    getSize(); 
-    if (myWidth >= 1024) {
-      $('header nav').removeClass('shownav');
-    }else
-    {
-      m.removeClass('moveMain');
-      a.css('display', 'block').removeClass('fadeOut');
-      o.css('display', 'none');
-      
-      $('#toc.toc-aside').css('display', 'none');
-        
-    }
-  });
-  c.click(function(){
-    a.addClass('fadeOut').css('display', 'none');
-    o.css('display', 'block').addClass('fadeIn');
-    m.addClass('moveMain');
-  });
-  o.click(function(){
-    o.css('display', 'none').removeClass('beforeFadeIn');
-    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
-    m.removeClass('moveMain');
-  });
-  $(window).scroll(function(){
-    o.css("top",Math.max(80,260-$(this).scrollTop()));
-  });
-});
-</script>
 
 <script type="text/javascript">
-$(document).ready(function(){ 
-  var ai = $('.article-content>iframe'),
-      ae = $('.article-content>embed'),
-      t  = $('#toc'),
-      h  = $('article h2')
-      ah = $('article h2'),
-      ta = $('#toc.toc-aside'),
-      o  = $('.openaside'),
-      c  = $('.closeaside');
-  if(ai.length>0){
-    ai.wrap('<div class="video-container" />');
-  };
-  if(ae.length>0){
-   ae.wrap('<div class="video-container" />');
-  };
-  if(ah.length==0){
-    t.css('display','none');
-  }else{
-    c.click(function(){
-      ta.css('display', 'block').addClass('fadeIn');
-    });
-    o.click(function(){
-      ta.css('display', 'none');
-    });
-    $(window).scroll(function(){
-      ta.css("top",Math.max(140,320-$(this).scrollTop()));
-    });
-  };
-});
-</script>
-
-
-<script type="text/javascript">
-$(document).ready(function(){ 
-  var $this = $('.share'),
-      url = $this.attr('data-url'),
-      encodedUrl = encodeURIComponent(url),
-      title = $this.attr('data-title'),
-      tsina = $this.attr('data-tsina'),
-      description = $this.attr('description');
-  var html = [
-  '<a href="#" class="overlay" id="qrcode"></a>',
-  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
-  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
-  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
-  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
-  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
-  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
-  '<span title="Share to"></span>'
-  ].join('');
-  $this.append(html);
-  $('.article-share-qrcode').click(function(){
-    var imgSrc = $('#qrcode-pic').attr('data-src');
-    $('#qrcode-pic').attr('src', imgSrc);
-    $('#qrcode-pic').load(function(){
-        $('.qrcode strong').text(' ');
-    });
-  });
-});     
-</script>
-
-
-
-
-<script type="text/javascript">
-
 var disqus_shortname = 'disqus_ciEwcJAF0E';
 
 (function(){
@@ -431,65 +214,17 @@ var disqus_shortname = 'disqus_ciEwcJAF0E';
   dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
 }());
-(function(){
-  var dsq = document.createElement('script');
-  dsq.type = 'text/javascript';
-  dsq.async = true;
-  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
-  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-}());
 </script>
-
-
-
 
 
 
 <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
 <script src="/fancybox/jquery.fancybox.pack.js"></script>
 <script type="text/javascript">
-$(document).ready(function(){ 
-  $('.article-content').each(function(i){
-    $(this).find('img').each(function(){
-      if ($(this).parent().hasClass('fancybox')) return;
-      var alt = this.alt;
-      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
-      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
-    });
-    $(this).find('.fancybox').each(function(){
-      $(this).attr('rel', 'article' + i);
-    });
-  });
-  if($.fancybox){
-    $('.fancybox').fancybox();
-  }
-}); 
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
 </script>
 
-
-
-<!-- Analytics Begin -->
-
-
-
-
-
-<!-- Analytics End -->
-
-<!-- Totop Begin -->
-
-	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
-	</div>
-	<script src="/js/totop.js"></script>
-
-<!-- Totop End -->
-
-<!-- MathJax Begin -->
-<!-- mathjax config similar to math.stackexchange -->
-
-
-<!-- MathJax End -->
-
-  </body>
+</body>
 </html>

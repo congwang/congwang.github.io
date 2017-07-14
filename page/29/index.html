@@ -1,100 +1,65 @@
-
- <!DOCTYPE HTML>
-<html >
+<!DOCTYPE HTML>
+<html>
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   
-    <title>A Geek&#39;s Page</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
-    
-    <meta name="author" content="Cong Wang">
-    
-    
-    <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="A Geek's Page">
-<meta property="og:url" content="http://wangcong.org/page/29/">
-<meta property="og:site_name" content="A Geek's Page">
-<meta property="og:description">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="A Geek's Page">
-<meta name="twitter:description">
-<meta name="twitter:creator" content="@conglinux">
+  <title>Page 29 | A Geek&#39;s Page</title>
+  <meta name="author" content="Cong Wang">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
+  
+  <meta property="og:site_name" content="A Geek&#39;s Page"/>
 
-    
-    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
-    
-    
-    <link rel="icon" href="/img/favicon.ico">
-    
-    
-    <link rel="apple-touch-icon" href="/img/jacman.jpg">
-    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
-    
-    <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
 
 </head>
 
-  <body>
-    <header>
-      <div>
-		
-			<div id="imglogo">
-				<a href="/"><img src="/img/logo.png" alt="A Geek&#39;s Page" title="A Geek&#39;s Page"/></a>
-			</div>
-			
-			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="A Geek&#39;s Page">A Geek&#39;s Page</a></h1>
-				<h2 class="blog-motto"></h2>
-			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
-			</a></div>
-			<nav class="animated">
-				<ul>
-					<ul>
-					 
-						<li><a href="/">Home</a></li>
-					
-						<li><a href="/archives">Archives</a></li>
-					
-						<li><a href="/about-2">About</a></li>
-					
-					<li>
- 					
-					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
-						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
-						<input type="hidden" name="q" value="site:wangcong.org">
-					</form>
-					
-					</li>
-				</ul>
-			</nav>			
-</div>
-    </header>
-    <div id="container">
-      <div id="main">
 
-   
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">A Geek&#39;s Page</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
     
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
+      <li><a href="/">Home</a></li>
     
-      <a href="/2009/02/12/-e6-9f-a5-e6-89-be-e7-bd-91-e7-bb-9c-e8-ae-be-e5-a4-87/" title="查找网络设备" itemprop="url">查找网络设备</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2009-02-13T05:19:34.000Z" itemprop="datePublished"> Published Feb 12 2009</time>
+      <li><a href="/archives">Archives</a></li>
     
-  </p>
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
 </header>
-    <div class="article-content">
-        
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-02-13T05:19:34.000Z"><a href="/2009/02/12/-e6-9f-a5-e6-89-be-e7-bd-91-e7-bb-9c-e8-ae-be-e5-a4-87/">Feb 12 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/02/12/-e6-9f-a5-e6-89-be-e7-bd-91-e7-bb-9c-e8-ae-be-e5-a4-87/">查找网络设备</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>在新闻组上看到有人问如何通过名字查找某个网络设备，其实不难，首先想到的就是通过ioctl，示例代码见下：</p>
 <p>[c]<br>int get_interface(const char <em>interface)<br>{<br>    int sock = socket(PF_INET, SOCK_STREAM, 0);<br>    struct ifconf ifc;<br>    struct ifreq </em>ifr;<br>    int ret = -1;</p>
 <pre><code><span class="keyword">if</span> (sock &amp;lt; <span class="number">0</span>)
@@ -143,62 +108,37 @@ ifpsave = ifp = <span class="keyword">if</span>_nameindex();
 </code></pre><p>}<br>[/c]</p>
 <p>我查了一下glibc中的实现，发现在linux上其实如果不用netlink的话，if_nameindex()也就是对ioctl(…SIOCGIFCONF…)的一个包装，具体可参考sysdeps/unix/sysv/linux/if_index.c。netlink这个东西够奇怪的，在这里居然也能派上用场，有机会要研究研究～</p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Programming/">Programming</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2009/02/12/-e6-9f-a5-e6-89-be-e7-bd-91-e7-bb-9c-e8-ae-be-e5-a4-87/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2009/02/11/-e6-8d-ae-e8-af-b4-e6-98-af-e4-b8-96-e7-95-8c-e4-b8-8a-e6-9c-80-e5-a5-bd-e7-9a-84-e5-b7-a5-e4-bd-9c-e3-80-82-e3-80-82-e3-80-82/" title="据说是世界上最好的工作。。。" itemprop="url">据说是世界上最好的工作。。。</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2009-02-12T07:49:42.000Z" itemprop="datePublished"> Published Feb 11 2009</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-02-12T07:49:42.000Z"><a href="/2009/02/11/-e6-8d-ae-e8-af-b4-e6-98-af-e4-b8-96-e7-95-8c-e4-b8-8a-e6-9c-80-e5-a5-bd-e7-9a-84-e5-b7-a5-e4-bd-9c-e3-80-82-e3-80-82-e3-80-82/">Feb 11 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/02/11/-e6-8d-ae-e8-af-b4-e6-98-af-e4-b8-96-e7-95-8c-e4-b8-8a-e6-9c-80-e5-a5-bd-e7-9a-84-e5-b7-a5-e4-bd-9c-e3-80-82-e3-80-82-e3-80-82/">据说是世界上最好的工作。。。</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>猜猜是什么？科学家？高管？总统？都不是！是大堡礁岛屿看护员！</p>
 <p>为什么是世界上最好的呢？首先工作环境狠好！在几乎是天堂的旅游胜地工作——世界自然遗产大堡礁。然后是待遇狠高！半年就能拿到15万澳元！工作也轻松啊，喂个鱼，送个信什么的……此外住宿啊，交通费啊，上网什么的人家全都包！！美死了都，直流口水……那个旅游局真有钱……</p>
 <p>有兴趣的看<a href="http://www.islandreefjob.com/" target="_blank" rel="external">官方网站</a>的介绍吧：<a href="http://www.islandreefjob.com/about-the-job/responsibilities" target="_blank" rel="external">职位描述</a>，<a href="http://www.islandreefjob.com/#/about-the-job/employment" target="_blank" rel="external">待遇及挑选标准</a>，<a href="http://www.islandreefjob.com/#/about-the-job/application-selection-process" target="_blank" rel="external">挑选过程</a>。</p>
@@ -206,62 +146,37 @@ ifpsave = ifp = <span class="keyword">if</span>_nameindex();
 <p>P.S. 附关于程序员的冷笑话一则：</p>
 <p>——我是程序员。<br>——哦，程先生！<br>——客气了，叫我序员就好。</p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Life/">Life</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2009/02/11/-e6-8d-ae-e8-af-b4-e6-98-af-e4-b8-96-e7-95-8c-e4-b8-8a-e6-9c-80-e5-a5-bd-e7-9a-84-e5-b7-a5-e4-bd-9c-e3-80-82-e3-80-82-e3-80-82/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2009/02/10/-e3-80-8a-e4-b8-80-e6-97-a5-e9-87-8d-e7-94-9f-e3-80-8b/" title="《一日重生》" itemprop="url">《一日重生》</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2009-02-11T00:21:14.000Z" itemprop="datePublished"> Published Feb 10 2009</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-02-11T00:21:14.000Z"><a href="/2009/02/10/-e3-80-8a-e4-b8-80-e6-97-a5-e9-87-8d-e7-94-9f-e3-80-8b/">Feb 10 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/02/10/-e3-80-8a-e4-b8-80-e6-97-a5-e9-87-8d-e7-94-9f-e3-80-8b/">《一日重生》</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p><a href="http://www.douban.com/subject/2065564/" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
 <p>这本书写得很别致，很短小，而且文字并不华丽，但却直指心灵深处，读完后内心深处有一种莫名的触动。</p>
 <p>书中的故事无疑是虚构的，但它却不离谱。一个堕落的人走上了自杀的道路，刻意制造了一场车祸，然后昏迷中梦到和逝去的母亲重逢，并一起度过一天，在这一天中还反复穿插着母亲还活着时自己的点点滴滴，对自己的行为感到后悔不已……</p>
@@ -274,62 +189,37 @@ ifpsave = ifp = <span class="keyword">if</span>_nameindex();
 <p>“<strong>一个因为母亲而感到羞愧的孩子，只不过是个没有长大的孩子罢了。</strong>”<br>多为爸妈做些什么，相对于他们的付出，其实他们要求的并不多。</p>
 </blockquote>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Book-Reviews/">Book Reviews</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2009/02/10/-e3-80-8a-e4-b8-80-e6-97-a5-e9-87-8d-e7-94-9f-e3-80-8b/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2009/02/08/c-e4-b8-ad-e7-9a-84-e5-ae-8f-e9-a2-84-e5-a4-84-e7-90-86/" title="C中的宏预处理" itemprop="url">C中的宏预处理</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2009-02-09T07:43:33.000Z" itemprop="datePublished"> Published Feb 8 2009</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-02-09T07:43:33.000Z"><a href="/2009/02/08/c-e4-b8-ad-e7-9a-84-e5-ae-8f-e9-a2-84-e5-a4-84-e7-90-86/">Feb 8 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/02/08/c-e4-b8-ad-e7-9a-84-e5-ae-8f-e9-a2-84-e5-a4-84-e7-90-86/">C中的宏预处理</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>宏的预处理这个坑看起来浅，其实还蛮深的。它也是最容易被忽视的几个地方之一。这里斗胆来谈谈，说实话，在写这句话时我也不清楚这坑究竟有多深，没关系，我们摸着石头过河，一起看看到最后这坑能有多深！同时这篇文章也将会是《C语言编程艺术》中的一部分。</p>
 <p>从一个相对简单的例子说起吧。<br>[c]</p>
 <h1 id="define_f(a,b)_a##b">define f(a,b) a##b</h1>
@@ -381,62 +271,37 @@ ifpsave = ifp = <span class="keyword">if</span>_nameindex();
 <p>综上，我们可以总结出两条重要的宏替换规则：1)再复杂的宏也只是被扫描两遍，而且递归是不允许发生的，即使在第2遍时；2)一个替换完成后如果还没扫描完，要从被替换的那里继续。</p>
 <p>（全文完）</p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Programming/">Programming</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2009/02/08/c-e4-b8-ad-e7-9a-84-e5-ae-8f-e9-a2-84-e5-a4-84-e7-90-86/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2009/02/07/-e5-ad-a6-e8-ae-a1-e7-ae-97-e6-9c-ba-e5-a4-aa-e6-b2-a1-e5-89-8d-e9-80-94-e4-ba-86-e3-80-82-e3-80-82-e3-80-82/" title="学计算机太没前途了。。。" itemprop="url">学计算机太没前途了。。。</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2009-02-08T06:52:05.000Z" itemprop="datePublished"> Published Feb 7 2009</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-02-08T06:52:05.000Z"><a href="/2009/02/07/-e5-ad-a6-e8-ae-a1-e7-ae-97-e6-9c-ba-e5-a4-aa-e6-b2-a1-e5-89-8d-e9-80-94-e4-ba-86-e3-80-82-e3-80-82-e3-80-82/">Feb 7 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/02/07/-e5-ad-a6-e8-ae-a1-e7-ae-97-e6-9c-ba-e5-a4-aa-e6-b2-a1-e5-89-8d-e9-80-94-e4-ba-86-e3-80-82-e3-80-82-e3-80-82/">学计算机太没前途了。。。</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>靠，我算是看透了，其实学计算机是很没前途的！不信你接着往下看。</p>
 <p>首先吧，你要是出去给美女说你是学计算机的，美女八成都会说：计算机高手啊，你快来帮我看看我的电脑怎么老是那么慢啊？而且该美女肯定是在使用windows。所以啊，你看，在美女眼里，计算机高手就等于修电脑的，能把她的电脑搞定你就是高手，如果搞不定，你就是懂再多也没用，什么Linux啊，C语言啊，C++啊，美女听不懂，在她眼里皆为0！你搞定了，下次她修电脑基本上还得找你，你搞不定，八成就开始疏远你了……</p>
 <p>你电脑修要是得好，连邻居的大妈都会上门来找你，然后出去逢人就夸：你看啊，人家xxx家的娃电脑学得就是好啊，我们家的电脑出毛病了人家一下子给就修好了！所以啊，学计算机是要学，但不是学这个专业的，会修电脑就成，多了没用！你Linux学得再牛逼再好邻居的大妈都不会知道！</p>
@@ -444,62 +309,37 @@ ifpsave = ifp = <span class="keyword">if</span>_nameindex();
 <p>最后，计算机学得牛逼的基本上都是geek到家的人，虽然我还没学到家但已经先geek到家了。我发现啊，在这个圈里基本上就没有美女，这个圈附近的圈里还是没多少，这方圆几十里之内无美女啊。而且呢，你越是geek你就越找不到美女……这或许该叫“牛与美女不可兼得”吧？</p>
 <p>这是tmd什么世道啊！！</p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Life/">Life</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2009/02/07/-e5-ad-a6-e8-ae-a1-e7-ae-97-e6-9c-ba-e5-a4-aa-e6-b2-a1-e5-89-8d-e9-80-94-e4-ba-86-e3-80-82-e3-80-82-e3-80-82/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2009/02/03/-e8-bf-98-e8-b0-88-e6-95-b0-e7-bb-84/" title="还谈数组" itemprop="url">还谈数组</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2009-02-04T07:59:39.000Z" itemprop="datePublished"> Published Feb 3 2009</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-02-04T07:59:39.000Z"><a href="/2009/02/03/-e8-bf-98-e8-b0-88-e6-95-b0-e7-bb-84/">Feb 3 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/02/03/-e8-bf-98-e8-b0-88-e6-95-b0-e7-bb-84/">还谈数组</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p><strong>作者：西邮 王聪</strong></p>
 <p>《C专家编程》中曾两次谈到数组，可是我觉得还不够，仍然没有把数组的本质给说出来。这里我想来个了断，终止一切关于数组和指针关系的讨论。:-)</p>
 <p>为了先让你困惑一下，先看下面的程序：<br>[c]</p>
@@ -536,62 +376,37 @@ ifpsave = ifp = <span class="keyword">if</span>_nameindex();
 <p>你看，语法上的问题也只能在语法上解决！这叫什么来着？“以其人之道还治其人之身”！</p>
 <p><strong>以上纯属一家之言，读后请自己三思！！</strong></p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Programming/">Programming</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2009/02/03/-e8-bf-98-e8-b0-88-e6-95-b0-e7-bb-84/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2009/02/02/c-string-literals/" title="C++ string literals" itemprop="url">C++ string literals</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2009-02-03T04:39:23.000Z" itemprop="datePublished"> Published Feb 2 2009</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-02-03T04:39:23.000Z"><a href="/2009/02/02/c-string-literals/">Feb 2 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/02/02/c-string-literals/">C++ string literals</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>从一个例子谈起，下面的例子摘自《C++ Templates》。<br>[cpp]</p>
 <h1 id="include">include</h1>
 <h1 id="include-1">include</h1>
@@ -614,62 +429,37 @@ ifpsave = ifp = <span class="keyword">if</span>_nameindex();
 <p>而直接传递呢？直接传递其实也是const char[]！我没开玩笑！想想啊，它的类型怎么能会突然就变呢？不可能！问题是为什么typeid看到的是const char *？很简单啊，因为这是函数！当数组作为函数参数传递时会退化为指针，我们耳熟能详的这句话在C++里也适用啊！所以，这里拧把的不是模板，而是引用，别被模板给吓怕了！</p>
 <p>如果你仔细看看原书那一节，你会发现还有个问题比较拧把：不同长度的同类型数组其实也不是一个类型，这也不难理解，放C里看看你就知道了：C里的一切类型皆是连续的内存块，数组更是，不同长度的同类型数组长度还是不一样啊，怎么能是同一个类型呢？所以这就有问题了，不同长度的字符串常量还不能作为同一个类型直接传递进模板了？如果我们用引用传递的话，是，可如果不用的话就行了，这正是解决方法！或者更干脆，直接用std::string。</p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Programming/">Programming</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2009/02/02/c-string-literals/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2009/02/01/virtual-function-e7-9a-84-e4-be-8b-e5-ad-90/" title="virtual function 的例子" itemprop="url">virtual function 的例子</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2009-02-02T07:58:33.000Z" itemprop="datePublished"> Published Feb 1 2009</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-02-02T07:58:33.000Z"><a href="/2009/02/01/virtual-function-e7-9a-84-e4-be-8b-e5-ad-90/">Feb 1 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/02/01/virtual-function-e7-9a-84-e4-be-8b-e5-ad-90/">virtual function 的例子</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>本来这没什么可说的，C++中的虚函数不难理解，可是我看到不少教程中的例子给得不行，多说一句得。</p>
 <p>那些教程给出的是类似下面的例子：</p>
 <p>Base *p = new Derived;<br>p-&gt;virt_func();</p>
@@ -688,62 +478,37 @@ ifpsave = ifp = <span class="keyword">if</span>_nameindex();
 <span class="keyword">return</span> <span class="number">0</span>;
 </code></pre><p>}<br>[/cpp] </p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Programming/">Programming</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2009/02/01/virtual-function-e7-9a-84-e4-be-8b-e5-ad-90/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2009/01/31/-e3-80-8a-e7-a8-bb-e9-a6-99-e3-80-8b/" title="《稻香》" itemprop="url">《稻香》</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2009-02-01T07:59:54.000Z" itemprop="datePublished"> Published Jan 31 2009</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-02-01T07:59:54.000Z"><a href="/2009/01/31/-e3-80-8a-e7-a8-bb-e9-a6-99-e3-80-8b/">Jan 31 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/01/31/-e3-80-8a-e7-a8-bb-e9-a6-99-e3-80-8b/">《稻香》</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p><img src="/images/" alt="" title="稻香"></p>
 <p>周杰伦的《稻香》歌词填得确实不错，有励志的味道。我一开始还以为又是方文山写的呢，没想到居然是周杰伦自己，看来周董的填词水平大有长进啊。</p>
 <p>歌词里告诉我们要珍惜现在所拥有的，懂得知足，“知足者常乐”。</p>
@@ -751,62 +516,37 @@ ifpsave = ifp = <span class="keyword">if</span>_nameindex();
 <p>对这个世界如果你有太多的抱怨<br>跌倒了就不敢继续往前走<br>为什么人要这么的脆弱堕落<br>请你打开电视看看<br>多少人为生命在努力勇敢的走下去<br><strong>我们是不是该知足<br>珍惜一切就算没有拥有 </strong><br>不要放弃自己的梦想，追逐梦想的目的不是为了功成名就，而是为了让自己快乐，那才是真正的意义。<br>不要这么容易就想放弃 就像我说的<br>追不到的梦想换个梦不就得了<br>为自己的人生鲜艳上色<br>先把爱涂上喜欢的颜色<br><strong>笑一个吧 功成名就不是目的<br>让自己快乐快乐这才叫做意义</strong><br>不要失去自己的童真，当然还有追忆美好童年的意思。每个人都有自己难以忘怀的美好的回忆！<br>童年的纸飞机<br>现在终于飞回我手里<br><strong>所谓的那快乐<br>赤脚在田里追蜻蜓追到累了<br>偷摘水果被蜜蜂给叮到怕了</strong><br>谁在偷笑呢<br>我靠着稻草人吹着风唱着歌睡着了<br>午后吉它在虫鸣中更清脆<br>阳光洒在路上就不怕心碎<br>童年的纸飞机可以飞回来，童年的阿娇却再也回不来了……</p>
 </blockquote>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Collection/">Collection</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2009/01/31/-e3-80-8a-e7-a8-bb-e9-a6-99-e3-80-8b/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2009/01/30/returing-void/" title="Returning void" itemprop="url">Returning void</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2009-01-31T04:34:37.000Z" itemprop="datePublished"> Published Jan 30 2009</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-01-31T04:34:37.000Z"><a href="/2009/01/30/returing-void/">Jan 30 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/01/30/returing-void/">Returning void</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>在一个 void 函数中返回void是不是允许的？这是一个比较有意思的问题。为此我查了一下C99和C++标准，它们的规定是不同的。</p>
 <p>在标准C中，这是不允许的，参见C99 6.8.6.4：</p>
 <blockquote>
@@ -815,213 +555,109 @@ ifpsave = ifp = <span class="keyword">if</span>_nameindex();
 <p>void foo() {}</p>
 <p>int main()<br>{<br>        func(foo);<br>        return 0;<br>}<br>[/cpp] </p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Programming/">Programming</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2009/01/30/returing-void/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-
-  <nav id="page-nav" class="clearfix">
-    <a class="extend prev" rel="prev" href="/page/28/"><span></span>Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/27/">27</a><a class="page-number" href="/page/28/">28</a><span class="page-number current">29</span><a class="page-number" href="/page/30/">30</a><a class="page-number" href="/page/31/">31</a><span class="space">&hellip;</span><a class="page-number" href="/page/71/">71</a><a class="extend next" rel="next" href="/page/30/">Next<span></span></a>
-  </nav>
-
-</div>
-      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
-
-<div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
-<aside class="clearfix">
-
-  
-<div class="categorieslist">
-	<p class="asidetitle">Categories</p>
-		<ul>
-		
-			<li><a href="/categories/Book-Reviews/" title="Book Reviews">Book Reviews<sup>18</sup></a></li>
-		
-			<li><a href="/categories/China/" title="China">China<sup>2</sup></a></li>
-		
-			<li><a href="/categories/Collection/" title="Collection">Collection<sup>25</sup></a></li>
-		
-			<li><a href="/categories/Life/" title="Life">Life<sup>324</sup></a></li>
-		
-			<li><a href="/categories/Linux-Application/" title="Linux Application">Linux Application<sup>73</sup></a></li>
-		
-			<li><a href="/categories/Linux-Kernel/" title="Linux Kernel">Linux Kernel<sup>64</sup></a></li>
-		
-			<li><a href="/categories/Love/" title="Love">Love<sup>6</sup></a></li>
-		
-			<li><a href="/categories/Movies/" title="Movies">Movies<sup>19</sup></a></li>
-		
-			<li><a href="/categories/Programming/" title="Programming">Programming<sup>152</sup></a></li>
-		
-			<li><a href="/categories/Science-Fiction/" title="Science Fiction">Science Fiction<sup>8</sup></a></li>
-		
-			<li><a href="/categories/Travel/" title="Travel">Travel<sup>19</sup></a></li>
-		
-		</ul>
-</div>
-
-
-  
-<div class="tagslist">
-	<p class="asidetitle">Tags</p>
-		<ul class="clearfix">
-		
-			<li><a href="/tags/vim/" title="vim">vim<sup>1</sup></a></li>
-		
-			<li><a href="/tags/joke/" title="joke">joke<sup>1</sup></a></li>
-		
-			<li><a href="/tags/geek/" title="geek">geek<sup>1</sup></a></li>
-		
-			<li><a href="/tags/unix/" title="unix">unix<sup>1</sup></a></li>
-		
-			<li><a href="/tags/signal/" title="signal">signal<sup>1</sup></a></li>
-		
-			<li><a href="/tags/linux/" title="linux">linux<sup>1</sup></a></li>
-		
-			<li><a href="/tags/handling/" title="handling">handling<sup>1</sup></a></li>
-		
-		</ul>
-</div>
-
-
-  <div class="linkslist">
-  <p class="asidetitle">Links</p>
-    <ul>
+    <footer>
+      
         
-    </ul>
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+<nav id="pagination">
+  
+    <a href="/page/28/" class="alignleft prev">Prev</a>
+  
+  
+    <a href="/page/30/" class="alignright next">Next</a>
+  
+  <div class="clearfix"></div>
+</nav></div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:wangcong.org">
+  </form>
 </div>
 
-  <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Book-Reviews/">Book Reviews</a><small>18</small></li>
+  
+    <li><a href="/categories/China/">China</a><small>2</small></li>
+  
+    <li><a href="/categories/Collection/">Collection</a><small>25</small></li>
+  
+    <li><a href="/categories/Life/">Life</a><small>324</small></li>
+  
+    <li><a href="/categories/Linux-Application/">Linux Application</a><small>73</small></li>
+  
+    <li><a href="/categories/Linux-Kernel/">Linux Kernel</a><small>64</small></li>
+  
+    <li><a href="/categories/Love/">Love</a><small>6</small></li>
+  
+    <li><a href="/categories/Movies/">Movies</a><small>19</small></li>
+  
+    <li><a href="/categories/Programming/">Programming</a><small>152</small></li>
+  
+    <li><a href="/categories/Science-Fiction/">Science Fiction</a><small>8</small></li>
+  
+    <li><a href="/categories/Travel/">Travel</a><small>19</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/geek/">geek</a><small>1</small></li>
+  
+    <li><a href="/tags/handling/">handling</a><small>1</small></li>
+  
+    <li><a href="/tags/joke/">joke</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/tags/signal/">signal</a><small>1</small></li>
+  
+    <li><a href="/tags/unix/">unix</a><small>1</small></li>
+  
+    <li><a href="/tags/vim/">vim</a><small>1</small></li>
+  
+  </ul>
 </div>
 
 </aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2017 Cong Wang
+  
 </div>
-    </div>
-    <footer><div id="footer" >
-	
-	
-	<div class="social-font" class="clearfix">
-		
-		
-		<a href="https://github.com/congwang" target="_blank" class="icon-github" title="github"></a>
-		
-		
-		
-		<a href="https://twitter.com/conglinux" target="_blank" class="icon-twitter" title="twitter"></a>
-		
-		
-		
-		
-		
-		
-		
-	</div>
-		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2016 
-		
-		<a href="http://wangcong.org/about" target="_blank" title="Cong Wang">Cong Wang</a>
-		
-		</p>
-</div>
-</footer>
-    <script src="/js/jquery-2.0.3.min.js"></script>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 <script src="/js/jquery.imagesloaded.min.js"></script>
 <script src="/js/gallery.js"></script>
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.navbar').click(function(){
-    $('header nav').toggleClass('shownav');
-  });
-  var myWidth = 0;
-  function getSize(){
-    if( typeof( window.innerWidth ) == 'number' ) {
-      myWidth = window.innerWidth;
-    } else if( document.documentElement && document.documentElement.clientWidth) {
-      myWidth = document.documentElement.clientWidth;
-    };
-  };
-  var m = $('#main'),
-      a = $('#asidepart'),
-      c = $('.closeaside'),
-      o = $('.openaside');
-  $(window).resize(function(){
-    getSize(); 
-    if (myWidth >= 1024) {
-      $('header nav').removeClass('shownav');
-    }else
-    {
-      m.removeClass('moveMain');
-      a.css('display', 'block').removeClass('fadeOut');
-      o.css('display', 'none');
-        
-    }
-  });
-  c.click(function(){
-    a.addClass('fadeOut').css('display', 'none');
-    o.css('display', 'block').addClass('fadeIn');
-    m.addClass('moveMain');
-  });
-  o.click(function(){
-    o.css('display', 'none').removeClass('beforeFadeIn');
-    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
-    m.removeClass('moveMain');
-  });
-  $(window).scroll(function(){
-    o.css("top",Math.max(80,260-$(this).scrollTop()));
-  });
-});
-</script>
-
-
-
-
 
 <script type="text/javascript">
-
 var disqus_shortname = 'disqus_ciEwcJAF0E';
 
-(function(){
-  var dsq = document.createElement('script');
-  dsq.type = 'text/javascript';
-  dsq.async = true;
-  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-}());
 (function(){
   var dsq = document.createElement('script');
   dsq.type = 'text/javascript';
@@ -1033,33 +669,13 @@ var disqus_shortname = 'disqus_ciEwcJAF0E';
 
 
 
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
 
-
-
-
-
-<!-- Analytics Begin -->
-
-
-
-
-
-<!-- Analytics End -->
-
-<!-- Totop Begin -->
-
-	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
-	</div>
-	<script src="/js/totop.js"></script>
-
-<!-- Totop End -->
-
-<!-- MathJax Begin -->
-<!-- mathjax config similar to math.stackexchange -->
-
-
-<!-- MathJax End -->
-
-  </body>
- </html>
+</body>
+</html>

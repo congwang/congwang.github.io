@@ -1,100 +1,65 @@
-
- <!DOCTYPE HTML>
-<html >
+<!DOCTYPE HTML>
+<html>
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   
-    <title>A Geek&#39;s Page</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
-    
-    <meta name="author" content="Cong Wang">
-    
-    
-    <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="A Geek's Page">
-<meta property="og:url" content="http://wangcong.org/page/3/">
-<meta property="og:site_name" content="A Geek's Page">
-<meta property="og:description">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="A Geek's Page">
-<meta name="twitter:description">
-<meta name="twitter:creator" content="@conglinux">
+  <title>Page 3 | A Geek&#39;s Page</title>
+  <meta name="author" content="Cong Wang">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
+  
+  <meta property="og:site_name" content="A Geek&#39;s Page"/>
 
-    
-    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
-    
-    
-    <link rel="icon" href="/img/favicon.ico">
-    
-    
-    <link rel="apple-touch-icon" href="/img/jacman.jpg">
-    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
-    
-    <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
 
 </head>
 
-  <body>
-    <header>
-      <div>
-		
-			<div id="imglogo">
-				<a href="/"><img src="/img/logo.png" alt="A Geek&#39;s Page" title="A Geek&#39;s Page"/></a>
-			</div>
-			
-			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="A Geek&#39;s Page">A Geek&#39;s Page</a></h1>
-				<h2 class="blog-motto"></h2>
-			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
-			</a></div>
-			<nav class="animated">
-				<ul>
-					<ul>
-					 
-						<li><a href="/">Home</a></li>
-					
-						<li><a href="/archives">Archives</a></li>
-					
-						<li><a href="/about-2">About</a></li>
-					
-					<li>
- 					
-					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
-						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
-						<input type="hidden" name="q" value="site:wangcong.org">
-					</form>
-					
-					</li>
-				</ul>
-			</nav>			
-</div>
-    </header>
-    <div id="container">
-      <div id="main">
 
-   
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">A Geek&#39;s Page</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
     
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
+      <li><a href="/">Home</a></li>
     
-      <a href="/2012/11/30/-e5-8f-91-e9-80-81-igmp-e5-8c-85-e7-9a-84-perl-e8-84-9a-e6-9c-ac/" title="发送 IGMP 包的 Perl 脚本" itemprop="url">发送 IGMP 包的 Perl 脚本</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2012-12-01T07:22:20.000Z" itemprop="datePublished"> Published Nov 30 2012</time>
+      <li><a href="/archives">Archives</a></li>
     
-  </p>
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
 </header>
-    <div class="article-content">
-        
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2012-12-01T07:22:20.000Z"><a href="/2012/11/30/-e5-8f-91-e9-80-81-igmp-e5-8c-85-e7-9a-84-perl-e8-84-9a-e6-9c-ac/">Nov 30 2012</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2012/11/30/-e5-8f-91-e9-80-81-igmp-e5-8c-85-e7-9a-84-perl-e8-84-9a-e6-9c-ac/">发送 IGMP 包的 Perl 脚本</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>因为 Fedora 上的 scapy （2.2.0）还不支持 IGMP，所以我用 Perl 写了一个发送 IGMP 的脚本。最初代码来自<a href="http://code.google.com/p/perl-igmp-querier/" target="_blank" rel="external">这里</a>，原脚本只能发送 IGMP query，我添加了 IGMP leave 和一些命令行选项。用法如下：</p>
 <pre>
 % ./igmp.pl -q 192.168.10.2 224.0.0.22
@@ -128,62 +93,37 @@
 <p>send(RAW,$packet,0,$dest);<br>send(RAW,$packet,0,$dest);</p>
 <p>[/perl] </p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Programming/">Programming</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2012/11/30/-e5-8f-91-e9-80-81-igmp-e5-8c-85-e7-9a-84-perl-e8-84-9a-e6-9c-ac/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2012/11/22/-e4-b8-a4-e4-b8-aa-e7-b2-be-e5-bd-a9-e7-9a-84-e6-af-94-e5-96-bb/" title="两个精彩的比喻" itemprop="url">两个精彩的比喻</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2012-11-23T04:21:35.000Z" itemprop="datePublished"> Published Nov 22 2012</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2012-11-23T04:21:35.000Z"><a href="/2012/11/22/-e4-b8-a4-e4-b8-aa-e7-b2-be-e5-bd-a9-e7-9a-84-e6-af-94-e5-96-bb/">Nov 22 2012</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2012/11/22/-e4-b8-a4-e4-b8-aa-e7-b2-be-e5-bd-a9-e7-9a-84-e6-af-94-e5-96-bb/">两个精彩的比喻</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>我们知道，计算机中有很多概念并不容易理解，有些时候一个好的比喻能胜过很多句解释。下面两个是我看到的两个很精彩的比喻，拿出来和大家分享一下。</p>
 <p>第一比喻是关于吞吐量（throughput）和延迟（latency）的。如果你要搞网络性能优化，这两个概念是你必须要知道的，它们看似简单实则不是。我相信包括我在内的很多人都曾经认为大的吞吐量就意味着低延迟，高延迟就意味着吞吐量变小。下面的比喻可以解释这种观点根本不对。该比喻来自<a href="http://techdiscuss.wordpress.com/2010/01/21/throughput-and-latency/" target="_blank" rel="external">这里</a>，我来做个大体意译（非逐字翻译）。</p>
 <p>我们可以把网络发送数据包比喻成去街边的 ATM 取钱。每一个人从开始使用 ATM 到取钱结束整个过程都需要一分钟，所以这里的延迟是60秒，那吞吐量呢？当然是 1/60 人/秒。现在银行升级了他们的 ATM 机操作系统，每个人只要30秒就可以完成取款了！延迟是 30秒，吞吐量是 1/30 人/秒。很好理解，可是前面的问题依然存在对不对？别慌，看下面。</p>
@@ -201,62 +141,37 @@
 <p>很好理解对嘛？那么它怎么解释二元信号量呢？也就是当这个厕所里面只能容纳一个人的时候，每个人进去的时候都要把门口的牌子翻到“已满”，出去的时候翻到“可用”。它和互斥锁的区别马上就可以看出来了，翻动的牌子在外面可以被别人翻的，而锁住的锁只有拿钥匙的人才可以开！</p>
 <p>当然了，信号量之所以翻译成“信号”，还是有道理的，因为它（厕所门口的牌子）标示的是资源（厕所空位）的状态，而互斥锁就是锁，它实实在在地锁住了资源。这在生产者消费者的情况下区别更明显。</p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Linux-Kernel/">Linux Kernel</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2012/11/22/-e4-b8-a4-e4-b8-aa-e7-b2-be-e5-bd-a9-e7-9a-84-e6-af-94-e5-96-bb/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2012/11/17/-e6-b7-b1-e5-85-a5-e7-90-86-e8-a7-a3-vxlan/" title="深入理解 VXLAN" itemprop="url">深入理解 VXLAN</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2012-11-18T06:03:14.000Z" itemprop="datePublished"> Published Nov 17 2012</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2012-11-18T06:03:14.000Z"><a href="/2012/11/17/-e6-b7-b1-e5-85-a5-e7-90-86-e8-a7-a3-vxlan/">Nov 17 2012</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2012/11/17/-e6-b7-b1-e5-85-a5-e7-90-86-e8-a7-a3-vxlan/">深入理解 VXLAN</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p><a href="http://tools.ietf.org/html/draft-mahalingam-dutt-dcops-vxlan-02" target="_blank" rel="external">VXLAN</a> 是非常新的一个 tunnel 技术，它是一个 L2 tunnel。Linux 内核的 upstream 中也刚刚加入 VXLAN 的实现。相比 GRE tunnel 它有着很的扩展性，同时解决了很多其它问题。</p>
 <p><strong>一，GRE tunnel 的不足</strong></p>
 <p>网络很多介绍 VXLAN 的文章都没有直接告诉你相比较 GRE tunnel，VXLAN 的优势在哪里，或者说 GRE tunnel 的不足在哪里。为了更好的了解 VXLAN，我们有必要看一下 GRE tunnel 的不足。</p>
@@ -382,62 +297,37 @@ skb<span class="subst">-&amp;</span><span class="literal">gt</span>;ip_summed <s
 <p><strong>参考资料：</strong></p>
 <p>1. <a href="http://tools.ietf.org/html/draft-mahalingam-dutt-dcops-vxlan-02" target="_blank" rel="external">http://tools.ietf.org/html/draft-mahalingam-dutt-dcops-vxlan-02</a><br>2. <a href="http://blogs.cisco.com/datacenter/digging-deeper-into-vxlan/" target="_blank" rel="external">http://blogs.cisco.com/datacenter/digging-deeper-into-vxlan/</a><br>3. <a href="http://www.yellow-bricks.com/2012/11/02/vxlan-use-cases/" target="_blank" rel="external">http://www.yellow-bricks.com/2012/11/02/vxlan-use-cases/</a><br>4. <a href="http://www.borgcube.com/blogs/2011/11/vxlan-primer-part-1/" target="_blank" rel="external">http://www.borgcube.com/blogs/2011/11/vxlan-primer-part-1/</a><br>5. <a href="http://www.borgcube.com/blogs/2012/03/vxlan-primer-part-2-lets-get-physical/" target="_blank" rel="external">http://www.borgcube.com/blogs/2012/03/vxlan-primer-part-2-lets-get-physical/</a><br>6. <a href="http://it20.info/2012/05/typical-vxlan-use-case/" target="_blank" rel="external">http://it20.info/2012/05/typical-vxlan-use-case/</a></p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Linux-Kernel/">Linux Kernel</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2012/11/17/-e6-b7-b1-e5-85-a5-e7-90-86-e8-a7-a3-vxlan/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2012/11/13/-e5-9c-a8-openvswitch-e4-b8-8a-e9-85-8d-e7-bd-ae-gre-tunnel/" title="在 openvswitch 上配置 GRE tunnel" itemprop="url">在 openvswitch 上配置 GRE tunnel</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2012-11-14T03:04:41.000Z" itemprop="datePublished"> Published Nov 13 2012</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2012-11-14T03:04:41.000Z"><a href="/2012/11/13/-e5-9c-a8-openvswitch-e4-b8-8a-e9-85-8d-e7-bd-ae-gre-tunnel/">Nov 13 2012</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2012/11/13/-e5-9c-a8-openvswitch-e4-b8-8a-e9-85-8d-e7-bd-ae-gre-tunnel/">在 openvswitch 上配置 GRE tunnel</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>如果你是用 openvswitch 内置的 GRE tunnel，那么配置很简单，基本上就一条命令：</p>
 <pre>
 ovs-vsctl add-port br0 gre0 -- set interface gre0 type=gre options:remote_ip=192.168.1.10
@@ -506,62 +396,37 @@ PING 192.168.1.2 (192.168.1.2) 56(84) bytes of data.
 4 packets transmitted, 4 received, 0% packet loss, time 3823ms
 rtt min/avg/max/mdev = 0.669/140.860/561.275/242.726 ms
 </pre>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Linux-Application/">Linux Application</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2012/11/13/-e5-9c-a8-openvswitch-e4-b8-8a-e9-85-8d-e7-bd-ae-gre-tunnel/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2012/11/08/-e6-b7-b1-e5-85-a5-e7-90-86-e8-a7-a3-gre-tunnel/" title="深入理解 GRE tunnel" itemprop="url">深入理解 GRE tunnel</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2012-11-09T03:05:22.000Z" itemprop="datePublished"> Published Nov 8 2012</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2012-11-09T03:05:22.000Z"><a href="/2012/11/08/-e6-b7-b1-e5-85-a5-e7-90-86-e8-a7-a3-gre-tunnel/">Nov 8 2012</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2012/11/08/-e6-b7-b1-e5-85-a5-e7-90-86-e8-a7-a3-gre-tunnel/">深入理解 GRE tunnel</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>我以前写过一篇<a href="http://wangcong.org/blog/archives/1683" target="_blank" rel="external">介绍 tunnel 的文章</a>，只是做了大体的介绍。里面多数 tunnel 是很容易理解的，因为它们多是一对一的，换句话说，是直接从一端到另一端。比如 IPv6 over IPv4 的 tunnel，也就是 SIT，它的原理如下图所示：</p>
 <p><a href="http://wangcong.org/blog/wp-content/uploads/2012/11/sit_tunnel1.jpg" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
 <p>显然，除了端点的 host A 和 host B之外，中间经过的任何设备都是看不到里面的 IPv6 的头，对于它们来说，经过 sit 发出的包和其它的 IPv4 的包没有任何区别。</p>
@@ -582,62 +447,37 @@ rtt min/avg/max/mdev = 0.669/140.860/561.275/242.726 ms
 <p>GRE header</p>
 <p><a href="http://wangcong.org/blog/wp-content/uploads/2012/11/gre_header.png" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Linux-Kernel/">Linux Kernel</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2012/11/08/-e6-b7-b1-e5-85-a5-e7-90-86-e8-a7-a3-gre-tunnel/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2012/11/03/tsq-e7-9a-84-e5-8e-9f-e7-90-86/" title="How TSQ works" itemprop="url">How TSQ works</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2012-11-04T00:42:36.000Z" itemprop="datePublished"> Published Nov 3 2012</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2012-11-04T00:42:36.000Z"><a href="/2012/11/03/tsq-e7-9a-84-e5-8e-9f-e7-90-86/">Nov 3 2012</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2012/11/03/tsq-e7-9a-84-e5-8e-9f-e7-90-86/">How TSQ works</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>通常看到 <a href="http://lwn.net/Articles/507065/" target="_blank" rel="external">TCP Small Queue</a> （简称 TSQ）之后第一问题是，既然我们已经有 tcp_wmem 了，为何还需要一个新的 sysctl？</p>
 <p>这个问题是理解 TSQ 的关键，其实 tcp_wmem 仅仅是从 TCP socket 层限制队列（或 buffer）中最多可以 queue 多少数据包，而实际上，一个包从 TCP 层发出到最后到达网卡，中间还经历了很多个 queue，TCP socket 只是其中一层罢了。而 TSQ 用了一个非常聪明的技巧来限制在所有这些 queue 中的包，从而降低 latency。</p>
 <p><a href="http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=46d3ceabd8d98ed0ad10f20c595ca784e34786c5" target="_blank" rel="external">TSQ 的代码</a>中最关键的一个地方是它实现了一个新的 skb destructor，也就是 tcp_wfree()，看它的定义：</p>
@@ -692,62 +532,37 @@ rtt min/avg/max/mdev = 0.669/140.860/561.275/242.726 ms
 <p>现在，我们从总体上可以看出 TSQ 的用意了：当发送的包超过 sysctl_tcp_limit_output_bytes 时，就会发生抖动（throttle），这时就会把包推迟发送，推迟到什么时候呢？当然是该队列有空闲的时候！那么什么时候有空闲呢？包被丢弃的时候！内核发送的包是在即将被丢弃的时候（忽略tasklet，用tasklet仅仅是因为skb destructor 中不能进行发送），用户层发送的包则是关闭 socket 的时候，这种时候 TSQ 会有新的空间，所以可以重新入队。</p>
 <p>可见，TSQ 的聪明之处在于，它虽然有自己的所谓队列，但并没有计算该队列的长度，而是巧妙地利用了内核中几个关键点来判断何时可以入队！这当然需要对 TCP 实现非常熟悉才可以，由此亦可见作者水平之高。</p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Linux-Kernel/">Linux Kernel</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2012/11/03/tsq-e7-9a-84-e5-8e-9f-e7-90-86/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2012/10/30/accept-ra-e7-9a-84-e4-b8-80-e4-b8-aa-e4-be-8b-e5-ad-90/" title="accept_ra 的一个例子" itemprop="url">accept_ra 的一个例子</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2012-10-30T23:55:22.000Z" itemprop="datePublished"> Published Oct 30 2012</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2012-10-30T23:55:22.000Z"><a href="/2012/10/30/accept-ra-e7-9a-84-e4-b8-80-e4-b8-aa-e4-be-8b-e5-ad-90/">Oct 30 2012</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2012/10/30/accept-ra-e7-9a-84-e4-b8-80-e4-b8-aa-e4-be-8b-e5-ad-90/">accept_ra 的一个例子</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>在 IPv6 中，Router Advertisement （简称 RA）是很关键的一个 ICMP 包，stateless autoconf 就是靠 RA 配置 IP 地址的，主机发送Router Solicitation（RS）广播，有点类似于 IPv4 中的 DHCP request，路由器就会回应 RA，类似于 DHCP reply。不同的是，DHCP 是 stateful 的，因为 DHCP 服务器必须维持一个地址表，而 IPv6 的路由器却不需要，所以是无状态的，而且 RA 的广播是周期性的。</p>
 <p>以上是技术背景。显然，一般情况下你是要接受这个包的。而我遇到一种情况却不得不禁止掉这个选项。</p>
 <p>情况是这样的，两台主机通过一个交换机连接，现在我们修改两台主机以及交换机的 MTU 为 9000，来发送大小为 8000 的 <a href="http://en.wikipedia.org/wiki/Jumbo_frame" target="_blank" rel="external">Jumbo Frame</a>，IPv4 一切正常，可是到了 IPv6 下面却不行了，会收到 ICMPV6_PKT_TOOBIG。</p>
@@ -758,62 +573,37 @@ rtt min/avg/max/mdev = 0.669/140.860/561.275/242.726 ms
 <p>好了，既然我们修改了主机的 MTU，那么 PMTU 也需要更新，尤其是 IPv6 路由表中的 MTU。幸运的是，这个是由内核自动完成的，通过 NETDEV_CHANGEMTU 这个异步通知完成。<code>ip -6 r s</code> 也可以看出对应的 MTU 确实变成了 9000，但是，不一会儿我就发现该 MTU 还会自动变会成之前的 1500。这很奇怪，然后我就捕捉一些包看看，发现原来每当收到 RA 的时候这个 MTU 就会变化！不用看代码你也能马上理解，RA 里肯定也包含了一个 router 的 MTU，这个 MTU 是 1500，所以 PMTU 才会跳回到 1500！</p>
 <p>可是我们不是已经修改交换机的 MTU 了，为什么它还会发出 RA (MTU=1500) 的广播？连接上交换机一看，jumbo MTU 确实是改成了 9000，但 routing MTU 依旧是 1500，而且无法修改成 9000，毕竟千兆网卡还没有普及。所以现在的问题就是，这个配置其实是对的，8000 字节的包明显在<strong>物理上</strong>也是可以发送出去的，但 IPv6 就因为交换机的 routing MTU 是 1500 而无法发送，这种情况下我们就不得不禁止掉 accept_ra 这个选项了，地址的获取用 DHCPv6 了。</p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Linux-Kernel/">Linux Kernel</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2012/10/30/accept-ra-e7-9a-84-e4-b8-80-e4-b8-aa-e4-be-8b-e5-ad-90/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2012/10/20/an-overview-of-openvswitch-implementation/" title="An overview of Openvswitch implementation" itemprop="url">An overview of Openvswitch implementation</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2012-10-20T17:09:46.000Z" itemprop="datePublished"> Published Oct 20 2012</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2012-10-20T17:09:46.000Z"><a href="/2012/10/20/an-overview-of-openvswitch-implementation/">Oct 20 2012</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2012/10/20/an-overview-of-openvswitch-implementation/">An overview of Openvswitch implementation</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <!--         @page { margin: 2cm }         P { margin-bottom: 0.21cm }         H1 { margin-bottom: 0.21cm }         H1.western { font-family: "Liberation Sans", sans-serif; font-size: 16pt }         H1.cjk { font-family: "WenQuanYi Zen Hei"; font-size: 16pt }         H1.ctl { font-family: "Lohit Devanagari"; font-size: 16pt }         A:link { so-language: zxx } -->
 
 <p><strong>Author: Cong Wang &lt;xiyou.wangcong@gmail.com&gt;</strong></p>
@@ -860,62 +650,37 @@ rtt min/avg/max/mdev = 0.669/140.860/561.275/242.726 ms
 <p>As you can see, the kernel part only implements a mechanism and the fast path (except the first packet), and the user-space implements different policies upon the mechanism provided by the kernel, the slow path. The user-space is much more complicated, so I will not cover its details here.</p>
 <p>Update: Ben, one of the most active developers for openvswitch, pointed out some mistakes in the previous version, I updated this article as he suggested. Thanks to Ben!</p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Linux-Kernel/">Linux Kernel</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2012/10/20/an-overview-of-openvswitch-implementation/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2012/10/15/-e4-bb-8e-ipv4-e5-88-b0-ipv6/" title="从 IPv4 到 IPv6" itemprop="url">从 IPv4 到 IPv6</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2012-10-15T07:00:06.000Z" itemprop="datePublished"> Published Oct 15 2012</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2012-10-15T07:00:06.000Z"><a href="/2012/10/15/-e4-bb-8e-ipv4-e5-88-b0-ipv6/">Oct 15 2012</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2012/10/15/-e4-bb-8e-ipv4-e5-88-b0-ipv6/">从 IPv4 到 IPv6</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>稍微熟悉 IPv6 的人都知道，IPv6 相对于 IPv4 并不只是简单地把地址从 32 位扩展到了 128 位，它同时还修复了 IPv4 协议设计中的一些不足。正如地址空间一样，当然设计 IPv4 时的不足已经逐渐凸显，理解这些 IPv4 的不足以及 IPv6 对它的改进对于深入理解 IPv6 至关重要。我在学习 IPv6 的时候就特别想找一个这样的文档，可惜一直没有发现，所以在这里简单总结一下，以方便初学 IPv6 的人。</p>
 <p><strong>1. 地址空间的划分</strong></p>
 <p>从 32 位一下子扩展到 128 位一个最明显的变化是，你很可能再也无法用脑子记住一个 IP 地址（除了 ::1 这种简单的地址）。玩笑。:-)</p>
@@ -946,62 +711,37 @@ rtt min/avg/max/mdev = 0.669/140.860/561.275/242.726 ms
 <p>这种设计使得 OSI 分层模式变得含糊。而 IPv6 使用的 ICMPv6 则完全基于 IP 之上，无须设计另外一个并列于 IP 层的协议。正如前面提到，邻居发现协议使用的是 link-local 地址，所以不会造成更大链路范围上的影响。link-local 地址是根据 MAC 地址自动生成的（协议规定的算法），因此有了 link-local 地址就可以马上和路由器进行通信了，因此也就有了 IP 地址自动分配的功能，即类似于 IPv4 的 DHCP，在 IPv6 上这被称为自动配置（Stateless Address Autoconfiguration）。</p>
 <p>当然了，因为没有广播地址，邻居发现协议使用的是多播地址。具体协议的细节可以参考 ICMPv6 协议的定义，和 ICMP 并无显著的差别，故省略。</p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Linux-Kernel/">Linux Kernel</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2012/10/15/-e4-bb-8e-ipv4-e5-88-b0-ipv6/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2012/10/11/-e7-94-a8-scapy-e5-8f-91-e9-80-81-vlan-e5-8c-85-e7-9a-84-e4-be-8b-e5-ad-90/" title="用 scapy 发送 vlan 包的例子" itemprop="url">用 scapy 发送 vlan 包的例子</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2012-10-11T22:21:14.000Z" itemprop="datePublished"> Published Oct 11 2012</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2012-10-11T22:21:14.000Z"><a href="/2012/10/11/-e7-94-a8-scapy-e5-8f-91-e9-80-81-vlan-e5-8c-85-e7-9a-84-e4-be-8b-e5-ad-90/">Oct 11 2012</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2012/10/11/-e7-94-a8-scapy-e5-8f-91-e9-80-81-vlan-e5-8c-85-e7-9a-84-e4-be-8b-e5-ad-90/">用 scapy 发送 vlan 包的例子</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p><a href="http://www.secdev.org/projects/scapy/" target="_blank" rel="external">scapy</a> 绝对是你应该学习的一大利器，功能十分强大，把 Python 的优势发挥的淋漓尽致。用它发送定制的数据包比你用C写快好几个数量级。。。</p>
 <p>下面是我在测试前面文章中的 vlan 问题时发送带指定 vlan tag 的 arp request，不到10行代码就可以搞定！</p>
 <p>[python]</p>
@@ -1010,213 +750,109 @@ rtt min/avg/max/mdev = 0.669/140.860/561.275/242.726 ms
 <p>mac=”52:54:00:2E:23:92”<br>eth=Ether(src=mac,type=0x8100)/Dot1Q(vlan=int(sys.argv[1]), prio=5)<br>arp=ARP(hwtype=0x0001,ptype=0x0800,op=0x0001,hwsrc=mac,psrc=’192.168.122.1’,pdst=’192.168.122.74’)<br>a=eth/arp<br>a.show()<br>sendp(a, iface=”virbr0”)</p>
 <p>[/python] </p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Linux-Application/">Linux Application</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2012/10/11/-e7-94-a8-scapy-e5-8f-91-e9-80-81-vlan-e5-8c-85-e7-9a-84-e4-be-8b-e5-ad-90/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-
-  <nav id="page-nav" class="clearfix">
-    <a class="extend prev" rel="prev" href="/page/2/"><span></span>Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/71/">71</a><a class="extend next" rel="next" href="/page/4/">Next<span></span></a>
-  </nav>
-
-</div>
-      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
-
-<div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
-<aside class="clearfix">
-
-  
-<div class="categorieslist">
-	<p class="asidetitle">Categories</p>
-		<ul>
-		
-			<li><a href="/categories/Book-Reviews/" title="Book Reviews">Book Reviews<sup>18</sup></a></li>
-		
-			<li><a href="/categories/China/" title="China">China<sup>2</sup></a></li>
-		
-			<li><a href="/categories/Collection/" title="Collection">Collection<sup>25</sup></a></li>
-		
-			<li><a href="/categories/Life/" title="Life">Life<sup>324</sup></a></li>
-		
-			<li><a href="/categories/Linux-Application/" title="Linux Application">Linux Application<sup>73</sup></a></li>
-		
-			<li><a href="/categories/Linux-Kernel/" title="Linux Kernel">Linux Kernel<sup>64</sup></a></li>
-		
-			<li><a href="/categories/Love/" title="Love">Love<sup>6</sup></a></li>
-		
-			<li><a href="/categories/Movies/" title="Movies">Movies<sup>19</sup></a></li>
-		
-			<li><a href="/categories/Programming/" title="Programming">Programming<sup>152</sup></a></li>
-		
-			<li><a href="/categories/Science-Fiction/" title="Science Fiction">Science Fiction<sup>8</sup></a></li>
-		
-			<li><a href="/categories/Travel/" title="Travel">Travel<sup>19</sup></a></li>
-		
-		</ul>
-</div>
-
-
-  
-<div class="tagslist">
-	<p class="asidetitle">Tags</p>
-		<ul class="clearfix">
-		
-			<li><a href="/tags/vim/" title="vim">vim<sup>1</sup></a></li>
-		
-			<li><a href="/tags/joke/" title="joke">joke<sup>1</sup></a></li>
-		
-			<li><a href="/tags/geek/" title="geek">geek<sup>1</sup></a></li>
-		
-			<li><a href="/tags/unix/" title="unix">unix<sup>1</sup></a></li>
-		
-			<li><a href="/tags/signal/" title="signal">signal<sup>1</sup></a></li>
-		
-			<li><a href="/tags/linux/" title="linux">linux<sup>1</sup></a></li>
-		
-			<li><a href="/tags/handling/" title="handling">handling<sup>1</sup></a></li>
-		
-		</ul>
-</div>
-
-
-  <div class="linkslist">
-  <p class="asidetitle">Links</p>
-    <ul>
+    <footer>
+      
         
-    </ul>
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+<nav id="pagination">
+  
+    <a href="/page/2/" class="alignleft prev">Prev</a>
+  
+  
+    <a href="/page/4/" class="alignright next">Next</a>
+  
+  <div class="clearfix"></div>
+</nav></div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:wangcong.org">
+  </form>
 </div>
 
-  <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Book-Reviews/">Book Reviews</a><small>18</small></li>
+  
+    <li><a href="/categories/China/">China</a><small>2</small></li>
+  
+    <li><a href="/categories/Collection/">Collection</a><small>25</small></li>
+  
+    <li><a href="/categories/Life/">Life</a><small>324</small></li>
+  
+    <li><a href="/categories/Linux-Application/">Linux Application</a><small>73</small></li>
+  
+    <li><a href="/categories/Linux-Kernel/">Linux Kernel</a><small>64</small></li>
+  
+    <li><a href="/categories/Love/">Love</a><small>6</small></li>
+  
+    <li><a href="/categories/Movies/">Movies</a><small>19</small></li>
+  
+    <li><a href="/categories/Programming/">Programming</a><small>152</small></li>
+  
+    <li><a href="/categories/Science-Fiction/">Science Fiction</a><small>8</small></li>
+  
+    <li><a href="/categories/Travel/">Travel</a><small>19</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/geek/">geek</a><small>1</small></li>
+  
+    <li><a href="/tags/handling/">handling</a><small>1</small></li>
+  
+    <li><a href="/tags/joke/">joke</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/tags/signal/">signal</a><small>1</small></li>
+  
+    <li><a href="/tags/unix/">unix</a><small>1</small></li>
+  
+    <li><a href="/tags/vim/">vim</a><small>1</small></li>
+  
+  </ul>
 </div>
 
 </aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2017 Cong Wang
+  
 </div>
-    </div>
-    <footer><div id="footer" >
-	
-	
-	<div class="social-font" class="clearfix">
-		
-		
-		<a href="https://github.com/congwang" target="_blank" class="icon-github" title="github"></a>
-		
-		
-		
-		<a href="https://twitter.com/conglinux" target="_blank" class="icon-twitter" title="twitter"></a>
-		
-		
-		
-		
-		
-		
-		
-	</div>
-		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2016 
-		
-		<a href="http://wangcong.org/about" target="_blank" title="Cong Wang">Cong Wang</a>
-		
-		</p>
-</div>
-</footer>
-    <script src="/js/jquery-2.0.3.min.js"></script>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 <script src="/js/jquery.imagesloaded.min.js"></script>
 <script src="/js/gallery.js"></script>
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.navbar').click(function(){
-    $('header nav').toggleClass('shownav');
-  });
-  var myWidth = 0;
-  function getSize(){
-    if( typeof( window.innerWidth ) == 'number' ) {
-      myWidth = window.innerWidth;
-    } else if( document.documentElement && document.documentElement.clientWidth) {
-      myWidth = document.documentElement.clientWidth;
-    };
-  };
-  var m = $('#main'),
-      a = $('#asidepart'),
-      c = $('.closeaside'),
-      o = $('.openaside');
-  $(window).resize(function(){
-    getSize(); 
-    if (myWidth >= 1024) {
-      $('header nav').removeClass('shownav');
-    }else
-    {
-      m.removeClass('moveMain');
-      a.css('display', 'block').removeClass('fadeOut');
-      o.css('display', 'none');
-        
-    }
-  });
-  c.click(function(){
-    a.addClass('fadeOut').css('display', 'none');
-    o.css('display', 'block').addClass('fadeIn');
-    m.addClass('moveMain');
-  });
-  o.click(function(){
-    o.css('display', 'none').removeClass('beforeFadeIn');
-    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
-    m.removeClass('moveMain');
-  });
-  $(window).scroll(function(){
-    o.css("top",Math.max(80,260-$(this).scrollTop()));
-  });
-});
-</script>
-
-
-
-
 
 <script type="text/javascript">
-
 var disqus_shortname = 'disqus_ciEwcJAF0E';
 
-(function(){
-  var dsq = document.createElement('script');
-  dsq.type = 'text/javascript';
-  dsq.async = true;
-  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-}());
 (function(){
   var dsq = document.createElement('script');
   dsq.type = 'text/javascript';
@@ -1228,33 +864,13 @@ var disqus_shortname = 'disqus_ciEwcJAF0E';
 
 
 
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
 
-
-
-
-
-<!-- Analytics Begin -->
-
-
-
-
-
-<!-- Analytics End -->
-
-<!-- Totop Begin -->
-
-	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
-	</div>
-	<script src="/js/totop.js"></script>
-
-<!-- Totop End -->
-
-<!-- MathJax Begin -->
-<!-- mathjax config similar to math.stackexchange -->
-
-
-<!-- MathJax End -->
-
-  </body>
- </html>
+</body>
+</html>

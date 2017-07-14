@@ -1,317 +1,612 @@
-
-  <!DOCTYPE HTML>
-<html >
+<!DOCTYPE HTML>
+<html>
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   
-    <title>Category: Linux Kernel | A Geek&#39;s Page</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
-    
-    <meta name="author" content="Cong Wang">
-    
-    
-    <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="A Geek's Page">
-<meta property="og:url" content="http://wangcong.org/categories/Linux-Kernel/page/6/">
-<meta property="og:site_name" content="A Geek's Page">
-<meta property="og:description">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="A Geek's Page">
-<meta name="twitter:description">
-<meta name="twitter:creator" content="@conglinux">
+  <title>Page 6 | Linux Kernel | A Geek&#39;s Page</title>
+  <meta name="author" content="Cong Wang">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
+  
+  <meta property="og:site_name" content="A Geek&#39;s Page"/>
 
-    
-    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
-    
-    
-    <link rel="icon" href="/img/favicon.ico">
-    
-    
-    <link rel="apple-touch-icon" href="/img/jacman.jpg">
-    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
-    
-    <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
 
 </head>
 
-    <body>
-      <header>
-        <div>
-		
-			<div id="imglogo">
-				<a href="/"><img src="/img/logo.png" alt="A Geek&#39;s Page" title="A Geek&#39;s Page"/></a>
-			</div>
-			
-			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="A Geek&#39;s Page">A Geek&#39;s Page</a></h1>
-				<h2 class="blog-motto"></h2>
-			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
-			</a></div>
-			<nav class="animated">
-				<ul>
-					<ul>
-					 
-						<li><a href="/">Home</a></li>
-					
-						<li><a href="/archives">Archives</a></li>
-					
-						<li><a href="/about-2">About</a></li>
-					
-					<li>
- 					
-					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
-						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
-						<input type="hidden" name="q" value="site:wangcong.org">
-					</form>
-					
-					</li>
-				</ul>
-			</nav>			
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">A Geek&#39;s Page</a></h1>
+  <h2><a href="/"></a></h2>
 </div>
-      </header>
-      <div id="container">
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title category">Linux Kernel</h2>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-10-16T04:01:47.000Z"><a href="/2007/10/15/reverse-mapping-in-linux-kernel/">Oct 15 2007</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2007/10/15/reverse-mapping-in-linux-kernel/">Reverse Mapping in Linux kernel</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>从vm_area找到其映射的struct page那叫mapping，反过来，从一个struct page找到所有映射上来的vm_area就叫reverse mapping。</p>
+<p>对于匿名映射，情况是这样的：</p>
+<p><img src="/images/" alt=""></p>
+<p>而对于非匿名映射，应该这样：</p>
+<p><img src="/images/" alt=""></p>
+<p>前者的技巧是加了anon_vma链表，而后者是加了一个layer——address_space。瞧～这名字起得多好，如果你第一次见绝对会把你绕晕～！</p>
+<p>上面的图片也清楚地向我们展示了这么一个结论：C语言编程其实就是Find a Needle in the Haystack～～！怎样？这次你信了吧～！</p>
+
+      
+    </div>
+    <footer>
+      
         
-
-<div class="archive-title" >
-  <h2 class="category-icon">Linux Kernel</h2>
-  
-</div>
-<div id="main" class="archive-part clearfix">
-  <div id="archive-page">
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2007/10/15/reverse-mapping-in-linux-kernel/" title="Reverse Mapping in Linux kernel" itemprop="url">
-  
-
-    <time datetime="2007-10-16T04:01:47.000Z" itemprop="datePublished">Oct 15 2007</time>
-
-
-    <h1 itemprop="name">Reverse Mapping in Linux kernel</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2007/08/26/-e6-88-8f-e8-af-b4intel-f00f-bug/" title="戏说Intel f00f Bug" itemprop="url">
-  
-
-    <time datetime="2007-08-26T08:41:36.000Z" itemprop="datePublished">Aug 26 2007</time>
-
-
-    <h1 itemprop="name">戏说Intel f00f Bug</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2007/08/17/slab-slob-slub/" title="Slab, Slob, Slub" itemprop="url">
-  
-
-    <time datetime="2007-08-18T04:14:14.000Z" itemprop="datePublished">Aug 17 2007</time>
-
-
-    <h1 itemprop="name">Slab, Slob, Slub</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2007/05/03/-e7-ac-ac-e4-ba-8c-e4-b8-aa-e8-a1-a5-e4-b8-81-e8-a2-ab-mm-e5-86-85-e6-a0-b8-e6-a0-91-e6-8e-a5-e5-8f-97/" title="第二个补丁被-mm内核树接受" itemprop="url">
-  
-
-    <time datetime="2007-05-03T21:54:37.000Z" itemprop="datePublished">May 3 2007</time>
-
-
-    <h1 itemprop="name">第二个补丁被-mm内核树接受</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2007/04/11/-e6-88-91-e7-9a-84-e8-a1-a5-e4-b8-81-e7-ac-ac-e4-b8-80-e6-ac-a1-e8-a2-ab-e6-ad-a3-e5-bc-8f-e6-8e-a5-e5-8f-97/" title="我的补丁第一次被正式接受" itemprop="url">
-  
-
-    <time datetime="2007-04-11T22:31:34.000Z" itemprop="datePublished">Apr 11 2007</time>
-
-
-    <h1 itemprop="name">我的补丁第一次被正式接受</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2007/04/09/linux-2621-rc6-e5-86-85-e6-a0-b8schedule-e6-b5-81-e7-a8-8b-e5-9b-be/" title="linux-2.6.21-rc6内核schedule()和fork()流程图" itemprop="url">
-  
-
-    <time datetime="2007-04-10T06:13:30.000Z" itemprop="datePublished">Apr 9 2007</time>
-
-
-    <h1 itemprop="name">linux-2.6.21-rc6内核schedule()和fork()流程图</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2007/03/12/-e5-9c-a8lkml-e4-b8-8a-e6-8f-90-e7-9a-84-e4-b8-80-e4-b8-aa-e9-97-ae-e9-a2-98/" title="在LKML上提的一个问题" itemprop="url">
-  
-
-    <time datetime="2007-03-12T22:36:47.000Z" itemprop="datePublished">Mar 12 2007</time>
-
-
-    <h1 itemprop="name">在LKML上提的一个问题</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2007/03/09/linux-e5-86-85-e6-a0-b8-e4-b8-ad-e7-9a-84-e5-87-a0-e4-b8-aa-e6-a6-82-e5-bf-b5-2/" title="Linux内核中的几个概念" itemprop="url">
-  
-
-    <time datetime="2007-03-10T07:08:12.000Z" itemprop="datePublished">Mar 9 2007</time>
-
-
-    <h1 itemprop="name">Linux内核中的几个概念</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2007/03/09/-e5-bc-80-e5-8f-91-e5-86-85-e6-a0-b8-e7-9a-84-e5-87-a0-e6-9d-a1-e7-bb-8f-e9-aa-8c-3/" title="开发内核的几条经验" itemprop="url">
-  
-
-    <time datetime="2007-03-10T07:07:02.000Z" itemprop="datePublished">Mar 9 2007</time>
-
-
-    <h1 itemprop="name">开发内核的几条经验</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2007/03/09/-e6-8e-a2-e7-b4-a2-e5-86-85-e6-a0-b8bug-e7-9a-84-e7-bb-8f-e5-8e-86/" title="探索内核bug的经历" itemprop="url">
-  
-
-    <time datetime="2007-03-10T06:57:10.000Z" itemprop="datePublished">Mar 9 2007</time>
-
-
-    <h1 itemprop="name">探索内核bug的经历</h1>
-
-  </a>
-</section>
-
-
-  <nav id="page-nav" class="clearfix archive-nav">
-    <a class="extend prev" rel="prev" href="/categories/Linux-Kernel/page/5/"><span></span>Prev</a><a class="page-number" href="/categories/Linux-Kernel/">1</a><span class="space">&hellip;</span><a class="page-number" href="/categories/Linux-Kernel/page/4/">4</a><a class="page-number" href="/categories/Linux-Kernel/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/categories/Linux-Kernel/page/7/">7</a><a class="extend next" rel="next" href="/categories/Linux-Kernel/page/7/">Next<span></span></a>
-  </nav>
-
+        
+      
+      <div class="clearfix"></div>
+    </footer>
   </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-08-26T08:41:36.000Z"><a href="/2007/08/26/-e6-88-8f-e8-af-b4intel-f00f-bug/">Aug 26 2007</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2007/08/26/-e6-88-8f-e8-af-b4intel-f00f-bug/">戏说Intel f00f Bug</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><img src="/images/" alt=""></p>
+<p>f00f是Intel Pentium CPU的一个臭名昭著的bug，就算你不知道它的具体成因但估计也对其大名有所耳闻了。 它影响到了Intel Pentium，Pentium MMX和Pentium OverDrive系列的CPU，属于设计上的缺陷。最早出现在1997年11月，从当时的一些邮件存档来看，这个bug造成了不小的轰动。当然了，Intel自然也不弱（尤其是它的“纠错”和“兼容”技术，对i386稍微有所了解的人都知道），很快就给出了解决方案来应对。当然，在那以后的Intel CPU中就没有这个bug了。</p>
+<p>好了，让我们现在一起来看看f00f bug的原理，恶劣影响，解决方法，以及对应到Linux内核源代码中的实际解决方案。</p>
+<p>还得先从名字说起，这个bug之所以叫这么个名字，是因为它是用来指代f0 0f c7 c8这个16进制数序列，而这个序列是表示一条i386汇编指令，用AT&amp;T语法来表示就是：</p>
+<p><pre><br> lock cmpxchg8b %eax</pre><br>用Intel语法来表示是：</p>
+<p><pre><br> LOCK CMPXCHG8B EAX</pre><br>这条指令明显是错误的，因为：</p>
+<p>1. cmpxchg8b是用来比较两个64bit的数，其中一个是隐含的edx:eax，另一个是由后面的操作数表示的指针来指出。上面那条指令显然违反了这条规则。</p>
+<p>2. lock前缀只能用于基于内存的“读—修改—写”型的指令，而上面的指令同样也不符合这一要求。</p>
+<p>按理说，上面的任何一个错误都会导致invalid opcode的错误。可是意外发生了，当这两种错误按照上面的方式叠加到一起时，CPU会自己锁死！解决方法只有重启！换句话说，我们可以构造这么一个短小的C程序来触发这个bug：</p>
+<p>char x [5] = { 0xf0, 0x0f, 0xc7, 0xc8 };</p>
+<p>int main(void){<br>    void (*f)() = x;<br>    f();<br>    return 0;<br>}</p>
+<p>而且不需要任何特权，任何用户都能使用！这是头一次“崭露头角”的 硬件错误，操作系统对此也无可奈何。这样，我们可以轻易让某台配有此bug的CPU的服务器挂掉！由此可见，这个bug有多么严重！</p>
+<p>这到底是怎么回事？为什么本该是错上加错的指令却酿成大祸？其实是这样，当CPU发现cmpxchg8b %eax是错误的之后，会产生一个invalid opcode的异常，然后寻找其对应的处理函数来处理。当CPU读取这个处理函数的地址时，错误地判断出了LOCK#信号，就对总线进行加锁，然后等待一个对该地址的加锁的写入，但在这中间，CPU是不会有任何写操作的，于是就把自己挂起了！这明显是一个设计上的失误！</p>
+<p>Intel老大马上给出了两套解决方案，都可行，但第一个不怎么聪明，甚至说“和问题本身一样糟糕”；而另一个算是一个聪明的方案。我们一起来看一下第二个，也就是Linux内核使用的这个。</p>
+<p>Intel这样建议：把包含IDT前7项的页面设置为只读，也把CR0的 WP位置为1。现在，当bug发生时，它先会找invalid opcode的异常处理函数，进而产生一个缺页异常，因为CPU企图写一个只读页面。而缺页异常不会被锁住，这样控制权又回到操作系统手中。然后就是要修改缺页异常的处理例程，让它判断，如果异常发生在内核态并且无效地址正好是invalid opcode异常处理函数的地址，那么就是f00f bug了。这时操作系统就应该转入处理invalid opcode异常。</p>
+<p>下面就是Linux内核源代码中的 实际处理方法：</p>
+<p>这是把IDT放到固定映射区域的代码，很明显，设置了只读。<br>(arch/i386/kernel/traps.c)</p>
+<p>void <strong>init trap_init_f00f_bug(void)<br>{
+    </strong>set_fixmap(FIX_F00F_IDT, __pa(&amp;idt_table), PAGE_KERNEL_RO);</p>
+<pre><code><span class="comment">/*
+ * Update the IDT descriptor and reload the IDT so that
+ * it uses the read-only mapped virtual address.
+ */</span>
+idt_descr.<span class="variable">address =</span> fix_to_virt(FIX_F00F_IDT);
+load_idt(&amp;amp;idt_descr);
+</code></pre><p>}</p>
+<p>这里是do_page_fault()，也就是缺页异常处理函数中的部分代码：<br>(arch/i386/mm/fault.c)</p>
+<p>//…<br>    if (boot_cpu_data.f00f_bug) {<br>        unsigned long nr;</p>
+<pre><code>    nr = (address - idt_descr.address) &amp;<span class="keyword">gt</span>;&amp;<span class="keyword">gt</span>; <span class="number">3</span>;
+
+    <span class="keyword">if</span> (nr == <span class="number">6</span>) {
+        do_invalid_op(regs, <span class="number">0</span>);
+        <span class="keyword">return</span>;
+    }
+}
+</code></pre><p>//…</p>
+<p>和上面的Intel的方案完全吻合！</p>
+<p>参考资料：</p>
+<p>[1] Wikipedia, <a href="http://en.wikipedia.org/wiki/F00f" target="_blank" rel="external">http://en.wikipedia.org/wiki/F00f</a><br>[2] x86.org, <a href="http://www.x86.org/errata/dec97/f00fbug.htm" target="_blank" rel="external">http://www.x86.org/errata/dec97/f00fbug.htm</a><br>[3] Understanding the Linux Kernel<br>[4] Intel 64 and IA-32 Architectures Software Developer’s Manual, Volume 3A</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-08-18T04:14:14.000Z"><a href="/2007/08/17/slab-slob-slub/">Aug 17 2007</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2007/08/17/slab-slob-slub/">Slab, Slob, Slub</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Linux内核真是变化太快了，内存管理这块就是一个好例子。</p>
+<p>本来Linux内核只有Slab的，现在好了，Slab多了两个兄弟：Slob和Slub。瞧！这就是内核的命名风格，让你光看名字就糊涂了！这也是我这两天读内核源代码的深刻体会，什么cache啊，cache_cache啊，free_area啊，绕不晕你才怪呢～！</p>
+<p>以前搞不懂这三个到底什么关系，为什么要有这三个 。今天搜了一下，明白了一些。简单的说：Slab是基础，是最早从Sun OS那引进的；Slub是在Slab上进行的改进，在大型机上表现出色（不知道在普通PC上如何），据说还被IA-64作为默认；而Slob是针对小型系统设计的，当然了，主要是嵌入式。相关文章如下：</p>
+<p><a href="http://www.ibm.com/developerworks/cn/linux/l-linux-slab-allocator/index.html" target="_blank" rel="external">Anatomy of the Linux slab allocator</a><br><a href="http://lwn.net/Articles/229984/" target="_blank" rel="external">The SLUB allocator</a><br><a href="http://lwn.net/Articles/157944/" target="_blank" rel="external">The SLOB allocator</a></p>
+<p>这也正好体现了一个Linux内核开发一贯的思想：<strong>提供一种机制，而不是一种策略（Provide mechanism not policy）</strong>。其它软件开发又何尝不是如此呢？</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-05-03T21:54:37.000Z"><a href="/2007/05/03/-e7-ac-ac-e4-ba-8c-e4-b8-aa-e8-a1-a5-e4-b8-81-e8-a2-ab-mm-e5-86-85-e6-a0-b8-e6-a0-91-e6-8e-a5-e5-8f-97/">May 3 2007</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2007/05/03/-e7-ac-ac-e4-ba-8c-e4-b8-aa-e8-a1-a5-e4-b8-81-e8-a2-ab-mm-e5-86-85-e6-a0-b8-e6-a0-91-e6-8e-a5-e5-8f-97/">第二个补丁被-mm内核树接受</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>嗨！</p>
+<p>很高兴宣布我的又一个补丁被Andrew的-mm接受，有兴趣的同学可以看这里：</p>
+<p><a href="http://marc.info/?l=linux-mm-commits&amp;m=117817128028211&amp;w=2" target="_blank" rel="external">http://marc.info/?l=linux-mm-commits&amp;m=117817128028211&amp;w=2</a></p>
+<p>（佩服Andrew的工作效率，刚发出补丁没几分钟就马上被确认并归入了）</p>
+<p>顺带补充上次没找到的链接：<br><a href="http://marc.info/?l=linux-mm-commits&amp;m=117624330000536&amp;w=2" target="_blank" rel="external">http://marc.info/?l=linux-mm-commits&amp;m=117624330000536&amp;w=2</a></p>
+<p>下面还有个总结：</p>
+<p>Patches currently in -mm which might be from xiyou.wangcong AT gmail.com are</p>
+<p>partitions-check-the-return-value-of-kobject_add-etc.patch<br>vt-add-color-support-to-the-underline-and-italic-attributes-fix-2.patch</p>
+<p>不知道这两补丁何时才能被归入-stable树，等吧。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-04-11T22:31:34.000Z"><a href="/2007/04/11/-e6-88-91-e7-9a-84-e8-a1-a5-e4-b8-81-e7-ac-ac-e4-b8-80-e6-ac-a1-e8-a2-ab-e6-ad-a3-e5-bc-8f-e6-8e-a5-e5-8f-97/">Apr 11 2007</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2007/04/11/-e6-88-91-e7-9a-84-e8-a1-a5-e4-b8-81-e7-ac-ac-e4-b8-80-e6-ac-a1-e8-a2-ab-e6-ad-a3-e5-bc-8f-e6-8e-a5-e5-8f-97/">我的补丁第一次被正式接受</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>很高兴宣布我的补丁第一次被Linux kernel -mm tree接受，在此之前提交过三四个补丁，似乎都没有被正式接受。;-(</p>
+<p>感谢Andrew Morton和德国IBM的Cornelia Huck，没有他们的帮助不可能有这个补丁，尤其是Cornelia Huck，他非常耐心地辅导我三次修改这个补丁。</p>
+<p>Andrew已经把这个补丁归入-mm树，可惜我找不到mm-commit邮件列表的www链接，在这里只给出一个lkml上的相关链接：</p>
+<p><a href="http://lkml.org/lkml/2007/4/10/335" target="_blank" rel="external">http://lkml.org/lkml/2007/4/10/335 </a></p>
+<p>同时给那些对Linux内核感兴趣的人一个建议：坚持下去！这是任何一个内核开发者能给你的最好的建议了！2.6现在仍有不少东西需要去做，赶快动手吧！</p>
+<p>呵呵，非常开心啊！ ;-D</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-04-10T06:13:30.000Z"><a href="/2007/04/09/linux-2621-rc6-e5-86-85-e6-a0-b8schedule-e6-b5-81-e7-a8-8b-e5-9b-be/">Apr 9 2007</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2007/04/09/linux-2621-rc6-e5-86-85-e6-a0-b8schedule-e6-b5-81-e7-a8-8b-e5-9b-be/">linux-2.6.21-rc6内核schedule()和fork()流程图</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>勉强把schedule()和fork()的流程图画出来了，对2.6的进程调度算法有了更深刻的认识。不容易~</p>
+<p>schedule()见下：<br><a href="http://files.myopera.com/congwang/files/schedule.jpeg" title="schedule()流程图" target="_blank" rel="external"> http://files.myopera.com/congwang/files/schedule.jpeg</a></p>
+<p>fork()见下：<br><a href="http://files.myopera.com/congwang/files/fork.jpeg" title="fork()流程图" target="_blank" rel="external"> http://files.myopera.com/congwang/files/fork.jpeg</a></p>
+<p>BTW：我设计的xylftp客户端的类图如下：</p>
+<p><a href="http://files.myopera.com/congwang/files/java_uml.jpeg" title="xylftp客户端类图" target="_blank" rel="external"> http://files.myopera.com/congwang/files/java_uml.jpeg</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-03-12T22:36:47.000Z"><a href="/2007/03/12/-e5-9c-a8lkml-e4-b8-8a-e6-8f-90-e7-9a-84-e4-b8-80-e4-b8-aa-e9-97-ae-e9-a2-98/">Mar 12 2007</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2007/03/12/-e5-9c-a8lkml-e4-b8-8a-e6-8f-90-e7-9a-84-e4-b8-80-e4-b8-aa-e9-97-ae-e9-a2-98/">在LKML上提的一个问题</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>发件人         Cong WANG<br>收件人         linux-kernel@vger.kernel.org<br>日期        2007-3-11 下午10:15<br>主题        Style Question<br>邮送域        gmail.com<br>Hi, list!</p>
+<p>I have a question about coding style in linux kernel. In<br>Documention/CodingStyle, it is said that “Linux style for comments is<br>the C89 “/<em> … </em>/“ style. Don’t use C99-style “// …” comments.”<br><em>But</em> I see a lot of ‘//‘ style comments in current kernel code.</p>
+<p>Which is wrong? The documentions or the code, or neither? And why?</p>
+<p>Another question is about NULL. AFAIK, in user space, using NULL is<br>better than directly using 0 in C. In kernel, I know it used its own<br>NULL, which may be defined as ((void*)0), but it’s <em>still</em> different<br>from raw zero. So can I say using NULL is better than 0 in kernel?</p>
+<p>Any reply is welcome. Thanks and have a nice day!</p>
+<p>Bernd Petrovitsch 第一个回答到：</p>
+<p>On Sun, 2007-03-11 at 22:15 +0800, Cong WANG wrote:<br>[…]<br>&gt; Another question is about NULL. AFAIK, in user space, using NULL is<br>&gt; better than directly using 0 in C. In kernel, I know it used its own<br>&gt; NULL, which may be defined as ((void*)0),</p>
+<p>Userspace has the usually same definition.</p>
+<p>&gt;                                           but it’s <em>still</em> different<br>&gt; from raw zero.</p>
+<p>It is different that “0” as such has the type “int”. But this int is<br>automatically promoted to a “0 pointer”.</p>
+<p>&gt;                So can I say using NULL is better than 0 in kernel?</p>
+<p>Yes, because it is immediately clear that a pointer is (or should be)<br>there (and not an int).<br>And the same holds for userspace since this is a pure C question.</p>
+<p>Bernd</p>
+<p>Jan Engelhardt 回复到：</p>
+<p>On Mar 11 2007 22:15, Cong WANG wrote:<br>&gt;<br>&gt; I have a question about coding style in linux kernel. In<br>&gt; Documention/CodingStyle, it is said that “Linux style for comments is<br>&gt; the C89 “/<em> … </em>/“ style. Don’t use C99-style “// …” comments.”<br>&gt; <em>But</em> I see a lot of ‘//‘ style comments in current kernel code.<br>&gt;<br>&gt; Which is wrong? The documentions or the code, or neither? And why?</p>
+<p>The code. And because it’s not always reviewed but silently pushed.</p>
+<p>&gt; Another question is about NULL. AFAIK, in user space, using NULL is<br>&gt; better than directly using 0 in C. In kernel, I know it used its own<br>&gt; NULL, which may be defined as ((void*)0), but it’s <em>still</em> different<br>&gt; from raw zero.</p>
+<p>In what way?</p>
+<p>&gt;So can I say using NULL is better than 0 in kernel?</p>
+<p>On what basis? Do you even know what NULL is defined as in<br>(C, not C++) userspace? Think about it.</p>
+<p>Jan</p>
+<p>我看到后回复：</p>
+<p>2007/3/12, Jan Engelhardt:<br>&gt;<br>&gt; On Mar 11 2007 22:15, Cong WANG wrote:<br>&gt; &gt;<br>&gt; &gt; I have a question about coding style in linux kernel. In<br>&gt; &gt; Documention/CodingStyle, it is said that “Linux style for comments is<br>&gt; &gt; the C89 “/<em> … </em>/“ style. Don’t use C99-style “// …” comments.”<br>&gt; &gt; <em>But</em> I see a lot of ‘//‘ style comments in current kernel code.<br>&gt; &gt;<br>&gt; &gt; Which is wrong? The documentions or the code, or neither? And why?<br>&gt;<br>&gt; The code. And because it’s not always reviewed but silently pushed.<br>&gt;<br>&gt; &gt; Another question is about NULL. AFAIK, in user space, using NULL is<br>&gt; &gt; better than directly using 0 in C. In kernel, I know it used its own<br>&gt; &gt; NULL, which may be defined as ((void*)0), but it’s <em>still</em> different<br>&gt; &gt; from raw zero.<br>&gt;<br>&gt; In what way?</p>
+<p>The following code is picked from drivers/kvm/kvm_main.c:</p>
+<p>static struct kvm_vcpu <em>vcpu_load(struct kvm </em>kvm, int vcpu_slot)<br>{<br>struct kvm_vcpu *vcpu = &amp;kvm-&gt;vcpus[vcpu_slot];</p>
+<p>mutex_lock(&amp;vcpu-&gt;mutex);<br>if (unlikely(!vcpu-&gt;vmcs)) {<br>mutex_unlock(&amp;vcpu-&gt;mutex);<br>return 0;<br>}<br>return kvm_arch_ops-&gt;vcpu_load(vcpu);<br>}</p>
+<p>Obviously, it used 0 rather than NULL when returning a pointer to<br>indicate an error. Should we fix such issue?</p>
+<p>&gt;<br>&gt; &gt;So can I say using NULL is better than 0 in kernel?<br>&gt;<br>&gt; On what basis? Do you even know what NULL is defined as in<br>&gt; (C, not C++) userspace? Think about it.<br>&gt;</p>
+<p>I think it’s more clear to indicate we are using a pointer rather than<br>an integer when we use NULL in kernel. But in userspace, using NULL is<br>for portbility of the program, although most (<em>just</em> most, NOT all) of<br>NULL’s defination is ((void*)0).</p>
+<p>一些其它的回复如下：</p>
+<p>Robert Hancock 写道：</p>
+<p>Cong WANG wrote:<br>&gt; Hi, list!<br>&gt;<br>&gt; I have a question about coding style in linux kernel. In<br>&gt; Documention/CodingStyle, it is said that “Linux style for comments is<br>&gt; the C89 “/<em> … </em>/“ style. Don’t use C99-style “// …” comments.”<br>&gt; <em>But</em> I see a lot of ‘//‘ style comments in current kernel code.<br>&gt;<br>&gt; Which is wrong? The documentions or the code, or neither? And why?</p>
+<p>The code.. As with a lot of coding style issues, it’s likely just that<br>nobody saw it and bothered to complain when it went in.</p>
+<p>&gt; Another question is about NULL. AFAIK, in user space, using NULL is<br>&gt; better than directly using 0 in C. In kernel, I know it used its own<br>&gt; NULL, which may be defined as ((void*)0), but it’s <em>still</em> different<br>&gt; from raw zero. So can I say using NULL is better than 0 in kernel?</p>
+<p>It’s the preferred style, Sparse will complain about using 0 for a null<br>pointer for example..</p>
+<p>Mac的Kyle Moffett 如是说：</p>
+<p>On Mar 11, 2007, at 16:41:51, Daniel Hazelton wrote:<br>&gt; On Sunday 11 March 2007 16:35:50 Jan Engelhardt wrote:<br>&gt;&gt; On Mar 11 2007 22:15, Cong WANG wrote:<br>&gt;&gt;&gt; So can I say using NULL is better than 0 in kernel?<br>&gt;&gt;<br>&gt;&gt; On what basis? Do you even know what NULL is defined as in (C, not<br>&gt;&gt; C++) userspace? Think about it.<br>&gt;<br>&gt; IIRC, the glibc and GCC headers define NULL as (void*)0  :)</p>
+<p>On the other hand when <strong>cplusplus is defined they define it to the<br>“</strong>null” builtin, which GCC uses to give type conversion errors for<br>“int foo = NULL” but not “char <em>foo = NULL”.  A “((void </em>)0)”<br>definition gives C++ type errors for both due to the broken C++ void<br>pointer conversion problems.</p>
+<p>Cheers,</p>
+<p>Nicholas Miell这样说：</p>
+<p>On Mon, 2007-03-12 at 06:40 +0100, Jan Engelhardt wrote:<br>&gt; On Mar 12 2007 13:37, Cong WANG wrote:<br>&gt; &gt;<br>&gt; &gt; The following code is picked from drivers/kvm/kvm_main.c:<br>&gt; &gt;<br>&gt; &gt; static struct kvm_vcpu <em>vcpu_load(struct kvm </em>kvm, int vcpu_slot)<br>&gt; &gt; {<br>&gt; &gt; struct kvm_vcpu <em>vcpu = &amp;kvm-&gt;vcpus[vcpu_slot];<br>&gt; &gt;<br>&gt; &gt; mutex_lock(&amp;vcpu-&gt;mutex);<br>&gt; &gt; if (unlikely(!vcpu-&gt;vmcs)) {<br>&gt; &gt; mutex_unlock(&amp;vcpu-&gt;mutex);<br>&gt; &gt; return 0;<br>&gt; &gt; }<br>&gt; &gt; return kvm_arch_ops-&gt;vcpu_load(vcpu);<br>&gt; &gt; }<br>&gt; &gt;<br>&gt; &gt; Obviously, it used 0 rather than NULL when returning a pointer to<br>&gt; &gt; indicate an error. Should we fix such issue?<br>&gt;<br>&gt; Indeed. If it was for me, something like that should throw a compile error.<br>&gt;<br>&gt; &gt;&gt;[…]<br>&gt; &gt; I think it’s more clear to indicate we are using a pointer rather than<br>&gt; &gt; an integer when we use NULL in kernel. But in userspace, using NULL is<br>&gt; &gt; for portbility of the program, although most (</em>just<em> most, NOT all) of<br>&gt; &gt; NULL’s defination is ((void</em>)0).</p>
+<p>&gt;<br>&gt; NULL has the same bit pattern as the number zero. (I’m not saying the bit<br>&gt; pattern is all zeroes. And I am not even sure if NULL ought to have the same<br>&gt; pattern as zero.) So C++ could use (void *)0, if it would let itself :p</p>
+<p>Not necessarily. You can use 0 at the source level, but the compiler has<br>to convert it to the actual NULL pointer bit pattern, whatever it may<br>be.</p>
+<p>In C++, NULL is typically defined to 0 (with no void* cast) by most<br>compilers because 0 (and only 0) can be implicitly converted to to null<br>pointer of any ponter type without a cast.</p>
+<p>GCC introduced the __null extension so that NULL still works correctly<br>in C++ when passed to a varargs function on 64-bit platforms.</p>
+<p>(This just works in C because C makes NULL ((void<em>)0) is thus is the<br>right size. In C++, the 0 ends up being an int instead of a pointer when<br>passed to a varargs function, and things tend to blow up when they read<br>the garbage high bits. Of course, nobody else does this, so you still<br>have to use (void</em>)NULL to be portable.)</p>
+<p>Randy.Dunlap 给以肯定回答：</p>
+<p>On Mon, 12 Mar 2007, Jan Engelhardt wrote:</p>
+<p>&gt;<br>&gt; On Mar 12 2007 13:37, Cong WANG wrote:<br>&gt; &gt;<br>&gt; &gt; The following code is picked from drivers/kvm/kvm_main.c:<br>&gt; &gt;<br>&gt; &gt; static struct kvm_vcpu <em>vcpu_load(struct kvm </em>kvm, int vcpu_slot)<br>&gt; &gt; {<br>&gt; &gt; struct kvm_vcpu *vcpu = &amp;kvm-&gt;vcpus[vcpu_slot];<br>&gt; &gt;<br>&gt; &gt; mutex_lock(&amp;vcpu-&gt;mutex);<br>&gt; &gt; if (unlikely(!vcpu-&gt;vmcs)) {<br>&gt; &gt; mutex_unlock(&amp;vcpu-&gt;mutex);<br>&gt; &gt; return 0;<br>&gt; &gt; }<br>&gt; &gt; return kvm_arch_ops-&gt;vcpu_load(vcpu);<br>&gt; &gt; }<br>&gt; &gt;<br>&gt; &gt; Obviously, it used 0 rather than NULL when returning a pointer to<br>&gt; &gt; indicate an error. Should we fix such issue?<br>&gt;<br>&gt; Indeed. If it was for me, something like that should throw a compile error.</p>
+<p>At least it does throw a sparse warning, and yes, it should<br>be fixed.</p>
+<p>最后我决定提交补丁：</p>
+<p>[PATCH]Replace 0 with NULL when returning a pointer</p>
+<p>Use NULL to indicate we are returning a pointer rather than an integer<br>and to eliminate some sparse warnings.</p>
+<p>Signed-off-by: Cong WANG &lt;xiyou.wangcong@gmail.com&gt;</p>
+<hr>
+<p>—- drivers/kvm/kvm_main.c.orig 2007-03-11 21:41:23.000000000 +0800<br>+++ drivers/kvm/kvm_main.c      2007-03-12 14:26:17.000000000 +0800<br>@@ -205,7 +205,7 @@ static struct kvm_vcpu *vcpu_load(struct<br>mutex_lock(&amp;vcpu-&gt;mutex);<br>if (unlikely(!vcpu-&gt;vmcs)) {<br>mutex_unlock(&amp;vcpu-&gt;mutex);</p>
+<ul>
+<li>return 0;</li>
+</ul>
+<ul>
+<li>return NULL;<br>}<br>return kvm_arch_ops-&gt;vcpu_load(vcpu);<br>}<br>@@ -799,7 +799,7 @@ struct kvm_memory_slot *gfn_to_memslot(s<br>&amp;&amp; gfn &lt; memslot-&gt;base_gfn + memslot-&gt;npages)<br>return memslot;<br>}</li>
+</ul>
+<ul>
+<li>return 0;</li>
+</ul>
+<ul>
+<li>return NULL;<br>}<br>EXPORT_SYMBOL_GPL(gfn_to_memslot);</li>
+</ul>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-03-10T07:08:12.000Z"><a href="/2007/03/09/linux-e5-86-85-e6-a0-b8-e4-b8-ad-e7-9a-84-e5-87-a0-e4-b8-aa-e6-a6-82-e5-bf-b5-2/">Mar 9 2007</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2007/03/09/linux-e5-86-85-e6-a0-b8-e4-b8-ad-e7-9a-84-e5-87-a0-e4-b8-aa-e6-a6-82-e5-bf-b5-2/">Linux内核中的几个概念</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Sunday, 25. February 2007, 07:19:10</p>
+<p></p><p align="right"><span class="alignright">王聪@西邮</span></p>
+<p>软中断（softirq）是内核使用的一种推后执行任务的一种机制，由于一些中断处理必须要在短期内完成，所以内核不得不把一些相对不重要的工作推后执行，软中断就是专门用来执行这种后退的工作。它在某种程度上有点像硬件中断，来得“随时随地”，而且不在进程上下文之中。千万不要把它和“软件中断（software interrupts）”这个概念混了，后者是因为在编程中使用了中断指令（比如：int 0x80）而产生一个硬件上实际存在的中断信号，而前者更本就不和硬件扯关系。</p>
+<p>小任务（tasklet）是在软中断的基础上实现的一种后推执行方式。软中断是在编译时就已经确定好的，而小任务则可以在运行时分配和初始化；软中断可以在不同的CPU上同时执行，而同一类型的tasklet只能在调度它们的同一CPU上运行，因此软中断函数必须是可重入的，而小任务的函数则没有这个必要。</p>
+<p>工作队列（work queue）是另一种后推方式，但它和小任务有着很大的区别，小任务是在中断上下文中执行的，而工作队列是在进程上下文中执行的，所以工作队列是可以休眠的，也就不一定是原子的。执行工作队列的线程是ksoftirqd/n（n是cpu的编号，在UP是ksoftirqd/0），这是一个内核线程，因此也不能访问用户内存。</p>
+<p>下半部（bottom half）是后推执行任务的一个统称，它主要是完成上半部未完成的一些工作。一般来说，在处理中断时，在中断处理例程（上半部）中做的工作越少越好，其余一些相对不那么迫切的工作可以后推给下半部来完成，当然了，下半部可以是小任务，也可以是工作队列。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-03-10T07:07:02.000Z"><a href="/2007/03/09/-e5-bc-80-e5-8f-91-e5-86-85-e6-a0-b8-e7-9a-84-e5-87-a0-e6-9d-a1-e7-bb-8f-e9-aa-8c-3/">Mar 9 2007</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2007/03/09/-e5-bc-80-e5-8f-91-e5-86-85-e6-a0-b8-e7-9a-84-e5-87-a0-e6-9d-a1-e7-bb-8f-e9-aa-8c-3/">开发内核的几条经验</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Wednesday, 14. February 2007, 12:20:41</p>
+<div class="content"><div id="excerpt"></div><span class="alignright">作者：王聪@西邮</span><br><br>1. 永远不要使用sleep_on及其变种，那是不安全的，而且即将被剔出。<br>2. 老的/proc接口是有害的，如果你不能彻底理解它，千万别使用！尽量不要再往/proc里面放东西了，因为那里现在已经够乱了。<br>3. wait_event的一个变种──wait_event_interruptible_exclusive──是可以执行独占等待的。LDD中这一点错了，不，过时了。<br>4. 不要使用lock_kernel()，这个锁太大了，会让系统性能下降。<br>5. 信号量本身就是一种高级的lock，它能比普通的lock，比如spinlock，实现更多的语义。就像分配了内存后必须释放一样，一个进程对一个信号量进行down操作后，必须在退出前执行up。切记：不要在拥有锁时睡眠！<br>6. Unix的errno具有丰富的含义，请认真小心地处理它们，在用户空间如此，在内核空间更要如此，因为内核空间的一个错误状态直接影响到现有用户程序的表现。<br>7. oops是严重的错误，不能信任存在oops的内核。<br>8.<br>关于补丁：<br>a) 稳定内核的补丁只能应用于基版本的内核，比如：2.6.17.*补丁只能应用于2.6.17版本的内核；<br>b) 基版本内核补丁只能应用于上一个版本的内核，比如：2.6.18补丁只能应用于2.6.17；<br>c) 增量型补丁只能从一个指定的版本应用于另一个指定版本，比如：补丁patch-2.6.17.10-11.bz2只能应用于2.6.17.10，把它升级为2.6.17.11；<br>d) 如果你需要升级的版本间隔比较大，比如从2.6.17.1到2.6.17.11，可以先从2.6.17.1退回到2.6.17，然后再一次升级到2.6.17.11；<br>e) 稳定内核的补丁和基版本内核补丁都在源代码目录中，而增量型补丁在一个单独的目录/pub/linux/kernel/v2.6/incr中。<br></div>
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-03-10T06:57:10.000Z"><a href="/2007/03/09/-e6-8e-a2-e7-b4-a2-e5-86-85-e6-a0-b8bug-e7-9a-84-e7-bb-8f-e5-8e-86/">Mar 9 2007</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2007/03/09/-e6-8e-a2-e7-b4-a2-e5-86-85-e6-a0-b8bug-e7-9a-84-e7-bb-8f-e5-8e-86/">探索内核bug的经历</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Thursday, 8. February 2007, 12:38:09</p>
+<div class="content"><br><div id="excerpt"></div><span class="alignright">04043196 王聪</span><span class="alignright">西安邮电学院计算机系</span><br><br>我们知道，当无符号数上溢时，它会安安静静地绕回，因此，当比较两个无符号数时，不得不考虑绕回的问题。很可能绝大多数情况下不会出现溢出的情况，但是一旦溢出而处理不当就会导致系统进入非预期状态。不幸的是，Linux内核中的kfifo并没有恰当地处理这一问题。<br><br>struct kfifo定义在include/linux/kfifo.h中，其成员如下：<br><pre>struct kfifo {<br>        unsigned char <em>buffer;<br>        unsigned int size;<br>        unsigned int in;<br>        unsigned int out;<br>        spinlock_t </em>lock;<br>};<br></pre>很明显，in和out两个成员都是无符号整型，这主要是为了下面的一个与操作方便。<strong>kfifo_put和</strong>kfifo<em>get是不带锁的两个接口，分别向循环缓冲区中放数据和取数据，定义如下：<br><pre>   118  unsigned int <strong>kfifo_put(struct kfifo <em>fifo,<br>   119                           unsigned char </em>buffer, unsigned int len)<br>   120  {<br>   121          unsigned int l;<br>   122<br>   123          len = min(len, fifo-&lt;size - fifo-&lt;in + fifo-&lt;out);<br>   …<br>   130          smp_mb();<br>   131<br>   132          /<em> first put the data starting from fifo-&lt;in to buffer end </em>/<br>   133          l = min(len, fifo-&lt;size - (fifo-&lt;in &amp; (fifo-&lt;size - 1)));<br>   134          memcpy(fifo-&lt;buffer + (fifo-&lt;in &amp; (fifo-&lt;size - 1)), buffer, l);<br>   135<br>   136          /<em> then put the rest (if any) at the beginning of the buffer </em>/<br>   137          memcpy(fifo-&lt;buffer, buffer + l, len - l);<br>   …<br>   144          smp_wmb();<br>   145<br>   146          fifo-&lt;in += len;<br>   147<br>   148          return len;<br>   149  }<br>   …<br>   164  unsigned int </strong>kfifo_get(struct kfifo <em>fifo,<br>   165                           unsigned char </em>buffer, unsigned int len)<br>   166  {<br>   167          unsigned int l;<br>   168<br>   169          len = min(len, fifo-&lt;in - fifo-&lt;out);<br>   …<br>   176          smp_rmb();<br>   177<br>   178          /<em> first get the data from fifo-&lt;out until the end of the buffer </em>/<br>   179          l = min(len, fifo-&lt;size - (fifo-&lt;out &amp; (fifo-&lt;size - 1)));<br>   180          memcpy(buffer, fifo-&lt;buffer + (fifo-&lt;out &amp; (fifo-&lt;size - 1)), l);<br>   181<br>   182          /<em> then get the rest (if any) from the beginning of the buffer </em>/<br>   183          memcpy(buffer + l, fifo-&lt;buffer, len - l);<br>   …<br>   190          smp_mb();<br>   191<br>   192          fifo-&lt;out += len;<br>   193<br>   194          return len;<br>   195  }<br></pre>上面的两个函数在正常情况下可以保证in总是大于等于out，并且它们的差不会超过size。但是当in溢出，而out恰好又没有溢出时，不幸的情况就会发生，in会小于out！这对<strong>kfifo_get影响似乎不大，但对</strong>kfifo_put却是致命地影响！in绕回后会变成一个很小的正数，而out仍然是一个很大的正数，结果(fifo-&lt;size - fifo-&lt;in + fifo-&lt;out)也会变成一个很大的正数。如果内核程序员恰好不小心把一个很大的len作为参数传递给了<strong>kfifo_put（kfifo_put也一样），就会出现指针越界，更严重的会让内核痛苦地oops！<br><p><br><br>下面一个粗糙的内核模块和用户程序可以展示这个bug。内核模块如下：<br><pre>     1  #include &gt;linux/kernel.hlinux/init.hlinux/module.hlinux/fs.hasm/uaccess.hlinux/err.hlinux/gfp.hlinux/spinlock.hlinux/kfifo.hlinux/string.h&lt;<br>    11<br>    12  #define LFS_MAGIC 0x19860913<br>    13  #define NFILES  2<br>    14  #define TEST_BUF_LEN    64<br>    15<br>    16  static struct kfifo <em>fifo;<br>    17  static spinlock_t lock;<br>    18  static char </em>buf;<br>    19<br>    20  static int lfs_open_file(struct inode <em>inode, struct file </em>filp)<br>    21  {<br>    22          if (inode-&lt;i_ino &lt; NFILES)<br>    23                  return -ENODEV;<br>    24          return 0;<br>    25  }<br>    26<br>    27  static ssize_t lfs_read_file(struct file <em>filp, char </em>buffer,<br>    28                               size_t count, loff_t <em> offset)<br>    29  {<br>    30          int len;<br>    31<br>    32          len = kfifo_get(fifo, buf, count);<br>    33          if (</em>offset &lt; len)<br>    34                  return 0;<br>    35          if (count &lt; len - <em>offset)<br>    36                  count = len - </em>offset;<br>    37<br>    38          if (copy_to_user(buffer, buf + <em>offset, count))<br>    39                  return -EFAULT;<br>    40          </em>offset += count;<br>    41          return count;<br>    42  }<br>    43<br>    44  static ssize_t lfs_write_file(struct file <em>filp, const char </em>buffer,<br>    45                                size_t count, loff_t <em> offset)<br>    46  {<br>    47          if (</em>offset != 0)<br>    48                  <em>offset = 0;<br>    49<br>    50          if (count &lt;= TEST_BUF_LEN)<br>    51                  count = TEST_BUF_LEN;<br>    52<br>    53          if (copy_from_user(buf, buffer, count))<br>    54                  return -EFAULT;<br>    55<br>    56          return (ssize_t) kfifo_put(fifo, (char </em>)buffer, count);<br>    57  }<br>    58<br>    59  static int my_atoi(const char <em>name)<br>    60  {<br>    61          int val = 0;<br>    62<br>    63          for (;; name++) {<br>    64                  switch (</em>name) {<br>    65                  case &#039;0&#039;…&#039;9&#039;:<br>    66                          val = 10 <em> val + (</em>name - &#039;0&#039;);<br>    67                          break;<br>    68                  default:<br>    69                          return val;<br>    70                  }<br>    71          }<br>    72  }<br>    73<br>    74  static int lfs_open_file2(struct inode <em>inode, struct file </em>filp)<br>    75  {<br>    76          if (inode-&lt;i_ino &lt; NFILES)<br>    77                  return -ENODEV;<br>    78          filp-&lt;private_data = fifo;<br>    79          return 0;<br>    80  }<br>    81<br>    82  static ssize_t lfs_read_file2(struct file <em>filp, char </em>buffer,<br>    83                                size_t count, loff_t <em> offset)<br>    84  {<br>    85          int len;<br>    86          struct kfifo </em>myfifo = (struct kfifo <em>)filp-&lt;private_data;<br>    87<br>    88          len =<br>    89              snprintf(buf, TEST_BUF_LEN, &quot;in=%u out=%un&quot;, myfifo-&lt;in,<br>    90                       myfifo-&lt;out);<br>    91          if (</em>offset &lt; len)<br>    92                  return 0;<br>    93          if (count &lt; len - <em>offset)<br>    94                  count = len - </em>offset;<br>    95<br>    96          if (copy_to_user(buffer, buf + <em>offset, count))<br>    97                  return -EFAULT;<br>    98          </em>offset += count;<br>    99          return count;<br>   100  }<br>   101<br>   102  static ssize_t lfs_write_file2(struct file <em>filp, const char </em>buffer,<br>   103                                 size_t count, loff_t <em> offset)<br>   104  {<br>   105          char </em>p = buf;<br>   106          struct kfifo <em>myfifo = (struct kfifo </em>)filp-&lt;private_data;<br>   107<br>   108          if (<em>offset != 0)<br>   109                  return -EINVAL;<br>   110<br>   111          if (count &lt;= TEST_BUF_LEN)<br>   112                  return -EINVAL;<br>   113          memset(buf, 0, TEST_BUF_LEN);<br>   114          if (copy_from_user(buf, buffer, count))<br>   115                  return -EFAULT;<br>   116          p = strchr(buf, &#039; &#039;);<br>   117          if (!p)<br>   118                  return -EINVAL;<br>   119          </em>p++ = &#039;&#039;;<br>   120          myfifo-&lt;in = my_atoi(buf);<br>   121          myfifo-&lt;out = my_atoi(p);<br>   122          return count;<br>   123  }<br>   124<br>   125  static struct file_operations lfs_file_ops = {<br>   126          .open = lfs_open_file,<br>   127          .read = lfs_read_file,<br>   128          .write = lfs_write_file,<br>   129  };<br>   130<br>   131  static struct file_operations lfs_file2_ops = {<br>   132          .open = lfs_open_file2,<br>   133          .read = lfs_read_file2,<br>   134          .write = lfs_write_file2,<br>   135  };<br>   136<br>   137  struct tree_descr myfiles[] = {<br>   138          {NULL, NULL, 0},<br>   139          {.name = &quot;kfifo&quot;,<br>   140           .ops = &amp;lfs_file_ops,<br>   141           .mode = S_IWUSR | S_IRUGO},<br>   142          {.name = &quot;debug&quot;,<br>   143           .ops = &amp;lfs_file2_ops,<br>   144           .mode = S_IWUSR | S_IRUGO},<br>   145          {&quot;&quot;, NULL, 0}<br>   146  };<br>   147<br>   148  static int lfs_fill_super(struct super_block <em>sb, void </em>data, int silent)<br>   149  {<br>   150          return simple_fill_super(sb, LFS_MAGIC, myfiles);<br>   151  }<br>   152<br>   153  static int lfs_get_super(struct file_system_type <em>fst,<br>   154                           int flags, const char </em>devname, void <em>data,<br>   155                           struct vfsmount </em>mnt)<br>   156  {<br>   157          return get_sb_single(fst, flags, data, lfs_fill_super, mnt);<br>   158  }<br>   159<br>   160  static struct file_system_type lfs_type = {<br>   161          .owner = THIS_MODULE,<br>   162          .name = &quot;demofs&quot;,<br>   163          .get_sb = lfs_get_super,<br>   164          .kill_sb = kill_litter_super,<br>   165  };<br>   166<br>   167  static int </pre></p></strong>init lfs_init(void)<br>   168  {<br>   169          spin_lock_init(&amp;lock);<br>   170          fifo = kfifo_alloc(TEST_BUF_LEN, GFP_KERNEL, &amp;lock);<br>   171          if (IS_ERR(fifo)) {<br>   172                  kfifo_free(fifo);<br>   173                  return -ENOMEM;<br>   174          }<br>   175          /<em><br>   176           </em> We just want the overflow comes soon.<br>   177           <em> You can, of course, let fifo-&lt;out and fifo-&lt;out<br>   178           </em> to be 0. And we can let them increase by &#039;fifo-&lt;size&#039;<br>   179           <em> in the user space quietly. Sooner or later, they will<br>   180           </em> overflow again like this.<br>   181           */<br>   182          fifo-&lt;in = fifo-xiyou.wangcong@gmail.com&lt;&quot;);<br>   204  MODULE_DESCRIPTION(&quot;Show the bug of unsigned integer overflow in kfifo.&quot;);<br>   205  MODULE_SUPPORTED_DEVICE(&quot;libfs filesystem&quot;);<br>用户程序代码：<br><pre>     1  #include &gt;sys/types.hsys/stat.hunistd.hfcntl.h 256;i++)<br>    19                  buf</pre></em>=’0’;<br>    20          /<em><br>    21           </em> I won’t check the return value of write.<br>    22           <em> And that’s the reason why I don’t use ‘echo’.<br>    23           </em>/<br>    24          write(fd, buf, 256);<br>    25          return 0;<br>    26  }<br>    27<br><br>—————————————————————————————————————<br><br>     1  #! /bin/bash<br>     2  #bugshow.sh<br>     3  #Author: WANG Cong, XIPT. &gt;xiyou.wangcong@gmail.com&lt;<br>     4  #Usage: ./bugshow.sh install your<em>module_name.ko<br>     5  #    OR ./bugshow.sh uninstall your_module_name<br>     6<br>     7  if [ $# != &quot;2&quot; ]; then<br>     8          echo &quot;Usage: ./bugshow.sh install your_module_name.ko&quot;<br>     9          echo &quot;OR ./bugshow.sh uninstall your_module_name&quot;<br>    10          exit -1<br>    11  fi<br>    12  action=&quot;$1&quot;<br>    13  if [ &quot;$action&quot; = &quot;install&quot; ]; then<br>    14          module=${!#}<br>    15          /sbin/insmod $module<br>    16          mkdir -p /mnt/libfs<br>    17          mount -t demofs none /mnt/libfs<br>    18          if find ./ -name bugshow.c<br>    19          then<br>    20                  gcc -Wall -o bugshow bugshow.c<br>    21          else<br>    22                  echo &quot;Can&#039;t find bugshow.c!&quot;<br>    23                  exit -2<br>    24          fi<br>    25          ./bugshow<br>    26          cat /mnt/libfs/debug<br>    27          ./bugshow<br>    28          cat /mnt/libfs/debug<br>    29  elif [ &quot;$action&quot; = &quot;uninstall&quot; ]; then<br>    30          module=${!#}<br>    31          umount none<br>    32          rmdir /mnt/libfs<br>    33          /sbin/rmmod $module<br>    34  else<br>    35          echo &quot;Bad usage!&quot;<br>    36          exit -3<br>    37  fi<br>    38  exit 0
+
+</em>上面的模块是仔细编写的（虽然没有考虑竞争;-p），所以bug不会导致很严重的问题，只是无法向kfifo中继续写入数据。这个bug影响到所有使用kfifo的内核版本，从2.6.10到2.6.20。<br><p><br><br>一个简单的补丁如下：<br><pre>—- kernel/kfifo.c.orig 2007-02-07 19:42:51.000000000 +0800<br>+++ kernel/kfifo.c      2007-02-07 19:43:31.000000000 +0800<br>@@ -24,6 +24,7 @@<br> #include &gt;linux/slab.hlinux/err.hlinux/kfifo.hlinux/compiler.h&lt;<br><br> /<em>*
+  </em> kfifo_init - allocates a new FIFO using a preallocated buffer<br>@@ -120,6 +121,12 @@ unsigned int <strong>kfifo_put(struct kfifo <em>f<br> {<br>        unsigned int l;<br><br>+       /</em>If only fifo-&lt;in overflows, let both overflow!<em>/<br>+       if (unlikely(fifo- fifo-&lt;out)) {<br>+               fifo-&lt;out += fifo-&lt;size;<br>+               fifo-&lt;in  += fifo-&lt;size;<br>+       }<br>+<br>        len = min(len, fifo-&lt;size - fifo-&lt;in + fifo-&lt;out);<br><br>        /</em><br>@@ -166,6 +173,12 @@ unsigned int </strong>kfifo_get(struct kfifo <em>f<br> {<br>        unsigned int l;<br><br>+       /</em>If only fifo-&lt;in overflows, let both overflow!<em>/<br>+       if (unlikely(fifo- fifo-&lt;out)) {<br>+               fifo-&lt;out += fifo-&lt;size;<br>+               fifo-&lt;in  += fifo-&lt;size;<br>+       }<br>+<br>        len = min(len, fifo-&lt;in - fifo-&lt;out);<br><br>        /</em><br></pre>后经过Andrew的指点，发现这不是一个bug。我一开始被/proc接口搞晕了，得出了错误的结论。<br><span style="color:orangered;">教训：千万不用使用老的/proc接口！</span><br></p><p><br></p></div>
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+
+  <nav id="pagination">
+  
+    <a href="/categories/Linux-Kernel/page/5/" class="alignleft prev">Prev</a>
+  
+  
+    <a href="/categories/Linux-Kernel/page/7/" class="alignright next">Next</a>
+  
+  <div class="clearfix"></div>
+</nav>
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:wangcong.org">
+  </form>
 </div>
 
-      </div>
-      <footer><div id="footer" >
-	
-	
-	<div class="social-font" class="clearfix">
-		
-		
-		<a href="https://github.com/congwang" target="_blank" class="icon-github" title="github"></a>
-		
-		
-		
-		<a href="https://twitter.com/conglinux" target="_blank" class="icon-twitter" title="twitter"></a>
-		
-		
-		
-		
-		
-		
-		
-	</div>
-		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2016 
-		
-		<a href="http://wangcong.org/about" target="_blank" title="Cong Wang">Cong Wang</a>
-		
-		</p>
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Book-Reviews/">Book Reviews</a><small>18</small></li>
+  
+    <li><a href="/categories/China/">China</a><small>2</small></li>
+  
+    <li><a href="/categories/Collection/">Collection</a><small>25</small></li>
+  
+    <li><a href="/categories/Life/">Life</a><small>324</small></li>
+  
+    <li><a href="/categories/Linux-Application/">Linux Application</a><small>73</small></li>
+  
+    <li><a href="/categories/Linux-Kernel/">Linux Kernel</a><small>64</small></li>
+  
+    <li><a href="/categories/Love/">Love</a><small>6</small></li>
+  
+    <li><a href="/categories/Movies/">Movies</a><small>19</small></li>
+  
+    <li><a href="/categories/Programming/">Programming</a><small>152</small></li>
+  
+    <li><a href="/categories/Science-Fiction/">Science Fiction</a><small>8</small></li>
+  
+    <li><a href="/categories/Travel/">Travel</a><small>19</small></li>
+  
+  </ul>
 </div>
-</footer>
-      <script src="/js/jquery-2.0.3.min.js"></script>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/geek/">geek</a><small>1</small></li>
+  
+    <li><a href="/tags/handling/">handling</a><small>1</small></li>
+  
+    <li><a href="/tags/joke/">joke</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/tags/signal/">signal</a><small>1</small></li>
+  
+    <li><a href="/tags/unix/">unix</a><small>1</small></li>
+  
+    <li><a href="/tags/vim/">vim</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2017 Cong Wang
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 <script src="/js/jquery.imagesloaded.min.js"></script>
 <script src="/js/gallery.js"></script>
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.navbar').click(function(){
-    $('header nav').toggleClass('shownav');
-  });
-  var myWidth = 0;
-  function getSize(){
-    if( typeof( window.innerWidth ) == 'number' ) {
-      myWidth = window.innerWidth;
-    } else if( document.documentElement && document.documentElement.clientWidth) {
-      myWidth = document.documentElement.clientWidth;
-    };
-  };
-  var m = $('#main'),
-      a = $('#asidepart'),
-      c = $('.closeaside'),
-      o = $('.openaside');
-  $(window).resize(function(){
-    getSize(); 
-    if (myWidth >= 1024) {
-      $('header nav').removeClass('shownav');
-    }else
-    {
-      m.removeClass('moveMain');
-      a.css('display', 'block').removeClass('fadeOut');
-      o.css('display', 'none');
-        
-    }
-  });
-  c.click(function(){
-    a.addClass('fadeOut').css('display', 'none');
-    o.css('display', 'block').addClass('fadeIn');
-    m.addClass('moveMain');
-  });
-  o.click(function(){
-    o.css('display', 'none').removeClass('beforeFadeIn');
-    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
-    m.removeClass('moveMain');
-  });
-  $(window).scroll(function(){
-    o.css("top",Math.max(80,260-$(this).scrollTop()));
-  });
-});
-</script>
-
-
-
-
 
 <script type="text/javascript">
-
 var disqus_shortname = 'disqus_ciEwcJAF0E';
 
-(function(){
-  var dsq = document.createElement('script');
-  dsq.type = 'text/javascript';
-  dsq.async = true;
-  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-}());
 (function(){
   var dsq = document.createElement('script');
   dsq.type = 'text/javascript';
@@ -323,33 +618,13 @@ var disqus_shortname = 'disqus_ciEwcJAF0E';
 
 
 
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
 
-
-
-
-
-<!-- Analytics Begin -->
-
-
-
-
-
-<!-- Analytics End -->
-
-<!-- Totop Begin -->
-
-	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
-	</div>
-	<script src="/js/totop.js"></script>
-
-<!-- Totop End -->
-
-<!-- MathJax Begin -->
-<!-- mathjax config similar to math.stackexchange -->
-
-
-<!-- MathJax End -->
-
-    </body>
-   </html>
+</body>
+</html>

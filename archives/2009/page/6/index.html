@@ -1,321 +1,639 @@
-
-  <!DOCTYPE HTML>
-<html >
+<!DOCTYPE HTML>
+<html>
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   
-    <title>Archives: 2009 | A Geek&#39;s Page</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
-    
-    <meta name="author" content="Cong Wang">
-    
-    
-    <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="A Geek's Page">
-<meta property="og:url" content="http://wangcong.org/archives/2009/page/6/">
-<meta property="og:site_name" content="A Geek's Page">
-<meta property="og:description">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="A Geek's Page">
-<meta name="twitter:description">
-<meta name="twitter:creator" content="@conglinux">
+  <title>Page 6 | Archives: 2009 | A Geek&#39;s Page</title>
+  <meta name="author" content="Cong Wang">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
+  
+  <meta property="og:site_name" content="A Geek&#39;s Page"/>
 
-    
-    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
-    
-    
-    <link rel="icon" href="/img/favicon.ico">
-    
-    
-    <link rel="apple-touch-icon" href="/img/jacman.jpg">
-    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
-    
-    <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
 
 </head>
 
-    <body>
-      <header>
-        <div>
-		
-			<div id="imglogo">
-				<a href="/"><img src="/img/logo.png" alt="A Geek&#39;s Page" title="A Geek&#39;s Page"/></a>
-			</div>
-			
-			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="A Geek&#39;s Page">A Geek&#39;s Page</a></h1>
-				<h2 class="blog-motto"></h2>
-			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
-			</a></div>
-			<nav class="animated">
-				<ul>
-					<ul>
-					 
-						<li><a href="/">Home</a></li>
-					
-						<li><a href="/archives">Archives</a></li>
-					
-						<li><a href="/about-2">About</a></li>
-					
-					<li>
- 					
-					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
-						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
-						<input type="hidden" name="q" value="site:wangcong.org">
-					</form>
-					
-					</li>
-				</ul>
-			</nav>			
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">A Geek&#39;s Page</a></h1>
+  <h2><a href="/"></a></h2>
 </div>
-      </header>
-      <div id="container">
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title">2009</h2>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-03-27T01:46:13.000Z"><a href="/2009/03/26/switch-to-e4-b8-ad-e7-9a-84-e6-b1-87-e7-bc-96/">Mar 26 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/03/26/switch-to-e4-b8-ad-e7-9a-84-e6-b1-87-e7-bc-96/">switch_to中的汇编</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>switch_to()的代码在arch/x86/include/asm/system.h中，如下：<br>[c]</p>
+<h1 id="define_switch_to(prev,_next,_last)">define switch_to(prev, next, last)</h1>
+<p>do {<br>    /*                                </p>
+<pre><code> <span class="keyword">*</span> Context-switching clobbers all registers, so we clobber    
+ <span class="keyword">*</span> them explicitly, via unused output variables.        
+ <span class="keyword">*</span> (EAX and EBP is not listed because EBP is saved/restored    
+ <span class="keyword">*</span> explicitly for wchan access and EAX is the return value of    
+ <span class="keyword">*</span> __switch_to())                        
+ <span class="keyword">*</span>/                                
+unsigned long ebx, ecx, edx, esi, edi;                
+
+asm volatile(<span class="string">"pushflnt"</span>        /<span class="keyword">*</span> save    flags <span class="keyword">*</span>/    
+         <span class="string">"pushl %%ebpnt"</span>        /<span class="keyword">*</span> save    EBP   <span class="keyword">*</span>/    
+         <span class="string">"movl %%esp,%[prev_sp]nt"</span>    /<span class="keyword">*</span> save    ESP   <span class="keyword">*</span>/ 
+         <span class="string">"movl %[next_sp],%%espnt"</span>    /<span class="keyword">*</span> restore ESP   <span class="keyword">*</span>/ 
+         <span class="string">"movl $1f,%[prev_ip]nt"</span>    /<span class="keyword">*</span> save    EIP   <span class="keyword">*</span>/    
+         <span class="string">"pushl %[next_ip]nt"</span>    /<span class="keyword">*</span> restore EIP   <span class="keyword">*</span>/    
+         <span class="string">"jmp __switch_ton"</span>    /<span class="keyword">*</span> regparm call  <span class="keyword">*</span>/    
+         <span class="string">"1:t"</span>                        
+         <span class="string">"popl %%ebpnt"</span>        /<span class="keyword">*</span> restore EBP   <span class="keyword">*</span>/    
+         <span class="string">"popfln"</span>            /<span class="keyword">*</span> restore flags <span class="keyword">*</span>/    
+
+         /<span class="keyword">*</span> output parameters <span class="keyword">*</span>/                
+         : [prev_sp] <span class="string">"=m"</span> (prev-&amp;gt;thread.sp),        
+           [prev_ip] <span class="string">"=m"</span> (prev-&amp;gt;thread.ip),        
+           <span class="string">"=a"</span> (last),                    
+
+           /<span class="keyword">*</span> clobbered output registers: <span class="keyword">*</span>/        
+           <span class="string">"=b"</span> (ebx), <span class="string">"=c"</span> (ecx), <span class="string">"=d"</span> (edx),        
+           <span class="string">"=S"</span> (esi), <span class="string">"=D"</span> (edi)                
+
+           /<span class="keyword">*</span> input parameters: <span class="keyword">*</span>/                
+         : [next_sp]  <span class="string">"m"</span> (next-&amp;gt;thread.sp),        
+           [next_ip]  <span class="string">"m"</span> (next-&amp;gt;thread.ip),        
+
+           /<span class="keyword">*</span> regparm parameters for __switch_to(): <span class="keyword">*</span>/    
+           [prev]     <span class="string">"a"</span> (prev),                
+           [next]     <span class="string">"d"</span> (next)                
+
+         : /<span class="keyword">*</span> reloaded segment registers <span class="keyword">*</span>/            
+        <span class="string">"memory"</span>);                    
+</code></pre><p>} while (0)<br>[/c]</p>
+<p>根据ABI约定和内联汇编，ebx, ecx, edx, esi, edi这几个寄存器是由编译器自动保存和恢复的。这一点可能不太好理解，举个例子，看下面的代码中的ecx：<br>[c]</p>
+<h1 id="include">include</h1>
+<p>void modify_ecx(void) {<br>  unsigned long ecx;</p>
+<p> <strong>asm</strong> (<br>  “movl $1, %%ecxnt”<br> :”=c”(ecx)<br> :<br> );<br>}</p>
+<p>void test(void) {<br> unsigned long ecx;</p>
+<p> <strong>asm</strong> volatile(<br> “nopnt”<br> “call modify_ecxnt”<br> : “=c” (ecx)<br> :<br> : “memory”<br> );<br> printf(“ecx=%ldn”, ecx);<br>}</p>
+<p>int main(void) {<br> test();<br> return 0;<br>}<br>[/c]<br>这里的test()就相当于内核源代码中“调用”switch_to()的context_switch()，我们来查看其对应的汇编代码（注意要加-O0）：</p>
+<p><pre><br>main:<br>        leal    4(%esp), %ecx<br>        andl    $-16, %esp<br>        pushl   -4(%ecx)<br>        pushl   %ecx<br>        subl    $8, %esp<br>        call    test<br>        movl    $0, %eax<br>        addl    $8, %esp<br>        popl    %ecx<br>        leal    -4(%ecx), %esp<br>        ret<br></pre><br>可见，在调用test()之前，编译器已经自动完成了保存ecx的操作，而调用之后它又会恢复ecx的值。</p>
+<p>而ebp，eflags是手工压入堆栈，并在switch回来后恢复出来的。esp和eip保存在相应的task_struct结构体里。</p>
+<p>需要额外说明的是那个jmp，因为这里的参数传递是通过寄存器完成的，具体说是用了eax和edx这个两个寄存器，所以再jmp其实就和call一样了，不过call是要把ebp入栈的，而jmp不需要，这里也不需要。</p>
+<p>另外一个可能的问题是：为什么switch_to()有三个参数？我们切换的进程明明是两个啊！这里问题的所在是进程切换时堆栈的切换，如果不使用三个参数，切换的堆栈中仍然保存的是切换前的参数，再切换回来时prev很可能不对了，所以需要一个参数来修正，这个参数又正好是__switch_to的返回值。这样问题就解决了。</p>
+
+      
+    </div>
+    <footer>
+      
         
-
-<div class="archive-title" >
-  <h2 class="archive-icon">2009</h2>
-  
-  <div class="archiveslist archive-float clearfix">
-   <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">Aug 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">Jan 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">Dec 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">Oct 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">Sep 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">Aug 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">Jul 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">Feb 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01/">Jan 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12/">Dec 2012</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">Nov 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">Oct 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">Sep 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">Aug 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/07/">Jul 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">Jun 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">Apr 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">Mar 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">Feb 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">Jan 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/12/">Dec 2011</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">Nov 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/10/">Oct 2011</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">Sep 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08/">Aug 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/07/">Jul 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/06/">Jun 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/05/">May 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04/">Apr 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03/">Mar 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/02/">Feb 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/01/">Jan 2011</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/12/">Dec 2010</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/11/">Nov 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/10/">Oct 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/09/">Sep 2010</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08/">Aug 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07/">Jul 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06/">Jun 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05/">May 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04/">Apr 2010</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03/">Mar 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02/">Feb 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01/">Jan 2010</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12/">Dec 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11/">Nov 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10/">Oct 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09/">Sep 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08/">Aug 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07/">Jul 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/06/">Jun 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/05/">May 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04/">Apr 2009</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03/">Mar 2009</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02/">Feb 2009</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01/">Jan 2009</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12/">Dec 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/11/">Nov 2008</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/10/">Oct 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09/">Sep 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08/">Aug 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07/">Jul 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06/">Jun 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05/">May 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04/">Apr 2008</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03/">Mar 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02/">Feb 2008</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01/">Jan 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12/">Dec 2007</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11/">Nov 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10/">Oct 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09/">Sep 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08/">Aug 2007</a><span class="archive-list-count">31</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07/">Jul 2007</a><span class="archive-list-count">34</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06/">Jun 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05/">May 2007</a><span class="archive-list-count">25</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04/">Apr 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03/">Mar 2007</a><span class="archive-list-count">50</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02/">Feb 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01/">Jan 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12/">Dec 2006</a><span class="archive-list-count">5</span></li></ul>
- </div>
-  
-</div>
-<div id="main" class="archive-part clearfix">
-  <div id="archive-page">
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2009/03/26/switch-to-e4-b8-ad-e7-9a-84-e6-b1-87-e7-bc-96/" title="switch_to中的汇编" itemprop="url">
-  
-
-    <time datetime="2009-03-27T01:46:13.000Z" itemprop="datePublished">Mar 26 2009</time>
-
-
-    <h1 itemprop="name">switch_to中的汇编</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2009/03/23/-e5-b0-be-e9-83-a8-e8-b0-83-e7-94-a8-e4-bc-98-e5-8c-96/" title="尾部调用优化" itemprop="url">
-  
-
-    <time datetime="2009-03-24T03:14:46.000Z" itemprop="datePublished">Mar 23 2009</time>
-
-
-    <h1 itemprop="name">尾部调用优化</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2009/03/21/serenity/" title="Serenity" itemprop="url">
-  
-
-    <time datetime="2009-03-21T08:04:48.000Z" itemprop="datePublished">Mar 21 2009</time>
-
-
-    <h1 itemprop="name">Serenity</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2009/03/19/-e8-af-ad-e8-a8-80-e5-ad-a6-e6-9c-af-e8-af-ad-e8-a7-a3-e9-87-8a/" title="语言学术语解释" itemprop="url">
-  
-
-    <time datetime="2009-03-19T23:06:21.000Z" itemprop="datePublished">Mar 19 2009</time>
-
-
-    <h1 itemprop="name">语言学术语解释</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2009/03/08/emacs-pk-vi/" title="emacs PK vi" itemprop="url">
-  
-
-    <time datetime="2009-03-09T00:18:52.000Z" itemprop="datePublished">Mar 8 2009</time>
-
-
-    <h1 itemprop="name">emacs PK vi</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2009/03/07/-e4-b8-91-e9-99-8b-e7-9a-84-e4-ba-ba-e7-b1-bb/" title="丑陋的人类" itemprop="url">
-  
-
-    <time datetime="2009-03-08T05:05:47.000Z" itemprop="datePublished">Mar 7 2009</time>
-
-
-    <h1 itemprop="name">丑陋的人类</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2009/03/03/linux-kernel-ascii-art/" title="Linux kernel ASCII art" itemprop="url">
-  
-
-    <time datetime="2009-03-04T05:50:32.000Z" itemprop="datePublished">Mar 3 2009</time>
-
-
-    <h1 itemprop="name">Linux kernel ASCII art</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2009/03/03/linux-e6-bc-ab-e7-94-bb-e6-95-99-e7-a8-8b/" title="Linux漫画教程" itemprop="url">
-  
-
-    <time datetime="2009-03-04T04:42:51.000Z" itemprop="datePublished">Mar 3 2009</time>
-
-
-    <h1 itemprop="name">Linux漫画教程</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2009/03/01/-e4-bb-8e-e9-87-8f-e5-ad-90-e7-89-a9-e7-90-86-e8-bf-9c-e6-9c-9b-e4-b8-8a-e5-b8-9d/" title="从量子物理远望上帝" itemprop="url">
-  
-
-    <time datetime="2009-03-02T03:26:04.000Z" itemprop="datePublished">Mar 1 2009</time>
-
-
-    <h1 itemprop="name">从量子物理远望上帝</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2009/02/28/-e4-bb-8e-e7-94-b5-e5-bd-b1-e7-9c-8b-e7-bc-96-e5-89-a7-e7-9a-84-e8-89-ba-e6-9c-af/" title="从电影看编剧的艺术" itemprop="url">
-  
-
-    <time datetime="2009-03-01T07:54:05.000Z" itemprop="datePublished">Feb 28 2009</time>
-
-
-    <h1 itemprop="name">从电影看编剧的艺术</h1>
-
-  </a>
-</section>
-
-
-  <nav id="page-nav" class="clearfix archive-nav">
-    <a class="extend prev" rel="prev" href="/archives/2009/page/5/"><span></span>Prev</a><a class="page-number" href="/archives/2009/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/2009/page/4/">4</a><a class="page-number" href="/archives/2009/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/archives/2009/page/7/">7</a><a class="page-number" href="/archives/2009/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/archives/2009/page/10/">10</a><a class="extend next" rel="next" href="/archives/2009/page/7/">Next<span></span></a>
-  </nav>
-
+        
+      
+      <div class="clearfix"></div>
+    </footer>
   </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-03-24T03:14:46.000Z"><a href="/2009/03/23/-e5-b0-be-e9-83-a8-e8-b0-83-e7-94-a8-e4-bc-98-e5-8c-96/">Mar 23 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/03/23/-e5-b0-be-e9-83-a8-e8-b0-83-e7-94-a8-e4-bc-98-e5-8c-96/">尾部调用优化</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>gcc实在是太聪明了，有时候就会聪明过头，尾部调用优化就是一个很好的例子。:)</p>
+<p>尾部调用其实很好理解，就是在函数的最后调用另外一个函数，一种大的可能就是这个函数和调用函数参数差别很小，那么这时候，gcc会对这个尾部调用进行优化，如果可能，完全可以把调用那个函数时的入栈操作给直接优化掉。这就是尾部调用的优化。我们可以看看下面的例子：</p>
+<p>[c]<br>extern int callee(int a, int b);</p>
+<p>static int c;</p>
+<p>int call(int a, int b)<br>{<br>        int ret = callee(c, b);<br>        return ret;<br>}<br>[/c]</p>
+<p>用”gcc -fomit-frame-pointer -fno-inline -O2 -S tail_call.c”编译它，得到的汇编代码截取如下：</p>
+<pre>
+call:
+        movl    c, %eax
+        movl    %eax, 4(%esp)
+        jmp     callee
+</pre>
+
+<p>很明显，入栈操作被优化掉了，成了直接操作call()的参数！这会有问题，如果call()的调用函数不想看到堆栈被改变的话。</p>
+<p>在Linux内核中有个很好的例子，那就是系统调用！系统调用的入口（arch/x86/kernel/entry_32.S）是用汇编写成的，在进入一个系统调用前存放参数的寄存器会被入栈，系统调用完毕后又会被恢复，所以，如果系统调用也被做了尾部调用优化的话，那么系统调用前后寄存器的值就会发生变化！这就可能会破坏用户空间的代码！</p>
+<p>Linux内核采取了相应的办法来解决这个问题，那就是宏asmlinkage_protect()，它的定义在arch/x86/include/asm/linkage.h。我们通过个具体的例子来看，比如open(2)，其定义是这样的：</p>
+<p>[c]<br>SYSCALL_DEFINE3(open, const char __user *, filename, int, flags, int, mode)<br>{<br>        long ret;</p>
+<pre><code>    if (force_o_largefile())
+            flags |= O_LARGEFILE<span class="comment">;</span>
+
+    <span class="keyword">ret</span> = do_sys_open(AT_FDCWD, filename, flags, mode)<span class="comment">;</span>
+    <span class="comment">/* avoid REGPARM breakage on x86: */</span>
+    asmlinkage_protect(<span class="number">3</span>, <span class="keyword">ret</span>, filename, flags, mode)<span class="comment">;</span>
+    return <span class="keyword">ret</span><span class="comment">;</span>
+</code></pre><p>}<br>[/c]</p>
+<p>上面的asmlinkage_protect会被展开成：</p>
+<p><pre><br><strong>asm</strong> <strong>volatile</strong> (“” : “=r” (ret) : “0” (ret), “g” (filename),<br>                                                       “g” (flags), “g” (mode));<br></pre><br>这句不会直接生成任何汇编代码，但是它会强迫gcc把参数放到寄存器中，也就避免了上面展示的直接对栈进行操作。</p>
+<p>为了完整，我们把最开始的那段代码修复一下：<br>[c]<br>extern int callee(int a, int b);</p>
+<p>static int c;</p>
+<p>int call(int a, int b)<br>{<br>        int ret = callee(c, b);<br>        <strong>asm</strong>(“”:”=r”(ret):”0”(ret), “g”(a), “g”(b));<br>        return ret;<br>}<br>[/c]<br>再汇编就可以看到堆栈操作了：</p>
+<p><pre><br>call:<br>        pushl   %ebx<br>        subl    $8, %esp<br>        movl    c, %eax<br>        movl    20(%esp), %ebx<br>        movl    %eax, (%esp)<br>        movl    %ebx, 4(%esp)<br>        call    callee<br>        addl    $8, %esp<br>        popl    %ebx<br>        ret<br></pre><br>这里展示的代码都很简单，实际中往往很复杂，情况不同gcc的优化操作也不同，比如，当上面的callee()是static的时候虽然也会被优化但不会直接操作堆栈（而是通过使用寄存器），因为gcc可以完整地看到两个函数，可以在“全局”进行优化。实际问题实际分析，但这个尾部调用优化带来的问题我们必须得小心才是。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-03-21T08:04:48.000Z"><a href="/2009/03/21/serenity/">Mar 21 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/03/21/serenity/">Serenity</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><a href="http://www.douban.com/subject/1309068/" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
+<p>这其实不仅仅是一部电影，还包括一部14集的电视剧。从故事情节上来看，电视剧的故事发生在电影之前，而电影又恰好起了画龙点睛的作用，给整个故事画上了一个完美的句号。</p>
+<p>从科幻的角度来讲，这部电影的故事情节并不是那么精彩，肯定没有《基地》系列好看。片中号称加入了中国元素，但我怎么看都是不伦不类，十分憋足！</p>
+<p>如果它仅仅是这样的话我是没必要写评论的，但<a href="http://www.douban.com/review/1595768/" target="_blank" rel="external">豆瓣上一篇对它的精彩评论</a>吸引了我的注意，它让我从另一种角度去重新看待这部电影。</p>
+<p>我坚持认为，“政府”和“国家”这两个东西的存在说明了人类依旧是那么愚蠢。于是，我们可能会幻想建立一个不需要政府的乌托邦，很不幸的是，那真的只是个乌托邦，残酷的现实是我们依旧还需要有政府，还需要有国家，说白了，我们还需要秩序，因为我们自己还不能自觉去维持秩序。“<a href="http://www.douban.com/subject/1466069/?i=0" target="_blank" rel="external">面对愚昧，连神们自己都束手无策。</a>”又何况是我们人呢？无政府主义者注定无法在这个愚蠢的世界上活下去……</p>
+<p>我认为人类的未来会有两种命运（如果人类还没灭绝的话）：要么是乌托邦，要么是如同《1984》中的世界一样。很不幸，我看的越多我越发现前者是那么地渺茫，后者又是那么地可能…… F**K!!</p>
+<p>=================================================</p>
+<p>附：《Serenity》片头曲</p>
+<p></p><p class="vspace"><em>Take my love, take my land</em><br><em>Take me where I cannot stand</em><br><em>I don’t care, I’m still free</em><br><em>You can’t take the sky from me</em><br><em>Take me out to the black</em><br><em>Tell them I ain’t comin’ back</em><br><em>Burn the land and boil the sea</em><br><em>You can’t take the sky from me</em><br><em>There’s no place I can be</em><br><em>Since I found Serenity</em><br><em>But you can’t take the sky from me…</em></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-03-19T23:06:21.000Z"><a href="/2009/03/19/-e8-af-ad-e8-a8-80-e5-ad-a6-e6-9c-af-e8-af-ad-e8-a7-a3-e9-87-8a/">Mar 19 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/03/19/-e8-af-ad-e8-a8-80-e5-ad-a6-e6-9c-af-e8-af-ad-e8-a7-a3-e9-87-8a/">语言学术语解释</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>（注：以下内容搜集整理于互联网。）</p>
+<p>article：定语。像英文中的a, an, the，葡语中的um, uma, o(s), a(s)，德语中的der, die, das, ein, eine等。</p>
+<p>verb: 动词。</p>
+<p>conjugation: 变位。动词的某种形式，典型的像葡语，法语都有很多种变位，英语中的动词变化也可以叫变位（？）。</p>
+<p>noun: 名词。</p>
+<p>gender: 名词，形容词的性，葡语中把名词分为阳性（masculine）和阴性（feminine），所以其前面的形容词也要做相应的变化。</p>
+<p>singular/plural：单数/复数。汉语的名词并没有单复数形式的变化。</p>
+<p>adjective: 形容词。</p>
+<p>degree: 形容词或副词的度，比如：good, better, best。用于比较（comparison）。</p>
+<p>adverb: 副词。</p>
+<p>pronoun: 代词。</p>
+<p>synonym/antonym: 同义词/反义词。</p>
+<p>auxiliary verb：助动词。协助主要动词构成谓语动词词组。</p>
+<p>比如英语需要借助助动词来完成否定和疑问：</p>
+<p>He does not like English. 中的”does”就是助动词，其本身并无意义。<br>Do you like it? 中的”Do”也是如此。</p>
+<p>modal auxiliary：情态动词。助动词的一种。比如英文中的can, must, dare, need等。表达建议、要求、可能和意愿等。</p>
+<p>infinitive：<a href="http://baike.baidu.com/view/26732.htm" target="_blank" rel="external">不定式</a>。不定式是一种非限定性动词。而非限定动词是指那些在句中不能单独充当谓语的动词，可分为不定式，动名词，现在分词和过去分词。</p>
+<p>subjunctive：<a href="http://baike.baidu.com/view/26751.htm" target="_blank" rel="external">虚拟语气</a>。用来表示说话人的主观愿望或假想，所说的是一个条件，不一定是事实，或与事实相反。</p>
+<p>例子：If I were you, I would not do that. 这个句子就是用的虚拟语气，从动词”were”上面可以体现出来。</p>
+<p>vowel: 元音。典型的元音字母就是a, e, i, o, u这五个字母，包括我们的汉语拼音，只是有些语言对这些字母做了变化，比如葡语中的á，德语中的ä, ö, ü。</p>
+<p>consonant：辅音。元音之外的音节。</p>
+<p>tense: 时态。</p>
+<p>present tense: 现在时。<br>present continuous tense：现在进行时。<br>present perfect tense：现在完成时。<br>present perfect continuous tense：现在完成进行时。<br>future tense: 将来时。<br>past tense：过去时。<br>past continuous tense：过去进行时。<br>past perfect tense：过去完成时。</p>
+<p>clause：从句。其中的定语从句（descriptive clause ）又分为限制性定语从句（restrictive clause）和非限制性定语从句（nonrestrictive clause）。</p>
+<p>subject：主语。主语表示句子主要说明的人或事物。</p>
+<p>predication: 表语。<strong>表语是谓语的一部分</strong>，它位于系动词，如”be”，之后（系表结构），说明主语身份，特征，属性或状态。</p>
+<p>predicate: 谓语。说明主语的动作，状态或特征。</p>
+<p>例子：She is beautiful. 这句中”she”作主语，”is”作系动词，”beautiful”作表语。</p>
+<p>subject complement：主语补语。<strong>表语就是主语补语，但主语补语不一定是表语。具体地说是：除了主系表结构中的表语这外（其标志是要有系动词be等），其它的主语补足语均不能称为表语。</strong></p>
+<p>例子：He waked up frightened. 中的”frightened”是主语补语，但不是表语。</p>
+<p>object：宾语。宾语表示动作行为的对象，跟在及物动词之后。</p>
+<p>例子：I am learning Portuguese. 中的”Portuguese”作宾语。</p>
+<p>attributive：定语。在句中修饰名词或代词的成分叫定语。</p>
+<p>例子：She is a beautiful girl. 这句中的”beautiful”作定语。</p>
+<p>complement: 补语。用来说明宾语或主语所处的状态或正在进行的动作。</p>
+<p>例子：I want to make her happy. 中的”happy”做补语。</p>
+<p>adverbial：<a href="http://baike.baidu.com/view/111834.htm" target="_blank" rel="external">状语</a>。从英文上很容易看出，它是”adverb”（副词）的形容词变形，所以副词一般在句子中做状语。状语用来修饰、限制、动词或形容词，表示动作的状态、方式、时间、处所或程度等。</p>
+<p>例子：They did well.中的副词”well”作状语。</p>
+<p>object complement：宾语补足语，或者简称宾补。用来补充说明宾语。</p>
+<p>例子：I saw you speaking with him. 中的”speaking with him”作宾语补足语。</p>
+<p>注意：通常来说，<strong>一个带宾语补足语的句子转化成被动后就会成为一个带主语补语的句子。</strong>比如上面的句子可以转化为：</p>
+<p>You were seen speaking with him.</p>
+<p>direct/indirect object：直接宾语，间接宾语。带双宾语的句子中要区分直接宾语和间接宾语。</p>
+<p>例子：I give her an apple. 中的”her”作间接宾语，”an apple”作直接宾语。</p>
+<p>注意：<strong>要区分双宾语和宾语补足语的区别，前者中两个宾语可以说是没什么联系，而后者中是有明显的修饰关系。</strong></p>
+<p>accusative: 宾格。<br>nominative：主格。</p>
+<p>例子：I want to thank him. 中的”I”是主格形式，”him”是”he”的宾格形式。</p>
+<p>dative：与格。和宾格类似，只是与格是作间接宾语。</p>
+<p>appositive：同位语。</p>
+<p>例子：He, a famous writer, wrote this book. 中的”a famous writer”作”He”的同位语，用来解释或进一步说明前面的名词或代词。</p>
+<p>注意：不要和定语混了，定语是修饰和被修饰的关系，这里是解释与被解释的关系。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-03-09T00:18:52.000Z"><a href="/2009/03/08/emacs-pk-vi/">Mar 8 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/03/08/emacs-pk-vi/">emacs PK vi</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Harley Hahn的<a href="http://www.amazon.com/Open-Computing-Unix-Unbound/dp/0078820502" target="_blank" rel="external">《Unix Unbound》</a>一书中有介绍vi和emacs的章节。其中介绍vi的一章中提到：</p>
+<blockquote>
+<p>HINT: If you are learning vi and you become temporarily<br>discouraged, take a break and try a little emacs. emacs<br>will seem so complex and impossible that you will feel a<br>lot better about using vi.<br>介绍emacs的一章中提到：<br>HINT: If you are learning emacs and you become temporarily<br>discouraged, take a break and try a little vi. vi<br>will seem so complex and impossible that you will feel a<br>lot better about using emacs.</p>
+</blockquote>
+<p>我：囧。。。。。。。。。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-03-08T05:05:47.000Z"><a href="/2009/03/07/-e4-b8-91-e9-99-8b-e7-9a-84-e4-ba-ba-e7-b1-bb/">Mar 7 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/03/07/-e4-b8-91-e9-99-8b-e7-9a-84-e4-ba-ba-e7-b1-bb/">丑陋的人类</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><a href="http://www.douban.com/subject/2253663/" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
+<p>看到这本书的名字时我以为是描写未来人类消失后的地球，其实不然，它不仅描绘了假设人类消失后地球会如何，而且还大量描写了历史上人类的种种行为，然后运用科学进行分析，得出人类消失以后地球上将会变得更好这个靠谱的结论。</p>
+<p>我觉得作者分析历史是很有道理，我一直坚持认为：<strong>如果你对历史了解足够多，那么，在某种程度上，你就可以预测未来！</strong>通过分析人类历史上各种丑陋的行为，你会发现未来人类是不会有什么好结果的，真是一种悲哀！虽然书中并没有对人类的未来进行任何预测，但是书中分析了没有了人类其它动物将会生活得更好，不得不说这是对人类的一个巨大讽刺！</p>
+<p>书中的另外一个亮点是作者并没有光凭歪歪就去预测，而是通过有理有据的科学事实，和一些科学家的分析得出一个个结论。这一点也是我们值得学习的地方。</p>
+<p>最后，引用别人的一句话作为本文的结尾：</p>
+<blockquote>
+<p><strong><font size="+1">“越来越丑陋的人类越来越配不上美丽的地球。”</font></strong></p>
+</blockquote>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-03-04T05:50:32.000Z"><a href="/2009/03/03/linux-kernel-ascii-art/">Mar 3 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/03/03/linux-kernel-ascii-art/">Linux kernel ASCII art</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Linux内核源代码里有两个比较好玩儿的ASCII art，一个sparc的panic里（见arch/sparc/kernel/traps_32.c），另一个在parisc的panic里（见arch/parisc/kernel/traps.c）。</p>
+<p>我想拿来用用，放到shell里，就把它们改成了shell语句：<br>[bash]<br>echo -e ‘              |/ <strong><em>_ |/n              “@’”‘“‘/,. `@”n              /</em>| \</strong>/ |<em>\n                 __U</em>/n’</p>
+<p>echo -e “             \   ^<strong>^n              \  (xx)_<em>__</em></strong>n                 (__)\       )\/\””<br>                  U  ||——w |n                     ||     ||n”<br>[/bash]</p>
+<p>这样每次启动shell我就可以看到这个图像了，见我的截图：</p>
+<p></p><p style="text-align:center;"><br><img src="/images/" alt="" title="linux ascii art"></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-03-04T04:42:51.000Z"><a href="/2009/03/03/linux-e6-bc-ab-e7-94-bb-e6-95-99-e7-a8-8b/">Mar 3 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/03/03/linux-e6-bc-ab-e7-94-bb-e6-95-99-e7-a8-8b/">Linux漫画教程</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>最近国外出了个linux漫画教程，大体看了看，非常有意思。能把学习linux以漫画的形式来传授，真是一个非常好的主意！现在学linux真是幸福啊～</p>
+<p>这个教程现在刚出到第2期，有兴趣的可以去其<a href="http://www.hackettandbankwell.com/issues" target="_blank" rel="external">官方网站</a>看看。另外，第1期已经可以以<a href="http://www.intarwebz.com/hackett-and-bankwell-1-free-pdf-ebook-version-11/" target="_blank" rel="external">pdf格式下载</a>了。可惜的是只有英文的。</p>
+<p>下面是其中的一幅图片：</p>
+<p><img src="/images/" alt="" title="linux comics"></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-03-02T03:26:04.000Z"><a href="/2009/03/01/-e4-bb-8e-e9-87-8f-e5-ad-90-e7-89-a9-e7-90-86-e8-bf-9c-e6-9c-9b-e4-b8-8a-e5-b8-9d/">Mar 1 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/03/01/-e4-bb-8e-e9-87-8f-e5-ad-90-e7-89-a9-e7-90-86-e8-bf-9c-e6-9c-9b-e4-b8-8a-e5-b8-9d/">从量子物理远望上帝</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><a href="http://www.douban.com/subject/1323102/" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
+<p>其实我想看的那本书本来是<a href="http://www.douban.com/subject/1089271/" target="_blank" rel="external">《寻找薛定谔的猫》</a>，但一开始没找到它，就读了这本。这本书挺薄，我花了不到两个小时就看完了，因为书中很多东西在大学物理课上已经学过了。</p>
+<p>量子物理是从一场争论开始的，就是讨论光到底是波还是粒子。虽然这场争论从牛顿那时候就有了，但无疑到了那个时候才发展到高潮。人家上帝说有就有的东西，放到人类这里争得不亦乐乎，热火朝天……最后的结果还是个平手：它既是波又是粒子。</p>
+<p>好了，看看我们的物理学吧，简单的说它的终极目的就是要寻找理论去解释一切现象，以前都是一个牛b的理论都能横扫全部相关的现象，但到这里行不通了，好多理论都是只能解释一部分，没有一个能解释全部，费了好大的劲儿怎么都不行。于是，有人开始怀疑人生了，这位老师就是玻尔，这位老大的观点是，既然我们没法解释那就说明它本来就不能解释！一切都是概率，宏观世界因为统计才美。爱因斯坦老师不同意了，他老人家坚持认为不能解释是因为我们笨，没找到合适的理论，上帝是不会玩筛子滴！上帝呢？说不定就在一旁偷偷地笑呢：我设计你们人类时就压根没想让你们搞明白这东西！这一点被另一个人看出了些端倪，那就是海森堡老师！但真相除了上帝本人谁知道呢！</p>
+<p>上帝到底有没有我不知道，我知道的是，如果真有，TA肯定是个超一流的数学家，设计师，艺术家！人类不是流行写《xxx艺术》嘛，上帝TA老人家如果也出本书的话就可以叫《设计宇宙的艺术》……</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-03-01T07:54:05.000Z"><a href="/2009/02/28/-e4-bb-8e-e7-94-b5-e5-bd-b1-e7-9c-8b-e7-bc-96-e5-89-a7-e7-9a-84-e8-89-ba-e6-9c-af/">Feb 28 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/02/28/-e4-bb-8e-e7-94-b5-e5-bd-b1-e7-9c-8b-e7-bc-96-e5-89-a7-e7-9a-84-e8-89-ba-e6-9c-af/">从电影看编剧的艺术</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><a href="http://www.douban.com/subject/2124703/" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
+<p>《疯狂的赛车》和《疯狂的石头》有个共同的特点就是以情节取胜，把一开始看似无关的几个情节线索交织穿插到一起，最后达到一种惊奇和喜剧的效果。</p>
+<p>做到这并不容易，单独拿出任何一条线索来看都合理，把它们组合起来依然合理，而且它们的交织还要显得自然而然，而不是看起来像是故意要巧合而巧合，所以，这是一种艺术！</p>
+<p>我不是专业人士，不可能从专业角度去分析，我只能说说我的个人体会，我觉得，这里最关键的是要把人物的身份和职业合理地组合起来，然后靠某个重要的东西使这些人物因此发生矛盾，进而把所以线索都串联起来。</p>
+<p>看看《疯狂的赛车》中那个主要角色：耿浩被禁赛后要不是搞海鲜运输的也不会导致后面的泰国人那样被杀；丧葬服务公司的总经理，要不他推出那种独特的丧葬服务耿浩也不会和那个黑社会老大扯上关系；那个李法拉，要不他搞假药并且在体育场做宣传也不会导致耿浩被禁赛，从而激化后面的矛盾……而要把这两条比较远的线扯上关系就得是那个两个笨贼了，再加上有警察掺和，所以这些情节开始互相交织了……可见，戏里角色的职业身份有多么重要！而且我们也许都已经注意到，这两个疯狂的电影中都有笨贼和警察（或保安），笨贼正是由于其笨，做一些荒唐的事看起来也合理，所以靠他们来连接这些情节也就不足为奇了。</p>
+<p>上面提到的“某个重要的东西”似乎就更明显了，就是《疯狂的石头》里的翡翠，《疯狂的赛车》里的美金，没有它们就没整个故事。而且我还注意到有个比较有意思的地方，那就是这些东西到最后都没好结局，真翡翠最后当作假的被保安送女友了，美金被当作骨灰给一起埋了……争来争去到最后谁也没真正捞着，哈，不愧是喜剧！</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+
+  <nav id="pagination">
+  
+    <a href="/archives/2009/page/5/" class="alignleft prev">Prev</a>
+  
+  
+    <a href="/archives/2009/page/7/" class="alignright next">Next</a>
+  
+  <div class="clearfix"></div>
+</nav>
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:wangcong.org">
+  </form>
 </div>
 
-      </div>
-      <footer><div id="footer" >
-	
-	
-	<div class="social-font" class="clearfix">
-		
-		
-		<a href="https://github.com/congwang" target="_blank" class="icon-github" title="github"></a>
-		
-		
-		
-		<a href="https://twitter.com/conglinux" target="_blank" class="icon-twitter" title="twitter"></a>
-		
-		
-		
-		
-		
-		
-		
-	</div>
-		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2016 
-		
-		<a href="http://wangcong.org/about" target="_blank" title="Cong Wang">Cong Wang</a>
-		
-		</p>
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Book-Reviews/">Book Reviews</a><small>18</small></li>
+  
+    <li><a href="/categories/China/">China</a><small>2</small></li>
+  
+    <li><a href="/categories/Collection/">Collection</a><small>25</small></li>
+  
+    <li><a href="/categories/Life/">Life</a><small>324</small></li>
+  
+    <li><a href="/categories/Linux-Application/">Linux Application</a><small>73</small></li>
+  
+    <li><a href="/categories/Linux-Kernel/">Linux Kernel</a><small>64</small></li>
+  
+    <li><a href="/categories/Love/">Love</a><small>6</small></li>
+  
+    <li><a href="/categories/Movies/">Movies</a><small>19</small></li>
+  
+    <li><a href="/categories/Programming/">Programming</a><small>152</small></li>
+  
+    <li><a href="/categories/Science-Fiction/">Science Fiction</a><small>8</small></li>
+  
+    <li><a href="/categories/Travel/">Travel</a><small>19</small></li>
+  
+  </ul>
 </div>
-</footer>
-      <script src="/js/jquery-2.0.3.min.js"></script>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/geek/">geek</a><small>1</small></li>
+  
+    <li><a href="/tags/handling/">handling</a><small>1</small></li>
+  
+    <li><a href="/tags/joke/">joke</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/tags/signal/">signal</a><small>1</small></li>
+  
+    <li><a href="/tags/unix/">unix</a><small>1</small></li>
+  
+    <li><a href="/tags/vim/">vim</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2017 Cong Wang
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 <script src="/js/jquery.imagesloaded.min.js"></script>
 <script src="/js/gallery.js"></script>
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.navbar').click(function(){
-    $('header nav').toggleClass('shownav');
-  });
-  var myWidth = 0;
-  function getSize(){
-    if( typeof( window.innerWidth ) == 'number' ) {
-      myWidth = window.innerWidth;
-    } else if( document.documentElement && document.documentElement.clientWidth) {
-      myWidth = document.documentElement.clientWidth;
-    };
-  };
-  var m = $('#main'),
-      a = $('#asidepart'),
-      c = $('.closeaside'),
-      o = $('.openaside');
-  $(window).resize(function(){
-    getSize(); 
-    if (myWidth >= 1024) {
-      $('header nav').removeClass('shownav');
-    }else
-    {
-      m.removeClass('moveMain');
-      a.css('display', 'block').removeClass('fadeOut');
-      o.css('display', 'none');
-        
-    }
-  });
-  c.click(function(){
-    a.addClass('fadeOut').css('display', 'none');
-    o.css('display', 'block').addClass('fadeIn');
-    m.addClass('moveMain');
-  });
-  o.click(function(){
-    o.css('display', 'none').removeClass('beforeFadeIn');
-    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
-    m.removeClass('moveMain');
-  });
-  $(window).scroll(function(){
-    o.css("top",Math.max(80,260-$(this).scrollTop()));
-  });
-});
-</script>
-
-
-
-
 
 <script type="text/javascript">
-
 var disqus_shortname = 'disqus_ciEwcJAF0E';
 
-(function(){
-  var dsq = document.createElement('script');
-  dsq.type = 'text/javascript';
-  dsq.async = true;
-  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-}());
 (function(){
   var dsq = document.createElement('script');
   dsq.type = 'text/javascript';
@@ -327,33 +645,13 @@ var disqus_shortname = 'disqus_ciEwcJAF0E';
 
 
 
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
 
-
-
-
-
-<!-- Analytics Begin -->
-
-
-
-
-
-<!-- Analytics End -->
-
-<!-- Totop Begin -->
-
-	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
-	</div>
-	<script src="/js/totop.js"></script>
-
-<!-- Totop End -->
-
-<!-- MathJax Begin -->
-<!-- mathjax config similar to math.stackexchange -->
-
-
-<!-- MathJax End -->
-
-    </body>
-   </html>
+</body>
+</html>

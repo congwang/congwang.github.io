@@ -1,321 +1,628 @@
-
-  <!DOCTYPE HTML>
-<html >
+<!DOCTYPE HTML>
+<html>
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   
-    <title>Archives | A Geek&#39;s Page</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
-    
-    <meta name="author" content="Cong Wang">
-    
-    
-    <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="A Geek's Page">
-<meta property="og:url" content="http://wangcong.org/archives/page/9/">
-<meta property="og:site_name" content="A Geek's Page">
-<meta property="og:description">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="A Geek's Page">
-<meta name="twitter:description">
-<meta name="twitter:creator" content="@conglinux">
+  <title>Page 9 | Archives | A Geek&#39;s Page</title>
+  <meta name="author" content="Cong Wang">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
+  
+  <meta property="og:site_name" content="A Geek&#39;s Page"/>
 
-    
-    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
-    
-    
-    <link rel="icon" href="/img/favicon.ico">
-    
-    
-    <link rel="apple-touch-icon" href="/img/jacman.jpg">
-    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
-    
-    <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
 
 </head>
 
-    <body>
-      <header>
-        <div>
-		
-			<div id="imglogo">
-				<a href="/"><img src="/img/logo.png" alt="A Geek&#39;s Page" title="A Geek&#39;s Page"/></a>
-			</div>
-			
-			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="A Geek&#39;s Page">A Geek&#39;s Page</a></h1>
-				<h2 class="blog-motto"></h2>
-			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
-			</a></div>
-			<nav class="animated">
-				<ul>
-					<ul>
-					 
-						<li><a href="/">Home</a></li>
-					
-						<li><a href="/archives">Archives</a></li>
-					
-						<li><a href="/about-2">About</a></li>
-					
-					<li>
- 					
-					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
-						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
-						<input type="hidden" name="q" value="site:wangcong.org">
-					</form>
-					
-					</li>
-				</ul>
-			</nav>			
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">A Geek&#39;s Page</a></h1>
+  <h2><a href="/"></a></h2>
 </div>
-      </header>
-      <div id="container">
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title">Archives</h2>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2011-11-17T08:00:37.000Z"><a href="/2011/11/17/-e5-92-8c/">Nov 17 2011</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2011/11/17/-e5-92-8c/">/ 和 //</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><div id="_mcePaste"></div></p>
+<p><div id="_mcePaste">看下面这个的例子：</div></p>
+<p><div></div></p>
+<p><div>[wangcong@cr0 ~]$ cd /</div></p>
+<p><div id="_mcePaste">[wangcong@cr0 /]$ pwd</div></p>
+<p><div id="_mcePaste">/</div></p>
+<p><div id="_mcePaste">[wangcong@cr0 /]$ cd //</div></p>
+<p><div id="_mcePaste">[wangcong@cr0 //]$ pwd</div></p>
+<p><div id="_mcePaste">//</div></p>
+<p><div id="_mcePaste">[wangcong@cr0 //]$ cd ///</div></p>
+<p><div id="_mcePaste">[wangcong@cr0 /]$ pwd</div></p>
+<p><div id="_mcePaste">/</div></p>
+<p><div id="_mcePaste">[wangcong@cr0 /]$ cd ////</div></p>
+<p><div id="_mcePaste">[wangcong@cr0 /]$ pwd</div></p>
+<p><div id="_mcePaste">/</div></p>
+<p><div></div></p>
+<p><div>其实 POSIX 规范里有讲到，<a href="http://pubs.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap04.html#tag_04_11" target="_blank" rel="external">Pathname Resolution</a>：</div><br></p>
+<blockquote>
+<p>A pathname consisting of a single slash shall resolve to the root directory of the process. A null pathname shall not be successfully resolved. A pathname that begins with two successive slashes may be interpreted in an implementation-defined manner, although more than two leading slashes shall be treated as a single slash.<br>大多数实现，包括 bash，都是把 // 当 / 来处理，但是仍然显示 //。但 zsh 不是，zsh 把 // 当 / 处理并显示。</p>
+</blockquote>
+
+      
+    </div>
+    <footer>
+      
         
-
-<div class="archive-title" >
-  <h2 class="archive-icon">Archives</h2>
-  
-  <div class="archiveslist archive-float clearfix">
-   <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">Aug 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">Jan 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">Dec 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">Oct 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">Sep 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">Aug 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">Jul 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">Feb 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01/">Jan 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12/">Dec 2012</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">Nov 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">Oct 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">Sep 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">Aug 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/07/">Jul 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">Jun 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">Apr 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">Mar 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">Feb 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">Jan 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/12/">Dec 2011</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">Nov 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/10/">Oct 2011</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">Sep 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08/">Aug 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/07/">Jul 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/06/">Jun 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/05/">May 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04/">Apr 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03/">Mar 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/02/">Feb 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/01/">Jan 2011</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/12/">Dec 2010</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/11/">Nov 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/10/">Oct 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/09/">Sep 2010</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08/">Aug 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07/">Jul 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06/">Jun 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05/">May 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04/">Apr 2010</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03/">Mar 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02/">Feb 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01/">Jan 2010</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12/">Dec 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11/">Nov 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10/">Oct 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09/">Sep 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08/">Aug 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07/">Jul 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/06/">Jun 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/05/">May 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04/">Apr 2009</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03/">Mar 2009</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02/">Feb 2009</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01/">Jan 2009</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12/">Dec 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/11/">Nov 2008</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/10/">Oct 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09/">Sep 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08/">Aug 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07/">Jul 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06/">Jun 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05/">May 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04/">Apr 2008</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03/">Mar 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02/">Feb 2008</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01/">Jan 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12/">Dec 2007</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11/">Nov 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10/">Oct 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09/">Sep 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08/">Aug 2007</a><span class="archive-list-count">31</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07/">Jul 2007</a><span class="archive-list-count">34</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06/">Jun 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05/">May 2007</a><span class="archive-list-count">25</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04/">Apr 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03/">Mar 2007</a><span class="archive-list-count">50</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02/">Feb 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01/">Jan 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12/">Dec 2006</a><span class="archive-list-count">5</span></li></ul>
- </div>
-  
-</div>
-<div id="main" class="archive-part clearfix">
-  <div id="archive-page">
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2011/11/17/-e5-92-8c/" title="/ 和 //" itemprop="url">
-  
-
-    <time datetime="2011-11-17T08:00:37.000Z" itemprop="datePublished">Nov 17 2011</time>
-
-
-    <h1 itemprop="name">/ 和 //</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2011/11/10/ping-e7-9a-84-mdev-e5-80-bc/" title="ping 的 mdev 值" itemprop="url">
-  
-
-    <time datetime="2011-11-11T00:43:50.000Z" itemprop="datePublished">Nov 10 2011</time>
-
-
-    <h1 itemprop="name">ping 的 mdev 值</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2011/11/02/-e5-b8-83-e6-8b-89-e6-a0-bc-e4-b9-8b-e8-a1-8c/" title="布拉格之行" itemprop="url">
-  
-
-    <time datetime="2011-11-03T06:58:57.000Z" itemprop="datePublished">Nov 2 2011</time>
-
-
-    <h1 itemprop="name">布拉格之行</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2011/10/30/-e5-85-b3-e4-ba-8e-bash-c/" title="关于 bash -c" itemprop="url">
-  
-
-    <time datetime="2011-10-31T06:09:12.000Z" itemprop="datePublished">Oct 30 2011</time>
-
-
-    <h1 itemprop="name">关于 bash -c</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2011/10/26/-e6-8e-a8-e8-8d-90-e4-b8-a4-e6-9c-ac-e5-b9-b6-e8-a1-8c-e7-bc-96-e7-a8-8b-e7-9a-84-e4-b9-a6/" title="推荐两本并行编程的书" itemprop="url">
-  
-
-    <time datetime="2011-10-27T00:40:01.000Z" itemprop="datePublished">Oct 26 2011</time>
-
-
-    <h1 itemprop="name">推荐两本并行编程的书</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2011/10/22/-e5-bf-bd-e7-84-b6-e5-be-88-e6-83-b3-e8-b7-9f-e8-87-aa-e5-b7-b1-e8-af-b4-e5-a3-b0-e5-af-b9-e4-b8-8d-e8-b5-b7/" title="忽然很想跟自己说声对不起" itemprop="url">
-  
-
-    <time datetime="2011-10-22T19:02:01.000Z" itemprop="datePublished">Oct 22 2011</time>
-
-
-    <h1 itemprop="name">忽然很想跟自己说声对不起</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2011/10/18/shell-e9-87-8d-e5-ae-9a-e5-90-91-e7-9a-84-e4-b8-80-e5-a4-84-e5-a6-99-e7-94-a8/" title="shell 重定向的一处妙用" itemprop="url">
-  
-
-    <time datetime="2011-10-18T18:41:30.000Z" itemprop="datePublished">Oct 18 2011</time>
-
-
-    <h1 itemprop="name">shell 重定向的一处妙用</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2011/10/14/-e5-85-b3-e4-ba-8e-e9-85-8d-e7-bd-ae-vlan-e8-ae-be-e5-a4-87-e5-90-8d-e5-ad-97/" title="关于配置 vlan 设备名字" itemprop="url">
-  
-
-    <time datetime="2011-10-14T18:14:49.000Z" itemprop="datePublished">Oct 14 2011</time>
-
-
-    <h1 itemprop="name">关于配置 vlan 设备名字</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2011/10/10/-e6-9c-80-e6-9c-80-e5-b9-b8-e7-a6-8f-e7-9a-84-e6-96-87-e5-ad-97/" title="最最幸福的文字" itemprop="url">
-  
-
-    <time datetime="2011-10-10T19:07:29.000Z" itemprop="datePublished">Oct 10 2011</time>
-
-
-    <h1 itemprop="name">最最幸福的文字</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2011/10/09/-e7-ba-a2-e5-b8-bd-e6-ad-a3-e5-9c-a8-e6-8b-9b-e4-ba-ba/" title="红帽正在招人" itemprop="url">
-  
-
-    <time datetime="2011-10-09T21:03:04.000Z" itemprop="datePublished">Oct 9 2011</time>
-
-
-    <h1 itemprop="name">红帽正在招人</h1>
-
-  </a>
-</section>
-
-
-  <nav id="page-nav" class="clearfix archive-nav">
-    <a class="extend prev" rel="prev" href="/archives/page/8/"><span></span>Prev</a><a class="page-number" href="/archives/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/7/">7</a><a class="page-number" href="/archives/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/archives/page/10/">10</a><a class="page-number" href="/archives/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/71/">71</a><a class="extend next" rel="next" href="/archives/page/10/">Next<span></span></a>
-  </nav>
-
+        
+      
+      <div class="clearfix"></div>
+    </footer>
   </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2011-11-11T00:43:50.000Z"><a href="/2011/11/10/ping-e7-9a-84-mdev-e5-80-bc/">Nov 10 2011</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2011/11/10/ping-e7-9a-84-mdev-e5-80-bc/">ping 的 mdev 值</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>在运行 ping 命令的时候，里面有一项输出叫 mdev，如下所示：</p>
+<div id="_mcePaste">~% ping www.google.pt</div><br><div id="_mcePaste">PING www.l.google.com (72.14.203.103) 56(84) bytes of data.</div><br><div id="_mcePaste">64 bytes from tx-in-f103.1e100.net (72.14.203.103): icmp_req=1 ttl=50 time=84.1 ms</div><br><div id="_mcePaste">64 bytes from tx-in-f103.1e100.net (72.14.203.103): icmp_req=2 ttl=50 time=83.0 ms</div><br><div id="_mcePaste">64 bytes from tx-in-f103.1e100.net (72.14.203.103): icmp_req=3 ttl=50 time=85.5 ms</div><br><div id="_mcePaste">^C</div><br><div id="_mcePaste">—- www.l.google.com ping statistics —-</div><br><div id="_mcePaste">3 packets transmitted, 3 received, 0% packet loss, time 2001ms</div><br><div id="_mcePaste">rtt min/avg/max/<strong>mdev</strong> = 83.019/84.227/85.506/1.016 ms</div>
+
+<p>它是什么意思呢？ ping 的手册中并没有提到。我们不妨看一下 <a href="http://www.skbuff.net/iputils" target="_blank" rel="external">ping 的源代码</a>，见 ping_common.c：</p>
+<p>tsum += triptime;<br>tsum2 += (long long)triptime * (long long)triptime</p>
+<p>以及</p>
+<p>tsum /= nreceived + nrepeats;<br>tsum2 /= nreceived + nrepeats;<br>tmdev = llsqrt(tsum2 - tsum * tsum);</p>
+<p>所以我们可以得出：</p>
+<p>mdev = SQRT(SUM(RTT*RTT) / N - (SUM(RTT)/N)^2)</p>
+<p>也就是这个<span style="font-family:arial;line-height:20px;">平均偏差的</span>公式：</p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2011/11/formula.png" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
+<p>所以 mdev 就是 Mean Deviation 的缩写，它表示这些 ICMP 包的 RTT 偏离平均值的程度，这个值越大说明你的网速越不稳定。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2011-11-03T06:58:57.000Z"><a href="/2011/11/02/-e5-b8-83-e6-8b-89-e6-a0-bc-e4-b9-8b-e8-a1-8c/">Nov 2 2011</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2011/11/02/-e5-b8-83-e6-8b-89-e6-a0-bc-e4-b9-8b-e8-a1-8c/">布拉格之行</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>因为开会的原因去了一趟捷克，顺便在那里玩了一圈。阔别三年，终于回到欧洲了，最遗憾的是这次因为签证的原因没机会到葡萄牙看望以前的同事了。:-( 不过，在布拉格开会期间遇到了 Fengguang Wu 和 Ying Han，就约着一起出去玩。</p>
+<p>布拉格绝对一个是典型的欧洲城市，有很多欧式风格的教堂、城堡，当然啦，还有大名鼎鼎的布拉格广场和查理大桥。</p>
+<p><a href="http://wangcong2015.files.wordpress.com/2011/11/img_9732.jpg" target="_blank" rel="external"><img src="/images/" alt="" title="Prague Castle"></a></p>
+<p>到了你会发现，这几个景点每天都是游客如织，即便秋天已经不是去捷克的最佳季节。所以，那首歌里唱的“布拉格黄昏的无人的广场”都是骗人的！黄昏的时候布拉格广场人山人海！</p>
+<p><a href="http://wangcong2015.files.wordpress.com/2011/11/img_9775.jpg" target="_blank" rel="external"><img src="/images/" alt="" title="Prague Square"></a></p>
+<p>虽然说夏天是来捷克旅游的最佳季节，但我认为秋天的布拉格也很不错，可以看到各种各样的颜色。</p>
+<p>离开布拉格，在捷克南波西米亚地区，靠近奥地利的地方，有一个非常出名的小镇，叫克鲁姆洛夫（Český Krumlov）。这里被称为“捷克的丽江”，确实和丽江风格类似，不过它比丽江要小得多，人也相对不多。那里除了那个闻名的城堡，还有一个非常好看的地方，就是瓦尔塔瓦河拐弯处。整个小镇美妙绝伦，天一放晴，感觉像是步入了童话世界。</p>
+<p><a href="http://wangcong2015.files.wordpress.com/2011/11/img_9878.jpg" target="_blank" rel="external"><img src="/images/" alt="" title="Český Krumlov"></a></p>
+<p><a href="http://wangcong2015.files.wordpress.com/2011/11/img_9886.jpg" target="_blank" rel="external"><img src="/images/" alt="" title="Český Krumlov"></a></p>
+<p>在克鲁姆洛夫的时候住青旅，遇到一个日本姑娘，第二天和她一起逛了逛小镇，海阔天空地聊了很多，发现日本人真心爽，去世界上好多地方都不需要签证，包括中国！我就不好意思对比中国的了。</p>
+<p>在捷克西部，也有一个知名的小镇，叫 Karlovy Vary。这个小镇以温泉而出名，所以那里有很多慕名而来泡温泉的人，但景色一般。我去那儿的时候还尝了尝免费的温泉，真的很难喝，还不如白开水呢。</p>
+<p><a href="http://wangcong2015.files.wordpress.com/2011/11/img_9902.jpg" target="_blank" rel="external"><img src="/images/" alt="" title="Karlovy Vary"></a></p>
+<p>这里一个有意思的插曲是，中午吃饭的时候我无意间着走到一家小店，老板是一位非常和蔼可亲的捷克大叔。他会汉语哦，而且还能说不少呢！和他聊了聊才知道，原来他之前是在捷克驻北京大使馆工作！说完，还一直用汉语说“建国门、建国门……”。临走之前，大叔给我要几个人民币硬币，我索性掏出一把零钱来都给他了。大叔问我今晚要不是住这，我说可惜我要回布拉格了。</p>
+<p>下面这个就是他的店的广告，如果你有机会去 Karlovy Vary 的话，记得去这个大叔店里面坐坐哦！</p>
+<p><a href="http://wangcong2015.files.wordpress.com/2011/11/img_9925.jpg" target="_blank" rel="external"><img src="/images/" alt="" title="A restaurant in Karlovy Vary"></a></p>
+<p>住宿推荐：</p>
+<p>Český Krumlov, Hostel99, <a href="http://www.hostel99.cz/" target="_blank" rel="external">http://www.hostel99.cz</a><br>Prague, Hostel ELF, <a href="http://www.hostelelf.com" target="_blank" rel="external">http://www.hostelelf.com</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2011-10-31T06:09:12.000Z"><a href="/2011/10/30/-e5-85-b3-e4-ba-8e-bash-c/">Oct 30 2011</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2011/10/30/-e5-85-b3-e4-ba-8e-bash-c/">关于 bash -c</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>我们知道 -c 的意思是 command，所以 bash -c 后面应该跟一个 command。连 bash 的 man page 中都这么说：</p>
+<blockquote>
+<p>-c string If the -c option is present, then commands are read from string.<br>If there are arguments after the string,  they  are  assigned  to  the positional parameters, starting with $0.<br>而实际上不对。我们看下面的例子：</p>
+</blockquote>
+<p>% bash -c “echo a b c”<br>a b c<br>% bash -c echo a b c</p>
+<p>% bash -cx “echo a”</p>
+<ul>
+<li>echo a<br>a</li>
+</ul>
+<p>如果 -c 后面跟一个参数 string的话，那么第三个例子中的 -cx 应该会报错，找不到x这个命令，而实际上没有报错，也就是说，-c 和 -x 一样，后面不跟任何参数。</p>
+<p>再看上面第二个例子中，为什么只有换行输出？手册中说，如果后面还有参数的话，那么它们被赋值给$0，$1，$2等等，也就是说，bash -c echo a b c，实际上只执行了 bash -c echo，所以只输出了换行！我们可以看更好的例子：</p>
+<p>% bash -c ‘echo “$0 is $0, $1 is $1, $2 is $2”‘ foo bar biz<br>$0 is foo, $1 is bar, $2 is biz</p>
+<p>% echo ‘echo “$0 is $0, $1 is $1, $2 is $2”‘ &gt; /tmp/args<br>% chmod +x /tmp/args<br>% bash -c /tmp/args foo bar biz<br>$0 is /tmp/args, $1 is , $2 is</p>
+<p>% bash -c ‘/tmp/args; echo $0 is $0, $1 is $1, $2 is $2’ foo bar biz<br>$0 is /tmp/args, $1 is , $2 is<br>$0 is foo, $1 is bar, $2 is biz</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2011-10-27T00:40:01.000Z"><a href="/2011/10/26/-e6-8e-a8-e8-8d-90-e4-b8-a4-e6-9c-ac-e5-b9-b6-e8-a1-8c-e7-bc-96-e7-a8-8b-e7-9a-84-e4-b9-a6/">Oct 26 2011</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2011/10/26/-e6-8e-a8-e8-8d-90-e4-b8-a4-e6-9c-ac-e5-b9-b6-e8-a1-8c-e7-bc-96-e7-a8-8b-e7-9a-84-e4-b9-a6/">推荐两本并行编程的书</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>1. 入门的，《The Little Book of Semaphores》</p>
+<blockquote>
+<p>The Little Book of Semaphores is a free textbook that introduces the principles of synchronization for concurrent programming.</p>
+<p>The approach of this book is to identify patterns that are useful for a variety of synchronization problems and then show how they can be assembled into solutions. After each problem, the book offers a hint before showing a solution, giving students a better chance of discovering solutions on their own.</p>
+<p>The book covers the classical problems, including “Readers-writers,” “Producer-consumer”, and “Dining Philosophers.” In addition, it collects a number of not-so-classical problems, some written by the author and some by other teachers and textbook writers.<br>可以在它的官方网站下载：<a href="http://greenteapress.com/semaphores/" target="_blank" rel="external">http://greenteapress.com/semaphores/</a></p>
+</blockquote>
+<p>2. RCU 的作者，大牛 Paul E. McKenney 写的书，《Is Parallel Programming Hard, And, If So, What Can You Do About It?》。这个比较猛，我还没时间看。它也是免费的，英文版可以在这里下载：</p>
+<p>git://git.kernel.org/pub/scm/linux/kernel/git/paulmck/perfbook.git</p>
+<p>现在已经被翻译成中文了，叫《深入理解并行编程》：</p>
+<p><a href="http://download.csdn.net/detail/xiebaoyou/3552357" target="_blank" rel="external">http://download.csdn.net/detail/xiebaoyou/3552357</a></p>
+<p>我在南京和布拉格的时候见过 Paul E. McKenney，他是一个非常和蔼、热心的人，没有一点儿牛人的架子。:-)</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2011-10-22T19:02:01.000Z"><a href="/2011/10/22/-e5-bf-bd-e7-84-b6-e5-be-88-e6-83-b3-e8-b7-9f-e8-87-aa-e5-b7-b1-e8-af-b4-e5-a3-b0-e5-af-b9-e4-b8-8d-e8-b5-b7/">Oct 22 2011</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2011/10/22/-e5-bf-bd-e7-84-b6-e5-be-88-e6-83-b3-e8-b7-9f-e8-87-aa-e5-b7-b1-e8-af-b4-e5-a3-b0-e5-af-b9-e4-b8-8d-e8-b5-b7/">忽然很想跟自己说声对不起</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><a href="http://wangcong.org/blog/wp-content/uploads/2011/10/love-you.jpg" target="_blank" rel="external"><img src="/images/" alt="" title="Love"></a></p>
+<p>忽然很想跟自己说声对不起，对不起总是让自己不开心</p>
+<p>忽然很想跟自己说声对不起，对不起总是莫名其妙的忧伤</p>
+<p>忽然很想跟自己说声对不起，对不起总是给自己太多的压力</p>
+<p>忽然很想跟自己说声对不起，对不起总是忘了提醒自己好好照顾自己</p>
+<p>忽然很想跟自己说声对不起，对不起总是不能为所欲为的做自己喜欢的事儿</p>
+<p>忽然很想跟自己说声对不起，对不起总是和别人说对不起而忘了自己</p>
+<p>忽然很想跟自己说声对不起，对不起因为悲观让自己不再相信生活</p>
+<p>忽然很想跟自己说声对不起，对不起因为倔强让自己受了很多伤</p>
+<p>忽然很想跟自己说声对不起，对不起因为伪装让自己活的很辛苦</p>
+<p>忽然很想跟自己说声对不起，对不起因为年轻让自己疲惫了太久</p>
+<p>忽然很想跟自己说声对不起，对不起因为悲伤麻烦了一些爱我的人</p>
+<p>忽然很想跟自己说声对不起，对不起很久没有好好的照顾自己</p>
+<p>忽然很想跟自己说声对不起，对不起很久没有好好的利用时间享受生活</p>
+<p>忽然很想跟自己说声对不起，对不起很久没有给自己挑一份喜欢的礼物</p>
+<p>忽然很想跟自己说声对不起，对不起曾经为了别人而难为自己</p>
+<p>忽然很想跟自己说声对不起，对不起难过的时候只能让自己硬撑着</p>
+<p>忽然很想跟自己说声对不起，对不起含泪微笑的时候我没有倾诉</p>
+<p>忽然很想跟自己说声对不起，对不起心那么的疼还要假装着不在乎</p>
+<p>忽然很想跟自己说声对不起，对不起让自己装了这么多年的无所谓</p>
+<p>忽然很想跟自己说声对不起，对不起很多东西我没有学会好好珍惜</p>
+<p>忽然很想跟自己说声对不起，对不起忘记了要搁浅</p>
+<p>忽然很想跟自己说声对不起，对不起再也找不回原来的自己了</p>
+<p>我弄丢了太多的东西、忘记了太多的事情、舍弃了太多的责任……</p>
+<p>对不起，对不起，对不起，真的对不起……</p>
+<p>不敢乞求自己的原谅，只有让自己活得更好才能对过去的生活有所补偿</p>
+<p>忘记所有，重新开始</p>
+<p>抬头仰望夜空，眼泪都已倒流，嘴角轻轻上扬</p>
+<p>告诉自己</p>
+<p>明天太阳依旧灿烂，生活却要华丽转身</p>
+<p>（转自：<a href="http://www.douban.com/note/124817865/" target="_blank" rel="external">http://www.douban.com/note/124817865/</a>）</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2011-10-18T18:41:30.000Z"><a href="/2011/10/18/shell-e9-87-8d-e5-ae-9a-e5-90-91-e7-9a-84-e4-b8-80-e5-a4-84-e5-a6-99-e7-94-a8/">Oct 18 2011</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2011/10/18/shell-e9-87-8d-e5-ae-9a-e5-90-91-e7-9a-84-e4-b8-80-e5-a4-84-e5-a6-99-e7-94-a8/">shell 重定向的一处妙用</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>偶然在 dracut 的代码中发现一个使用重定向很巧妙的地方。见 modules.d/90kernel-modules/module-setup.sh 文件。</p>
+<p>之前的老代码是这样的：</p>
+<p>[bash]</p>
+<h1 id="#">#</h1>
+<pre><code>         local _f
+         <span class="keyword">while</span> <span class="built_in">read</span> _f; <span class="keyword">do</span> <span class="keyword">case</span> <span class="string">"<span class="variable">$_f</span>"</span> <span class="keyword">in</span>
+             *.ko)    [[ $(&amp;lt;         <span class="variable">$_f</span>) =~ <span class="variable">$_blockfuncs</span> ]] &amp;amp;&amp;amp; <span class="built_in">echo</span> &amp;quot;<span class="variable">$_f</span>&amp;quot; ;;
+             *.ko.gz) [[ $(gzip -dc &amp;lt;<span class="variable">$_f</span>) =~ <span class="variable">$_blockfuncs</span> ]] &amp;amp;&amp;amp; <span class="built_in">echo</span> &amp;quot;<span class="variable">$_f</span>&amp;quot; ;;
+             <span class="keyword">esac</span>
+         <span class="keyword">done</span>
+</code></pre><p>[/bash]</p>
+<p>意思很清楚吧？就是在内核模块（注意是二进制格式）中匹配一些函数（字符串）。这样会很慢，因为 bash 要在庞大的二进制文件流中匹配一些指定字符串。</p>
+<p>于是，就有人想了一个方法加速这个处理过程，把原来的单个数据流分成两个并行的数据流，同时进行匹配！很巧妙！</p>
+<p>[bash]</p>
+<h1 id="#-1">#</h1>
+<pre><code>         function <span class="function"><span class="title">bmf1</span></span>() {
+             local _f
+             <span class="keyword">while</span> <span class="built_in">read</span> _f; <span class="keyword">do</span> <span class="keyword">case</span> &amp;quot;<span class="variable">$_f</span>&amp;quot; <span class="keyword">in</span>
+                 *.ko)    [[ $(&amp;lt;         <span class="variable">$_f</span>) =~ <span class="variable">$_blockfuncs</span> ]] &amp;amp;&amp;amp; <span class="built_in">echo</span> &amp;quot;<span class="variable">$_f</span>&amp;quot; ;;
+                 *.ko.gz) [[ $(gzip -dc &amp;amp;<span class="variable">${side2}</span>; <span class="keyword">fi</span>
+             <span class="keyword">done</span> 
+             | bmf1     <span class="number">1</span>&amp;gt;&amp;amp;<span class="variable">${merge}</span>    ) {side2}&amp;gt;&amp;amp;<span class="number">1</span> 
+             | bmf1  )      {merge}&amp;gt;&amp;amp;<span class="number">1</span>
+</code></pre><p>[/bash]</p>
+<p>经过 refactor 之后的或许更好理解一些：</p>
+<p>[bash]</p>
+<pre><code>        <span class="comment"># subfunctions inherit following FDs</span>
+        local _merge=<span class="number">8</span> _side2=<span class="number">9</span>
+        function <span class="function"><span class="title">bmf1</span></span>() {
+            local _f
+            <span class="keyword">while</span> <span class="built_in">read</span> _f; <span class="keyword">do</span> <span class="keyword">case</span> <span class="string">"<span class="variable">$_f</span>"</span> <span class="keyword">in</span>
+                *.ko)    [[ $(&amp;lt;         <span class="variable">$_f</span>) =~ <span class="variable">$_blockfuncs</span> ]] &amp;amp;&amp;amp; <span class="built_in">echo</span> &amp;quot;<span class="variable">$_f</span>&amp;quot; ;;
+                *.ko.gz) [[ $(gzip -dc &amp;amp;<span class="variable">${_side2}</span>
+                <span class="keyword">fi</span>
+            <span class="keyword">done</span> | bmf1 <span class="number">1</span>&amp;gt;&amp;amp;<span class="variable">${_merge}</span>
+        }
+        <span class="comment"># Use two parallel streams to filter alternating modules.</span>
+        <span class="built_in">eval</span> <span class="string">"( ( rotor ) <span class="variable">${_side2}</span>&amp;gt;&amp;amp;1 | bmf1 ) <span class="variable">${_merge}</span>&amp;gt;&amp;amp;1"</span>
+</code></pre><p>[/bash] </p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2011-10-14T18:14:49.000Z"><a href="/2011/10/14/-e5-85-b3-e4-ba-8e-e9-85-8d-e7-bd-ae-vlan-e8-ae-be-e5-a4-87-e5-90-8d-e5-ad-97/">Oct 14 2011</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2011/10/14/-e5-85-b3-e4-ba-8e-e9-85-8d-e7-bd-ae-vlan-e8-ae-be-e5-a4-87-e5-90-8d-e5-ad-97/">关于配置 vlan 设备名字</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>以前只知道 vlan 设备的名字都是像 bond0.77 这种格式，前两天拿到一台机器，上面的 vlan 是 vlan77，而且 ifcfg-vlan77 多了一个 PHYSDEV=bond0。这才明白原来 vlan 还可以这么配置。</p>
+<p>可是我仍然想测一下之前的 bond0.77 这个格式的配置，因为 kdump 要解释这两个不同的格式。于是我把 ifcfg-vlan77 重命名为 ifcfg-bond0.77，并且把 DEVICE=vlan77 改为 DEVICE=bond0.77，结果重启之后出错。看了半天的 ifup 的代码也没找到问题出在哪里。忽然注意到 /proc/net/vlan 下面仍然是 vlan77，于是开始扒内核的源代码，终于在 net/8021q/vlanproc.c 里发现了问题的所在。</p>
+<p>我忘记修改 VLAN_NAME_TYPE=VLAN_PLUS_VID_NO_PAD 这一项！看内核源代码很了然，VLAN_PLUS_VID_NO_PAD 就是说名字格式是 “vlan” + VLANID，而且没有填充0，也就是 “vlan77” 这种格式。VLAN_NAME_TYPE=DEV_PLUS_VID_NO_PAD 才是我想要的设备名+VLANID，比如 bond0.77。如果不加“NO_PAD”的话，VLAN_NAME_TYPE=DEV_PLUS_VID 就会把设备命名成 bond0.0077了。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2011-10-10T19:07:29.000Z"><a href="/2011/10/10/-e6-9c-80-e6-9c-80-e5-b9-b8-e7-a6-8f-e7-9a-84-e6-96-87-e5-ad-97/">Oct 10 2011</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2011/10/10/-e6-9c-80-e6-9c-80-e5-b9-b8-e7-a6-8f-e7-9a-84-e6-96-87-e5-ad-97/">最最幸福的文字</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><a href="http://book.douban.com/subject/4881850/" target="_blank" rel="external"><img src="/images/" alt="" title="《阿勒泰的角落》"></a></p>
+<p>去新疆之前路过成都的时候，杜姑娘推荐我看一下这本书。上火车之前，正好在成都的一家书店买到了它。</p>
+<p>过多的评价用不着，我只想说一句，这本书是我读过的最最幸福的文字！一个在阿勒泰的角落里生活的裁缝，怎么能写出这么幸福这么朴实得打动人心的文字呢！:-) 这让我想起了<a href="http://book.douban.com/subject/4187411/" target="_blank" rel="external">《万物有灵且美》</a>这本书，作者是一个英国的乡村兽医，同样是不怎么起眼的职业，他们写出的文字一点儿都不华丽，可就是这种朴实、乐观、幸福，足以打动每一个读者！</p>
+<p>由此可见，幸福和职业无关，和金钱更是没有关系，“苦和甜来自外界，而体味幸福却来自内心”！这个在阿勒泰当裁缝的李娟足以让每一个生活在大城市还每天矫揉造作的人无地自容了。</p>
+<p>我去新疆的时候也去了阿勒泰，去了那个“童话边的小城”布尔津，也去了那个“遍地都是宝石”的可可托海镇。从布尔津到可可托海真费了我不少功夫，先是坐车到阿勒泰市（后来才知道其实可以在北屯镇转车的），再转车到富蕴县，再转车到可可托海镇，要去景区的话还得转车……到了可可托海镇才发现，这么一个小地方就是李娟所谓的“算得上真正的城市”！天呐，她到底生活在阿勒泰的哪个小小小小角落里！</p>
+<p>阿勒泰有很多哈萨克族人，他们应该是为数不多的现在还在过游牧生活的民族。我在去阿勒泰市的路上看到不少赶着骆驼、骑着马、放着羊的哈萨克人，而骆驼上驼着各种各种的东西，有桌子，帐篷，家具……要我说，他们才是真正的四海为家的人！</p>
+<p>我们在禾木碰到过两个哈萨克小伙儿，都很幽默。其中一个小伙儿骑着马，主动上来跟我们当中的姑娘搭讪，用他那不太流利的汉语介绍说，“我——叫——哈——哈”。哈哈哈哈，我们一听就笑了！另一个小伙儿是住的客栈碰到的，叫克里木，他硬是从我这儿蹭走了一个打火机！我怎么觉得哈萨克族的小伙儿都是这么“脸皮厚”呢，哈哈！</p>
+<p>打住，继续说这本书。书上还留了她的博客地址，看到下面的一句“进城不易，更新缓慢”，我又笑了！再看看她的微博上，“不见网友。不见读者。不签名”，看来还是李娟懂得什么是幸福！</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2011-10-09T21:03:04.000Z"><a href="/2011/10/09/-e7-ba-a2-e5-b8-bd-e6-ad-a3-e5-9c-a8-e6-8b-9b-e4-ba-ba/">Oct 9 2011</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2011/10/09/-e7-ba-a2-e5-b8-bd-e6-ad-a3-e5-9c-a8-e6-8b-9b-e4-ba-ba/">红帽正在招人</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>受同事之托，发一下 Kernel QE 的招聘信息：</p>
+<p><a href="http://jobs.zhaopin.com/beijing/SENIOR+QUALITY+ENGIN_136243538250413.htm" target="_blank" rel="external">Senior Quality Engineer - Kernel(General)</a></p>
+<p><a href="http://jobs.zhaopin.com/beijing/SENIOR+QUALITY+ENGIN_136243538250459.htm" target="_blank" rel="external">Senior Quality Engineer - Kernel(Network)</a></p>
+<p><a href="http://jobs.zhaopin.com/beijing/QUALITY+ENGINEER++KE_136243538250414.htm" target="_blank" rel="external">Quality Engineer - Kernel(General)</a></p>
+<p><a href="http://jobs.zhaopin.com/INTERN++KERNEL+QE+%EF%BC%88%E5%8F%AA%E9%99%90%E5%9C%A8_136243538250171.htm" target="_blank" rel="external">Intern - Kernel QE</a></p>
+<p>有兴趣的可以把简历发到我的邮箱：xiyou dot wangcong at gmail dot com，我会转发到负责招聘的人那里。</p>
+<p>关于在红帽工作，我最喜欢的是上下班时间自由、假期可任意调换、允许在家上班。:-D 我好久不在办公室上班了，时常想念公司里的阿姨和零食。。。想了解更多更新内容可参考其他同事的博客：</p>
+<p>akong：<a href="http://amosk.info/blog/" target="_blank" rel="external">http://amosk.info/blog/</a></p>
+<p>caspar：<a href="http://www.casparant.com/" target="_blank" rel="external">http://www.casparant.com/</a></p>
+<p>erguan：<a href="http://guaneryu.com/blog/" target="_blank" rel="external">http://guaneryu.com/blog/</a></p>
+<p>adam8157：<a href="http://www.adam8157.info/" target="_blank" rel="external">http://www.adam8157.info/</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+
+  <nav id="pagination">
+  
+    <a href="/archives/page/8/" class="alignleft prev">Prev</a>
+  
+  
+    <a href="/archives/page/10/" class="alignright next">Next</a>
+  
+  <div class="clearfix"></div>
+</nav>
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:wangcong.org">
+  </form>
 </div>
 
-      </div>
-      <footer><div id="footer" >
-	
-	
-	<div class="social-font" class="clearfix">
-		
-		
-		<a href="https://github.com/congwang" target="_blank" class="icon-github" title="github"></a>
-		
-		
-		
-		<a href="https://twitter.com/conglinux" target="_blank" class="icon-twitter" title="twitter"></a>
-		
-		
-		
-		
-		
-		
-		
-	</div>
-		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2016 
-		
-		<a href="http://wangcong.org/about" target="_blank" title="Cong Wang">Cong Wang</a>
-		
-		</p>
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Book-Reviews/">Book Reviews</a><small>18</small></li>
+  
+    <li><a href="/categories/China/">China</a><small>2</small></li>
+  
+    <li><a href="/categories/Collection/">Collection</a><small>25</small></li>
+  
+    <li><a href="/categories/Life/">Life</a><small>324</small></li>
+  
+    <li><a href="/categories/Linux-Application/">Linux Application</a><small>73</small></li>
+  
+    <li><a href="/categories/Linux-Kernel/">Linux Kernel</a><small>64</small></li>
+  
+    <li><a href="/categories/Love/">Love</a><small>6</small></li>
+  
+    <li><a href="/categories/Movies/">Movies</a><small>19</small></li>
+  
+    <li><a href="/categories/Programming/">Programming</a><small>152</small></li>
+  
+    <li><a href="/categories/Science-Fiction/">Science Fiction</a><small>8</small></li>
+  
+    <li><a href="/categories/Travel/">Travel</a><small>19</small></li>
+  
+  </ul>
 </div>
-</footer>
-      <script src="/js/jquery-2.0.3.min.js"></script>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/geek/">geek</a><small>1</small></li>
+  
+    <li><a href="/tags/handling/">handling</a><small>1</small></li>
+  
+    <li><a href="/tags/joke/">joke</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/tags/signal/">signal</a><small>1</small></li>
+  
+    <li><a href="/tags/unix/">unix</a><small>1</small></li>
+  
+    <li><a href="/tags/vim/">vim</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2017 Cong Wang
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 <script src="/js/jquery.imagesloaded.min.js"></script>
 <script src="/js/gallery.js"></script>
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.navbar').click(function(){
-    $('header nav').toggleClass('shownav');
-  });
-  var myWidth = 0;
-  function getSize(){
-    if( typeof( window.innerWidth ) == 'number' ) {
-      myWidth = window.innerWidth;
-    } else if( document.documentElement && document.documentElement.clientWidth) {
-      myWidth = document.documentElement.clientWidth;
-    };
-  };
-  var m = $('#main'),
-      a = $('#asidepart'),
-      c = $('.closeaside'),
-      o = $('.openaside');
-  $(window).resize(function(){
-    getSize(); 
-    if (myWidth >= 1024) {
-      $('header nav').removeClass('shownav');
-    }else
-    {
-      m.removeClass('moveMain');
-      a.css('display', 'block').removeClass('fadeOut');
-      o.css('display', 'none');
-        
-    }
-  });
-  c.click(function(){
-    a.addClass('fadeOut').css('display', 'none');
-    o.css('display', 'block').addClass('fadeIn');
-    m.addClass('moveMain');
-  });
-  o.click(function(){
-    o.css('display', 'none').removeClass('beforeFadeIn');
-    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
-    m.removeClass('moveMain');
-  });
-  $(window).scroll(function(){
-    o.css("top",Math.max(80,260-$(this).scrollTop()));
-  });
-});
-</script>
-
-
-
-
 
 <script type="text/javascript">
-
 var disqus_shortname = 'disqus_ciEwcJAF0E';
 
-(function(){
-  var dsq = document.createElement('script');
-  dsq.type = 'text/javascript';
-  dsq.async = true;
-  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-}());
 (function(){
   var dsq = document.createElement('script');
   dsq.type = 'text/javascript';
@@ -327,33 +634,13 @@ var disqus_shortname = 'disqus_ciEwcJAF0E';
 
 
 
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
 
-
-
-
-
-<!-- Analytics Begin -->
-
-
-
-
-
-<!-- Analytics End -->
-
-<!-- Totop Begin -->
-
-	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
-	</div>
-	<script src="/js/totop.js"></script>
-
-<!-- Totop End -->
-
-<!-- MathJax Begin -->
-<!-- mathjax config similar to math.stackexchange -->
-
-
-<!-- MathJax End -->
-
-    </body>
-   </html>
+</body>
+</html>

@@ -1,116 +1,69 @@
-
- <!DOCTYPE HTML>
-<html >
+<!DOCTYPE HTML>
+<html>
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   
-    <title>又一个宏技巧 | A Geek&#39;s Page</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
-    
-    <meta name="author" content="Cong Wang">
-    
-    <meta name="description" content="（本文为《C语言编程艺术》的一部分。）
+  <title>又一个宏技巧 | A Geek&#39;s Page</title>
+  <meta name="author" content="Cong Wang">
+  
+  <meta name="description" content="（本文为《C语言编程艺术》的一部分。）
 这个技巧是从 Nick Bowler 的一封邮件中看来的，非常有意思，分享一下。
 情况是这样的：在 Linux 内核中，有一个函数 kmap_atomic()，它之前带两个参数，而现在，它的第二个参数已经名存实亡了，可以直接去掉。所以问题就出来了，如何警告使用">
-    
-    
-    <meta name="description" content="（本文为《C语言编程艺术》的一部分。）
-这个技巧是从 Nick Bowler 的一封邮件中看来的，非常有意思，分享一下。
-情况是这样的：在 Linux 内核中，有一个函数 kmap_atomic()，它之前带两个参数，而现在，它的第二个参数已经名存实亡了，可以直接去掉。所以问题就出来了，如何警告使用 kmap_atomic() 的人带有两个参数的形式是过时的？换句话说，怎么才能在用两个参数调用 k">
-<meta property="og:type" content="article">
-<meta property="og:title" content="又一个宏技巧">
-<meta property="og:url" content="http://wangcong.org/2011/11/24/-e4-b8-80-e4-b8-aa-e5-ae-8f-e6-8a-80-e5-b7-a7/">
-<meta property="og:site_name" content="A Geek's Page">
-<meta property="og:description" content="（本文为《C语言编程艺术》的一部分。）
-这个技巧是从 Nick Bowler 的一封邮件中看来的，非常有意思，分享一下。
-情况是这样的：在 Linux 内核中，有一个函数 kmap_atomic()，它之前带两个参数，而现在，它的第二个参数已经名存实亡了，可以直接去掉。所以问题就出来了，如何警告使用 kmap_atomic() 的人带有两个参数的形式是过时的？换句话说，怎么才能在用两个参数调用 k">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="又一个宏技巧">
-<meta name="twitter:description" content="（本文为《C语言编程艺术》的一部分。）
-这个技巧是从 Nick Bowler 的一封邮件中看来的，非常有意思，分享一下。
-情况是这样的：在 Linux 内核中，有一个函数 kmap_atomic()，它之前带两个参数，而现在，它的第二个参数已经名存实亡了，可以直接去掉。所以问题就出来了，如何警告使用 kmap_atomic() 的人带有两个参数的形式是过时的？换句话说，怎么才能在用两个参数调用 k">
-<meta name="twitter:creator" content="@conglinux">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
+  <meta property="og:title" content="又一个宏技巧"/>
+  <meta property="og:site_name" content="A Geek&#39;s Page"/>
 
-    
-    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
-    
-    
-    <link rel="icon" href="/img/favicon.ico">
-    
-    
-    <link rel="apple-touch-icon" href="/img/jacman.jpg">
-    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
-    
-    <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
 
 </head>
 
-  <body>
-    <header>
-      <div>
-		
-			<div id="imglogo">
-				<a href="/"><img src="/img/logo.png" alt="A Geek&#39;s Page" title="A Geek&#39;s Page"/></a>
-			</div>
-			
-			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="A Geek&#39;s Page">A Geek&#39;s Page</a></h1>
-				<h2 class="blog-motto"></h2>
-			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
-			</a></div>
-			<nav class="animated">
-				<ul>
-					<ul>
-					 
-						<li><a href="/">Home</a></li>
-					
-						<li><a href="/archives">Archives</a></li>
-					
-						<li><a href="/about-2">About</a></li>
-					
-					<li>
- 					
-					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
-						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
-						<input type="hidden" name="q" value="site:wangcong.org">
-					</form>
-					
-					</li>
-				</ul>
-			</nav>			
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">A Geek&#39;s Page</a></h1>
+  <h2><a href="/"></a></h2>
 </div>
-    </header>
-    <div id="container">
-      <div id="main" class="post" itemscope itemprop="blogPost">
-  
-	<article itemprop="articleBody"> 
-		<header class="article-info clearfix">
-  <h1 itemprop="name">
+<nav id="main-nav" class="alignright">
+  <ul>
     
-      <a href="/2011/11/24/-e4-b8-80-e4-b8-aa-e5-ae-8f-e6-8a-80-e5-b7-a7/" title="又一个宏技巧" itemprop="url">又一个宏技巧</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2011-11-25T07:32:15.000Z" itemprop="datePublished"> Published Nov 24 2011</time>
+      <li><a href="/">Home</a></li>
     
-  </p>
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
 </header>
-	<div class="article-content">
-		
-		<div id="toc" class="toc-article">
-			<strong class="toc-title">Contents</strong>
-		
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#define_PASTE(a,_b)_a_##_b"><span class="toc-number">1.</span> <span class="toc-text">define PASTE(a, b) a ## b</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#define_PASTE2(a,_b)_PASTE(a,_b)"><span class="toc-number">2.</span> <span class="toc-text">define PASTE2(a, b) PASTE(a, b)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#define_NARG_(_2,__1,_n,_…)_n"><span class="toc-number">3.</span> <span class="toc-text">define NARG_(_2, _1, n, …) n</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#define_NARG(…)_NARG(_VA_ARGS,_2,_1,_:)"><span class="toc-number">4.</span> <span class="toc-text">define NARG(…) NARG(_VA_ARGS, 2, 1, :)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#define_kmapatomic1(…)_kmapatomic(__VA_ARGS)"><span class="toc-number">5.</span> <span class="toc-text">define kmapatomic1(…) kmapatomic(__VA_ARGS)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#define_kmapatomic2(…)_kmapatomic_deprecated(__VA_ARGS)"><span class="toc-number">6.</span> <span class="toc-text">define kmapatomic2(…) kmapatomic_deprecated(__VA_ARGS)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#define_kmapatomic(…)_PASTE2(kmapatomic,_NARG(VA_ARGS)(__VA_ARGS))"><span class="toc-number">7.</span> <span class="toc-text">define kmapatomic(…) PASTE2(kmapatomic, NARG(VA_ARGS)(__VA_ARGS))</span></a></li></ol>
-		
-		</div>
-		
-		<p>（本文为《C语言编程艺术》的一部分。）</p>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2011-11-25T07:32:15.000Z"><a href="/2011/11/24/-e4-b8-80-e4-b8-aa-e5-ae-8f-e6-8a-80-e5-b7-a7/">Nov 24 2011</a></time>
+      
+      
+  
+    <h1 class="title">又一个宏技巧</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>（本文为《C语言编程艺术》的一部分。）</p>
 <p>这个技巧是从 Nick Bowler 的一封邮件中看来的，非常有意思，分享一下。</p>
 <p>情况是这样的：在 Linux 内核中，有一个函数 kmap_atomic()，它之前带两个参数，而现在，它的第二个参数已经名存实亡了，可以<a href="https://lkml.org/lkml/2011/11/27/3" target="_blank" rel="external">直接去掉</a>。所以问题就出来了，如何警告使用 kmap_atomic() 的人带有两个参数的形式是过时的？换句话说，怎么才能在用两个参数调用 kmap_atomic() 时发出警告而用一个参数调用时就没有警告？</p>
 <p>所以下面的技巧就出来了。</p>
@@ -128,289 +81,130 @@
 <p>这里最精妙的地方当属 NARGS 这个宏的定义，它通过参数个数来决定返回值，进而通过 PASTE2 来选择是 kmap_atomic1，还是 kmap_atomic2，而后者是过期的。如果用户用了两个参数，他就会得到类似下面的编译警告：</p>
 <p>drivers/block/drbd/drbd_bitmap.c:973:3: warning: ‘kmap_atomic_deprecated’ is deprecated (declared at /home/wangcong/linux-2.6/include/linux/highmem.h:124)</p>
 <p>非常聪明，不是吗？ :)</p>
+
+      
+    </div>
+    <footer>
+      
+        
   
-	</div>
-		<footer class="article-footer clearfix">
-<div class="article-catetags">
+  <div class="categories">
+    <a href="/categories/Programming/">Programming</a>
+  </div>
 
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Programming/">Programming</a>
-</div>
+        
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
 
-
-</div>
-
-
-
-	<div class="article-share" id="share">
-	
-	  <div data-url="http://wangcong.org/2011/11/24/-e4-b8-80-e4-b8-aa-e5-ae-8f-e6-8a-80-e5-b7-a7/" data-title="又一个宏技巧 | A Geek&#39;s Page" data-tsina="null" class="share clearfix">
-	  </div>
-	
-	</div>
-
-
-</footer>
-
-   	       
-	</article>
-	
-<nav class="article-nav clearfix">
- 
- <div class="prev" >
- <a href="/2011/11/27/-e5-8b-be-e6-90-ad-e4-b8-8a-e4-b8-80-e4-b8-aa-e5-a7-91-e5-a8-98/" title="勾搭上一个姑娘……">
-  <strong>上一篇：</strong><br/>
-  <span>
-  勾搭上一个姑娘……</span>
-</a>
-</div>
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
 
 
-<div class="next">
-<a href="/2011/11/17/-e5-92-8c/"  title="/ 和 //">
- <strong>下一篇：</strong><br/> 
- <span>/ 和 //
-</span>
-</a>
-</div>
+<section id="comment">
+  <h1 class="title">Comments</h1>
 
-</nav>
-
-	
-
-<section id="comments" class="comment">
+  
   <div id="disqus_thread">
     <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
   </div>
+  
 </section>
 
-</div>  
-      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
-
-  <div id="toc" class="toc-aside">
-  <strong class="toc-title">Contents</strong>
- 
- <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#define_PASTE(a,_b)_a_##_b"><span class="toc-number">1.</span> <span class="toc-text">define PASTE(a, b) a ## b</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#define_PASTE2(a,_b)_PASTE(a,_b)"><span class="toc-number">2.</span> <span class="toc-text">define PASTE2(a, b) PASTE(a, b)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#define_NARG_(_2,__1,_n,_…)_n"><span class="toc-number">3.</span> <span class="toc-text">define NARG_(_2, _1, n, …) n</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#define_NARG(…)_NARG(_VA_ARGS,_2,_1,_:)"><span class="toc-number">4.</span> <span class="toc-text">define NARG(…) NARG(_VA_ARGS, 2, 1, :)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#define_kmapatomic1(…)_kmapatomic(__VA_ARGS)"><span class="toc-number">5.</span> <span class="toc-text">define kmapatomic1(…) kmapatomic(__VA_ARGS)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#define_kmapatomic2(…)_kmapatomic_deprecated(__VA_ARGS)"><span class="toc-number">6.</span> <span class="toc-text">define kmapatomic2(…) kmapatomic_deprecated(__VA_ARGS)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#define_kmapatomic(…)_PASTE2(kmapatomic,_NARG(VA_ARGS)(__VA_ARGS))"><span class="toc-number">7.</span> <span class="toc-text">define kmapatomic(…) PASTE2(kmapatomic, NARG(VA_ARGS)(__VA_ARGS))</span></a></li></ol>
- 
-  </div>
-
-<div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
-<aside class="clearfix">
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:wangcong.org">
+  </form>
+</div>
 
   
-<div class="categorieslist">
-	<p class="asidetitle">Categories</p>
-		<ul>
-		
-			<li><a href="/categories/Book-Reviews/" title="Book Reviews">Book Reviews<sup>18</sup></a></li>
-		
-			<li><a href="/categories/China/" title="China">China<sup>2</sup></a></li>
-		
-			<li><a href="/categories/Collection/" title="Collection">Collection<sup>25</sup></a></li>
-		
-			<li><a href="/categories/Life/" title="Life">Life<sup>324</sup></a></li>
-		
-			<li><a href="/categories/Linux-Application/" title="Linux Application">Linux Application<sup>73</sup></a></li>
-		
-			<li><a href="/categories/Linux-Kernel/" title="Linux Kernel">Linux Kernel<sup>64</sup></a></li>
-		
-			<li><a href="/categories/Love/" title="Love">Love<sup>6</sup></a></li>
-		
-			<li><a href="/categories/Movies/" title="Movies">Movies<sup>19</sup></a></li>
-		
-			<li><a href="/categories/Programming/" title="Programming">Programming<sup>152</sup></a></li>
-		
-			<li><a href="/categories/Science-Fiction/" title="Science Fiction">Science Fiction<sup>8</sup></a></li>
-		
-			<li><a href="/categories/Travel/" title="Travel">Travel<sup>19</sup></a></li>
-		
-		</ul>
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Book-Reviews/">Book Reviews</a><small>18</small></li>
+  
+    <li><a href="/categories/China/">China</a><small>2</small></li>
+  
+    <li><a href="/categories/Collection/">Collection</a><small>25</small></li>
+  
+    <li><a href="/categories/Life/">Life</a><small>324</small></li>
+  
+    <li><a href="/categories/Linux-Application/">Linux Application</a><small>73</small></li>
+  
+    <li><a href="/categories/Linux-Kernel/">Linux Kernel</a><small>64</small></li>
+  
+    <li><a href="/categories/Love/">Love</a><small>6</small></li>
+  
+    <li><a href="/categories/Movies/">Movies</a><small>19</small></li>
+  
+    <li><a href="/categories/Programming/">Programming</a><small>152</small></li>
+  
+    <li><a href="/categories/Science-Fiction/">Science Fiction</a><small>8</small></li>
+  
+    <li><a href="/categories/Travel/">Travel</a><small>19</small></li>
+  
+  </ul>
 </div>
 
 
   
-<div class="tagslist">
-	<p class="asidetitle">Tags</p>
-		<ul class="clearfix">
-		
-			<li><a href="/tags/vim/" title="vim">vim<sup>1</sup></a></li>
-		
-			<li><a href="/tags/joke/" title="joke">joke<sup>1</sup></a></li>
-		
-			<li><a href="/tags/geek/" title="geek">geek<sup>1</sup></a></li>
-		
-			<li><a href="/tags/unix/" title="unix">unix<sup>1</sup></a></li>
-		
-			<li><a href="/tags/signal/" title="signal">signal<sup>1</sup></a></li>
-		
-			<li><a href="/tags/linux/" title="linux">linux<sup>1</sup></a></li>
-		
-			<li><a href="/tags/handling/" title="handling">handling<sup>1</sup></a></li>
-		
-		</ul>
-</div>
-
-
-  <div class="linkslist">
-  <p class="asidetitle">Links</p>
-    <ul>
-        
-    </ul>
-</div>
-
-  <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/geek/">geek</a><small>1</small></li>
+  
+    <li><a href="/tags/handling/">handling</a><small>1</small></li>
+  
+    <li><a href="/tags/joke/">joke</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/tags/signal/">signal</a><small>1</small></li>
+  
+    <li><a href="/tags/unix/">unix</a><small>1</small></li>
+  
+    <li><a href="/tags/vim/">vim</a><small>1</small></li>
+  
+  </ul>
 </div>
 
 </aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2017 Cong Wang
+  
 </div>
-    </div>
-    <footer><div id="footer" >
-	
-	
-	<div class="social-font" class="clearfix">
-		
-		
-		<a href="https://github.com/congwang" target="_blank" class="icon-github" title="github"></a>
-		
-		
-		
-		<a href="https://twitter.com/conglinux" target="_blank" class="icon-twitter" title="twitter"></a>
-		
-		
-		
-		
-		
-		
-		
-	</div>
-		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2016 
-		
-		<a href="http://wangcong.org/about" target="_blank" title="Cong Wang">Cong Wang</a>
-		
-		</p>
-</div>
-</footer>
-    <script src="/js/jquery-2.0.3.min.js"></script>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 <script src="/js/jquery.imagesloaded.min.js"></script>
 <script src="/js/gallery.js"></script>
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.navbar').click(function(){
-    $('header nav').toggleClass('shownav');
-  });
-  var myWidth = 0;
-  function getSize(){
-    if( typeof( window.innerWidth ) == 'number' ) {
-      myWidth = window.innerWidth;
-    } else if( document.documentElement && document.documentElement.clientWidth) {
-      myWidth = document.documentElement.clientWidth;
-    };
-  };
-  var m = $('#main'),
-      a = $('#asidepart'),
-      c = $('.closeaside'),
-      o = $('.openaside');
-  $(window).resize(function(){
-    getSize(); 
-    if (myWidth >= 1024) {
-      $('header nav').removeClass('shownav');
-    }else
-    {
-      m.removeClass('moveMain');
-      a.css('display', 'block').removeClass('fadeOut');
-      o.css('display', 'none');
-      
-      $('#toc.toc-aside').css('display', 'none');
-        
-    }
-  });
-  c.click(function(){
-    a.addClass('fadeOut').css('display', 'none');
-    o.css('display', 'block').addClass('fadeIn');
-    m.addClass('moveMain');
-  });
-  o.click(function(){
-    o.css('display', 'none').removeClass('beforeFadeIn');
-    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
-    m.removeClass('moveMain');
-  });
-  $(window).scroll(function(){
-    o.css("top",Math.max(80,260-$(this).scrollTop()));
-  });
-});
-</script>
 
 <script type="text/javascript">
-$(document).ready(function(){ 
-  var ai = $('.article-content>iframe'),
-      ae = $('.article-content>embed'),
-      t  = $('#toc'),
-      h  = $('article h2')
-      ah = $('article h2'),
-      ta = $('#toc.toc-aside'),
-      o  = $('.openaside'),
-      c  = $('.closeaside');
-  if(ai.length>0){
-    ai.wrap('<div class="video-container" />');
-  };
-  if(ae.length>0){
-   ae.wrap('<div class="video-container" />');
-  };
-  if(ah.length==0){
-    t.css('display','none');
-  }else{
-    c.click(function(){
-      ta.css('display', 'block').addClass('fadeIn');
-    });
-    o.click(function(){
-      ta.css('display', 'none');
-    });
-    $(window).scroll(function(){
-      ta.css("top",Math.max(140,320-$(this).scrollTop()));
-    });
-  };
-});
-</script>
-
-
-<script type="text/javascript">
-$(document).ready(function(){ 
-  var $this = $('.share'),
-      url = $this.attr('data-url'),
-      encodedUrl = encodeURIComponent(url),
-      title = $this.attr('data-title'),
-      tsina = $this.attr('data-tsina'),
-      description = $this.attr('description');
-  var html = [
-  '<a href="#" class="overlay" id="qrcode"></a>',
-  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
-  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
-  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
-  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
-  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
-  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
-  '<span title="Share to"></span>'
-  ].join('');
-  $this.append(html);
-  $('.article-share-qrcode').click(function(){
-    var imgSrc = $('#qrcode-pic').attr('data-src');
-    $('#qrcode-pic').attr('src', imgSrc);
-    $('#qrcode-pic').load(function(){
-        $('.qrcode strong').text(' ');
-    });
-  });
-});     
-</script>
-
-
-
-
-<script type="text/javascript">
-
 var disqus_shortname = 'disqus_ciEwcJAF0E';
 
 (function(){
@@ -420,65 +214,17 @@ var disqus_shortname = 'disqus_ciEwcJAF0E';
   dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
 }());
-(function(){
-  var dsq = document.createElement('script');
-  dsq.type = 'text/javascript';
-  dsq.async = true;
-  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
-  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-}());
 </script>
-
-
-
 
 
 
 <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
 <script src="/fancybox/jquery.fancybox.pack.js"></script>
 <script type="text/javascript">
-$(document).ready(function(){ 
-  $('.article-content').each(function(i){
-    $(this).find('img').each(function(){
-      if ($(this).parent().hasClass('fancybox')) return;
-      var alt = this.alt;
-      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
-      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
-    });
-    $(this).find('.fancybox').each(function(){
-      $(this).attr('rel', 'article' + i);
-    });
-  });
-  if($.fancybox){
-    $('.fancybox').fancybox();
-  }
-}); 
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
 </script>
 
-
-
-<!-- Analytics Begin -->
-
-
-
-
-
-<!-- Analytics End -->
-
-<!-- Totop Begin -->
-
-	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
-	</div>
-	<script src="/js/totop.js"></script>
-
-<!-- Totop End -->
-
-<!-- MathJax Begin -->
-<!-- mathjax config similar to math.stackexchange -->
-
-
-<!-- MathJax End -->
-
-  </body>
+</body>
 </html>

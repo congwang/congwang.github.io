@@ -1,317 +1,540 @@
-
-  <!DOCTYPE HTML>
-<html >
+<!DOCTYPE HTML>
+<html>
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   
-    <title>Category: Linux Application | A Geek&#39;s Page</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
-    
-    <meta name="author" content="Cong Wang">
-    
-    
-    <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="A Geek's Page">
-<meta property="og:url" content="http://wangcong.org/categories/Linux-Application/page/7/">
-<meta property="og:site_name" content="A Geek's Page">
-<meta property="og:description">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="A Geek's Page">
-<meta name="twitter:description">
-<meta name="twitter:creator" content="@conglinux">
+  <title>Page 7 | Linux Application | A Geek&#39;s Page</title>
+  <meta name="author" content="Cong Wang">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
+  
+  <meta property="og:site_name" content="A Geek&#39;s Page"/>
 
-    
-    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
-    
-    
-    <link rel="icon" href="/img/favicon.ico">
-    
-    
-    <link rel="apple-touch-icon" href="/img/jacman.jpg">
-    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
-    
-    <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
 
 </head>
 
-    <body>
-      <header>
-        <div>
-		
-			<div id="imglogo">
-				<a href="/"><img src="/img/logo.png" alt="A Geek&#39;s Page" title="A Geek&#39;s Page"/></a>
-			</div>
-			
-			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="A Geek&#39;s Page">A Geek&#39;s Page</a></h1>
-				<h2 class="blog-motto"></h2>
-			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
-			</a></div>
-			<nav class="animated">
-				<ul>
-					<ul>
-					 
-						<li><a href="/">Home</a></li>
-					
-						<li><a href="/archives">Archives</a></li>
-					
-						<li><a href="/about-2">About</a></li>
-					
-					<li>
- 					
-					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
-						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
-						<input type="hidden" name="q" value="site:wangcong.org">
-					</form>
-					
-					</li>
-				</ul>
-			</nav>			
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">A Geek&#39;s Page</a></h1>
+  <h2><a href="/"></a></h2>
 </div>
-      </header>
-      <div id="container">
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title category">Linux Application</h2>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2008-01-17T01:43:24.000Z"><a href="/2008/01/16/-e5-85-b1-e4-ba-ab-e4-b8-8a-e7-bd-91-e5-92-8cnfs/">Jan 16 2008</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2008/01/16/-e5-85-b1-e4-ba-ab-e4-b8-8a-e7-bd-91-e5-92-8cnfs/">共享上网和NFS</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>有两台电脑，一个上网帐号，为了让两台电脑都能上网，得动手搭建一个小型局域网，“自己动手，丰衣足食”啊！前提是拨入网络的电脑必须配有两个网卡。</p>
+<p>物理设备齐全后开始进行配置。先配置拨号的电脑（简称为S），两个网卡，一个用来拨号，一个用来和另一台电脑（简称为C）通信。eth0和ppp0就留作拨号，而eth1配置成192.168.1.1，和C连接。C的IP配置为192.168.1.2，网关为192.168.1.1。这还没完，此时C还够不到外网，必须还得用S做个代理，要是在Windows上恐怕得用sysgate了，可咱用的是Linux，两条命令搞定：</p>
+<p><pre><br>sudo /sbin/iptables -F #这个是把FC7自带的防火墙规则全部清掉</pre></p>
+<p>sudo /sbin/iptables -t nat -A POSTROUTING -o ppp0 -j MASQUERADE<br>最后在C的/etc/resolv.conf里加上DNS服务器地址就可以了。这样，两台电脑上就能同时上网了。</p>
+<p>这样还不够，虽然它们都能上网，可它们之间共享东西还不方便，那就开nfs吧！</p>
+<p>NFS服务器还是在S上开，把属性设置成可写就是了。先编辑exports文件：</p>
+<p><pre><br>sudo vi /etc/exports</pre><br>内容如下：</p>
+<p><pre><br>/home/wangcong/ 192.168.1.2(rw,sync)</pre><br>然后开启NFS需要的服务：</p>
+<p><pre>sudo /sbin/service rpcbind start</pre></p>
+<p><pre>sudo /sbin/service nfslock start</pre></p>
+<p>sudo /sbin/service netfs start</p>
+<p>sudo /sbin/service nfs start<br>接下来是C主机，本以为直接mount就可以，谁知得到如下错误：</p>
+<p><pre><br>$ sudo mount 192.168.1.1:/home/wangcong /mnt</pre></p>
+<p><pre>mount.nfs: rpc.statd is not running but is required for remote locking</pre></p>
+<p>Either use “-o nolocks” to keep locks local, or start statd.<br>经过尝试，原来还需要开启nfslock和rpcbind，打开就是了：</p>
+<p><pre><br>sudo /sbin/service rpcbind start</pre></p>
+<p><pre>sudo /sbin/service nfslock start</pre><br>这样再mount就可以使用NFS了。</p>
+
+      
+    </div>
+    <footer>
+      
         
-
-<div class="archive-title" >
-  <h2 class="category-icon">Linux Application</h2>
-  
-</div>
-<div id="main" class="archive-part clearfix">
-  <div id="archive-page">
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2008/01/16/-e5-85-b1-e4-ba-ab-e4-b8-8a-e7-bd-91-e5-92-8cnfs/" title="共享上网和NFS" itemprop="url">
-  
-
-    <time datetime="2008-01-17T01:43:24.000Z" itemprop="datePublished">Jan 16 2008</time>
-
-
-    <h1 itemprop="name">共享上网和NFS</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2007/10/23/linux-e7-a3-81-e7-9b-98-e4-bd-bf-e7-94-a8-e5-88-86-e6-9e-90/" title="Linux磁盘使用分析" itemprop="url">
-  
-
-    <time datetime="2007-10-23T20:47:17.000Z" itemprop="datePublished">Oct 23 2007</time>
-
-
-    <h1 itemprop="name">Linux磁盘使用分析</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2007/10/21/vimpress-e7-9a-84-e5-87-a0-e4-b8-aa-e4-b8-8d-e7-88-bd-e4-b9-8b-e5-a4-84/" title="vimpress的几个不爽之处" itemprop="url">
-  
-
-    <time datetime="2007-10-22T04:45:59.000Z" itemprop="datePublished">Oct 21 2007</time>
-
-
-    <h1 itemprop="name">vimpress的几个不爽之处</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2007/06/06/quilt/" title="Quilt" itemprop="url">
-  
-
-    <time datetime="2007-06-07T04:09:01.000Z" itemprop="datePublished">Jun 6 2007</time>
-
-
-    <h1 itemprop="name">Quilt</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2007/06/02/-e6-8d-a2-e8-be-93-e5-85-a5-e6-b3-95-e4-ba-86/" title="换输入法了" itemprop="url">
-  
-
-    <time datetime="2007-06-02T17:49:17.000Z" itemprop="datePublished">Jun 2 2007</time>
-
-
-    <h1 itemprop="name">换输入法了</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2007/05/26/-e6-8d-a2-e7-94-a8kde-e4-ba-86/" title="换用KDE了" itemprop="url">
-  
-
-    <time datetime="2007-05-27T02:13:05.000Z" itemprop="datePublished">May 26 2007</time>
-
-
-    <h1 itemprop="name">换用KDE了</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2007/04/29/jdb/" title="JDB" itemprop="url">
-  
-
-    <time datetime="2007-04-30T00:16:47.000Z" itemprop="datePublished">Apr 29 2007</time>
-
-
-    <h1 itemprop="name">JDB</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2007/04/04/-e6-90-9e-e5-ae-9amutt/" title="搞定mutt" itemprop="url">
-  
-
-    <time datetime="2007-04-05T05:38:34.000Z" itemprop="datePublished">Apr 4 2007</time>
-
-
-    <h1 itemprop="name">搞定mutt</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2007/04/01/muttfetchmailprocmail/" title="mutt+fetchmail+procmail" itemprop="url">
-  
-
-    <time datetime="2007-04-02T05:56:39.000Z" itemprop="datePublished">Apr 1 2007</time>
-
-
-    <h1 itemprop="name">mutt+fetchmail+procmail</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2007/03/09/-e4-bd-bf-e7-94-a8mutt-e5-a4-84-e7-90-86-e7-94-b5-e5-ad-90-e9-82-ae-e4-bb-b6-2/" title="使用mutt处理电子邮件" itemprop="url">
-  
-
-    <time datetime="2007-03-10T06:26:23.000Z" itemprop="datePublished">Mar 9 2007</time>
-
-
-    <h1 itemprop="name">使用mutt处理电子邮件</h1>
-
-  </a>
-</section>
-
-
-  <nav id="page-nav" class="clearfix archive-nav">
-    <a class="extend prev" rel="prev" href="/categories/Linux-Application/page/6/"><span></span>Prev</a><a class="page-number" href="/categories/Linux-Application/">1</a><span class="space">&hellip;</span><a class="page-number" href="/categories/Linux-Application/page/5/">5</a><a class="page-number" href="/categories/Linux-Application/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/categories/Linux-Application/page/8/">8</a><a class="extend next" rel="next" href="/categories/Linux-Application/page/8/">Next<span></span></a>
-  </nav>
-
+        
+      
+      <div class="clearfix"></div>
+    </footer>
   </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-10-23T20:47:17.000Z"><a href="/2007/10/23/linux-e7-a3-81-e7-9b-98-e4-bd-bf-e7-94-a8-e5-88-86-e6-9e-90/">Oct 23 2007</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2007/10/23/linux-e7-a3-81-e7-9b-98-e4-bd-bf-e7-94-a8-e5-88-86-e6-9e-90/">Linux磁盘使用分析</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>以前分析都是用df和du，突然间发现了一个巨好用的图形化工具——磁盘使用分析器，英文名叫Baobab。看看下面的截图就知道它有多么友好。</p>
+<p><img src="/images/" alt=""></p>
+<p>经过仔细分析，发现/tmp目录下的某些cscope文件居然占据了很多空间，马上rm -rf掉。结果根分区的使用率一下从74%下降到60%。妈呀，虚惊一场。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-10-22T04:45:59.000Z"><a href="/2007/10/21/vimpress-e7-9a-84-e5-87-a0-e4-b8-aa-e4-b8-8d-e7-88-bd-e4-b9-8b-e5-a4-84/">Oct 21 2007</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2007/10/21/vimpress-e7-9a-84-e5-87-a0-e4-b8-aa-e4-b8-8d-e7-88-bd-e4-b9-8b-e5-a4-84/">vimpress的几个不爽之处</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>自从<a href="http://amankwahly.cn/blog" target="_blank" rel="external">老大</a>上次<a href="http://amankwahly.cn/blog/?p=83" target="_blank" rel="external">推荐</a>了<a href="http://www.vim.org/scripts/script.php?script_id=1953" target="_blank" rel="external">vimpress</a>之后，就尝试用vimpress写了几次博客。可是用了之后发现，其实很不爽。原因如下：</p>
+<p>1.  仅支持一个博客的撰写。因为我还要编辑xiyoulinux博客，也想用vimpress，无奈vimpress配置里只能记录一个blog的帐号。</p>
+<p>2.  不支持草稿。虽说可以用vim保存到本地，但有时也想保存草稿到服务器，可惜vimpress不支持。</p>
+<p>3. 编辑功能不完善（？）。好几次用的时候，BlogOpen之后再BlogSend，结果和没编辑一样～！费解中……</p>
+<p>我个人心目中理想的功能应该是：</p>
+<p>1. BlogList ALIAS</p>
+<p>列出ALIAS指代的博客上的文章。ALIAS可以在配置文件中指定，对应帐号也应该在里面。</p>
+<p>2. BlogEdit abc@ALIAS</p>
+<p>编辑ALIAS博客上的ID为abc的文章。草稿或许应该有另外的表示方式。</p>
+<p>3. BlogSave</p>
+<p>把当前正在编辑的保存为草稿，如果是新建文章的话。否则就应该直接保存到原文。</p>
+<p>4. BlogNew ALIAS</p>
+<p>在ALIAS博客上撰写一篇新文章。</p>
+<p>5. BlogPublish ALIAS</p>
+<p>把当前的文章发布到ALIAS博客上去。</p>
+<p>有兴趣的同学可以根据上面的建议给vimpress打补丁，然后提交给作者。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-06-07T04:09:01.000Z"><a href="/2007/06/06/quilt/">Jun 6 2007</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2007/06/06/quilt/">Quilt</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Quilt是用来管理补丁的一个工具，非常好用，是由Andrew Morton自己写的一些脚本演变而来，现在由Andreas来维护。它解决了一些常见却又不太好处理的做补丁的问题，比如，两个补丁对同一个文件做了修改，怎么合并两个补丁？</p>
+<p>小试了一下quilt，发现确实挺好用的， 也发现很多内核开发者也都在用（从输出的补丁信息可以看出）。而且我认为quilt的设计思想非常好，用了栈的原理。</p>
+<p>命令行界面的quilt可以在<a href="http://savannah.nongnu.org/projects/quilt/" target="_blank" rel="external">这里</a>下载，不过请注意，它对bash版本还有些挑剔，我在fc5上装的版本它警告说有bug，只能升级bash后再装。懒惰的人可以装一个<a href="http://gquilt.sourceforge.net/" target="_blank" rel="external">图形界面的quilt</a>来用一下。</p>
+<p>关于quilt的教程似乎不多，中文更少，以后有时间的话我详细整理一下。这里先给出我搜到的两个：维护者写的<a href="http://www.suse.de/~agruen/quilt.pdf" target="_blank" rel="external">“官方”教程</a>和一个<a href="http://www.coffeebreaks.org/blogs/wp-content/archives/talks/2005/quilt/quiltintro-s5.html" target="_blank" rel="external">简单的quilt介绍</a>。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-06-02T17:49:17.000Z"><a href="/2007/06/02/-e6-8d-a2-e8-be-93-e5-85-a5-e6-b3-95-e4-ba-86/">Jun 2 2007</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2007/06/02/-e6-8d-a2-e8-be-93-e5-85-a5-e6-b3-95-e4-ba-86/">换输入法了</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>昨天不知怎么了fcitx脾气暴躁得很，只要一被调出来就马上发出关闭信号，自己退出不说，还要顺带杀死几个其它的进程，实在无语了……</p>
+<p>被迫换SCIM了，发现升级后的SCIM不存在原来FC5中的问题了，但是，有一个问题仍然没有搞定，Opera里总是调不出SCIM来！！能Google到的方法全都试了，还是不行。路过的达人们谁知道解决方法还望不吝赐教！ 先行谢过～！</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-05-27T02:13:05.000Z"><a href="/2007/05/26/-e6-8d-a2-e7-94-a8kde-e4-ba-86/">May 26 2007</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2007/05/26/-e6-8d-a2-e7-94-a8kde-e4-ba-86/">换用KDE了</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>今天突发奇想，决定换一下KDE试试。用Gnome已多年矣，有些疲倦了，换了KDE感觉焕然一新。而且上次留的KDE界面居然还是WinXP风格，不错，Kscope也弄好了，非常滴爽啊！</p>
+<p>个人感觉KDE比Gnome的可定制性更强，Konsole就是一个很好的例子。;) 不过这fcitx输入法似乎在KDE下还有点儿问题……还有，KDE的崩溃提示总让我想起M$的“错误报告”，这一点颇为不爽~~</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-04-30T00:16:47.000Z"><a href="/2007/04/29/jdb/">Apr 29 2007</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2007/04/29/jdb/">JDB</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>今天想调试Java代码，可发现连JDB都没有。貌似FC默认安装的不是Sun官方的JDK，自己又下了一个装好，这才能用上JDB。</p>
+<p>Google了一下JDB的资料，发现中文的实在不多，搜到几个有价值的英文的 介绍，供大家参考：</p>
+<p><a href="http://www.javaworld.com/javaworld/javaqa/2000-06/04-qa-0623-jdb.html?page=1" target="_blank" rel="external">javaworld.com</a><br><a href="http://www.cs.wisc.edu/~horwitz/jdb/jdb-lab.html" target="_blank" rel="external">http://www.cs.wisc.edu/~horwitz/jdb/jdb-lab.html</a><br><a href="http://www.cs.wisc.edu/~horwitz/jdb/jdb.html" target="_blank" rel="external">http://www.cs.wisc.edu/~horwitz/jdb/jdb.html</a></p>
+<p>个人感觉JDB不如GDB好用，起码它不能通过向上键来选择以前的命令，不能直接回车就执行上一条命令。还有一个地方需要指出，需要JDB调试的代码在编译时请加上-g:lines,vars,source选项。貌似感觉还是不太好。</p>
+<p>貌似大家最近都爱用“貌似”。 ;-p</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-04-05T05:38:34.000Z"><a href="/2007/04/04/-e6-90-9e-e5-ae-9amutt/">Apr 4 2007</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2007/04/04/-e6-90-9e-e5-ae-9amutt/">搞定mutt</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>昨天总算是把mutt搞定了，不过昨天网通掉线，上不了网，今天补上这篇。</p>
+<p>其实mutt设置挺简单的，照着网上的文章来没多大问题。我主要再说一下我遇到的一些问题。首先是编码问题，都统一为gb2312，如果有中文的话，因为终端就是gb2312。这还涉及到vi，因为我给mutt 设的编辑器就是vi，在.vimrc里加上下面这句：</p>
+<p><code>set fileencoding=gb2312</code><br>.muttrc里有这么几句：</p>
+<p><code>set charset=&quot;gb2312&quot;
+set send_charset=&quot;us-ascii:gb2312:utf-8&quot;</code></p>
+<p>以前总以为charset里也要加utf-8之类的，其实不用，那只是指定终端编码。而且也没必要设置什么charset-hook，不过这可能是因为我还没遇到什么更奇怪的编码，呵呵~</p>
+<p>还有就是排序的问题。鉴于我订阅了很多邮件列表，所以使用下面的一种排序方式，现在感觉很爽。</p>
+<p><code>set sort=threads
+set sort_aux=reverse-last-date</code><br>再就是邮件列表问题，最好在muttrc里加上subcribe命令。在回复邮件列表时，使用g比r要好，因为g能把cc里的人也能照顾到。</p>
+<p>最后就是mutt天生的一个问题，无法收邮件，只能靠别的程序。我用的是fetchmail，但我启用fetchmail的daemon功能，并且在fetchmailrc里设定set daemon 60，但还是没收到邮件！干脆，自己写个shell脚本去跑。代码很简单，如下：</p>
+<pre><code><span class="shebang">#!/bin/sh
+</span>
+<span class="keyword">while</span> <span class="literal">true</span>; <span class="keyword">do</span>
+        sleep <span class="number">60</span>
+        <span class="keyword">if</span> fetchmail <span class="operator">-d</span>0 ; <span class="keyword">then</span>
+                <span class="comment">#cat XXX.wav &amp;gt;/dev/dsp</span>
+                mutt
+        <span class="keyword">else</span>
+                <span class="built_in">echo</span> <span class="string">"No mail!."</span>
+        <span class="keyword">fi</span>
+<span class="keyword">done</span>
+</code></pre><p>PS. 你可以把上面的注释去了，弄个*.wav文件做你的铃声！;-p</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-04-02T05:56:39.000Z"><a href="/2007/04/01/muttfetchmailprocmail/">Apr 1 2007</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2007/04/01/muttfetchmailprocmail/">mutt+fetchmail+procmail</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>今天试图搞定这三个东西，实在不容易。</p>
+<p>从开学到现在还一直是在Opera里收发gmail邮件，人懒了就这样。今天向Andrew提交patch时猛然发现该正式换一下mutt发邮件了，浏览器里有很多不方便的地方，最大的问题就是回复mailing list时不会把这个thread中的人都cc到。于是决定重拾mutt。</p>
+<p>首先解决的是编码问题。鉴于xterm用的是gb2312，而邮件有中文的也有英文的，所以决定文件采用utf-8编码，而muttrc设置成us-ascii:gb2312:utf-8。但仍有一个问题没解决，刘洋使用的是evolution，而且还是gb18130这种相对少见的编码，所以他的邮件到现在仍然是乱码！然后就是mbox的问题，~/Mail/目录下有三个文件：from，from_me，sent，mbox，对应muttrc中设置：</p>
+<p>set mbox=~/Mail/mbox<br>set spoolfile=~/Mail/mbox<br>set record=~/Mail/sent</p>
+<p>这弄了半天也终于弄好了。</p>
+<p>mutt先到此为止，还有就是procmail和fetchmail的问题。fetchmail可以以daemon的形式运行，可以在fetchmailrc中指定：set daemon 60。不过我试了试 ，发现似乎过了1分钟也没收到什么新邮件。kill掉fetchmail后再fetchmail -d0就马上收到一封！很奇怪。另一种解决方案是用crontab，不过这也有问题，crontab似乎只发送一个通知，而并没有把邮件弄到mutt里，因为我一直没收到邮件。这似乎还牵扯到procmailrc。彻底被搞糊涂了……</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-03-10T06:26:23.000Z"><a href="/2007/03/09/-e4-bd-bf-e7-94-a8mutt-e5-a4-84-e7-90-86-e7-94-b5-e5-ad-90-e9-82-ae-e4-bb-b6-2/">Mar 9 2007</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2007/03/09/-e4-bd-bf-e7-94-a8mutt-e5-a4-84-e7-90-86-e7-94-b5-e5-ad-90-e9-82-ae-e4-bb-b6-2/">使用mutt处理电子邮件</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Tuesday, 26. December 2006, 14:47:36</p>
+<div class="content"><div id="excerpt"></div><span class="imgleft"><img src="/images/" alt=""></span><br><br>今天突发奇想，决定不再使用evolution来处理email了，换用一下命令行下的mutt。以前虽然早已闻其大名，但到今天才有勇气去试一下。<br><br>先在网上仔细搜了一下mutt的教程，发现要么是过时的东西，要么就是讲得不清楚，决定自己重新整理一下。（不敢期望比其它教程都好;-p）<br><br>下面仅以我使用的FC5和gmail为例。;-)<br><br>首先你应该清楚mutt所扮演的角色，mutt的设计遵循了Unix的设计哲学──“做一件事，把它做好”。mutt不会编辑邮件，也不会收发邮件，它只是把做这些事的程序有效的结合起来。具体说就是，mutt会把由fetchmail接收来的邮件以可定制的方式呈现给用户，用户编辑时它会调用用户指定好的编辑器（比如：vi或emacs），然后把编辑好的邮件交给sendmail或者其它发送邮件的程序（比如我用的msmtp）来发送。整个过程就完成了。<br><br>为了更好的配合mutt，有必要先讲一下ESR编写的fetchmail的使用。首先，按照常规，你需要通过编写配置文件来定制fetchmail的行为。在用户目录下新建一个名为.fetchmailrc的文件，内容大体如下：<br><pre><br>defaults<br>poll pop.gmail.com proto POP3 and options no dns<br>user ‘YOUR<em>USER_NAME@gmail.com’ there with password ‘YOUR_PASSWORD’ is ‘YOUR_USER_NAME’ here options ssl<br>keep<br>mda “/usr/bin/procmail -d YOUR_USER_ID”<br></em></pre><br>把上面的YOUR_USER_NAME替换成你gmail的用户名（非gmail用户也要替换后面的服务器名和上面的pop服务器），YOUR_PASSWORD替换成你的邮箱密码，把YOUR_USER_ID替换成你在你//所用主机//上面的用户名。<br><br>编写完.fetchmailrc文件之后还要用chmod把它权限设为600。<br><br>试试用下面的命令测试一下你上面的配置：<br><pre><br>fetchmail -c<br></pre><br>如果配置OK的话，你以后就可以使用_fetchmail -d0 -v来接收邮件了。<br><br>如果你上面收到邮件的话（没收到的话就自己发一封;-p），现在启动mutt试试。（如果没有mutt的话，到<a href="http://www.mutt.org/" target="_blank" rel="external">mutt官方主页</a>上下载一个最新的。<span style="color:red;">注意：如果你要让mutt本身也有收邮件功能的话，编译时请指明。</span>）进去后是不是就看到收到的email了？mutt的按键风格和vi类似，追求用最少的按键完成最多的功能。<em>Enter</em>键是阅读，<em>i</em>键退出阅读界面，如果有多于一封邮件的话，<em>j</em>上选中下面的一封，而<em>k</em>是选中下面的，如果还有更多的话，按<em>PageUp</em>和<em>PageDown</em>来进行翻页。和其它多数程序一样，按q键是退出mutt。<br><br>在进行进一步介绍mutt之前，我们先要看一下怎么发送邮件以及怎么定制mutt。<br><br>如前所述，发送邮件可以使用sendmail或者msmtp，我用的是后者（msmtp的官方主页是：<a href="http://msmtp.sourceforge.net/" target="_blank" rel="external"><a href="http://msmtp.sourceforge.net/" target="_blank">http://msmtp.sourceforge.net/</a></a>）。它的配置文件你应该能猜到了，也是在用户目录下，名为.msmtprc。设置如下：<br><pre><br>account gmail<br>host smtp.gmail.com<br>from YOUR<em>MAILBOX<br>tls on<br>auth on<br>port 587<br>user YOUR_MAILBOX<br>password YOUR_PASSWORD<br></em></pre><br>把里面的YOUR_MAILBOX替换成你的gmail邮箱，把YOUR_PASSWORD替换为你的密码即可。<br><br>mutt的配置文件有两个，一个是系统的，一个是用户的。系统配置文件是/etc/Muttrc，里面是设置mutt的一些配色等，而用户配置文件是为用户所用的，指定自己想要的一些特性，它是在用户目录下，名为.muttrc，内容大体如下：<br><pre><br>set alternates=”YOUR_MAILBOX”<br>set to_chars=”+TCFL”<br>set index_format=”%4C %Z %{%b %d} %-15.15L (%41) %s”<br>mailboxes Mailbox sent-mail<br>set header=yes<br>set quit=ask-yes<br>auto_view text/html<br>set move=yes<br>set include<br>set indent_str=”&lt;&quot;<br>my_hdr From: YOUR_MAILBOX<br>set sort=date<br>set charset=&quot;utf-8&quot;<br>set send_charset=&quot;us-ascii:utf-8&quot;<br>set editor=&quot;vi&quot;<br>set sendmail=&quot;/usr/local/bin/msmtp -a gmail&quot;<br>set pop_last=yes<br>set pop_user=YOUR_MAILBOX<br>set pop_pass=&quot;YOUR_PASSWORD&quot;<br>set pop_host=&quot;pops://pop.gmail.com&quot;<br></pre><br>同样，对大写的内容做相应的替换即可。<br>我们逐行来看：<br>set alternates=”YOUR_MAILBOX”<br><br>你有可能收到信件的地址。<br><br>set to_chars=”+TCFL”<br><br>设置$to_chars变量，一般就为”+TCFL”。<br><br>set index_format=”%4C %Z %{%b %d} %-15.15L (%41) %s”<br><br>格式字符串，用来控制index的列表显示。<br><br>mailboxes Mailbox sent-mail<br><br>指定你有哪些信箱文件。<br><br>set header=yes<br><br>显示邮件头。<br><br>set quit=ask-yes<br><br>退出时询问，默认是yes。<br><br>auto_view text/html<br><br>自动浏览text/html格式的邮件。<br><br>set move=yes<br><br>提示你把信件从 /var/spool移动到的邮箱文件。<br><br>set include<br><br>回复时引用原文。<br><br>set indent_str=”&lt;&quot;<br><br>回信时以”&lt;&quot;表示引用内容。<br><br>my_hdr From: YOUR_MAILBOX<br><br>设置你自己的邮件头。<br><br>set sort=date<br><br>按日期对邮件进行排序。<br><br>set charset=”utf-8”<br><br>终端支持的那一种编码的显示。<br><br>set send_charset=”us-ascii:utf-8”<br><br>设置发送邮件的编码，先是ASCII，如果不行的话会选择UTF-8。<br><br>set editor=”vi”<br><br>指定编辑器是vi，当然了，也可以是其它你喜欢的。<br><br>set sendmail=”/usr/local/bin/msmtp -a gmail”<br><br>设置发送邮件的程序是msmtp，-a选项指定账户，就是.msmtprc中account后面指定的内容，默认的是default。<br><br>如果你的mutt编译时带了pop功能，你可以加上下面几行：<br><pre><br>set pop_last=yes<br>set pop_user=YOUR_MAILBOX<br>set pop_pass=”YOUR_PASSWORD”<br>set pop_host=”pops://pop.gmail.com”<br></pre><br>OK!mutt的配置搞定了，现在你可以用mutt发一封邮件试试。进入mutt以后按_m键，或者干脆直接在mutt选项中指定：<br><pre><br>mutt -s “This is subject.” foo@bar.com &gt; contents.txt<br></pre><br><br>好了，mutt的介绍就到此为止了。更多的mutt介绍请参考[2]。试试mutt，是不是很酷呢？<br><br>参考资料：<br><br>[1] <a href="http://corsairdoom.blogspot.com/2006/10/mutt.html" target="_blank" rel="external">http://corsairdoom.blogspot.com/2006/10/mutt.html</a><br><br>[2] <a href="http://www.ucolick.org/~lharden/learnmutt.html" target="_blank" rel="external">http://www.ucolick.org/~lharden/learnmutt.html</a><br><br>[3] <a href="http://learn.tsinghua.edu.cn:8080/2001315450/mutt_frame.html" target="_blank" rel="external">http://learn.tsinghua.edu.cn:8080/2001315450/mutt_frame.html</a><br><br></div>
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+
+  <nav id="pagination">
+  
+    <a href="/categories/Linux-Application/page/6/" class="alignleft prev">Prev</a>
+  
+  
+    <a href="/categories/Linux-Application/page/8/" class="alignright next">Next</a>
+  
+  <div class="clearfix"></div>
+</nav>
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:wangcong.org">
+  </form>
 </div>
 
-      </div>
-      <footer><div id="footer" >
-	
-	
-	<div class="social-font" class="clearfix">
-		
-		
-		<a href="https://github.com/congwang" target="_blank" class="icon-github" title="github"></a>
-		
-		
-		
-		<a href="https://twitter.com/conglinux" target="_blank" class="icon-twitter" title="twitter"></a>
-		
-		
-		
-		
-		
-		
-		
-	</div>
-		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2016 
-		
-		<a href="http://wangcong.org/about" target="_blank" title="Cong Wang">Cong Wang</a>
-		
-		</p>
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Book-Reviews/">Book Reviews</a><small>18</small></li>
+  
+    <li><a href="/categories/China/">China</a><small>2</small></li>
+  
+    <li><a href="/categories/Collection/">Collection</a><small>25</small></li>
+  
+    <li><a href="/categories/Life/">Life</a><small>324</small></li>
+  
+    <li><a href="/categories/Linux-Application/">Linux Application</a><small>73</small></li>
+  
+    <li><a href="/categories/Linux-Kernel/">Linux Kernel</a><small>64</small></li>
+  
+    <li><a href="/categories/Love/">Love</a><small>6</small></li>
+  
+    <li><a href="/categories/Movies/">Movies</a><small>19</small></li>
+  
+    <li><a href="/categories/Programming/">Programming</a><small>152</small></li>
+  
+    <li><a href="/categories/Science-Fiction/">Science Fiction</a><small>8</small></li>
+  
+    <li><a href="/categories/Travel/">Travel</a><small>19</small></li>
+  
+  </ul>
 </div>
-</footer>
-      <script src="/js/jquery-2.0.3.min.js"></script>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/geek/">geek</a><small>1</small></li>
+  
+    <li><a href="/tags/handling/">handling</a><small>1</small></li>
+  
+    <li><a href="/tags/joke/">joke</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/tags/signal/">signal</a><small>1</small></li>
+  
+    <li><a href="/tags/unix/">unix</a><small>1</small></li>
+  
+    <li><a href="/tags/vim/">vim</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2017 Cong Wang
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 <script src="/js/jquery.imagesloaded.min.js"></script>
 <script src="/js/gallery.js"></script>
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.navbar').click(function(){
-    $('header nav').toggleClass('shownav');
-  });
-  var myWidth = 0;
-  function getSize(){
-    if( typeof( window.innerWidth ) == 'number' ) {
-      myWidth = window.innerWidth;
-    } else if( document.documentElement && document.documentElement.clientWidth) {
-      myWidth = document.documentElement.clientWidth;
-    };
-  };
-  var m = $('#main'),
-      a = $('#asidepart'),
-      c = $('.closeaside'),
-      o = $('.openaside');
-  $(window).resize(function(){
-    getSize(); 
-    if (myWidth >= 1024) {
-      $('header nav').removeClass('shownav');
-    }else
-    {
-      m.removeClass('moveMain');
-      a.css('display', 'block').removeClass('fadeOut');
-      o.css('display', 'none');
-        
-    }
-  });
-  c.click(function(){
-    a.addClass('fadeOut').css('display', 'none');
-    o.css('display', 'block').addClass('fadeIn');
-    m.addClass('moveMain');
-  });
-  o.click(function(){
-    o.css('display', 'none').removeClass('beforeFadeIn');
-    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
-    m.removeClass('moveMain');
-  });
-  $(window).scroll(function(){
-    o.css("top",Math.max(80,260-$(this).scrollTop()));
-  });
-});
-</script>
-
-
-
-
 
 <script type="text/javascript">
-
 var disqus_shortname = 'disqus_ciEwcJAF0E';
 
-(function(){
-  var dsq = document.createElement('script');
-  dsq.type = 'text/javascript';
-  dsq.async = true;
-  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-}());
 (function(){
   var dsq = document.createElement('script');
   dsq.type = 'text/javascript';
@@ -323,33 +546,13 @@ var disqus_shortname = 'disqus_ciEwcJAF0E';
 
 
 
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
 
-
-
-
-
-<!-- Analytics Begin -->
-
-
-
-
-
-<!-- Analytics End -->
-
-<!-- Totop Begin -->
-
-	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
-	</div>
-	<script src="/js/totop.js"></script>
-
-<!-- Totop End -->
-
-<!-- MathJax Begin -->
-<!-- mathjax config similar to math.stackexchange -->
-
-
-<!-- MathJax End -->
-
-    </body>
-   </html>
+</body>
+</html>

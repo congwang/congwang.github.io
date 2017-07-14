@@ -1,100 +1,65 @@
-
- <!DOCTYPE HTML>
-<html >
+<!DOCTYPE HTML>
+<html>
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   
-    <title>A Geek&#39;s Page</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
-    
-    <meta name="author" content="Cong Wang">
-    
-    
-    <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="A Geek's Page">
-<meta property="og:url" content="http://wangcong.org/page/14/">
-<meta property="og:site_name" content="A Geek's Page">
-<meta property="og:description">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="A Geek's Page">
-<meta name="twitter:description">
-<meta name="twitter:creator" content="@conglinux">
+  <title>Page 14 | A Geek&#39;s Page</title>
+  <meta name="author" content="Cong Wang">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
+  
+  <meta property="og:site_name" content="A Geek&#39;s Page"/>
 
-    
-    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
-    
-    
-    <link rel="icon" href="/img/favicon.ico">
-    
-    
-    <link rel="apple-touch-icon" href="/img/jacman.jpg">
-    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
-    
-    <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
 
 </head>
 
-  <body>
-    <header>
-      <div>
-		
-			<div id="imglogo">
-				<a href="/"><img src="/img/logo.png" alt="A Geek&#39;s Page" title="A Geek&#39;s Page"/></a>
-			</div>
-			
-			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="A Geek&#39;s Page">A Geek&#39;s Page</a></h1>
-				<h2 class="blog-motto"></h2>
-			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
-			</a></div>
-			<nav class="animated">
-				<ul>
-					<ul>
-					 
-						<li><a href="/">Home</a></li>
-					
-						<li><a href="/archives">Archives</a></li>
-					
-						<li><a href="/about-2">About</a></li>
-					
-					<li>
- 					
-					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
-						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
-						<input type="hidden" name="q" value="site:wangcong.org">
-					</form>
-					
-					</li>
-				</ul>
-			</nav>			
-</div>
-    </header>
-    <div id="container">
-      <div id="main">
 
-   
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">A Geek&#39;s Page</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
     
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
+      <li><a href="/">Home</a></li>
     
-      <a href="/2011/01/29/-e8-ae-a1-e6-97-b6-e8-bf-90-e8-a1-8c-e5-91-bd-e4-bb-a4/" title="计时运行命令" itemprop="url">计时运行命令</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2011-01-29T08:20:50.000Z" itemprop="datePublished"> Published Jan 29 2011</time>
+      <li><a href="/archives">Archives</a></li>
     
-  </p>
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
 </header>
-    <div class="article-content">
-        
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2011-01-29T08:20:50.000Z"><a href="/2011/01/29/-e8-ae-a1-e6-97-b6-e8-bf-90-e8-a1-8c-e5-91-bd-e4-bb-a4/">Jan 29 2011</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2011/01/29/-e8-ae-a1-e6-97-b6-e8-bf-90-e8-a1-8c-e5-91-bd-e4-bb-a4/">计时运行命令</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>见过好几个人问怎样可以计时运行某一个命令？比如我可能想运行某个交互式的命令（像fdisk），但我又不想让它一直永远等待输入，我就得给它指定一个时间，若没有输入则自动退出。</p>
 <p>我之前也遇到过这个问题，当时找到的是timed-run。而最近我发现coreutils里面已经默默包含了一个等价的命令——timeout。</p>
 <p>timed-run来自expect包，很明显是用expect脚本写的：</p>
@@ -113,62 +78,37 @@ expect
 
 <p>而timeout则来自coreutils，应该是用C写的。它们的用法都一样，后面第一个参数是指定的时间，在后面就是要运行的命令，比如：timeout 1 sleep 10。timeout还能接受一些选项，更强大一些。</p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Linux-Application/">Linux Application</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2011/01/29/-e8-ae-a1-e6-97-b6-e8-bf-90-e8-a1-8c-e5-91-bd-e4-bb-a4/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2011/01/27/-e6-9c-89-e8-88-8d-e6-89-8d-e6-9c-89-e5-be-97/" title="有舍才有得" itemprop="url">有舍才有得</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2011-01-28T07:29:49.000Z" itemprop="datePublished"> Published Jan 27 2011</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2011-01-28T07:29:49.000Z"><a href="/2011/01/27/-e6-9c-89-e8-88-8d-e6-89-8d-e6-9c-89-e5-be-97/">Jan 27 2011</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2011/01/27/-e6-9c-89-e8-88-8d-e6-89-8d-e6-9c-89-e5-be-97/">有舍才有得</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>前一篇文章下面的留言我都看了，很感动，谢谢你们的关心和理解！</p>
 <p>这些天也收到好些邮件，接到好几个电话，上网也有很多朋友和我聊天，收到了来自湖南长沙、四川成都、广东深圳、海南三亚的朋友的邀请，都说，你来吧，有你吃的也有你住的！也有上海和杭州的朋友给我介绍工作的。你们对我的好我都一一记得，有机会也一定要当面感谢！我想去的那个地方允许我暂时保密，等我到了那里你们自然就会知道了。:-)</p>
 <p>这两天也和公司里我的两个经理聊了聊，他们都问我以后有什么打算。我说要是有机会肯定还是会找和Linux相关的工作，这是毋庸置疑的，但是找不到我也不担心，总会有别的工作我会喜欢，或者干脆就当一个自由职业者。以后挣得钱或许会少了，但是我本来就要求不多，能够我自己花的，还能给父母寄一些，对我来说就已经足够了。</p>
@@ -181,62 +121,37 @@ expect
 <p>我还要加上《恋爱的犀牛》里面那句：“<strong>上天会厚待那些勇敢的、坚强的、多情的人。</strong>”</p>
 <p>别的不敢说，做人方面咱绝对是很优秀的，说到做到，敢做敢当，从不亏欠别人什么。那些懦弱的，虚伪的人和咱一比，很丑，真的！</p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Life/">Life</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2011/01/27/-e6-9c-89-e8-88-8d-e6-89-8d-e6-9c-89-e5-be-97/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2011/01/23/-e4-b8-8d-e8-bf-87-e4-ba-86-ef-bc-81-ef-bc-81-ef-bc-81/" title="不过了！！！" itemprop="url">不过了！！！</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2011-01-24T04:01:00.000Z" itemprop="datePublished"> Published Jan 23 2011</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2011-01-24T04:01:00.000Z"><a href="/2011/01/23/-e4-b8-8d-e8-bf-87-e4-ba-86-ef-bc-81-ef-bc-81-ef-bc-81/">Jan 23 2011</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2011/01/23/-e4-b8-8d-e8-bf-87-e4-ba-86-ef-bc-81-ef-bc-81-ef-bc-81/">不过了！！！</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>考虑了很久，我决定要离开北京了。</p>
 <p>这些日子憋了一肚子的委屈，都是生活上的事儿，付出那么多换来的只有误解和伤害。这些日子里见识了人的各种虚伪、狡猾、背信弃义，真是大开眼界。压抑了太久，我真的受够了，不过了！</p>
 <p>来北京快两年了，在这里认识了很多的朋友，谢谢你们陪我度过这些日子。北京这种地方确实不适合生活，空气污染不说，四万一平不说，严重的物质化和城市化让我感到窒息，在这种环境里很容易迷失自己，所以我决定要走，去西部、去南方、去国外……去任何我想去的地方！世界之大，还能没有我一个容身之处？</p>
@@ -245,62 +160,37 @@ expect
 <p>我决定了，过完年回来就把工作上的事儿交接好之后就走，去南方的某个心仪已久小城市，先放松一下心情，然后或许再找一份工作，或许去探索另一种新的生活方式。</p>
 <p>我只是像梵高那样渴望生活！</p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Life/">Life</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2011/01/23/-e4-b8-8d-e8-bf-87-e4-ba-86-ef-bc-81-ef-bc-81-ef-bc-81/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2011/01/17/-e5-88-86-e4-ba-ab-e4-b8-80-e4-ba-9b-shell-e5-87-bd-e6-95-b0-e5-92-8c-alias/" title="分享一些 shell 函数和 alias" itemprop="url">分享一些 shell 函数和 alias</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2011-01-18T07:05:08.000Z" itemprop="datePublished"> Published Jan 17 2011</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2011-01-18T07:05:08.000Z"><a href="/2011/01/17/-e5-88-86-e4-ba-ab-e4-b8-80-e4-ba-9b-shell-e5-87-bd-e6-95-b0-e5-92-8c-alias/">Jan 17 2011</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2011/01/17/-e5-88-86-e4-ba-ab-e4-b8-80-e4-ba-9b-shell-e5-87-bd-e6-95-b0-e5-92-8c-alias/">分享一些 shell 函数和 alias</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>省略掉公司内部用的一些东西。其中的calc()和isdigit()是从网上抄来的。:-) 希望对你有用。</p>
 <p>[bash]<br>alias gts=”git send-email —cc-cmd=’./scripts/get_maintainer.pl —norolestats’ —to linux-kernel@vger.kernel.org —smtp-server XXXX”<br>alias v=”vim -O”<br>alias e=”emacs -q -nw”<br>alias wpas=”wpa_supplicant -Dwext -iwlan0 -c/etc/wpa_supplicant.conf -B”<br>alias mutt=”LC_ALL=zh_CN.UTF-8 mutt”<br>alias wget=”wget —no-check-certificate”</p>
 <p>function calc () { awk “BEGIN{ print $* }” ;}</p>
@@ -316,62 +206,37 @@ expect
 </code></pre><p>}</p>
 <p>function kcgrep ()<br>{<br>    local dest<br>    local str<br>    if [ -z $2 ]<br>    then<br>        dest=”.”<br>    else<br>        dest=”$2”<br>    fi<br>    str=$(echo “$1” | sed -e ‘s/^CONFIG_//‘)<br>    find “$dest” -iname ‘kconfig*’ -exec grep “$str” -nwH ‘{}’ ;<br>}<br>[/bash] </p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Linux-Application/">Linux Application</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2011/01/17/-e5-88-86-e4-ba-ab-e4-b8-80-e4-ba-9b-shell-e5-87-bd-e6-95-b0-e5-92-8c-alias/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2011/01/15/-e4-bb-8e-grep-e7-9a-84-e7-94-a8-e6-b3-95-e8-af-b4-e8-b5-b7/" title="从 grep 的用法说起" itemprop="url">从 grep 的用法说起</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2011-01-16T00:41:30.000Z" itemprop="datePublished"> Published Jan 15 2011</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2011-01-16T00:41:30.000Z"><a href="/2011/01/15/-e4-bb-8e-grep-e7-9a-84-e7-94-a8-e6-b3-95-e8-af-b4-e8-b5-b7/">Jan 15 2011</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2011/01/15/-e4-bb-8e-grep-e7-9a-84-e7-94-a8-e6-b3-95-e8-af-b4-e8-b5-b7/">从 grep 的用法说起</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>我本不想写这篇文章，首先我觉得这些东西大家肯定都知道，其次就算真不知道还有手册。</p>
 <p>直到那天面试的时候我碰到一个哥们，我问他grep你都知道哪些选项？他告诉我，只有-r。我当时就乐了，既然grep是你常用的命令，你凭什么只知道-r？他回答说，他只想把精力放到内核上，没有时间来学习这些东西。我笑，正是因为你没有时间，所以你才应该提高你的工作效率，而熟悉命令行显然是Linux上一种提高工作效率的方式。有句老话说得好：“磨刀不误砍柴功。”</p>
 <p>有的同学可能觉得我在提倡死记硬背了，事实上我比你更反对中国教育的那种死记硬背。我的观点很简单：既然你用得多，那么有些东西，比如grep的一些选项，自然而然就应该记住了，无须刻意去背。</p>
@@ -397,62 +262,37 @@ expect
 <p>去了解它们/或者/让它住进你的心里</p>
 <p>人机合一/融为一体</p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Linux-Application/">Linux Application</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2011/01/15/-e4-bb-8e-grep-e7-9a-84-e7-94-a8-e6-b3-95-e8-af-b4-e8-b5-b7/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2011/01/05/-e6-88-91-e5-9c-86-e4-ba-86-e4-b8-80-e4-b8-aa-e7-8e-af-e5-b2-9b-e6-a2-a6/" title="我圆了一个环岛梦" itemprop="url">我圆了一个环岛梦</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2011-01-06T07:30:07.000Z" itemprop="datePublished"> Published Jan 5 2011</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2011-01-06T07:30:07.000Z"><a href="/2011/01/05/-e6-88-91-e5-9c-86-e4-ba-86-e4-b8-80-e4-b8-aa-e7-8e-af-e5-b2-9b-e6-a2-a6/">Jan 5 2011</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2011/01/05/-e6-88-91-e5-9c-86-e4-ba-86-e4-b8-80-e4-b8-aa-e7-8e-af-e5-b2-9b-e6-a2-a6/">我圆了一个环岛梦</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>每次旅行回来都积攒一堆未读的邮件，所以回来之后的首要任务是看邮件，而且一回来就有各种饭局，这就是导致我欠下那么多篇游记的原因。小公子说，这次必须写，我就简单写写吧。没仔细理什么头绪，想到什么写什么。</p>
 <p>一</p>
 <p>我自行调整了行程，实际行程如下：</p>
@@ -490,62 +330,37 @@ expect
 <p>“我独自一人，感动了所有的风和日丽。”</p>
 <p>（照片<a href="http://www.douban.com/photos/album/40452742/" target="_blank" rel="external">在这里</a>。）</p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Travel/">Travel</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2011/01/05/-e6-88-91-e5-9c-86-e4-ba-86-e4-b8-80-e4-b8-aa-e7-8e-af-e5-b2-9b-e6-a2-a6/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2011/01/04/-e6-b4-bb-e5-9c-a8-e8-87-aa-e5-b7-b1-e7-9a-84-e6-a2-a6-e9-87-8c/" title="活在自己的梦里" itemprop="url">活在自己的梦里</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2011-01-05T07:01:34.000Z" itemprop="datePublished"> Published Jan 4 2011</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2011-01-05T07:01:34.000Z"><a href="/2011/01/04/-e6-b4-bb-e5-9c-a8-e8-87-aa-e5-b7-b1-e7-9a-84-e6-a2-a6-e9-87-8c/">Jan 4 2011</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2011/01/04/-e6-b4-bb-e5-9c-a8-e8-87-aa-e5-b7-b1-e7-9a-84-e6-a2-a6-e9-87-8c/">活在自己的梦里</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p><img src="/images/" alt="" title="万水千山走遍"></p>
 <p>我之前从没读过三毛的书，只是一个很偶然的机会发现了这一本。去海南的时候想带两本书上路，选来选去，发现只有这本最适合旅途上读，于是在飞机上就把它读完了。</p>
 <p>我本并不喜欢三毛的文字，她的文字没有张爱玲那种华丽，可却多了几分朴素，多了几分不羁，让我边读边感慨：好一个疯女人！</p>
@@ -554,62 +369,37 @@ expect
 <p>今天正好是三毛去世20周年，特写此文以作纪念。与君相见恨晚。</p>
 <p>“红尘十丈，茫茫的人海，竟还是自己的来处。”</p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Book-Reviews/">Book Reviews</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2011/01/04/-e6-b4-bb-e5-9c-a8-e8-87-aa-e5-b7-b1-e7-9a-84-e6-a2-a6-e9-87-8c/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2010/12/19/-e5-a5-bd-e4-ba-ba-e5-bd-93-e8-85-bb-e4-ba-86/" title="我只是比较拧巴" itemprop="url">我只是比较拧巴</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2010-12-20T01:16:56.000Z" itemprop="datePublished"> Published Dec 19 2010</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-20T01:16:56.000Z"><a href="/2010/12/19/-e5-a5-bd-e4-ba-ba-e5-bd-93-e8-85-bb-e4-ba-86/">Dec 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/-e5-a5-bd-e4-ba-ba-e5-bd-93-e8-85-bb-e4-ba-86/">我只是比较拧巴</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>虽然有自吹自擂的嫌疑，我在很多朋友眼中都算是一个好人，用一个小姑娘的话说是“好人卡拿好”。就算是有时候我故意和你们开玩笑，显得我有多坏，但你们也应该能明白，我就是在严肃认真地逗你们玩儿，并不是真心那么想。我承认，有时候玩笑确实开得有点儿过分，希望你们不要介意，我只是想逗你们开心而已，无意冒犯。</p>
 <p>可能有些人觉得我老爱请客吃饭，其实不是，我只是觉得你给我的帮助总得通过某种形式回报一下，请你吃饭是我想到的比较好的办法。其实，我可能比你们谁都勤俭节约，平时自己吃一顿饭基本上都控制在10块钱左右，钱包里经常剩下不到10元钱。这和挣钱多少没关系，就算是我哪天能有月薪10万，我还是会喜欢去路边麻辣烫，照样会去小摊上买3块钱一个的煎饼果子，依旧会在夏天光着膀子去吃路边的大排档。你要是真拉我去吃金钱豹，我还说不定享不了那福呢！虽然我平时吓唬你们的时候总是说“你请我们去吃金钱豹吧”。</p>
 <p>哪个朋友说借钱，我几乎都不带犹豫的，只要有马上借给他/她。说到借钱，这是比较头疼的事儿。借给那些自己主动还的没问题，谁能没个需要钱的时候，做朋友帮你是我分内的。可是借给那些不主动还的人问题就来了。我要是不借给你吧，我一对不住你，二对不住我自己的良心；我借给你吧，你又不知道主动还。我跟你要吧，显得我跟黄世仁似的，而且还会破坏我们之间的友谊；我要是不跟你要吧，这钱好歹说也是我挣的，不是偷的不是抢的，而且我爸又不是李刚，直系亲属中又没有副省长，还没富到不在乎这些钱的程度。</p>
@@ -618,123 +408,73 @@ expect
 <p>所以我就在想，我到底何得何能值得这么多朋友关心？有时候感觉非常羞愧。你们对我的好我都一一记得，有机会也会一一去还。目前我能报答你们的就是，不让你们失望。:-)</p>
 <p>我这个人不坏，基本无害，只是有时候比较拧巴。你们大抵不必和我较真。</p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Life/">Life</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2010/12/19/-e5-a5-bd-e4-ba-ba-e5-bd-93-e8-85-bb-e4-ba-86/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2010/12/17/kdump-e4-bb-8b-e7-bb-8d/" title="kdump 介绍" itemprop="url">kdump 介绍</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2010-12-18T05:00:35.000Z" itemprop="datePublished"> Published Dec 17 2010</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-18T05:00:35.000Z"><a href="/2010/12/17/kdump-e4-bb-8b-e7-bb-8d/">Dec 17 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/17/kdump-e4-bb-8b-e7-bb-8d/">kdump 介绍</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>今天在公司内部讲了一下自己工作中做的kdump，都是开源的东西，没什么机密，所以拿出来和大家分享一下。Slides可以<a href="http://wangcong2015.files.wordpress.com/2010/12/rh-kdump-2.pdf" target="_blank" rel="external">在这里下载</a>。</p>
 <p>准备这个slides没花费我多长时间，画里面那三张图倒是花费了我好几个小时。没有功劳也又苦劳啊。T_T</p>
 <p>看完之后起码你能明白为啥我说这个工作是又脏又累了，整天修一些蛋疼的bug。每一个自己做initrd的人上辈子都是折翼天使！而做kdump的initrd的人连上上一辈子都是折翼天使！</p>
 <p>以后我可能还会讲其它和Linux内核相关的一些有趣的东西，讲完之后会陆续在这里和大家分享。</p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Linux-Kernel/">Linux Kernel</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2010/12/17/kdump-e4-bb-8b-e7-bb-8d/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2010/12/08/-e4-bd-a0-e6-98-af-e6-88-91-e4-bb-8a-e7-94-9f-e4-b8-8d-e6-ad-bb-e7-9a-84-e6-ac-b2-e6-9c-9b/" title="你是我今生不死的欲望" itemprop="url">你是我今生不死的欲望</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2010-12-09T07:45:08.000Z" itemprop="datePublished"> Published Dec 8 2010</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-09T07:45:08.000Z"><a href="/2010/12/08/-e4-bd-a0-e6-98-af-e6-88-91-e4-bb-8a-e7-94-9f-e4-b8-8d-e6-ad-bb-e7-9a-84-e6-ac-b2-e6-9c-9b/">Dec 8 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/08/-e4-bd-a0-e6-98-af-e6-88-91-e4-bb-8a-e7-94-9f-e4-b8-8d-e6-ad-bb-e7-9a-84-e6-ac-b2-e6-9c-9b/">你是我今生不死的欲望</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>在多数朋友眼中，我是一个乐观上进的好青年，嘻嘻哈哈没脾气，经常爱开各种玩笑，荤素搭配。就算是有人伤心难过，我通常也是充当安慰别人的角色。</p>
 <p>你们都以为我就没有伤心没有难过的时候？我也有，只是你们没看到。我疲惫的时候未尝不想找个人坐一起说说话，聊聊天；我难过的时候也是想找个人诉说诉说，发泄点儿小私愤。可是身为一个纯爷们儿，我好面子，不好意思在你们面前表露出来，只能自己硬撑过去。所以你们大概一无所知。</p>
 <p>这些时候，我也渴望身边能有一红颜知己相伴，“宜言饮酒，与子偕老。琴瑟在御，莫不静好。”可惜，那只是一种永无止境的欲望，是一种可望不可及梦想。杜拉斯说：“爱之于我，不是肌肤之亲，不是一蔬一菜，它是一种不死的欲望，是疲惫生活中的英雄梦想。”于我更是如此，而你便是我这辈子不死的欲望。</p>
@@ -747,213 +487,109 @@ expect
 <p>你们以为我走遍千山万水，踏遍天涯海角又是为了什么呢！</p>
 <p>命中注定如此，我又可奈何！</p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Life/">Life</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2010/12/08/-e4-bd-a0-e6-98-af-e6-88-91-e4-bb-8a-e7-94-9f-e4-b8-8d-e6-ad-bb-e7-9a-84-e6-ac-b2-e6-9c-9b/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-
-  <nav id="page-nav" class="clearfix">
-    <a class="extend prev" rel="prev" href="/page/13/"><span></span>Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><a class="page-number" href="/page/16/">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/71/">71</a><a class="extend next" rel="next" href="/page/15/">Next<span></span></a>
-  </nav>
-
-</div>
-      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
-
-<div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
-<aside class="clearfix">
-
-  
-<div class="categorieslist">
-	<p class="asidetitle">Categories</p>
-		<ul>
-		
-			<li><a href="/categories/Book-Reviews/" title="Book Reviews">Book Reviews<sup>18</sup></a></li>
-		
-			<li><a href="/categories/China/" title="China">China<sup>2</sup></a></li>
-		
-			<li><a href="/categories/Collection/" title="Collection">Collection<sup>25</sup></a></li>
-		
-			<li><a href="/categories/Life/" title="Life">Life<sup>324</sup></a></li>
-		
-			<li><a href="/categories/Linux-Application/" title="Linux Application">Linux Application<sup>73</sup></a></li>
-		
-			<li><a href="/categories/Linux-Kernel/" title="Linux Kernel">Linux Kernel<sup>64</sup></a></li>
-		
-			<li><a href="/categories/Love/" title="Love">Love<sup>6</sup></a></li>
-		
-			<li><a href="/categories/Movies/" title="Movies">Movies<sup>19</sup></a></li>
-		
-			<li><a href="/categories/Programming/" title="Programming">Programming<sup>152</sup></a></li>
-		
-			<li><a href="/categories/Science-Fiction/" title="Science Fiction">Science Fiction<sup>8</sup></a></li>
-		
-			<li><a href="/categories/Travel/" title="Travel">Travel<sup>19</sup></a></li>
-		
-		</ul>
-</div>
-
-
-  
-<div class="tagslist">
-	<p class="asidetitle">Tags</p>
-		<ul class="clearfix">
-		
-			<li><a href="/tags/vim/" title="vim">vim<sup>1</sup></a></li>
-		
-			<li><a href="/tags/joke/" title="joke">joke<sup>1</sup></a></li>
-		
-			<li><a href="/tags/geek/" title="geek">geek<sup>1</sup></a></li>
-		
-			<li><a href="/tags/unix/" title="unix">unix<sup>1</sup></a></li>
-		
-			<li><a href="/tags/signal/" title="signal">signal<sup>1</sup></a></li>
-		
-			<li><a href="/tags/linux/" title="linux">linux<sup>1</sup></a></li>
-		
-			<li><a href="/tags/handling/" title="handling">handling<sup>1</sup></a></li>
-		
-		</ul>
-</div>
-
-
-  <div class="linkslist">
-  <p class="asidetitle">Links</p>
-    <ul>
+    <footer>
+      
         
-    </ul>
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+<nav id="pagination">
+  
+    <a href="/page/13/" class="alignleft prev">Prev</a>
+  
+  
+    <a href="/page/15/" class="alignright next">Next</a>
+  
+  <div class="clearfix"></div>
+</nav></div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:wangcong.org">
+  </form>
 </div>
 
-  <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Book-Reviews/">Book Reviews</a><small>18</small></li>
+  
+    <li><a href="/categories/China/">China</a><small>2</small></li>
+  
+    <li><a href="/categories/Collection/">Collection</a><small>25</small></li>
+  
+    <li><a href="/categories/Life/">Life</a><small>324</small></li>
+  
+    <li><a href="/categories/Linux-Application/">Linux Application</a><small>73</small></li>
+  
+    <li><a href="/categories/Linux-Kernel/">Linux Kernel</a><small>64</small></li>
+  
+    <li><a href="/categories/Love/">Love</a><small>6</small></li>
+  
+    <li><a href="/categories/Movies/">Movies</a><small>19</small></li>
+  
+    <li><a href="/categories/Programming/">Programming</a><small>152</small></li>
+  
+    <li><a href="/categories/Science-Fiction/">Science Fiction</a><small>8</small></li>
+  
+    <li><a href="/categories/Travel/">Travel</a><small>19</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/geek/">geek</a><small>1</small></li>
+  
+    <li><a href="/tags/handling/">handling</a><small>1</small></li>
+  
+    <li><a href="/tags/joke/">joke</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/tags/signal/">signal</a><small>1</small></li>
+  
+    <li><a href="/tags/unix/">unix</a><small>1</small></li>
+  
+    <li><a href="/tags/vim/">vim</a><small>1</small></li>
+  
+  </ul>
 </div>
 
 </aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2017 Cong Wang
+  
 </div>
-    </div>
-    <footer><div id="footer" >
-	
-	
-	<div class="social-font" class="clearfix">
-		
-		
-		<a href="https://github.com/congwang" target="_blank" class="icon-github" title="github"></a>
-		
-		
-		
-		<a href="https://twitter.com/conglinux" target="_blank" class="icon-twitter" title="twitter"></a>
-		
-		
-		
-		
-		
-		
-		
-	</div>
-		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2016 
-		
-		<a href="http://wangcong.org/about" target="_blank" title="Cong Wang">Cong Wang</a>
-		
-		</p>
-</div>
-</footer>
-    <script src="/js/jquery-2.0.3.min.js"></script>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 <script src="/js/jquery.imagesloaded.min.js"></script>
 <script src="/js/gallery.js"></script>
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.navbar').click(function(){
-    $('header nav').toggleClass('shownav');
-  });
-  var myWidth = 0;
-  function getSize(){
-    if( typeof( window.innerWidth ) == 'number' ) {
-      myWidth = window.innerWidth;
-    } else if( document.documentElement && document.documentElement.clientWidth) {
-      myWidth = document.documentElement.clientWidth;
-    };
-  };
-  var m = $('#main'),
-      a = $('#asidepart'),
-      c = $('.closeaside'),
-      o = $('.openaside');
-  $(window).resize(function(){
-    getSize(); 
-    if (myWidth >= 1024) {
-      $('header nav').removeClass('shownav');
-    }else
-    {
-      m.removeClass('moveMain');
-      a.css('display', 'block').removeClass('fadeOut');
-      o.css('display', 'none');
-        
-    }
-  });
-  c.click(function(){
-    a.addClass('fadeOut').css('display', 'none');
-    o.css('display', 'block').addClass('fadeIn');
-    m.addClass('moveMain');
-  });
-  o.click(function(){
-    o.css('display', 'none').removeClass('beforeFadeIn');
-    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
-    m.removeClass('moveMain');
-  });
-  $(window).scroll(function(){
-    o.css("top",Math.max(80,260-$(this).scrollTop()));
-  });
-});
-</script>
-
-
-
-
 
 <script type="text/javascript">
-
 var disqus_shortname = 'disqus_ciEwcJAF0E';
 
-(function(){
-  var dsq = document.createElement('script');
-  dsq.type = 'text/javascript';
-  dsq.async = true;
-  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-}());
 (function(){
   var dsq = document.createElement('script');
   dsq.type = 'text/javascript';
@@ -965,33 +601,13 @@ var disqus_shortname = 'disqus_ciEwcJAF0E';
 
 
 
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
 
-
-
-
-
-<!-- Analytics Begin -->
-
-
-
-
-
-<!-- Analytics End -->
-
-<!-- Totop Begin -->
-
-	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
-	</div>
-	<script src="/js/totop.js"></script>
-
-<!-- Totop End -->
-
-<!-- MathJax Begin -->
-<!-- mathjax config similar to math.stackexchange -->
-
-
-<!-- MathJax End -->
-
-  </body>
- </html>
+</body>
+</html>

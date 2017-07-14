@@ -1,321 +1,559 @@
-
-  <!DOCTYPE HTML>
-<html >
+<!DOCTYPE HTML>
+<html>
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   
-    <title>Archives: 2009 | A Geek&#39;s Page</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
-    
-    <meta name="author" content="Cong Wang">
-    
-    
-    <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="A Geek's Page">
-<meta property="og:url" content="http://wangcong.org/archives/2009/">
-<meta property="og:site_name" content="A Geek's Page">
-<meta property="og:description">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="A Geek's Page">
-<meta name="twitter:description">
-<meta name="twitter:creator" content="@conglinux">
+  <title>Archives: 2009 | A Geek&#39;s Page</title>
+  <meta name="author" content="Cong Wang">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
+  
+  <meta property="og:site_name" content="A Geek&#39;s Page"/>
 
-    
-    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
-    
-    
-    <link rel="icon" href="/img/favicon.ico">
-    
-    
-    <link rel="apple-touch-icon" href="/img/jacman.jpg">
-    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
-    
-    <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
 
 </head>
 
-    <body>
-      <header>
-        <div>
-		
-			<div id="imglogo">
-				<a href="/"><img src="/img/logo.png" alt="A Geek&#39;s Page" title="A Geek&#39;s Page"/></a>
-			</div>
-			
-			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="A Geek&#39;s Page">A Geek&#39;s Page</a></h1>
-				<h2 class="blog-motto"></h2>
-			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
-			</a></div>
-			<nav class="animated">
-				<ul>
-					<ul>
-					 
-						<li><a href="/">Home</a></li>
-					
-						<li><a href="/archives">Archives</a></li>
-					
-						<li><a href="/about-2">About</a></li>
-					
-					<li>
- 					
-					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
-						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
-						<input type="hidden" name="q" value="site:wangcong.org">
-					</form>
-					
-					</li>
-				</ul>
-			</nav>			
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">A Geek&#39;s Page</a></h1>
+  <h2><a href="/"></a></h2>
 </div>
-      </header>
-      <div id="container">
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title">2009</h2>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-12-28T20:10:15.000Z"><a href="/2009/12/28/-e8-8e-b7-e5-8f-96c-e8-af-ad-e8-a8-80-e6-95-b0-e6-8d-ae-e7-b1-bb-e5-9e-8b-e5-a4-a7-e5-b0-8f/">Dec 28 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/12/28/-e8-8e-b7-e5-8f-96c-e8-af-ad-e8-a8-80-e6-95-b0-e6-8d-ae-e7-b1-bb-e5-9e-8b-e5-a4-a7-e5-b0-8f/">获取C语言数据类型大小</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>一个简单的脚本，可以在命令行下获取C语言中数据类型的大小。在邮件列表的讨论中看到的这个主意，我用 Perl 重写了一下。</p>
+<p>代码很简单，见下。分享一下，希望对你有用。<br>[perl]</p>
+<h1 id="!/usr/bin/perl_-w">!/usr/bin/perl -w</h1>
+<p>use strict;<br>use File::Temp qw/tempfile tempdir/;</p>
+<p>die “Wrong usage.n” unless @ARGV == 1;<br>my $type=$ARGV[0];<br>my $dir = tempdir(CLEANUP =&gt; 1);<br>my ($obj, $src) = tempfile(“$dir/XXXXX”, SUFFIX =&gt; ‘.c’, UNLINK =&gt; 0);<br>open my $fd, “&gt;$src” or die “can’t create file: $!”;<br>$src =~ s/.c$//g;<br>my $exe_file = $src;</p>
+<p>print $fd &lt;&lt;eof;</p>
+<h1 id="include">include</h1>
+<h1 id="include-1">include</h1>
+<h1 id="include-2">include</h1>
+<h1 id="include-3">include</h1>
+<h1 id="include-4">include</h1>
+<h1 id="include-5">include</h1>
+<h1 id="include-6">include</h1>
+<h1 id="include-7">include</h1>
+<h1 id="include-8">include</h1>
+<h1 id="include-9">include</h1>
+<h1 id="include-10">include</h1>
+<h1 id="include-11">include</h1>
+<h1 id="include-12">include</h1>
+<p>int<br>main (void)<br>{<br>  $type x;<br>  printf (“%d\n”, sizeof x);<br>  exit (0);<br>}<br>EOF<br>my $result = qx(gcc -o $exe_file $exe_file.c &amp;&amp; $exe_file);<br>print $result;<br>[/perl]</p>
+
+      
+    </div>
+    <footer>
+      
         
-
-<div class="archive-title" >
-  <h2 class="archive-icon">2009</h2>
-  
-  <div class="archiveslist archive-float clearfix">
-   <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">Aug 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">Jan 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">Dec 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">Oct 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">Sep 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">Aug 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">Jul 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">Feb 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01/">Jan 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12/">Dec 2012</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">Nov 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">Oct 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">Sep 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">Aug 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/07/">Jul 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">Jun 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">Apr 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">Mar 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">Feb 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">Jan 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/12/">Dec 2011</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">Nov 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/10/">Oct 2011</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">Sep 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08/">Aug 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/07/">Jul 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/06/">Jun 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/05/">May 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04/">Apr 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03/">Mar 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/02/">Feb 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/01/">Jan 2011</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/12/">Dec 2010</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/11/">Nov 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/10/">Oct 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/09/">Sep 2010</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08/">Aug 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07/">Jul 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06/">Jun 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05/">May 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04/">Apr 2010</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03/">Mar 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02/">Feb 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01/">Jan 2010</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12/">Dec 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11/">Nov 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10/">Oct 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09/">Sep 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08/">Aug 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07/">Jul 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/06/">Jun 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/05/">May 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04/">Apr 2009</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03/">Mar 2009</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02/">Feb 2009</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01/">Jan 2009</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12/">Dec 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/11/">Nov 2008</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/10/">Oct 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09/">Sep 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08/">Aug 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07/">Jul 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06/">Jun 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05/">May 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04/">Apr 2008</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03/">Mar 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02/">Feb 2008</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01/">Jan 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12/">Dec 2007</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11/">Nov 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10/">Oct 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09/">Sep 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08/">Aug 2007</a><span class="archive-list-count">31</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07/">Jul 2007</a><span class="archive-list-count">34</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06/">Jun 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05/">May 2007</a><span class="archive-list-count">25</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04/">Apr 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03/">Mar 2007</a><span class="archive-list-count">50</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02/">Feb 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01/">Jan 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12/">Dec 2006</a><span class="archive-list-count">5</span></li></ul>
- </div>
-  
-</div>
-<div id="main" class="archive-part clearfix">
-  <div id="archive-page">
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2009/12/28/-e8-8e-b7-e5-8f-96c-e8-af-ad-e8-a8-80-e6-95-b0-e6-8d-ae-e7-b1-bb-e5-9e-8b-e5-a4-a7-e5-b0-8f/" title="获取C语言数据类型大小" itemprop="url">
-  
-
-    <time datetime="2009-12-28T20:10:15.000Z" itemprop="datePublished">Dec 28 2009</time>
-
-
-    <h1 itemprop="name">获取C语言数据类型大小</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2009/12/21/christmas-gifts-from-portugal/" title="Christmas gifts from Portugal!" itemprop="url">
-  
-
-    <time datetime="2009-12-22T07:33:52.000Z" itemprop="datePublished">Dec 21 2009</time>
-
-
-    <h1 itemprop="name">Christmas gifts from Portugal!</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2009/12/21/-e4-b8-9c-e5-8c-97-e6-b8-b8-e8-ae-a1-e5-88-92/" title="东北行计划" itemprop="url">
-  
-
-    <time datetime="2009-12-21T09:04:32.000Z" itemprop="datePublished">Dec 21 2009</time>
-
-
-    <h1 itemprop="name">东北行计划</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2009/12/20/symlink-ef-bc-8cchroot-ef-bc-8cmount/" title="symlink，chroot 和 mount" itemprop="url">
-  
-
-    <time datetime="2009-12-21T07:57:07.000Z" itemprop="datePublished">Dec 20 2009</time>
-
-
-    <h1 itemprop="name">symlink，chroot 和 mount</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2009/12/14/-e7-94-9f-e6-b4-bb-e6-98-af-e6-9c-80-e5-a5-bd-e7-9a-84-e5-af-bc-e6-bc-94/" title="生活是最好的导演" itemprop="url">
-  
-
-    <time datetime="2009-12-15T06:29:45.000Z" itemprop="datePublished">Dec 14 2009</time>
-
-
-    <h1 itemprop="name">生活是最好的导演</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2009/11/26/-e4-b8-80-e4-b8-aa-e5-85-b8-e5-9e-8b-e7-9a-84-off-by-one-bug/" title="一个典型的 off-by-one bug" itemprop="url">
-  
-
-    <time datetime="2009-11-27T07:26:38.000Z" itemprop="datePublished">Nov 26 2009</time>
-
-
-    <h1 itemprop="name">一个典型的 off-by-one bug</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2009/11/21/kbuild-e6-9b-b4-e6-8d-a2-e7-bb-b4-e6-8a-a4-e8-80-85/" title="kbuild 更换维护者" itemprop="url">
-  
-
-    <time datetime="2009-11-22T06:23:04.000Z" itemprop="datePublished">Nov 21 2009</time>
-
-
-    <h1 itemprop="name">kbuild 更换维护者</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2009/11/18/-e5-b7-9d-e6-bb-87-e4-b9-8b-e8-a1-8c-e6-b8-b8-e8-ae-b0-ef-bc-88-e4-b8-89-ef-bc-89/" title="川滇之行游记（三）" itemprop="url">
-  
-
-    <time datetime="2009-11-19T07:57:49.000Z" itemprop="datePublished">Nov 18 2009</time>
-
-
-    <h1 itemprop="name">川滇之行游记（三）</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2009/11/11/-e5-8d-95-e8-ba-ab-e6-9d-af-e5-85-b7/" title="单身杯具" itemprop="url">
-  
-
-    <time datetime="2009-11-11T19:11:48.000Z" itemprop="datePublished">Nov 11 2009</time>
-
-
-    <h1 itemprop="name">单身杯具</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2009/11/09/-e5-b7-9d-e6-bb-87-e4-b9-8b-e8-a1-8c-e6-b8-b8-e8-ae-b0-ef-bc-88-e4-ba-8c-ef-bc-89/" title="川滇之行游记（二）" itemprop="url">
-  
-
-    <time datetime="2009-11-09T08:26:44.000Z" itemprop="datePublished">Nov 9 2009</time>
-
-
-    <h1 itemprop="name">川滇之行游记（二）</h1>
-
-  </a>
-</section>
-
-
-  <nav id="page-nav" class="clearfix archive-nav">
-    <span class="page-number current">1</span><a class="page-number" href="/archives/2009/page/2/">2</a><a class="page-number" href="/archives/2009/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/archives/2009/page/10/">10</a><a class="extend next" rel="next" href="/archives/2009/page/2/">Next<span></span></a>
-  </nav>
-
+        
+      
+      <div class="clearfix"></div>
+    </footer>
   </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-12-22T07:33:52.000Z"><a href="/2009/12/21/christmas-gifts-from-portugal/">Dec 21 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/12/21/christmas-gifts-from-portugal/">Christmas gifts from Portugal!</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Today I was surprised that I received a box of gifts from Ricardo and Ana for Christmas! Hooray!</p>
+<p>I really really love all of them, they are nice and sweet! :) Thank you so much!! Merry Christmas!</p>
+<p>Okay, below are they.</p>
+<p>The box which contains everything:</p>
+<p><img src="/images/" alt=""></p>
+<p>Porto wine!! We already tried one bottle! So sweet! I like it…</p>
+<p><img src="/images/" alt=""></p>
+<p>A Christmas card:</p>
+<p><img src="/images/" alt=""></p>
+<p>And a little “sheep” made by Ana with hands… so cute!</p>
+<p><img src="/images/" alt=""></p>
+<p>And also there is a cap for which I don’t take a picture. I think I can wear it now since it’s cold in Beijing these days. ;)</p>
+<p>Hmmm,  I can still clearly remember which Christmas gifts I got from Ana last year. It is already one year past since I left Portugal! Time goes sooooo fast! I miss all the friends that I met in Portugal! Good old days!</p>
+<p>Next year, we plan to go to Portugal to attend a friend’s wedding which is scheduled in July. I wish I could meet all the friends at that time. Go back to Europe, go back to Portugal, go back to Coimbra!</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-12-21T09:04:32.000Z"><a href="/2009/12/21/-e4-b8-9c-e5-8c-97-e6-b8-b8-e8-ae-a1-e5-88-92/">Dec 21 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/12/21/-e4-b8-9c-e5-8c-97-e6-b8-b8-e8-ae-a1-e5-88-92/">东北行计划</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>元旦计划去东北，主要是去哈尔滨。这将是头一次去东北，目前去过祖国最北的地方仍然是北京……</p>
+<p>时间：<br>1月1号晚上北京出发，1月6号晚上回京。</p>
+<p>具体计划：<br>1.1晚，卧铺-沈阳<br>1.2沈阳中街，故宫，大帅府<br>1.2晚，卧铺-齐齐哈尔<br>1.3齐齐哈尔观鹤（扎龙自然保护区，俗称鹤乡）<br>1.3下午/傍晚，火车-哈尔滨<br>1.3/4/5宿哈尔滨<br>4/5行程：索菲亚教堂，中央大街，松花江，太阳岛，兆麟公园，冰雪大世界<br>1.6早，硬座-长春，长春行程待定<br>1.6晚，飞机-首都机场</p>
+<p>预计费用：<br>行，900￥；住，150￥；其它费用包括吃，景点门票，打的等等。总共预计，2000￥。</p>
+<p>在哈尔滨住宿还未定，初步计划住哈工大附近。</p>
+<p>希望去过上面几个地方的朋友不吝赐教攻略。同时征同行，虽然你可能并不在北京出发，虽然可能路线不完全一样。</p>
+<p>P.S. 漠河离哈尔滨不是一般远啊，从 google map 上目测了一下，感觉和哈尔滨到大连差不多远，东北真辽阔啊！</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-12-21T07:57:07.000Z"><a href="/2009/12/20/symlink-ef-bc-8cchroot-ef-bc-8cmount/">Dec 20 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/12/20/symlink-ef-bc-8cchroot-ef-bc-8cmount/">symlink，chroot 和 mount</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>前两天在处理一个关于 selinux 的 bug 时遇到一个比较有意思的问题，顺着仔细往下想了想，发现更多相关的话题，遂整理成一篇文章记录一下。实际上我想到的这几个问题和 selinux 基本上毫无关系，先从简单的谈起，然后顺着我的思路一步步往下走。</p>
+<p>最初的问题是，如果我在一个目录中建立了一个符号链接，那么我 chroot 进去之后会得到什么？这个问题比较简单，如果符号链接的目标文件路径在 chroot jail 里也存在，那么你就会得到 chroot jail 里面的那个文件；否则就无法访问到目标文件。这一点有个比较有趣的应用就是，你可以建立一个符号链接，让它在 chroot jail 里面和外面都有效，当你在 jail 外面时你就用外面那个，当你在 jail 里面时里面那个就会“立刻生效”。</p>
+<p>接下来的一个问题是，要是我建立的是一个硬链接呢？这个也不难，硬链接会直接访问到目标文件，不存在目标文件存在不存在的问题。那么，如果一个 chroot jail 中有那么一个硬链接，那么你就可以逃出 jail 了？答案是否定的，因为硬链接是不允许建立在目录之上的！至少在 Linux 上如此。在 Linux 上，除了目录“.”“..”你是看不到其它任何硬链接的目录的，为什么？因为如果允许了对目录的硬链接，那么文件系统树状结构层次就会被打破，会出现环。你会说，软链接也不是一样出现环吗？是啊，可是我们对它可以选择 follow 还是不 follow，比如 find(1)，默认的情况就是不去 follow 软链接。</p>
+<p>呃，在继续向前走之前，这里还有另一个关于 chroot 的问题，那就是 chroot(2) 并不会自己去 chdir(2)，也不会关闭任何在此之前打开的文件，无论其是在 jail 里还是 jail外！瞧瞧，Unix 的设计哲学运用得多么好，绝对不多做一件不属于自己的事！但这会带来问题，如果你忘记自己去 chdir(2) 的话你完全可以在 jail 之外通过“..”跳出 jail。这是意料之中的行为，Al Viro解释到：</p>
+<blockquote>
+<p>“If you are within chroot jail and capable of chroot(), you can chdir to its root, then chroot() to subdirectory and you’ve got cwd outside of your new root. After that you can chdir all way out to original root. Again, this is standard behaviour. Changing it will not yield any security improvements, so kindly give that a rest.”<br>好了，继续向前走。硬链接有个天生的缺陷，就是无法跨文件系统，估计你也能隐约感觉到。想想如果我要 chroot 的是一个U盘目录，比如：/mnt/USB，那么我就无法在里面使用硬链接来链接到外面的文件了。为了解决这个问题，我们可以使用 Linux 上的 bind mount，也就是说把一个文件通过“挂载”的方式给“绑定”到一个地方，从而到达和硬链接一样的效果！但这个可以跨任何文件系统！我们完全可以chroot jail 里使用 bind mount 进来的文件。但是，它是有缺点的，相对于硬链接来说。一，它不会像硬链接那样“永久”存在，一重启就没有了，当然了，你可以修改 fstab，但这并不总是一个好办法；二，bind mount 需要 root 权限，即使两个文件的所有者都不是 root （内核邮件列表中有人提交过 unprivileged bind mounts 的<a href="http://lwn.net/Articles/273729/" target="_blank" rel="external">补丁</a>，不知道最后情况如何，至少我在 Fedora 上还是需要 root 权限的）。</p>
+</blockquote>
+<p>从上面可以看出 mount 是个很有意思的东西，如果你觉得 bind mount 比较神奇，别慌，下面还有更神奇的呢。</p>
+<p>mount 还提供一个 move 功能，可以帮助你把一个已经 mount 上来的东东移动到另一个地方去，免得你先 umount 再 mount。</p>
+<p>还有呢，从 2.6. 15 之后mount 还提供了一个非常强大的功能，shared subtrees。这个稍微有些复杂，它的目的是这样的，比如我想在我的用户目录下克隆一个根目录的结构，通常我该怎么做呢？恩，cp -R，或者 rsync 一下。这么做有个明显的缺点：复制了东西，占用了更多硬盘空间。所以我们用 bind mount 比较合适，但是仅仅这么做还不完美：首先，我的用户目录本身也是在根目录下的，本身也会被 bind mount 进去；其次，如果后来我又在 /mnt 下挂载了新的东西呢？那在我的克隆目录中就看不到了。基于此，mount引入了个新玩意儿叫 shared subtrees，于是你可以这么做：</p>
+<blockquote>
+<p>mount —bind /home/wangcong /home/wangcong<br>mount —make-unbindable /home/wangcong<br>mount —bind /mnt /mnt<br>mount —make-shared /mnt<br>如此一来，你就可以在 bind mount 上来的所有 /mnt 中看到新挂载的内容了。非常牛叉。</p>
+</blockquote>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-12-15T06:29:45.000Z"><a href="/2009/12/14/-e7-94-9f-e6-b4-bb-e6-98-af-e6-9c-80-e5-a5-bd-e7-9a-84-e5-af-bc-e6-bc-94/">Dec 14 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/12/14/-e7-94-9f-e6-b4-bb-e6-98-af-e6-9c-80-e5-a5-bd-e7-9a-84-e5-af-bc-e6-bc-94/">生活是最好的导演</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>我经常语重心长地给别人说，其实生活啊，才是最好的导演。这不，又发生了一件神奇的事情。<br>事情是这样的：</p>
+<p>今天下班回家刚做完吃完饭，突然接到一个陌生电话，对方自报姓名，说是王简，问我是不是王聪。我一听，哦，原来是公司一起踢球的那哥们啊。解释一下，虽然经常和这哥们一起踢球，但因为不是同一个部门，所以不知道彼此号码；如果想知道也很简单，去公司内网查；所以上面的合情合理。</p>
+<p>我问他什么事啊，他说代码遇到问题了，怎么怎么编译不过去，问我如何解决。我大体说了说思路，然后看他电话也说不清楚就问他现在是不是在公司，我过去看看，他说好。一路上我就在琢磨为啥这哥们遇到问题找我啊。</p>
+<p>到了公司往那哥们的位置上一看，没人！！问旁边的同事，他们说他今天有事还提前下班回家了！我当时就震惊了，明明刚才说在公司的，而且还遇到代码问题了，怎么突然就没人了！</p>
+<p>我冷静了一下，回到我的座位上拿出手机回拨那个号码，问问这哥们到底什么情况。一听电话我就傻了，是另一个人，我还在想他是谁时他倒是听出我来了，竟然是我一个高中同学？！我当时蒙了……</p>
+<p>我问他到底是什么情况怎么这么离谱？他解释说他们公司有个叫王聪的，他旁边的一个同事有问题问那个王聪，然后看到他手机里有这个名字就拨了。巧合的是，这个打电话的人也叫王简（是不是同一个字不知道，反正读音一样），正好和我那个踢球的同事重名。更巧的是，我那个同事是东北人，口音很重，而我这个同学在大连工作，所以很可能他那个同事也是东北人，口音还差不多，至少我是没听出啥差别来。更更巧的是，我有那个高中同学的手机号啊，按理说能看到是不是他的手机打来的，可偏偏是他那个号欠费，用的另一个号码……</p>
+<p>更更更巧的是，还好我今天晚上和美国那边开会，否则就白来一趟了……</p>
+<p>瞧，生活导演了一部多么好的小电影啊！</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-11-27T07:26:38.000Z"><a href="/2009/11/26/-e4-b8-80-e4-b8-aa-e5-85-b8-e5-9e-8b-e7-9a-84-off-by-one-bug/">Nov 26 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/11/26/-e4-b8-80-e4-b8-aa-e5-85-b8-e5-9e-8b-e7-9a-84-off-by-one-bug/">一个典型的 off-by-one bug</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>今天美国人民过节，所以我今天上班基本上没啥事做。闲得发慌时无意中看到有人在邮件列表中报告 hexdump 有一个 bug，重现方法很简单，你只要通过 -s 把 skip 设置成该文件的大小就可以了，你可以用你手头上的 hexdump 试试，你会发现你可以看到全部文件的内容。这一下子激起了我的兴趣。</p>
+<p>我一开始的想法是，hexdump 是个老命令了，虽然不能说像 ls 那些命令经过“千锤百炼”吧，但说“基本上不可能有bug”还是可以的。于是我抱着这个心态去翻源代码，虽然我在此之前从来没看过 hexdump 的源代码，但我还是信心满怀地找到了下面这么一句：skip -= sbuf.st_size; ，恩，看来是知道这种情况了，只是把它“折回”处理了，所以我回答说可能是一个 feature 而不是 bug。</p>
+<p>但那个人后来的回复一下子惊醒了我，把 skip 再多加上一就是另一种结果了，什么都没有。所以这确实是一个 bug！当时我绕着源代码转了半天也没头绪，而且被里面那么多的全局变量和 static 变量给绕晕了，思考方向走错了。后来等我回到家做完晚饭一想，我靠，多一个或少一就没有 bug，这不就是 <a href="http://en.wikipedia.org/wiki/Off-by-one_error" target="_blank" rel="external">off-by-one</a> 的症状嘛！肯定是哪里少算或者多算了一个临界值！抱着这个想法去找就简单了，很快就可以定位到问题所在，于是<a href="http://article.gmane.org/gmane.linux.utilities.util-linux-ng/2804" target="_blank" rel="external">补丁自然而然地出来了</a>。</p>
+<p>以前我们学C语言时不经常被提醒一定要注意 off-by-one 嘛，可能都没遇到过多么好的例子，现在这个就是现实中活生生的，非常典型的一个例子。作为反面教材放这里了。</p>
+<p>现在再来回头看，问题其实很简单了，但当时分析这个 bug 时怎么就没想到这个原因值得深思：首先是心态不对，要面对现实，哪怕现实再残酷再不符合你的逻辑也要勇于否定自己，<strong>不要尝试找理由去否定现实，而是要接受现实去分析原因</strong>；其次，没有对“现象”进行深入思考，没有掌握到“现象”中表现出来的隐含规律，而这才是解决这个问题的关键！所以啊，不管在哪里多思考都是有好处的！</p>
+<p>我很早以前就有这么个想法啊：作为程序员做 debug 工作，其实在很大程度上和侦探做破案工作是一样的。都要根据“凶案现场”（bug 症状）留下的蛛丝马迹顺藤摸瓜地去找“杀人凶手”（bug 所在）；同样都是靠严密的逻辑去推理，唯一不同的是，侦探的逻辑和线索是事情发展的过程和顺序，而程序员的逻辑和线索是源代码；侦探在破案毫无头绪时会想更多的办法去搜集证据和证词等等，而程序员在毫无头绪时可以通过调试器等获取更多 debug 信息，总之都是获取更多的信息量，因为信息更多意味着分析出来的东西会更多。</p>
+<p>这让我想起多年前上高中时上课都偷看的《福尔摩斯探案集》来了，里面福尔摩斯老师的那几句话真是饱含哲理，牛逼轰轰，金光闪闪啊：</p>
+<p><strong>当你把决不可能的因素排除后，不管剩下的是什么——-不管多么难以置信——那就是真相。  </strong></p>
+<p><strong>没有掌握全部证据以前，先作出假设，这是决大的错误，那样会使判断产生偏差。</strong></p>
+<p><strong>猜想是很不好的习惯，它有害于作逻辑推理。</strong></p>
+<p>内牛满面地把这几句话收藏起来作为 debug 时的座右铭…… T_T</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-11-22T06:23:04.000Z"><a href="/2009/11/21/kbuild-e6-9b-b4-e6-8d-a2-e7-bb-b4-e6-8a-a4-e8-80-85/">Nov 21 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/11/21/kbuild-e6-9b-b4-e6-8d-a2-e7-bb-b4-e6-8a-a4-e8-80-85/">kbuild 更换维护者</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Sam Ravnborg 作为 Linux 内核 kbuild 子系统的维护者已经很长时间。因为提交过相关补丁的原因，和他有过电子邮件来往。如果我没记错的话，他应该是意大利人，这位老大英语不是一般差，他的英语我每次读都比较费劲。无论如何，他对内核社区的贡献是有目共睹的，感谢多年来他的努力，现在 kbuild 系统已经很完善了。</p>
+<p>在<a href="http://lkml.org/lkml/2009/11/20/262" target="_blank" rel="external">昨天晚上的一封电子邮件</a>中，Sam 突然宣布放弃继续维护 kbuild，因为家庭和工作的原因，时间不够用了。他维护 kbuild 也都是在业余时间来做，确实比较辛苦。 kbuild 作为内核中比较特殊的一部分，它几乎纯粹是用户层的东西，但和最后生成的内核二进制文件又息息相关，总体上感觉有点儿“鸡肋”，而且一般人是不会乱碰那些很多人看不懂的 Makefile 的。而且编译不光涉及简单的直接编译，还涉及到各个平台之间的交叉编译，涉及二进制文件格式等等，维护这些东西确实很麻烦。不管谁接手这个活儿都不容易。</p>
+<p>目前谁将继续维护 kbuild 还未确定，主要还是要看 lkml 社区的认可程度，毕竟开源社区就是靠声望运作的。在私下的讨论中，Debian 开发者 Aníbal Monsalve Salazar 表示对此感兴趣，希望能接手，但不知为何并没有抄送到 lkml。最后如何我们只能拭目以待了。</p>
+<p>BTW：正是靠这么多业余爱好者的努力，Linux 才成长如此迅速。感谢那些默默无闻，常年奋战在自由软件开发第一线的 geek 们！他们是互联网上最可爱的人！geek 万岁！8-)  姑娘们，<a href="http://www.helium.com/items/805591-ten-reasons-you-should-marry-a-geek" target="_blank" rel="external">给你们十个理由去嫁给 geek 男</a>！恩哼～！</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-11-19T07:57:49.000Z"><a href="/2009/11/18/-e5-b7-9d-e6-bb-87-e4-b9-8b-e8-a1-8c-e6-b8-b8-e8-ae-b0-ef-bc-88-e4-b8-89-ef-bc-89/">Nov 18 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/11/18/-e5-b7-9d-e6-bb-87-e4-b9-8b-e8-a1-8c-e6-b8-b8-e8-ae-b0-ef-bc-88-e4-b8-89-ef-bc-89/">川滇之行游记（三）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>TBD</p>
+<p>部分照片：</p>
+<p>重庆：<br><a href="http://www.douban.com/photos/album/20244551/" target="_blank" rel="external">http://www.douban.com/photos/album/20244551/</a><br>成都：<br><a href="http://www.douban.com/photos/album/20245333/" target="_blank" rel="external">http://www.douban.com/photos/album/20245333/</a><br>丽江：<br><a href="http://www.douban.com/photos/album/20271629/" target="_blank" rel="external">http://www.douban.com/photos/album/20271629/</a><br><a href="http://www.douban.com/photos/album/20318899/" target="_blank" rel="external">http://www.douban.com/photos/album/20318899/</a><br><a href="http://www.douban.com/photos/album/20319614/" target="_blank" rel="external">http://www.douban.com/photos/album/20319614/</a><br>香格里拉：<br><a href="http://www.douban.com/photos/album/20271634/" target="_blank" rel="external">http://www.douban.com/photos/album/20271634/</a><br><a href="http://www.douban.com/photos/album/20649141/" target="_blank" rel="external">http://www.douban.com/photos/album/20649141/</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-11-11T19:11:48.000Z"><a href="/2009/11/11/-e5-8d-95-e8-ba-ab-e6-9d-af-e5-85-b7/">Nov 11 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/11/11/-e5-8d-95-e8-ba-ab-e6-9d-af-e5-85-b7/">单身杯具</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>一年一度的传统节日又到了。。。（作者省略数千字感慨）</p>
+<p>事实证明，搞Linux的geek注定是单身杯具。证据如下：</p>
+<p>% whatis girl<br>girl: nothing appropriate.</p>
+<p>% which girl<br>girl not found</p>
+<p>% give me a girl<br>zsh: command not found: give</p>
+<p>% find girls<br>find: `girls’: No such file or directory</p>
+<p>% killall boring<br>boring: no process found</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-11-09T08:26:44.000Z"><a href="/2009/11/09/-e5-b7-9d-e6-bb-87-e4-b9-8b-e8-a1-8c-e6-b8-b8-e8-ae-b0-ef-bc-88-e4-ba-8c-ef-bc-89/">Nov 9 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/11/09/-e5-b7-9d-e6-bb-87-e4-b9-8b-e8-a1-8c-e6-b8-b8-e8-ae-b0-ef-bc-88-e4-ba-8c-ef-bc-89/">川滇之行游记（二）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>丽江古城大体上分为两部分，一个是大研古城，一个束河古城。前者比后者大得多，所以前者热闹，后者安静。喜欢安静的可以考虑去束河住。我们住在大研古城边上，到的时候正好天黑，可以去看丽江古城的夜景。小佳说丽江古城在晚上和清晨最好看，我说那就今晚和明天一早把古城逛逛吧。</p>
+<p>进古城不收任何费用，说收古城维护费的都是骗你的，不过倒是听说去黑龙潭公园门票里会包含古城维护费，这个貌似是真的，我没去。古城有很多入口，我们进去的那个比较偏僻，进去绕了好久才绕到一条灯火通明的主路上。走在古城的路上，路边全都是店铺，各种各样，琳琅满目，恨不得每个都进去逛一下逛。因为来之前答应几个朋友带礼物，所以很留心地看了看买纪念品的小店，发现不少东西以前见过，因为上大学时宿舍一哥们去丽江带回去不少东西。走到一家卖T-shirt的店时终于忍不住买了件有丽江味的Tee，可以在我的照片上看到我穿，才20￥，比起在北京买的那件50￥的TBBT的Tee来说便宜多了。</p>
+<p>古城很大，街道纵横交错，我们又没有地图，我早就走晕了，还好有小佳在前面带路。好不容易才走到四方街，那边太热闹了，歌舞升平，酒吧很多，酒吧里人也很多，里面很热闹。当时听到有人在唱《我只在乎你》，在这样的丽江的夜晚听到这首歌别有一番风味，我很喜欢。丽江古城里到处都有水流过，到了晚上在灯光下感觉尤其惬意。四方街那里有卖河灯的，作成荷花状，中间放着蜡烛，看着它放到水里一直漂下去很有意思。有几个地方还可以看到水车，有大的有小的，很符合古城的风格。</p>
+<p>逛累了走累了，找一家店吃饭。本来想吃丽江腊排骨火锅的，不过我在北京吃过了，小佳也吃过，遂作罢。于是我们就找了家小吃多的店，点了好几种小吃，丽江粑粑，竹筒饭，炒米线等等。我记得小佳点的炒米线很不错，我点的那份甜的丽江粑粑也还好，以前不喜欢吃丽江粑粑的小佳也说这次这个不错，但我不喜欢吃那个米灌肠。</p>
+<p>吃完饭想去酒吧的，毕竟这里酒吧比北京的热闹多了。但小佳有些感冒，于是就陪她回去休息了，约好第二天一早起来去看清晨的古城。</p>
+<p>清晨的古城是另一番景象。虽然我们起来收拾好出门都已经九点多了，但古城里开始营业的店铺仍然很少。这就是丽江的生活，晚上睡得早，早上起得晚，盼完天黑盼天明，悠哉悠哉～！在清晨的阳光下，古城里的水流，水车显得分外漂亮，有的地方还有小桥，偶尔还会有鲜花，走在其中感觉无比舒服。好想好想留住这样的清晨，好想好想留在那里不走……</p>
+<p>走到四方街时看到了一群少数民族的大妈们在跳舞，人挺多的，很热闹，我也加入了她们，完全不会跳，跟着瞎跳，让小佳一起来她还不来。离四方街不远有一个邮局，昨天晚上就看到了，今天特意记着给北京的朋友同事们寄明信片，我买了一整套明信片，还让他们给盖了丽江的邮戳，然后就是一个个发短信问地址，写地址，贴邮票，最后寄出，说是一周之后到，我想那时我人都到北京了。</p>
+<p>然后我准备做旅店老板的车去拉什海骑马，小佳因为上次去被晒黑了，所以这次说什么也不去了，我只好自己去。到了那里发现骑马的人很多，门票贵，我想去的那条线280￥一张，不过可以让旅店老板帮你讲价。牵马的大哥很有意思，他是纳西族人，说话带有浓重的口音，他让我叫他胖金哥。胖金哥会教你如何骑马，在路上他还会给你讲沿途的一些景点，比如茶马古道的来历，偶尔没话说了他会唱当地的山歌。这是我第一次骑马，感觉很累，尤其是马跑起来的时候。</p>
+<p>骑完马就去喝茶，倒茶的是个纳西族的姑娘，她不光会介绍各种茶的由来和作用，还会介绍纳西族的生活习俗。最让我震惊的是，在纳西族，男女角色和我们是完全反过来的：男人在家几乎什么都不干，女人几乎什么都干，什么重活累活全是女人的，男人就负责传孙接代。这正好解释了为什么我在路上看到那么多上了年纪的女的还在下地干活。我问他们是不是也有走婚，她告诉我说现在虽然还有但已经越来越少了。</p>
+<p>喝完茶去划船。虽然拉什海很大，但是能让你划过去的地方很小，绕一小圈就完了。在船上是听到旁边的船上有人唱山歌，于是我们船上的姑娘们要求和他们对，但是我们谁也不会唱……</p>
+<p>从拉什海回来就让旅店老板带着小佳一起去束河那边。束河古镇和丽江古城差不多，就是比它要安静很多，人相对来说比较少，酒吧也少。但是随着最近几年的发展，束河也变得越来越商业化。因为中午没吃饭，所以在路边找了一家老奶奶开的小店吃点儿东西，尝了尝冰粉，凉宵，味道不错的说。束河不大，但都逛完也挺不容易，记得在一条路上绕了好久在走出去。在束河古镇的正门口有到丽江古城的车，一个人2￥就够了，坐满人就走。</p>
+<p>回到旅店天色已暗，洗了个澡出来吃饭。去了对面的一家饭店吃鱼，我们还特意要了两瓶啤酒，四川妹子就是豪爽，酒量也不错，不像北京的姑娘们，怎么让也不喝，好不容易劝下去一杯，还得羞羞答答，吞吞吐吐才喝下去，还得再来一句：“人家不好意思嘛……” 吃完饭再回古城逛，今天晚上就是要去酒吧，来丽江怎么能不去酒吧呢！丽江的酒吧消费特贵，很多地方比北京的还要贵，太黑了。我来之前兔兔说让我去小吧黎，我们好不容易才找到，正好人也不多。问了问消费没其它地方那么贵，就坐下来接着喝酒，边喝酒边看乐队演出，正好听到有一首张震岳的《再见》，非常符合此情此景。因为第二天要去香格里拉，又和小佳商量了一下第二天怎么走，去了怎么安排。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+
+  <nav id="pagination">
+  
+  
+    <a href="/archives/2009/page/2/" class="alignright next">Next</a>
+  
+  <div class="clearfix"></div>
+</nav>
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:wangcong.org">
+  </form>
 </div>
 
-      </div>
-      <footer><div id="footer" >
-	
-	
-	<div class="social-font" class="clearfix">
-		
-		
-		<a href="https://github.com/congwang" target="_blank" class="icon-github" title="github"></a>
-		
-		
-		
-		<a href="https://twitter.com/conglinux" target="_blank" class="icon-twitter" title="twitter"></a>
-		
-		
-		
-		
-		
-		
-		
-	</div>
-		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2016 
-		
-		<a href="http://wangcong.org/about" target="_blank" title="Cong Wang">Cong Wang</a>
-		
-		</p>
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Book-Reviews/">Book Reviews</a><small>18</small></li>
+  
+    <li><a href="/categories/China/">China</a><small>2</small></li>
+  
+    <li><a href="/categories/Collection/">Collection</a><small>25</small></li>
+  
+    <li><a href="/categories/Life/">Life</a><small>324</small></li>
+  
+    <li><a href="/categories/Linux-Application/">Linux Application</a><small>73</small></li>
+  
+    <li><a href="/categories/Linux-Kernel/">Linux Kernel</a><small>64</small></li>
+  
+    <li><a href="/categories/Love/">Love</a><small>6</small></li>
+  
+    <li><a href="/categories/Movies/">Movies</a><small>19</small></li>
+  
+    <li><a href="/categories/Programming/">Programming</a><small>152</small></li>
+  
+    <li><a href="/categories/Science-Fiction/">Science Fiction</a><small>8</small></li>
+  
+    <li><a href="/categories/Travel/">Travel</a><small>19</small></li>
+  
+  </ul>
 </div>
-</footer>
-      <script src="/js/jquery-2.0.3.min.js"></script>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/geek/">geek</a><small>1</small></li>
+  
+    <li><a href="/tags/handling/">handling</a><small>1</small></li>
+  
+    <li><a href="/tags/joke/">joke</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/tags/signal/">signal</a><small>1</small></li>
+  
+    <li><a href="/tags/unix/">unix</a><small>1</small></li>
+  
+    <li><a href="/tags/vim/">vim</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2017 Cong Wang
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 <script src="/js/jquery.imagesloaded.min.js"></script>
 <script src="/js/gallery.js"></script>
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.navbar').click(function(){
-    $('header nav').toggleClass('shownav');
-  });
-  var myWidth = 0;
-  function getSize(){
-    if( typeof( window.innerWidth ) == 'number' ) {
-      myWidth = window.innerWidth;
-    } else if( document.documentElement && document.documentElement.clientWidth) {
-      myWidth = document.documentElement.clientWidth;
-    };
-  };
-  var m = $('#main'),
-      a = $('#asidepart'),
-      c = $('.closeaside'),
-      o = $('.openaside');
-  $(window).resize(function(){
-    getSize(); 
-    if (myWidth >= 1024) {
-      $('header nav').removeClass('shownav');
-    }else
-    {
-      m.removeClass('moveMain');
-      a.css('display', 'block').removeClass('fadeOut');
-      o.css('display', 'none');
-        
-    }
-  });
-  c.click(function(){
-    a.addClass('fadeOut').css('display', 'none');
-    o.css('display', 'block').addClass('fadeIn');
-    m.addClass('moveMain');
-  });
-  o.click(function(){
-    o.css('display', 'none').removeClass('beforeFadeIn');
-    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
-    m.removeClass('moveMain');
-  });
-  $(window).scroll(function(){
-    o.css("top",Math.max(80,260-$(this).scrollTop()));
-  });
-});
-</script>
-
-
-
-
 
 <script type="text/javascript">
-
 var disqus_shortname = 'disqus_ciEwcJAF0E';
 
-(function(){
-  var dsq = document.createElement('script');
-  dsq.type = 'text/javascript';
-  dsq.async = true;
-  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-}());
 (function(){
   var dsq = document.createElement('script');
   dsq.type = 'text/javascript';
@@ -327,33 +565,13 @@ var disqus_shortname = 'disqus_ciEwcJAF0E';
 
 
 
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
 
-
-
-
-
-<!-- Analytics Begin -->
-
-
-
-
-
-<!-- Analytics End -->
-
-<!-- Totop Begin -->
-
-	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
-	</div>
-	<script src="/js/totop.js"></script>
-
-<!-- Totop End -->
-
-<!-- MathJax Begin -->
-<!-- mathjax config similar to math.stackexchange -->
-
-
-<!-- MathJax End -->
-
-    </body>
-   </html>
+</body>
+</html>

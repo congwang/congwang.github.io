@@ -1,317 +1,597 @@
-
-  <!DOCTYPE HTML>
-<html >
+<!DOCTYPE HTML>
+<html>
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   
-    <title>Category: Linux Kernel | A Geek&#39;s Page</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
-    
-    <meta name="author" content="Cong Wang">
-    
-    
-    <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="A Geek's Page">
-<meta property="og:url" content="http://wangcong.org/categories/Linux-Kernel/page/3/">
-<meta property="og:site_name" content="A Geek's Page">
-<meta property="og:description">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="A Geek's Page">
-<meta name="twitter:description">
-<meta name="twitter:creator" content="@conglinux">
+  <title>Page 3 | Linux Kernel | A Geek&#39;s Page</title>
+  <meta name="author" content="Cong Wang">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
+  
+  <meta property="og:site_name" content="A Geek&#39;s Page"/>
 
-    
-    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
-    
-    
-    <link rel="icon" href="/img/favicon.ico">
-    
-    
-    <link rel="apple-touch-icon" href="/img/jacman.jpg">
-    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
-    
-    <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
 
 </head>
 
-    <body>
-      <header>
-        <div>
-		
-			<div id="imglogo">
-				<a href="/"><img src="/img/logo.png" alt="A Geek&#39;s Page" title="A Geek&#39;s Page"/></a>
-			</div>
-			
-			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="A Geek&#39;s Page">A Geek&#39;s Page</a></h1>
-				<h2 class="blog-motto"></h2>
-			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
-			</a></div>
-			<nav class="animated">
-				<ul>
-					<ul>
-					 
-						<li><a href="/">Home</a></li>
-					
-						<li><a href="/archives">Archives</a></li>
-					
-						<li><a href="/about-2">About</a></li>
-					
-					<li>
- 					
-					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
-						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
-						<input type="hidden" name="q" value="site:wangcong.org">
-					</form>
-					
-					</li>
-				</ul>
-			</nav>			
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">A Geek&#39;s Page</a></h1>
+  <h2><a href="/"></a></h2>
 </div>
-      </header>
-      <div id="container">
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title category">Linux Kernel</h2>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2012-03-24T22:44:17.000Z"><a href="/2012/03/24/perfbook-e8-af-bb-e4-b9-a6-e7-ac-94-e8-ae-b0-ef-bc-9alivelock/">Mar 24 2012</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2012/03/24/perfbook-e8-af-bb-e4-b9-a6-e7-ac-94-e8-ae-b0-ef-bc-9alivelock/">perfbook 读书笔记：livelock</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>注：本文以及后面的文章中提到的 perfbook 均是指大牛 Paul E. McKenney 的书，《Is Parallel Programming Hard, And, If So, What Can You Do About It?》，书名太长，故简写之。</p>
+<p>最近一直在读这本 perfbook，它算是少有的全面而专门介绍 locking 的书，值得每个系统程序员去读。在读的过程中发现有的地方它介绍的并不是很详细，所以就写几篇读书笔记也算是对它的小小补充。</p>
+<p>书中 6.1.2 节讲到了 livelock，即所谓的“活锁”，相对于死锁（deadlock）而言。因为上过操作系统课的原因，我估计很多人对 deadlock 并不陌生，但是 livelock 相对不那么熟悉。livelock 无非是饥饿（starvation）的极端情况。饥饿是由竞争引起，所谓竞争（contention）是指尝试获取一个已经被锁住的锁，长时间竞争会导致这些得不到锁的进程饥饿，所以饥饿的极端情况就是多个进程一直在尝试获取某一（几）把锁，但一直都得不到满足。</p>
+<p>书中给出的例子很简单，解决方法是给两个进程加上不同延迟，也同时增加了 overhead，所以这个例子并不是很好。我们看一个现实中的例子，Linux 内核中的一个 livelock 的 bug：</p>
+<blockquote>
+<p>commit eaf5f9073533cde21c7121c136f1c3f072d9cf59<br>Author: Miklos Szeredi<br>Date:   Tue Jan 10 18:22:25 2012 +0100</p>
+<p>fix shrink_dcache_parent() livelock</p>
+</blockquote>
+<p>发生 livelock 的地方是 shrink_dcache_parent()，看其定义：<br>[c]<br>void shrink_dcache_parent(struct dentry * parent)<br>{<br>        LIST_HEAD(dispose);<br>        int found;</p>
+<pre><code>    <span class="keyword">while</span> ((found = select_parent(<span class="keyword">parent</span>, &amp;amp;dispose)) != <span class="number">0</span>)
+            shrink_dentry_list(&amp;amp;dispose);
+</code></pre><p>}<br>[/c]</p>
+<p>根据这个 commit 的描述，我们可以发现存在下面这种情况：</p>
+<p>1. CPU0 上的进程调用 select_parent(P) 找到了 dentry C，并把它放入 dispose 链表中，返回1；</p>
+<p>2. 与此同时，CPU1 上的另一个进程也调用了select_parent(P)，获取了 dentry P 的 -&gt;d_lock；</p>
+<p>3. CPU0 上的进程继续调用 shrink_dentry_list()，获取了 dentry C 的 -&gt;d_lock，然后又调用 try_prune_one_dentry(C)，dentry_kill(C)：</p>
+<p>[c]<br>…<br>        if (inode &amp;&amp; !spin_trylock(&amp;inode-&gt;i_lock)) {<br>relock:<br>                spin_unlock(&amp;dentry-&gt;d_lock);<br>                cpu_relax();<br>                return dentry; /<em> try again with same dentry </em>/<br>        }<br>        if (IS_ROOT(dentry))<br>                parent = NULL;<br>        else<br>                parent = dentry-&gt;d_parent;<br>        if (parent &amp;&amp; !spin_trylock(&amp;parent-&gt;d_lock)) {<br>                if (inode)<br>                        spin_unlock(&amp;inode-&gt;i_lock);<br>                goto relock;<br>        }<br>[/c]</p>
+<p>因为另一个进程持有dentry P的-&gt;d_lock，所以 dentry_kill() 中 spin_trylock(&amp;parent-&gt;d_lock) 失败，转而 spin_unlock(&amp;dentry-&gt;d_lock) 并返回；</p>
+<p>4. CPU1 上的进程此时仍在调用 select_parent(P)，并找到了 dentry C，锁住了它的-&gt;d_lock，放入 dispose 链表并返回1（其实就是重复步骤(1)）；</p>
+<p>5. CPU0 上的进程继续 shrink_dentry_list() 中的循环，发现 dispose 链表已经为空，退出循环并返回；</p>
+<p>6. CPU1 的进程开始重复步骤(3)；</p>
+<p>7. CPU0 的进程开始重复步骤(2)。</p>
+<p>Livelock 产生了！</p>
+<p>这里问题的关键在于那个 dispose list，如果 dentry C被某个进程加入到 dispose list 中，另外的进程不应该再找到它，所以修复就是加一个标志位 DCACHE_SHRINK_LIST，来标示这个 dentry 有没有被加入。</p>
+
+      
+    </div>
+    <footer>
+      
         
-
-<div class="archive-title" >
-  <h2 class="category-icon">Linux Kernel</h2>
-  
-</div>
-<div id="main" class="archive-part clearfix">
-  <div id="archive-page">
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2012/03/24/perfbook-e8-af-bb-e4-b9-a6-e7-ac-94-e8-ae-b0-ef-bc-9alivelock/" title="perfbook 读书笔记：livelock" itemprop="url">
-  
-
-    <time datetime="2012-03-24T22:44:17.000Z" itemprop="datePublished">Mar 24 2012</time>
-
-
-    <h1 itemprop="name">perfbook 读书笔记：livelock</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2012/02/17/-e5-85-b3-e4-ba-8e-tmpfs/" title="关于 tmpfs" itemprop="url">
-  
-
-    <time datetime="2012-02-17T18:34:12.000Z" itemprop="datePublished">Feb 17 2012</time>
-
-
-    <h1 itemprop="name">关于 tmpfs</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2011/06/01/kernel-crash-logging-and-core-dump/" title="Kernel Crash Logging and Core Dump" itemprop="url">
-  
-
-    <time datetime="2011-06-02T03:56:29.000Z" itemprop="datePublished">Jun 1 2011</time>
-
-
-    <h1 itemprop="name">Kernel Crash Logging and Core Dump</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2011/03/01/fedora-e4-b8-8a-e9-82-a3-e4-ba-9b-e5-86-85-e6-a0-b8-e5-8c-85/" title="Fedora 上那些内核包" itemprop="url">
-  
-
-    <time datetime="2011-03-02T06:30:52.000Z" itemprop="datePublished">Mar 1 2011</time>
-
-
-    <h1 itemprop="name">Fedora 上那些内核包</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2011/01/30/linux-reboot-magic/" title="LINUX_REBOOT_MAGIC" itemprop="url">
-  
-
-    <time datetime="2011-01-31T07:01:29.000Z" itemprop="datePublished">Jan 30 2011</time>
-
-
-    <h1 itemprop="name">LINUX_REBOOT_MAGIC</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2010/12/17/kdump-e4-bb-8b-e7-bb-8d/" title="kdump 介绍" itemprop="url">
-  
-
-    <time datetime="2010-12-18T05:00:35.000Z" itemprop="datePublished">Dec 17 2010</time>
-
-
-    <h1 itemprop="name">kdump 介绍</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2010/10/05/cve-2009-0029-e5-92-8c-cve-2010-3301/" title="CVE-2009-0029 和 CVE-2010-3301" itemprop="url">
-  
-
-    <time datetime="2010-10-06T05:41:57.000Z" itemprop="datePublished">Oct 5 2010</time>
-
-
-    <h1 itemprop="name">CVE-2009-0029 和 CVE-2010-3301</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2010/04/22/elf-extended-numbering/" title="ELF Extended Numbering" itemprop="url">
-  
-
-    <time datetime="2010-04-23T05:18:37.000Z" itemprop="datePublished">Apr 22 2010</time>
-
-
-    <h1 itemprop="name">ELF Extended Numbering</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2010/04/21/-e8-87-aa-e5-8a-a8-e7-94-9f-e6-88-90-e5-86-85-e6-a0-b8config/" title="自动生成内核config" itemprop="url">
-  
-
-    <time datetime="2010-04-22T06:16:16.000Z" itemprop="datePublished">Apr 21 2010</time>
-
-
-    <h1 itemprop="name">自动生成内核config</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2010/04/05/bonding-e5-92-8cbridge-e5-af-b9netpoll-e7-9a-84-e6-94-af-e6-8c-81/" title="bonding和bridge对netpoll的支持" itemprop="url">
-  
-
-    <time datetime="2010-04-06T01:23:17.000Z" itemprop="datePublished">Apr 5 2010</time>
-
-
-    <h1 itemprop="name">bonding和bridge对netpoll的支持</h1>
-
-  </a>
-</section>
-
-
-  <nav id="page-nav" class="clearfix archive-nav">
-    <a class="extend prev" rel="prev" href="/categories/Linux-Kernel/page/2/"><span></span>Prev</a><a class="page-number" href="/categories/Linux-Kernel/">1</a><a class="page-number" href="/categories/Linux-Kernel/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/categories/Linux-Kernel/page/4/">4</a><a class="page-number" href="/categories/Linux-Kernel/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/categories/Linux-Kernel/page/7/">7</a><a class="extend next" rel="next" href="/categories/Linux-Kernel/page/4/">Next<span></span></a>
-  </nav>
-
+        
+      
+      <div class="clearfix"></div>
+    </footer>
   </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2012-02-17T18:34:12.000Z"><a href="/2012/02/17/-e5-85-b3-e4-ba-8e-tmpfs/">Feb 17 2012</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2012/02/17/-e5-85-b3-e4-ba-8e-tmpfs/">关于 tmpfs</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>“tmpfs” 是 Linux 内核中另一个让人困惑的名字，它的实现是在 mm/shmem.c，”shmem” 猛一看和 “tmpfs” 根本不沾边，虽然我们知道 tmpfs 是基于内存的！我们可以通过看一下 tmpfs 都被用到哪些地方来了解它到底为什么叫这个名字。</p>
+<p>你的桌面 Linux 系统中基本上都会挂载了 tmpfs：</p>
+<p>% grep tmpfs /proc/mounts<br>devtmpfs /dev devtmpfs rw,seclabel,nosuid,relatime,size=1958956k,nr_inodes=489739,mode=755 0 0<br><strong>tmpfs /dev/shm tmpfs rw,seclabel,nosuid,nodev,relatime 0 0</strong><br>tmpfs /run tmpfs rw,seclabel,nosuid,nodev,relatime,mode=755 0 0<br>tmpfs /sys/fs/cgroup tmpfs rw,seclabel,nosuid,nodev,noexec,relatime,mode=755 0 0<br>tmpfs /media tmpfs rw,rootcontext=system_u:object_r:mnt_t:s0,seclabel,nosuid,nodev,noexec,relatime,mode=755 0 0</p>
+<p>正如<a href="http://wangcong.org/blog/archives/591" target="_blank" rel="external">这篇文章</a>中提到的，/dev/shm 是 POSIX IPC 用到的，用来实现进程间通信。除了 sem_open(3) 的中 oflag 参数，基本上看不出来和文件有什么相关。</p>
+<p>除此之外，另一个用到它的地方是 anonymous shared mapping！</p>
+<pre>
+mmap_region():
+
+        if (file) {
+        //...
+        } else if (vm_flags &amp; VM_SHARED) {
+                error = shmem_zero_setup(vma);
+                if (error)
+                        goto free_vma;
+        }
+</pre>
+
+<p>shmem_zero_setup() 在内核通过 kern_mount() 挂载的（用户不可见的） tmpfs 的根目录中创建了一个”dev/zero”的文件，注意，这里可以重复创建哦，因为内核跳过了类似 may_create() 的检查，而且这个文件本身很特殊，它一开始就是 unlinked 的。所以内核实际上是通过 tmpfs 中的一个文件来实现了匿名的共享映射！到此，你可以看出，tmpfs 这个名字其实名副其实了。</p>
+<p>另外，tmpfs 本身可以随意挂载，通过 mount -t tmpfs，你可以在上面进行任意文件操作。所以，内核通过 tmpfs 一套代码把下面三个东西给统一起来了：1. 匿名共享映射；2. POSIX IPC；3. tmpfs 文件操作。Mel Gorman <a href="http://kernel.org/doc/gorman/html/understand/understand015.html" target="_blank" rel="external">这样解释</a>到：</p>
+<blockquote>
+<p>This is a very clean interface that is conceptually easy to understand but it does not help anonymous pages as there is no file backing. To keep this nice interface, Linux creates an artifical file-backing for anonymous pages using a RAM-based filesystem where each VMA is backed by a “file” in this filesystem. Every inode in the filesystem is placed on a linked list called shmem_inodes so that they may always be easily located. This allows the same file-based interface to be used without treating anonymous pages as a special case.</p>
+</blockquote>
+<p>之所以用 tmpfs 而不是同样基于内存的 ramfs 是因为：1) tmpfs 文件是可以 swap 的；2) tmpfs 是有大小限制的，不会允许用户无限制使用内存从而导致 OOM。（注：只有当 CONFIG_SHMEM=n 时，tmpfs 才会调用 ramfs 代码。）</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2011-06-02T03:56:29.000Z"><a href="/2011/06/01/kernel-crash-logging-and-core-dump/">Jun 1 2011</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2011/06/01/kernel-crash-logging-and-core-dump/">Kernel Crash Logging and Core Dump</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><a href="http://wangcong2015.files.wordpress.com/2011/06/linuxcon-kdump.pdf" target="_blank" rel="external">这里是</a>今天在 LinuxCon Japan 2011 上讲的 slides，没想到来的听众那么多，整个房间差不多要坐满了……</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2011-03-02T06:30:52.000Z"><a href="/2011/03/01/fedora-e4-b8-8a-e9-82-a3-e4-ba-9b-e5-86-85-e6-a0-b8-e5-8c-85/">Mar 1 2011</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2011/03/01/fedora-e4-b8-8a-e9-82-a3-e4-ba-9b-e5-86-85-e6-a0-b8-e5-8c-85/">Fedora 上那些内核包</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Fedora 上和内核相关的包很多，运行下面的命令看一下：</p>
+<p><pre><br>~% repoquery -q ‘kernel*’<br>kernel-0:2.6.35.11-83.fc14.x86_64<br>kernel-debug-0:2.6.35.11-83.fc14.x86_64<br>kernel-debug-debuginfo-0:2.6.35.6-45.fc14.x86_64<br>kernel-debug-devel-0:2.6.35.11-83.fc14.x86_64<br>kernel-debuginfo-0:2.6.35.6-45.fc14.x86_64<br>kernel-debuginfo-common-x86_64-0:2.6.35.6-45.fc14.x86_64<br>kernel-devel-0:2.6.35.11-83.fc14.x86_64<br>kernel-doc-0:2.6.35.11-83.fc14.noarch<br>kernel-headers-0:2.6.35.11-83.fc14.x86_64<br></pre><br><br><br>我们一一看一下这些包的内容和用途。</p>
+<p>kernel 这个包不言而喻了，必备的，里面包含了vmlinuz，initramfs，以及所有内核模块，也就是/lib/modules/<code>uname -r</code>下面的东东。</p>
+<p>kernel-devel 这个包是给开发内核驱动，写内核模块的人用的，里面包含了内核源代码中的头文件，Kconfig文件，Makefile等等。</p>
+<p>kernel-headers 这个包是给glibc 等用户空间的库、程序使用的，它提供内核导出到用户空间的所有头文件，主要在/usr/include/linux/中，这样以来用户空间就可以和内核使用相同的常量，结构体定义等等。</p>
+<p>kernel-doc 这个包提供内核文档，即源代码 Documentation/目录下的文档，不过里面包含了make htmldocs 和 make mandocs 之后的文档。</p>
+<p>kernel-debug 和 kernel 包类似，但编译时使用的是带debug选项的config文件。</p>
+<p>kernel-debug-devel 同理，和 kernel-devel 包类似。</p>
+<p>kernel-debuginfo，给SystemTap在 kernel 上使用的。 kernel-debug-debuginfo 同理，供 SystemTap在 kernel-debug 上使用。 而 kernel-debuginfo-common 包为它们提供一些共同的源文件。注意，kernel-debuginfo 包提供vmlinux！ 像 crash 这样的工具也需要它。</p>
+<p>这里似乎少了一个 kernel-firmware，原来在 Fedora 上它已经改名为 linux-firmware 了，但是在RHEL上面没改，里面提供内核源代码目录 firmware/ 里面的固件。</p>
+<p>当然了，因为 perf 也在内核源代码树中，所以 perf 这个包也是从同一个spec文件生成的。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2011-01-31T07:01:29.000Z"><a href="/2011/01/30/linux-reboot-magic/">Jan 30 2011</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2011/01/30/linux-reboot-magic/">LINUX_REBOOT_MAGIC</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>include/linux/reboot.h 中有五个魔数：</p>
+<h1 id="define_LINUX_REBOOT_MAGIC1_0xfee1dead">define LINUX_REBOOT_MAGIC1     0xfee1dead</h1>
+<h1 id="define_LINUX_REBOOT_MAGIC2_672274793">define LINUX_REBOOT_MAGIC2     672274793</h1>
+<h1 id="define_LINUX_REBOOT_MAGIC2A_85072278">define LINUX_REBOOT_MAGIC2A    85072278</h1>
+<h1 id="define_LINUX_REBOOT_MAGIC2B_369367448">define LINUX_REBOOT_MAGIC2B    369367448</h1>
+<h1 id="define_LINUX_REBOOT_MAGIC2C_537993216">define LINUX_REBOOT_MAGIC2C    537993216</h1>
+<p>第一个的意思很了然，是feel dead的hex表示，类似于0xdeadbeef。</p>
+<p>而后面四个就有意思了，今天在公司的邮件列表上看到一个讨论说这些其实是Linus和他女儿的生日。猛一看看不懂，这么一看就了然了：</p>
+<p>% awk ‘/MAGIC2/ {printf “%Xn”,$3}’ include/linux/reboot.h<br>28121969<br>5121996<br>16041998<br>20112000</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-18T05:00:35.000Z"><a href="/2010/12/17/kdump-e4-bb-8b-e7-bb-8d/">Dec 17 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/17/kdump-e4-bb-8b-e7-bb-8d/">kdump 介绍</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>今天在公司内部讲了一下自己工作中做的kdump，都是开源的东西，没什么机密，所以拿出来和大家分享一下。Slides可以<a href="http://wangcong2015.files.wordpress.com/2010/12/rh-kdump-2.pdf" target="_blank" rel="external">在这里下载</a>。</p>
+<p>准备这个slides没花费我多长时间，画里面那三张图倒是花费了我好几个小时。没有功劳也又苦劳啊。T_T</p>
+<p>看完之后起码你能明白为啥我说这个工作是又脏又累了，整天修一些蛋疼的bug。每一个自己做initrd的人上辈子都是折翼天使！而做kdump的initrd的人连上上一辈子都是折翼天使！</p>
+<p>以后我可能还会讲其它和Linux内核相关的一些有趣的东西，讲完之后会陆续在这里和大家分享。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-10-06T05:41:57.000Z"><a href="/2010/10/05/cve-2009-0029-e5-92-8c-cve-2010-3301/">Oct 5 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/10/05/cve-2009-0029-e5-92-8c-cve-2010-3301/">CVE-2009-0029 和 CVE-2010-3301</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>从我出去旅行到现在这段时间内，Linux内核似乎是漏洞频频啊，光我看到的安全漏洞就已经若干个了，有机会真想八一八这些安全漏洞。</p>
+<p>CVE-2010-3301是其中一个。这个漏洞的成因是，在64位的内核上执行32位的系统调用时，作为传递系统调用号的%rax高32位未被清零处理，而且在进行比较的时候直接使用的%eax，导致高32位被忽略：</p>
+<pre>
+        cmpl $(IA32_NR_syscalls-1),%eax
+        ja ia32_badsys
+ia32_do_call:
+        IA32_ARG_FIXUP
+        call *ia32_sys_call_table(,%rax,8)
+</pre>
+
+<p>这样以来，通过静心构造的%rax就可以跳转到它想要的位置去！在<a href="http://sota.gen.nz/compat2/robert_you_suck.c" target="_blank" rel="external">这个exploit</a>中，它就利用ptrace()来跟踪系统调用，并把计算好的想要跳转地址的偏移传递到%rax中，然后执行事先放置好的代码来提升权限！</p>
+<p>修复方法很简单，要么把%rax的高位清零，要么比较的时候使用%rax。修复这个问题的commit是：</p>
+<p><a href="http://git.kernel.org/linus/36d001c70d8a0144ac1d038f6876c484849a74de" target="_blank" rel="external">http://git.kernel.org/linus/36d001c70d8a0144ac1d038f6876c484849a74de</a><br><a href="http://git.kernel.org/linus/eefdca043e8391dcd719711716492063030b55ac" target="_blank" rel="external">http://git.kernel.org/linus/eefdca043e8391dcd719711716492063030b55ac</a></p>
+<p>和这个问题类似的问题之前也曾出现过，CVE-2009-0029，问题更严重，涉及很多的系统调用。不同的是，这个涉及64位的内核和64位的用户空间，来自用户空间的传递系统调用参数的寄存器的高32位同样没被清零，而带32位参数（比如int）的系统调用就会有问题，内核代码只会检查对它有意义的低32位，高32位就被忽略而直接传递到后面去了，这就会带来问题了。</p>
+<p>问题的解决方法也很简单，就是要把这些寄存器高位清零。说起来简单，做起来难。要是和上面一样直接用汇编处理的话，参数的类型的信息就丢失了，因为你汇编里分不清它到底是32位还是64位；而如果用C处理的话，有那么多系统调用，一个一个处理？那不符合Linus的作风！他是怎么做的呢？用宏！而且用强制转化，把所有的32位参数声明为long，然后再强制转化成实际的类型，比如int。去看看<strong>SC_CASTx()和</strong>SC_LONGx()的定义就知道了：</p>
+<p>[c]</p>
+<h1 id="define___SC_CAST1(t1,_a1)_(t1)_a1">define __SC_CAST1(t1, a1)      (t1) a1</h1>
+<h1 id="define___SC_LONG1(t1,_a1)_long_a1">define __SC_LONG1(t1, a1)      long a1</h1>
+<h1 id="define___SYSCALL_DEFINEx(x,_name,_…)">define __SYSCALL_DEFINEx(x, name, …)</h1>
+<pre><code>    asmlinkage <span class="keyword">long</span> sys<span class="preprocessor">##name(__SC_DECL##x(__VA_ARGS__));           </span>
+    <span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">long</span> SYSC<span class="preprocessor">##name(__SC_DECL##x(__VA_ARGS__));       </span>
+    asmlinkage <span class="keyword">long</span> SyS<span class="preprocessor">##name(__SC_LONG##x(__VA_ARGS__))            </span>
+    {                                                               
+            __SC_TEST<span class="preprocessor">##x(__VA_ARGS__);                              </span>
+            <span class="keyword">return</span> (<span class="keyword">long</span>) SYSC<span class="preprocessor">##name(__SC_CAST##x(__VA_ARGS__));    </span>
+    }                                                               
+    SYSCALL_ALIAS(sys<span class="preprocessor">##name, SyS##name);                            </span>
+    <span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">long</span> SYSC<span class="preprocessor">##name(__SC_DECL##x(__VA_ARGS__))</span>
+</code></pre><p>[/c]</p>
+<p>可见Linus大神把宏用到了何等出神入化的地步。:-) 这也是为什么你在内核中看到系统调用都是用SYSCALL_DEFINEx()来定义了。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-04-23T05:18:37.000Z"><a href="/2010/04/22/elf-extended-numbering/">Apr 22 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/04/22/elf-extended-numbering/">ELF Extended Numbering</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>ELF格式天生就有个不小的缺陷—— segment 个数最多 65535 个，这是由e_phnum来决定的，其类型是16位的无符号整数。对于一些程序来说，65535是不够的，如果它使用了很多mmap(2)的话。</p>
+<p>要解决这个问题并不容易，e_phnum是用了多年早已定型了的东西，不能随意修改，只能在别的地方想办法去补救，于是下面这个方案就出来乐。这个方案在Solaris上已经使用了长时间了，但 Linux 上一直还没有。其原理是：e_phnum保持不动， 如果 segment 的个数大于等于0xffff时，e_phnum设为0xffff ，同时下标为0的section header中的sh_info被设为真实的 segment 数。而 sh_info 是32位无符号类型，所以它最多能支持4294967295个。使用这个 sh_info 是合理的，因为下标为0的section header平时是没用的，其类型是 SHT_NULL。随之相应改变的还有 sh_size 和 sh_link，它们分别被设为 e_shnum和 e_shstrndx（见<a href="http://docs.sun.com/app/docs/doc/817-1984" target="_blank" rel="external">该文档</a>P215）。</p>
+<p>Daisuke HATAYAMA 提交了Linux上的补丁，主要分为三部分：内核，gdb，和binutils。内核部分补丁不少，但真正起作用的补丁只有一个，其它的都是refactor，见下：</p>
+<pre id="comment_text_4">
+<pre id="comment_text_4">8d9032bbe4671dc481261ccd4e161cd96e54b118 elf coredump: add extended numbering support
+93eb211e6c9ff6054fcf9c5b9e344d8d9ad29175 elf coredump: make offset calculation process and writing process explicit
+1fcccbac89f5bbc5e41aa72086960059fce372da elf coredump: replace ELF_CORE_EXTRA_* macros by functions
+088e7af73a962fcc8883b7a6392544d8342553d6 coredump: move dump_write() and dump_seek() into a header file
+05f47fda9fc5b17bfab189e9d54228025befc996 coredump: unify dump_seek()
+
+gdb 的补丁如下：
+78999a9bcf9d87f72cd67a782e1e859a6a09d9de  * common.h (PN_XNUM): Define.
+cce546478afe296ebbb69f208b708a8b3fe5f7e5 * elfcode.h (elf_swap_ehdr_out): Handle e_phnum &gt; 0xffff.
+
+binutils 的补丁：
+[http://sourceware.org/ml/binutils/2010-01/msg00393.html](http://sourceware.org/ml/binutils/2010-01/msg00393.html)
+
+man-page 补丁：
+[http://permalink.gmane.org/gmane.linux.man/1302](http://permalink.gmane.org/gmane.linux.man/1302)
+</pre>
+</pre>
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-04-22T06:16:16.000Z"><a href="/2010/04/21/-e8-87-aa-e5-8a-a8-e7-94-9f-e6-88-90-e5-86-85-e6-a0-b8config/">Apr 21 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/04/21/-e8-87-aa-e5-8a-a8-e7-94-9f-e6-88-90-e5-86-85-e6-a0-b8config/">自动生成内核config</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>配置内核的人都清楚要选择内核的配置项是一件比较麻烦的事：要是多选了吧，内核体积可能变大，编译时间会变长；要是选少了吧，恐怕系统连启动都启动不了。所以一般我们的做法是拿过系统提供的 config 来直接make oldconfig。</p>
+<p>但这么做并不是很好，因为发行版通常为了照顾不同配置的机器而选中了很多的模块，这样一来对本机器没有用的东西也会被编译进来，从而导致编译时间变长，这还是次要，关键是模块数量会增多，内核体积也有可能变大。</p>
+<p>理想的情况是我们根据本系统运行时加载的模块来决定到底选中哪些模块。问题就来了，我们怎么才能知道自己的系统需要哪些模块不需要哪些模块呢？</p>
+<p>为了解决这个问题，Steven Rostedt写了一个脚本，叫作<a href="http://rostedt.homelinux.com/code/streamline_config.pl" target="_blank" rel="external">streamline_config.pl</a>，来解决这个问题。而且他已经把此脚本提交到内核，见scripts/kconfig/streamline_config.pl。这样一来，我们就可以通过 make localmodconfig 或 make localyesconfig 来生成我们真正需要的最小的config了。不同的是，后者会把系统正在使用模块编译进内核，而前者不会，它只会保留系统使用的模块而且继续以模块的形式存在。</p>
+<p>这个脚本不复杂，原理也很简单，通过 lsmod 找出正在使用的驱动， 然后通过解析所有的Makefile中的obj-$(CONFIG<em>XXX) += xxx.o模式来找到驱动对应的CONFIG</em>*，不过还要解决依赖性的问题。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-04-06T01:23:17.000Z"><a href="/2010/04/05/bonding-e5-92-8cbridge-e5-af-b9netpoll-e7-9a-84-e6-94-af-e6-8c-81/">Apr 5 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/04/05/bonding-e5-92-8cbridge-e5-af-b9netpoll-e7-9a-84-e6-94-af-e6-8c-81/">bonding和bridge对netpoll的支持</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>最近我在做 netpoll 的东东，具体说是让 bridge 和 bonding 支持 netpoll，这样我们就可以通过 bridge 和 bonding 设备来使用 netconsole 和 netdump 了（注：netdump 已经被遗弃）。三个补丁见这里：</p>
+<p><a href="http://lkml.org/lkml/2010/4/5/13" target="_blank" rel="external">http://lkml.org/lkml/2010/4/5/13</a></p>
+<p><a href="http://lkml.org/lkml/2010/4/5/14" target="_blank" rel="external">http://lkml.org/lkml/2010/4/5/14</a></p>
+<p><a href="http://lkml.org/lkml/2010/4/5/15" target="_blank" rel="external">http://lkml.org/lkml/2010/4/5/15</a></p>
+<p>其实很简单，无非就是实现几个回调函数，传递几个关键的指针。最纠结的地方是 netpoll 的那几个成员变量，一步错了导致后面全错，不过说到底，还是对 net 部分的代码不熟悉。</p>
+<p>最气人的是，不少时候明明是一个成员忘了赋值，结果导致 lockdep 警告，有时甚至连警告都没有直接死掉，非常莫名其妙！所以我就说啊，你遇到 oops，soft lockup 不要紧张，你最起码是已经得到很多错误信息了，真要是一条错误信息都没有，那才紧张呢！你问我这时候怎么办？没什么好办法，只能尝试缩小可疑代码的范围，然后凭直觉去猜问题应该在哪里！比如我这个，我可以通过使用或不使用 netconsole 来判断问题是出在我的补丁上还是原有代码中（不要太迷信原有代码，它们也会有 bug 的），如果是出在我的补丁中，那到底是哪一块，哪个函数。如果没任何信息，系统死掉很可能是因为什么？当然是加锁了！重新检查锁到底有没有用对。如果还不行就老老实实地加 printk 吧！</p>
+<p>还有就是，不要迷恋现象，现象并不一定能正确表明问题所在，它只是问题带来的症状，仅此而已！换句话说，可能是前面的一个小问题引发了后面大的症状，这并不意味着问题就是后面的一个大问题，也不意味着问题就真如症状直接表明的那样。静下心来仔细分析症状的每一个细节，不要轻易下结论说问题应该在哪里。</p>
+<p>赤果果的教训啊！</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+
+  <nav id="pagination">
+  
+    <a href="/categories/Linux-Kernel/page/2/" class="alignleft prev">Prev</a>
+  
+  
+    <a href="/categories/Linux-Kernel/page/4/" class="alignright next">Next</a>
+  
+  <div class="clearfix"></div>
+</nav>
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:wangcong.org">
+  </form>
 </div>
 
-      </div>
-      <footer><div id="footer" >
-	
-	
-	<div class="social-font" class="clearfix">
-		
-		
-		<a href="https://github.com/congwang" target="_blank" class="icon-github" title="github"></a>
-		
-		
-		
-		<a href="https://twitter.com/conglinux" target="_blank" class="icon-twitter" title="twitter"></a>
-		
-		
-		
-		
-		
-		
-		
-	</div>
-		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2016 
-		
-		<a href="http://wangcong.org/about" target="_blank" title="Cong Wang">Cong Wang</a>
-		
-		</p>
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Book-Reviews/">Book Reviews</a><small>18</small></li>
+  
+    <li><a href="/categories/China/">China</a><small>2</small></li>
+  
+    <li><a href="/categories/Collection/">Collection</a><small>25</small></li>
+  
+    <li><a href="/categories/Life/">Life</a><small>324</small></li>
+  
+    <li><a href="/categories/Linux-Application/">Linux Application</a><small>73</small></li>
+  
+    <li><a href="/categories/Linux-Kernel/">Linux Kernel</a><small>64</small></li>
+  
+    <li><a href="/categories/Love/">Love</a><small>6</small></li>
+  
+    <li><a href="/categories/Movies/">Movies</a><small>19</small></li>
+  
+    <li><a href="/categories/Programming/">Programming</a><small>152</small></li>
+  
+    <li><a href="/categories/Science-Fiction/">Science Fiction</a><small>8</small></li>
+  
+    <li><a href="/categories/Travel/">Travel</a><small>19</small></li>
+  
+  </ul>
 </div>
-</footer>
-      <script src="/js/jquery-2.0.3.min.js"></script>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/geek/">geek</a><small>1</small></li>
+  
+    <li><a href="/tags/handling/">handling</a><small>1</small></li>
+  
+    <li><a href="/tags/joke/">joke</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/tags/signal/">signal</a><small>1</small></li>
+  
+    <li><a href="/tags/unix/">unix</a><small>1</small></li>
+  
+    <li><a href="/tags/vim/">vim</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2017 Cong Wang
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 <script src="/js/jquery.imagesloaded.min.js"></script>
 <script src="/js/gallery.js"></script>
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.navbar').click(function(){
-    $('header nav').toggleClass('shownav');
-  });
-  var myWidth = 0;
-  function getSize(){
-    if( typeof( window.innerWidth ) == 'number' ) {
-      myWidth = window.innerWidth;
-    } else if( document.documentElement && document.documentElement.clientWidth) {
-      myWidth = document.documentElement.clientWidth;
-    };
-  };
-  var m = $('#main'),
-      a = $('#asidepart'),
-      c = $('.closeaside'),
-      o = $('.openaside');
-  $(window).resize(function(){
-    getSize(); 
-    if (myWidth >= 1024) {
-      $('header nav').removeClass('shownav');
-    }else
-    {
-      m.removeClass('moveMain');
-      a.css('display', 'block').removeClass('fadeOut');
-      o.css('display', 'none');
-        
-    }
-  });
-  c.click(function(){
-    a.addClass('fadeOut').css('display', 'none');
-    o.css('display', 'block').addClass('fadeIn');
-    m.addClass('moveMain');
-  });
-  o.click(function(){
-    o.css('display', 'none').removeClass('beforeFadeIn');
-    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
-    m.removeClass('moveMain');
-  });
-  $(window).scroll(function(){
-    o.css("top",Math.max(80,260-$(this).scrollTop()));
-  });
-});
-</script>
-
-
-
-
 
 <script type="text/javascript">
-
 var disqus_shortname = 'disqus_ciEwcJAF0E';
 
-(function(){
-  var dsq = document.createElement('script');
-  dsq.type = 'text/javascript';
-  dsq.async = true;
-  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-}());
 (function(){
   var dsq = document.createElement('script');
   dsq.type = 'text/javascript';
@@ -323,33 +603,13 @@ var disqus_shortname = 'disqus_ciEwcJAF0E';
 
 
 
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
 
-
-
-
-
-<!-- Analytics Begin -->
-
-
-
-
-
-<!-- Analytics End -->
-
-<!-- Totop Begin -->
-
-	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
-	</div>
-	<script src="/js/totop.js"></script>
-
-<!-- Totop End -->
-
-<!-- MathJax Begin -->
-<!-- mathjax config similar to math.stackexchange -->
-
-
-<!-- MathJax End -->
-
-    </body>
-   </html>
+</body>
+</html>

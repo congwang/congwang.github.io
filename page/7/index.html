@@ -1,100 +1,65 @@
-
- <!DOCTYPE HTML>
-<html >
+<!DOCTYPE HTML>
+<html>
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   
-    <title>A Geek&#39;s Page</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
-    
-    <meta name="author" content="Cong Wang">
-    
-    
-    <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="A Geek's Page">
-<meta property="og:url" content="http://wangcong.org/page/7/">
-<meta property="og:site_name" content="A Geek's Page">
-<meta property="og:description">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="A Geek's Page">
-<meta name="twitter:description">
-<meta name="twitter:creator" content="@conglinux">
+  <title>Page 7 | A Geek&#39;s Page</title>
+  <meta name="author" content="Cong Wang">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
+  
+  <meta property="og:site_name" content="A Geek&#39;s Page"/>
 
-    
-    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
-    
-    
-    <link rel="icon" href="/img/favicon.ico">
-    
-    
-    <link rel="apple-touch-icon" href="/img/jacman.jpg">
-    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
-    
-    <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
 
 </head>
 
-  <body>
-    <header>
-      <div>
-		
-			<div id="imglogo">
-				<a href="/"><img src="/img/logo.png" alt="A Geek&#39;s Page" title="A Geek&#39;s Page"/></a>
-			</div>
-			
-			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="A Geek&#39;s Page">A Geek&#39;s Page</a></h1>
-				<h2 class="blog-motto"></h2>
-			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
-			</a></div>
-			<nav class="animated">
-				<ul>
-					<ul>
-					 
-						<li><a href="/">Home</a></li>
-					
-						<li><a href="/archives">Archives</a></li>
-					
-						<li><a href="/about-2">About</a></li>
-					
-					<li>
- 					
-					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
-						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
-						<input type="hidden" name="q" value="site:wangcong.org">
-					</form>
-					
-					</li>
-				</ul>
-			</nav>			
-</div>
-    </header>
-    <div id="container">
-      <div id="main">
 
-   
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">A Geek&#39;s Page</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
     
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
+      <li><a href="/">Home</a></li>
     
-      <a href="/2012/03/24/perfbook-e8-af-bb-e4-b9-a6-e7-ac-94-e8-ae-b0-ef-bc-9alivelock/" title="perfbook 读书笔记：livelock" itemprop="url">perfbook 读书笔记：livelock</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2012-03-24T22:44:17.000Z" itemprop="datePublished"> Published Mar 24 2012</time>
+      <li><a href="/archives">Archives</a></li>
     
-  </p>
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
 </header>
-    <div class="article-content">
-        
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2012-03-24T22:44:17.000Z"><a href="/2012/03/24/perfbook-e8-af-bb-e4-b9-a6-e7-ac-94-e8-ae-b0-ef-bc-9alivelock/">Mar 24 2012</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2012/03/24/perfbook-e8-af-bb-e4-b9-a6-e7-ac-94-e8-ae-b0-ef-bc-9alivelock/">perfbook 读书笔记：livelock</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>注：本文以及后面的文章中提到的 perfbook 均是指大牛 Paul E. McKenney 的书，《Is Parallel Programming Hard, And, If So, What Can You Do About It?》，书名太长，故简写之。</p>
 <p>最近一直在读这本 perfbook，它算是少有的全面而专门介绍 locking 的书，值得每个系统程序员去读。在读的过程中发现有的地方它介绍的并不是很详细，所以就写几篇读书笔记也算是对它的小小补充。</p>
 <p>书中 6.1.2 节讲到了 livelock，即所谓的“活锁”，相对于死锁（deadlock）而言。因为上过操作系统课的原因，我估计很多人对 deadlock 并不陌生，但是 livelock 相对不那么熟悉。livelock 无非是饥饿（starvation）的极端情况。饥饿是由竞争引起，所谓竞争（contention）是指尝试获取一个已经被锁住的锁，长时间竞争会导致这些得不到锁的进程饥饿，所以饥饿的极端情况就是多个进程一直在尝试获取某一（几）把锁，但一直都得不到满足。</p>
@@ -120,62 +85,37 @@
 <p>Livelock 产生了！</p>
 <p>这里问题的关键在于那个 dispose list，如果 dentry C被某个进程加入到 dispose list 中，另外的进程不应该再找到它，所以修复就是加一个标志位 DCACHE_SHRINK_LIST，来标示这个 dentry 有没有被加入。</p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Linux-Kernel/">Linux Kernel</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2012/03/24/perfbook-e8-af-bb-e4-b9-a6-e7-ac-94-e8-ae-b0-ef-bc-9alivelock/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2012/03/20/-e7-94-a8-e5-ae-8f-e5-ae-9e-e7-8e-b0-alignof/" title="用宏实现 alignof" itemprop="url">用宏实现 alignof</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2012-03-21T04:29:14.000Z" itemprop="datePublished"> Published Mar 20 2012</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2012-03-21T04:29:14.000Z"><a href="/2012/03/20/-e7-94-a8-e5-ae-8f-e5-ae-9e-e7-8e-b0-alignof/">Mar 20 2012</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2012/03/20/-e7-94-a8-e5-ae-8f-e5-ae-9e-e7-8e-b0-alignof/">用宏实现 alignof</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>我们知道在C2011标准中引入了 alignof 操作符，但是在 gcc 和 glibc 完全支持 C2011 之前，我们仍然不能使用它。其实我们可以自己用宏实现一个（<a href="https://groups.google.com/forum/?fromgroups#!topic/comp.lang.c/g3f3CHgX864" target="_blank" rel="external">出自c.l.c</a>）：</p>
 <h1 id="define_AlignOf(type)_(offsetof(struct_{_char_c;_type_t;_},_t))">define AlignOf(type<em>) (offsetof(struct { char c; type</em> t; }, t))</h1>
 <p>它巧妙地把参数指定的类型放入一个结构体中，在此结构体的最前面镶入一个 char 类型，这样该成员在结构体中的偏移就是它对齐的位置。看例子：</p>
@@ -192,62 +132,37 @@
 <span class="keyword">return</span> <span class="number">0</span>;
 </code></pre><p>}<br>[/c]<br>输出：<br>sizeof foo: 16<br>AlignOf foo: 8<br>sizeof bar: 2048<br>AlignOf bar: 8</p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Programming/">Programming</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2012/03/20/-e7-94-a8-e5-ae-8f-e5-ae-9e-e7-8e-b0-alignof/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2012/03/16/-e5-86-8d-e8-a7-81-ef-bc-8c-e5-a4-a7-e7-90-86-ef-bc-81/" title="再见，大理！" itemprop="url">再见，大理！</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2012-03-17T05:32:24.000Z" itemprop="datePublished"> Published Mar 16 2012</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2012-03-17T05:32:24.000Z"><a href="/2012/03/16/-e5-86-8d-e8-a7-81-ef-bc-8c-e5-a4-a7-e7-90-86-ef-bc-81/">Mar 16 2012</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2012/03/16/-e5-86-8d-e8-a7-81-ef-bc-8c-e5-a4-a7-e7-90-86-ef-bc-81/">再见，大理！</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p><a href="http://wangcong2015.files.wordpress.com/2012/03/img_5152.jpg" target="_blank" rel="external"><img src="/images/" alt="" title="一只叫豆沙的狗，by 太郎"></a></p>
 <p>从去年7月初开始，在大理待了半年多了。明天一早就要离开大理了，各种舍不得……这期间因为去新疆离开过一次，可这次不同，下次再回来不知道是何时。</p>
 <p>大理是我在国内能找到的最适宜居住和生活的地方了，没有之一。我理想中的生活有两种：一种是在路上，四处漂泊浪迹天涯；另一种是像在大理这样，白天晒晒太阳，晚上和朋友喝喝茶，打打牌，聊聊天，日子就这么无忧无虑地过着……</p>
@@ -255,62 +170,37 @@
 <p>再见，大理！不知道下次再回来你会变成什么样子！就算是真变成了“失败者乐园，老少边穷文艺中青年扎堆，街上十个人九个神经病，五个飞叶子，三个修禅的，一个摆地摊的”也千万不要变成丽江那样搞一夜情的圣地！不要！</p>
 <p>（相册：<a href="http://www.douban.com/photos/album/53193348/" target="_blank" rel="external">在大理的日子</a>）</p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Life/">Life</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2012/03/16/-e5-86-8d-e8-a7-81-ef-bc-8c-e5-a4-a7-e7-90-86-ef-bc-81/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2012/03/07/-e5-85-b3-e4-ba-8e-extern-inline/" title="关于 extern inline" itemprop="url">关于 extern inline</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2012-03-07T23:27:04.000Z" itemprop="datePublished"> Published Mar 7 2012</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2012-03-07T23:27:04.000Z"><a href="/2012/03/07/-e5-85-b3-e4-ba-8e-extern-inline/">Mar 7 2012</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2012/03/07/-e5-85-b3-e4-ba-8e-extern-inline/">关于 extern inline</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>（本文是《C语言编程艺术》的一部分，转载请注明出处，勿用于商业用途。）</p>
 <p>大家一定对C语言 inline 关键字不陌生，甚至经常用到 static inline 的函数。可能感到陌生的是 extern inline。C11 标准在6.7.4 p7 中对此进行了描述，不过比较生涩难读。简单地讲，static line 和 extern inline 的区别，从名字上也能看得出来，就是编译单元之外可见性的问题。把一个普通函数给内联掉之后，一个显著的区别就是外部可见性没了，怎么能同时既能内联又能保留外部的可见性呢？为了解决这个问题就有了extern inline。</p>
 <p>static inline 是说这个函数就这么一个，而且没有外部可见性，在所有的编译单元中大家必须共用这么一个定义，这也是为什么 static inline 通常要放到头文件中的原因；而 extern inline 就不一样了，它是说这个函数虽然只有一个定义，但是既有内联的版本，也有非内联的版本，如果你能看得到它的定义。即在同一个编译单元中，那么你就可以用它的内联版本；看不到的话，你就可以用非内联版本，即和其它普通函数一模一样。</p>
@@ -356,62 +246,37 @@ b.c:(.text+0xb): undefined reference to</code>max’<br>collect2: ld returned 1 
 </blockquote>
 <p>参考资料：<br><a href="http://www.greenend.org.uk/rjk/tech/inline.html" target="_blank" rel="external">http://www.greenend.org.uk/rjk/tech/inline.html</a><br><a href="http://gcc.gnu.org/ml/gcc/2006-11/msg00006.html" target="_blank" rel="external">http://gcc.gnu.org/ml/gcc/2006-11/msg00006.html</a><br><a href="http://stackoverflow.com/questions/6312597/is-inline-without-static-or-extern-ever-useful-in-c99" target="_blank" rel="external">http://stackoverflow.com/questions/6312597/is-inline-without-static-or-extern-ever-useful-in-c99</a><br><a href="http://www.cnblogs.com/cnmaizi/archive/2011/01/19/1939686.html" target="_blank" rel="external">http://www.cnblogs.com/cnmaizi/archive/2011/01/19/1939686.html</a></p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Programming/">Programming</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2012/03/07/-e5-85-b3-e4-ba-8e-extern-inline/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2012/03/01/-e4-b8-8d-e5-90-8c-e4-ba-ba-e7-9c-bc-e4-b8-ad-e7-9a-84-e6-88-91/" title="不同人眼中的我" itemprop="url">不同人眼中的我</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2012-03-02T05:21:07.000Z" itemprop="datePublished"> Published Mar 1 2012</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2012-03-02T05:21:07.000Z"><a href="/2012/03/01/-e4-b8-8d-e5-90-8c-e4-ba-ba-e7-9c-bc-e4-b8-ad-e7-9a-84-e6-88-91/">Mar 1 2012</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2012/03/01/-e4-b8-8d-e5-90-8c-e4-ba-ba-e7-9c-bc-e4-b8-ad-e7-9a-84-e6-88-91/">不同人眼中的我</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p><strong>在别人眼中我是</strong></p>
 <p><strong><a href="http://wangcong.org/blog/wp-content/uploads/2012/03/programmer_1.png" target="_blank" rel="external"><img src="/images/" alt="" title="IT民工"></a>
 </strong></p>
@@ -431,62 +296,37 @@ b.c:(.text+0xb): undefined reference to</code>max’<br>collect2: ld returned 1 
 <p><strong>终有一天我会是</strong></p>
 <p><a href="http://wangcong.org/blog/wp-content/uploads/2012/03/programmer_9.jpg" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Life/">Life</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2012/03/01/-e4-b8-8d-e5-90-8c-e4-ba-ba-e7-9c-bc-e4-b8-ad-e7-9a-84-e6-88-91/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2012/02/24/-e6-80-80-e5-bf-b5-e9-80-82-e4-b9-8b/" title="怀念适之" itemprop="url">怀念适之</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2012-02-25T01:06:05.000Z" itemprop="datePublished"> Published Feb 24 2012</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2012-02-25T01:06:05.000Z"><a href="/2012/02/24/-e6-80-80-e5-bf-b5-e9-80-82-e4-b9-8b/">Feb 24 2012</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2012/02/24/-e6-80-80-e5-bf-b5-e9-80-82-e4-b9-8b/">怀念适之</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p><a href="http://wangcong2015.files.wordpress.com/2012/02/hushi.jpg" target="_blank" rel="external"><img src="/images/" alt="" title="胡适之"></a></p>
 <p>先生过世已经整整50周年了，可先生充满智慧的话至今仍振聋发聩。无怪乎有人说“二十世纪是鲁迅的世纪，二十一世纪是胡适的世纪”！</p>
 <p>1. “<strong>容忍比自由更重要 。</strong>”</p>
@@ -502,62 +342,37 @@ b.c:(.text+0xb): undefined reference to</code>max’<br>collect2: ld returned 1 
 <p>6. “<strong>美国人来了，既有面包也有自由；苏俄来了，只有面包没有自由；他们来了，既没有面包也没有自由。</strong>”</p>
 <p>原来先生几十年前就看破了……</p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Life/">Life</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2012/02/24/-e6-80-80-e5-bf-b5-e9-80-82-e4-b9-8b/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2012/02/17/-e5-85-b3-e4-ba-8e-tmpfs/" title="关于 tmpfs" itemprop="url">关于 tmpfs</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2012-02-17T18:34:12.000Z" itemprop="datePublished"> Published Feb 17 2012</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2012-02-17T18:34:12.000Z"><a href="/2012/02/17/-e5-85-b3-e4-ba-8e-tmpfs/">Feb 17 2012</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2012/02/17/-e5-85-b3-e4-ba-8e-tmpfs/">关于 tmpfs</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>“tmpfs” 是 Linux 内核中另一个让人困惑的名字，它的实现是在 mm/shmem.c，”shmem” 猛一看和 “tmpfs” 根本不沾边，虽然我们知道 tmpfs 是基于内存的！我们可以通过看一下 tmpfs 都被用到哪些地方来了解它到底为什么叫这个名字。</p>
 <p>你的桌面 Linux 系统中基本上都会挂载了 tmpfs：</p>
 <p>% grep tmpfs /proc/mounts<br>devtmpfs /dev devtmpfs rw,seclabel,nosuid,relatime,size=1958956k,nr_inodes=489739,mode=755 0 0<br><strong>tmpfs /dev/shm tmpfs rw,seclabel,nosuid,nodev,relatime 0 0</strong><br>tmpfs /run tmpfs rw,seclabel,nosuid,nodev,relatime,mode=755 0 0<br>tmpfs /sys/fs/cgroup tmpfs rw,seclabel,nosuid,nodev,noexec,relatime,mode=755 0 0<br>tmpfs /media tmpfs rw,rootcontext=system_u:object_r:mnt_t:s0,seclabel,nosuid,nodev,noexec,relatime,mode=755 0 0</p>
@@ -582,62 +397,37 @@ mmap_region():
 </blockquote>
 <p>之所以用 tmpfs 而不是同样基于内存的 ramfs 是因为：1) tmpfs 文件是可以 swap 的；2) tmpfs 是有大小限制的，不会允许用户无限制使用内存从而导致 OOM。（注：只有当 CONFIG_SHMEM=n 时，tmpfs 才会调用 ramfs 代码。）</p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Linux-Kernel/">Linux Kernel</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2012/02/17/-e5-85-b3-e4-ba-8e-tmpfs/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2012/01/30/bash-e5-8f-8d-e6-96-9c-e7-ba-bf-e7-9a-84-e4-b8-80-e4-b8-aa-e7-96-91-e9-97-ae/" title="bash 反斜线的一个疑问" itemprop="url">bash 反斜线的一个疑问</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2012-01-31T06:59:24.000Z" itemprop="datePublished"> Published Jan 30 2012</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2012-01-31T06:59:24.000Z"><a href="/2012/01/30/bash-e5-8f-8d-e6-96-9c-e7-ba-bf-e7-9a-84-e4-b8-80-e4-b8-aa-e7-96-91-e9-97-ae/">Jan 30 2012</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2012/01/30/bash-e5-8f-8d-e6-96-9c-e7-ba-bf-e7-9a-84-e4-b8-80-e4-b8-aa-e7-96-91-e9-97-ae/">bash 反斜线的一个疑问</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p><a href="http://tldp.org/LDP/abs/html/escapingsection.html" target="_blank" rel="external">ABS 里</a>在讲解 echo 的转义时，给出过下面这几个例子：</p>
 <p>bash-4.2$ echo \z<br>z<br>bash-4.2$ echo \z<br>z<br>bash-4.2$ echo <code>echo \z</code><br>z<br>bash-4.2$ echo <code>echo \z</code><br>z</p>
 <p>我们知道反引号会把里面命令的输出直接传递给外面的命令，那么，既然前两个echo的输出一样，为什么后面就不一样呢？这里一定发生了什么我们没有注意到。我来根据我的理解来解释一下。</p>
@@ -647,62 +437,37 @@ mmap_region():
 <p>第四个更复杂一些，外面的shell处理反斜线后得到：echo <code>echo \z</code>，前两个”\”依旧被解释成””，剩下的”z”会原封不动，因为”z”对于外面的shell来说没兴趣，它只对”`”或”$”这样的转义感兴趣！subshell 执行“echo \z”，同第一个例子，输出z，这时外面的shell看到的是echo z，输出”z”，结束。</p>
 <p>例子虽简单，却能反映出我们确实对 bash 还有一些角落的地方没有理解清楚。理解 ABS 后面的例子就留给你作为课后作业了。:-) </p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Linux-Application/">Linux Application</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2012/01/30/bash-e5-8f-8d-e6-96-9c-e7-ba-bf-e7-9a-84-e4-b8-80-e4-b8-aa-e7-96-91-e9-97-ae/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2012/01/22/2012-e8-a6-81-e8-87-aa-e7-94-b1-ef-bc-8c-e8-a6-81-e5-b9-b8-e7-a6-8f/" title="2012 年祝你幸运" itemprop="url">2012 年祝你幸运</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2012-01-22T20:54:37.000Z" itemprop="datePublished"> Published Jan 22 2012</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2012-01-22T20:54:37.000Z"><a href="/2012/01/22/2012-e8-a6-81-e8-87-aa-e7-94-b1-ef-bc-8c-e8-a6-81-e5-b9-b8-e7-a6-8f/">Jan 22 2012</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2012/01/22/2012-e8-a6-81-e8-87-aa-e7-94-b1-ef-bc-8c-e8-a6-81-e5-b9-b8-e7-a6-8f/">2012 年祝你幸运</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>2011 年马上就要过去了，回顾过去的一年，我发现最正确的决定就是离开北京。北京的空气污染已经到了非常严重的程度，奉劝各位能不去北京就别去，别拿自己的身体健康开玩笑。在这个神奇的国度，能让自己健康地活着本身就是一种很大的成功！</p>
 <p>在 2011 年中，中华民族已经到了最坑爹的时候，所以在 2012 年里，祝愿大家都能有新鲜的空气呼吸，能有正常的牛奶喝，能有健康的食用油吃，能有一所房子不被强拆，能有个孩子是亲生的，能扶起老太不被讹，最关键的是，能让自己不被活埋！</p>
 <p>虽然你仍然不可能像对岸一样能投上一票，但是你能选择离开。所以，有钱有本事的还是尽早移民吧！没本事的就好好练习游泳，游到对岸去！要自由从来都不丢人，“我们这儿”才丢人！</p>
@@ -710,62 +475,37 @@ mmap_region():
 <p>最后祝愿所有的五毛，全家都搬到朝鲜去，早日体会到社会主义的优越性！</p>
 <p>2012 年，要幸福，更要自由。</p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Life/">Life</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2012/01/22/2012-e8-a6-81-e8-87-aa-e7-94-b1-ef-bc-8c-e8-a6-81-e5-b9-b8-e7-a6-8f/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2012/01/19/-e6-89-a9-e5-b1-95-e6-96-87-e4-bb-b6-e5-b1-9e-e6-80-a7/" title="扩展文件属性" itemprop="url">扩展文件属性</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2012-01-19T18:52:55.000Z" itemprop="datePublished"> Published Jan 19 2012</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2012-01-19T18:52:55.000Z"><a href="/2012/01/19/-e6-89-a9-e5-b1-95-e6-96-87-e4-bb-b6-e5-b1-9e-e6-80-a7/">Jan 19 2012</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2012/01/19/-e6-89-a9-e5-b1-95-e6-96-87-e4-bb-b6-e5-b1-9e-e6-80-a7/">扩展文件属性</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>我们知道，在 Linux 上最基本的文件属性是，</p>
 <pre>
 # ls -l foo
@@ -818,213 +558,109 @@ setxattr("foo", "system.posix_acl_access", "x02x00x00x00x01x00x06x00xffxffxffxff
 
 <p>之所以出现 ENODATA 是因为挂载文件系统时我没有指定”acl”，需要重新挂载：mount -o remount,acl /home 然后重新创建文件，因为旧的文件依旧是没有 ACL的。</p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Linux-Application/">Linux Application</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2012/01/19/-e6-89-a9-e5-b1-95-e6-96-87-e4-bb-b6-e5-b1-9e-e6-80-a7/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-
-  <nav id="page-nav" class="clearfix">
-    <a class="extend prev" rel="prev" href="/page/6/"><span></span>Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/71/">71</a><a class="extend next" rel="next" href="/page/8/">Next<span></span></a>
-  </nav>
-
-</div>
-      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
-
-<div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
-<aside class="clearfix">
-
-  
-<div class="categorieslist">
-	<p class="asidetitle">Categories</p>
-		<ul>
-		
-			<li><a href="/categories/Book-Reviews/" title="Book Reviews">Book Reviews<sup>18</sup></a></li>
-		
-			<li><a href="/categories/China/" title="China">China<sup>2</sup></a></li>
-		
-			<li><a href="/categories/Collection/" title="Collection">Collection<sup>25</sup></a></li>
-		
-			<li><a href="/categories/Life/" title="Life">Life<sup>324</sup></a></li>
-		
-			<li><a href="/categories/Linux-Application/" title="Linux Application">Linux Application<sup>73</sup></a></li>
-		
-			<li><a href="/categories/Linux-Kernel/" title="Linux Kernel">Linux Kernel<sup>64</sup></a></li>
-		
-			<li><a href="/categories/Love/" title="Love">Love<sup>6</sup></a></li>
-		
-			<li><a href="/categories/Movies/" title="Movies">Movies<sup>19</sup></a></li>
-		
-			<li><a href="/categories/Programming/" title="Programming">Programming<sup>152</sup></a></li>
-		
-			<li><a href="/categories/Science-Fiction/" title="Science Fiction">Science Fiction<sup>8</sup></a></li>
-		
-			<li><a href="/categories/Travel/" title="Travel">Travel<sup>19</sup></a></li>
-		
-		</ul>
-</div>
-
-
-  
-<div class="tagslist">
-	<p class="asidetitle">Tags</p>
-		<ul class="clearfix">
-		
-			<li><a href="/tags/vim/" title="vim">vim<sup>1</sup></a></li>
-		
-			<li><a href="/tags/joke/" title="joke">joke<sup>1</sup></a></li>
-		
-			<li><a href="/tags/geek/" title="geek">geek<sup>1</sup></a></li>
-		
-			<li><a href="/tags/unix/" title="unix">unix<sup>1</sup></a></li>
-		
-			<li><a href="/tags/signal/" title="signal">signal<sup>1</sup></a></li>
-		
-			<li><a href="/tags/linux/" title="linux">linux<sup>1</sup></a></li>
-		
-			<li><a href="/tags/handling/" title="handling">handling<sup>1</sup></a></li>
-		
-		</ul>
-</div>
-
-
-  <div class="linkslist">
-  <p class="asidetitle">Links</p>
-    <ul>
+    <footer>
+      
         
-    </ul>
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+<nav id="pagination">
+  
+    <a href="/page/6/" class="alignleft prev">Prev</a>
+  
+  
+    <a href="/page/8/" class="alignright next">Next</a>
+  
+  <div class="clearfix"></div>
+</nav></div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:wangcong.org">
+  </form>
 </div>
 
-  <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Book-Reviews/">Book Reviews</a><small>18</small></li>
+  
+    <li><a href="/categories/China/">China</a><small>2</small></li>
+  
+    <li><a href="/categories/Collection/">Collection</a><small>25</small></li>
+  
+    <li><a href="/categories/Life/">Life</a><small>324</small></li>
+  
+    <li><a href="/categories/Linux-Application/">Linux Application</a><small>73</small></li>
+  
+    <li><a href="/categories/Linux-Kernel/">Linux Kernel</a><small>64</small></li>
+  
+    <li><a href="/categories/Love/">Love</a><small>6</small></li>
+  
+    <li><a href="/categories/Movies/">Movies</a><small>19</small></li>
+  
+    <li><a href="/categories/Programming/">Programming</a><small>152</small></li>
+  
+    <li><a href="/categories/Science-Fiction/">Science Fiction</a><small>8</small></li>
+  
+    <li><a href="/categories/Travel/">Travel</a><small>19</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/geek/">geek</a><small>1</small></li>
+  
+    <li><a href="/tags/handling/">handling</a><small>1</small></li>
+  
+    <li><a href="/tags/joke/">joke</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/tags/signal/">signal</a><small>1</small></li>
+  
+    <li><a href="/tags/unix/">unix</a><small>1</small></li>
+  
+    <li><a href="/tags/vim/">vim</a><small>1</small></li>
+  
+  </ul>
 </div>
 
 </aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2017 Cong Wang
+  
 </div>
-    </div>
-    <footer><div id="footer" >
-	
-	
-	<div class="social-font" class="clearfix">
-		
-		
-		<a href="https://github.com/congwang" target="_blank" class="icon-github" title="github"></a>
-		
-		
-		
-		<a href="https://twitter.com/conglinux" target="_blank" class="icon-twitter" title="twitter"></a>
-		
-		
-		
-		
-		
-		
-		
-	</div>
-		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2016 
-		
-		<a href="http://wangcong.org/about" target="_blank" title="Cong Wang">Cong Wang</a>
-		
-		</p>
-</div>
-</footer>
-    <script src="/js/jquery-2.0.3.min.js"></script>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 <script src="/js/jquery.imagesloaded.min.js"></script>
 <script src="/js/gallery.js"></script>
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.navbar').click(function(){
-    $('header nav').toggleClass('shownav');
-  });
-  var myWidth = 0;
-  function getSize(){
-    if( typeof( window.innerWidth ) == 'number' ) {
-      myWidth = window.innerWidth;
-    } else if( document.documentElement && document.documentElement.clientWidth) {
-      myWidth = document.documentElement.clientWidth;
-    };
-  };
-  var m = $('#main'),
-      a = $('#asidepart'),
-      c = $('.closeaside'),
-      o = $('.openaside');
-  $(window).resize(function(){
-    getSize(); 
-    if (myWidth >= 1024) {
-      $('header nav').removeClass('shownav');
-    }else
-    {
-      m.removeClass('moveMain');
-      a.css('display', 'block').removeClass('fadeOut');
-      o.css('display', 'none');
-        
-    }
-  });
-  c.click(function(){
-    a.addClass('fadeOut').css('display', 'none');
-    o.css('display', 'block').addClass('fadeIn');
-    m.addClass('moveMain');
-  });
-  o.click(function(){
-    o.css('display', 'none').removeClass('beforeFadeIn');
-    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
-    m.removeClass('moveMain');
-  });
-  $(window).scroll(function(){
-    o.css("top",Math.max(80,260-$(this).scrollTop()));
-  });
-});
-</script>
-
-
-
-
 
 <script type="text/javascript">
-
 var disqus_shortname = 'disqus_ciEwcJAF0E';
 
-(function(){
-  var dsq = document.createElement('script');
-  dsq.type = 'text/javascript';
-  dsq.async = true;
-  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-}());
 (function(){
   var dsq = document.createElement('script');
   dsq.type = 'text/javascript';
@@ -1036,33 +672,13 @@ var disqus_shortname = 'disqus_ciEwcJAF0E';
 
 
 
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
 
-
-
-
-
-<!-- Analytics Begin -->
-
-
-
-
-
-<!-- Analytics End -->
-
-<!-- Totop Begin -->
-
-	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
-	</div>
-	<script src="/js/totop.js"></script>
-
-<!-- Totop End -->
-
-<!-- MathJax Begin -->
-<!-- mathjax config similar to math.stackexchange -->
-
-
-<!-- MathJax End -->
-
-  </body>
- </html>
+</body>
+</html>

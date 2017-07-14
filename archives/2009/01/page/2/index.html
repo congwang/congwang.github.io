@@ -1,256 +1,420 @@
-
-  <!DOCTYPE HTML>
-<html >
+<!DOCTYPE HTML>
+<html>
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   
-    <title>Archives: 2009/1 | A Geek&#39;s Page</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
-    
-    <meta name="author" content="Cong Wang">
-    
-    
-    <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="A Geek's Page">
-<meta property="og:url" content="http://wangcong.org/archives/2009/01/page/2/">
-<meta property="og:site_name" content="A Geek's Page">
-<meta property="og:description">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="A Geek's Page">
-<meta name="twitter:description">
-<meta name="twitter:creator" content="@conglinux">
+  <title>Page 2 | Archives: 2009/1 | A Geek&#39;s Page</title>
+  <meta name="author" content="Cong Wang">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
+  
+  <meta property="og:site_name" content="A Geek&#39;s Page"/>
 
-    
-    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
-    
-    
-    <link rel="icon" href="/img/favicon.ico">
-    
-    
-    <link rel="apple-touch-icon" href="/img/jacman.jpg">
-    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
-    
-    <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
 
 </head>
 
-    <body>
-      <header>
-        <div>
-		
-			<div id="imglogo">
-				<a href="/"><img src="/img/logo.png" alt="A Geek&#39;s Page" title="A Geek&#39;s Page"/></a>
-			</div>
-			
-			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="A Geek&#39;s Page">A Geek&#39;s Page</a></h1>
-				<h2 class="blog-motto"></h2>
-			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
-			</a></div>
-			<nav class="animated">
-				<ul>
-					<ul>
-					 
-						<li><a href="/">Home</a></li>
-					
-						<li><a href="/archives">Archives</a></li>
-					
-						<li><a href="/about-2">About</a></li>
-					
-					<li>
- 					
-					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
-						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
-						<input type="hidden" name="q" value="site:wangcong.org">
-					</form>
-					
-					</li>
-				</ul>
-			</nav>			
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">A Geek&#39;s Page</a></h1>
+  <h2><a href="/"></a></h2>
 </div>
-      </header>
-      <div id="container">
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title">2009/1</h2>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-01-18T08:58:18.000Z"><a href="/2009/01/18/linux-e5-88-86-e5-8c-ba-e4-b8-aa-e6-95-b0-e9-99-90-e5-88-b6/">Jan 18 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/01/18/linux-e5-88-86-e5-8c-ba-e4-b8-aa-e6-95-b0-e9-99-90-e5-88-b6/">Linux分区个数限制</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>在linux上，对于IDE硬盘来说，分区个数限制在63个；而对于SCSI硬盘限制在15个。</p>
+<p>我们可以直接在linux内核源代码中找到证据：</p>
+<p>include/linux/ide.h</p>
+<h1 id="define_PARTN_BITS_6_/_number_of_minor_dev_bits_for_partitions_/">define PARTN_BITS      6       /<em> number of minor dev bits for partitions </em>/</h1>
+<p>次设备号也就决定了可挂载的IDE设备不会超过63个（2^6-1，之所以减一是因为hdX本身也会占用一个）。</p>
+<p>SCSI也差不多，见 drivers/scsi/sd.c</p>
+<h1 id="if_!defined(CONFIG_DEBUG_BLOCK_EXT_DEVT)">if !defined(CONFIG_DEBUG_BLOCK_EXT_DEVT)</h1>
+<h1 id="define_SD_MINORS_16">define SD_MINORS       16</h1>
+<h1 id="else">else</h1>
+<h1 id="define_SD_MINORS_0">define SD_MINORS       0</h1>
+<h1 id="endif">endif</h1>
+<p>在内核文档中也可以看到，见Documentation/devices.txt ：</p>
+<p>For partitions, add to the whole disk device number:<br>0 = /dev/hd?          Whole disk<br>1 = /dev/hd?1         First partition<br>2 = /dev/hd?2         Second partition<br>…<br>63 = /dev/hd?63        63rd partition<br>…</p>
+<p>8 block       SCSI disk devices (0-15)</p>
+<p>Partitions are handled in the same way as for IDE<br>disks (see major number 3) except that the limit on<br>partitions is 15.</p>
+
+      
+    </div>
+    <footer>
+      
         
-
-<div class="archive-title" >
-  <h2 class="archive-icon">2009/1</h2>
-  
-  <div class="archiveslist archive-float clearfix">
-   <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">Aug 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">Jan 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">Dec 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">Oct 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">Sep 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">Aug 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">Jul 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">Feb 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01/">Jan 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12/">Dec 2012</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">Nov 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">Oct 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">Sep 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">Aug 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/07/">Jul 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">Jun 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">Apr 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">Mar 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">Feb 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">Jan 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/12/">Dec 2011</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">Nov 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/10/">Oct 2011</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">Sep 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08/">Aug 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/07/">Jul 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/06/">Jun 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/05/">May 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04/">Apr 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03/">Mar 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/02/">Feb 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/01/">Jan 2011</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/12/">Dec 2010</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/11/">Nov 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/10/">Oct 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/09/">Sep 2010</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08/">Aug 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07/">Jul 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06/">Jun 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05/">May 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04/">Apr 2010</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03/">Mar 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02/">Feb 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01/">Jan 2010</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12/">Dec 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11/">Nov 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10/">Oct 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09/">Sep 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08/">Aug 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07/">Jul 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/06/">Jun 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/05/">May 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04/">Apr 2009</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03/">Mar 2009</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02/">Feb 2009</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01/">Jan 2009</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12/">Dec 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/11/">Nov 2008</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/10/">Oct 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09/">Sep 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08/">Aug 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07/">Jul 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06/">Jun 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05/">May 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04/">Apr 2008</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03/">Mar 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02/">Feb 2008</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01/">Jan 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12/">Dec 2007</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11/">Nov 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10/">Oct 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09/">Sep 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08/">Aug 2007</a><span class="archive-list-count">31</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07/">Jul 2007</a><span class="archive-list-count">34</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06/">Jun 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05/">May 2007</a><span class="archive-list-count">25</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04/">Apr 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03/">Mar 2007</a><span class="archive-list-count">50</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02/">Feb 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01/">Jan 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12/">Dec 2006</a><span class="archive-list-count">5</span></li></ul>
- </div>
-  
-</div>
-<div id="main" class="archive-part clearfix">
-  <div id="archive-page">
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2009/01/18/linux-e5-88-86-e5-8c-ba-e4-b8-aa-e6-95-b0-e9-99-90-e5-88-b6/" title="Linux分区个数限制" itemprop="url">
-  
-
-    <time datetime="2009-01-18T08:58:18.000Z" itemprop="datePublished">Jan 18 2009</time>
-
-
-    <h1 itemprop="name">Linux分区个数限制</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2009/01/17/ide-ata-scsi-e7-ad-89-e7-ad-89/" title="IDE, ATA, SCSI 等等" itemprop="url">
-  
-
-    <time datetime="2009-01-18T07:09:10.000Z" itemprop="datePublished">Jan 17 2009</time>
-
-
-    <h1 itemprop="name">IDE, ATA, SCSI 等等</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2009/01/16/linux-pid-namespace/" title="Linux PID namespace" itemprop="url">
-  
-
-    <time datetime="2009-01-17T06:52:49.000Z" itemprop="datePublished">Jan 16 2009</time>
-
-
-    <h1 itemprop="name">Linux PID namespace</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2009/01/14/-e6-97-85-e8-a1-8c-e6-80-bb-e7-bb-93-ef-bc-88-e4-b8-8b-ef-bc-89/" title="旅行总结（下）" itemprop="url">
-  
-
-    <time datetime="2009-01-15T07:44:58.000Z" itemprop="datePublished">Jan 14 2009</time>
-
-
-    <h1 itemprop="name">旅行总结（下）</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2009/01/05/-e6-97-85-e8-a1-8c-e6-80-bb-e7-bb-93-ef-bc-88-e4-b8-80-ef-bc-89/" title="旅行总结（上）" itemprop="url">
-  
-
-    <time datetime="2009-01-06T02:50:52.000Z" itemprop="datePublished">Jan 5 2009</time>
-
-
-    <h1 itemprop="name">旅行总结（上）</h1>
-
-  </a>
-</section>
-
-
-  <nav id="page-nav" class="clearfix archive-nav">
-    <a class="extend prev" rel="prev" href="/archives/2009/01/"><span></span>Prev</a><a class="page-number" href="/archives/2009/01/">1</a><span class="page-number current">2</span>
-  </nav>
-
+        
+      
+      <div class="clearfix"></div>
+    </footer>
   </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-01-18T07:09:10.000Z"><a href="/2009/01/17/ide-ata-scsi-e7-ad-89-e7-ad-89/">Jan 17 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/01/17/ide-ata-scsi-e7-ad-89-e7-ad-89/">IDE, ATA, SCSI 等等</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>关于硬盘的术语有一大堆，而且和很多别的计算机术语一样，界定不清，含义模糊。在这里简单澄清一下，但我不排除你看了之后会更糊涂。:^)</p>
+<p><strong>IDE</strong>：Integrated Drive Electronics 的缩写。最早的硬盘接口，后来被 ATA 标准所取代，准确地讲应该是 ATA-1。所以有时也被称为 IDE/ATA，可参见<a href="http://www.pcguide.com/ref/hdd/if/ide/over.htm" target="_blank" rel="external">其历史介绍</a>。后来，几乎和ATA-1同时出现的 <strong>EIDE</strong>（Enhanced IDE ）又被规范化为 ATA-2。</p>
+<p><strong>ATA</strong>：Advanced Technology Attachment 的缩写，存储设备（并非仅限硬盘）的接口标准。有时也被称为 IDE。IDE 在 ATA 标准出现之前就有了，所以估计这个也是因为历史原因。不过根据<a href="http://en.wikipedia.org/wiki/AT_Attachment" target="_blank" rel="external">wikipedia记载</a>，这两个术语还是有些许不同之处的：</p>
+<blockquote>
+<p>The terms “integrated drive electronics” (IDE), “enhanced IDE” and “EIDE” have come to be used interchangeably with ATA (now Parallel ATA). However the terms “IDE” and “EIDE” are at best imprecise. Every ATA drive is an “integrated drive electronics” drive, but not every “integrated drive electronics” drive is an ATA drive, as the term also correctly describes SCSI drives: They have the drive controllers on board and present the drive to the host as an array of blocks.<br>后来就都是 ATA 了。又因为 <strong>SATA</strong>（Serial ATA，即 ATA-7）的出现，所以老的 ATA 又都被称为 <strong>PATA</strong>（Parallel ATA）了。</p>
+</blockquote>
+<p><a href="http://en.wikipedia.org/wiki/SCSI" target="_blank" rel="external"><strong>SCSI</strong></a>：Small Computer  System Interface 的缩写，另一个完全不同的标准，定义了内部的命令，协议和接口。SCSI更快，当然也更贵，多用在中，高性能服务器上，不过apple的mac也是最早使用它的计算机之一。新的SCSI标准，<a href="http://en.wikipedia.org/wiki/Serial_Attached_SCSI" target="_blank" rel="external">Serial  Attached SCSI</a>又被简称为<strong>SAS</strong>。</p>
+<p>SCSI 和前面的总起来并列为三个标准：PATA，SATA，SCSI。其中SATA应该是会继续流行的PC机硬盘接口。</p>
+<p><strong>HDD</strong>：Hard Disk Drive 的缩写，就是我们通常所说的硬盘，磁盘。</p>
+<p><strong>SSD</strong>：Solid State Drive 的缩写，通常我们称为固态硬盘。SSD耗电少，抗震性能好，但比起HDD来要贵一些，而且容量通常也不像HDD那么大。</p>
+<p><strong>RAID</strong>：Redundant Array of Independent Disks 的缩写，就是我们通常所说的磁盘阵列。RAID是对多块硬盘的组合，需要硬件支持（貌似也有从文件系统层支持RAID的，btrfs？）。根据不同的组合方式，RAID又分为RAID0到RAID7，详细参考<a href="http://en.wikipedia.org/wiki/RAID" target="_blank" rel="external">这里</a>。</p>
+<p>参考：</p>
+<p><a href="http://www.91wp.com/Article/jswz/200704/350.html" target="_blank" rel="external">http://www.91wp.com/Article/jswz/200704/350.html</a><br><a href="http://www.pcbuyerbeware.co.uk/IDE.htm" target="_blank" rel="external">http://www.pcbuyerbeware.co.uk/IDE.htm</a><br><a href="http://www.pcguide.com/ref/hdd/if/ide/over.htm" target="_blank" rel="external">http://www.pcguide.com/ref/hdd/if/ide/over.htm</a><br><a href="http://en.wikipedia.org/wiki/RAID" target="_blank" rel="external">http://en.wikipedia.org/wiki/RAID</a><br><a href="http://en.wikipedia.org/wiki/SCSI" target="_blank" rel="external">http://en.wikipedia.org/wiki/SCSI</a><br><a href="http://en.wikipedia.org/wiki/AT_Attachment" target="_blank" rel="external">http://en.wikipedia.org/wiki/AT_Attachment</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-01-17T06:52:49.000Z"><a href="/2009/01/16/linux-pid-namespace/">Jan 16 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/01/16/linux-pid-namespace/">Linux PID namespace</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>一直对linux内核的namespace感到困惑，今天看了一下代码才知道，原来所谓的namespace其实就是给虚拟化用的，<a href="http://lwn.net/Articles/259217/" target="_blank" rel="external">PID namespace</a>其实就是建立一个新的PID空间，这样内部可以使用一套新的PID，而且不会和外部冲突。这也就是说某个进程其实会有两个PID，一个空间一个。</p>
+<p>我写了段C代码来展示这个问题。<br>[c]</p>
+<h1 id="include">include</h1>
+<h1 id="include-1">include</h1>
+<h1 id="include-2">include</h1>
+<h1 id="include-3">include</h1>
+<h1 id="include-4">include</h1>
+<h1 id="include-5">include</h1>
+<p>static int fork_child(void *arg)<br>{<br>    int a = (int)arg;<br>    int i;<br>    pid_t pid;</p>
+<pre><code><span class="keyword">printf</span>(<span class="string">"In the container, my pid is: <span class="variable">%dn</span>"</span>, getpid());
+<span class="keyword">for</span> (i = <span class="number">0</span>; i &amp;<span class="keyword">lt</span>; a; i++) {
+    pid = <span class="keyword">fork</span>();
+    <span class="keyword">if</span> (pid &amp;<span class="keyword">lt</span>; <span class="number">0</span>)
+        <span class="keyword">return</span> pid;
+    <span class="keyword">else</span> <span class="keyword">if</span> (pid)
+        <span class="keyword">printf</span>(&amp;quot;pid of <span class="keyword">my</span> child is <span class="variable">%dn</span>&amp;quot;, pid);
+    <span class="keyword">else</span> <span class="keyword">if</span> (pid == <span class="number">0</span>) {
+        <span class="keyword">sleep</span>(<span class="number">3</span>);
+        <span class="keyword">exit</span>(<span class="number">0</span>);
+    }
+}
+<span class="keyword">return</span> <span class="number">0</span>;
+</code></pre><p>}</p>
+<p>int main(int argc, char <em>argv[])<br>{<br>    int cpid;<br>    void </em>childstack, <em>stack;<br>    int flags;<br>    int ret = 0;<br>    int stacksize = getpagesize() </em> 4;</p>
+<pre><code><span class="keyword">if</span> (argc != <span class="number">2</span>) {
+    <span class="built_in">fprintf</span>(stderr, &amp;quot;Wrong usage.n&amp;quot;);
+    <span class="keyword">return</span> -<span class="number">1</span>;
+}
+
+<span class="built_in">stack</span> = <span class="built_in">malloc</span>(stacksize);
+<span class="keyword">if</span> (!<span class="built_in">stack</span>) {
+    perror(&amp;quot;<span class="built_in">malloc</span>&amp;quot;);
+    <span class="keyword">return</span> -<span class="number">1</span>;
+}
+
+<span class="built_in">printf</span>(&amp;quot;Out of the container, my pid is: %dn&amp;quot;, getpid());
+
+childstack = <span class="built_in">stack</span> + stacksize;
+flags = CLONE_NEWPID | CLONE_NEWNS;
+
+cpid = clone(fork_child, childstack, flags, (<span class="keyword">void</span> *)atoi(argv[<span class="number">1</span>]));
+<span class="built_in">printf</span>(&amp;quot;cpid: %dn&amp;quot;, cpid);
+
+<span class="keyword">if</span> (cpid &amp;lt; <span class="number">0</span>) {
+    perror(&amp;quot;clone&amp;quot;);
+    ret = -<span class="number">1</span>;
+    <span class="keyword">goto</span> out;
+}
+
+<span class="built_in">fprintf</span>(stderr, &amp;quot;Parent sleeping <span class="number">20</span> secondsn&amp;quot;);
+sleep(<span class="number">20</span>);
+ret = <span class="number">0</span>;
+</code></pre><p>out:<br>    free(stack);<br>    return ret;<br>}<br>[/c]</p>
+<p>运行结果：</p>
+<p>$ sudo ./pid_container 3<br>Out of the container, my pid is: 7061<br>cpid: 7062<br>In the container, my pid is: 1<br>Parent sleeping 20 seconds<br>pid of my child is 2<br>pid of my child is 3<br>pid of my child is 4</p>
+<p>其实被namespace化的不只是PID，还有很多东西，貌似它们合起来被称为container。可以看 include/linux/nsproxy.h：</p>
+<p>struct nsproxy {<br>        atomic_t count;<br>        struct uts_namespace <em>uts_ns;<br>        struct ipc_namespace </em>ipc_ns;<br>        struct mnt_namespace <em>mnt_ns;<br>        struct pid_namespace </em>pid_ns;<br>        struct net           *net_ns;<br>};</p>
+<p>虚拟化的东西是越来越让人摸不清头脑了。。。。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-01-15T07:44:58.000Z"><a href="/2009/01/14/-e6-97-85-e8-a1-8c-e6-80-bb-e7-bb-93-ef-bc-88-e4-b8-8b-ef-bc-89/">Jan 14 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/01/14/-e6-97-85-e8-a1-8c-e6-80-bb-e7-bb-93-ef-bc-88-e4-b8-8b-ef-bc-89/">旅行总结（下）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><strong>长沙</strong>：</p>
+<p>在长沙终于见到了认识很久的网友，王大大同学。虽然和她聊天感觉她很小气，但实际上一点也不是，她招待得很周到，还有她男友，对我都很好。听她讲了很多湖南话，我总感觉湖南话基本上就是四川话和粤语的混合……</p>
+<p>在长沙有两件有意思的事，一件是到长沙那天开始下雪，还比较大，晚上电视台都发不橙色警报了，我琢磨着是不是又会像去年那样，不过还好，第二天不下了，一点儿事也没有；另一件是去长沙火车站时差五分钟就晚了火车！我冲出公交车后基本上是一路飞奔到火车里的，还好有惊无险。</p>
+<p>长沙的岳麓书院不错，值得一去。</p>
+<p>黄兴南路步行街附近有条小吃街，不错，靠着太平街，我在那里第一次吃湖南臭豆腐，开始感觉臭，越吃越香，吃完感觉很爽！很奇特。</p>
+<p>P.S. 在长沙吃的每道菜基本上都有辣子，无语了……</p>
+<p><strong>广州</strong>：</p>
+<p>见到了阔别已久的<a href="http://amankwahly.cn/blog/" target="_blank" rel="external">老大</a>，基本上还是那么胖。不过这次终于把老大雪藏已久的“大嫂”给见到了，还拍了N张照片给兄弟们散发了一下。我就不多作什么评论了，要不老大非得杀了我。:-)</p>
+<p>老大请我们吃了很多好吃的，我也是头一次尝到了粤菜，对于我一个山东人来说，他们的菜基本上算是没放盐……而且广州人还真吃那些乱七八糟的东西，唉…… 不过汤确实煲得不错。比较遗憾的是，由于老大的失误，我这次没吃到撒尿牛丸。。。</p>
+<p>白云山离老大太远，而且爬山太累，所以我就没去。去了趟越秀公园，不错，很美很别致的一个公园，很有广州特色。陈家祠也不错，可惜里面还有的在装修。</p>
+<p>最后，来广州一定不能不乘船夜游一下珠江，很美很有情调！记着带上美女哦～！</p>
+<p><strong>深圳</strong>：</p>
+<p>深圳基本上没什么好逛的，世界之窗吧，也就那个玻璃架子，欢乐谷吧，也就个游乐园。不过还好，海边的红树林不错，风景挺美。在深圳做的两件比较疯狂的事是：一，吃了一次青蛙，头一次吃，一开始心理上还不好接受，不过确实很好吃，没有枉费我们排队等那一个小时；二，又去了一次酒吧，歌舞那个升平啊。。。。</p>
+<p>P.S. 正好赶上参加了深圳LUG的聚会，见到了好几个在网络上素未谋面的朋友，挺有意思的。</p>
+<p><strong>福州</strong>：</p>
+<p>感觉福州实在是没什么独特的，和长沙差不多，不过人家长沙至少还有个岳麓书院啊！连陪我逛的<a href="http://windflush.cn/blog/?p=113" target="_blank" rel="external">小林子</a>都不知道福州有啥好玩的。最后我们就逛了一下五一广场，台江步行街，三坊七巷。小林子带我吃了一下福州菜，基本上全都是海鲜，饼里面有，叫蛎饼；还有海鲜版的煎饼果子，忘了叫啥名了；就连我最后叫的米粉里都有海鲜！海鲜我就能吃个别的鱼和虾，其它软体动物基本上都不能接受……不习惯啊，不习惯～！唉，还有，也是没放盐……</p>
+<p>这次旅行就全部结束啦～！多亏各位朋友的帮忙才使得整个旅行有条不紊地按照我的计划全部进行完！走过了很多地方，见到了很多朋友，吃到了很多小吃！当然了，因为时间关系也有不少的遗憾，但毫无疑问，这是一次愉快的旅行！这就是旅行的意义。:-)</p>
+<p>希望各位朋友生活更开心幸福！加油！</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-01-06T02:50:52.000Z"><a href="/2009/01/05/-e6-97-85-e8-a1-8c-e6-80-bb-e7-bb-93-ef-bc-88-e4-b8-80-ef-bc-89/">Jan 5 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/01/05/-e6-97-85-e8-a1-8c-e6-80-bb-e7-bb-93-ef-bc-88-e4-b8-80-ef-bc-89/">旅行总结（上）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><strong>济南</strong>：</p>
+<p>除了轻轨，基本上没怎么变。</p>
+<p><strong>北京</strong>：</p>
+<p>坐地铁，挤死；坐公交，堵死；出去逛，冻死。。。</p>
+<p>去了趟颐和园，基本上就滑冰去了！</p>
+<p>想去奥运体育馆，基本上没找到！</p>
+<p>最大的意外是：发现北京居然也有蓝天，太tmd不可思议了。。。</p>
+<p><strong>天津</strong>：</p>
+<p>08年的最后一天，邱曼的生日。</p>
+<p><strong><a href="http://www.douban.com/photos/album/13637005/" target="_blank" rel="external">西安</a></strong>：</p>
+<p>见到了很多同学，老师，朋友～～张老师要有baby啦，陈mm的脸越来越大了～</p>
+<p>又去吃了一次建基泡馍，那个爽啊～</p>
+<p>通宵了一个晚上，那个疯啊～</p>
+<p>还是西安好！</p>
+<p><strong><a href="http://www.douban.com/photos/album/13638156/" target="_blank" rel="external">武汉</a></strong>：</p>
+<p>吃了很多小吃，还专门尝了几种很奇特的武汉小吃，在别的地方从来没有吃过，比如那个糯米卷油条。来武汉一定不要错过户部巷，就像去西安一定要去回民街一样。一般人我不告诉他。:-)</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+
+  <nav id="pagination">
+  
+    <a href="/archives/2009/01/" class="alignleft prev">Prev</a>
+  
+  
+  <div class="clearfix"></div>
+</nav>
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:wangcong.org">
+  </form>
 </div>
 
-      </div>
-      <footer><div id="footer" >
-	
-	
-	<div class="social-font" class="clearfix">
-		
-		
-		<a href="https://github.com/congwang" target="_blank" class="icon-github" title="github"></a>
-		
-		
-		
-		<a href="https://twitter.com/conglinux" target="_blank" class="icon-twitter" title="twitter"></a>
-		
-		
-		
-		
-		
-		
-		
-	</div>
-		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2016 
-		
-		<a href="http://wangcong.org/about" target="_blank" title="Cong Wang">Cong Wang</a>
-		
-		</p>
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Book-Reviews/">Book Reviews</a><small>18</small></li>
+  
+    <li><a href="/categories/China/">China</a><small>2</small></li>
+  
+    <li><a href="/categories/Collection/">Collection</a><small>25</small></li>
+  
+    <li><a href="/categories/Life/">Life</a><small>324</small></li>
+  
+    <li><a href="/categories/Linux-Application/">Linux Application</a><small>73</small></li>
+  
+    <li><a href="/categories/Linux-Kernel/">Linux Kernel</a><small>64</small></li>
+  
+    <li><a href="/categories/Love/">Love</a><small>6</small></li>
+  
+    <li><a href="/categories/Movies/">Movies</a><small>19</small></li>
+  
+    <li><a href="/categories/Programming/">Programming</a><small>152</small></li>
+  
+    <li><a href="/categories/Science-Fiction/">Science Fiction</a><small>8</small></li>
+  
+    <li><a href="/categories/Travel/">Travel</a><small>19</small></li>
+  
+  </ul>
 </div>
-</footer>
-      <script src="/js/jquery-2.0.3.min.js"></script>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/geek/">geek</a><small>1</small></li>
+  
+    <li><a href="/tags/handling/">handling</a><small>1</small></li>
+  
+    <li><a href="/tags/joke/">joke</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/tags/signal/">signal</a><small>1</small></li>
+  
+    <li><a href="/tags/unix/">unix</a><small>1</small></li>
+  
+    <li><a href="/tags/vim/">vim</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2017 Cong Wang
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 <script src="/js/jquery.imagesloaded.min.js"></script>
 <script src="/js/gallery.js"></script>
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.navbar').click(function(){
-    $('header nav').toggleClass('shownav');
-  });
-  var myWidth = 0;
-  function getSize(){
-    if( typeof( window.innerWidth ) == 'number' ) {
-      myWidth = window.innerWidth;
-    } else if( document.documentElement && document.documentElement.clientWidth) {
-      myWidth = document.documentElement.clientWidth;
-    };
-  };
-  var m = $('#main'),
-      a = $('#asidepart'),
-      c = $('.closeaside'),
-      o = $('.openaside');
-  $(window).resize(function(){
-    getSize(); 
-    if (myWidth >= 1024) {
-      $('header nav').removeClass('shownav');
-    }else
-    {
-      m.removeClass('moveMain');
-      a.css('display', 'block').removeClass('fadeOut');
-      o.css('display', 'none');
-        
-    }
-  });
-  c.click(function(){
-    a.addClass('fadeOut').css('display', 'none');
-    o.css('display', 'block').addClass('fadeIn');
-    m.addClass('moveMain');
-  });
-  o.click(function(){
-    o.css('display', 'none').removeClass('beforeFadeIn');
-    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
-    m.removeClass('moveMain');
-  });
-  $(window).scroll(function(){
-    o.css("top",Math.max(80,260-$(this).scrollTop()));
-  });
-});
-</script>
-
-
-
-
 
 <script type="text/javascript">
-
 var disqus_shortname = 'disqus_ciEwcJAF0E';
 
-(function(){
-  var dsq = document.createElement('script');
-  dsq.type = 'text/javascript';
-  dsq.async = true;
-  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-}());
 (function(){
   var dsq = document.createElement('script');
   dsq.type = 'text/javascript';
@@ -262,33 +426,13 @@ var disqus_shortname = 'disqus_ciEwcJAF0E';
 
 
 
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
 
-
-
-
-
-<!-- Analytics Begin -->
-
-
-
-
-
-<!-- Analytics End -->
-
-<!-- Totop Begin -->
-
-	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
-	</div>
-	<script src="/js/totop.js"></script>
-
-<!-- Totop End -->
-
-<!-- MathJax Begin -->
-<!-- mathjax config similar to math.stackexchange -->
-
-
-<!-- MathJax End -->
-
-    </body>
-   </html>
+</body>
+</html>

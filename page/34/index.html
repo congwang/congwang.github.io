@@ -1,100 +1,65 @@
-
- <!DOCTYPE HTML>
-<html >
+<!DOCTYPE HTML>
+<html>
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   
-    <title>A Geek&#39;s Page</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
-    
-    <meta name="author" content="Cong Wang">
-    
-    
-    <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="A Geek's Page">
-<meta property="og:url" content="http://wangcong.org/page/34/">
-<meta property="og:site_name" content="A Geek's Page">
-<meta property="og:description">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="A Geek's Page">
-<meta name="twitter:description">
-<meta name="twitter:creator" content="@conglinux">
+  <title>Page 34 | A Geek&#39;s Page</title>
+  <meta name="author" content="Cong Wang">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
+  
+  <meta property="og:site_name" content="A Geek&#39;s Page"/>
 
-    
-    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
-    
-    
-    <link rel="icon" href="/img/favicon.ico">
-    
-    
-    <link rel="apple-touch-icon" href="/img/jacman.jpg">
-    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
-    
-    <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
 
 </head>
 
-  <body>
-    <header>
-      <div>
-		
-			<div id="imglogo">
-				<a href="/"><img src="/img/logo.png" alt="A Geek&#39;s Page" title="A Geek&#39;s Page"/></a>
-			</div>
-			
-			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="A Geek&#39;s Page">A Geek&#39;s Page</a></h1>
-				<h2 class="blog-motto"></h2>
-			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
-			</a></div>
-			<nav class="animated">
-				<ul>
-					<ul>
-					 
-						<li><a href="/">Home</a></li>
-					
-						<li><a href="/archives">Archives</a></li>
-					
-						<li><a href="/about-2">About</a></li>
-					
-					<li>
- 					
-					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
-						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
-						<input type="hidden" name="q" value="site:wangcong.org">
-					</form>
-					
-					</li>
-				</ul>
-			</nav>			
-</div>
-    </header>
-    <div id="container">
-      <div id="main">
 
-   
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">A Geek&#39;s Page</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
     
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
+      <li><a href="/">Home</a></li>
     
-      <a href="/2008/10/24/-e5-8f-88-e9-81-87snmp/" title="又遇SNMP" itemprop="url">又遇SNMP</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2008-10-24T08:23:19.000Z" itemprop="datePublished"> Published Oct 24 2008</time>
+      <li><a href="/archives">Archives</a></li>
     
-  </p>
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
 </header>
-    <div class="article-content">
-        
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2008-10-24T08:23:19.000Z"><a href="/2008/10/24/-e5-8f-88-e9-81-87snmp/">Oct 24 2008</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2008/10/24/-e5-8f-88-e9-81-87snmp/">又遇SNMP</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>差点被SNMP给整疯了……</p>
 <p>先是要从QoS中提取指定信息，要导出到SNMP。这看似简单但做起来相当麻烦，基本上就是左手拿着表格查对应的行和列，右手拿着QoS输出对比，然后脑子里要思考如何提取正则表达式。总共50多项，我是一项一项对出来的，哎，没办法，这根本不可能由机器完成（瞧瞧计算机有多笨！！不过它要是聪明到这种程度我们这些程序员就该失业啦～！）。</p>
 <p>然后要考虑整个程序的构架，看似一个简单的程序，如果什么都不考虑直接去写肯定也可以，50多个函数嘛，可问题是怎么把代码组织得更和逻辑？这确实得下一番功夫。一开始我想出一个颇为简洁的构架，后来发现不行，经过修改最后居然保持住了简洁，纯属侥幸～～最后再看看整个程序的构架，依然简洁而又合理，先得意一下。;-)</p>
@@ -106,123 +71,73 @@
 <p>然后就可以这么匹配了：</p>
 <p>$output =~ m/class htb .<em> root rate ([0-9]+)Kbit .</em>ns<em>Sent ([0-9]+) bytes ([0-9]+) pkt (dropped ([0-9]+).</em>ns*rate ([0-9]+)bit/m</p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Programming/">Programming</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2008/10/24/-e5-8f-88-e9-81-87snmp/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2008/10/18/-e7-be-8e-e4-b8-bd-e4-b8-ad-e5-9b-bd/" title="美丽中国" itemprop="url">美丽中国</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2008-10-18T08:50:51.000Z" itemprop="datePublished"> Published Oct 18 2008</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2008-10-18T08:50:51.000Z"><a href="/2008/10/18/-e7-be-8e-e4-b8-bd-e4-b8-ad-e5-9b-bd/">Oct 18 2008</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2008/10/18/-e7-be-8e-e4-b8-bd-e4-b8-ad-e5-9b-bd/">美丽中国</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p><img src="/images/" alt=""></p>
 <p>英国BBC拍的一部记录中国自然风景和野生动物的纪录片，相当美，里面的一些画面美得简直震撼人心！印象最深刻的是蝙蝠在水面上拍打的画面，太美了……我们的祖国真的很美！</p>
 <p>第2集提到了香格里拉——我心中那个向往已久的胜地，回国一定去那里看看！！另外还有西藏，丝绸之路，内蒙古大草原……</p>
 <p>强烈推荐此片，给每个人。:-)</p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Movies/">Movies</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2008/10/18/-e7-be-8e-e4-b8-bd-e4-b8-ad-e5-9b-bd/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2008/10/14/-e9-99-86-e6-ad-a2-e4-ba-8e-e6-ad-a4-ef-bc-8c-e6-b5-b7-e5-a7-8b-e4-ba-8e-e6-96-af-ef-bc-81/" title="陆止于此，海始于斯！" itemprop="url">陆止于此，海始于斯！</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2008-10-14T08:10:28.000Z" itemprop="datePublished"> Published Oct 14 2008</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2008-10-14T08:10:28.000Z"><a href="/2008/10/14/-e9-99-86-e6-ad-a2-e4-ba-8e-e6-ad-a4-ef-bc-8c-e6-b5-b7-e5-a7-8b-e4-ba-8e-e6-96-af-ef-bc-81/">Oct 14 2008</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2008/10/14/-e9-99-86-e6-ad-a2-e4-ba-8e-e6-ad-a4-ef-bc-8c-e6-b5-b7-e5-a7-8b-e4-ba-8e-e6-96-af-ef-bc-81/">陆止于此，海始于斯！</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p><img src="/images/" alt=""></p>
 <p><a href="http://en.wikipedia.org/wiki/Cabo_da_Roca" target="_blank" rel="external">Cabo da Roca</a>是欧洲大陆的最西端，有着非常壮阔的风景。这里天很蓝，风很大，站在悬崖边上望去是一片蔚蓝的大海，非常迷人。在卡罗角的纪念碑下，你终于可以感慨：我站在欧洲大陆最西端了！</p>
 <p>500年前，葡萄牙诗人卡蒙斯在此写下一行诗：</p>
@@ -232,62 +147,37 @@
 <p>中文的翻译是本文的标题。“天涯海角”的含义在这一刻你能更深刻地体会到！</p>
 <p>500年前的葡萄牙应该是航海英雄的时代，不知道500年前的他站在此处时又是怎样的心情？对于真正的水手来说，或许真的是“天无涯，海无角”……</p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Life/">Life</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2008/10/14/-e9-99-86-e6-ad-a2-e4-ba-8e-e6-ad-a4-ef-bc-8c-e6-b5-b7-e5-a7-8b-e4-ba-8e-e6-96-af-ef-bc-81/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2008/10/13/fakeroot-vs-sudo/" title="fakeroot vs sudo" itemprop="url">fakeroot vs sudo</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2008-10-14T05:44:46.000Z" itemprop="datePublished"> Published Oct 13 2008</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2008-10-14T05:44:46.000Z"><a href="/2008/10/13/fakeroot-vs-sudo/">Oct 13 2008</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2008/10/13/fakeroot-vs-sudo/">fakeroot vs sudo</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>1. sudo是一个setuid程序，而fakeroot不是。</p>
 <p>2. sudo真正地给与root权限，而fakeroot不会，它只会欺骗程序看起来像是以root身份执行得到的效果。</p>
 <p>3. fakeroot最初是为了创建debian包使用的，Fedora上也有fakeroot包，但不知为何找不到其man手册……</p>
@@ -298,62 +188,37 @@
 </blockquote>
 <p>5. fakeroot使用了很多trick，不信的话查看<a href="http://ftp.de.debian.org/debian/pool/main/f/fakeroot/fakeroot_1.5.10.tar.gz" target="_blank" rel="external">其源代码</a>（看看里面那个awk脚本！）。</p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Linux-Application/">Linux Application</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2008/10/13/fakeroot-vs-sudo/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2008/10/07/bash-e5-8f-98-e9-87-8f-e4-bd-9c-e7-94-a8-e5-9f-9f/" title="bash变量作用域" itemprop="url">bash变量作用域</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2008-10-08T04:50:15.000Z" itemprop="datePublished"> Published Oct 7 2008</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2008-10-08T04:50:15.000Z"><a href="/2008/10/07/bash-e5-8f-98-e9-87-8f-e4-bd-9c-e7-94-a8-e5-9f-9f/">Oct 7 2008</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2008/10/07/bash-e5-8f-98-e9-87-8f-e4-bd-9c-e7-94-a8-e5-9f-9f/">bash变量作用域</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>bash的变量作用域其实很简单，不过有些时候可能看起来很奇怪。下面简单总结一下。</p>
 <p>在默认的情况下，bash的变量都是全局的，除非你使用了local或者typeset命令来改变，那样就可以变成局部的了。</p>
 <p>export改变的是变量是否对其子进程可见，并不会影响父进程，如果想要改变父进程中的变量可以用source（或者“.”）。需要额外说明的是，source后面的脚本不能有exit，否者父进程就跟着一起退出了。</p>
@@ -368,247 +233,147 @@
 <li><div style="font-family:'Courier New', Courier, monospace;font-weight:normal;">echo <span style="color:#0000ff;">$foo</span></div><br></li></ol></div><br>这时就不那么容易觉察了。解决方法是，用重定向去替换管道。
 
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Programming/">Programming</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2008/10/07/bash-e5-8f-98-e9-87-8f-e4-bd-9c-e7-94-a8-e5-9f-9f/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2008/10/07/-e5-9f-8e-e5-a0-a1/" title="城堡" itemprop="url">城堡</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2008-10-08T02:26:36.000Z" itemprop="datePublished"> Published Oct 7 2008</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2008-10-08T02:26:36.000Z"><a href="/2008/10/07/-e5-9f-8e-e5-a0-a1/">Oct 7 2008</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2008/10/07/-e5-9f-8e-e5-a0-a1/">城堡</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>葡萄牙有很多城堡，在Coimbra附近的有三个地方的城堡比较有名，这几个星期利用周末把这几个地方都转了一遍。</p>
 <p><a href="http://www.douban.com/photos/album/11907665/" target="_blank" rel="external">Leiria</a>：山顶上有个城堡，这个城堡是唯一一个收费的，不过不贵，里面可以看到不错的风景，很值得一去。</p>
 <p><a href="http://www.douban.com/photos/album/12102493/" target="_blank" rel="external">Montemor-o-Velho</a>：离Coimbra最近，不过坐火车无法直接到，需要在Alfarelos下车后打个的才能到，车站旁边那个出租车司机很nice的说～～！这个城堡独特的地方是里面有个教堂，还有个草坪。</p>
 <p><a href="http://www.douban.com/photos/album/12102333/" target="_blank" rel="external">Pombal</a>：这个城堡不那么出名，去的人似乎很少，我到那里的时候里面就我自己～～可以自己随便逛，站到最高出远望感觉挺不错的～～</p>
 <p>这个周末打算去传说中的<a href="http://en.wikipedia.org/wiki/Cabo_da_Roca" target="_blank" rel="external">Cabo da Roca</a>——欧洲大陆的最西端。:-)</p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Life/">Life</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2008/10/07/-e5-9f-8e-e5-a0-a1/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2008/09/30/lapa-do-lobo/" title="Lapa do Lobo" itemprop="url">Lapa do Lobo</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2008-09-30T09:08:36.000Z" itemprop="datePublished"> Published Sep 30 2008</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2008-09-30T09:08:36.000Z"><a href="/2008/09/30/lapa-do-lobo/">Sep 30 2008</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2008/09/30/lapa-do-lobo/">Lapa do Lobo</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>上周末过得非常充实，周五不光有<a href="http://www.douban.com/photos/album/11990448/" target="_blank" rel="external">beer lifting</a>，而且还赶上了<a href="http://www.douban.com/photos/album/11990474/" target="_blank" rel="external">聚餐</a>，于是周五晚上直到一点多才回到公寓。第二天Marco带着我去他家玩，于是我们驱车四五十分钟到了他的老家<a href="http://www.douban.com/photos/album/11990517/" target="_blank" rel="external">Lapa do Lobo</a>，一个安静的小镇。</p>
 <p>我们先去的是他岳母家，在那里喝了杯咖啡吃了点儿东西（葡萄牙人习惯在午饭和晚饭之间加一顿小吃，他们称其为lanche），之后才到了他家。他家的房子很大，而且有三层，房子后面还有个院子，院子里除了有花花草草之外还有个小的游泳池；家里养了一只很大的狗。看样子应该是一个典型的葡萄牙人的房子，非常惬意～～</p>
 <p>他家里有四口人，还有个妹妹，全家人基本上都能说英语。他爸爸是个警察，非常热情好客，告诉我在这里要感觉像在中国一样。:-) 晚饭由他妈妈和妹妹做的，非常可口的火鸡。吃完饭我们去镇上的酒吧看足球比赛，那里聚集了很多人，都在边和啤酒边看足球。酒吧的女老板很有意思，英语说得不错，见了我就跟我开玩笑，给我印象最深的是她说了句：喝啤酒总比喝牛奶好！唉，真是坏事传千里，连她都知道中国最近闹得沸沸扬扬的奶粉事件！看完比赛我们回去继续上网，结果直到两点多才睡觉。第二天快十点才起来。起来本来不想吃早饭的，结果他爸爸看不惯，硬是塞给我牛奶和面包吃。午饭尝到了一种葡萄牙风格的土豆，感觉有点儿奇特，不过还是比较好吃的。</p>
 <p>这是我来到这里头一次体会到葡萄牙的乡村生活：邻里之间见面问好，互相串门；自行车放到外面不用锁；晚上睡觉也不用锁门……哎，再看看城市里面：墙越来越高了，锁越来越多了，见面打招呼的越来越少了，真是一种悲哀～～！</p>
 <p>赶紧逃离城市！:-)</p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Life/">Life</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2008/09/30/lapa-do-lobo/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2008/09/26/-e4-b9-b0-e4-ba-86-e8-be-86-e8-bd-a6-e3-80-82-e3-80-82-e3-80-82-e3-80-82-e3-80-82-e3-80-82-e3-80-82-e3-80-82-e3-80-82-e8-87-aa-e8-a1-8c-e7-9a-84/" title="买了辆车。。。。。。。。。自行的" itemprop="url">买了辆车。。。。。。。。。自行的</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2008-09-26T07:43:35.000Z" itemprop="datePublished"> Published Sep 26 2008</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2008-09-26T07:43:35.000Z"><a href="/2008/09/26/-e4-b9-b0-e4-ba-86-e8-be-86-e8-bd-a6-e3-80-82-e3-80-82-e3-80-82-e3-80-82-e3-80-82-e3-80-82-e3-80-82-e3-80-82-e3-80-82-e8-87-aa-e8-a1-8c-e7-9a-84/">Sep 26 2008</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2008/09/26/-e4-b9-b0-e4-ba-86-e8-be-86-e8-bd-a6-e3-80-82-e3-80-82-e3-80-82-e3-80-82-e3-80-82-e3-80-82-e3-80-82-e3-80-82-e3-80-82-e8-87-aa-e8-a1-8c-e7-9a-84/">买了辆车。。。。。。。。。自行的</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>这里的自行车不是一般的贵，那可是相当贵！最便宜的也得70多E，不过那只能在超市里找到，要是从那里买了坏了没地方修。所以不得不去专门卖自行车的地方去买，那里最便宜的也要129E……更夸张的是还有辆1500E的自行车。。。我估计那是黄金做成的～</p>
 <p>这里的车子和国内差别很大，基本都是用来休闲的，所以如果你需要后座之类的东西你得自己另买……所以整个下来花费实在不小。</p>
 <p>昨天晚上和今天早上都是骑车上下班，因为不太熟悉路，所以路上犯了不少错误，不过还好，最终还是能到达目的地。现在好了，彻底把路线搞清楚了～～我最大的感受是：这里的公路设计得相当“艺术”，有数不清的转弯不说，还经常有上坡下坡，所以骑车上下班还是比较累的。恩，就当作锻炼身体了。:-)</p>
 <p>在这里，自行车的另一个用途是可以放到火车上带着出去旅游，应该很爽，有机会试试。</p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Life/">Life</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2008/09/26/-e4-b9-b0-e4-ba-86-e8-be-86-e8-bd-a6-e3-80-82-e3-80-82-e3-80-82-e3-80-82-e3-80-82-e3-80-82-e3-80-82-e3-80-82-e3-80-82-e8-87-aa-e8-a1-8c-e7-9a-84/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2008/09/23/-e5-85-b3-e4-ba-8emount-e7-9a-84-e4-b8-a4-e4-b8-aa-e9-94-99-e8-af-af/" title="关于mount的两个错误" itemprop="url">关于mount的两个错误</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2008-09-24T05:32:04.000Z" itemprop="datePublished"> Published Sep 23 2008</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2008-09-24T05:32:04.000Z"><a href="/2008/09/23/-e5-85-b3-e4-ba-8emount-e7-9a-84-e4-b8-a4-e4-b8-aa-e9-94-99-e8-af-af/">Sep 23 2008</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2008/09/23/-e5-85-b3-e4-ba-8emount-e7-9a-84-e4-b8-a4-e4-b8-aa-e9-94-99-e8-af-af/">关于mount的两个错误</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>1. mount: could not find any free loop device</p>
 <p>解决方法：losetup -d /dev/loop7</p>
 <p>2. <code>umount: device is busy</code></p>
@@ -618,62 +383,37 @@
 <p>umount -f /dev/sda3</p>
 <p>umount -l /dev/sda3</p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Linux-Application/">Linux Application</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2008/09/23/-e5-85-b3-e4-ba-8emount-e7-9a-84-e4-b8-a4-e4-b8-aa-e9-94-99-e8-af-af/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2008/09/19/-e6-97-a0-e4-ba-ba-e8-83-bd-e7-bb-ad-e7-9a-84-e7-a7-91-e5-b9-bb-e5-b7-a8-e8-91-97/" title="无人能续的科幻巨著" itemprop="url">无人能续的科幻巨著</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2008-09-19T09:00:57.000Z" itemprop="datePublished"> Published Sep 19 2008</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2008-09-19T09:00:57.000Z"><a href="/2008/09/19/-e6-97-a0-e4-ba-ba-e8-83-bd-e7-bb-ad-e7-9a-84-e7-a7-91-e5-b9-bb-e5-b7-a8-e8-91-97/">Sep 19 2008</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2008/09/19/-e6-97-a0-e4-ba-ba-e8-83-bd-e7-bb-ad-e7-9a-84-e7-a7-91-e5-b9-bb-e5-b7-a8-e8-91-97/">无人能续的科幻巨著</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>我花了好几个月地时间才终于断断续续地把阿西莫夫的《基地》系列全部读完（其中有几个月根本就是一点儿都没读），说实话，读完之后最大的感觉是痛苦，不是因为它太长（它再长都是非常值得的！），而是因为它远远没有写完！阿西莫夫老先生给我们留下的疑问太多太多……估计除了阿西莫夫本人之外无人能完美地续好这部宏伟的科幻巨著！</p>
 <p>读完后疑问有无数，因为时间间隔长，我无法一一历数全部，只能把我最关心的大问题列举一下：</p>
 <p>1. 机器人的命运最终如何？<br>2. 丹尼尔的另一个计划是什么？辞去宰相后他又去做了什么？<br>3. 第一基地和第二基地的命运最终会如何？盖亚模式真的是人类最后的选择？<br>4. 第二帝国是如何建立的？建立后何去何从？</p>
@@ -694,213 +434,109 @@
 <p>5. 根据《基地的胜利》一书中的总结推断，机器人系列的时间顺序是：</p>
 <p>《我，机器人》<br>《钢穴》<br>《裸阳》<br>《曙光中的机器人》<br>《机器人与帝国》</p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Science-Fiction/">Science Fiction</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2008/09/19/-e6-97-a0-e4-ba-ba-e8-83-bd-e7-bb-ad-e7-9a-84-e7-a7-91-e5-b9-bb-e5-b7-a8-e8-91-97/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-
-  <nav id="page-nav" class="clearfix">
-    <a class="extend prev" rel="prev" href="/page/33/"><span></span>Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/32/">32</a><a class="page-number" href="/page/33/">33</a><span class="page-number current">34</span><a class="page-number" href="/page/35/">35</a><a class="page-number" href="/page/36/">36</a><span class="space">&hellip;</span><a class="page-number" href="/page/71/">71</a><a class="extend next" rel="next" href="/page/35/">Next<span></span></a>
-  </nav>
-
-</div>
-      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
-
-<div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
-<aside class="clearfix">
-
-  
-<div class="categorieslist">
-	<p class="asidetitle">Categories</p>
-		<ul>
-		
-			<li><a href="/categories/Book-Reviews/" title="Book Reviews">Book Reviews<sup>18</sup></a></li>
-		
-			<li><a href="/categories/China/" title="China">China<sup>2</sup></a></li>
-		
-			<li><a href="/categories/Collection/" title="Collection">Collection<sup>25</sup></a></li>
-		
-			<li><a href="/categories/Life/" title="Life">Life<sup>324</sup></a></li>
-		
-			<li><a href="/categories/Linux-Application/" title="Linux Application">Linux Application<sup>73</sup></a></li>
-		
-			<li><a href="/categories/Linux-Kernel/" title="Linux Kernel">Linux Kernel<sup>64</sup></a></li>
-		
-			<li><a href="/categories/Love/" title="Love">Love<sup>6</sup></a></li>
-		
-			<li><a href="/categories/Movies/" title="Movies">Movies<sup>19</sup></a></li>
-		
-			<li><a href="/categories/Programming/" title="Programming">Programming<sup>152</sup></a></li>
-		
-			<li><a href="/categories/Science-Fiction/" title="Science Fiction">Science Fiction<sup>8</sup></a></li>
-		
-			<li><a href="/categories/Travel/" title="Travel">Travel<sup>19</sup></a></li>
-		
-		</ul>
-</div>
-
-
-  
-<div class="tagslist">
-	<p class="asidetitle">Tags</p>
-		<ul class="clearfix">
-		
-			<li><a href="/tags/vim/" title="vim">vim<sup>1</sup></a></li>
-		
-			<li><a href="/tags/joke/" title="joke">joke<sup>1</sup></a></li>
-		
-			<li><a href="/tags/geek/" title="geek">geek<sup>1</sup></a></li>
-		
-			<li><a href="/tags/unix/" title="unix">unix<sup>1</sup></a></li>
-		
-			<li><a href="/tags/signal/" title="signal">signal<sup>1</sup></a></li>
-		
-			<li><a href="/tags/linux/" title="linux">linux<sup>1</sup></a></li>
-		
-			<li><a href="/tags/handling/" title="handling">handling<sup>1</sup></a></li>
-		
-		</ul>
-</div>
-
-
-  <div class="linkslist">
-  <p class="asidetitle">Links</p>
-    <ul>
+    <footer>
+      
         
-    </ul>
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+<nav id="pagination">
+  
+    <a href="/page/33/" class="alignleft prev">Prev</a>
+  
+  
+    <a href="/page/35/" class="alignright next">Next</a>
+  
+  <div class="clearfix"></div>
+</nav></div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:wangcong.org">
+  </form>
 </div>
 
-  <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Book-Reviews/">Book Reviews</a><small>18</small></li>
+  
+    <li><a href="/categories/China/">China</a><small>2</small></li>
+  
+    <li><a href="/categories/Collection/">Collection</a><small>25</small></li>
+  
+    <li><a href="/categories/Life/">Life</a><small>324</small></li>
+  
+    <li><a href="/categories/Linux-Application/">Linux Application</a><small>73</small></li>
+  
+    <li><a href="/categories/Linux-Kernel/">Linux Kernel</a><small>64</small></li>
+  
+    <li><a href="/categories/Love/">Love</a><small>6</small></li>
+  
+    <li><a href="/categories/Movies/">Movies</a><small>19</small></li>
+  
+    <li><a href="/categories/Programming/">Programming</a><small>152</small></li>
+  
+    <li><a href="/categories/Science-Fiction/">Science Fiction</a><small>8</small></li>
+  
+    <li><a href="/categories/Travel/">Travel</a><small>19</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/geek/">geek</a><small>1</small></li>
+  
+    <li><a href="/tags/handling/">handling</a><small>1</small></li>
+  
+    <li><a href="/tags/joke/">joke</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/tags/signal/">signal</a><small>1</small></li>
+  
+    <li><a href="/tags/unix/">unix</a><small>1</small></li>
+  
+    <li><a href="/tags/vim/">vim</a><small>1</small></li>
+  
+  </ul>
 </div>
 
 </aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2017 Cong Wang
+  
 </div>
-    </div>
-    <footer><div id="footer" >
-	
-	
-	<div class="social-font" class="clearfix">
-		
-		
-		<a href="https://github.com/congwang" target="_blank" class="icon-github" title="github"></a>
-		
-		
-		
-		<a href="https://twitter.com/conglinux" target="_blank" class="icon-twitter" title="twitter"></a>
-		
-		
-		
-		
-		
-		
-		
-	</div>
-		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2016 
-		
-		<a href="http://wangcong.org/about" target="_blank" title="Cong Wang">Cong Wang</a>
-		
-		</p>
-</div>
-</footer>
-    <script src="/js/jquery-2.0.3.min.js"></script>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 <script src="/js/jquery.imagesloaded.min.js"></script>
 <script src="/js/gallery.js"></script>
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.navbar').click(function(){
-    $('header nav').toggleClass('shownav');
-  });
-  var myWidth = 0;
-  function getSize(){
-    if( typeof( window.innerWidth ) == 'number' ) {
-      myWidth = window.innerWidth;
-    } else if( document.documentElement && document.documentElement.clientWidth) {
-      myWidth = document.documentElement.clientWidth;
-    };
-  };
-  var m = $('#main'),
-      a = $('#asidepart'),
-      c = $('.closeaside'),
-      o = $('.openaside');
-  $(window).resize(function(){
-    getSize(); 
-    if (myWidth >= 1024) {
-      $('header nav').removeClass('shownav');
-    }else
-    {
-      m.removeClass('moveMain');
-      a.css('display', 'block').removeClass('fadeOut');
-      o.css('display', 'none');
-        
-    }
-  });
-  c.click(function(){
-    a.addClass('fadeOut').css('display', 'none');
-    o.css('display', 'block').addClass('fadeIn');
-    m.addClass('moveMain');
-  });
-  o.click(function(){
-    o.css('display', 'none').removeClass('beforeFadeIn');
-    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
-    m.removeClass('moveMain');
-  });
-  $(window).scroll(function(){
-    o.css("top",Math.max(80,260-$(this).scrollTop()));
-  });
-});
-</script>
-
-
-
-
 
 <script type="text/javascript">
-
 var disqus_shortname = 'disqus_ciEwcJAF0E';
 
-(function(){
-  var dsq = document.createElement('script');
-  dsq.type = 'text/javascript';
-  dsq.async = true;
-  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-}());
 (function(){
   var dsq = document.createElement('script');
   dsq.type = 'text/javascript';
@@ -912,33 +548,13 @@ var disqus_shortname = 'disqus_ciEwcJAF0E';
 
 
 
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
 
-
-
-
-
-<!-- Analytics Begin -->
-
-
-
-
-
-<!-- Analytics End -->
-
-<!-- Totop Begin -->
-
-	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
-	</div>
-	<script src="/js/totop.js"></script>
-
-<!-- Totop End -->
-
-<!-- MathJax Begin -->
-<!-- mathjax config similar to math.stackexchange -->
-
-
-<!-- MathJax End -->
-
-  </body>
- </html>
+</body>
+</html>

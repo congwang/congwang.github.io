@@ -1,317 +1,655 @@
-
-  <!DOCTYPE HTML>
-<html >
+<!DOCTYPE HTML>
+<html>
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   
-    <title>Category: Programming | A Geek&#39;s Page</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
-    
-    <meta name="author" content="Cong Wang">
-    
-    
-    <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="A Geek's Page">
-<meta property="og:url" content="http://wangcong.org/categories/Programming/page/6/">
-<meta property="og:site_name" content="A Geek's Page">
-<meta property="og:description">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="A Geek's Page">
-<meta name="twitter:description">
-<meta name="twitter:creator" content="@conglinux">
+  <title>Page 6 | Programming | A Geek&#39;s Page</title>
+  <meta name="author" content="Cong Wang">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
+  
+  <meta property="og:site_name" content="A Geek&#39;s Page"/>
 
-    
-    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
-    
-    
-    <link rel="icon" href="/img/favicon.ico">
-    
-    
-    <link rel="apple-touch-icon" href="/img/jacman.jpg">
-    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
-    
-    <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
 
 </head>
 
-    <body>
-      <header>
-        <div>
-		
-			<div id="imglogo">
-				<a href="/"><img src="/img/logo.png" alt="A Geek&#39;s Page" title="A Geek&#39;s Page"/></a>
-			</div>
-			
-			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="A Geek&#39;s Page">A Geek&#39;s Page</a></h1>
-				<h2 class="blog-motto"></h2>
-			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
-			</a></div>
-			<nav class="animated">
-				<ul>
-					<ul>
-					 
-						<li><a href="/">Home</a></li>
-					
-						<li><a href="/archives">Archives</a></li>
-					
-						<li><a href="/about-2">About</a></li>
-					
-					<li>
- 					
-					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
-						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
-						<input type="hidden" name="q" value="site:wangcong.org">
-					</form>
-					
-					</li>
-				</ul>
-			</nav>			
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">A Geek&#39;s Page</a></h1>
+  <h2><a href="/"></a></h2>
 </div>
-      </header>
-      <div id="container">
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title category">Programming</h2>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-02-03T04:39:23.000Z"><a href="/2009/02/02/c-string-literals/">Feb 2 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/02/02/c-string-literals/">C++ string literals</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>从一个例子谈起，下面的例子摘自《C++ Templates》。<br>[cpp]</p>
+<h1 id="include">include</h1>
+<h1 id="include-1">include</h1>
+<p>template<br>void ref (T const&amp; x)<br>{<br>    std::cout &lt;&lt; &quot;x in ref(T const&amp;): &quot;<br>              &lt;&lt; typeid(x).name() &lt;&lt; &#039;n&#039;;<br>}</p>
+<p>template<br>void nonref (T x)<br>{<br>    std::cout &lt;&lt; &quot;x in nonref(T): &quot;<br>              &lt;&lt; typeid(x).name() &lt;&lt; &#039;n&#039;;<br>}</p>
+<p>int main()<br>{<br>    ref(&quot;hello&quot;);<br>    nonref(&quot;hello&quot;);<br>}<br>[/cpp]</p>
+<p>用g++编译，得到运行结果如下：</p>
+<p>x in ref(T const&amp;): A6_c<br>x in nonref(T): PKc</p>
+<p>（注：A6_c表示：array(A) of 6 chars (c)；PKc表示：pointer (P) to const (K) char (c)。）</p>
+<p>初看到这个例子我有些惊讶，为什么同样是字符串常量，通过引用传递和非引用传递差别就这么大呢？其实真想想也没什么大惊小怪的。看下面的分析。</p>
+<p>首先，对于字符串常量，在C++标准里的类型已经发生了变化，以前是char []，现在是const char[]，参考C++06 2.13.4：</p>
+<blockquote>
+<p>An ordinary string literal has type “array of n const char” and static storage duration,<br>where n is the size of the string as defined below, and is initialized with the given characters.</p>
+</blockquote>
+<p>但为了保持兼容，一部分当char []来使用的代码仍然有效。这不像C99，C99照顾兼容照顾得更厉害，所以这点仍然没变，它只说了一句：</p>
+<blockquote>
+<p>If the program attempts to modify such an array, the behavior is undefined.</p>
+</blockquote>
+<p>有些跑题了……咳，所以，当引用传递时自然是原来的类型const char[]。</p>
+<p>而直接传递呢？直接传递其实也是const char[]！我没开玩笑！想想啊，它的类型怎么能会突然就变呢？不可能！问题是为什么typeid看到的是const char *？很简单啊，因为这是函数！当数组作为函数参数传递时会退化为指针，我们耳熟能详的这句话在C++里也适用啊！所以，这里拧把的不是模板，而是引用，别被模板给吓怕了！</p>
+<p>如果你仔细看看原书那一节，你会发现还有个问题比较拧把：不同长度的同类型数组其实也不是一个类型，这也不难理解，放C里看看你就知道了：C里的一切类型皆是连续的内存块，数组更是，不同长度的同类型数组长度还是不一样啊，怎么能是同一个类型呢？所以这就有问题了，不同长度的字符串常量还不能作为同一个类型直接传递进模板了？如果我们用引用传递的话，是，可如果不用的话就行了，这正是解决方法！或者更干脆，直接用std::string。</p>
+
+      
+    </div>
+    <footer>
+      
         
-
-<div class="archive-title" >
-  <h2 class="category-icon">Programming</h2>
-  
-</div>
-<div id="main" class="archive-part clearfix">
-  <div id="archive-page">
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2009/02/02/c-string-literals/" title="C++ string literals" itemprop="url">
-  
-
-    <time datetime="2009-02-03T04:39:23.000Z" itemprop="datePublished">Feb 2 2009</time>
-
-
-    <h1 itemprop="name">C++ string literals</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2009/02/01/virtual-function-e7-9a-84-e4-be-8b-e5-ad-90/" title="virtual function 的例子" itemprop="url">
-  
-
-    <time datetime="2009-02-02T07:58:33.000Z" itemprop="datePublished">Feb 1 2009</time>
-
-
-    <h1 itemprop="name">virtual function 的例子</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2009/01/30/returing-void/" title="Returning void" itemprop="url">
-  
-
-    <time datetime="2009-01-31T04:34:37.000Z" itemprop="datePublished">Jan 30 2009</time>
-
-
-    <h1 itemprop="name">Returning void</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2009/01/29/auto-ptr-e5-92-8c-shared-ptr/" title="auto_ptr 和 shared_ptr" itemprop="url">
-  
-
-    <time datetime="2009-01-30T04:19:10.000Z" itemprop="datePublished">Jan 29 2009</time>
-
-
-    <h1 itemprop="name">auto_ptr 和 shared_ptr</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2009/01/28/-e7-bc-96-e7-a8-8b-e5-a4-aa-e9-9a-be-ef-bc-8c-e6-88-91-e4-bb-ac-e5-8e-bb-e5-86-99-e8-84-9a-e6-9c-ac-e5-90-a7-ef-bc-81/" title="编程太难，我们去写脚本吧！" itemprop="url">
-  
-
-    <time datetime="2009-01-29T07:23:04.000Z" itemprop="datePublished">Jan 28 2009</time>
-
-
-    <h1 itemprop="name">编程太难，我们去写脚本吧！</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2009/01/27/-e5-af-b9-e6-a0-87-e5-87-86-e7-9a-84-e4-b8-80-e6-9d-a1-e8-af-84-e8-ae-ba/" title="对标准的一条评论" itemprop="url">
-  
-
-    <time datetime="2009-01-28T05:45:07.000Z" itemprop="datePublished">Jan 27 2009</time>
-
-
-    <h1 itemprop="name">对标准的一条评论</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2009/01/21/reentrant-ef-bc-8cthread-safe-e5-92-8c-async-signal-safe/" title="reentrant，thread-safe 和 async-signal-safe" itemprop="url">
-  
-
-    <time datetime="2009-01-22T07:18:42.000Z" itemprop="datePublished">Jan 21 2009</time>
-
-
-    <h1 itemprop="name">reentrant，thread-safe 和 async-signal-safe</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2009/01/20/-e7-94-a8-sigaction2-e7-9a-84-e5-8e-9f-e5-9b-a0/" title="用 sigaction(2) 的原因" itemprop="url">
-  
-
-    <time datetime="2009-01-21T07:41:25.000Z" itemprop="datePublished">Jan 20 2009</time>
-
-
-    <h1 itemprop="name">用 sigaction(2) 的原因</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2009/01/17/ide-ata-scsi-e7-ad-89-e7-ad-89/" title="IDE, ATA, SCSI 等等" itemprop="url">
-  
-
-    <time datetime="2009-01-18T07:09:10.000Z" itemprop="datePublished">Jan 17 2009</time>
-
-
-    <h1 itemprop="name">IDE, ATA, SCSI 等等</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2008/12/20/-e8-8e-b7-e5-8f-96-cpu-e5-ba-8f-e5-88-97-e5-8f-b7/" title="获取 CPU 序列号" itemprop="url">
-  
-
-    <time datetime="2008-12-21T04:37:55.000Z" itemprop="datePublished">Dec 20 2008</time>
-
-
-    <h1 itemprop="name">获取 CPU 序列号</h1>
-
-  </a>
-</section>
-
-
-  <nav id="page-nav" class="clearfix archive-nav">
-    <a class="extend prev" rel="prev" href="/categories/Programming/page/5/"><span></span>Prev</a><a class="page-number" href="/categories/Programming/">1</a><span class="space">&hellip;</span><a class="page-number" href="/categories/Programming/page/4/">4</a><a class="page-number" href="/categories/Programming/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/categories/Programming/page/7/">7</a><a class="page-number" href="/categories/Programming/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/categories/Programming/page/16/">16</a><a class="extend next" rel="next" href="/categories/Programming/page/7/">Next<span></span></a>
-  </nav>
-
+        
+      
+      <div class="clearfix"></div>
+    </footer>
   </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-02-02T07:58:33.000Z"><a href="/2009/02/01/virtual-function-e7-9a-84-e4-be-8b-e5-ad-90/">Feb 1 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/02/01/virtual-function-e7-9a-84-e4-be-8b-e5-ad-90/">virtual function 的例子</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>本来这没什么可说的，C++中的虚函数不难理解，可是我看到不少教程中的例子给得不行，多说一句得。</p>
+<p>那些教程给出的是类似下面的例子：</p>
+<p>Base *p = new Derived;<br>p-&gt;virt_func();</p>
+<p>我认为这个例子不行，只能显示虚函数啥样子，却不能说明白为什么要有虚函数。其实，至少我认为，虚函数是为了给函数传递参数用的，我使用基类指针作为函数参数类型的定义，但调用时却可以传递给它子类的指针，可虚函数的行为却是实参类型中的对应方法。我认为这才是虚函数的意义，为此我写了下面一个程序，顺便练练了刚学成的template recursion。</p>
+<p>[cpp]</p>
+<h1 id="include">include</h1>
+<p>template<br>class C: public C<br>{<br>    public:<br>        virtual void foo();<br>};</p>
+<p>template<br>void C::foo()<br>{<br>    std::cout&lt;&lt;id&lt;&lt;std::endl;<br>}</p>
+<p>template<br>class C<br>{<br>    public:<br>        virtual void foo();<br>};</p>
+<p>void C::foo()<br>{<br>    std::cout&lt;&lt;0&lt;&lt;std::endl;<br>}</p>
+<p>void func(C *arg)<br>{<br>    arg-&gt;foo();<br>}</p>
+<p>int main()<br>{<br>    C C1;<br>    C C2;<br>    C C3;</p>
+<pre><code><span class="func"><span class="keyword">func</span><span class="params">(&amp;amp;C1)</span></span>;
+<span class="func"><span class="keyword">func</span><span class="params">(&amp;amp;C2)</span></span>;
+<span class="func"><span class="keyword">func</span><span class="params">(&amp;amp;C3)</span></span>;
+<span class="keyword">return</span> <span class="number">0</span>;
+</code></pre><p>}<br>[/cpp] </p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-01-31T04:34:37.000Z"><a href="/2009/01/30/returing-void/">Jan 30 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/01/30/returing-void/">Returning void</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>在一个 void 函数中返回void是不是允许的？这是一个比较有意思的问题。为此我查了一下C99和C++标准，它们的规定是不同的。</p>
+<p>在标准C中，这是不允许的，参见C99 6.8.6.4：</p>
+<blockquote>
+<p>A return statement with an expression shall not appear in a function whose return type<br>is void. A return statement without an expression shall only appear in a function<br>whose return type is void.<br>写得很清楚，没什么好说的。C++不同，C++标准是完全允许的，第6.6.3节第三段写道：<br>A return statement with an expression of type “cv void”can be used only in functions<br>with a return type of cv void; the expression is evaluated just before the function<br>returns to its caller.<br>我想C++之所以这么做是为了模板考虑的，看下面的代码片段：<br>[cpp]<br>template<br>T func(T (*pf)())<br>{<br>    return pf();<br>}</p>
+</blockquote>
+<p>void foo() {}</p>
+<p>int main()<br>{<br>        func(foo);<br>        return 0;<br>}<br>[/cpp] </p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-01-30T04:19:10.000Z"><a href="/2009/01/29/auto-ptr-e5-92-8c-shared-ptr/">Jan 29 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/01/29/auto-ptr-e5-92-8c-shared-ptr/">auto_ptr 和 shared_ptr</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>偶然的机会看到boost里还有一个shared_ptr型智能指针，费解，C++标准库里不是有auto_ptr了已经？我们先翻出源代码来看看。</p>
+<p>先看auto_ptr，因为它比较简单。既然它在标准库里，那么我们就在gcc的代码中找，恩，最后确定在libstdc++-v3/include/backward/auto_ptr.h里面。说实话，auto_ptr真是太简单了，里面的私有变量就一个：</p>
+<p>private:<br>  _Tp* _M_ptr;</p>
+<p>其它操作皆是围绕这个进行的，你自己猜都能猜到，看看吧，构造函数中的一个：<br>[cpp]<br>explicit<br>  auto_ptr(element_type<em> <strong>p = 0) throw() : _M_ptr(</strong>p) { }<br>[/cpp]<br>析构函数：<br>[cpp]<br>~auto_ptr() { delete _M_ptr; }<br>[/cpp]<br>重载的赋值运算符：<br>[cpp]<br>      template<br>        auto_ptr&amp;<br>        operator=(auto_ptr&amp; <strong>a) throw()<br>        {<br>          reset(</strong>a.release());<br>          return </em>this;<br>        }<br>[/cpp]<br>调用了自己的reset和release方法，按住不表，下面会介绍。重载的提领运算符：<br>[cpp]<br>      element_type&amp;<br>      operator<em>() const throw()<br>      {<br>        _GLIBCXX_DEBUG_ASSERT(_M_ptr != 0);<br>        return </em>_M_ptr;<br>      }<br>[/cpp]</p>
+<p>成员运算符：<br>[cpp]<br>      element_type*<br>      operator-&gt;() const throw()<br>      {<br>        _GLIBCXX_DEBUG_ASSERT(_M_ptr != 0);<br>        return _M_ptr;<br>      }<br>[/cpp]</p>
+<p>get()方法：</p>
+<p>[cpp]<br>      element_type*<br>      get() const throw() { return _M_ptr; }<br>[/cpp]</p>
+<p>release()方法：<br>[cpp]<br>      element_type<em><br>      release() throw()<br>      {<br>        element_type</em> <strong>tmp = _M_ptr;<br>        _M_ptr = 0;<br>        return </strong>tmp;<br>      }<br>[/cpp]</p>
+<p>reset()方法：<br>[cpp]<br>      void<br>      reset(element_type* <strong>p = 0) throw()<br>      {<br>        if (</strong>p != _M_ptr)<br>          {<br>            delete _M_ptr;<br>            _M_ptr = __p;<br>          }<br>      }<br>[/cpp]</p>
+<p>这些应该没什么难理解的，可能除了那个成员运算符，只说一句：C++会把foo-&gt;bar()翻译成：(foo.operator-&gt;())-&gt;bar()。</p>
+<p>从上面我们可以看出，auto_ptr明显没有计数引用，而shared_ptr和它的最大区别就是它有计数。shared_ptr的源代码在boost/shared_ptr.hpp里。先看它的私有变量：</p>
+<p>  T * px;                     // contained pointer<br>  boost::detail::shared_count pn;    // reference counter</p>
+<p>多了一个引用计数器，是一个boost::detail::shared_count类型，再翻源代码boost/detail/shared_count.hpp，只看用到的三个方法：<br>[cpp]<br>    bool unique() const // nothrow<br>    {<br>        return use_count() == 1;<br>    }</p>
+<pre><code><span class="keyword">void</span> swap(shared_count &amp;amp; r) <span class="comment">// nothrow</span>
+{
+    sp_counted_base * tmp = r.pi_;
+    r.pi_ = pi_;
+    pi_ = tmp;
+}
+
+<span class="keyword">long</span> use_count() <span class="keyword">const</span> <span class="comment">// nothrow</span>
+{
+    <span class="keyword">return</span> pi_ != <span class="number">0</span>? pi_-&amp;gt;use_count(): <span class="number">0</span>;
+}
+</code></pre><p>[/cpp]<br>呃，还有一个不能漏了，赋值运算符：<br>[cpp]<br>    shared<em>count &amp; operator= (shared_count const &amp; r) // nothrow<br>    {<br>        sp_counted_base * tmp = r.pi</em>;</p>
+<pre><code>    <span class="keyword">if</span>( tmp != pi<span class="number">_</span> )
+    {
+        <span class="keyword">if</span>( tmp != <span class="number">0</span> ) tmp-&amp;<span class="keyword">gt</span>;add_ref_copy();
+        <span class="keyword">if</span>( pi<span class="number">_</span> != <span class="number">0</span> ) pi<span class="number">_</span>-&amp;<span class="keyword">gt</span>;release();
+        pi<span class="number">_</span> = tmp;
+    }
+
+    <span class="keyword">return</span> *this;
+}
+</code></pre><p>[/cpp]<br>再回过头去看shared_ptr的源代码：<br>[cpp]<br>    reference operator<em> () const // never throws<br>    {<br>        BOOST_ASSERT(px != 0);<br>        return </em>px;<br>    }</p>
+<pre><code>T * <span class="keyword">operator</span>-&amp;gt; () <span class="keyword">const</span> <span class="comment">// never throws</span>
+{
+    BOOST_ASSERT(px != <span class="number">0</span>);
+    <span class="keyword">return</span> px;
+}
+
+T * get() <span class="keyword">const</span> <span class="comment">// never throws</span>
+{
+    <span class="keyword">return</span> px;
+}
+
+<span class="keyword">bool</span> <span class="keyword">operator</span>! () <span class="keyword">const</span> <span class="comment">// never throws</span>
+{
+    <span class="keyword">return</span> px == <span class="number">0</span>;
+}
+
+<span class="keyword">bool</span> unique() <span class="keyword">const</span> <span class="comment">// never throws</span>
+{
+    <span class="keyword">return</span> pn.unique();
+}
+
+<span class="keyword">long</span> use_count() <span class="keyword">const</span> <span class="comment">// never throws</span>
+{
+    <span class="keyword">return</span> pn.use_count();
+}
+
+<span class="keyword">void</span> swap(<span class="built_in">shared_ptr</span> &amp;amp; other) <span class="comment">// never throws</span>
+{
+    std::swap(px, other.px);
+    pn.swap(other.pn);
+}
+
+<span class="built_in">shared_ptr</span> &amp;amp; <span class="keyword">operator</span>=( <span class="built_in">shared_ptr</span> &amp;amp;&amp;amp; r ) <span class="comment">// never throws</span>
+{
+    this_type( <span class="keyword">static_cast</span>( r ) ).swap( *<span class="keyword">this</span> );
+    <span class="keyword">return</span> *<span class="keyword">this</span>;
+}
+</code></pre><p>[/cpp]</p>
+<p>这样一切都明了了。所以，auto_ptr和shared_ptr在使用上的区别也好理解了，下面的小程序可以展示：</p>
+<p>[cpp]</p>
+<h1 id="include">include</h1>
+<h1 id="include-1">include</h1>
+<h1 id="include-2">include</h1>
+<p>using namespace boost;<br>using std::cout;<br>using std::endl;<br>using std::auto_ptr;</p>
+<p>class A<br>{<br>    public:<br>    void print()<br>    {<br>        cout&lt;&lt;&quot;hello&quot;&lt;&lt;endl;<br>    }<br>};</p>
+<p>int main()<br>{<br>    auto_ptr<a> aptr1(new A);<br>    auto_ptr<a> aptr2;</a></a></p>
+<pre><code>aptr2 <span class="subst">=</span> aptr1;
+aptr2<span class="subst">-&amp;</span><span class="literal">gt</span>;print(); <span class="comment">//Ok</span>
+cout<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span>quot;pointer <span class="keyword">in</span> aptr1 is: <span class="subst">&amp;</span>quot;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;aptr1<span class="built_in">.</span>get()<span class="subst">&amp;</span><span class="literal">lt</span>;print(); <span class="comment">//Wrong!</span>
+
+A <span class="subst">*</span> a <span class="subst">=</span> <span class="literal">new</span> A;
+shared_ptr<span class="subst">&lt;</span>a<span class="subst">&gt;</span> sptr1(a);
+shared_ptr<span class="subst">&lt;</span>a<span class="subst">&gt;</span> sptr2(sptr1); <span class="comment">//alright</span>
+sptr2 <span class="subst">=</span> sptr1;
+sptr2<span class="subst">-&amp;</span><span class="literal">gt</span>;print(); <span class="comment">//ok</span>
+sptr1<span class="subst">-&amp;</span><span class="literal">gt</span>;print(); <span class="comment">//ok</span>
+
+int <span class="subst">*</span> b <span class="subst">=</span> <span class="literal">new</span> int;
+shared_ptr sptr3(b);
+shared_ptr sptr4(b); <span class="comment">//WRONG!!</span>
+
+<span class="keyword">return</span> <span class="number">0</span>;
+</code></pre><p>}<br>[/cpp] </p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-01-29T07:23:04.000Z"><a href="/2009/01/28/-e7-bc-96-e7-a8-8b-e5-a4-aa-e9-9a-be-ef-bc-8c-e6-88-91-e4-bb-ac-e5-8e-bb-e5-86-99-e8-84-9a-e6-9c-ac-e5-90-a7-ef-bc-81/">Jan 28 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/01/28/-e7-bc-96-e7-a8-8b-e5-a4-aa-e9-9a-be-ef-bc-8c-e6-88-91-e4-bb-ac-e5-8e-bb-e5-86-99-e8-84-9a-e6-9c-ac-e5-90-a7-ef-bc-81/">编程太难，我们去写脚本吧！</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><a href="http://www.perl.com" target="_blank" rel="external">perl.com</a> 上发布了Larry Wall的<a href="http://www.perl.com/pub/a/2007/12/06/soto-11.html" target="_blank" rel="external">一篇文章</a>，题目就是本文的标题，非常有意思。</p>
+<p>文中从脚本语言的历史谈起，提到了脚本语言的一些特征，和设计脚本语言的方方面面。当然了，Larry写这篇文章的目的之一肯定就是鼓吹Perl6了，看来他是力挺Perl6的。总之，推荐读一下这篇文章。</p>
+<p>另，很期待perl6的到来，不知道得等到哪一年的圣诞节啦～～！</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-01-28T05:45:07.000Z"><a href="/2009/01/27/-e5-af-b9-e6-a0-87-e5-87-86-e7-9a-84-e4-b8-80-e6-9d-a1-e8-af-84-e8-ae-ba/">Jan 27 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/01/27/-e5-af-b9-e6-a0-87-e5-87-86-e7-9a-84-e4-b8-80-e6-9d-a1-e8-af-84-e8-ae-ba/">对标准的一条评论</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <blockquote>
+<p>The standard is written in a variant of English sometimes called<br>standardese.  It’s designed (or at least intended) to be<br>absolutely precise and unambiguous, even at the cost of<br>understandability.  It doesn’t always succeed with its intent,<br>but in all cases, precision and a lack of ambiguity have<br>precedence over readability.<br>非常精辟的评价～！来自James Kanze。</p>
+</blockquote>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-01-22T07:18:42.000Z"><a href="/2009/01/21/reentrant-ef-bc-8cthread-safe-e5-92-8c-async-signal-safe/">Jan 21 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/01/21/reentrant-ef-bc-8cthread-safe-e5-92-8c-async-signal-safe/">reentrant，thread-safe 和 async-signal-safe</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>先上定义吧，POSIX对它们的<a href="http://www.opengroup.org/onlinepubs/000095399/basedefs/xbd_chap03.html" target="_blank" rel="external">定义</a>分别是：</p>
+<blockquote>
+<p><strong>Reentrant Function</strong></p>
+<p>A function whose effect, when called by two or more threads, is guaranteed to be as if the threads each executed the function one after another in an undefined order, even if the actual execution is interleaved.</p>
+<p><strong>Thread-Safe</strong></p>
+<p>A function that may be safely invoked concurrently by multiple threads. <em>Each function defined in the System Interfaces volume of IEEE Std 1003.1-2001 is thread-safe unless explicitly stated otherwise.</em></p>
+<p><strong>Async-Signal-Safe Function</strong></p>
+<p>A function that may be invoked, without restriction, from signal-catching functions. <em>No function is async-signal-safe unless explicitly described as such.</em><br>可重入我们都清楚，顾名思义，就是可以重新进入，进一步讲就是，用相同的输入，每次调用函数一定会返回相同的结果。这就是可重入。<a href="http://en.wikipedia.org/wiki/Reentrant_(subroutine" target="_blank" rel="external">wikipedia上</a>)有更严谨的定义：</p>
+<ul>
+<li>Must hold no static (global) non-constant data.</li>
+<li>Must not return the address to static (global) non-constant data.</li>
+<li>Must work only on the data provided to it by the caller.</li>
+<li>Must not rely on locks to singleton resources.</li>
+<li>Must not call non-reentrant computer programs or routines.<br>然后是<a href="http://en.wikipedia.org/wiki/Thread-safety" target="_blank" rel="external">线程安全</a>，从定义上看，它仅要求了可以安全地被线程并发执行。这是一个相对较低的要求，因为它内部可以访问全局变量或静态变量，不过需要加锁，也就是说，只要是在线程可控之中的，每次调用它返回不同的结果也没关系。到这里我们可以看出：<strong>可重入函数一定是线程安全的，而反之未必。</strong>wikipedia上也写道：<br>Therefore, reentrancy is a more fundamental property than thread-safety and by definition, leads to thread-safety: Every reentrant function is thread-safe, however, not every thread-safe function is reentrant.<br>例子，有很多，最出名的莫过于strtok(3)，我们认识可重入这个概念就是从它开始的，它内部适用了静态变量，显然是不可重入的（它的可重入版是strtok_r(3)）。其次应该是malloc(3)，嘿嘿，其实也很明显，我就不多说了。但是，strtok(3)<strong>不是</strong>线程安全的，而malloc(3)是。</li>
+</ul>
+</blockquote>
+<p>还有一个概念我们不常碰到，那就是异步信号安全，它其实也很简单，就是一个函数可以在信号处理函数中被安全地调用。看起来它似乎和线程安全类似，其实不然，我们知道信号是异步产生的，但是，信号处理函数是打断主函数（相对于信号处理函数）后执行，执行完后又返回主函数中去的。也就是说，它<strong>不是</strong>并发的！</p>
+<p>一个函数，它访问了全局变量，那么它就是不可重入的，不过我们可以把它变成线程安全的，加上锁就可以，但是这种方法并不会把它变成异步信号安全的，而几乎可以肯定的是，使用了锁的一定不是信号安全的（除非屏蔽了信号，显然），信号完全可以在锁加上后解开前到来，然后就很可能形成死锁…… <a href="http://www.cocoadev.com/index.pl?SignalSafety" target="_blank" rel="external">这里</a>有个很好的例子。所以，可重入的函数也一定是异步信号安全的，而反之未必。可以参考<a href="http://www.ibm.com/developerworks/linux/library/l-reent.html" target="_blank" rel="external">IBM上一篇不错的文章</a>。</p>
+<p>关于异步信号安全的函数列表可以参考<a href="http://www.kernel.org/doc/man-pages/online/pages/man7/signal.7.html" target="_blank" rel="external">man 7 signal</a>；关于<strong>非</strong>线程安全的函数列表可以参考<a href="http://book.chinaunix.net/special/ebook/addisonWesley/APUE2/0201433079/ch12lev1sec5.html" target="_blank" rel="external">APUE第12.5节</a> ；关于可重入函数列表，可参考<a href="http://book.chinaunix.net/special/ebook/addisonWesley/APUE2/0201433079/ch10lev1sec6.html#ch10lev1sec6" target="_blank" rel="external">APUE第10.6节</a>。另请<a href="http://www.unix.org/whitepapers/reentrant.html" target="_blank" rel="external">参阅</a>。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-01-21T07:41:25.000Z"><a href="/2009/01/20/-e7-94-a8-sigaction2-e7-9a-84-e5-8e-9f-e5-9b-a0/">Jan 20 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/01/20/-e7-94-a8-sigaction2-e7-9a-84-e5-8e-9f-e5-9b-a0/">用 sigaction(2) 的原因</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Linux <a href="http://www.kernel.org/doc/man-pages/online/pages/man2/signal.2.html" target="_blank" rel="external">man page中</a>提到：</p>
+<blockquote>
+<p>The behavior of signal() varies across Unix versions, and has also varied<br>historically across different versions of Linux.  Avoid its use: use sigaction(2) instead.<br>…<br>The only portable use of signal() is to set a signal’s disposition to SIG_DFL or SIG_IGN. The semantics when using signal() to establish a signal handler vary across systems (and POSIX.1 explicitly permits this variation); do not use it for this purpose.<br>所以signal(2)的可移植性首先就差了一截子。还有就是，signal(2)也不能像sigaction(2)那样去屏蔽信号，<a href="http://www.opengroup.org/onlinepubs/000095399/functions/sigaction.html" target="_blank" rel="external">POSIX中</a>提到：<br>When a signal is caught by a signal-catching function installed by<br>sigaction(), a new signal mask is calculated and installed for the<br>duration of the signal-catching function (or until a call to either<br>sigprocmask() or sigsuspend() is made). This mask is formed by taking<br>the union of the current signal mask and the value of the sa_mask for<br>the signal being delivered unless SA_NODEFER or<br>SA_RESETHAND is set, And then including the signal being<br>delivered. If and when the user’s signal handler returns normally, the<br>original signal mask is restored.</p>
+</blockquote>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-01-18T07:09:10.000Z"><a href="/2009/01/17/ide-ata-scsi-e7-ad-89-e7-ad-89/">Jan 17 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/01/17/ide-ata-scsi-e7-ad-89-e7-ad-89/">IDE, ATA, SCSI 等等</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>关于硬盘的术语有一大堆，而且和很多别的计算机术语一样，界定不清，含义模糊。在这里简单澄清一下，但我不排除你看了之后会更糊涂。:^)</p>
+<p><strong>IDE</strong>：Integrated Drive Electronics 的缩写。最早的硬盘接口，后来被 ATA 标准所取代，准确地讲应该是 ATA-1。所以有时也被称为 IDE/ATA，可参见<a href="http://www.pcguide.com/ref/hdd/if/ide/over.htm" target="_blank" rel="external">其历史介绍</a>。后来，几乎和ATA-1同时出现的 <strong>EIDE</strong>（Enhanced IDE ）又被规范化为 ATA-2。</p>
+<p><strong>ATA</strong>：Advanced Technology Attachment 的缩写，存储设备（并非仅限硬盘）的接口标准。有时也被称为 IDE。IDE 在 ATA 标准出现之前就有了，所以估计这个也是因为历史原因。不过根据<a href="http://en.wikipedia.org/wiki/AT_Attachment" target="_blank" rel="external">wikipedia记载</a>，这两个术语还是有些许不同之处的：</p>
+<blockquote>
+<p>The terms “integrated drive electronics” (IDE), “enhanced IDE” and “EIDE” have come to be used interchangeably with ATA (now Parallel ATA). However the terms “IDE” and “EIDE” are at best imprecise. Every ATA drive is an “integrated drive electronics” drive, but not every “integrated drive electronics” drive is an ATA drive, as the term also correctly describes SCSI drives: They have the drive controllers on board and present the drive to the host as an array of blocks.<br>后来就都是 ATA 了。又因为 <strong>SATA</strong>（Serial ATA，即 ATA-7）的出现，所以老的 ATA 又都被称为 <strong>PATA</strong>（Parallel ATA）了。</p>
+</blockquote>
+<p><a href="http://en.wikipedia.org/wiki/SCSI" target="_blank" rel="external"><strong>SCSI</strong></a>：Small Computer  System Interface 的缩写，另一个完全不同的标准，定义了内部的命令，协议和接口。SCSI更快，当然也更贵，多用在中，高性能服务器上，不过apple的mac也是最早使用它的计算机之一。新的SCSI标准，<a href="http://en.wikipedia.org/wiki/Serial_Attached_SCSI" target="_blank" rel="external">Serial  Attached SCSI</a>又被简称为<strong>SAS</strong>。</p>
+<p>SCSI 和前面的总起来并列为三个标准：PATA，SATA，SCSI。其中SATA应该是会继续流行的PC机硬盘接口。</p>
+<p><strong>HDD</strong>：Hard Disk Drive 的缩写，就是我们通常所说的硬盘，磁盘。</p>
+<p><strong>SSD</strong>：Solid State Drive 的缩写，通常我们称为固态硬盘。SSD耗电少，抗震性能好，但比起HDD来要贵一些，而且容量通常也不像HDD那么大。</p>
+<p><strong>RAID</strong>：Redundant Array of Independent Disks 的缩写，就是我们通常所说的磁盘阵列。RAID是对多块硬盘的组合，需要硬件支持（貌似也有从文件系统层支持RAID的，btrfs？）。根据不同的组合方式，RAID又分为RAID0到RAID7，详细参考<a href="http://en.wikipedia.org/wiki/RAID" target="_blank" rel="external">这里</a>。</p>
+<p>参考：</p>
+<p><a href="http://www.91wp.com/Article/jswz/200704/350.html" target="_blank" rel="external">http://www.91wp.com/Article/jswz/200704/350.html</a><br><a href="http://www.pcbuyerbeware.co.uk/IDE.htm" target="_blank" rel="external">http://www.pcbuyerbeware.co.uk/IDE.htm</a><br><a href="http://www.pcguide.com/ref/hdd/if/ide/over.htm" target="_blank" rel="external">http://www.pcguide.com/ref/hdd/if/ide/over.htm</a><br><a href="http://en.wikipedia.org/wiki/RAID" target="_blank" rel="external">http://en.wikipedia.org/wiki/RAID</a><br><a href="http://en.wikipedia.org/wiki/SCSI" target="_blank" rel="external">http://en.wikipedia.org/wiki/SCSI</a><br><a href="http://en.wikipedia.org/wiki/AT_Attachment" target="_blank" rel="external">http://en.wikipedia.org/wiki/AT_Attachment</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2008-12-21T04:37:55.000Z"><a href="/2008/12/20/-e8-8e-b7-e5-8f-96-cpu-e5-ba-8f-e5-88-97-e5-8f-b7/">Dec 20 2008</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2008/12/20/-e8-8e-b7-e5-8f-96-cpu-e5-ba-8f-e5-88-97-e5-8f-b7/">获取 CPU 序列号</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>受lshw的启发，自己动手写了一个获取Intel CPU序列号的小程序，顺便练练gcc内嵌汇编。过程中参考了Intel手册和<a href="http://ezix.org/project/wiki/HardwareLiSter" target="_blank" rel="external">lshw源代码</a>。:-)</p>
+<p>注意：并不是所有的Intel CPU都有序列号。我的CPU就不行，又在别的机器上测的。</p>
+<p>[c]</p>
+<h1 id="include">include</h1>
+<p>typedef struct {<br>    unsigned int eax;<br>    unsigned int edx;<br>    unsigned int ecx;<br>} cpusn_t;</p>
+<p>int get<em>cpusn(cpusn<em>t *sn)<br>{<br>    sn-&gt;eax = 1;<br>    <strong>asm</strong> (<br>        “cpuidnt”<br>        :”=c”(sn-&gt;ecx), “=d”(sn-&gt;edx), “=a” (sn-&gt;eax)<br>        :”2” (sn-&gt;eax)<br>    );<br>    if ((sn-&gt;edx &amp; (1&lt;eax = 3;<br>    __asm</em></em> (<br>        “cpuidnt”<br>        :”=c”(sn-&gt;ecx), “=d”(sn-&gt;edx), “=a” (sn-&gt;eax)<br>        :”2” (sn-&gt;eax)<br>    );<br>    return 0;<br>}<br>void print_cpusn(cpusn_t sn)<br>{<br>    char buf[30];<br>    snprintf(buf, sizeof(buf), “%04X-%04X-%04X-%04X-%04X-%04X”,<br>        sn.eax &gt;&gt; 16, sn.eax &amp; 0xffff,<br>        sn.edx &gt;&gt; 16, sn.edx &amp; 0xffff,<br>        sn.ecx &gt;&gt; 16, sn.ecx &amp; 0xffff);<br>    printf(“%sn”, buf);</p>
+<p>}</p>
+<p>int main(void)<br>{<br>    cpusn_t sn = {0, 0, 0};<br>    if (get_cpusn(&amp;sn) == 0) {<br>        print_cpusn(sn);<br>    } else {<br>        //printf(“edx = %xn”, sn.edx);<br>        printf(“Doesn’t support this.n”);<br>    }<br>    return 0;<br>}<br>[/c] </p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+
+  <nav id="pagination">
+  
+    <a href="/categories/Programming/page/5/" class="alignleft prev">Prev</a>
+  
+  
+    <a href="/categories/Programming/page/7/" class="alignright next">Next</a>
+  
+  <div class="clearfix"></div>
+</nav>
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:wangcong.org">
+  </form>
 </div>
 
-      </div>
-      <footer><div id="footer" >
-	
-	
-	<div class="social-font" class="clearfix">
-		
-		
-		<a href="https://github.com/congwang" target="_blank" class="icon-github" title="github"></a>
-		
-		
-		
-		<a href="https://twitter.com/conglinux" target="_blank" class="icon-twitter" title="twitter"></a>
-		
-		
-		
-		
-		
-		
-		
-	</div>
-		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2016 
-		
-		<a href="http://wangcong.org/about" target="_blank" title="Cong Wang">Cong Wang</a>
-		
-		</p>
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Book-Reviews/">Book Reviews</a><small>18</small></li>
+  
+    <li><a href="/categories/China/">China</a><small>2</small></li>
+  
+    <li><a href="/categories/Collection/">Collection</a><small>25</small></li>
+  
+    <li><a href="/categories/Life/">Life</a><small>324</small></li>
+  
+    <li><a href="/categories/Linux-Application/">Linux Application</a><small>73</small></li>
+  
+    <li><a href="/categories/Linux-Kernel/">Linux Kernel</a><small>64</small></li>
+  
+    <li><a href="/categories/Love/">Love</a><small>6</small></li>
+  
+    <li><a href="/categories/Movies/">Movies</a><small>19</small></li>
+  
+    <li><a href="/categories/Programming/">Programming</a><small>152</small></li>
+  
+    <li><a href="/categories/Science-Fiction/">Science Fiction</a><small>8</small></li>
+  
+    <li><a href="/categories/Travel/">Travel</a><small>19</small></li>
+  
+  </ul>
 </div>
-</footer>
-      <script src="/js/jquery-2.0.3.min.js"></script>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/geek/">geek</a><small>1</small></li>
+  
+    <li><a href="/tags/handling/">handling</a><small>1</small></li>
+  
+    <li><a href="/tags/joke/">joke</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/tags/signal/">signal</a><small>1</small></li>
+  
+    <li><a href="/tags/unix/">unix</a><small>1</small></li>
+  
+    <li><a href="/tags/vim/">vim</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2017 Cong Wang
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 <script src="/js/jquery.imagesloaded.min.js"></script>
 <script src="/js/gallery.js"></script>
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.navbar').click(function(){
-    $('header nav').toggleClass('shownav');
-  });
-  var myWidth = 0;
-  function getSize(){
-    if( typeof( window.innerWidth ) == 'number' ) {
-      myWidth = window.innerWidth;
-    } else if( document.documentElement && document.documentElement.clientWidth) {
-      myWidth = document.documentElement.clientWidth;
-    };
-  };
-  var m = $('#main'),
-      a = $('#asidepart'),
-      c = $('.closeaside'),
-      o = $('.openaside');
-  $(window).resize(function(){
-    getSize(); 
-    if (myWidth >= 1024) {
-      $('header nav').removeClass('shownav');
-    }else
-    {
-      m.removeClass('moveMain');
-      a.css('display', 'block').removeClass('fadeOut');
-      o.css('display', 'none');
-        
-    }
-  });
-  c.click(function(){
-    a.addClass('fadeOut').css('display', 'none');
-    o.css('display', 'block').addClass('fadeIn');
-    m.addClass('moveMain');
-  });
-  o.click(function(){
-    o.css('display', 'none').removeClass('beforeFadeIn');
-    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
-    m.removeClass('moveMain');
-  });
-  $(window).scroll(function(){
-    o.css("top",Math.max(80,260-$(this).scrollTop()));
-  });
-});
-</script>
-
-
-
-
 
 <script type="text/javascript">
-
 var disqus_shortname = 'disqus_ciEwcJAF0E';
 
-(function(){
-  var dsq = document.createElement('script');
-  dsq.type = 'text/javascript';
-  dsq.async = true;
-  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-}());
 (function(){
   var dsq = document.createElement('script');
   dsq.type = 'text/javascript';
@@ -323,33 +661,13 @@ var disqus_shortname = 'disqus_ciEwcJAF0E';
 
 
 
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
 
-
-
-
-
-<!-- Analytics Begin -->
-
-
-
-
-
-<!-- Analytics End -->
-
-<!-- Totop Begin -->
-
-	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
-	</div>
-	<script src="/js/totop.js"></script>
-
-<!-- Totop End -->
-
-<!-- MathJax Begin -->
-<!-- mathjax config similar to math.stackexchange -->
-
-
-<!-- MathJax End -->
-
-    </body>
-   </html>
+</body>
+</html>

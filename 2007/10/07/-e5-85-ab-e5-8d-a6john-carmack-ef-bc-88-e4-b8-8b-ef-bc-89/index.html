@@ -1,398 +1,197 @@
-
- <!DOCTYPE HTML>
-<html >
+<!DOCTYPE HTML>
+<html>
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   
-    <title>八卦John Carmack（下） | A Geek&#39;s Page</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
-    
-    <meta name="author" content="Cong Wang">
-    
-    <meta name="description" content="我们再来看看JC大哥非技术方面值得我们学习的地方吧。这里面，最值得提的就是JC老大退学的事乐。这件事有下面两种传说。一种是说：他不满意大学里面的教授，他曾经说过，最讨厌大学里面填鸭子式的教学，“那些教授为什么不给些项目我们做呢？他给我们一个项目，想做成怎么样，我们就一定做到”，终于最后他忍无可忍，在">
-    
-    
-    <meta name="description" content="我们再来看看JC大哥非技术方面值得我们学习的地方吧。这里面，最值得提的就是JC老大退学的事乐。这件事有下面两种传说。一种是说：他不满意大学里面的教授，他曾经说过，最讨厌大学里面填鸭子式的教学，“那些教授为什么不给些项目我们做呢？他给我们一个项目，想做成怎么样，我们就一定做到”，终于最后他忍无可忍，在两个学期后就退学了！（天哪，你们美国都填鸭啊！那我们中国岂不是在喂猪了？）另一种说法是：他考试的时">
-<meta property="og:type" content="article">
-<meta property="og:title" content="八卦John Carmack（下）">
-<meta property="og:url" content="http://wangcong.org/2007/10/07/-e5-85-ab-e5-8d-a6john-carmack-ef-bc-88-e4-b8-8b-ef-bc-89/">
-<meta property="og:site_name" content="A Geek's Page">
-<meta property="og:description" content="我们再来看看JC大哥非技术方面值得我们学习的地方吧。这里面，最值得提的就是JC老大退学的事乐。这件事有下面两种传说。一种是说：他不满意大学里面的教授，他曾经说过，最讨厌大学里面填鸭子式的教学，“那些教授为什么不给些项目我们做呢？他给我们一个项目，想做成怎么样，我们就一定做到”，终于最后他忍无可忍，在两个学期后就退学了！（天哪，你们美国都填鸭啊！那我们中国岂不是在喂猪了？）另一种说法是：他考试的时">
-<meta property="og:image" content="/images/">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="八卦John Carmack（下）">
-<meta name="twitter:description" content="我们再来看看JC大哥非技术方面值得我们学习的地方吧。这里面，最值得提的就是JC老大退学的事乐。这件事有下面两种传说。一种是说：他不满意大学里面的教授，他曾经说过，最讨厌大学里面填鸭子式的教学，“那些教授为什么不给些项目我们做呢？他给我们一个项目，想做成怎么样，我们就一定做到”，终于最后他忍无可忍，在两个学期后就退学了！（天哪，你们美国都填鸭啊！那我们中国岂不是在喂猪了？）另一种说法是：他考试的时">
-<meta name="twitter:creator" content="@conglinux">
+  <title>八卦John Carmack（下） | A Geek&#39;s Page</title>
+  <meta name="author" content="Cong Wang">
+  
+  <meta name="description" content="我们再来看看JC大哥非技术方面值得我们学习的地方吧。这里面，最值得提的就是JC老大退学的事乐。这件事有下面两种传说。一种是说：他不满意大学里面的教授，他曾经说过，最讨厌大学里面填鸭子式的教学，“那些教授为什么不给些项目我们做呢？他给我们一个项目，想做成怎么样，我们就一定做到”，终于最后他忍无可忍，在">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
+  <meta property="og:title" content="八卦John Carmack（下）"/>
+  <meta property="og:site_name" content="A Geek&#39;s Page"/>
 
-    
-    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
-    
-    
-    <link rel="icon" href="/img/favicon.ico">
-    
-    
-    <link rel="apple-touch-icon" href="/img/jacman.jpg">
-    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
-    
-    <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
 
 </head>
 
-  <body>
-    <header>
-      <div>
-		
-			<div id="imglogo">
-				<a href="/"><img src="/img/logo.png" alt="A Geek&#39;s Page" title="A Geek&#39;s Page"/></a>
-			</div>
-			
-			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="A Geek&#39;s Page">A Geek&#39;s Page</a></h1>
-				<h2 class="blog-motto"></h2>
-			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
-			</a></div>
-			<nav class="animated">
-				<ul>
-					<ul>
-					 
-						<li><a href="/">Home</a></li>
-					
-						<li><a href="/archives">Archives</a></li>
-					
-						<li><a href="/about-2">About</a></li>
-					
-					<li>
- 					
-					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
-						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
-						<input type="hidden" name="q" value="site:wangcong.org">
-					</form>
-					
-					</li>
-				</ul>
-			</nav>			
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">A Geek&#39;s Page</a></h1>
+  <h2><a href="/"></a></h2>
 </div>
-    </header>
-    <div id="container">
-      <div id="main" class="post" itemscope itemprop="blogPost">
-  
-	<article itemprop="articleBody"> 
-		<header class="article-info clearfix">
-  <h1 itemprop="name">
+<nav id="main-nav" class="alignright">
+  <ul>
     
-      <a href="/2007/10/07/-e5-85-ab-e5-8d-a6john-carmack-ef-bc-88-e4-b8-8b-ef-bc-89/" title="八卦John Carmack（下）" itemprop="url">八卦John Carmack（下）</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2007-10-08T03:26:24.000Z" itemprop="datePublished"> Published Oct 7 2007</time>
+      <li><a href="/">Home</a></li>
     
-  </p>
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
 </header>
-	<div class="article-content">
-		
-		<div id="toc" class="toc-article">
-			<strong class="toc-title">Contents</strong>
-		
-			
-		
-		</div>
-		
-		<p><img src="/images/" alt=""></p>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-10-08T03:26:24.000Z"><a href="/2007/10/07/-e5-85-ab-e5-8d-a6john-carmack-ef-bc-88-e4-b8-8b-ef-bc-89/">Oct 7 2007</a></time>
+      
+      
+  
+    <h1 class="title">八卦John Carmack（下）</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><img src="/images/" alt=""></p>
 <p>我们再来看看JC大哥非技术方面值得我们学习的地方吧。这里面，最值得提的就是JC老大退学的事乐。这件事有下面两种传说。一种是说：他不满意大学里面的教授，他曾经说过，最讨厌大学里面填鸭子式的教学，“那些教授为什么不给些项目我们做呢？他给我们一个项目，想做成怎么样，我们就一定做到”，终于最后他忍无可忍，在两个学期后就退学了！（天哪，你们美国都填鸭啊！那我们中国岂不是在喂猪了？）另一种说法是：他考试的时候，说卷子做的太简单了，能不能难一点儿的？老师说不行，别的同学有意见！然后他就不爽了，一怒之下就退学了。当然了，他因此和他的父母产生了隔阂，而他的父母后来看到他比他老子还牛，比他那老老实实念完大学的兄弟还牛N倍的时候也就开始支持他的工作乐。这是后话。在我看来，JC大哥对待大学的态度是非常正确的，在这里引用一下来教训一下悲哀的国人！</p>
 <blockquote>
 <p>JC认为：“如果你是为了正确的理由上学，那么学校将是一个很好的学习知识的场所，大学可以提供极为丰富的信息。‘我现在回想起自己的大学生活，觉得浪费了很多宝贵的时光，我当时应该使用他们的图形工作站和其它设备学习知识’。如果你只是为了获得一个学位，以便找到一份满意的工作，那么我并不支持；但是如果是为了结识聪明人、拓展知识面和学习新知识，那么我完全支持。我并不认为大学是不好的地方，但我并不支持这样的观点——‘你必须上大学，这是唯一的成功之路’。原因很简单，它并不是唯一的成功之路。我认为，对于一些年轻、迅速发展的行业，例如互连网和游戏设计而言，才能和工作经验比学位更加重要，我在招聘的时候从不问别人‘你是否有学位？’我更关心的是‘你做过什么? 能做什么？’。”<br>（每个被中国教育毒害过的人都应该好好读读上面JC老大的话，然后深刻反思一下自己。）</p>
 </blockquote>
 <p>JC另一点很值得我们学习就是他对待金钱的态度了，这 一点他和Gates差不多。Gates就不说了，人家是世界首富同时也是世界最大的慈善家，Gates夫妇现在已经捐献了他们所有财富的70%！再对比丁x、陈xx这些中国顶级富翁，实在是让人觉得汗颜呀。JC认为，现在他已经拥有了足够的财富，足以维持自己的生活，不必听命于任何人，也不需要想法赚更多的钱，因此没有任何人、任何公司对他产生严重的影响。再想想中国的很多贪官，本来已经很富有，但他们仍然屈从于拥有更多财物的诱惑，不惜使用不正当的手段，最终锒铛入狱……自食其果的说～～！</p>
 <p>JC的传奇就讲到这里乐，想知道更多关于此牛的故事就请买一本《Masters of DOOM》读读吧！静下心来，我们掩卷沉思一下：为什么我们不能成为牛人？牛人牛肯定也是有原因的，JC老大本身就是美国梦的样本，他结婚前可是每天坚持编程14个小时！牛是用时间砸出来的！你能做到你也照样牛！恩，这是乐观的结论。悲观一点儿，当然了，有些牛人牛也是靠天分的，比如Bill Joy和Donald Knuth这等牛。哎，不得不承认，有些东西还真是先天的，再努力也改变不了……</p>
+
+      
+    </div>
+    <footer>
+      
+        
   
-	</div>
-		<footer class="article-footer clearfix">
-<div class="article-catetags">
+  <div class="categories">
+    <a href="/categories/Programming/">Programming</a>
+  </div>
 
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Programming/">Programming</a>
-</div>
+        
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
 
-
-</div>
-
-
-
-	<div class="article-share" id="share">
-	
-	  <div data-url="http://wangcong.org/2007/10/07/-e5-85-ab-e5-8d-a6john-carmack-ef-bc-88-e4-b8-8b-ef-bc-89/" data-title="八卦John Carmack（下） | A Geek&#39;s Page" data-tsina="null" class="share clearfix">
-	  </div>
-	
-	</div>
-
-
-</footer>
-
-   	       
-	</article>
-	
-<nav class="article-nav clearfix">
- 
- <div class="prev" >
- <a href="/2007/10/10/-e8-ae-ba-e6-96-87-e7-bb-88-e4-ba-8e-e6-86-8b-e5-87-ba-e6-9d-a5-e4-ba-86/" title="论文终于憋出来了">
-  <strong>上一篇：</strong><br/>
-  <span>
-  论文终于憋出来了</span>
-</a>
-</div>
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
 
 
-<div class="next">
-<a href="/2007/10/06/-e5-85-ab-e5-8d-a6john-carmack-ef-bc-88-e4-b8-8a-ef-bc-89/"  title="八卦John Carmack（上）">
- <strong>下一篇：</strong><br/> 
- <span>八卦John Carmack（上）
-</span>
-</a>
-</div>
+<section id="comment">
+  <h1 class="title">Comments</h1>
 
-</nav>
-
-	
-
-<section id="comments" class="comment">
+  
   <div id="disqus_thread">
     <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
   </div>
+  
 </section>
 
-</div>  
-      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
-
-  <div id="toc" class="toc-aside">
-  <strong class="toc-title">Contents</strong>
- 
- 
- 
-  </div>
-
-<div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
-<aside class="clearfix">
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:wangcong.org">
+  </form>
+</div>
 
   
-<div class="categorieslist">
-	<p class="asidetitle">Categories</p>
-		<ul>
-		
-			<li><a href="/categories/Book-Reviews/" title="Book Reviews">Book Reviews<sup>18</sup></a></li>
-		
-			<li><a href="/categories/China/" title="China">China<sup>2</sup></a></li>
-		
-			<li><a href="/categories/Collection/" title="Collection">Collection<sup>25</sup></a></li>
-		
-			<li><a href="/categories/Life/" title="Life">Life<sup>324</sup></a></li>
-		
-			<li><a href="/categories/Linux-Application/" title="Linux Application">Linux Application<sup>73</sup></a></li>
-		
-			<li><a href="/categories/Linux-Kernel/" title="Linux Kernel">Linux Kernel<sup>64</sup></a></li>
-		
-			<li><a href="/categories/Love/" title="Love">Love<sup>6</sup></a></li>
-		
-			<li><a href="/categories/Movies/" title="Movies">Movies<sup>19</sup></a></li>
-		
-			<li><a href="/categories/Programming/" title="Programming">Programming<sup>152</sup></a></li>
-		
-			<li><a href="/categories/Science-Fiction/" title="Science Fiction">Science Fiction<sup>8</sup></a></li>
-		
-			<li><a href="/categories/Travel/" title="Travel">Travel<sup>19</sup></a></li>
-		
-		</ul>
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Book-Reviews/">Book Reviews</a><small>18</small></li>
+  
+    <li><a href="/categories/China/">China</a><small>2</small></li>
+  
+    <li><a href="/categories/Collection/">Collection</a><small>25</small></li>
+  
+    <li><a href="/categories/Life/">Life</a><small>324</small></li>
+  
+    <li><a href="/categories/Linux-Application/">Linux Application</a><small>73</small></li>
+  
+    <li><a href="/categories/Linux-Kernel/">Linux Kernel</a><small>64</small></li>
+  
+    <li><a href="/categories/Love/">Love</a><small>6</small></li>
+  
+    <li><a href="/categories/Movies/">Movies</a><small>19</small></li>
+  
+    <li><a href="/categories/Programming/">Programming</a><small>152</small></li>
+  
+    <li><a href="/categories/Science-Fiction/">Science Fiction</a><small>8</small></li>
+  
+    <li><a href="/categories/Travel/">Travel</a><small>19</small></li>
+  
+  </ul>
 </div>
 
 
   
-<div class="tagslist">
-	<p class="asidetitle">Tags</p>
-		<ul class="clearfix">
-		
-			<li><a href="/tags/vim/" title="vim">vim<sup>1</sup></a></li>
-		
-			<li><a href="/tags/joke/" title="joke">joke<sup>1</sup></a></li>
-		
-			<li><a href="/tags/geek/" title="geek">geek<sup>1</sup></a></li>
-		
-			<li><a href="/tags/unix/" title="unix">unix<sup>1</sup></a></li>
-		
-			<li><a href="/tags/signal/" title="signal">signal<sup>1</sup></a></li>
-		
-			<li><a href="/tags/linux/" title="linux">linux<sup>1</sup></a></li>
-		
-			<li><a href="/tags/handling/" title="handling">handling<sup>1</sup></a></li>
-		
-		</ul>
-</div>
-
-
-  <div class="linkslist">
-  <p class="asidetitle">Links</p>
-    <ul>
-        
-    </ul>
-</div>
-
-  <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/geek/">geek</a><small>1</small></li>
+  
+    <li><a href="/tags/handling/">handling</a><small>1</small></li>
+  
+    <li><a href="/tags/joke/">joke</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/tags/signal/">signal</a><small>1</small></li>
+  
+    <li><a href="/tags/unix/">unix</a><small>1</small></li>
+  
+    <li><a href="/tags/vim/">vim</a><small>1</small></li>
+  
+  </ul>
 </div>
 
 </aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2017 Cong Wang
+  
 </div>
-    </div>
-    <footer><div id="footer" >
-	
-	
-	<div class="social-font" class="clearfix">
-		
-		
-		<a href="https://github.com/congwang" target="_blank" class="icon-github" title="github"></a>
-		
-		
-		
-		<a href="https://twitter.com/conglinux" target="_blank" class="icon-twitter" title="twitter"></a>
-		
-		
-		
-		
-		
-		
-		
-	</div>
-		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2016 
-		
-		<a href="http://wangcong.org/about" target="_blank" title="Cong Wang">Cong Wang</a>
-		
-		</p>
-</div>
-</footer>
-    <script src="/js/jquery-2.0.3.min.js"></script>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 <script src="/js/jquery.imagesloaded.min.js"></script>
 <script src="/js/gallery.js"></script>
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.navbar').click(function(){
-    $('header nav').toggleClass('shownav');
-  });
-  var myWidth = 0;
-  function getSize(){
-    if( typeof( window.innerWidth ) == 'number' ) {
-      myWidth = window.innerWidth;
-    } else if( document.documentElement && document.documentElement.clientWidth) {
-      myWidth = document.documentElement.clientWidth;
-    };
-  };
-  var m = $('#main'),
-      a = $('#asidepart'),
-      c = $('.closeaside'),
-      o = $('.openaside');
-  $(window).resize(function(){
-    getSize(); 
-    if (myWidth >= 1024) {
-      $('header nav').removeClass('shownav');
-    }else
-    {
-      m.removeClass('moveMain');
-      a.css('display', 'block').removeClass('fadeOut');
-      o.css('display', 'none');
-      
-      $('#toc.toc-aside').css('display', 'none');
-        
-    }
-  });
-  c.click(function(){
-    a.addClass('fadeOut').css('display', 'none');
-    o.css('display', 'block').addClass('fadeIn');
-    m.addClass('moveMain');
-  });
-  o.click(function(){
-    o.css('display', 'none').removeClass('beforeFadeIn');
-    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
-    m.removeClass('moveMain');
-  });
-  $(window).scroll(function(){
-    o.css("top",Math.max(80,260-$(this).scrollTop()));
-  });
-});
-</script>
 
 <script type="text/javascript">
-$(document).ready(function(){ 
-  var ai = $('.article-content>iframe'),
-      ae = $('.article-content>embed'),
-      t  = $('#toc'),
-      h  = $('article h2')
-      ah = $('article h2'),
-      ta = $('#toc.toc-aside'),
-      o  = $('.openaside'),
-      c  = $('.closeaside');
-  if(ai.length>0){
-    ai.wrap('<div class="video-container" />');
-  };
-  if(ae.length>0){
-   ae.wrap('<div class="video-container" />');
-  };
-  if(ah.length==0){
-    t.css('display','none');
-  }else{
-    c.click(function(){
-      ta.css('display', 'block').addClass('fadeIn');
-    });
-    o.click(function(){
-      ta.css('display', 'none');
-    });
-    $(window).scroll(function(){
-      ta.css("top",Math.max(140,320-$(this).scrollTop()));
-    });
-  };
-});
-</script>
-
-
-<script type="text/javascript">
-$(document).ready(function(){ 
-  var $this = $('.share'),
-      url = $this.attr('data-url'),
-      encodedUrl = encodeURIComponent(url),
-      title = $this.attr('data-title'),
-      tsina = $this.attr('data-tsina'),
-      description = $this.attr('description');
-  var html = [
-  '<a href="#" class="overlay" id="qrcode"></a>',
-  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
-  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
-  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
-  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
-  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
-  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
-  '<span title="Share to"></span>'
-  ].join('');
-  $this.append(html);
-  $('.article-share-qrcode').click(function(){
-    var imgSrc = $('#qrcode-pic').attr('data-src');
-    $('#qrcode-pic').attr('src', imgSrc);
-    $('#qrcode-pic').load(function(){
-        $('.qrcode strong').text(' ');
-    });
-  });
-});     
-</script>
-
-
-
-
-<script type="text/javascript">
-
 var disqus_shortname = 'disqus_ciEwcJAF0E';
 
 (function(){
@@ -402,65 +201,17 @@ var disqus_shortname = 'disqus_ciEwcJAF0E';
   dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
 }());
-(function(){
-  var dsq = document.createElement('script');
-  dsq.type = 'text/javascript';
-  dsq.async = true;
-  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
-  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-}());
 </script>
-
-
-
 
 
 
 <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
 <script src="/fancybox/jquery.fancybox.pack.js"></script>
 <script type="text/javascript">
-$(document).ready(function(){ 
-  $('.article-content').each(function(i){
-    $(this).find('img').each(function(){
-      if ($(this).parent().hasClass('fancybox')) return;
-      var alt = this.alt;
-      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
-      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
-    });
-    $(this).find('.fancybox').each(function(){
-      $(this).attr('rel', 'article' + i);
-    });
-  });
-  if($.fancybox){
-    $('.fancybox').fancybox();
-  }
-}); 
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
 </script>
 
-
-
-<!-- Analytics Begin -->
-
-
-
-
-
-<!-- Analytics End -->
-
-<!-- Totop Begin -->
-
-	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
-	</div>
-	<script src="/js/totop.js"></script>
-
-<!-- Totop End -->
-
-<!-- MathJax Begin -->
-<!-- mathjax config similar to math.stackexchange -->
-
-
-<!-- MathJax End -->
-
-  </body>
+</body>
 </html>

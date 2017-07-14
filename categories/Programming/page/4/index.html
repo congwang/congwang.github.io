@@ -1,317 +1,564 @@
-
-  <!DOCTYPE HTML>
-<html >
+<!DOCTYPE HTML>
+<html>
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   
-    <title>Category: Programming | A Geek&#39;s Page</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
-    
-    <meta name="author" content="Cong Wang">
-    
-    
-    <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="A Geek's Page">
-<meta property="og:url" content="http://wangcong.org/categories/Programming/page/4/">
-<meta property="og:site_name" content="A Geek's Page">
-<meta property="og:description">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="A Geek's Page">
-<meta name="twitter:description">
-<meta name="twitter:creator" content="@conglinux">
+  <title>Page 4 | Programming | A Geek&#39;s Page</title>
+  <meta name="author" content="Cong Wang">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
+  
+  <meta property="og:site_name" content="A Geek&#39;s Page"/>
 
-    
-    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
-    
-    
-    <link rel="icon" href="/img/favicon.ico">
-    
-    
-    <link rel="apple-touch-icon" href="/img/jacman.jpg">
-    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
-    
-    <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
 
 </head>
 
-    <body>
-      <header>
-        <div>
-		
-			<div id="imglogo">
-				<a href="/"><img src="/img/logo.png" alt="A Geek&#39;s Page" title="A Geek&#39;s Page"/></a>
-			</div>
-			
-			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="A Geek&#39;s Page">A Geek&#39;s Page</a></h1>
-				<h2 class="blog-motto"></h2>
-			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
-			</a></div>
-			<nav class="animated">
-				<ul>
-					<ul>
-					 
-						<li><a href="/">Home</a></li>
-					
-						<li><a href="/archives">Archives</a></li>
-					
-						<li><a href="/about-2">About</a></li>
-					
-					<li>
- 					
-					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
-						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
-						<input type="hidden" name="q" value="site:wangcong.org">
-					</form>
-					
-					</li>
-				</ul>
-			</nav>			
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">A Geek&#39;s Page</a></h1>
+  <h2><a href="/"></a></h2>
 </div>
-      </header>
-      <div id="container">
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title category">Programming</h2>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-09-24T23:32:30.000Z"><a href="/2010/09/24/jump-label/">Sep 24 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/09/24/jump-label/">Jump Label</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>从gcc 4.5开始，<a href="http://gcc.gnu.org/onlinedocs/gcc/Extended-Asm.html" target="_blank" rel="external">gcc 内嵌汇编</a>开始支持一个叫jump label的东西。说白了，其实就是在gcc 内嵌汇编中支持外面C语言的goto label。不能访问外面C语言的goto label一直以来都是gcc内嵌汇编的一大缺陷。来自Red Hat 的 Richard Henderson向gcc社区提交了<a href="http://gcc.gnu.org/ml/gcc-patches/2009-07/msg01556.html" target="_blank" rel="external">这个想法</a>。</p>
+<p>最初的动机是因为内核要tracer需要这个东西，因为现在的tracer都是静态实现的，类似于：</p>
+<p>[c]<br>if (unlikely(tracer_is_enabled))<br>    trace();<br>[/c]</p>
+<p>这样显然增加了一个额外的 if 开销，每次都要判断是否需要调用trace()。</p>
+<p>而如果jump label 实现的话，那么我们就可以用汇编把需要调用trace()的那部分代码放到一个goto label之下，把这个goto label存放到一个单独的 section 里。而当启用或禁用某个tracer时，我们就可以修改里面的代码！换句话说，如果tracer没有启用，它里面放的就是nop指令，而如果tracer开启，那么我们就把一个jmp指令复制到那个位置，让它跳转到那个label从而去调用trace()！</p>
+<p>下面就是用jump label来实现的这个功能的最重要的部分：<br>[c]</p>
+<h1 id="define_JUMP_LABEL_INITIAL_NOP_“-byte_0xe9_nt_-long_0nt”">define JUMP_LABEL_INITIAL_NOP “.byte 0xe9 nt .long 0nt”</h1>
+<h1 id="define_JUMP_LABEL(key,_label)">define JUMP_LABEL(key, label)</h1>
+<pre><code>   <span class="keyword">do</span> {                                                    
+           <span class="keyword">asm</span> <span class="keyword">goto</span>(<span class="string">"1:"</span>                                   
+                   JUMP_LABEL_INITIAL_NOP                  
+                    <span class="string">".pushsection __jump_table,  "</span>a<span class="string">" nt"</span>
+                    _ASM_PTR <span class="string">"1b, %l["</span> <span class="preprocessor">#label <span class="title">"], %c0 nt"</span> </span>
+                    <span class="string">".popsection nt"</span>                      
+                    : :  <span class="string">"i"</span> (key) :  : label);            
+    } <span class="keyword">while</span> (<span class="number">0</span>)
+</code></pre><p>[/c]</p>
+<p>所谓.pushsection和.popsection就是把当前的section也保存起来，然后建立一个新的section，名字就是在后面指定。可见，所有的label都是放在了__jump_table这个section里，格式固定如下：</p>
+<p>[instruction address] [jump target] [tracepoint key]</p>
+<p>先前代码的地址也是要保存的，因为jmp需要一个offset。更详细的介绍可以参考<a href="http://marc.info/?l=linux-kernel&amp;m=128473626321092&amp;w=2" target="_blank" rel="external">Jump Label的内核文档</a>。</p>
+<p>要完全理解它的原理，你还需要读一下<a href="http://marc.info/?l=linux-kernel&amp;m=128473631621154&amp;w=2" target="_blank" rel="external">整个patch set</a>，尤其是arch_jump_label_transform()的实现。代码不难理解，而且读起来很有意思。</p>
+
+      
+    </div>
+    <footer>
+      
         
-
-<div class="archive-title" >
-  <h2 class="category-icon">Programming</h2>
-  
-</div>
-<div id="main" class="archive-part clearfix">
-  <div id="archive-page">
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2010/09/24/jump-label/" title="Jump Label" itemprop="url">
-  
-
-    <time datetime="2010-09-24T23:32:30.000Z" itemprop="datePublished">Sep 24 2010</time>
-
-
-    <h1 itemprop="name">Jump Label</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2010/08/19/-e9-aa-84-e5-82-b2-e5-9c-b0-e6-b4-bb-e4-b8-8b-e5-8e-bb-ef-bc-81/" title="两个有意思的bug" itemprop="url">
-  
-
-    <time datetime="2010-08-20T03:17:19.000Z" itemprop="datePublished">Aug 19 2010</time>
-
-
-    <h1 itemprop="name">两个有意思的bug</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2010/07/15/-e5-bc-95-e5-8f-b7-e5-b8-a6-e6-9d-a5-e7-9a-84-e4-b8-80-e4-b8-aa-e9-97-ae-e9-a2-98/" title="引号带来的一个问题" itemprop="url">
-  
-
-    <time datetime="2010-07-16T06:10:27.000Z" itemprop="datePublished">Jul 15 2010</time>
-
-
-    <h1 itemprop="name">引号带来的一个问题</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2010/05/12/-e5-87-a0-e4-b8-aa-e6-9c-89-e7-94-a8-e7-9a-84-malloc-e7-8e-af-e5-a2-83-e5-8f-98-e9-87-8f/" title="几个有用的 malloc 环境变量" itemprop="url">
-  
-
-    <time datetime="2010-05-13T05:16:52.000Z" itemprop="datePublished">May 12 2010</time>
-
-
-    <h1 itemprop="name">几个有用的 malloc 环境变量</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2010/04/29/-e8-bf-99-e4-b8-89-e4-b8-aa-e7-bd-91-e7-ab-99-e6-98-af-e5-85-84-e5-bc-9f-e5-90-97/" title="三个兄弟网站……" itemprop="url">
-  
-
-    <time datetime="2010-04-29T17:58:31.000Z" itemprop="datePublished">Apr 29 2010</time>
-
-
-    <h1 itemprop="name">三个兄弟网站……</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2010/04/27/glibc-e5-ae-9a-e4-b9-89-e7-9a-84-e7-b3-bb-e7-bb-9f-e8-b0-83-e7-94-a8/" title="glibc定义的系统调用" itemprop="url">
-  
-
-    <time datetime="2010-04-28T04:19:57.000Z" itemprop="datePublished">Apr 27 2010</time>
-
-
-    <h1 itemprop="name">glibc定义的系统调用</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2010/04/25/kimian-self-reproduction/" title="Kimian Self Reproduction" itemprop="url">
-  
-
-    <time datetime="2010-04-25T20:00:19.000Z" itemprop="datePublished">Apr 25 2010</time>
-
-
-    <h1 itemprop="name">Kimian Self Reproduction</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2010/02/23/integer-format-conversion/" title="Integer format conversion" itemprop="url">
-  
-
-    <time datetime="2010-02-24T02:38:37.000Z" itemprop="datePublished">Feb 23 2010</time>
-
-
-    <h1 itemprop="name">Integer format conversion</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2009/12/28/-e8-8e-b7-e5-8f-96c-e8-af-ad-e8-a8-80-e6-95-b0-e6-8d-ae-e7-b1-bb-e5-9e-8b-e5-a4-a7-e5-b0-8f/" title="获取C语言数据类型大小" itemprop="url">
-  
-
-    <time datetime="2009-12-28T20:10:15.000Z" itemprop="datePublished">Dec 28 2009</time>
-
-
-    <h1 itemprop="name">获取C语言数据类型大小</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2009/11/26/-e4-b8-80-e4-b8-aa-e5-85-b8-e5-9e-8b-e7-9a-84-off-by-one-bug/" title="一个典型的 off-by-one bug" itemprop="url">
-  
-
-    <time datetime="2009-11-27T07:26:38.000Z" itemprop="datePublished">Nov 26 2009</time>
-
-
-    <h1 itemprop="name">一个典型的 off-by-one bug</h1>
-
-  </a>
-</section>
-
-
-  <nav id="page-nav" class="clearfix archive-nav">
-    <a class="extend prev" rel="prev" href="/categories/Programming/page/3/"><span></span>Prev</a><a class="page-number" href="/categories/Programming/">1</a><a class="page-number" href="/categories/Programming/page/2/">2</a><a class="page-number" href="/categories/Programming/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/categories/Programming/page/5/">5</a><a class="page-number" href="/categories/Programming/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/categories/Programming/page/16/">16</a><a class="extend next" rel="next" href="/categories/Programming/page/5/">Next<span></span></a>
-  </nav>
-
+        
+      
+      <div class="clearfix"></div>
+    </footer>
   </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-08-20T03:17:19.000Z"><a href="/2010/08/19/-e9-aa-84-e5-82-b2-e5-9c-b0-e6-b4-bb-e4-b8-8b-e5-8e-bb-ef-bc-81/">Aug 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/08/19/-e9-aa-84-e5-82-b2-e5-9c-b0-e6-b4-bb-e4-b8-8b-e5-8e-bb-ef-bc-81/">两个有意思的bug</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>因为工作的关系，平时都是在和bugzilla打交道。在红帽如此，在之前的Critical-Links也是，这让我感觉开源的公司似乎都是用bugzilla这个东西管理项目bug的。</p>
+<p>我见过很多bug，各种各样的，但是像下面这两个还是头一次见，很有趣。</p>
+<p>一个是gnome的一个“严重的”bug，gnome 偷走了一位美女的男朋友：</p>
+<p><a href="https://bugzilla.gnome.org/show_bug.cgi?id=626593" target="_blank" rel="external">https://bugzilla.gnome.org/show_bug.cgi?id=626593</a></p>
+<p>看来她男朋友是个gnome hacker，受他的影响，这位美女才知道去gnome的bugzilla去报告这个bug。果然geek到家了！</p>
+<p>另一个是mozilla上的一个bug，说是要给实习生买几张小床。看来在mozilla实习很累啊，赶上华为了！</p>
+<p><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=579522" target="_blank" rel="external">https://bugzilla.mozilla.org/show_bug.cgi?id=579522</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-07-16T06:10:27.000Z"><a href="/2010/07/15/-e5-bc-95-e5-8f-b7-e5-b8-a6-e6-9d-a5-e7-9a-84-e4-b8-80-e4-b8-aa-e9-97-ae-e9-a2-98/">Jul 15 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/07/15/-e5-bc-95-e5-8f-b7-e5-b8-a6-e6-9d-a5-e7-9a-84-e4-b8-80-e4-b8-aa-e9-97-ae-e9-a2-98/">引号带来的一个问题</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>可能你也发现了，不少/etc 下面的配置文件其实就是 bash 脚本，用到它们的bash程序都是直接source进来的。这种情况下没什么问题。可以如果你不是source进行来的配置文件，因为格式的原因，而是一行一行read进来的，那就可能有问题了。我们的配置文件格式如下：</p>
+<p>OPTION VALUE</p>
+<p>直接read一般不会有问题，可有一种情况很特殊，那就是当某个option接受字符串值的时候。字符串值要是不允许带引号吧，可值中有空格就不好办了，虽然read可以处理，但配置文件读起来很奇怪。值要是带引号吧，嘿嘿，read又不好办了，因为引号本身不是值的一部分。这时候你可能会想用sed把引号去掉，仔细一想这个方法行不通，因为引号的情况完全比你想象得要复杂，不信你试试。我的解决方法是用eval：OPTION=<code>eval echo $VALUE</code>，让bash自己处理这该死的引号去好了！</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-05-13T05:16:52.000Z"><a href="/2010/05/12/-e5-87-a0-e4-b8-aa-e6-9c-89-e7-94-a8-e7-9a-84-malloc-e7-8e-af-e5-a2-83-e5-8f-98-e9-87-8f/">May 12 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/05/12/-e5-87-a0-e4-b8-aa-e6-9c-89-e7-94-a8-e7-9a-84-malloc-e7-8e-af-e5-a2-83-e5-8f-98-e9-87-8f/">几个有用的 malloc 环境变量</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>或许除了LD<em>DEBUG等少数几个环境变量，你对glibc的其它环境变量并不熟悉，比如 MALLOC_PERTURB</em>。</p>
+<p>MALLOC<em>PERTURB</em> 很有用，它的作用是指定用来填充 malloc(3) 所分配的内存的内容，单位是字节。我们知道，malloc(3) 并不会对其所分配的内容进行初始化，所以如果直接使用这部分内存会出错。而 MALLOC<em>PERTURB</em> 就是用来解决这个问题的，你可以用它来填充这些内存，然后一旦使用了未初始化的内存，这部分内存就很容易被识别出来。所以它在某种程度上可以帮助我们检测未初始化的 malloc(3) 内存。</p>
+<p>需要注意的是，用来初始化 malloc(3) 内存的值是 MALLOC<em>PERTURB</em> 的二进制取反（也就是~MALLOC<em>PERTURB</em>），但是 0 会取消掉这个功能。通常我们可以这样来设置：</p>
+<p>export MALLOC<em>PERTURB</em>=$(($RANDOM % 255 + 1))</p>
+<p>另一个是MALLOC<em>CHECK</em>，当设置了它时 glibc 就会使用另外一个 malloc(3) 的实现来检查一些简单的内存错误，比如多次 free(3) 同一个地址，off-by-one 错误等。它有三个值：0表示忽视检测到的错误，1表示打印错误到标准错误输出，2表示检测到错误就马上中止程序。更详细的描述可以参考<a href="http://www.gnu.org/s/libc/manual/html_node/Heap-Consistency-Checking.html" target="_blank" rel="external">手册</a>。</p>
+<p>还有几个和 malloc 内存分配策略相关的环境变量是：</p>
+<p>MALLOC<em>MMAP_MAX</em><br>MALLOC<em>MMAP_THRESHOLD</em><br>MALLOC<em>TOP_PAD</em><br>MALLOC<em>TRIM_THRESHOLD</em></p>
+<p>它们分别等价于 mallopt() 的对应参数，可以参考<a href="http://www.gnu.org/s/libc/manual/html_node/Malloc-Tunable-Parameters.html" target="_blank" rel="external"> mallopt() 的手册</a>。更详细的介绍<a href="http://www.linuxjournal.com/node/6390/print" target="_blank" rel="external">见这里</a>。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-04-29T17:58:31.000Z"><a href="/2010/04/29/-e8-bf-99-e4-b8-89-e4-b8-aa-e7-bd-91-e7-ab-99-e6-98-af-e5-85-84-e5-bc-9f-e5-90-97/">Apr 29 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/04/29/-e8-bf-99-e4-b8-89-e4-b8-aa-e7-bd-91-e7-ab-99-e6-98-af-e5-85-84-e5-bc-9f-e5-90-97/">三个兄弟网站……</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><a href="http://stackoverflow.com/" target="_blank" rel="external">Stackoverflow</a> 我们都知道，它又出了两个兄弟：</p>
+<p><a href="http://serverfault.com/" target="_blank" rel="external">http://serverfault.com/</a><br><a href="http://superuser.com/" target="_blank" rel="external">http://superuser.com/</a></p>
+<p>这两个也都是 Stackoverflow 旗下的。StackOverflow 是面向程序员的，ServerFault 很明显是面向系统管理员的，而 SuperUser 是面向普通用户的。</p>
+<p>另外它还有个旁系兄弟：</p>
+<p><a href="http://mathoverflow.net/" target="_blank" rel="external">http://mathoverflow.net/</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-04-28T04:19:57.000Z"><a href="/2010/04/27/glibc-e5-ae-9a-e4-b9-89-e7-9a-84-e7-b3-bb-e7-bb-9f-e8-b0-83-e7-94-a8/">Apr 27 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/04/27/glibc-e5-ae-9a-e4-b9-89-e7-9a-84-e7-b3-bb-e7-bb-9f-e8-b0-83-e7-94-a8/">glibc定义的系统调用</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>最近有人问道，glibc 中对我们常见的那些系统调用的定义在哪里？比如<a href="http://groups.google.com/group/xiyoulinux/browse_thread/thread/dff7b19f301d1d11" target="_blank" rel="external">write(2)</a>，<a href="http://sourceware.org/ml/libc-help/2010-04/msg00033.html" target="_blank" rel="external">recv(2)</a>。</p>
+<p>这个问题我以前在看glibc的代码时注意到了。我们通常可以直接找到的所谓定义，比如下面这个：</p>
+<p>﻿[c]<br>ssize_t<br><strong>libc_write (int fd, const void *buf, size_t nbytes)<br>{<br>  if (nbytes == 0)<br>    return 0;<br>  if (fd &lt; 0)<br>    {
+      </strong>set_errno (EBADF);<br>      return -1;<br>    }<br>  if (buf == NULL)<br>    {<br>      __set_errno (EINVAL);<br>      return -1;<br>    }</p>
+<p>  <strong>set_errno (ENOSYS);<br>  return -1;<br>}<br>libc_hidden_def (</strong>libc_write)<br>stub_warning (write)</p>
+<p>weak_alias (<strong>libc_write, </strong>write)<br>libc_hidden_weak (<strong>write)<br>weak_alias (</strong>libc_write, write)<br>[/c]</p>
+<p>其实很明显，这并不是真正的定义，至少并不是你想找的那个。这个是什么呢？这个其实是write(2)的一个alias，而且还是weak alias，换句话说也就是，如果一个平台上没有定义自己的write(2)，那么就用一个。而且从上面的代码也可以看得出来，这个函数仅仅是处理了一下errno，别的什么都不做。</p>
+<p>那真正的定义究竟在哪里？说实话，我当初找到费了一番周折，找到它们并不容易，因为它们是编译时生成的！！可以从下面三个文件中看出来：</p>
+<p>sysdeps/unix/make-syscalls.sh<br>sysdeps/unix/syscalls.list（sysdeps/unix/inet/syscalls.list）<br>sysdeps/unix/syscall-template.S</p>
+<p>syscall-template.S顾名思义是个定义的模板，每个生成的系统调用都要参考这个模板，但是怎么用模板来“刻画”每一个系统调用呢？于是就有了syscalls.list，而make-syscalls.sh就是用模板和那个列表来构建生成系统调用定义的makefile，该makefile最终生成最后的定义。有兴趣的朋友应该仔细看看这几个文件。</p>
+<p>现在再想想，这么做其实是有道理的，在Linux下，系统调用的真正定义有很多相似的地方，确实可以通过“模板”来生成对应的汇编，但是否真值得花时间去构建那么抽象的一个模板和框架？我说不清楚，本着“懒惰”的原则确实应该如此，不过看看模板本身似乎原因不仅仅是“懒惰”。</p>
+<p>从这里我们也可以看出glibc的代码难读啊，比起Linux内核来，不仅仅是风格的问题，还有就是使用了太多的tricks，导致的结果也很显而易见，参与glibc开发的和参与linux内核开发的人明显不是一个数量级的。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-04-25T20:00:19.000Z"><a href="/2010/04/25/kimian-self-reproduction/">Apr 25 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/04/25/kimian-self-reproduction/">Kimian Self Reproduction</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>看《GEB》时看到了这个东西，感觉很有意思。<a href="http://www.egodeath.com/geb.htm" target="_blank" rel="external">《GEB》</a>在第 16 章中提到了这个东西，中文版的把它翻译成了“凯姆式自复制”。其实它类似于<a href="http://en.wikipedia.org/wiki/Quine_(computing" target="_blank" rel="external">Quine</a>)（如果你还不了解这个东西，可以在我的主页上找到我写的Quine），也是打印其本身，不过它是无意义的，也就是说编译器/解释器会报错，而错误信息本身就是它的内容！</p>
+<p>在网上搜了搜，发现就<a href="http://www.nyx.net/~gthompso/self_kim.txt" target="_blank" rel="external">这么一个页面</a>介绍Kimian，里面给出的例子除了Perl的那个别的在Linux上都不行。所以我又自己特意写了几个：</p>
+<p><strong>zsh版的Kimian：</strong></p>
+<p><pre>% zsh: command not found: zsh:<br>zsh: command not found: zsh:</pre><br><strong>Python版的Kimian：</strong></p>
+<p><pre>% cat kimian.py<br>  File “kimian.py”, line 1<br>    File “kimian.py”, line 1<br>    ^<br>IndentationError: unexpected indent<br>% python kimian.py<br>  File “kimian.py”, line 1<br>    File “kimian.py”, line 1<br>    ^<br>IndentationError: unexpected indent</pre><br><strong>另一个Perl版的：</strong></p>
+<p><pre>% cat kimian.pl<br>kimian.pl syntax OK<br>% perl -X -c kimian.pl<br>kimian.pl syntax OK</pre><br><strong>C版的Kimian：</strong></p>
+<p><pre>% cat kimian.c<br>kimian.c:1: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘<strong>attribute</strong>‘ before ‘.’ token<br>% gcc -w -c kimian.c<br>kimian.c:1: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘<strong>attribute</strong>’ before ‘.’ token</pre><br>有兴趣的朋友可以自己尝试去写写。;)</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-02-24T02:38:37.000Z"><a href="/2010/02/23/integer-format-conversion/">Feb 23 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/02/23/integer-format-conversion/">Integer format conversion</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>我们知道 C99 中引入了uint32_t，uintmax_t 这样的标准整数类型，可有一个随之而来的问题，那就是它们在 printf()/scanf() 中对应的是 format conversion 该用什么呢？</p>
+<p>其实这个问题由来已久，比如之前就有的标准类型：ptrdiff_t，printf()有专门的一个 “t” length modifier 来对应它。再比如非标准的 pid_t，我们是没有对应的 length modifier 可用的，这时该怎么办？其实这种问题的一般处理原则是，先把它们转化成可能的最大整数类型，比如这个 pid_t，POSIX 只要求它是一个 signed integer type，所以至少转化成 long 才比较安全，所以我们可以：</p>
+<p>printf(“%ldn”, (long)pid);</p>
+<p>所以我们最开始的那个问题也可以这么处理，但是很明显这种处理方式并不优雅，尤其是对于标准整数类型来说。一种解决方案是像 ptrdiff_t 那样引入新的 length modifier，但这恐怕需要增加不少，所以C99采取了另一种方式——添加标准的宏来代替直接使用字符串，比如针对 uint32_t，uintmax_t 我们可以使用 PRIu32 和 PRIuMAX，像这样：</p>
+<p>printf(“%” PRIu32 “%” PRIuMAX “n”, uint32, uintmax);</p>
+<p>这些宏可以在 C99 标准附录 B.7 找到，可以在 &lt;inttypes.h&gt; 中看到其定义（在 glibc 源代码中对应 sysdeps/generic/inttypes.h）。有兴趣的可以直接去看一下源代码，其实就是对已有的 format conversion 进行的宏封装。</p>
+<p>那些宏也挺好记的：PRI 代表 printf，SCN 代表 scanf，PRI/SCN后面的第一个字母其实就是对应的常见的 conversion specifier，比如 uint32_t 肯定对应一个u。再后面要么对应长度比如uint32_t中的32，要么对应max什么的。</p>
+<p>最后，对于 intmax_t 和 uintmax_t 这两个类型，printf()有对对应的 “j” length modifier 可以直接用，对于 size_t 和 ssize_t ，有对应的 “z”。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-12-28T20:10:15.000Z"><a href="/2009/12/28/-e8-8e-b7-e5-8f-96c-e8-af-ad-e8-a8-80-e6-95-b0-e6-8d-ae-e7-b1-bb-e5-9e-8b-e5-a4-a7-e5-b0-8f/">Dec 28 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/12/28/-e8-8e-b7-e5-8f-96c-e8-af-ad-e8-a8-80-e6-95-b0-e6-8d-ae-e7-b1-bb-e5-9e-8b-e5-a4-a7-e5-b0-8f/">获取C语言数据类型大小</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>一个简单的脚本，可以在命令行下获取C语言中数据类型的大小。在邮件列表的讨论中看到的这个主意，我用 Perl 重写了一下。</p>
+<p>代码很简单，见下。分享一下，希望对你有用。<br>[perl]</p>
+<h1 id="!/usr/bin/perl_-w">!/usr/bin/perl -w</h1>
+<p>use strict;<br>use File::Temp qw/tempfile tempdir/;</p>
+<p>die “Wrong usage.n” unless @ARGV == 1;<br>my $type=$ARGV[0];<br>my $dir = tempdir(CLEANUP =&gt; 1);<br>my ($obj, $src) = tempfile(“$dir/XXXXX”, SUFFIX =&gt; ‘.c’, UNLINK =&gt; 0);<br>open my $fd, “&gt;$src” or die “can’t create file: $!”;<br>$src =~ s/.c$//g;<br>my $exe_file = $src;</p>
+<p>print $fd &lt;&lt;eof;</p>
+<h1 id="include">include</h1>
+<h1 id="include-1">include</h1>
+<h1 id="include-2">include</h1>
+<h1 id="include-3">include</h1>
+<h1 id="include-4">include</h1>
+<h1 id="include-5">include</h1>
+<h1 id="include-6">include</h1>
+<h1 id="include-7">include</h1>
+<h1 id="include-8">include</h1>
+<h1 id="include-9">include</h1>
+<h1 id="include-10">include</h1>
+<h1 id="include-11">include</h1>
+<h1 id="include-12">include</h1>
+<p>int<br>main (void)<br>{<br>  $type x;<br>  printf (“%d\n”, sizeof x);<br>  exit (0);<br>}<br>EOF<br>my $result = qx(gcc -o $exe_file $exe_file.c &amp;&amp; $exe_file);<br>print $result;<br>[/perl]</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-11-27T07:26:38.000Z"><a href="/2009/11/26/-e4-b8-80-e4-b8-aa-e5-85-b8-e5-9e-8b-e7-9a-84-off-by-one-bug/">Nov 26 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/11/26/-e4-b8-80-e4-b8-aa-e5-85-b8-e5-9e-8b-e7-9a-84-off-by-one-bug/">一个典型的 off-by-one bug</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>今天美国人民过节，所以我今天上班基本上没啥事做。闲得发慌时无意中看到有人在邮件列表中报告 hexdump 有一个 bug，重现方法很简单，你只要通过 -s 把 skip 设置成该文件的大小就可以了，你可以用你手头上的 hexdump 试试，你会发现你可以看到全部文件的内容。这一下子激起了我的兴趣。</p>
+<p>我一开始的想法是，hexdump 是个老命令了，虽然不能说像 ls 那些命令经过“千锤百炼”吧，但说“基本上不可能有bug”还是可以的。于是我抱着这个心态去翻源代码，虽然我在此之前从来没看过 hexdump 的源代码，但我还是信心满怀地找到了下面这么一句：skip -= sbuf.st_size; ，恩，看来是知道这种情况了，只是把它“折回”处理了，所以我回答说可能是一个 feature 而不是 bug。</p>
+<p>但那个人后来的回复一下子惊醒了我，把 skip 再多加上一就是另一种结果了，什么都没有。所以这确实是一个 bug！当时我绕着源代码转了半天也没头绪，而且被里面那么多的全局变量和 static 变量给绕晕了，思考方向走错了。后来等我回到家做完晚饭一想，我靠，多一个或少一就没有 bug，这不就是 <a href="http://en.wikipedia.org/wiki/Off-by-one_error" target="_blank" rel="external">off-by-one</a> 的症状嘛！肯定是哪里少算或者多算了一个临界值！抱着这个想法去找就简单了，很快就可以定位到问题所在，于是<a href="http://article.gmane.org/gmane.linux.utilities.util-linux-ng/2804" target="_blank" rel="external">补丁自然而然地出来了</a>。</p>
+<p>以前我们学C语言时不经常被提醒一定要注意 off-by-one 嘛，可能都没遇到过多么好的例子，现在这个就是现实中活生生的，非常典型的一个例子。作为反面教材放这里了。</p>
+<p>现在再来回头看，问题其实很简单了，但当时分析这个 bug 时怎么就没想到这个原因值得深思：首先是心态不对，要面对现实，哪怕现实再残酷再不符合你的逻辑也要勇于否定自己，<strong>不要尝试找理由去否定现实，而是要接受现实去分析原因</strong>；其次，没有对“现象”进行深入思考，没有掌握到“现象”中表现出来的隐含规律，而这才是解决这个问题的关键！所以啊，不管在哪里多思考都是有好处的！</p>
+<p>我很早以前就有这么个想法啊：作为程序员做 debug 工作，其实在很大程度上和侦探做破案工作是一样的。都要根据“凶案现场”（bug 症状）留下的蛛丝马迹顺藤摸瓜地去找“杀人凶手”（bug 所在）；同样都是靠严密的逻辑去推理，唯一不同的是，侦探的逻辑和线索是事情发展的过程和顺序，而程序员的逻辑和线索是源代码；侦探在破案毫无头绪时会想更多的办法去搜集证据和证词等等，而程序员在毫无头绪时可以通过调试器等获取更多 debug 信息，总之都是获取更多的信息量，因为信息更多意味着分析出来的东西会更多。</p>
+<p>这让我想起多年前上高中时上课都偷看的《福尔摩斯探案集》来了，里面福尔摩斯老师的那几句话真是饱含哲理，牛逼轰轰，金光闪闪啊：</p>
+<p><strong>当你把决不可能的因素排除后，不管剩下的是什么——-不管多么难以置信——那就是真相。  </strong></p>
+<p><strong>没有掌握全部证据以前，先作出假设，这是决大的错误，那样会使判断产生偏差。</strong></p>
+<p><strong>猜想是很不好的习惯，它有害于作逻辑推理。</strong></p>
+<p>内牛满面地把这几句话收藏起来作为 debug 时的座右铭…… T_T</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+
+  <nav id="pagination">
+  
+    <a href="/categories/Programming/page/3/" class="alignleft prev">Prev</a>
+  
+  
+    <a href="/categories/Programming/page/5/" class="alignright next">Next</a>
+  
+  <div class="clearfix"></div>
+</nav>
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:wangcong.org">
+  </form>
 </div>
 
-      </div>
-      <footer><div id="footer" >
-	
-	
-	<div class="social-font" class="clearfix">
-		
-		
-		<a href="https://github.com/congwang" target="_blank" class="icon-github" title="github"></a>
-		
-		
-		
-		<a href="https://twitter.com/conglinux" target="_blank" class="icon-twitter" title="twitter"></a>
-		
-		
-		
-		
-		
-		
-		
-	</div>
-		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2016 
-		
-		<a href="http://wangcong.org/about" target="_blank" title="Cong Wang">Cong Wang</a>
-		
-		</p>
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Book-Reviews/">Book Reviews</a><small>18</small></li>
+  
+    <li><a href="/categories/China/">China</a><small>2</small></li>
+  
+    <li><a href="/categories/Collection/">Collection</a><small>25</small></li>
+  
+    <li><a href="/categories/Life/">Life</a><small>324</small></li>
+  
+    <li><a href="/categories/Linux-Application/">Linux Application</a><small>73</small></li>
+  
+    <li><a href="/categories/Linux-Kernel/">Linux Kernel</a><small>64</small></li>
+  
+    <li><a href="/categories/Love/">Love</a><small>6</small></li>
+  
+    <li><a href="/categories/Movies/">Movies</a><small>19</small></li>
+  
+    <li><a href="/categories/Programming/">Programming</a><small>152</small></li>
+  
+    <li><a href="/categories/Science-Fiction/">Science Fiction</a><small>8</small></li>
+  
+    <li><a href="/categories/Travel/">Travel</a><small>19</small></li>
+  
+  </ul>
 </div>
-</footer>
-      <script src="/js/jquery-2.0.3.min.js"></script>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/geek/">geek</a><small>1</small></li>
+  
+    <li><a href="/tags/handling/">handling</a><small>1</small></li>
+  
+    <li><a href="/tags/joke/">joke</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/tags/signal/">signal</a><small>1</small></li>
+  
+    <li><a href="/tags/unix/">unix</a><small>1</small></li>
+  
+    <li><a href="/tags/vim/">vim</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2017 Cong Wang
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 <script src="/js/jquery.imagesloaded.min.js"></script>
 <script src="/js/gallery.js"></script>
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.navbar').click(function(){
-    $('header nav').toggleClass('shownav');
-  });
-  var myWidth = 0;
-  function getSize(){
-    if( typeof( window.innerWidth ) == 'number' ) {
-      myWidth = window.innerWidth;
-    } else if( document.documentElement && document.documentElement.clientWidth) {
-      myWidth = document.documentElement.clientWidth;
-    };
-  };
-  var m = $('#main'),
-      a = $('#asidepart'),
-      c = $('.closeaside'),
-      o = $('.openaside');
-  $(window).resize(function(){
-    getSize(); 
-    if (myWidth >= 1024) {
-      $('header nav').removeClass('shownav');
-    }else
-    {
-      m.removeClass('moveMain');
-      a.css('display', 'block').removeClass('fadeOut');
-      o.css('display', 'none');
-        
-    }
-  });
-  c.click(function(){
-    a.addClass('fadeOut').css('display', 'none');
-    o.css('display', 'block').addClass('fadeIn');
-    m.addClass('moveMain');
-  });
-  o.click(function(){
-    o.css('display', 'none').removeClass('beforeFadeIn');
-    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
-    m.removeClass('moveMain');
-  });
-  $(window).scroll(function(){
-    o.css("top",Math.max(80,260-$(this).scrollTop()));
-  });
-});
-</script>
-
-
-
-
 
 <script type="text/javascript">
-
 var disqus_shortname = 'disqus_ciEwcJAF0E';
 
-(function(){
-  var dsq = document.createElement('script');
-  dsq.type = 'text/javascript';
-  dsq.async = true;
-  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-}());
 (function(){
   var dsq = document.createElement('script');
   dsq.type = 'text/javascript';
@@ -323,33 +570,13 @@ var disqus_shortname = 'disqus_ciEwcJAF0E';
 
 
 
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
 
-
-
-
-
-<!-- Analytics Begin -->
-
-
-
-
-
-<!-- Analytics End -->
-
-<!-- Totop Begin -->
-
-	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
-	</div>
-	<script src="/js/totop.js"></script>
-
-<!-- Totop End -->
-
-<!-- MathJax Begin -->
-<!-- mathjax config similar to math.stackexchange -->
-
-
-<!-- MathJax End -->
-
-    </body>
-   </html>
+</body>
+</html>

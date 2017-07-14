@@ -1,100 +1,65 @@
-
- <!DOCTYPE HTML>
-<html >
+<!DOCTYPE HTML>
+<html>
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   
-    <title>A Geek&#39;s Page</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
-    
-    <meta name="author" content="Cong Wang">
-    
-    
-    <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="A Geek's Page">
-<meta property="og:url" content="http://wangcong.org/page/30/">
-<meta property="og:site_name" content="A Geek's Page">
-<meta property="og:description">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="A Geek's Page">
-<meta name="twitter:description">
-<meta name="twitter:creator" content="@conglinux">
+  <title>Page 30 | A Geek&#39;s Page</title>
+  <meta name="author" content="Cong Wang">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
+  
+  <meta property="og:site_name" content="A Geek&#39;s Page"/>
 
-    
-    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
-    
-    
-    <link rel="icon" href="/img/favicon.ico">
-    
-    
-    <link rel="apple-touch-icon" href="/img/jacman.jpg">
-    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
-    
-    <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
 
 </head>
 
-  <body>
-    <header>
-      <div>
-		
-			<div id="imglogo">
-				<a href="/"><img src="/img/logo.png" alt="A Geek&#39;s Page" title="A Geek&#39;s Page"/></a>
-			</div>
-			
-			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="A Geek&#39;s Page">A Geek&#39;s Page</a></h1>
-				<h2 class="blog-motto"></h2>
-			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
-			</a></div>
-			<nav class="animated">
-				<ul>
-					<ul>
-					 
-						<li><a href="/">Home</a></li>
-					
-						<li><a href="/archives">Archives</a></li>
-					
-						<li><a href="/about-2">About</a></li>
-					
-					<li>
- 					
-					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
-						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
-						<input type="hidden" name="q" value="site:wangcong.org">
-					</form>
-					
-					</li>
-				</ul>
-			</nav>			
-</div>
-    </header>
-    <div id="container">
-      <div id="main">
 
-   
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">A Geek&#39;s Page</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
     
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
+      <li><a href="/">Home</a></li>
     
-      <a href="/2009/01/29/auto-ptr-e5-92-8c-shared-ptr/" title="auto_ptr 和 shared_ptr" itemprop="url">auto_ptr 和 shared_ptr</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2009-01-30T04:19:10.000Z" itemprop="datePublished"> Published Jan 29 2009</time>
+      <li><a href="/archives">Archives</a></li>
     
-  </p>
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
 </header>
-    <div class="article-content">
-        
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-01-30T04:19:10.000Z"><a href="/2009/01/29/auto-ptr-e5-92-8c-shared-ptr/">Jan 29 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/01/29/auto-ptr-e5-92-8c-shared-ptr/">auto_ptr 和 shared_ptr</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>偶然的机会看到boost里还有一个shared_ptr型智能指针，费解，C++标准库里不是有auto_ptr了已经？我们先翻出源代码来看看。</p>
 <p>先看auto_ptr，因为它比较简单。既然它在标准库里，那么我们就在gcc的代码中找，恩，最后确定在libstdc++-v3/include/backward/auto_ptr.h里面。说实话，auto_ptr真是太简单了，里面的私有变量就一个：</p>
 <p>private:<br>  _Tp* _M_ptr;</p>
@@ -194,182 +159,107 @@ shared_ptr sptr4(b); <span class="comment">//WRONG!!</span>
 <span class="keyword">return</span> <span class="number">0</span>;
 </code></pre><p>}<br>[/cpp] </p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Programming/">Programming</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2009/01/29/auto-ptr-e5-92-8c-shared-ptr/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2009/01/28/-e7-bc-96-e7-a8-8b-e5-a4-aa-e9-9a-be-ef-bc-8c-e6-88-91-e4-bb-ac-e5-8e-bb-e5-86-99-e8-84-9a-e6-9c-ac-e5-90-a7-ef-bc-81/" title="编程太难，我们去写脚本吧！" itemprop="url">编程太难，我们去写脚本吧！</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2009-01-29T07:23:04.000Z" itemprop="datePublished"> Published Jan 28 2009</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-01-29T07:23:04.000Z"><a href="/2009/01/28/-e7-bc-96-e7-a8-8b-e5-a4-aa-e9-9a-be-ef-bc-8c-e6-88-91-e4-bb-ac-e5-8e-bb-e5-86-99-e8-84-9a-e6-9c-ac-e5-90-a7-ef-bc-81/">Jan 28 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/01/28/-e7-bc-96-e7-a8-8b-e5-a4-aa-e9-9a-be-ef-bc-8c-e6-88-91-e4-bb-ac-e5-8e-bb-e5-86-99-e8-84-9a-e6-9c-ac-e5-90-a7-ef-bc-81/">编程太难，我们去写脚本吧！</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p><a href="http://www.perl.com" target="_blank" rel="external">perl.com</a> 上发布了Larry Wall的<a href="http://www.perl.com/pub/a/2007/12/06/soto-11.html" target="_blank" rel="external">一篇文章</a>，题目就是本文的标题，非常有意思。</p>
 <p>文中从脚本语言的历史谈起，提到了脚本语言的一些特征，和设计脚本语言的方方面面。当然了，Larry写这篇文章的目的之一肯定就是鼓吹Perl6了，看来他是力挺Perl6的。总之，推荐读一下这篇文章。</p>
 <p>另，很期待perl6的到来，不知道得等到哪一年的圣诞节啦～～！</p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Programming/">Programming</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2009/01/28/-e7-bc-96-e7-a8-8b-e5-a4-aa-e9-9a-be-ef-bc-8c-e6-88-91-e4-bb-ac-e5-8e-bb-e5-86-99-e8-84-9a-e6-9c-ac-e5-90-a7-ef-bc-81/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2009/01/27/-e5-af-b9-e6-a0-87-e5-87-86-e7-9a-84-e4-b8-80-e6-9d-a1-e8-af-84-e8-ae-ba/" title="对标准的一条评论" itemprop="url">对标准的一条评论</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2009-01-28T05:45:07.000Z" itemprop="datePublished"> Published Jan 27 2009</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-01-28T05:45:07.000Z"><a href="/2009/01/27/-e5-af-b9-e6-a0-87-e5-87-86-e7-9a-84-e4-b8-80-e6-9d-a1-e8-af-84-e8-ae-ba/">Jan 27 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/01/27/-e5-af-b9-e6-a0-87-e5-87-86-e7-9a-84-e4-b8-80-e6-9d-a1-e8-af-84-e8-ae-ba/">对标准的一条评论</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <blockquote>
 <p>The standard is written in a variant of English sometimes called<br>standardese.  It’s designed (or at least intended) to be<br>absolutely precise and unambiguous, even at the cost of<br>understandability.  It doesn’t always succeed with its intent,<br>but in all cases, precision and a lack of ambiguity have<br>precedence over readability.<br>非常精辟的评价～！来自James Kanze。</p>
 </blockquote>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Programming/">Programming</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2009/01/27/-e5-af-b9-e6-a0-87-e5-87-86-e7-9a-84-e4-b8-80-e6-9d-a1-e8-af-84-e8-ae-ba/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2009/01/25/-e6-80-bb-e7-bb-9308-ef-bc-8c-e5-b1-95-e6-9c-9b09/" title="总结08，展望09" itemprop="url">总结08，展望09</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2009-01-25T09:43:21.000Z" itemprop="datePublished"> Published Jan 25 2009</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-01-25T09:43:21.000Z"><a href="/2009/01/25/-e6-80-bb-e7-bb-9308-ef-bc-8c-e5-b1-95-e6-9c-9b09/">Jan 25 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/01/25/-e6-80-bb-e7-bb-9308-ef-bc-8c-e5-b1-95-e6-9c-9b09/">总结08，展望09</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>今天又是年三十了，我觉得我应该写点什么来总结一下过去的这一年，也算对自己有个交代，以后看起来也方便。</p>
 <p>08年对我来说是内容最丰富的一年。国内发生了那么多事，我也基本上都赶了，反正今年整个国家没消停……</p>
 <p>我也没消停，出了次国，看了看外面的精彩世界，认识了很多外国友人，看到了很多异国风情，可是人家再好也是人家的国家，我的国家依旧如此……</p>
@@ -390,121 +280,71 @@ shared_ptr sptr4(b); <span class="comment">//WRONG!!</span>
 <p>=========================新年的分割线=========================</p>
 <p><strong>最后祝各位在新的一年里生活得更好，更开心，向着自己的目标继续奋斗！</strong>（别说心想事成，那太假，没有人能想什么就有什么。）</p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Life/">Life</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2009/01/25/-e6-80-bb-e7-bb-9308-ef-bc-8c-e5-b1-95-e6-9c-9b09/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2009/01/24/wine-e4-ba-86-e4-b8-80-e6-8a-8a-e3-80-8a-e7-ba-a2-e8-ad-a62-e3-80-8b/" title="wine 了一把《红警2》" itemprop="url">wine 了一把《红警2》</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2009-01-24T08:33:56.000Z" itemprop="datePublished"> Published Jan 24 2009</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-01-24T08:33:56.000Z"><a href="/2009/01/24/wine-e4-ba-86-e4-b8-80-e6-8a-8a-e3-80-8a-e7-ba-a2-e8-ad-a62-e3-80-8b/">Jan 24 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/01/24/wine-e4-ba-86-e4-b8-80-e6-8a-8a-e3-80-8a-e7-ba-a2-e8-ad-a62-e3-80-8b/">wine 了一把《红警2》</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>昨天和几个哥们出去玩去，本来说打死也不去网吧的结果最后还是跑到网吧去了，到了网吧后我发现我只有《红警》能玩，于是又疯狂了一把。回去后觉得意犹未尽，干脆在linux上装了个wine跑一个来玩，没想到wine 1.1.12对《红警2》支持那么好，图像音效什么的都很棒！就还有两个小问题：1. 速度有点慢；2. 每次鼠标到左上角的时候总是暂时“退出”该窗口，怀疑是个bug……</p>
 <p>唉，想当年上高一的时候我对《红警2》那个疯狂啊～！当时我还搞到一张正版的《红警2》，上面录像很全，我认认真真地看了一遍，而且后来硬是把任务一关一关地都过了一遍。哎，往事不堪回首矣～！</p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Life/">Life</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2009/01/24/wine-e4-ba-86-e4-b8-80-e6-8a-8a-e3-80-8a-e7-ba-a2-e8-ad-a62-e3-80-8b/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2009/01/21/reentrant-ef-bc-8cthread-safe-e5-92-8c-async-signal-safe/" title="reentrant，thread-safe 和 async-signal-safe" itemprop="url">reentrant，thread-safe 和 async-signal-safe</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2009-01-22T07:18:42.000Z" itemprop="datePublished"> Published Jan 21 2009</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-01-22T07:18:42.000Z"><a href="/2009/01/21/reentrant-ef-bc-8cthread-safe-e5-92-8c-async-signal-safe/">Jan 21 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/01/21/reentrant-ef-bc-8cthread-safe-e5-92-8c-async-signal-safe/">reentrant，thread-safe 和 async-signal-safe</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>先上定义吧，POSIX对它们的<a href="http://www.opengroup.org/onlinepubs/000095399/basedefs/xbd_chap03.html" target="_blank" rel="external">定义</a>分别是：</p>
 <blockquote>
 <p><strong>Reentrant Function</strong></p>
@@ -525,183 +365,108 @@ shared_ptr sptr4(b); <span class="comment">//WRONG!!</span>
 <p>一个函数，它访问了全局变量，那么它就是不可重入的，不过我们可以把它变成线程安全的，加上锁就可以，但是这种方法并不会把它变成异步信号安全的，而几乎可以肯定的是，使用了锁的一定不是信号安全的（除非屏蔽了信号，显然），信号完全可以在锁加上后解开前到来，然后就很可能形成死锁…… <a href="http://www.cocoadev.com/index.pl?SignalSafety" target="_blank" rel="external">这里</a>有个很好的例子。所以，可重入的函数也一定是异步信号安全的，而反之未必。可以参考<a href="http://www.ibm.com/developerworks/linux/library/l-reent.html" target="_blank" rel="external">IBM上一篇不错的文章</a>。</p>
 <p>关于异步信号安全的函数列表可以参考<a href="http://www.kernel.org/doc/man-pages/online/pages/man7/signal.7.html" target="_blank" rel="external">man 7 signal</a>；关于<strong>非</strong>线程安全的函数列表可以参考<a href="http://book.chinaunix.net/special/ebook/addisonWesley/APUE2/0201433079/ch12lev1sec5.html" target="_blank" rel="external">APUE第12.5节</a> ；关于可重入函数列表，可参考<a href="http://book.chinaunix.net/special/ebook/addisonWesley/APUE2/0201433079/ch10lev1sec6.html#ch10lev1sec6" target="_blank" rel="external">APUE第10.6节</a>。另请<a href="http://www.unix.org/whitepapers/reentrant.html" target="_blank" rel="external">参阅</a>。</p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Programming/">Programming</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2009/01/21/reentrant-ef-bc-8cthread-safe-e5-92-8c-async-signal-safe/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2009/01/20/-e7-94-a8-sigaction2-e7-9a-84-e5-8e-9f-e5-9b-a0/" title="用 sigaction(2) 的原因" itemprop="url">用 sigaction(2) 的原因</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2009-01-21T07:41:25.000Z" itemprop="datePublished"> Published Jan 20 2009</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-01-21T07:41:25.000Z"><a href="/2009/01/20/-e7-94-a8-sigaction2-e7-9a-84-e5-8e-9f-e5-9b-a0/">Jan 20 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/01/20/-e7-94-a8-sigaction2-e7-9a-84-e5-8e-9f-e5-9b-a0/">用 sigaction(2) 的原因</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>Linux <a href="http://www.kernel.org/doc/man-pages/online/pages/man2/signal.2.html" target="_blank" rel="external">man page中</a>提到：</p>
 <blockquote>
 <p>The behavior of signal() varies across Unix versions, and has also varied<br>historically across different versions of Linux.  Avoid its use: use sigaction(2) instead.<br>…<br>The only portable use of signal() is to set a signal’s disposition to SIG_DFL or SIG_IGN. The semantics when using signal() to establish a signal handler vary across systems (and POSIX.1 explicitly permits this variation); do not use it for this purpose.<br>所以signal(2)的可移植性首先就差了一截子。还有就是，signal(2)也不能像sigaction(2)那样去屏蔽信号，<a href="http://www.opengroup.org/onlinepubs/000095399/functions/sigaction.html" target="_blank" rel="external">POSIX中</a>提到：<br>When a signal is caught by a signal-catching function installed by<br>sigaction(), a new signal mask is calculated and installed for the<br>duration of the signal-catching function (or until a call to either<br>sigprocmask() or sigsuspend() is made). This mask is formed by taking<br>the union of the current signal mask and the value of the sa_mask for<br>the signal being delivered unless SA_NODEFER or<br>SA_RESETHAND is set, And then including the signal being<br>delivered. If and when the user’s signal handler returns normally, the<br>original signal mask is restored.</p>
 </blockquote>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Programming/">Programming</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2009/01/20/-e7-94-a8-sigaction2-e7-9a-84-e5-8e-9f-e5-9b-a0/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2009/01/19/sparse-e7-9a-84-e4-b8-80-e4-b8-aa-bug/" title="sparse 的一个 bug" itemprop="url">sparse 的一个 bug</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2009-01-20T04:02:22.000Z" itemprop="datePublished"> Published Jan 19 2009</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-01-20T04:02:22.000Z"><a href="/2009/01/19/sparse-e7-9a-84-e4-b8-80-e4-b8-aa-bug/">Jan 19 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/01/19/sparse-e7-9a-84-e4-b8-80-e4-b8-aa-bug/">sparse 的一个 bug</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>今天用sparse的时候遇到一个bug：</p>
 <p>error: unable to open ‘stddef.h’</p>
 <p>简单地搜了搜，发现debian上已经<a href="http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=505177" target="_blank" rel="external">有人报告</a>，最新的sparse的git树里已经解决了这个问题，可是Fedora还没有。于是只好自己编译，git-clone之后 make &amp;&amp;  make install PREFIX=/usr 就可以了。希望Fedora也尽快更新sparse。</p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Linux-Application/">Linux Application</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2009/01/19/sparse-e7-9a-84-e4-b8-80-e4-b8-aa-bug/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2009/01/18/linux-e5-88-86-e5-8c-ba-e4-b8-aa-e6-95-b0-e9-99-90-e5-88-b6/" title="Linux分区个数限制" itemprop="url">Linux分区个数限制</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2009-01-18T08:58:18.000Z" itemprop="datePublished"> Published Jan 18 2009</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-01-18T08:58:18.000Z"><a href="/2009/01/18/linux-e5-88-86-e5-8c-ba-e4-b8-aa-e6-95-b0-e9-99-90-e5-88-b6/">Jan 18 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/01/18/linux-e5-88-86-e5-8c-ba-e4-b8-aa-e6-95-b0-e9-99-90-e5-88-b6/">Linux分区个数限制</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>在linux上，对于IDE硬盘来说，分区个数限制在63个；而对于SCSI硬盘限制在15个。</p>
 <p>我们可以直接在linux内核源代码中找到证据：</p>
 <p>include/linux/ide.h</p>
@@ -718,62 +483,37 @@ shared_ptr sptr4(b); <span class="comment">//WRONG!!</span>
 <p>8 block       SCSI disk devices (0-15)</p>
 <p>Partitions are handled in the same way as for IDE<br>disks (see major number 3) except that the limit on<br>partitions is 15.</p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Linux-Kernel/">Linux Kernel</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2009/01/18/linux-e5-88-86-e5-8c-ba-e4-b8-aa-e6-95-b0-e9-99-90-e5-88-b6/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2009/01/17/ide-ata-scsi-e7-ad-89-e7-ad-89/" title="IDE, ATA, SCSI 等等" itemprop="url">IDE, ATA, SCSI 等等</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2009-01-18T07:09:10.000Z" itemprop="datePublished"> Published Jan 17 2009</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-01-18T07:09:10.000Z"><a href="/2009/01/17/ide-ata-scsi-e7-ad-89-e7-ad-89/">Jan 17 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/01/17/ide-ata-scsi-e7-ad-89-e7-ad-89/">IDE, ATA, SCSI 等等</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>关于硬盘的术语有一大堆，而且和很多别的计算机术语一样，界定不清，含义模糊。在这里简单澄清一下，但我不排除你看了之后会更糊涂。:^)</p>
 <p><strong>IDE</strong>：Integrated Drive Electronics 的缩写。最早的硬盘接口，后来被 ATA 标准所取代，准确地讲应该是 ATA-1。所以有时也被称为 IDE/ATA，可参见<a href="http://www.pcguide.com/ref/hdd/if/ide/over.htm" target="_blank" rel="external">其历史介绍</a>。后来，几乎和ATA-1同时出现的 <strong>EIDE</strong>（Enhanced IDE ）又被规范化为 ATA-2。</p>
 <p><strong>ATA</strong>：Advanced Technology Attachment 的缩写，存储设备（并非仅限硬盘）的接口标准。有时也被称为 IDE。IDE 在 ATA 标准出现之前就有了，所以估计这个也是因为历史原因。不过根据<a href="http://en.wikipedia.org/wiki/AT_Attachment" target="_blank" rel="external">wikipedia记载</a>，这两个术语还是有些许不同之处的：</p>
@@ -788,213 +528,109 @@ shared_ptr sptr4(b); <span class="comment">//WRONG!!</span>
 <p>参考：</p>
 <p><a href="http://www.91wp.com/Article/jswz/200704/350.html" target="_blank" rel="external">http://www.91wp.com/Article/jswz/200704/350.html</a><br><a href="http://www.pcbuyerbeware.co.uk/IDE.htm" target="_blank" rel="external">http://www.pcbuyerbeware.co.uk/IDE.htm</a><br><a href="http://www.pcguide.com/ref/hdd/if/ide/over.htm" target="_blank" rel="external">http://www.pcguide.com/ref/hdd/if/ide/over.htm</a><br><a href="http://en.wikipedia.org/wiki/RAID" target="_blank" rel="external">http://en.wikipedia.org/wiki/RAID</a><br><a href="http://en.wikipedia.org/wiki/SCSI" target="_blank" rel="external">http://en.wikipedia.org/wiki/SCSI</a><br><a href="http://en.wikipedia.org/wiki/AT_Attachment" target="_blank" rel="external">http://en.wikipedia.org/wiki/AT_Attachment</a></p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Programming/">Programming</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2009/01/17/ide-ata-scsi-e7-ad-89-e7-ad-89/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-
-  <nav id="page-nav" class="clearfix">
-    <a class="extend prev" rel="prev" href="/page/29/"><span></span>Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/28/">28</a><a class="page-number" href="/page/29/">29</a><span class="page-number current">30</span><a class="page-number" href="/page/31/">31</a><a class="page-number" href="/page/32/">32</a><span class="space">&hellip;</span><a class="page-number" href="/page/71/">71</a><a class="extend next" rel="next" href="/page/31/">Next<span></span></a>
-  </nav>
-
-</div>
-      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
-
-<div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
-<aside class="clearfix">
-
-  
-<div class="categorieslist">
-	<p class="asidetitle">Categories</p>
-		<ul>
-		
-			<li><a href="/categories/Book-Reviews/" title="Book Reviews">Book Reviews<sup>18</sup></a></li>
-		
-			<li><a href="/categories/China/" title="China">China<sup>2</sup></a></li>
-		
-			<li><a href="/categories/Collection/" title="Collection">Collection<sup>25</sup></a></li>
-		
-			<li><a href="/categories/Life/" title="Life">Life<sup>324</sup></a></li>
-		
-			<li><a href="/categories/Linux-Application/" title="Linux Application">Linux Application<sup>73</sup></a></li>
-		
-			<li><a href="/categories/Linux-Kernel/" title="Linux Kernel">Linux Kernel<sup>64</sup></a></li>
-		
-			<li><a href="/categories/Love/" title="Love">Love<sup>6</sup></a></li>
-		
-			<li><a href="/categories/Movies/" title="Movies">Movies<sup>19</sup></a></li>
-		
-			<li><a href="/categories/Programming/" title="Programming">Programming<sup>152</sup></a></li>
-		
-			<li><a href="/categories/Science-Fiction/" title="Science Fiction">Science Fiction<sup>8</sup></a></li>
-		
-			<li><a href="/categories/Travel/" title="Travel">Travel<sup>19</sup></a></li>
-		
-		</ul>
-</div>
-
-
-  
-<div class="tagslist">
-	<p class="asidetitle">Tags</p>
-		<ul class="clearfix">
-		
-			<li><a href="/tags/vim/" title="vim">vim<sup>1</sup></a></li>
-		
-			<li><a href="/tags/joke/" title="joke">joke<sup>1</sup></a></li>
-		
-			<li><a href="/tags/geek/" title="geek">geek<sup>1</sup></a></li>
-		
-			<li><a href="/tags/unix/" title="unix">unix<sup>1</sup></a></li>
-		
-			<li><a href="/tags/signal/" title="signal">signal<sup>1</sup></a></li>
-		
-			<li><a href="/tags/linux/" title="linux">linux<sup>1</sup></a></li>
-		
-			<li><a href="/tags/handling/" title="handling">handling<sup>1</sup></a></li>
-		
-		</ul>
-</div>
-
-
-  <div class="linkslist">
-  <p class="asidetitle">Links</p>
-    <ul>
+    <footer>
+      
         
-    </ul>
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+<nav id="pagination">
+  
+    <a href="/page/29/" class="alignleft prev">Prev</a>
+  
+  
+    <a href="/page/31/" class="alignright next">Next</a>
+  
+  <div class="clearfix"></div>
+</nav></div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:wangcong.org">
+  </form>
 </div>
 
-  <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Book-Reviews/">Book Reviews</a><small>18</small></li>
+  
+    <li><a href="/categories/China/">China</a><small>2</small></li>
+  
+    <li><a href="/categories/Collection/">Collection</a><small>25</small></li>
+  
+    <li><a href="/categories/Life/">Life</a><small>324</small></li>
+  
+    <li><a href="/categories/Linux-Application/">Linux Application</a><small>73</small></li>
+  
+    <li><a href="/categories/Linux-Kernel/">Linux Kernel</a><small>64</small></li>
+  
+    <li><a href="/categories/Love/">Love</a><small>6</small></li>
+  
+    <li><a href="/categories/Movies/">Movies</a><small>19</small></li>
+  
+    <li><a href="/categories/Programming/">Programming</a><small>152</small></li>
+  
+    <li><a href="/categories/Science-Fiction/">Science Fiction</a><small>8</small></li>
+  
+    <li><a href="/categories/Travel/">Travel</a><small>19</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/geek/">geek</a><small>1</small></li>
+  
+    <li><a href="/tags/handling/">handling</a><small>1</small></li>
+  
+    <li><a href="/tags/joke/">joke</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/tags/signal/">signal</a><small>1</small></li>
+  
+    <li><a href="/tags/unix/">unix</a><small>1</small></li>
+  
+    <li><a href="/tags/vim/">vim</a><small>1</small></li>
+  
+  </ul>
 </div>
 
 </aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2017 Cong Wang
+  
 </div>
-    </div>
-    <footer><div id="footer" >
-	
-	
-	<div class="social-font" class="clearfix">
-		
-		
-		<a href="https://github.com/congwang" target="_blank" class="icon-github" title="github"></a>
-		
-		
-		
-		<a href="https://twitter.com/conglinux" target="_blank" class="icon-twitter" title="twitter"></a>
-		
-		
-		
-		
-		
-		
-		
-	</div>
-		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2016 
-		
-		<a href="http://wangcong.org/about" target="_blank" title="Cong Wang">Cong Wang</a>
-		
-		</p>
-</div>
-</footer>
-    <script src="/js/jquery-2.0.3.min.js"></script>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 <script src="/js/jquery.imagesloaded.min.js"></script>
 <script src="/js/gallery.js"></script>
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.navbar').click(function(){
-    $('header nav').toggleClass('shownav');
-  });
-  var myWidth = 0;
-  function getSize(){
-    if( typeof( window.innerWidth ) == 'number' ) {
-      myWidth = window.innerWidth;
-    } else if( document.documentElement && document.documentElement.clientWidth) {
-      myWidth = document.documentElement.clientWidth;
-    };
-  };
-  var m = $('#main'),
-      a = $('#asidepart'),
-      c = $('.closeaside'),
-      o = $('.openaside');
-  $(window).resize(function(){
-    getSize(); 
-    if (myWidth >= 1024) {
-      $('header nav').removeClass('shownav');
-    }else
-    {
-      m.removeClass('moveMain');
-      a.css('display', 'block').removeClass('fadeOut');
-      o.css('display', 'none');
-        
-    }
-  });
-  c.click(function(){
-    a.addClass('fadeOut').css('display', 'none');
-    o.css('display', 'block').addClass('fadeIn');
-    m.addClass('moveMain');
-  });
-  o.click(function(){
-    o.css('display', 'none').removeClass('beforeFadeIn');
-    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
-    m.removeClass('moveMain');
-  });
-  $(window).scroll(function(){
-    o.css("top",Math.max(80,260-$(this).scrollTop()));
-  });
-});
-</script>
-
-
-
-
 
 <script type="text/javascript">
-
 var disqus_shortname = 'disqus_ciEwcJAF0E';
 
-(function(){
-  var dsq = document.createElement('script');
-  dsq.type = 'text/javascript';
-  dsq.async = true;
-  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-}());
 (function(){
   var dsq = document.createElement('script');
   dsq.type = 'text/javascript';
@@ -1006,33 +642,13 @@ var disqus_shortname = 'disqus_ciEwcJAF0E';
 
 
 
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
 
-
-
-
-
-<!-- Analytics Begin -->
-
-
-
-
-
-<!-- Analytics End -->
-
-<!-- Totop Begin -->
-
-	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
-	</div>
-	<script src="/js/totop.js"></script>
-
-<!-- Totop End -->
-
-<!-- MathJax Begin -->
-<!-- mathjax config similar to math.stackexchange -->
-
-
-<!-- MathJax End -->
-
-  </body>
- </html>
+</body>
+</html>

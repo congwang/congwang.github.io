@@ -1,317 +1,697 @@
-
-  <!DOCTYPE HTML>
-<html >
+<!DOCTYPE HTML>
+<html>
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   
-    <title>Category: Linux Kernel | A Geek&#39;s Page</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
-    
-    <meta name="author" content="Cong Wang">
-    
-    
-    <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="A Geek's Page">
-<meta property="og:url" content="http://wangcong.org/categories/Linux-Kernel/page/4/">
-<meta property="og:site_name" content="A Geek's Page">
-<meta property="og:description">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="A Geek's Page">
-<meta name="twitter:description">
-<meta name="twitter:creator" content="@conglinux">
+  <title>Page 4 | Linux Kernel | A Geek&#39;s Page</title>
+  <meta name="author" content="Cong Wang">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
+  
+  <meta property="og:site_name" content="A Geek&#39;s Page"/>
 
-    
-    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
-    
-    
-    <link rel="icon" href="/img/favicon.ico">
-    
-    
-    <link rel="apple-touch-icon" href="/img/jacman.jpg">
-    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
-    
-    <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
 
 </head>
 
-    <body>
-      <header>
-        <div>
-		
-			<div id="imglogo">
-				<a href="/"><img src="/img/logo.png" alt="A Geek&#39;s Page" title="A Geek&#39;s Page"/></a>
-			</div>
-			
-			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="A Geek&#39;s Page">A Geek&#39;s Page</a></h1>
-				<h2 class="blog-motto"></h2>
-			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
-			</a></div>
-			<nav class="animated">
-				<ul>
-					<ul>
-					 
-						<li><a href="/">Home</a></li>
-					
-						<li><a href="/archives">Archives</a></li>
-					
-						<li><a href="/about-2">About</a></li>
-					
-					<li>
- 					
-					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
-						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
-						<input type="hidden" name="q" value="site:wangcong.org">
-					</form>
-					
-					</li>
-				</ul>
-			</nav>			
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">A Geek&#39;s Page</a></h1>
+  <h2><a href="/"></a></h2>
 </div>
-      </header>
-      <div id="container">
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title category">Linux Kernel</h2>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-03-03T06:27:30.000Z"><a href="/2010/03/02/-e7-bd-91-e7-bb-9c-e7-ab-af-e5-8f-a3-e9-a2-84-e7-95-99/">Mar 2 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/03/02/-e7-bd-91-e7-bb-9c-e7-ab-af-e5-8f-a3-e9-a2-84-e7-95-99/">网络端口预留</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>最近这些天我在做内核的一个新功能：/proc/sys/net/ipv4/ip_local_reserved_ports，这个文件的作用是告诉内核保留一些指定的端口，这样以来对于那些使用固定端口号的第三方应用程序来说就能保证它们总是能成功使用这些端口，而不是被内核自动分配端口时抢占。</p>
+<p>我们知道在调用比如 bind(2) 时指定端口0其实是告诉内核自动去分配一个可用的端口，这个端口是随机的，而且范围是在 /proc/sys/net/ipv4/ip_local_port_range 指定的之内。不光 bind(2)，你调用 connect(2) 时也会自动获得一个端口，它也是这样得到的。所以，如果我们都使用端口0去让内核分配端口世界会很和谐，各个程序相安无事，但是很多服务器程序需要有个固定的端口的，随机分配的端口是不能接受的，于是就有了那些<a href="http://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers" target="_blank" rel="external">已知的固定端口号</a>。问题还没解决，如果我们的服务器程序的端口号不在里面怎么办？去 <a href="http://www.iana.org/assignments/port-numbers" target="_blank" rel="external">IANA</a> 申请吧，不至于，可能你的程序不够知名，或者 IANA 没有批准等等申请不上，怎么办？</p>
+<p>一个方法是使用那个 ip_local_port_range ，把范围调整到不包含你的端口的范围。这样做有个明显的缺点，如果你的端口号正好在当前  ip_local_port_range 的正中间，那样会有一半的端口都要被排除掉了，而且很明显 ip_local_port_range 的本意也不让你做这种事的。于是就有了 ip_local_reserved_ports，引入它的目的就是为了让你在这种情况下预留端口。</p>
+<p>我写的最初的补丁只支持像 ip_local_port_range 那样的输入格式，比如：”50000 50100”，但是 Octavian 觉得这种格式灵活性不高，如果能支持指定多个任意范围的端口号那就更好了。于是他接过我的补丁继续做，从<a href="http://patchwork.kernel.org/patch/76954/" target="_blank" rel="external">我的 v2</a> 一直到<a href="http://lkml.org/lkml/2010/2/26/472" target="_blank" rel="external">现在的 v6</a>，期间经过了多次讨论和测试，现在基本上已经成熟了。如果不出意外，应该可以汇入到主线内核中。新的 ip_local_reserved_ports 可以支持“50000,50100-50200” 这种格式，可以非常方便地指定要预留的单个端口或者端口范围。</p>
+<p>注意，ip_local_reserved_ports 和 ip_local_port_range 关系不大，前者里的端口完全可以在后者的范围之外，这么设计一是为了简单，二是为了防止竞争，你可以先把 ip_local_port_range 调整到你预留的端口范围之外，然后等写好预留端口的列表之后再把前面的范围调回去。比如我们可以这么写代码：<br>[bash]<br>from=<code>cut -f1 /proc/sys/net/ipv4/ip_local_port_range</code><br>to=<code>cut -f2 /proc/sys/net/ipv4/ip_local_port_range</code><br>if [ “$1” -lt $to ] &amp;&amp; [ “$1” -gt $from ]; then<br>    echo “$from $[$1-1]” &gt; /proc/sys/net/ipv4/ip_local_port_range<br>fi<br>original=<code>cat /proc/sys/net/ipv4/ip_local_reserved_ports</code><br>original=”$original, $1”<br>echo “$original” &gt; /proc/sys/net/ipv4/ip_local_reserved_ports<br>echo “$from $to” &gt; /proc/sys/net/ipv4/ip_local_port_range<br>[/bash] </p>
+
+      
+    </div>
+    <footer>
+      
         
-
-<div class="archive-title" >
-  <h2 class="category-icon">Linux Kernel</h2>
-  
-</div>
-<div id="main" class="archive-part clearfix">
-  <div id="archive-page">
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2010/03/02/-e7-bd-91-e7-bb-9c-e7-ab-af-e5-8f-a3-e9-a2-84-e7-95-99/" title="网络端口预留" itemprop="url">
-  
-
-    <time datetime="2010-03-03T06:27:30.000Z" itemprop="datePublished">Mar 2 2010</time>
-
-
-    <h1 itemprop="name">网络端口预留</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2010/02/28/archlinux-e7-bc-96-e8-af-91-e5-ae-89-e8-a3-85-e5-86-85-e6-a0-b8/" title="archlinux 编译安装内核" itemprop="url">
-  
-
-    <time datetime="2010-02-28T08:10:10.000Z" itemprop="datePublished">Feb 28 2010</time>
-
-
-    <h1 itemprop="name">archlinux 编译安装内核</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2009/11/21/kbuild-e6-9b-b4-e6-8d-a2-e7-bb-b4-e6-8a-a4-e8-80-85/" title="kbuild 更换维护者" itemprop="url">
-  
-
-    <time datetime="2009-11-22T06:23:04.000Z" itemprop="datePublished">Nov 21 2009</time>
-
-
-    <h1 itemprop="name">kbuild 更换维护者</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2009/05/26/-e5-a4-ad-e6-8a-98-e7-9a-84-e4-b8-80-e4-b8-aa-e8-a1-a5-e4-b8-81/" title="夭折的一个补丁" itemprop="url">
-  
-
-    <time datetime="2009-05-27T04:55:36.000Z" itemprop="datePublished">May 26 2009</time>
-
-
-    <h1 itemprop="name">夭折的一个补丁</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2009/03/29/-umoddi3-e7-9a-84-e9-97-ae-e9-a2-98/" title="__umoddi3()的问题" itemprop="url">
-  
-
-    <time datetime="2009-03-30T04:31:49.000Z" itemprop="datePublished">Mar 29 2009</time>
-
-
-    <h1 itemprop="name">__umoddi3()的问题</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2009/03/26/switch-to-e4-b8-ad-e7-9a-84-e6-b1-87-e7-bc-96/" title="switch_to中的汇编" itemprop="url">
-  
-
-    <time datetime="2009-03-27T01:46:13.000Z" itemprop="datePublished">Mar 26 2009</time>
-
-
-    <h1 itemprop="name">switch_to中的汇编</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2009/03/23/-e5-b0-be-e9-83-a8-e8-b0-83-e7-94-a8-e4-bc-98-e5-8c-96/" title="尾部调用优化" itemprop="url">
-  
-
-    <time datetime="2009-03-24T03:14:46.000Z" itemprop="datePublished">Mar 23 2009</time>
-
-
-    <h1 itemprop="name">尾部调用优化</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2009/01/18/linux-e5-88-86-e5-8c-ba-e4-b8-aa-e6-95-b0-e9-99-90-e5-88-b6/" title="Linux分区个数限制" itemprop="url">
-  
-
-    <time datetime="2009-01-18T08:58:18.000Z" itemprop="datePublished">Jan 18 2009</time>
-
-
-    <h1 itemprop="name">Linux分区个数限制</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2009/01/16/linux-pid-namespace/" title="Linux PID namespace" itemprop="url">
-  
-
-    <time datetime="2009-01-17T06:52:49.000Z" itemprop="datePublished">Jan 16 2009</time>
-
-
-    <h1 itemprop="name">Linux PID namespace</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2008/08/23/-e4-b8-80-e4-b8-aa-e6-98-8e-e6-98-be-e7-9a-84-e6-8b-bc-e5-86-99-e9-94-99-e8-af-af/" title="一个明显的拼写错误" itemprop="url">
-  
-
-    <time datetime="2008-08-23T07:43:11.000Z" itemprop="datePublished">Aug 23 2008</time>
-
-
-    <h1 itemprop="name">一个明显的拼写错误</h1>
-
-  </a>
-</section>
-
-
-  <nav id="page-nav" class="clearfix archive-nav">
-    <a class="extend prev" rel="prev" href="/categories/Linux-Kernel/page/3/"><span></span>Prev</a><a class="page-number" href="/categories/Linux-Kernel/">1</a><a class="page-number" href="/categories/Linux-Kernel/page/2/">2</a><a class="page-number" href="/categories/Linux-Kernel/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/categories/Linux-Kernel/page/5/">5</a><a class="page-number" href="/categories/Linux-Kernel/page/6/">6</a><a class="page-number" href="/categories/Linux-Kernel/page/7/">7</a><a class="extend next" rel="next" href="/categories/Linux-Kernel/page/5/">Next<span></span></a>
-  </nav>
-
+        
+      
+      <div class="clearfix"></div>
+    </footer>
   </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-02-28T08:10:10.000Z"><a href="/2010/02/28/archlinux-e7-bc-96-e8-af-91-e5-ae-89-e8-a3-85-e5-86-85-e6-a0-b8/">Feb 28 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/02/28/archlinux-e7-bc-96-e8-af-91-e5-ae-89-e8-a3-85-e5-86-85-e6-a0-b8/">archlinux 编译安装内核</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>一离开 Red Hat 的开发环境很多东西都不顺手，编译安装内核就是一个例子。在 Fedora/RHEL 上，直接 make install 就什么都装好了，到了 archlinux 下可就不行了，它上面没有 /sbin/installkernel 不说，制作 initrd 工具也不一样，内核 config 放置不一样，就连内核版本号命名方式也不一样。所以就得自己写脚本来搞定了。</p>
+<p>首先，你要把 CONFIG_LOCALVERSION 和 CONFIG_LOCALVERSION_AUTO 关了，前者是加自己的版本标识，后者是使用 git 来决定当前编译内核的版本号，所以说你会得到类似 2.6.33-rc7-ARCH-00010-g6339204-dirty 的东东，很烦人，直接关掉。</p>
+<p>然后就是内核 config 文件的放置，Fedora 上都是单独放到 /boot 下，而 archlinux 是编译进内核的，也就是说在 /proc/config.gz 里，是通过 CONFIG_IKCONFIG_PROC 来控制的。我觉得放置在哪没多大关系，咱又不差内存。;)</p>
+<p>好了，下面就是脚本了，它可以帮你完成安装内核这个最后的步骤，有点像 installkernel。但你必须在内核源代码根目录下运行，而且假设你执行完了 make modules_install 这一步，当然了，假设你使用的是 grub。</p>
+<p>有兴趣的同学可以把它改成 installkernel 一样的接口，这样就可以直接 make install 了。</p>
+<p>[bash]</p>
+<h1 id="!/bin/bash">!/bin/bash</h1>
+<p>#</p>
+<h1 id="1-_This_must_be_run_in_the_top_kernel_source_directory-">1. This must be run in the top kernel source directory.</h1>
+<h1 id="2-_Assume_you_already_install_the_modules-">2. Assume you already install the modules.</h1>
+<p>version=<code>make kernelversion</code><br>cp  System.map /boot/System.map.${version}</p>
+<h1 id="Maybe_only_works_on_x86">Maybe only works on x86</h1>
+<p>cp  arch/<code>uname -m</code>/boot/bzImage /boot/vmlinuz-${version}<br>mkinitcpio -k “${version}” -c /etc/mkinitcpio.conf -g /boot/kernel.${version}.img</p>
+<p>kernel_args=<code>cat /proc/cmdline</code><br>root_device=<code>awk &#39;/^root/ { print $2; exit; }&#39; /boot/grub/menu.lst</code><br>if ! grep -q “Test Kernel ${version}” /boot/grub/menu.lst<br>then<br>    cat &gt;&gt; /boot/grub/menu.lst &lt;&lt;eof</p>
+<p>title Test Kernel ${version}<br>root ${root_device}<br>kernel /boot/vmlinuz-${version} ${kernel_args}<br>initrd /boot/kernel.${version}.img<br>EOF<br>fi<br>[/bash] </p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-11-22T06:23:04.000Z"><a href="/2009/11/21/kbuild-e6-9b-b4-e6-8d-a2-e7-bb-b4-e6-8a-a4-e8-80-85/">Nov 21 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/11/21/kbuild-e6-9b-b4-e6-8d-a2-e7-bb-b4-e6-8a-a4-e8-80-85/">kbuild 更换维护者</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Sam Ravnborg 作为 Linux 内核 kbuild 子系统的维护者已经很长时间。因为提交过相关补丁的原因，和他有过电子邮件来往。如果我没记错的话，他应该是意大利人，这位老大英语不是一般差，他的英语我每次读都比较费劲。无论如何，他对内核社区的贡献是有目共睹的，感谢多年来他的努力，现在 kbuild 系统已经很完善了。</p>
+<p>在<a href="http://lkml.org/lkml/2009/11/20/262" target="_blank" rel="external">昨天晚上的一封电子邮件</a>中，Sam 突然宣布放弃继续维护 kbuild，因为家庭和工作的原因，时间不够用了。他维护 kbuild 也都是在业余时间来做，确实比较辛苦。 kbuild 作为内核中比较特殊的一部分，它几乎纯粹是用户层的东西，但和最后生成的内核二进制文件又息息相关，总体上感觉有点儿“鸡肋”，而且一般人是不会乱碰那些很多人看不懂的 Makefile 的。而且编译不光涉及简单的直接编译，还涉及到各个平台之间的交叉编译，涉及二进制文件格式等等，维护这些东西确实很麻烦。不管谁接手这个活儿都不容易。</p>
+<p>目前谁将继续维护 kbuild 还未确定，主要还是要看 lkml 社区的认可程度，毕竟开源社区就是靠声望运作的。在私下的讨论中，Debian 开发者 Aníbal Monsalve Salazar 表示对此感兴趣，希望能接手，但不知为何并没有抄送到 lkml。最后如何我们只能拭目以待了。</p>
+<p>BTW：正是靠这么多业余爱好者的努力，Linux 才成长如此迅速。感谢那些默默无闻，常年奋战在自由软件开发第一线的 geek 们！他们是互联网上最可爱的人！geek 万岁！8-)  姑娘们，<a href="http://www.helium.com/items/805591-ten-reasons-you-should-marry-a-geek" target="_blank" rel="external">给你们十个理由去嫁给 geek 男</a>！恩哼～！</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-05-27T04:55:36.000Z"><a href="/2009/05/26/-e5-a4-ad-e6-8a-98-e7-9a-84-e4-b8-80-e4-b8-aa-e8-a1-a5-e4-b8-81/">May 26 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/05/26/-e5-a4-ad-e6-8a-98-e7-9a-84-e4-b8-80-e4-b8-aa-e8-a1-a5-e4-b8-81/">夭折的一个补丁</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><a href="http://wangcong.org/down/export-socket-flags-from-proc.diff" target="_blank" rel="external">这个补丁</a>其实本来是我分配到的一个任务，不过在我们内部讨论时被拒了，所以放出来也无妨。再说了，在我们内部提交补丁的第一原则是必须首先在LKML上得到认可，没什么秘密。:-)</p>
+<p>这个任务其实很简单，就是要把socket的一些选项给通过/proc导出，这些选项就是通过setsockopt(2)设置的那些。</p>
+<p>初看这个任务感觉很简单，无怪乎就是一个/proc下的interface，然后就是通过某种方式把数据传输过来。但仔细一看其实不简单，因为setsockopt(2)并没有把这些数据集中存储起来，而是分散地存放到各个角落，然后通过switch/case的方式逐个判断。所以这里问题就来了，在某种程度上，其实我们要的就是一种“迭代”，而无奈的是，这些数据太过离散而不能迭代！这就是难点所在！</p>
+<p>怎么解决呢？我首先想到的是用hash，把这些数据通过链表连起来，用其level和optname作关键字。后来想想其实这样也很麻烦，而且越往下想越麻烦。。。这时我就开始反思是不是该往简单里想想了？我盯住那switch/case，发现它既然能阻止我“迭代”，那我也能用它来“迭代”！对，我的主意就是用fall through！于是下面这个技巧就出来乐～～！</p>
+<p>[c]</p>
+<h1 id="define_BREAK(OPT,_val)">define BREAK(OPT, val)</h1>
+<pre><code>   <span class="keyword">if</span> (optname != SO_ALL)  
+           <span class="keyword">break</span>;          
+   len += scnprintf(buf+len, *(<span class="keyword">int</span> *)optlen - len, <span class="string">"<span class="variable">%dt</span><span class="variable">%dt</span><span class="variable">%ldt</span><span class="variable">%dn</span>"</span>, 
+           level, OPT, (long)(val), (<span class="keyword">int</span>)sizeof(val))
+</code></pre><h1 id="define_STOP()_if_(optname_==_SO_ALL)_{">define STOP() if (optname == SO_ALL) {</h1>
+<pre><code>                   *(<span class="keyword">int</span> *)optlen = <span class="built_in">len</span>; 
+                   <span class="keyword">return</span> <span class="number">0</span>;       
+           }
+</code></pre><p>[/c]</p>
+<p>其余的就很简单了，尤其是/proc的函数接口，感觉那块儿代码算是很整洁的，相当值得一读。</p>
+<p>当然了，正如开头所说，现实是很残酷的，这个补丁被拒绝了，因为大牛David Miller不喜欢，他说这个是Solaris上有的东西，这并不代表Linux就一定要有，如果真的需要这个功能，我们还有systemtap，而且程序本身有义务自己打印socket的设置选项，如果调试的话。</p>
+<p>如果你要有兴趣的话可以试试<a href="http://wangcong.org/down/export-socket-flags-from-proc.diff" target="_blank" rel="external">我这个补丁</a>，但真要用的话还得自己完善一下，尤其是输出格式。:-)</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-03-30T04:31:49.000Z"><a href="/2009/03/29/-umoddi3-e7-9a-84-e9-97-ae-e9-a2-98/">Mar 29 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/03/29/-umoddi3-e7-9a-84-e9-97-ae-e9-a2-98/">__umoddi3()的问题</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>在编译内核时有人遇到下面这个问题：</p>
+<pre>
+kernel/built-in.o: In function `getnstimeofday':
+(.text+0xb6ae): undefined reference to `__umoddi3'
+kernel/built-in.o: In function `getnstimeofday':
+(.text+0xb6ce): undefined reference to `__udivdi3'
+</pre>
+
+<p>这个问题可以在用户空间重现，不过不是很容易，我实验了一下，在i386上，并不是所有的64位整数操作都会被转化成调用__umoddi3，<a href="http://gcc.gnu.org/bugzilla/show_bug.cgi?id=32044" target="_blank" rel="external">gcc bugzilla上</a>有演示程序，如下：</p>
+<p>[c]</p>
+<h1 id="define_NSEC_PER_SEC_1000000000UL">define NSEC_PER_SEC  1000000000UL</h1>
+<p>int rmg(void);</p>
+<p>int main(void)<br>{<br>        /<em> int sec; </em>/<br>        return rmg();<br>}</p>
+<p>int rmg(void)<br>{<br>static unsigned long long nsec = 0;<br>static int sec = 0;<br>    while (sec = NSEC_PER_SEC, 0)) {<br>                nsec -= NSEC_PER_SEC;<br>                ++sec;<br>        }<br>    }<br>        return sec;<br>}<br>[/c]</p>
+<p>这样编译它：% gcc -nostdlib -O2 -o umoddi3 umoddi3.c，就会得到：</p>
+<pre>
+/tmp/ccycM684.o: In function `rmg':
+umoddi3.c:(.text+0x87): undefined reference to `__udivdi3'
+collect2: ld returned 1 exit status
+</pre>
+
+<p>问题重现了。这里的问题是，对于nsec来说，内层的循环其实等价于求模运算，gcc在优化时发现了这一点，而且硬件本身也不支持对64位整数直接进行算术运算，所以gcc会把这一步优化成调用内部函数<strong>udivdi3()和</strong>umoddi3()，这两个函数在libgcc中（见gcc源代码gcc/libgcc2.c），libgcc默认和libc一样是要被加载的，但如果我们加了-nostdlib（Linux内核是更好的例子），这个问题就会出现了。</p>
+<p>知道原因了，怎么解决？网上有两种方法，一种是像<a href="http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=38332cb98772f5ea757e6486bed7ed0381cb5f98;hp=e48af19f56eb47a1f908ee8f16df9d246f955b21" target="_blank" rel="external">这个补丁</a>那样，在循环中插入下面这条内联汇编：</p>
+<p><pre><br>asm(“” : “+r”(ns));<br></pre><br>这句是告诉gcc把ns这个变量放到寄存器中，并且既有读操作也有写操作，所以后面再用它时必须重新读取，这样就消除了上面的优化。</p>
+<p>另一种解决方法是添加新的编译选项：-fno-tree-scev-cprop，这个选项似乎没有文档，至少我没找到。说说它的大体意思。scev应该是SCalar EVolutions，什么意思不知道。:( cprop应该是Copy PROPagation，这个应该很容易理解，就是赋值的传播，比如：</p>
+<p>i = 10;<br>a = i;<br>b = i;</p>
+<p>其实就是：</p>
+<p>a = 10;<br>b = 10;</p>
+<p>可见，编译优化是门大学问，写个编译器丝毫不比写个内核容易。:-P</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-03-27T01:46:13.000Z"><a href="/2009/03/26/switch-to-e4-b8-ad-e7-9a-84-e6-b1-87-e7-bc-96/">Mar 26 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/03/26/switch-to-e4-b8-ad-e7-9a-84-e6-b1-87-e7-bc-96/">switch_to中的汇编</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>switch_to()的代码在arch/x86/include/asm/system.h中，如下：<br>[c]</p>
+<h1 id="define_switch_to(prev,_next,_last)">define switch_to(prev, next, last)</h1>
+<p>do {<br>    /*                                </p>
+<pre><code> <span class="keyword">*</span> Context-switching clobbers all registers, so we clobber    
+ <span class="keyword">*</span> them explicitly, via unused output variables.        
+ <span class="keyword">*</span> (EAX and EBP is not listed because EBP is saved/restored    
+ <span class="keyword">*</span> explicitly for wchan access and EAX is the return value of    
+ <span class="keyword">*</span> __switch_to())                        
+ <span class="keyword">*</span>/                                
+unsigned long ebx, ecx, edx, esi, edi;                
+
+asm volatile(<span class="string">"pushflnt"</span>        /<span class="keyword">*</span> save    flags <span class="keyword">*</span>/    
+         <span class="string">"pushl %%ebpnt"</span>        /<span class="keyword">*</span> save    EBP   <span class="keyword">*</span>/    
+         <span class="string">"movl %%esp,%[prev_sp]nt"</span>    /<span class="keyword">*</span> save    ESP   <span class="keyword">*</span>/ 
+         <span class="string">"movl %[next_sp],%%espnt"</span>    /<span class="keyword">*</span> restore ESP   <span class="keyword">*</span>/ 
+         <span class="string">"movl $1f,%[prev_ip]nt"</span>    /<span class="keyword">*</span> save    EIP   <span class="keyword">*</span>/    
+         <span class="string">"pushl %[next_ip]nt"</span>    /<span class="keyword">*</span> restore EIP   <span class="keyword">*</span>/    
+         <span class="string">"jmp __switch_ton"</span>    /<span class="keyword">*</span> regparm call  <span class="keyword">*</span>/    
+         <span class="string">"1:t"</span>                        
+         <span class="string">"popl %%ebpnt"</span>        /<span class="keyword">*</span> restore EBP   <span class="keyword">*</span>/    
+         <span class="string">"popfln"</span>            /<span class="keyword">*</span> restore flags <span class="keyword">*</span>/    
+
+         /<span class="keyword">*</span> output parameters <span class="keyword">*</span>/                
+         : [prev_sp] <span class="string">"=m"</span> (prev-&amp;gt;thread.sp),        
+           [prev_ip] <span class="string">"=m"</span> (prev-&amp;gt;thread.ip),        
+           <span class="string">"=a"</span> (last),                    
+
+           /<span class="keyword">*</span> clobbered output registers: <span class="keyword">*</span>/        
+           <span class="string">"=b"</span> (ebx), <span class="string">"=c"</span> (ecx), <span class="string">"=d"</span> (edx),        
+           <span class="string">"=S"</span> (esi), <span class="string">"=D"</span> (edi)                
+
+           /<span class="keyword">*</span> input parameters: <span class="keyword">*</span>/                
+         : [next_sp]  <span class="string">"m"</span> (next-&amp;gt;thread.sp),        
+           [next_ip]  <span class="string">"m"</span> (next-&amp;gt;thread.ip),        
+
+           /<span class="keyword">*</span> regparm parameters for __switch_to(): <span class="keyword">*</span>/    
+           [prev]     <span class="string">"a"</span> (prev),                
+           [next]     <span class="string">"d"</span> (next)                
+
+         : /<span class="keyword">*</span> reloaded segment registers <span class="keyword">*</span>/            
+        <span class="string">"memory"</span>);                    
+</code></pre><p>} while (0)<br>[/c]</p>
+<p>根据ABI约定和内联汇编，ebx, ecx, edx, esi, edi这几个寄存器是由编译器自动保存和恢复的。这一点可能不太好理解，举个例子，看下面的代码中的ecx：<br>[c]</p>
+<h1 id="include">include</h1>
+<p>void modify_ecx(void) {<br>  unsigned long ecx;</p>
+<p> <strong>asm</strong> (<br>  “movl $1, %%ecxnt”<br> :”=c”(ecx)<br> :<br> );<br>}</p>
+<p>void test(void) {<br> unsigned long ecx;</p>
+<p> <strong>asm</strong> volatile(<br> “nopnt”<br> “call modify_ecxnt”<br> : “=c” (ecx)<br> :<br> : “memory”<br> );<br> printf(“ecx=%ldn”, ecx);<br>}</p>
+<p>int main(void) {<br> test();<br> return 0;<br>}<br>[/c]<br>这里的test()就相当于内核源代码中“调用”switch_to()的context_switch()，我们来查看其对应的汇编代码（注意要加-O0）：</p>
+<p><pre><br>main:<br>        leal    4(%esp), %ecx<br>        andl    $-16, %esp<br>        pushl   -4(%ecx)<br>        pushl   %ecx<br>        subl    $8, %esp<br>        call    test<br>        movl    $0, %eax<br>        addl    $8, %esp<br>        popl    %ecx<br>        leal    -4(%ecx), %esp<br>        ret<br></pre><br>可见，在调用test()之前，编译器已经自动完成了保存ecx的操作，而调用之后它又会恢复ecx的值。</p>
+<p>而ebp，eflags是手工压入堆栈，并在switch回来后恢复出来的。esp和eip保存在相应的task_struct结构体里。</p>
+<p>需要额外说明的是那个jmp，因为这里的参数传递是通过寄存器完成的，具体说是用了eax和edx这个两个寄存器，所以再jmp其实就和call一样了，不过call是要把ebp入栈的，而jmp不需要，这里也不需要。</p>
+<p>另外一个可能的问题是：为什么switch_to()有三个参数？我们切换的进程明明是两个啊！这里问题的所在是进程切换时堆栈的切换，如果不使用三个参数，切换的堆栈中仍然保存的是切换前的参数，再切换回来时prev很可能不对了，所以需要一个参数来修正，这个参数又正好是__switch_to的返回值。这样问题就解决了。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-03-24T03:14:46.000Z"><a href="/2009/03/23/-e5-b0-be-e9-83-a8-e8-b0-83-e7-94-a8-e4-bc-98-e5-8c-96/">Mar 23 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/03/23/-e5-b0-be-e9-83-a8-e8-b0-83-e7-94-a8-e4-bc-98-e5-8c-96/">尾部调用优化</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>gcc实在是太聪明了，有时候就会聪明过头，尾部调用优化就是一个很好的例子。:)</p>
+<p>尾部调用其实很好理解，就是在函数的最后调用另外一个函数，一种大的可能就是这个函数和调用函数参数差别很小，那么这时候，gcc会对这个尾部调用进行优化，如果可能，完全可以把调用那个函数时的入栈操作给直接优化掉。这就是尾部调用的优化。我们可以看看下面的例子：</p>
+<p>[c]<br>extern int callee(int a, int b);</p>
+<p>static int c;</p>
+<p>int call(int a, int b)<br>{<br>        int ret = callee(c, b);<br>        return ret;<br>}<br>[/c]</p>
+<p>用”gcc -fomit-frame-pointer -fno-inline -O2 -S tail_call.c”编译它，得到的汇编代码截取如下：</p>
+<pre>
+call:
+        movl    c, %eax
+        movl    %eax, 4(%esp)
+        jmp     callee
+</pre>
+
+<p>很明显，入栈操作被优化掉了，成了直接操作call()的参数！这会有问题，如果call()的调用函数不想看到堆栈被改变的话。</p>
+<p>在Linux内核中有个很好的例子，那就是系统调用！系统调用的入口（arch/x86/kernel/entry_32.S）是用汇编写成的，在进入一个系统调用前存放参数的寄存器会被入栈，系统调用完毕后又会被恢复，所以，如果系统调用也被做了尾部调用优化的话，那么系统调用前后寄存器的值就会发生变化！这就可能会破坏用户空间的代码！</p>
+<p>Linux内核采取了相应的办法来解决这个问题，那就是宏asmlinkage_protect()，它的定义在arch/x86/include/asm/linkage.h。我们通过个具体的例子来看，比如open(2)，其定义是这样的：</p>
+<p>[c]<br>SYSCALL_DEFINE3(open, const char __user *, filename, int, flags, int, mode)<br>{<br>        long ret;</p>
+<pre><code>    if (force_o_largefile())
+            flags |= O_LARGEFILE<span class="comment">;</span>
+
+    <span class="keyword">ret</span> = do_sys_open(AT_FDCWD, filename, flags, mode)<span class="comment">;</span>
+    <span class="comment">/* avoid REGPARM breakage on x86: */</span>
+    asmlinkage_protect(<span class="number">3</span>, <span class="keyword">ret</span>, filename, flags, mode)<span class="comment">;</span>
+    return <span class="keyword">ret</span><span class="comment">;</span>
+</code></pre><p>}<br>[/c]</p>
+<p>上面的asmlinkage_protect会被展开成：</p>
+<p><pre><br><strong>asm</strong> <strong>volatile</strong> (“” : “=r” (ret) : “0” (ret), “g” (filename),<br>                                                       “g” (flags), “g” (mode));<br></pre><br>这句不会直接生成任何汇编代码，但是它会强迫gcc把参数放到寄存器中，也就避免了上面展示的直接对栈进行操作。</p>
+<p>为了完整，我们把最开始的那段代码修复一下：<br>[c]<br>extern int callee(int a, int b);</p>
+<p>static int c;</p>
+<p>int call(int a, int b)<br>{<br>        int ret = callee(c, b);<br>        <strong>asm</strong>(“”:”=r”(ret):”0”(ret), “g”(a), “g”(b));<br>        return ret;<br>}<br>[/c]<br>再汇编就可以看到堆栈操作了：</p>
+<p><pre><br>call:<br>        pushl   %ebx<br>        subl    $8, %esp<br>        movl    c, %eax<br>        movl    20(%esp), %ebx<br>        movl    %eax, (%esp)<br>        movl    %ebx, 4(%esp)<br>        call    callee<br>        addl    $8, %esp<br>        popl    %ebx<br>        ret<br></pre><br>这里展示的代码都很简单，实际中往往很复杂，情况不同gcc的优化操作也不同，比如，当上面的callee()是static的时候虽然也会被优化但不会直接操作堆栈（而是通过使用寄存器），因为gcc可以完整地看到两个函数，可以在“全局”进行优化。实际问题实际分析，但这个尾部调用优化带来的问题我们必须得小心才是。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-01-18T08:58:18.000Z"><a href="/2009/01/18/linux-e5-88-86-e5-8c-ba-e4-b8-aa-e6-95-b0-e9-99-90-e5-88-b6/">Jan 18 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/01/18/linux-e5-88-86-e5-8c-ba-e4-b8-aa-e6-95-b0-e9-99-90-e5-88-b6/">Linux分区个数限制</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>在linux上，对于IDE硬盘来说，分区个数限制在63个；而对于SCSI硬盘限制在15个。</p>
+<p>我们可以直接在linux内核源代码中找到证据：</p>
+<p>include/linux/ide.h</p>
+<h1 id="define_PARTN_BITS_6_/_number_of_minor_dev_bits_for_partitions_/">define PARTN_BITS      6       /<em> number of minor dev bits for partitions </em>/</h1>
+<p>次设备号也就决定了可挂载的IDE设备不会超过63个（2^6-1，之所以减一是因为hdX本身也会占用一个）。</p>
+<p>SCSI也差不多，见 drivers/scsi/sd.c</p>
+<h1 id="if_!defined(CONFIG_DEBUG_BLOCK_EXT_DEVT)">if !defined(CONFIG_DEBUG_BLOCK_EXT_DEVT)</h1>
+<h1 id="define_SD_MINORS_16">define SD_MINORS       16</h1>
+<h1 id="else">else</h1>
+<h1 id="define_SD_MINORS_0">define SD_MINORS       0</h1>
+<h1 id="endif">endif</h1>
+<p>在内核文档中也可以看到，见Documentation/devices.txt ：</p>
+<p>For partitions, add to the whole disk device number:<br>0 = /dev/hd?          Whole disk<br>1 = /dev/hd?1         First partition<br>2 = /dev/hd?2         Second partition<br>…<br>63 = /dev/hd?63        63rd partition<br>…</p>
+<p>8 block       SCSI disk devices (0-15)</p>
+<p>Partitions are handled in the same way as for IDE<br>disks (see major number 3) except that the limit on<br>partitions is 15.</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-01-17T06:52:49.000Z"><a href="/2009/01/16/linux-pid-namespace/">Jan 16 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/01/16/linux-pid-namespace/">Linux PID namespace</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>一直对linux内核的namespace感到困惑，今天看了一下代码才知道，原来所谓的namespace其实就是给虚拟化用的，<a href="http://lwn.net/Articles/259217/" target="_blank" rel="external">PID namespace</a>其实就是建立一个新的PID空间，这样内部可以使用一套新的PID，而且不会和外部冲突。这也就是说某个进程其实会有两个PID，一个空间一个。</p>
+<p>我写了段C代码来展示这个问题。<br>[c]</p>
+<h1 id="include">include</h1>
+<h1 id="include-1">include</h1>
+<h1 id="include-2">include</h1>
+<h1 id="include-3">include</h1>
+<h1 id="include-4">include</h1>
+<h1 id="include-5">include</h1>
+<p>static int fork_child(void *arg)<br>{<br>    int a = (int)arg;<br>    int i;<br>    pid_t pid;</p>
+<pre><code><span class="keyword">printf</span>(<span class="string">"In the container, my pid is: <span class="variable">%dn</span>"</span>, getpid());
+<span class="keyword">for</span> (i = <span class="number">0</span>; i &amp;<span class="keyword">lt</span>; a; i++) {
+    pid = <span class="keyword">fork</span>();
+    <span class="keyword">if</span> (pid &amp;<span class="keyword">lt</span>; <span class="number">0</span>)
+        <span class="keyword">return</span> pid;
+    <span class="keyword">else</span> <span class="keyword">if</span> (pid)
+        <span class="keyword">printf</span>(&amp;quot;pid of <span class="keyword">my</span> child is <span class="variable">%dn</span>&amp;quot;, pid);
+    <span class="keyword">else</span> <span class="keyword">if</span> (pid == <span class="number">0</span>) {
+        <span class="keyword">sleep</span>(<span class="number">3</span>);
+        <span class="keyword">exit</span>(<span class="number">0</span>);
+    }
+}
+<span class="keyword">return</span> <span class="number">0</span>;
+</code></pre><p>}</p>
+<p>int main(int argc, char <em>argv[])<br>{<br>    int cpid;<br>    void </em>childstack, <em>stack;<br>    int flags;<br>    int ret = 0;<br>    int stacksize = getpagesize() </em> 4;</p>
+<pre><code><span class="keyword">if</span> (argc != <span class="number">2</span>) {
+    <span class="built_in">fprintf</span>(stderr, &amp;quot;Wrong usage.n&amp;quot;);
+    <span class="keyword">return</span> -<span class="number">1</span>;
+}
+
+<span class="built_in">stack</span> = <span class="built_in">malloc</span>(stacksize);
+<span class="keyword">if</span> (!<span class="built_in">stack</span>) {
+    perror(&amp;quot;<span class="built_in">malloc</span>&amp;quot;);
+    <span class="keyword">return</span> -<span class="number">1</span>;
+}
+
+<span class="built_in">printf</span>(&amp;quot;Out of the container, my pid is: %dn&amp;quot;, getpid());
+
+childstack = <span class="built_in">stack</span> + stacksize;
+flags = CLONE_NEWPID | CLONE_NEWNS;
+
+cpid = clone(fork_child, childstack, flags, (<span class="keyword">void</span> *)atoi(argv[<span class="number">1</span>]));
+<span class="built_in">printf</span>(&amp;quot;cpid: %dn&amp;quot;, cpid);
+
+<span class="keyword">if</span> (cpid &amp;lt; <span class="number">0</span>) {
+    perror(&amp;quot;clone&amp;quot;);
+    ret = -<span class="number">1</span>;
+    <span class="keyword">goto</span> out;
+}
+
+<span class="built_in">fprintf</span>(stderr, &amp;quot;Parent sleeping <span class="number">20</span> secondsn&amp;quot;);
+sleep(<span class="number">20</span>);
+ret = <span class="number">0</span>;
+</code></pre><p>out:<br>    free(stack);<br>    return ret;<br>}<br>[/c]</p>
+<p>运行结果：</p>
+<p>$ sudo ./pid_container 3<br>Out of the container, my pid is: 7061<br>cpid: 7062<br>In the container, my pid is: 1<br>Parent sleeping 20 seconds<br>pid of my child is 2<br>pid of my child is 3<br>pid of my child is 4</p>
+<p>其实被namespace化的不只是PID，还有很多东西，貌似它们合起来被称为container。可以看 include/linux/nsproxy.h：</p>
+<p>struct nsproxy {<br>        atomic_t count;<br>        struct uts_namespace <em>uts_ns;<br>        struct ipc_namespace </em>ipc_ns;<br>        struct mnt_namespace <em>mnt_ns;<br>        struct pid_namespace </em>pid_ns;<br>        struct net           *net_ns;<br>};</p>
+<p>虚拟化的东西是越来越让人摸不清头脑了。。。。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2008-08-23T07:43:11.000Z"><a href="/2008/08/23/-e4-b8-80-e4-b8-aa-e6-98-8e-e6-98-be-e7-9a-84-e6-8b-bc-e5-86-99-e9-94-99-e8-af-af/">Aug 23 2008</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2008/08/23/-e4-b8-80-e4-b8-aa-e6-98-8e-e6-98-be-e7-9a-84-e6-8b-bc-e5-86-99-e9-94-99-e8-af-af/">一个明显的拼写错误</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>在 iptables 的 man 手册中，有如下语句：</p>
+<blockquote>
+<p>If the second port <span style="color:#ff0000;">greater then</span> the first they will be swapped.<br>如果你觉得这个明显的拼写错误不常见那你就错了，内核注释，文档，代码中有一堆类似的拼写错误！</p>
+</blockquote>
+<p>见补丁：</p>
+<p><a href="http://marc.info/?l=netfilter-devel&amp;m=121942286702712&amp;w=2" target="_blank" rel="external">http://marc.info/?l=netfilter-devel&amp;m=121942286702712&amp;w=2</a></p>
+<p><a href="http://marc.info/?l=linux-kernel&amp;m=121942113631519&amp;w=2" target="_blank" rel="external">http://marc.info/?l=linux-kernel&amp;m=121942113631519&amp;w=2</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+
+  <nav id="pagination">
+  
+    <a href="/categories/Linux-Kernel/page/3/" class="alignleft prev">Prev</a>
+  
+  
+    <a href="/categories/Linux-Kernel/page/5/" class="alignright next">Next</a>
+  
+  <div class="clearfix"></div>
+</nav>
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:wangcong.org">
+  </form>
 </div>
 
-      </div>
-      <footer><div id="footer" >
-	
-	
-	<div class="social-font" class="clearfix">
-		
-		
-		<a href="https://github.com/congwang" target="_blank" class="icon-github" title="github"></a>
-		
-		
-		
-		<a href="https://twitter.com/conglinux" target="_blank" class="icon-twitter" title="twitter"></a>
-		
-		
-		
-		
-		
-		
-		
-	</div>
-		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2016 
-		
-		<a href="http://wangcong.org/about" target="_blank" title="Cong Wang">Cong Wang</a>
-		
-		</p>
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Book-Reviews/">Book Reviews</a><small>18</small></li>
+  
+    <li><a href="/categories/China/">China</a><small>2</small></li>
+  
+    <li><a href="/categories/Collection/">Collection</a><small>25</small></li>
+  
+    <li><a href="/categories/Life/">Life</a><small>324</small></li>
+  
+    <li><a href="/categories/Linux-Application/">Linux Application</a><small>73</small></li>
+  
+    <li><a href="/categories/Linux-Kernel/">Linux Kernel</a><small>64</small></li>
+  
+    <li><a href="/categories/Love/">Love</a><small>6</small></li>
+  
+    <li><a href="/categories/Movies/">Movies</a><small>19</small></li>
+  
+    <li><a href="/categories/Programming/">Programming</a><small>152</small></li>
+  
+    <li><a href="/categories/Science-Fiction/">Science Fiction</a><small>8</small></li>
+  
+    <li><a href="/categories/Travel/">Travel</a><small>19</small></li>
+  
+  </ul>
 </div>
-</footer>
-      <script src="/js/jquery-2.0.3.min.js"></script>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/geek/">geek</a><small>1</small></li>
+  
+    <li><a href="/tags/handling/">handling</a><small>1</small></li>
+  
+    <li><a href="/tags/joke/">joke</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/tags/signal/">signal</a><small>1</small></li>
+  
+    <li><a href="/tags/unix/">unix</a><small>1</small></li>
+  
+    <li><a href="/tags/vim/">vim</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2017 Cong Wang
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 <script src="/js/jquery.imagesloaded.min.js"></script>
 <script src="/js/gallery.js"></script>
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.navbar').click(function(){
-    $('header nav').toggleClass('shownav');
-  });
-  var myWidth = 0;
-  function getSize(){
-    if( typeof( window.innerWidth ) == 'number' ) {
-      myWidth = window.innerWidth;
-    } else if( document.documentElement && document.documentElement.clientWidth) {
-      myWidth = document.documentElement.clientWidth;
-    };
-  };
-  var m = $('#main'),
-      a = $('#asidepart'),
-      c = $('.closeaside'),
-      o = $('.openaside');
-  $(window).resize(function(){
-    getSize(); 
-    if (myWidth >= 1024) {
-      $('header nav').removeClass('shownav');
-    }else
-    {
-      m.removeClass('moveMain');
-      a.css('display', 'block').removeClass('fadeOut');
-      o.css('display', 'none');
-        
-    }
-  });
-  c.click(function(){
-    a.addClass('fadeOut').css('display', 'none');
-    o.css('display', 'block').addClass('fadeIn');
-    m.addClass('moveMain');
-  });
-  o.click(function(){
-    o.css('display', 'none').removeClass('beforeFadeIn');
-    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
-    m.removeClass('moveMain');
-  });
-  $(window).scroll(function(){
-    o.css("top",Math.max(80,260-$(this).scrollTop()));
-  });
-});
-</script>
-
-
-
-
 
 <script type="text/javascript">
-
 var disqus_shortname = 'disqus_ciEwcJAF0E';
 
-(function(){
-  var dsq = document.createElement('script');
-  dsq.type = 'text/javascript';
-  dsq.async = true;
-  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-}());
 (function(){
   var dsq = document.createElement('script');
   dsq.type = 'text/javascript';
@@ -323,33 +703,13 @@ var disqus_shortname = 'disqus_ciEwcJAF0E';
 
 
 
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
 
-
-
-
-
-<!-- Analytics Begin -->
-
-
-
-
-
-<!-- Analytics End -->
-
-<!-- Totop Begin -->
-
-	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
-	</div>
-	<script src="/js/totop.js"></script>
-
-<!-- Totop End -->
-
-<!-- MathJax Begin -->
-<!-- mathjax config similar to math.stackexchange -->
-
-
-<!-- MathJax End -->
-
-    </body>
-   </html>
+</body>
+</html>

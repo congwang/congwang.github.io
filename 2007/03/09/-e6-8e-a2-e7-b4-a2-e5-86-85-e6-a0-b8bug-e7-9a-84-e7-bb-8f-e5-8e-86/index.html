@@ -1,398 +1,195 @@
-
- <!DOCTYPE HTML>
-<html >
+<!DOCTYPE HTML>
+<html>
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   
-    <title>探索内核bug的经历 | A Geek&#39;s Page</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
-    
-    <meta name="author" content="Cong Wang">
-    
-    <meta name="description" content="Thursday, 8. February 2007, 12:38:09
+  <title>探索内核bug的经历 | A Geek&#39;s Page</title>
+  <meta name="author" content="Cong Wang">
+  
+  <meta name="description" content="Thursday, 8. February 2007, 12:38:09
 04043196 王聪西安邮电学院计算机系我们知道，当无符号数上溢时，它会安安静静地绕回，因此，当比较两个无符号数时，不得不考虑绕回的问题。很可能绝大多数情况下不会出现溢出的情况，但是一旦溢出而处理不当就会导致系统进入非预期状">
-    
-    
-    <meta name="description" content="Thursday, 8. February 2007, 12:38:09
-04043196 王聪西安邮电学院计算机系我们知道，当无符号数上溢时，它会安安静静地绕回，因此，当比较两个无符号数时，不得不考虑绕回的问题。很可能绝大多数情况下不会出现溢出的情况，但是一旦溢出而处理不当就会导致系统进入非预期状态。不幸的是，Linux内核中的kfifo并没有恰当地处理这一问题。struct kfifo定义在i">
-<meta property="og:type" content="article">
-<meta property="og:title" content="探索内核bug的经历">
-<meta property="og:url" content="http://wangcong.org/2007/03/09/-e6-8e-a2-e7-b4-a2-e5-86-85-e6-a0-b8bug-e7-9a-84-e7-bb-8f-e5-8e-86/">
-<meta property="og:site_name" content="A Geek's Page">
-<meta property="og:description" content="Thursday, 8. February 2007, 12:38:09
-04043196 王聪西安邮电学院计算机系我们知道，当无符号数上溢时，它会安安静静地绕回，因此，当比较两个无符号数时，不得不考虑绕回的问题。很可能绝大多数情况下不会出现溢出的情况，但是一旦溢出而处理不当就会导致系统进入非预期状态。不幸的是，Linux内核中的kfifo并没有恰当地处理这一问题。struct kfifo定义在i">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="探索内核bug的经历">
-<meta name="twitter:description" content="Thursday, 8. February 2007, 12:38:09
-04043196 王聪西安邮电学院计算机系我们知道，当无符号数上溢时，它会安安静静地绕回，因此，当比较两个无符号数时，不得不考虑绕回的问题。很可能绝大多数情况下不会出现溢出的情况，但是一旦溢出而处理不当就会导致系统进入非预期状态。不幸的是，Linux内核中的kfifo并没有恰当地处理这一问题。struct kfifo定义在i">
-<meta name="twitter:creator" content="@conglinux">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
+  <meta property="og:title" content="探索内核bug的经历"/>
+  <meta property="og:site_name" content="A Geek&#39;s Page"/>
 
-    
-    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
-    
-    
-    <link rel="icon" href="/img/favicon.ico">
-    
-    
-    <link rel="apple-touch-icon" href="/img/jacman.jpg">
-    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
-    
-    <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
 
 </head>
 
-  <body>
-    <header>
-      <div>
-		
-			<div id="imglogo">
-				<a href="/"><img src="/img/logo.png" alt="A Geek&#39;s Page" title="A Geek&#39;s Page"/></a>
-			</div>
-			
-			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="A Geek&#39;s Page">A Geek&#39;s Page</a></h1>
-				<h2 class="blog-motto"></h2>
-			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
-			</a></div>
-			<nav class="animated">
-				<ul>
-					<ul>
-					 
-						<li><a href="/">Home</a></li>
-					
-						<li><a href="/archives">Archives</a></li>
-					
-						<li><a href="/about-2">About</a></li>
-					
-					<li>
- 					
-					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
-						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
-						<input type="hidden" name="q" value="site:wangcong.org">
-					</form>
-					
-					</li>
-				</ul>
-			</nav>			
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">A Geek&#39;s Page</a></h1>
+  <h2><a href="/"></a></h2>
 </div>
-    </header>
-    <div id="container">
-      <div id="main" class="post" itemscope itemprop="blogPost">
-  
-	<article itemprop="articleBody"> 
-		<header class="article-info clearfix">
-  <h1 itemprop="name">
+<nav id="main-nav" class="alignright">
+  <ul>
     
-      <a href="/2007/03/09/-e6-8e-a2-e7-b4-a2-e5-86-85-e6-a0-b8bug-e7-9a-84-e7-bb-8f-e5-8e-86/" title="探索内核bug的经历" itemprop="url">探索内核bug的经历</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2007-03-10T06:57:10.000Z" itemprop="datePublished"> Published Mar 9 2007</time>
+      <li><a href="/">Home</a></li>
     
-  </p>
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
 </header>
-	<div class="article-content">
-		
-		<div id="toc" class="toc-article">
-			<strong class="toc-title">Contents</strong>
-		
-			
-		
-		</div>
-		
-		<p>Thursday, 8. February 2007, 12:38:09</p>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-03-10T06:57:10.000Z"><a href="/2007/03/09/-e6-8e-a2-e7-b4-a2-e5-86-85-e6-a0-b8bug-e7-9a-84-e7-bb-8f-e5-8e-86/">Mar 9 2007</a></time>
+      
+      
+  
+    <h1 class="title">探索内核bug的经历</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Thursday, 8. February 2007, 12:38:09</p>
 <div class="content"><br><div id="excerpt"></div><span class="alignright">04043196 王聪</span><span class="alignright">西安邮电学院计算机系</span><br><br>我们知道，当无符号数上溢时，它会安安静静地绕回，因此，当比较两个无符号数时，不得不考虑绕回的问题。很可能绝大多数情况下不会出现溢出的情况，但是一旦溢出而处理不当就会导致系统进入非预期状态。不幸的是，Linux内核中的kfifo并没有恰当地处理这一问题。<br><br>struct kfifo定义在include/linux/kfifo.h中，其成员如下：<br><pre>struct kfifo {<br>        unsigned char <em>buffer;<br>        unsigned int size;<br>        unsigned int in;<br>        unsigned int out;<br>        spinlock_t </em>lock;<br>};<br></pre>很明显，in和out两个成员都是无符号整型，这主要是为了下面的一个与操作方便。<strong>kfifo_put和</strong>kfifo<em>get是不带锁的两个接口，分别向循环缓冲区中放数据和取数据，定义如下：<br><pre>   118  unsigned int <strong>kfifo_put(struct kfifo <em>fifo,<br>   119                           unsigned char </em>buffer, unsigned int len)<br>   120  {<br>   121          unsigned int l;<br>   122<br>   123          len = min(len, fifo-&lt;size - fifo-&lt;in + fifo-&lt;out);<br>   …<br>   130          smp_mb();<br>   131<br>   132          /<em> first put the data starting from fifo-&lt;in to buffer end </em>/<br>   133          l = min(len, fifo-&lt;size - (fifo-&lt;in &amp; (fifo-&lt;size - 1)));<br>   134          memcpy(fifo-&lt;buffer + (fifo-&lt;in &amp; (fifo-&lt;size - 1)), buffer, l);<br>   135<br>   136          /<em> then put the rest (if any) at the beginning of the buffer </em>/<br>   137          memcpy(fifo-&lt;buffer, buffer + l, len - l);<br>   …<br>   144          smp_wmb();<br>   145<br>   146          fifo-&lt;in += len;<br>   147<br>   148          return len;<br>   149  }<br>   …<br>   164  unsigned int </strong>kfifo_get(struct kfifo <em>fifo,<br>   165                           unsigned char </em>buffer, unsigned int len)<br>   166  {<br>   167          unsigned int l;<br>   168<br>   169          len = min(len, fifo-&lt;in - fifo-&lt;out);<br>   …<br>   176          smp_rmb();<br>   177<br>   178          /<em> first get the data from fifo-&lt;out until the end of the buffer </em>/<br>   179          l = min(len, fifo-&lt;size - (fifo-&lt;out &amp; (fifo-&lt;size - 1)));<br>   180          memcpy(buffer, fifo-&lt;buffer + (fifo-&lt;out &amp; (fifo-&lt;size - 1)), l);<br>   181<br>   182          /<em> then get the rest (if any) from the beginning of the buffer </em>/<br>   183          memcpy(buffer + l, fifo-&lt;buffer, len - l);<br>   …<br>   190          smp_mb();<br>   191<br>   192          fifo-&lt;out += len;<br>   193<br>   194          return len;<br>   195  }<br></pre>上面的两个函数在正常情况下可以保证in总是大于等于out，并且它们的差不会超过size。但是当in溢出，而out恰好又没有溢出时，不幸的情况就会发生，in会小于out！这对<strong>kfifo_get影响似乎不大，但对</strong>kfifo_put却是致命地影响！in绕回后会变成一个很小的正数，而out仍然是一个很大的正数，结果(fifo-&lt;size - fifo-&lt;in + fifo-&lt;out)也会变成一个很大的正数。如果内核程序员恰好不小心把一个很大的len作为参数传递给了<strong>kfifo_put（kfifo_put也一样），就会出现指针越界，更严重的会让内核痛苦地oops！<br><p><br><br>下面一个粗糙的内核模块和用户程序可以展示这个bug。内核模块如下：<br><pre>     1  #include &gt;linux/kernel.hlinux/init.hlinux/module.hlinux/fs.hasm/uaccess.hlinux/err.hlinux/gfp.hlinux/spinlock.hlinux/kfifo.hlinux/string.h&lt;<br>    11<br>    12  #define LFS_MAGIC 0x19860913<br>    13  #define NFILES  2<br>    14  #define TEST_BUF_LEN    64<br>    15<br>    16  static struct kfifo <em>fifo;<br>    17  static spinlock_t lock;<br>    18  static char </em>buf;<br>    19<br>    20  static int lfs_open_file(struct inode <em>inode, struct file </em>filp)<br>    21  {<br>    22          if (inode-&lt;i_ino &lt; NFILES)<br>    23                  return -ENODEV;<br>    24          return 0;<br>    25  }<br>    26<br>    27  static ssize_t lfs_read_file(struct file <em>filp, char </em>buffer,<br>    28                               size_t count, loff_t <em> offset)<br>    29  {<br>    30          int len;<br>    31<br>    32          len = kfifo_get(fifo, buf, count);<br>    33          if (</em>offset &lt; len)<br>    34                  return 0;<br>    35          if (count &lt; len - <em>offset)<br>    36                  count = len - </em>offset;<br>    37<br>    38          if (copy_to_user(buffer, buf + <em>offset, count))<br>    39                  return -EFAULT;<br>    40          </em>offset += count;<br>    41          return count;<br>    42  }<br>    43<br>    44  static ssize_t lfs_write_file(struct file <em>filp, const char </em>buffer,<br>    45                                size_t count, loff_t <em> offset)<br>    46  {<br>    47          if (</em>offset != 0)<br>    48                  <em>offset = 0;<br>    49<br>    50          if (count &lt;= TEST_BUF_LEN)<br>    51                  count = TEST_BUF_LEN;<br>    52<br>    53          if (copy_from_user(buf, buffer, count))<br>    54                  return -EFAULT;<br>    55<br>    56          return (ssize_t) kfifo_put(fifo, (char </em>)buffer, count);<br>    57  }<br>    58<br>    59  static int my_atoi(const char <em>name)<br>    60  {<br>    61          int val = 0;<br>    62<br>    63          for (;; name++) {<br>    64                  switch (</em>name) {<br>    65                  case &#039;0&#039;…&#039;9&#039;:<br>    66                          val = 10 <em> val + (</em>name - &#039;0&#039;);<br>    67                          break;<br>    68                  default:<br>    69                          return val;<br>    70                  }<br>    71          }<br>    72  }<br>    73<br>    74  static int lfs_open_file2(struct inode <em>inode, struct file </em>filp)<br>    75  {<br>    76          if (inode-&lt;i_ino &lt; NFILES)<br>    77                  return -ENODEV;<br>    78          filp-&lt;private_data = fifo;<br>    79          return 0;<br>    80  }<br>    81<br>    82  static ssize_t lfs_read_file2(struct file <em>filp, char </em>buffer,<br>    83                                size_t count, loff_t <em> offset)<br>    84  {<br>    85          int len;<br>    86          struct kfifo </em>myfifo = (struct kfifo <em>)filp-&lt;private_data;<br>    87<br>    88          len =<br>    89              snprintf(buf, TEST_BUF_LEN, &quot;in=%u out=%un&quot;, myfifo-&lt;in,<br>    90                       myfifo-&lt;out);<br>    91          if (</em>offset &lt; len)<br>    92                  return 0;<br>    93          if (count &lt; len - <em>offset)<br>    94                  count = len - </em>offset;<br>    95<br>    96          if (copy_to_user(buffer, buf + <em>offset, count))<br>    97                  return -EFAULT;<br>    98          </em>offset += count;<br>    99          return count;<br>   100  }<br>   101<br>   102  static ssize_t lfs_write_file2(struct file <em>filp, const char </em>buffer,<br>   103                                 size_t count, loff_t <em> offset)<br>   104  {<br>   105          char </em>p = buf;<br>   106          struct kfifo <em>myfifo = (struct kfifo </em>)filp-&lt;private_data;<br>   107<br>   108          if (<em>offset != 0)<br>   109                  return -EINVAL;<br>   110<br>   111          if (count &lt;= TEST_BUF_LEN)<br>   112                  return -EINVAL;<br>   113          memset(buf, 0, TEST_BUF_LEN);<br>   114          if (copy_from_user(buf, buffer, count))<br>   115                  return -EFAULT;<br>   116          p = strchr(buf, &#039; &#039;);<br>   117          if (!p)<br>   118                  return -EINVAL;<br>   119          </em>p++ = &#039;&#039;;<br>   120          myfifo-&lt;in = my_atoi(buf);<br>   121          myfifo-&lt;out = my_atoi(p);<br>   122          return count;<br>   123  }<br>   124<br>   125  static struct file_operations lfs_file_ops = {<br>   126          .open = lfs_open_file,<br>   127          .read = lfs_read_file,<br>   128          .write = lfs_write_file,<br>   129  };<br>   130<br>   131  static struct file_operations lfs_file2_ops = {<br>   132          .open = lfs_open_file2,<br>   133          .read = lfs_read_file2,<br>   134          .write = lfs_write_file2,<br>   135  };<br>   136<br>   137  struct tree_descr myfiles[] = {<br>   138          {NULL, NULL, 0},<br>   139          {.name = &quot;kfifo&quot;,<br>   140           .ops = &amp;lfs_file_ops,<br>   141           .mode = S_IWUSR | S_IRUGO},<br>   142          {.name = &quot;debug&quot;,<br>   143           .ops = &amp;lfs_file2_ops,<br>   144           .mode = S_IWUSR | S_IRUGO},<br>   145          {&quot;&quot;, NULL, 0}<br>   146  };<br>   147<br>   148  static int lfs_fill_super(struct super_block <em>sb, void </em>data, int silent)<br>   149  {<br>   150          return simple_fill_super(sb, LFS_MAGIC, myfiles);<br>   151  }<br>   152<br>   153  static int lfs_get_super(struct file_system_type <em>fst,<br>   154                           int flags, const char </em>devname, void <em>data,<br>   155                           struct vfsmount </em>mnt)<br>   156  {<br>   157          return get_sb_single(fst, flags, data, lfs_fill_super, mnt);<br>   158  }<br>   159<br>   160  static struct file_system_type lfs_type = {<br>   161          .owner = THIS_MODULE,<br>   162          .name = &quot;demofs&quot;,<br>   163          .get_sb = lfs_get_super,<br>   164          .kill_sb = kill_litter_super,<br>   165  };<br>   166<br>   167  static int </pre></p></strong>init lfs_init(void)<br>   168  {<br>   169          spin_lock_init(&amp;lock);<br>   170          fifo = kfifo_alloc(TEST_BUF_LEN, GFP_KERNEL, &amp;lock);<br>   171          if (IS_ERR(fifo)) {<br>   172                  kfifo_free(fifo);<br>   173                  return -ENOMEM;<br>   174          }<br>   175          /<em><br>   176           </em> We just want the overflow comes soon.<br>   177           <em> You can, of course, let fifo-&lt;out and fifo-&lt;out<br>   178           </em> to be 0. And we can let them increase by &#039;fifo-&lt;size&#039;<br>   179           <em> in the user space quietly. Sooner or later, they will<br>   180           </em> overflow again like this.<br>   181           */<br>   182          fifo-&lt;in = fifo-xiyou.wangcong@gmail.com&lt;&quot;);<br>   204  MODULE_DESCRIPTION(&quot;Show the bug of unsigned integer overflow in kfifo.&quot;);<br>   205  MODULE_SUPPORTED_DEVICE(&quot;libfs filesystem&quot;);<br>用户程序代码：<br><pre>     1  #include &gt;sys/types.hsys/stat.hunistd.hfcntl.h 256;i++)<br>    19                  buf</pre></em>=’0’;<br>    20          /<em><br>    21           </em> I won’t check the return value of write.<br>    22           <em> And that’s the reason why I don’t use ‘echo’.<br>    23           </em>/<br>    24          write(fd, buf, 256);<br>    25          return 0;<br>    26  }<br>    27<br><br>—————————————————————————————————————<br><br>     1  #! /bin/bash<br>     2  #bugshow.sh<br>     3  #Author: WANG Cong, XIPT. &gt;xiyou.wangcong@gmail.com&lt;<br>     4  #Usage: ./bugshow.sh install your<em>module_name.ko<br>     5  #    OR ./bugshow.sh uninstall your_module_name<br>     6<br>     7  if [ $# != &quot;2&quot; ]; then<br>     8          echo &quot;Usage: ./bugshow.sh install your_module_name.ko&quot;<br>     9          echo &quot;OR ./bugshow.sh uninstall your_module_name&quot;<br>    10          exit -1<br>    11  fi<br>    12  action=&quot;$1&quot;<br>    13  if [ &quot;$action&quot; = &quot;install&quot; ]; then<br>    14          module=${!#}<br>    15          /sbin/insmod $module<br>    16          mkdir -p /mnt/libfs<br>    17          mount -t demofs none /mnt/libfs<br>    18          if find ./ -name bugshow.c<br>    19          then<br>    20                  gcc -Wall -o bugshow bugshow.c<br>    21          else<br>    22                  echo &quot;Can&#039;t find bugshow.c!&quot;<br>    23                  exit -2<br>    24          fi<br>    25          ./bugshow<br>    26          cat /mnt/libfs/debug<br>    27          ./bugshow<br>    28          cat /mnt/libfs/debug<br>    29  elif [ &quot;$action&quot; = &quot;uninstall&quot; ]; then<br>    30          module=${!#}<br>    31          umount none<br>    32          rmdir /mnt/libfs<br>    33          /sbin/rmmod $module<br>    34  else<br>    35          echo &quot;Bad usage!&quot;<br>    36          exit -3<br>    37  fi<br>    38  exit 0
 
 </em>上面的模块是仔细编写的（虽然没有考虑竞争;-p），所以bug不会导致很严重的问题，只是无法向kfifo中继续写入数据。这个bug影响到所有使用kfifo的内核版本，从2.6.10到2.6.20。<br><p><br><br>一个简单的补丁如下：<br><pre>—- kernel/kfifo.c.orig 2007-02-07 19:42:51.000000000 +0800<br>+++ kernel/kfifo.c      2007-02-07 19:43:31.000000000 +0800<br>@@ -24,6 +24,7 @@<br> #include &gt;linux/slab.hlinux/err.hlinux/kfifo.hlinux/compiler.h&lt;<br><br> /<em>*
-  </em> kfifo_init - allocates a new FIFO using a preallocated buffer<br>@@ -120,6 +121,12 @@ unsigned int <strong>kfifo_put(struct kfifo <em>f<br> {<br>        unsigned int l;<br><br>+       /</em>If only fifo-&lt;in overflows, let both overflow!<em>/<br>+       if (unlikely(fifo- fifo-&lt;out)) {<br>+               fifo-&lt;out += fifo-&lt;size;<br>+               fifo-&lt;in  += fifo-&lt;size;<br>+       }<br>+<br>        len = min(len, fifo-&lt;size - fifo-&lt;in + fifo-&lt;out);<br><br>        /</em><br>@@ -166,6 +173,12 @@ unsigned int </strong>kfifo_get(struct kfifo <em>f<br> {<br>        unsigned int l;<br><br>+       /</em>If only fifo-&lt;in overflows, let both overflow!<em>/<br>+       if (unlikely(fifo- fifo-&lt;out)) {<br>+               fifo-&lt;out += fifo-&lt;size;<br>+               fifo-&lt;in  += fifo-&lt;size;<br>+       }<br>+<br>        len = min(len, fifo-&lt;in - fifo-&lt;out);<br><br>        /</em><br></pre>后经过Andrew的指点，发现这不是一个bug。我一开始被/proc接口搞晕了，得出了错误的结论。<br><span style="color:orangered;">教训：千万不用使用老的/proc接口！</span><br></p><p><br></p></div>  
-	</div>
-		<footer class="article-footer clearfix">
-<div class="article-catetags">
+  </em> kfifo_init - allocates a new FIFO using a preallocated buffer<br>@@ -120,6 +121,12 @@ unsigned int <strong>kfifo_put(struct kfifo <em>f<br> {<br>        unsigned int l;<br><br>+       /</em>If only fifo-&lt;in overflows, let both overflow!<em>/<br>+       if (unlikely(fifo- fifo-&lt;out)) {<br>+               fifo-&lt;out += fifo-&lt;size;<br>+               fifo-&lt;in  += fifo-&lt;size;<br>+       }<br>+<br>        len = min(len, fifo-&lt;size - fifo-&lt;in + fifo-&lt;out);<br><br>        /</em><br>@@ -166,6 +173,12 @@ unsigned int </strong>kfifo_get(struct kfifo <em>f<br> {<br>        unsigned int l;<br><br>+       /</em>If only fifo-&lt;in overflows, let both overflow!<em>/<br>+       if (unlikely(fifo- fifo-&lt;out)) {<br>+               fifo-&lt;out += fifo-&lt;size;<br>+               fifo-&lt;in  += fifo-&lt;size;<br>+       }<br>+<br>        len = min(len, fifo-&lt;in - fifo-&lt;out);<br><br>        /</em><br></pre>后经过Andrew的指点，发现这不是一个bug。我一开始被/proc接口搞晕了，得出了错误的结论。<br><span style="color:orangered;">教训：千万不用使用老的/proc接口！</span><br></p><p><br></p></div>
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/Linux-Kernel/">Linux Kernel</a>
+  </div>
 
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Linux-Kernel/">Linux Kernel</a>
-</div>
+        
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
 
-
-</div>
-
-
-
-	<div class="article-share" id="share">
-	
-	  <div data-url="http://wangcong.org/2007/03/09/-e6-8e-a2-e7-b4-a2-e5-86-85-e6-a0-b8bug-e7-9a-84-e7-bb-8f-e5-8e-86/" data-title="探索内核bug的经历 | A Geek&#39;s Page" data-tsina="null" class="share clearfix">
-	  </div>
-	
-	</div>
-
-
-</footer>
-
-   	       
-	</article>
-	
-<nav class="article-nav clearfix">
- 
- <div class="prev" >
- <a href="/2007/03/09/-e5-9c-a8-e8-bf-99-e4-b8-aa-e8-82-ae-e8-84-8f-e7-9a-84-e4-b8-96-e7-95-8c-ef-bc-8c-e4-bd-a0-e6-98-af-e6-88-91-e7-9a-84-e6-9c-80-e7-88-b1/" title="在这个肮脏的世界，你是我的最爱">
-  <strong>上一篇：</strong><br/>
-  <span>
-  在这个肮脏的世界，你是我的最爱</span>
-</a>
-</div>
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
 
 
-<div class="next">
-<a href="/2007/03/09/-e8-80-83-e8-af-95-e5-8f-aa-e4-b8-8d-e8-bf-87-e6-98-af-e4-b8-80-e7-a7-8d-e6-ac-ba-e9-aa-97-2/"  title="不公开: 考试只不过是一种欺骗">
- <strong>下一篇：</strong><br/> 
- <span>不公开: 考试只不过是一种欺骗
-</span>
-</a>
-</div>
+<section id="comment">
+  <h1 class="title">Comments</h1>
 
-</nav>
-
-	
-
-<section id="comments" class="comment">
+  
   <div id="disqus_thread">
     <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
   </div>
+  
 </section>
 
-</div>  
-      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
-
-  <div id="toc" class="toc-aside">
-  <strong class="toc-title">Contents</strong>
- 
- 
- 
-  </div>
-
-<div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
-<aside class="clearfix">
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:wangcong.org">
+  </form>
+</div>
 
   
-<div class="categorieslist">
-	<p class="asidetitle">Categories</p>
-		<ul>
-		
-			<li><a href="/categories/Book-Reviews/" title="Book Reviews">Book Reviews<sup>18</sup></a></li>
-		
-			<li><a href="/categories/China/" title="China">China<sup>2</sup></a></li>
-		
-			<li><a href="/categories/Collection/" title="Collection">Collection<sup>25</sup></a></li>
-		
-			<li><a href="/categories/Life/" title="Life">Life<sup>324</sup></a></li>
-		
-			<li><a href="/categories/Linux-Application/" title="Linux Application">Linux Application<sup>73</sup></a></li>
-		
-			<li><a href="/categories/Linux-Kernel/" title="Linux Kernel">Linux Kernel<sup>64</sup></a></li>
-		
-			<li><a href="/categories/Love/" title="Love">Love<sup>6</sup></a></li>
-		
-			<li><a href="/categories/Movies/" title="Movies">Movies<sup>19</sup></a></li>
-		
-			<li><a href="/categories/Programming/" title="Programming">Programming<sup>152</sup></a></li>
-		
-			<li><a href="/categories/Science-Fiction/" title="Science Fiction">Science Fiction<sup>8</sup></a></li>
-		
-			<li><a href="/categories/Travel/" title="Travel">Travel<sup>19</sup></a></li>
-		
-		</ul>
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Book-Reviews/">Book Reviews</a><small>18</small></li>
+  
+    <li><a href="/categories/China/">China</a><small>2</small></li>
+  
+    <li><a href="/categories/Collection/">Collection</a><small>25</small></li>
+  
+    <li><a href="/categories/Life/">Life</a><small>324</small></li>
+  
+    <li><a href="/categories/Linux-Application/">Linux Application</a><small>73</small></li>
+  
+    <li><a href="/categories/Linux-Kernel/">Linux Kernel</a><small>64</small></li>
+  
+    <li><a href="/categories/Love/">Love</a><small>6</small></li>
+  
+    <li><a href="/categories/Movies/">Movies</a><small>19</small></li>
+  
+    <li><a href="/categories/Programming/">Programming</a><small>152</small></li>
+  
+    <li><a href="/categories/Science-Fiction/">Science Fiction</a><small>8</small></li>
+  
+    <li><a href="/categories/Travel/">Travel</a><small>19</small></li>
+  
+  </ul>
 </div>
 
 
   
-<div class="tagslist">
-	<p class="asidetitle">Tags</p>
-		<ul class="clearfix">
-		
-			<li><a href="/tags/vim/" title="vim">vim<sup>1</sup></a></li>
-		
-			<li><a href="/tags/joke/" title="joke">joke<sup>1</sup></a></li>
-		
-			<li><a href="/tags/geek/" title="geek">geek<sup>1</sup></a></li>
-		
-			<li><a href="/tags/unix/" title="unix">unix<sup>1</sup></a></li>
-		
-			<li><a href="/tags/signal/" title="signal">signal<sup>1</sup></a></li>
-		
-			<li><a href="/tags/linux/" title="linux">linux<sup>1</sup></a></li>
-		
-			<li><a href="/tags/handling/" title="handling">handling<sup>1</sup></a></li>
-		
-		</ul>
-</div>
-
-
-  <div class="linkslist">
-  <p class="asidetitle">Links</p>
-    <ul>
-        
-    </ul>
-</div>
-
-  <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/geek/">geek</a><small>1</small></li>
+  
+    <li><a href="/tags/handling/">handling</a><small>1</small></li>
+  
+    <li><a href="/tags/joke/">joke</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/tags/signal/">signal</a><small>1</small></li>
+  
+    <li><a href="/tags/unix/">unix</a><small>1</small></li>
+  
+    <li><a href="/tags/vim/">vim</a><small>1</small></li>
+  
+  </ul>
 </div>
 
 </aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2017 Cong Wang
+  
 </div>
-    </div>
-    <footer><div id="footer" >
-	
-	
-	<div class="social-font" class="clearfix">
-		
-		
-		<a href="https://github.com/congwang" target="_blank" class="icon-github" title="github"></a>
-		
-		
-		
-		<a href="https://twitter.com/conglinux" target="_blank" class="icon-twitter" title="twitter"></a>
-		
-		
-		
-		
-		
-		
-		
-	</div>
-		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2016 
-		
-		<a href="http://wangcong.org/about" target="_blank" title="Cong Wang">Cong Wang</a>
-		
-		</p>
-</div>
-</footer>
-    <script src="/js/jquery-2.0.3.min.js"></script>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 <script src="/js/jquery.imagesloaded.min.js"></script>
 <script src="/js/gallery.js"></script>
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.navbar').click(function(){
-    $('header nav').toggleClass('shownav');
-  });
-  var myWidth = 0;
-  function getSize(){
-    if( typeof( window.innerWidth ) == 'number' ) {
-      myWidth = window.innerWidth;
-    } else if( document.documentElement && document.documentElement.clientWidth) {
-      myWidth = document.documentElement.clientWidth;
-    };
-  };
-  var m = $('#main'),
-      a = $('#asidepart'),
-      c = $('.closeaside'),
-      o = $('.openaside');
-  $(window).resize(function(){
-    getSize(); 
-    if (myWidth >= 1024) {
-      $('header nav').removeClass('shownav');
-    }else
-    {
-      m.removeClass('moveMain');
-      a.css('display', 'block').removeClass('fadeOut');
-      o.css('display', 'none');
-      
-      $('#toc.toc-aside').css('display', 'none');
-        
-    }
-  });
-  c.click(function(){
-    a.addClass('fadeOut').css('display', 'none');
-    o.css('display', 'block').addClass('fadeIn');
-    m.addClass('moveMain');
-  });
-  o.click(function(){
-    o.css('display', 'none').removeClass('beforeFadeIn');
-    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
-    m.removeClass('moveMain');
-  });
-  $(window).scroll(function(){
-    o.css("top",Math.max(80,260-$(this).scrollTop()));
-  });
-});
-</script>
 
 <script type="text/javascript">
-$(document).ready(function(){ 
-  var ai = $('.article-content>iframe'),
-      ae = $('.article-content>embed'),
-      t  = $('#toc'),
-      h  = $('article h2')
-      ah = $('article h2'),
-      ta = $('#toc.toc-aside'),
-      o  = $('.openaside'),
-      c  = $('.closeaside');
-  if(ai.length>0){
-    ai.wrap('<div class="video-container" />');
-  };
-  if(ae.length>0){
-   ae.wrap('<div class="video-container" />');
-  };
-  if(ah.length==0){
-    t.css('display','none');
-  }else{
-    c.click(function(){
-      ta.css('display', 'block').addClass('fadeIn');
-    });
-    o.click(function(){
-      ta.css('display', 'none');
-    });
-    $(window).scroll(function(){
-      ta.css("top",Math.max(140,320-$(this).scrollTop()));
-    });
-  };
-});
-</script>
-
-
-<script type="text/javascript">
-$(document).ready(function(){ 
-  var $this = $('.share'),
-      url = $this.attr('data-url'),
-      encodedUrl = encodeURIComponent(url),
-      title = $this.attr('data-title'),
-      tsina = $this.attr('data-tsina'),
-      description = $this.attr('description');
-  var html = [
-  '<a href="#" class="overlay" id="qrcode"></a>',
-  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
-  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
-  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
-  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
-  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
-  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
-  '<span title="Share to"></span>'
-  ].join('');
-  $this.append(html);
-  $('.article-share-qrcode').click(function(){
-    var imgSrc = $('#qrcode-pic').attr('data-src');
-    $('#qrcode-pic').attr('src', imgSrc);
-    $('#qrcode-pic').load(function(){
-        $('.qrcode strong').text(' ');
-    });
-  });
-});     
-</script>
-
-
-
-
-<script type="text/javascript">
-
 var disqus_shortname = 'disqus_ciEwcJAF0E';
 
 (function(){
@@ -402,65 +199,17 @@ var disqus_shortname = 'disqus_ciEwcJAF0E';
   dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
 }());
-(function(){
-  var dsq = document.createElement('script');
-  dsq.type = 'text/javascript';
-  dsq.async = true;
-  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
-  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-}());
 </script>
-
-
-
 
 
 
 <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
 <script src="/fancybox/jquery.fancybox.pack.js"></script>
 <script type="text/javascript">
-$(document).ready(function(){ 
-  $('.article-content').each(function(i){
-    $(this).find('img').each(function(){
-      if ($(this).parent().hasClass('fancybox')) return;
-      var alt = this.alt;
-      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
-      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
-    });
-    $(this).find('.fancybox').each(function(){
-      $(this).attr('rel', 'article' + i);
-    });
-  });
-  if($.fancybox){
-    $('.fancybox').fancybox();
-  }
-}); 
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
 </script>
 
-
-
-<!-- Analytics Begin -->
-
-
-
-
-
-<!-- Analytics End -->
-
-<!-- Totop Begin -->
-
-	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
-	</div>
-	<script src="/js/totop.js"></script>
-
-<!-- Totop End -->
-
-<!-- MathJax Begin -->
-<!-- mathjax config similar to math.stackexchange -->
-
-
-<!-- MathJax End -->
-
-  </body>
+</body>
 </html>

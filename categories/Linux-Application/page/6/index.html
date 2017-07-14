@@ -1,317 +1,602 @@
-
-  <!DOCTYPE HTML>
-<html >
+<!DOCTYPE HTML>
+<html>
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   
-    <title>Category: Linux Application | A Geek&#39;s Page</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
-    
-    <meta name="author" content="Cong Wang">
-    
-    
-    <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="A Geek's Page">
-<meta property="og:url" content="http://wangcong.org/categories/Linux-Application/page/6/">
-<meta property="og:site_name" content="A Geek's Page">
-<meta property="og:description">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="A Geek's Page">
-<meta name="twitter:description">
-<meta name="twitter:creator" content="@conglinux">
+  <title>Page 6 | Linux Application | A Geek&#39;s Page</title>
+  <meta name="author" content="Cong Wang">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
+  
+  <meta property="og:site_name" content="A Geek&#39;s Page"/>
 
-    
-    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
-    
-    
-    <link rel="icon" href="/img/favicon.ico">
-    
-    
-    <link rel="apple-touch-icon" href="/img/jacman.jpg">
-    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
-    
-    <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
 
 </head>
 
-    <body>
-      <header>
-        <div>
-		
-			<div id="imglogo">
-				<a href="/"><img src="/img/logo.png" alt="A Geek&#39;s Page" title="A Geek&#39;s Page"/></a>
-			</div>
-			
-			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="A Geek&#39;s Page">A Geek&#39;s Page</a></h1>
-				<h2 class="blog-motto"></h2>
-			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
-			</a></div>
-			<nav class="animated">
-				<ul>
-					<ul>
-					 
-						<li><a href="/">Home</a></li>
-					
-						<li><a href="/archives">Archives</a></li>
-					
-						<li><a href="/about-2">About</a></li>
-					
-					<li>
- 					
-					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
-						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
-						<input type="hidden" name="q" value="site:wangcong.org">
-					</form>
-					
-					</li>
-				</ul>
-			</nav>			
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">A Geek&#39;s Page</a></h1>
+  <h2><a href="/"></a></h2>
 </div>
-      </header>
-      <div id="container">
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title category">Linux Application</h2>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2008-03-11T18:28:46.000Z"><a href="/2008/03/11/suid-sgid-and-sticky-bit/">Mar 11 2008</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2008/03/11/suid-sgid-and-sticky-bit/">SUID, SGID and sticky bit</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>stick bit以前表示要把这个可执行文件放到swap分区中来加快执行速度，现在这个显然用不着了，因为Linux/Unix的vm子系统会自动完成这种功能。为了“变废为宝”，这个sticky bit并没有被遗弃，现在它的功能是这样的：对于一个目录，如果它被设置了sticky bit，那么它里面的文件只能被文件所有者，目录所有者，或特权用户删除。最好的一个例子是/tmp目录，在Fedora上它的权限是：</p>
+<p>$ ls -ld /tmp/<br>drwxrwxrwt 50 root root 20480 03-09 21:08 /tmp/<br>$ test -k /tmp<br>$ echo $?<br>0</p>
+<p>我们可以看到最后一个x变成了t。而如果目录或者文件不具有x权限，那么t就会变成T，比如：</p>
+<p>$ touch foo.txt<br>$ chmod +t foo.txt<br>$ ls -l foo.txt<br>-rw-rw-r-T 1 wangcong wangcong 0 03-09 23:53 foo.txt</p>
+<p>suid和sgid类似，它们的符号是s或者S而不是t。suid的含义是让可执行文件执行时具有owner的权限，sgid的含义是让其具有owner所在group的权限。例如：</p>
+<p>$ ls -l /bin/ping<br>-rwsr-xr-x 1 root root 41748 2007-04-06 /bin/ping</p>
+<p>如果你用ls -l看，你会发现suid的s是在owner权限一组，sgid的s是在group权限一组。</p>
+<p>sgid用到目录上的含义是：里面的新文件或者子目录会继承这个group id。而在Linux上，suid用在目录上是被忽略的。</p>
+<p>参考资料：<br>1. <a href="http://www.zzee.com/solutions/linux-permissions.shtml#setuid" target="_blank" rel="external">http://www.zzee.com/solutions/linux-permissions.shtml#setuid</a><br>2. <a href="http://www.unixguide.net/hp/faq/5.1.9.shtml." target="_blank" rel="external">http://www.unixguide.net/hp/faq/5.1.9.shtml.</a><br>3. <a href="http://en.wikipedia.org/wiki/Sticky_bit" target="_blank" rel="external">http://en.wikipedia.org/wiki/Sticky_bit</a><br>4. <a href="http://en.wikipedia.org/wiki/Setuid" target="_blank" rel="external">http://en.wikipedia.org/wiki/Setuid</a></p>
+
+      
+    </div>
+    <footer>
+      
         
-
-<div class="archive-title" >
-  <h2 class="category-icon">Linux Application</h2>
-  
-</div>
-<div id="main" class="archive-part clearfix">
-  <div id="archive-page">
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2008/03/11/suid-sgid-and-sticky-bit/" title="SUID, SGID and sticky bit" itemprop="url">
-  
-
-    <time datetime="2008-03-11T18:28:46.000Z" itemprop="datePublished">Mar 11 2008</time>
-
-
-    <h1 itemprop="name">SUID, SGID and sticky bit</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2008/02/22/-e7-bb-99emacs-e5-ae-89-e8-a3-85color-theme/" title="给emacs安装color-theme" itemprop="url">
-  
-
-    <time datetime="2008-02-22T20:27:49.000Z" itemprop="datePublished">Feb 22 2008</time>
-
-
-    <h1 itemprop="name">给emacs安装color-theme</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2008/02/21/-e5-9c-a8emacs-e9-87-8c-e5-86-99blog/" title="在emacs里写blog" itemprop="url">
-  
-
-    <time datetime="2008-02-22T05:05:03.000Z" itemprop="datePublished">Feb 21 2008</time>
-
-
-    <h1 itemprop="name">在emacs里写blog</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2008/02/16/-e4-b8-8d-e7-9f-a5-e9-81-93-e7-9a-84-e5-87-a0-e4-b8-aa-e6-8a-80-e5-b7-a7/" title="不知道的几个技巧" itemprop="url">
-  
-
-    <time datetime="2008-02-17T07:38:14.000Z" itemprop="datePublished">Feb 16 2008</time>
-
-
-    <h1 itemprop="name">不知道的几个技巧</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2008/02/14/-e5-9c-a8emacs-e4-b8-8b-e4-bd-bf-e7-94-a8mew/" title="在emacs下使用mew" itemprop="url">
-  
-
-    <time datetime="2008-02-14T22:42:26.000Z" itemprop="datePublished">Feb 14 2008</time>
-
-
-    <h1 itemprop="name">在emacs下使用mew</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2008/02/10/emacs-e7-9a-84-e4-b8-80-e4-ba-9b-e8-ae-be-e7-bd-ae/" title="emacs的一些设置" itemprop="url">
-  
-
-    <time datetime="2008-02-11T05:46:16.000Z" itemprop="datePublished">Feb 10 2008</time>
-
-
-    <h1 itemprop="name">emacs的一些设置</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2008/02/09/-e5-85-b3-e4-ba-8emeta-e9-94-ae/" title="关于Meta键" itemprop="url">
-  
-
-    <time datetime="2008-02-10T07:21:23.000Z" itemprop="datePublished">Feb 9 2008</time>
-
-
-    <h1 itemprop="name">关于Meta键</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2008/01/30/sudo-e5-92-8ctee/" title="sudo和tee" itemprop="url">
-  
-
-    <time datetime="2008-01-31T06:50:20.000Z" itemprop="datePublished">Jan 30 2008</time>
-
-
-    <h1 itemprop="name">sudo和tee</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2008/01/27/-e5-86-8d-e6-9d-a5-e4-b8-80-e4-ba-9bshell-e6-8a-80-e5-b7-a7/" title="再来一些shell技巧" itemprop="url">
-  
-
-    <time datetime="2008-01-28T07:41:28.000Z" itemprop="datePublished">Jan 27 2008</time>
-
-
-    <h1 itemprop="name">再来一些shell技巧</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2008/01/18/-e8-bf-9b-e4-b8-80-e6-ad-a5-e5-ad-a6-e4-b9-a0git/" title="进一步学习git" itemprop="url">
-  
-
-    <time datetime="2008-01-19T07:58:35.000Z" itemprop="datePublished">Jan 18 2008</time>
-
-
-    <h1 itemprop="name">进一步学习git</h1>
-
-  </a>
-</section>
-
-
-  <nav id="page-nav" class="clearfix archive-nav">
-    <a class="extend prev" rel="prev" href="/categories/Linux-Application/page/5/"><span></span>Prev</a><a class="page-number" href="/categories/Linux-Application/">1</a><span class="space">&hellip;</span><a class="page-number" href="/categories/Linux-Application/page/4/">4</a><a class="page-number" href="/categories/Linux-Application/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/categories/Linux-Application/page/7/">7</a><a class="page-number" href="/categories/Linux-Application/page/8/">8</a><a class="extend next" rel="next" href="/categories/Linux-Application/page/7/">Next<span></span></a>
-  </nav>
-
+        
+      
+      <div class="clearfix"></div>
+    </footer>
   </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2008-02-22T20:27:49.000Z"><a href="/2008/02/22/-e7-bb-99emacs-e5-ae-89-e8-a3-85color-theme/">Feb 22 2008</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2008/02/22/-e7-bb-99emacs-e5-ae-89-e8-a3-85color-theme/">给emacs安装color-theme</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>决定给emacs换个主题，因为默认的这个主题比较丑。</p>
+<p>简单搜索了一下，需要安装color-theme这个package。从这里下载：</p>
+<p><a href="http://download.gna.org/color-theme/" target="_blank" rel="external">http://download.gna.org/color-theme/</a></p>
+<p>下载解压缩后，需要</p>
+<p>1) 把color-theme.el拷贝到某个load-path中，比如我的是~/.emacs.d</p>
+<p>2) 把themes目录也要拷贝到上面的路径中</p>
+<p>3) 在~/.emacs里添加下面几行：</p>
+<p>(require ‘color-theme)<br>(color-theme-initialize)<br>(color-theme-oswald)</p>
+<p>注意：网上的很多教程并没提到第2行，但是它必须有，否则会出错。<br>最起码在我这里如此。</p>
+<p>第3行是我自己选择的一个主题，你可以换成你自己喜欢的，浏览里面<br>的主题可以用M-x color-theme-select，然后一个个地试，觉得哪个好<br>就把第三行替换成那个。</p>
+<p>最后，如果你有其它主题，把它下载到themes目录里，然后再修改<br>~/.emacs：</p>
+<p>(load-file “~/.emacs.d/themes/your-own-theme.el”)<br>(color-theme-your-own)</p>
+<p>这样emacs看起来就很漂亮。</p>
+<p>BTW，<a href="http://www.emacswiki.org/cgi-bin/emacs/pink-bliss.el" target="_blank" rel="external">这里</a>有一款为mm准备的粉红主题，很炫。不知道有没有mm使用emacs？</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2008-02-22T05:05:03.000Z"><a href="/2008/02/21/-e5-9c-a8emacs-e9-87-8c-e5-86-99blog/">Feb 21 2008</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2008/02/21/-e5-9c-a8emacs-e9-87-8c-e5-86-99blog/">在emacs里写blog</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>搜了好大一会儿才找到emacs的这个写博客的插件——weblogger，配置很简单。<br>不过下载要直接从CVS上取，用如下命令：</p>
+<p>cd ~/.emacs.d/<br>cvs -z3 -d:pserver:anonymous@cvs.savannah.nongnu.org:/sources/emacsweblogs<br>co -d weblogger weblogger/lisp</p>
+<p>然后编辑~/.emacs：</p>
+<p>(add-to-list ‘load-path “~/.emacs.d/weblogger”)<br>(require ‘weblogger)</p>
+<p>配置博客：</p>
+<p>M-x weblogger-setup-weblog</p>
+<p>写博客：</p>
+<p>M-x weblogger-start-entry</p>
+<p>发表博客：</p>
+<p>M-x weblogger-save-entry</p>
+<p>保存博客：</p>
+<p>M-x weblogger-send-entry<br>更多的其它命令可以查看weblogger的帮助。</p>
+<p>这是第一篇在emacs里写的文章，作个实验。;-)</p>
+<p>Update：<a href="http://jwickers.wordpress.com/2007/09/20/webloggerel-enhanced/" target="_blank" rel="external">这里</a>有一个更新版本，用wordpress的同学最好使用这个。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2008-02-17T07:38:14.000Z"><a href="/2008/02/16/-e4-b8-8d-e7-9f-a5-e9-81-93-e7-9a-84-e5-87-a0-e4-b8-aa-e6-8a-80-e5-b7-a7/">Feb 16 2008</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2008/02/16/-e4-b8-8d-e7-9f-a5-e9-81-93-e7-9a-84-e5-87-a0-e4-b8-aa-e6-8a-80-e5-b7-a7/">不知道的几个技巧</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>以前俺好傻好天真。。。</p>
+<p>俺以前总以为，一个文档内容要是不停地变化，查看其最新的内容就得先less foo然后不停地按End键。现在，俺终于知道了，tail这东西，它有个选项叫-f，就是干这事儿的！这就省去俺多按N次End键的工夫！</p>
+<p>俺以前总以为，要打印某个文件第m行到第n行之间的内容必须用awk，或者head与tail的管道组合。现在，俺总算是明白了，做个事的其实是sed，它短短一句就可以完成！比如，打印第3行到第10行之间的内容就用：</p>
+<p>sed -n ‘3,10p’ warnings.txt</p>
+<p>俺以前总以为，查找某个进程就得ps aux | grep xxx，现在，俺知道了，其实还有个东西，它叫pgrep，所以可以这样用：</p>
+<p>pgrep -l xxx</p>
+<p>类似，也有个东西叫pkill。</p>
+<p>俺以前居然不知道还有个叫disown的东西，现在，俺终于知道了，挺有用。</p>
+<p>俺以前不知道rm还可以这样删除名字以-开头的文件：rm — -xxxx。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2008-02-14T22:42:26.000Z"><a href="/2008/02/14/-e5-9c-a8emacs-e4-b8-8b-e4-bd-bf-e7-94-a8mew/">Feb 14 2008</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2008/02/14/-e5-9c-a8emacs-e4-b8-8b-e4-bd-bf-e7-94-a8mew/">在emacs下使用mew</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>作者： 西邮 王聪</p>
+<p><a href="http://www.mew.org/" target="_blank" rel="external">Mew</a>是emacs里面一款很好很强大的邮件客户端插件，最近因迷恋emacs所以决定要把邮件客户端也换成emacs里面的。</p>
+<p>在这里，我以Fedora和Gmail为例简单说一下配置过程。</p>
+<p>首先需要安装mew，Fedora用户直接</p>
+<h1 id="yum_install_mew">yum install mew</h1>
+<p>就可以了。安装好之后就开始配置，不用担心，其实很简单。需要修改的配置文件就两个，一个是~/.emacs，另一个是Mew专用的~/.mew.el。虽然说这些配置项放哪个文件里都成，但是最好还是人为区分一下，免得弄得~/.emacs里一团糟。;-)</p>
+<p>我在~/.emacs里为Mew添加了下面这些东西：</p>
+<p>(autoload ‘mew “mew” nil t)<br>(autoload ‘mew-send “mew” nil t)<br>(if (boundp ‘read-mail-command)<br>(setq read-mail-command ‘mew))<br>(autoload ‘mew-user-agent-compose “mew” nil t)<br>(if (boundp ‘mail-user-agent)<br>(setq mail-user-agent ‘mew-user-agent))<br>(if (fboundp ‘define-mail-user-agent)<br>(define-mail-user-agent<br>‘mew-user-agent<br>‘mew-user-agent-compose<br>‘mew-draft-send-message<br>‘mew-draft-kill<br>‘mew-send-hook))</p>
+<p>(set-default ‘mew-decode-quoted ‘t)<br>(when (boundp ‘utf-translate-cjk)<br>(setq utf-translate-cjk t)<br>(custom-set-variables<br>‘(utf-translate-cjk t)))<br>(if (fboundp ‘utf-translate-cjk-mode)<br>(utf-translate-cjk-mode 1))<br>(require ‘flyspell)</p>
+<p>然后在编辑~/.mew.el（没有就先创建）。我用的可以<a href="http://wangcong.org/down/dotmew.el" target="_blank" rel="external">在这里下载</a>，我这个是综合了网上各路神仙的配置之后的结果。;-) 然后你根据自己需要把它修改成你自己的就行了。</p>
+<p>配置完成后我们进入mew模式就可以收发邮件了。我再总结一下它的基本使用方法：</p>
+<p>w 写信<br>M-TAB 补齐收信人信息<br>Q 退出mew<br>i 收信<br>g 跳转邮箱<br>o 对邮件进行分类<br>d 把邮件标记为删除</p>
+<ul>
+<li>作星号标记<br>u 清除标记<br>x 对所有标记进行处理<br>a 不带引用的回复，不建议使用<br>A 带引用的回复，推荐<br>f 转发邮件<br>y 保存邮件，会提示是保存整个邮件和是仅保存正文<br>SPACE 阅读邮件<br>ENTER 让阅读的邮件向上滚动一行</li>
+</ul>
+<ul>
+<li>向下滚动一行<br>n 下一封邮件<br>p 前一封邮件<br>j 跳到某一封邮件<br>N 下一封带星号的邮件<br>P 上一封带星号的邮件<br>S 按某个指定项目对邮件排序<br>/ 按指定条件搜索邮件，并进入虚拟模式<br>tt 进入虚拟模式，根据线索查看，普通模式下是不可以的<br>C 如果设置了多个邮箱，用此切换<br>C-cC-m 编辑新邮件，放入草稿中<br>C-cC-c 发送邮件<br>C-cC-q 取消草稿<br>C-cC-a 插入附件<br>C-cTAB 插入签名<br>C-cC-l    转换当前邮件的编码格式<br>C-cC-y 复制部分邮件，带引用前缀<br>C-cC-t 复制部分邮件，不带引用前缀<br>C-cC-a    把当前的发信人加入地址薄<br>C-uC-cC-a 比C-cC-a多加入昵称和名字，推荐</li>
+</ul>
+<p>恩，我就知道这些，但这些也已经足够对付日常使用了。如果需要更多，可查看<a href="http://www.mew.org/release/info/index.html.en" target="_blank" rel="external">mew官方网站上的手册</a>。</p>
+<p>参考资料：</p>
+<p>1. Mew官方手册：<a href="http://www.mew.org/release/info/index.html.en" target="_blank" rel="external">http://www.mew.org/release/info/index.html.en </a></p>
+<p>2. <a href="http://www.zhangw.com/emacs/dotmewel.html" target="_blank" rel="external">http://www.zhangw.com/emacs/dotmewel.html</a></p>
+<p>3. <a href="http://learn.tsinghua.edu.cn:8080/2004211031/publish/GNU/mew.html" target="_blank" rel="external">http://learn.tsinghua.edu.cn:8080/2004211031/publish/GNU/mew.html</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2008-02-11T05:46:16.000Z"><a href="/2008/02/10/emacs-e7-9a-84-e4-b8-80-e4-ba-9b-e8-ae-be-e7-bd-ae/">Feb 10 2008</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2008/02/10/emacs-e7-9a-84-e4-b8-80-e4-ba-9b-e8-ae-be-e7-bd-ae/">emacs的一些设置</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>在上一篇博客中提到emacs和gnome-terminal在alt键上的冲突，今天在摆弄发现冲突远不止这个。</p>
+<p>最明显的一个就是和scim也有冲突！ctrl+space默认是调出scim输入法，而在emacs里其实是mark（我不想用ctrl+@，因为那要按三个键。;-）。如果在gnome-terminal下面用emacs的话就无法mark了。搜搜了，解决方法是，把mark功能映射到shift+space上，把原来的ctrl+space去了，如下：</p>
+<p>(when window-system<br>(global-unset-key [?C- ])<br>(global-set-key [?S- ] ‘set-mark-command)<br>)</p>
+<p>还有一个就是，emacs默认（最起码在fc7上如此）要在启动时显示一个启动画面，这样每次都得ctrl+l，不爽，去了它。</p>
+<p>(setq inhibit-startup-message t)</p>
+<p>让ctrl+y也可以粘贴来自X粘贴板的内容：</p>
+<p>(setq x-select-enable-clipboard t)</p>
+<p>还没完，gnome-terminal还占用着一些ctrl+*键，比如：ctrl+-，这个虽然也能屏蔽掉，但其它还有一堆。算了算了，我还是换Konsole吧～！</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2008-02-10T07:21:23.000Z"><a href="/2008/02/09/-e5-85-b3-e4-ba-8emeta-e9-94-ae/">Feb 9 2008</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2008/02/09/-e5-85-b3-e4-ba-8emeta-e9-94-ae/">关于Meta键</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>最近在着手使用emacs，难免要和Meta键打交道。可是遇到一个小冲突。那就是，在FC上，Alt键被设置为Meta，而Alt又偏偏正好是某些窗口菜单的快捷键，比如gnome-terminal。这样问题就来了，如果我在gnome-terminal里使用emacs的话，本来是想使用M-b来移动光标，按Alt＋b却调出了gnome-terminal的一个菜单，也就是说这个按键被窗口先于emacs捕捉到了。</p>
+<p>简单搜了搜，没有太合适的方法。最理想的一个方法是把Win键映射成Meta，把Alt键上的Meta去掉。修改了一下~/.Xmodmap，倒是把Win键给映射过去了，但Alt仍然会被窗口捕捉到。估计还要修改xterm的配置，未果。最后找到的一个临时解决方法是，在gnome-terminal的“编辑-&gt;快捷键”里面把快捷键都禁用掉。反正我是基本上不会用Alt键来调用菜单～</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2008-01-31T06:50:20.000Z"><a href="/2008/01/30/sudo-e5-92-8ctee/">Jan 30 2008</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2008/01/30/sudo-e5-92-8ctee/">sudo和tee</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>今天<a href="http://amankwahly.cn/blog" target="_blank" rel="external">刘洋同学</a>问到一个问题，为什么sudo下面的命令还是无权限</p>
+<font size="3">$sudo echo ‘1’ &gt; ip_forward<br>bash: ip_forward: Permission denied</font>
+
+<p>而以root身份就可以？</p>
+<font size="3"># echo ‘1’ &gt; ip_forward</font>
+
+<p>一开始没有看出原因来，后来仔细一琢磨，其实原因很简单，shell对‘&gt;’解释干扰了对这个命令含义的判断。我们本想应该是这样的意思：让sudo执行后面的这些“echo ‘1’ &gt; ip_forward”，而实际上是：sudo echo ‘1’ ，执行到这里，shell再把它的执行结果重定向到ip_forward里去！当然是无权限，因为流本身不会随echo那样被sudo“感染”上suid权限！</p>
+<p>解决方法是什么？也很简单，就让后面那一串东西搁一起执行：</p>
+<font size="3">$sudo sh -c ‘echo 1 &gt; ip_forward’</font>
+
+<p>等等，还有没有更好的解决方法？有！刘洋同学认真思考了一下，觉得应该有这么个东西XX： echo ‘1’ | sudo XX ip_forward。我擦亮眼睛一看，我靠，这不就是tee(1)么！！没错，另一种解决方法就是：</p>
+<font size="3">$echo ‘1’ | sudo tee ip_forward  </font>
+
+<p>或者：</p>
+<font size="3">$echo ‘1’ | sudo tee ip_forward | cat &gt; /dev/null</font>
+
+<p>刘洋问tee(1)是不是和tea有关系？不是！tee其实取自大写字母T的发音，而T不正是最后一个命令中流的流向么？！多么形象的名字啊！</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2008-01-28T07:41:28.000Z"><a href="/2008/01/27/-e5-86-8d-e6-9d-a5-e4-b8-80-e4-ba-9bshell-e6-8a-80-e5-b7-a7/">Jan 27 2008</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2008/01/27/-e5-86-8d-e6-9d-a5-e4-b8-80-e4-ba-9bshell-e6-8a-80-e5-b7-a7/">再来一些shell技巧</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>1. 批量删除某些指定文件</p>
+<p>我们都知道用find，很快就可以给出：</p>
+<p>find . -name ‘your_pattern*’ -exec rm -f {} ;</p>
+<p>恩，不过还有更快更简洁的方法，用find自带的delete：</p>
+<p>find . -name ‘your_pattern*’ -delete</p>
+<p>2. 列出当前目录下的所有目录（不递归）</p>
+<p>你能想到几种方法？我这里有三种解决方法：</p>
+<p>(1) $ ls -l | egrep ‘^d’</p>
+<p>(2) $ find . -maxdepth 1 -type d</p>
+<p>(3) $ ls -d */.</p>
+<p>最后一个是从别处看来的，很巧妙。欢迎提供其它不同的方法。</p>
+<p>3. 打印文件的倒数第N行</p>
+<p>以倒数第2行为例，我的通常做法是：</p>
+<p>$ tail -2 my_file | head -1</p>
+<p>另一种方法是：</p>
+<p>$ gawk ‘BEGIN {RS = “none_existed_pattern”; FS = “n”}; END {print $(NF-2)}’ my_file</p>
+<p>[注：在一些awk（不是gawk）中，RS应该是一个字符，而不能是正则表达式。]</p>
+<p>4. 产生连续的数字</p>
+<p>常见的方法是用seq：</p>
+<p>比如产生1~10的数字，</p>
+<p>$ seq 1 10</p>
+<p>其实也可以用：</p>
+<p>$ echo {1..10}</p>
+<p>倒叙时这样：</p>
+<p>$ seq 10 -1 1</p>
+<p>或者：</p>
+<p>$ echo {10..1}</p>
+<p>用seq的好处是可以指定步长，但它只能针对数字； {..}虽然不能指定步长，但可以适用于字母。另外，很明显，seq的分隔符是n，而{..}是空格。</p>
+<p>5. *grep</p>
+<p>你最常用的很可能是grep，可是除此还有两个grep：fgrep和egrep。fgrep是Fixed grep的缩写，而<strong>不是</strong>fast grep，事实上，搜索同样的字符串时fgrep通常比grep要慢；egrep是Extended grep的所写，因为它采用了扩展的正则表达式和更好的算法，所以你应该更倾向于用egrep而不是grep。</p>
+<p>题外话：有多少人知道grep是什么缩写？我也是最近才知道的，它其实是Global Regular Expression Print的缩写，ms也有人说是Get Regular Expression And Print。grep如此常用，以至于连词典都把它收录为一个单词了。</p>
+<blockquote>
+<p>[Jargon File]<br>grep</p>
+<p>/grep/ vi. [from the qed/ed editor idiom g/re/p, where re stands for a regular expression, to Globally search for the Regular Expression and Print the lines containing matches to it, via Unix <code>grep(1)&#39;] To rapidly scan a file or set of files looking for a particular string or pattern (when browsing through a large set of files, one may speak of</code>grepping around’). By extension, to look for something by pattern. “Grep the bulletin board for the system backup schedule, would you?” See also vgrep.</p>
+</blockquote>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2008-01-19T07:58:35.000Z"><a href="/2008/01/18/-e8-bf-9b-e4-b8-80-e6-ad-a5-e5-ad-a6-e4-b9-a0git/">Jan 18 2008</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2008/01/18/-e8-bf-9b-e4-b8-80-e6-ad-a5-e5-ad-a6-e4-b9-a0git/">进一步学习git</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>以前仅仅掌握了git的基本用法，对git里的很多概念还是不清楚。鉴于使用git之频繁，今天决定仔细学习一下git。</p>
+<p>简单地搜了一下，发现中文的似乎就没有很深入介绍git的，都是一些基本的东西。英文教程中，最好的当然是kernel.org官方的教程，一篇详细介绍了git的概念，可以在<a href="http://www.kernel.org/pub/software/scm/git/docs/tutorial-2.html" target="_blank" rel="external">这里</a>得到；另一篇介绍了一些更核心的东西，在<a href="http://www.kernel.org/pub/software/scm/git/docs/core-tutorial.html" target="_blank" rel="external">这里</a>。</p>
+<p>git里有两个强悍的东西，一个是object database，一个是index file。先看前面那个，所谓object database就是存放所有object的一个“数据库”，其实就是.git/objects，里面放的东西自然都是object。git里的object分四种类型：tree，blob，commit，tag。所有的object都有各自的“编号”，叫ref，就是你每次git-log时看到的里面那长长的16进制数字，比如下面这个：</p>
+<p>$ git log<br>commit 03bbe082cffc4533f6557bf23f0c672307067246<br>Merge: 3047290… fb49161…<br>Author: Linus Torvalds &lt;&gt;<br>Date:   Thu Jan 17 15:50:19 2008 -0800</p>
+<p>这个object的类型显然是commit。这个数字是怎么来的呢？其实就是对object的内容，时间，作者等信息进行SHA1之后得到的。如果你上网络安全课没有睡着的话，你应该知道，这玩意儿其实是为了保证数据的完整性。这样一来保证了不同的object的“编号”不会相同，二来保证了object内容和其它信息的完整。</p>
+<p>我们再继续看那四个类型，commit刚才已经看到，它其实就是表示对文件的修改。而一个文件的内容被称为blob，一个目录的状态被称作tree。由此可见，commit是基于tree的，它引用它的parent，表示从这个parent这个tree到历史上另一个tree的“过程”。git-cat-file可以帮助我们查找某个object的类型，或者查看它的内容。而git-ls-tree可以帮我们查看tree的内容。tag object是一个包含tag的object，而tag通常是一个指向某个tag object或commit object的ref，所以我们可以在.git/refs里看到tags。再多说一句，在commit里面，HEAD恐怕是最有名的一个了。;-)</p>
+<p>好了，我们再接着看index file。这又是个什么东西呢？也很简单，它其实是个“子虚乌有”的东西，当你对tree里的东西做了修改后，你可以git-diff查看修改，而当你再git-add之后，不带任何参数的git-diff就查不到结果了，因为修改都放到index file里去了！index file又是实实在在存在的，它在.git/index里，以二进制的形式存放。再回头来看，不带任何参数的git-diff其实比较的是index file和当前目录内容的差异。你git-commit一次其实就是把一次git-add的内容加入历史，而git-commit -a才是把所有git-add的结果加入。</p>
+<p>还有什么不明白的呢？恩，head，注意，这个是小写，和上面提到的大写的那个不同。head其实应该是指某个ref，不信你看.git/refs/heads。为什么这里是叫heads呢？因为一个branch一个head，branch可能有多个，heads自然就是复数了。一般我们的heads里都有个master，看看它的内容，其实就是一个ref。</p>
+<p>这样我们就对git里的概念有了个大体了解了，至少不至于连git的man pages都看不懂了。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+
+  <nav id="pagination">
+  
+    <a href="/categories/Linux-Application/page/5/" class="alignleft prev">Prev</a>
+  
+  
+    <a href="/categories/Linux-Application/page/7/" class="alignright next">Next</a>
+  
+  <div class="clearfix"></div>
+</nav>
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:wangcong.org">
+  </form>
 </div>
 
-      </div>
-      <footer><div id="footer" >
-	
-	
-	<div class="social-font" class="clearfix">
-		
-		
-		<a href="https://github.com/congwang" target="_blank" class="icon-github" title="github"></a>
-		
-		
-		
-		<a href="https://twitter.com/conglinux" target="_blank" class="icon-twitter" title="twitter"></a>
-		
-		
-		
-		
-		
-		
-		
-	</div>
-		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2016 
-		
-		<a href="http://wangcong.org/about" target="_blank" title="Cong Wang">Cong Wang</a>
-		
-		</p>
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Book-Reviews/">Book Reviews</a><small>18</small></li>
+  
+    <li><a href="/categories/China/">China</a><small>2</small></li>
+  
+    <li><a href="/categories/Collection/">Collection</a><small>25</small></li>
+  
+    <li><a href="/categories/Life/">Life</a><small>324</small></li>
+  
+    <li><a href="/categories/Linux-Application/">Linux Application</a><small>73</small></li>
+  
+    <li><a href="/categories/Linux-Kernel/">Linux Kernel</a><small>64</small></li>
+  
+    <li><a href="/categories/Love/">Love</a><small>6</small></li>
+  
+    <li><a href="/categories/Movies/">Movies</a><small>19</small></li>
+  
+    <li><a href="/categories/Programming/">Programming</a><small>152</small></li>
+  
+    <li><a href="/categories/Science-Fiction/">Science Fiction</a><small>8</small></li>
+  
+    <li><a href="/categories/Travel/">Travel</a><small>19</small></li>
+  
+  </ul>
 </div>
-</footer>
-      <script src="/js/jquery-2.0.3.min.js"></script>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/geek/">geek</a><small>1</small></li>
+  
+    <li><a href="/tags/handling/">handling</a><small>1</small></li>
+  
+    <li><a href="/tags/joke/">joke</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/tags/signal/">signal</a><small>1</small></li>
+  
+    <li><a href="/tags/unix/">unix</a><small>1</small></li>
+  
+    <li><a href="/tags/vim/">vim</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2017 Cong Wang
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 <script src="/js/jquery.imagesloaded.min.js"></script>
 <script src="/js/gallery.js"></script>
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.navbar').click(function(){
-    $('header nav').toggleClass('shownav');
-  });
-  var myWidth = 0;
-  function getSize(){
-    if( typeof( window.innerWidth ) == 'number' ) {
-      myWidth = window.innerWidth;
-    } else if( document.documentElement && document.documentElement.clientWidth) {
-      myWidth = document.documentElement.clientWidth;
-    };
-  };
-  var m = $('#main'),
-      a = $('#asidepart'),
-      c = $('.closeaside'),
-      o = $('.openaside');
-  $(window).resize(function(){
-    getSize(); 
-    if (myWidth >= 1024) {
-      $('header nav').removeClass('shownav');
-    }else
-    {
-      m.removeClass('moveMain');
-      a.css('display', 'block').removeClass('fadeOut');
-      o.css('display', 'none');
-        
-    }
-  });
-  c.click(function(){
-    a.addClass('fadeOut').css('display', 'none');
-    o.css('display', 'block').addClass('fadeIn');
-    m.addClass('moveMain');
-  });
-  o.click(function(){
-    o.css('display', 'none').removeClass('beforeFadeIn');
-    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
-    m.removeClass('moveMain');
-  });
-  $(window).scroll(function(){
-    o.css("top",Math.max(80,260-$(this).scrollTop()));
-  });
-});
-</script>
-
-
-
-
 
 <script type="text/javascript">
-
 var disqus_shortname = 'disqus_ciEwcJAF0E';
 
-(function(){
-  var dsq = document.createElement('script');
-  dsq.type = 'text/javascript';
-  dsq.async = true;
-  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-}());
 (function(){
   var dsq = document.createElement('script');
   dsq.type = 'text/javascript';
@@ -323,33 +608,13 @@ var disqus_shortname = 'disqus_ciEwcJAF0E';
 
 
 
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
 
-
-
-
-
-<!-- Analytics Begin -->
-
-
-
-
-
-<!-- Analytics End -->
-
-<!-- Totop Begin -->
-
-	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
-	</div>
-	<script src="/js/totop.js"></script>
-
-<!-- Totop End -->
-
-<!-- MathJax Begin -->
-<!-- mathjax config similar to math.stackexchange -->
-
-
-<!-- MathJax End -->
-
-    </body>
-   </html>
+</body>
+</html>

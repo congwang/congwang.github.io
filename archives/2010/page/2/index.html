@@ -1,321 +1,643 @@
-
-  <!DOCTYPE HTML>
-<html >
+<!DOCTYPE HTML>
+<html>
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   
-    <title>Archives: 2010 | A Geek&#39;s Page</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
-    
-    <meta name="author" content="Cong Wang">
-    
-    
-    <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="A Geek's Page">
-<meta property="og:url" content="http://wangcong.org/archives/2010/page/2/">
-<meta property="og:site_name" content="A Geek's Page">
-<meta property="og:description">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="A Geek's Page">
-<meta name="twitter:description">
-<meta name="twitter:creator" content="@conglinux">
+  <title>Page 2 | Archives: 2010 | A Geek&#39;s Page</title>
+  <meta name="author" content="Cong Wang">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
+  
+  <meta property="og:site_name" content="A Geek&#39;s Page"/>
 
-    
-    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
-    
-    
-    <link rel="icon" href="/img/favicon.ico">
-    
-    
-    <link rel="apple-touch-icon" href="/img/jacman.jpg">
-    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
-    
-    <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
 
 </head>
 
-    <body>
-      <header>
-        <div>
-		
-			<div id="imglogo">
-				<a href="/"><img src="/img/logo.png" alt="A Geek&#39;s Page" title="A Geek&#39;s Page"/></a>
-			</div>
-			
-			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="A Geek&#39;s Page">A Geek&#39;s Page</a></h1>
-				<h2 class="blog-motto"></h2>
-			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
-			</a></div>
-			<nav class="animated">
-				<ul>
-					<ul>
-					 
-						<li><a href="/">Home</a></li>
-					
-						<li><a href="/archives">Archives</a></li>
-					
-						<li><a href="/about-2">About</a></li>
-					
-					<li>
- 					
-					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
-						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
-						<input type="hidden" name="q" value="site:wangcong.org">
-					</form>
-					
-					</li>
-				</ul>
-			</nav>			
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">A Geek&#39;s Page</a></h1>
+  <h2><a href="/"></a></h2>
 </div>
-      </header>
-      <div id="container">
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title">2010</h2>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-10-15T06:17:32.000Z"><a href="/2010/10/14/gcc-e5-a4-aa-e8-81-aa-e6-98-8e-e4-ba-86-ef-bc-81/">Oct 14 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/10/14/gcc-e5-a4-aa-e8-81-aa-e6-98-8e-e4-ba-86-ef-bc-81/">gcc 太聪明了！</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>gcc 越来越聪明了，有时候为了故意不让它优化某一部分代码（但同时还要开启-O！）我真可是费尽了心思。</p>
+<p>举两个简单的例子来说明一下。一个是exp()的问题，<strong>不带</strong>-lm编译下面这段代码：</p>
+<p>[c]</p>
+<h1 id="include">include</h1>
+<h1 id="include-1">include</h1>
+<p>int main(void)<br>{<br>        printf(“%lf”, exp(4.0));<br>        return 0;<br>}<br>[/c]</p>
+<p>你会发现可以得出正确的结果，没任何链接错误。它被预处理掉了吗?gcc -E告诉我们没有。那到底怎么回事呢？看一下生成的汇编，你会发现里面根本就没有call exp这样的指令！也就是说它被gcc在编译的时候处理了！这是因为像exp(4.0)这样的常量表达式是可以在编译的时候优化的，它的结果是个常量，所以gcc编译的时候就已经把这个值计算出来了，并把计算结果作为一个常量放到那个位置去了！为我们省去了一个函数调用！:-) 所以，如果你把上面的4.0换成一个double变量传递给exp()，你就会得到链接错误了。</p>
+<p>另外一个例子是一个非常真实的例子。我们知道内核中有个著名的结构体叫struct skbuff，而我们公司内部的一个补丁中在某个函数中错误地把skbuff拼写成了skbuf！但编译和运行没任何问题！这个问题是后来别人在code review的时候才发现的！为什么呢？这明明应该通不过编译啊！我花费了不少时间去追踪这个问题，最后发现了问题的根源。为了方便叙述，我把问题的关键部分抽象成了下面的代码：</p>
+<p>[c]<br>int foo(struct non_exist *n)<br>{<br>    if (n)<br>        return 0;<br>    else<br>        return 1;<br>}<br>[/c]</p>
+<p>我们这么编译：gcc -c foo.c，你会发现我们只有警告，没有错误！警告我们可以忽略，因为我们只关心为什么不会有错误，换句话说，为什么gcc依旧可以成功地编译出代码来？仔细想一下你会明白，其实在foo()里面，我们根本就不用关心n到底是一个什么样的指针，只要知道它是一个指针就可以了！因为我们一没有对它进行dereference操作，二没有进行++或者—运算！而所有指针在特定的机器上长度是一定的。这正是为什么它可以通得过编译，但警告是肯定不会少的。;-)</p>
+<p>如果你读过-O（或以上）生成的汇编的话，你还会发现一大坨gcc优化的例子，这可苦了我这种读汇编的人了，每次都得去猜gcc到底做了那些优化，不过这也相当有乐趣！</p>
+
+      
+    </div>
+    <footer>
+      
         
-
-<div class="archive-title" >
-  <h2 class="archive-icon">2010</h2>
-  
-  <div class="archiveslist archive-float clearfix">
-   <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">Aug 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">Jan 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">Dec 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">Oct 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">Sep 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">Aug 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">Jul 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">Feb 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01/">Jan 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12/">Dec 2012</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">Nov 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">Oct 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">Sep 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">Aug 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/07/">Jul 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">Jun 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">Apr 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">Mar 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">Feb 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">Jan 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/12/">Dec 2011</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">Nov 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/10/">Oct 2011</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">Sep 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08/">Aug 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/07/">Jul 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/06/">Jun 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/05/">May 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04/">Apr 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03/">Mar 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/02/">Feb 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/01/">Jan 2011</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/12/">Dec 2010</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/11/">Nov 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/10/">Oct 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/09/">Sep 2010</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08/">Aug 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07/">Jul 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06/">Jun 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05/">May 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04/">Apr 2010</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03/">Mar 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02/">Feb 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01/">Jan 2010</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12/">Dec 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11/">Nov 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10/">Oct 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09/">Sep 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08/">Aug 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07/">Jul 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/06/">Jun 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/05/">May 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04/">Apr 2009</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03/">Mar 2009</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02/">Feb 2009</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01/">Jan 2009</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12/">Dec 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/11/">Nov 2008</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/10/">Oct 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09/">Sep 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08/">Aug 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07/">Jul 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06/">Jun 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05/">May 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04/">Apr 2008</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03/">Mar 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02/">Feb 2008</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01/">Jan 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12/">Dec 2007</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11/">Nov 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10/">Oct 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09/">Sep 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08/">Aug 2007</a><span class="archive-list-count">31</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07/">Jul 2007</a><span class="archive-list-count">34</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06/">Jun 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05/">May 2007</a><span class="archive-list-count">25</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04/">Apr 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03/">Mar 2007</a><span class="archive-list-count">50</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02/">Feb 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01/">Jan 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12/">Dec 2006</a><span class="archive-list-count">5</span></li></ul>
- </div>
-  
-</div>
-<div id="main" class="archive-part clearfix">
-  <div id="archive-page">
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2010/10/14/gcc-e5-a4-aa-e8-81-aa-e6-98-8e-e4-ba-86-ef-bc-81/" title="gcc 太聪明了！" itemprop="url">
-  
-
-    <time datetime="2010-10-15T06:17:32.000Z" itemprop="datePublished">Oct 14 2010</time>
-
-
-    <h1 itemprop="name">gcc 太聪明了！</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2010/10/08/-e5-85-b3-e4-ba-8e-e5-86-85-e5-ad-98-e6-b3-84-e6-bc-8f/" title="关于内存泄漏" itemprop="url">
-  
-
-    <time datetime="2010-10-09T03:08:40.000Z" itemprop="datePublished">Oct 8 2010</time>
-
-
-    <h1 itemprop="name">关于内存泄漏</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2010/10/05/cve-2009-0029-e5-92-8c-cve-2010-3301/" title="CVE-2009-0029 和 CVE-2010-3301" itemprop="url">
-  
-
-    <time datetime="2010-10-06T05:41:57.000Z" itemprop="datePublished">Oct 5 2010</time>
-
-
-    <h1 itemprop="name">CVE-2009-0029 和 CVE-2010-3301</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2010/10/01/-e4-bd-95-e5-96-9c-e4-b9-8b-e6-9c-89-ef-bc-9f/" title="何喜之有？" itemprop="url">
-  
-
-    <time datetime="2010-10-02T01:55:32.000Z" itemprop="datePublished">Oct 1 2010</time>
-
-
-    <h1 itemprop="name">何喜之有？</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2010/09/28/-e7-9c-bc-e7-9d-9b-e4-b8-8a-e5-a4-a9-e5-a0-82-ef-bc-8c-e5-bf-83-e7-81-b5-e5-9b-9e-e6-95-85-e4-b9-a1/" title="眼睛上天堂，心灵回故乡" itemprop="url">
-  
-
-    <time datetime="2010-09-29T06:24:12.000Z" itemprop="datePublished">Sep 28 2010</time>
-
-
-    <h1 itemprop="name">眼睛上天堂，心灵回故乡</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2010/09/28/-e9-95-bf-e9-80-94-e6-97-85-e8-a1-8c-e6-a3-80-e6-9f-a5-e5-88-97-e8-a1-a8/" title="长途旅行物品检查列表" itemprop="url">
-  
-
-    <time datetime="2010-09-29T05:38:55.000Z" itemprop="datePublished">Sep 28 2010</time>
-
-
-    <h1 itemprop="name">长途旅行物品检查列表</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2010/09/27/gcc-trampoline/" title="Gcc Trampoline" itemprop="url">
-  
-
-    <time datetime="2010-09-28T06:21:28.000Z" itemprop="datePublished">Sep 27 2010</time>
-
-
-    <h1 itemprop="name">Gcc Trampoline</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2010/09/26/-e7-97-9b-e8-8b-a6-e5-8d-b3-e4-ba-ba-e7-94-9f/" title="痛苦即人生" itemprop="url">
-  
-
-    <time datetime="2010-09-27T05:33:53.000Z" itemprop="datePublished">Sep 26 2010</time>
-
-
-    <h1 itemprop="name">痛苦即人生</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2010/09/25/-e3-80-8a-e7-94-9f-e6-b4-bb-e5-a4-a7-e7-88-86-e7-82-b8-e3-80-8b-e7-ac-ac-e5-9b-9b-e5-ad-a3/" title="《生活大爆炸》第四季" itemprop="url">
-  
-
-    <time datetime="2010-09-26T04:18:33.000Z" itemprop="datePublished">Sep 25 2010</time>
-
-
-    <h1 itemprop="name">《生活大爆炸》第四季</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2010/09/24/jump-label/" title="Jump Label" itemprop="url">
-  
-
-    <time datetime="2010-09-24T23:32:30.000Z" itemprop="datePublished">Sep 24 2010</time>
-
-
-    <h1 itemprop="name">Jump Label</h1>
-
-  </a>
-</section>
-
-
-  <nav id="page-nav" class="clearfix archive-nav">
-    <a class="extend prev" rel="prev" href="/archives/2010/"><span></span>Prev</a><a class="page-number" href="/archives/2010/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/2010/page/3/">3</a><a class="page-number" href="/archives/2010/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/archives/2010/page/8/">8</a><a class="extend next" rel="next" href="/archives/2010/page/3/">Next<span></span></a>
-  </nav>
-
+        
+      
+      <div class="clearfix"></div>
+    </footer>
   </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-10-09T03:08:40.000Z"><a href="/2010/10/08/-e5-85-b3-e4-ba-8e-e5-86-85-e5-ad-98-e6-b3-84-e6-bc-8f/">Oct 8 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/10/08/-e5-85-b3-e4-ba-8e-e5-86-85-e5-ad-98-e6-b3-84-e6-bc-8f/">关于内存泄漏</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>不少编写用户空间程序的人都关心内存泄漏到底会造成多少影响。这里简单澄清一下。</p>
+<p>无论用户空间是通过malloc()也好，mmap()也好，最终都是通过Linux内核管理的。只要内核没有bug，这些和这个进程相关的页面都是会被记录的，而且会在进程exit()的时候由Linux内核全部释放掉。所以对于运行时间不长的应用程序，有一些内存泄漏一般是没多大问题的。作为用户程序的编写者，如果释放内存真的很麻烦，或者说会让你的某一块代码变得很难读，你完全可以直接exit()。虽然很多时候我并不建议你这么做，道理很简单，因为你申请了资源就应该自己去释放，这不光是资源浪费的问题，而且是你代码逻辑和你作为开发者职责的问题。</p>
+<p>实际上，Linux内核根本就不会注意到用户空间的泄漏不泄漏，它只关心你申请的这个页面有没有被它记录，所以进程退出时所有和此相关的内存页面都会被内核释放掉，管你是因为泄漏留下的还是用作其它用途的。</p>
+<p>但是，你也知道，有些进程是不会主动退出的，那就是后台进程。这样的程序要是存在内存泄漏的话，还是可能会很浪费系统的内存资源的，因为内核没机会去释放这些页面，而且对用户空间的泄漏情况完全不知，它只会不停地给用户空间分配内存，直到用户空间地址耗尽或者物理内存趋近用完。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-10-06T05:41:57.000Z"><a href="/2010/10/05/cve-2009-0029-e5-92-8c-cve-2010-3301/">Oct 5 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/10/05/cve-2009-0029-e5-92-8c-cve-2010-3301/">CVE-2009-0029 和 CVE-2010-3301</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>从我出去旅行到现在这段时间内，Linux内核似乎是漏洞频频啊，光我看到的安全漏洞就已经若干个了，有机会真想八一八这些安全漏洞。</p>
+<p>CVE-2010-3301是其中一个。这个漏洞的成因是，在64位的内核上执行32位的系统调用时，作为传递系统调用号的%rax高32位未被清零处理，而且在进行比较的时候直接使用的%eax，导致高32位被忽略：</p>
+<pre>
+        cmpl $(IA32_NR_syscalls-1),%eax
+        ja ia32_badsys
+ia32_do_call:
+        IA32_ARG_FIXUP
+        call *ia32_sys_call_table(,%rax,8)
+</pre>
+
+<p>这样以来，通过静心构造的%rax就可以跳转到它想要的位置去！在<a href="http://sota.gen.nz/compat2/robert_you_suck.c" target="_blank" rel="external">这个exploit</a>中，它就利用ptrace()来跟踪系统调用，并把计算好的想要跳转地址的偏移传递到%rax中，然后执行事先放置好的代码来提升权限！</p>
+<p>修复方法很简单，要么把%rax的高位清零，要么比较的时候使用%rax。修复这个问题的commit是：</p>
+<p><a href="http://git.kernel.org/linus/36d001c70d8a0144ac1d038f6876c484849a74de" target="_blank" rel="external">http://git.kernel.org/linus/36d001c70d8a0144ac1d038f6876c484849a74de</a><br><a href="http://git.kernel.org/linus/eefdca043e8391dcd719711716492063030b55ac" target="_blank" rel="external">http://git.kernel.org/linus/eefdca043e8391dcd719711716492063030b55ac</a></p>
+<p>和这个问题类似的问题之前也曾出现过，CVE-2009-0029，问题更严重，涉及很多的系统调用。不同的是，这个涉及64位的内核和64位的用户空间，来自用户空间的传递系统调用参数的寄存器的高32位同样没被清零，而带32位参数（比如int）的系统调用就会有问题，内核代码只会检查对它有意义的低32位，高32位就被忽略而直接传递到后面去了，这就会带来问题了。</p>
+<p>问题的解决方法也很简单，就是要把这些寄存器高位清零。说起来简单，做起来难。要是和上面一样直接用汇编处理的话，参数的类型的信息就丢失了，因为你汇编里分不清它到底是32位还是64位；而如果用C处理的话，有那么多系统调用，一个一个处理？那不符合Linus的作风！他是怎么做的呢？用宏！而且用强制转化，把所有的32位参数声明为long，然后再强制转化成实际的类型，比如int。去看看<strong>SC_CASTx()和</strong>SC_LONGx()的定义就知道了：</p>
+<p>[c]</p>
+<h1 id="define___SC_CAST1(t1,_a1)_(t1)_a1">define __SC_CAST1(t1, a1)      (t1) a1</h1>
+<h1 id="define___SC_LONG1(t1,_a1)_long_a1">define __SC_LONG1(t1, a1)      long a1</h1>
+<h1 id="define___SYSCALL_DEFINEx(x,_name,_…)">define __SYSCALL_DEFINEx(x, name, …)</h1>
+<pre><code>    asmlinkage <span class="keyword">long</span> sys<span class="preprocessor">##name(__SC_DECL##x(__VA_ARGS__));           </span>
+    <span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">long</span> SYSC<span class="preprocessor">##name(__SC_DECL##x(__VA_ARGS__));       </span>
+    asmlinkage <span class="keyword">long</span> SyS<span class="preprocessor">##name(__SC_LONG##x(__VA_ARGS__))            </span>
+    {                                                               
+            __SC_TEST<span class="preprocessor">##x(__VA_ARGS__);                              </span>
+            <span class="keyword">return</span> (<span class="keyword">long</span>) SYSC<span class="preprocessor">##name(__SC_CAST##x(__VA_ARGS__));    </span>
+    }                                                               
+    SYSCALL_ALIAS(sys<span class="preprocessor">##name, SyS##name);                            </span>
+    <span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">long</span> SYSC<span class="preprocessor">##name(__SC_DECL##x(__VA_ARGS__))</span>
+</code></pre><p>[/c]</p>
+<p>可见Linus大神把宏用到了何等出神入化的地步。:-) 这也是为什么你在内核中看到系统调用都是用SYSCALL_DEFINEx()来定义了。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-10-02T01:55:32.000Z"><a href="/2010/10/01/-e4-bd-95-e5-96-9c-e4-b9-8b-e6-9c-89-ef-bc-9f/">Oct 1 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/10/01/-e4-bd-95-e5-96-9c-e4-b9-8b-e6-9c-89-ef-bc-9f/">何喜之有？</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>今天是贵国的生日，帝都上下一片喜洋洋的景象。不过今年贵国没有像去年那样施展世界领先的天气控制技术把天上的乌云给赶走。</p>
+<p>我就纳闷了，贵国都建国六十一年了，连人民的住所都保护不了，和本国居民之间的土地纠纷比和领国之间的土地纠纷都多，人民群众摆个地摊都得和一种叫做城管的东西发生纠纷，有什么值得庆贺的？</p>
+<p>我就奇怪了，贵国都建国六十一年了，普通人民不吃不喝一辈子连一间很普通很普通的房子都买不起，老老实实上班的不如炒房的，踏踏实实做研究的不如炒股的，勤勤恳恳干活的不如投机倒把的，有什么值得鼓舞的？</p>
+<p>我就郁闷了，贵国都建国六十一年了，我都活了二十四年了，每个月税不少缴可我连选票长什么样子都没见过，还动不动就被代表，连上网写一篇老爷们不喜欢的文章都得担心会不会被删除，有什么值得骄傲的？</p>
+<p>贵国全称中华人民共和国，你怎么好意思叫得出口呢？一，贵国眼中只有人民币，没有人民；二，共和的理念是自由、平等、博爱，这三条贵国实现哪条了？我觉得贵国不如改叫“中华官国”好了。</p>
+<p>六十一年了，贵国连自己要建设一个什么样的国家都没搞明白，连我们为什么要在一起形成一个统一的国家都没搞清楚，一个自称强大的国家却时常因为某一个手无寸铁的人的言论就可能被颠覆一下，何喜之有？</p>
+<p>就像那首歌里唱的那样，“伟大的祖国它超有钱呐，四万个亿跟我有蛋关系呀？骄傲的GDP它噌噌地涨啊，能给我换来几包尿不湿吗？”</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-09-29T06:24:12.000Z"><a href="/2010/09/28/-e7-9c-bc-e7-9d-9b-e4-b8-8a-e5-a4-a9-e5-a0-82-ef-bc-8c-e5-bf-83-e7-81-b5-e5-9b-9e-e6-95-85-e4-b9-a1/">Sep 28 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/09/28/-e7-9c-bc-e7-9d-9b-e4-b8-8a-e5-a4-a9-e5-a0-82-ef-bc-8c-e5-bf-83-e7-81-b5-e5-9b-9e-e6-95-85-e4-b9-a1/">眼睛上天堂，心灵回故乡</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>这次旅行的游记和攻略。篇幅太长，慢慢写，先占坑。</p>
+<p>带的日记本只记到了拉萨，在川藏线一路基本上都在赶时间，没空写，到了成都也没时间补。我试试能不能找一个扫描仪扫进来，找不到就自己手工输了。</p>
+<p>下面是照片：</p>
+<p><a href="http://www.douban.com/photos/album/34116115/" target="_blank" rel="external">http://www.douban.com/photos/album/34116115/</a></p>
+<p><a href="http://www.douban.com/photos/album/34162211/" target="_blank" rel="external">http://www.douban.com/photos/album/34162211/</a></p>
+<p><a href="http://www.douban.com/photos/album/34314611/" target="_blank" rel="external">http://www.douban.com/photos/album/34314611/</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-09-29T05:38:55.000Z"><a href="/2010/09/28/-e9-95-bf-e9-80-94-e6-97-85-e8-a1-8c-e6-a3-80-e6-9f-a5-e5-88-97-e8-a1-a8/">Sep 28 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/09/28/-e9-95-bf-e9-80-94-e6-97-85-e8-a1-8c-e6-a3-80-e6-9f-a5-e5-88-97-e8-a1-a8/">长途旅行物品检查列表</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>每次出远门之前我都纠结于该带哪些东西，想想东西不多，可一收拾起来还真不少，真后悔我那个45L的背包当初买小了。可我每次又都是不慌不忙，直到出发的前一天晚上才开始收拾，所以每次都有点儿手忙脚乱。</p>
+<p>这次回来我就想整理一个详细的检查列表，把能想到的东西都想好，这样每次出门之前对着这个列表检查就可以了。</p>
+<p>下面是我自己整理的一些，想到再补充：</p>
+<p>1. <strong>手机，备用手机电池，手机充电器。</strong>除非你去的地方没手机信号，那就带GPS吧。</p>
+<p>2. <strong>相机，备用相机电池，相机电池充电器，备用相机存储卡。</strong>我这个卡片机的一个好处是它用的是普通的五号电池，所以充电电池要是没电了去商店买南孚电池也可以。如果万一存储卡都不够的话，准备几张空DVD吧，到时找个地方把照片刻出来。</p>
+<p>3. <strong>雨衣，雨裤，雨伞。</strong>通常用不到，但是一旦下雨就必须有了。这几种看情况而选，比如你去爬山或者骑车的话，你肯定用不到雨伞；如果只是腐败游的话，雨伞足够了。</p>
+<p>4. <strong>太阳镜，防晒霜。</strong>去海边的话最好都带上；去高原的话最好带上防晒霜，去爬雪山的话也需要，尤其是太阳镜。可是我从来没买过防晒霜，所以这次去青海西藏时鼻子上被晒得脱皮了。</p>
+<p>5. <strong>拖鞋，毛巾，洗漱用品（主要是刷牙和洗头洗澡用的）。</strong>视出门的天数而定，出门时间长的话最好都带上，住的青旅很可能没有这些东西，或者住的地方很简陋（青海湖边住宿就是最好的例子）也不可能有。有一双自己的拖鞋穿还是很舒服的，尤其是夏天。</p>
+<p>6. <strong>衣物。</strong>视季节、气候和地方而定。去高原的话昼夜温差比较大，出发之前建议看一下当地的天气预报，气温大概是多少，该准备的衣服都备好。衣服比较多的话，有一个种节省空间的方法，就是把衣服都一件一件卷起来，真的能省不少空间！<strong>速干衣服</strong>最好备着，尽管你可能也带着雨衣。<strong>内衣、袜子</strong>要多准备一些。<strong>冲锋衣</strong>最好带上，既能保暖挡风，又能当雨衣用。</p>
+<p>7. <strong>纸巾（干湿两种）。</strong>干纸巾不用多说，很常用。对于我来说带着它还以备流鼻血，因为我吃辣的吃多了就流鼻血。湿纸巾可以在没地方洗脸的时候用，我不是开玩笑，真有这种情况。自行斟酌。女士最好备好大创可贴，我是一爷们儿，这方面不方便多说。</p>
+<p>8. <strong>小手电筒或头灯。</strong>走夜路或扎营必备。爬比较高的大山我都是选择夜爬，拿着手电筒真是不太方便，准备买一个头灯。除非你很确定不走夜路，那带着吧。</p>
+<p>9. <strong>腰包。</strong>之前我也没有，这次出门多亏带着它。骑车时带上还是很方便的，这样裤子口袋里就不用塞手机之类的东西。腰包了除了放钱包和手机之外也可以放一些纸巾，放一包烟和打火机，放一些证件之类的。分离这些东西的还一个好处是你住在某个地方之后，可以把除了它之外的包放在房间里，出门吃饭只要带着它就够了。</p>
+<p>10. <strong>药品。</strong>因个人身体情况而定。一般要带上治感冒发烧的，治上火的，治拉肚子的，如果去高原还要带治高反的，都是以防万一，用不到当然更好！如果夏天住宿条件差的话，最好带上风油精，即能驱蚊又能提神。</p>
+<p>11. <strong>食物和水。</strong>能不带就不带，能去当地买就别现在买，一是因为带着太占地方、占重量，二是可能你吃不完然后浪费了。如果真要带的话，估算好一共需要带几顿饭，都是哪一顿。如果体力消耗很大的话最好也带上几罐<strong>红牛</strong>。</p>
+<p>12. <strong>刀子。</strong>不用多说，吃饭时切肉什么的很方便。最好带一把瑞士军刀，然后开啤酒的起子也有了。不过坐飞机时一定要注意啊，千万要把刀子放到托运的包里，否则你就扔给机场吧。</p>
+<p>13. <strong>登山杖、护膝。</strong>要爬山就都带上，尤其是下山时，带护膝能明显保护你的膝盖。如果徒步的话，最好带一对登山杖。</p>
+<p>14. <strong>扎营装备。</strong>如果扎营的话那一套都得带着，<strong>帐篷、防潮垫、睡袋、地席、营灯</strong>。所以你还得有个大包才行啊！</p>
+<p>15. <strong>几本书。</strong>如果路上坐车时间比较多的话，带上几本书可以打发时间，最好找些适合旅途上看的，比如短篇散文。也可以带上一本笔记本，记一下路上每一天的感受。</p>
+<p>16. <strong>塑料袋。</strong>一种用来装垃圾，一种用来放穿过的内裤、袜子，一种用来防潮。</p>
+<p>17. <strong>手套。</strong>冬天出门的话一般会用到。骑车的话一定要带啊，否则骑时间长了手会很疼的。</p>
+<p>18. <strong>百变魔巾。</strong>这个是最有意思的东西，出汗的时候能当头巾用，骑车的时候能当口罩，围脖用，不戴的时候还能当毛巾来擦汗。</p>
+<p>附几条户外经验：</p>
+<p>1. 冬天最好带着保温杯，能在山顶上或路上累了喝一口热水很舒服的！</p>
+<p>2. 关于路上吃饭。早饭一定要吃热的，一定吃饱！尤其是你当天要消耗大量体力的话，一上午的体力全靠你这一顿早饭支持着，所以必须重视早饭。午饭没必要吃太饱，如果时间紧张要吃快。晚饭要吃饱，也要吃热的，要是扎营的话带着炉头升火做饭吧。</p>
+<p>3. 补充能量的东西：<strong>巧克力、牛肉干、奶片</strong>。我的感觉是，巧克力是最给力的！吃一块德芙巧克力能骑出好几公里……我还没吃过那种叫能量棒的东西。</p>
+<p>4. 半路上不要喝酒，尤其是白酒，否则你腿会发软。晚上住宿时可以喝。</p>
+<p>5. 压缩饼干能不吃就不吃，因为它很难吃，但是如果真吃的话它也确实很撑时候。</p>
+<p>6. 如果去的地方不方便取钱，带着现金，走之前估算好要带多少。如果带的比较多的话，分开放，多的部分放到大包里，少的部分带在身上。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-09-28T06:21:28.000Z"><a href="/2010/09/27/gcc-trampoline/">Sep 27 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/09/27/gcc-trampoline/">Gcc Trampoline</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>gcc对<a href="http://gcc.gnu.org/onlinedocs/gccint/Trampolines.html" target="_blank" rel="external">trampoline的定义</a>如下：</p>
+<p>A trampoline is a small piece of code that is created at run time when the address of a nested function is taken. It normally resides on the stack, in the stack frame of the containing function.</p>
+<p>trampoline是因nested function应运而生的。其基本原理描述如下：</p>
+<p>The instructions in the trampoline must do two things: load a constant address into the static chain register, and jump to the real address of the nested function. On CISC machines such as the m68k, this requires two instructions, a move immediate and a jump. Then the two addresses exist in the trampoline as word-long immediate operands. On RISC machines, it is often necessary to load each address into a register in two parts. Then pieces of each address form separate immediate operands.</p>
+<p>下面我们来看看它具体是怎么工作的。看<a href="http://www.technovelty.org/code/c/trampoline.html" target="_blank" rel="external">这个例子</a>：<br>[c]</p>
+<h1 id="include">include</h1>
+<p>int function(int arg) {</p>
+<pre><code>    <span class="keyword">int</span> nested_function(<span class="keyword">int</span> nested_arg) {
+            <span class="keyword">return</span> arg + nested_arg;
+    }
+
+    <span class="keyword">return</span> nested_function(arg);
+</code></pre><p>}</p>
+<p>int main(void)<br>{<br>        printf(“%dn”, function(10));<br>}<br>[/c]<br>很明显我们使用到了一个nested function，但是我们看gcc生成的汇编：<br>[asm]<br>00000000004004c4 :<br>  4004c4:       55                      push   %rbp<br>  4004c5:       48 89 e5                mov    %rsp,%rbp<br>  4004c8:       89 7d fc                mov    %edi,-0x4(%rbp)<br>  4004cb:       4c 89 d0                mov    %r10,%rax<br>  4004ce:       8b 00                   mov    (%rax),%eax<br>  4004d0:       03 45 fc                add    -0x4(%rbp),%eax<br>  4004d3:       c9                      leaveq<br>  4004d4:       c3                      retq</p>
+<p>00000000004004d5 :<br>  4004d5:       55                      push   %rbp<br>  4004d6:       48 89 e5                mov    %rsp,%rbp<br>  4004d9:       48 83 ec 10             sub    $0x10,%rsp<br>  4004dd:       89 f8                   mov    %edi,%eax<br>  4004df:       89 45 f0                mov    %eax,-0x10(%rbp)<br>  4004e2:       8b 45 f0                mov    -0x10(%rbp),%eax<br>  4004e5:       48 8d 55 f0             lea    -0x10(%rbp),%rdx<br>  4004e9:       49 89 d2                mov    %rdx,%r10<br>  4004ec:       89 c7                   mov    %eax,%edi<br>  4004ee:       e8 d1 ff ff ff          callq  4004c4<br>  4004f3:       c9                      leaveq<br>  4004f4:       c3                      retq<br>[/asm]</p>
+<p>很明显这和普通的函数调用没什么区别嘛！（当然，除了汇编中的nest_function()的名字改变了。）没trampoline什么事。这是因为这时候还没必要使用trampoline，gcc优化还是很聪明的，它不到万不得已不会做一点儿额外的工作。</p>
+<p>下面我们就取一下它的地址：<br>[c]</p>
+<h1 id="include-1">include</h1>
+<p>int function(int arg) {</p>
+<pre><code>    <span class="keyword">int</span> nested_function(<span class="keyword">int</span> nested_arg) {
+            <span class="keyword">return</span> arg + nested_arg;
+    }
+
+    <span class="keyword">return</span> nested_function(arg);
+</code></pre><p>}</p>
+<p>int function2(int arg) {</p>
+<pre><code>    <span class="keyword">int</span> nested_function(<span class="keyword">int</span> nested_arg) {
+            <span class="keyword">return</span> arg + nested_arg;
+    }
+
+    <span class="keyword">int</span> (*function_pointer)(<span class="keyword">int</span> arg) = nested_function;
+
+    <span class="keyword">return</span> function_pointer(arg);
+</code></pre><p>}</p>
+<p>int main(void)<br>{<br>        printf(“%dn”, function(10));<br>        printf(“%dn”, function2(10));<br>        return 0;<br>}<br>[/c]<br>这时trampoline就产生了，因为我们对它取了地址，这个地址在栈上，而且nested function()的栈必须被设为外面function2()的栈。<br>[asm]<br>00000000004004f5 :<br>  4004f5:       55                      push   %rbp<br>  4004f6:       48 89 e5                mov    %rsp,%rbp<br>  4004f9:       89 7d fc                mov    %edi,-0x4(%rbp)<br>  4004fc:       4c 89 d0                mov    %r10,%rax<br>  4004ff:       8b 00                   mov    (%rax),%eax<br>  400501:       03 45 fc                add    -0x4(%rbp),%eax<br>  400504:       c9                      leaveq<br>  400505:       c3                      retq</p>
+<p>0000000000400506 :<br>  400506:       55                      push   %rbp<br>  400507:       48 89 e5                mov    %rsp,%rbp<br>  40050a:       48 83 ec 30             sub    $0x30,%rsp<br>  40050e:       89 f8                   mov    %edi,%eax<br>  400510:       89 45 d0                mov    %eax,-0x30(%rbp)<br>  400513:       48 8d 45 d0             lea    -0x30(%rbp),%rax<br>  400517:       48 83 c0 04             add    $0x4,%rax<br>  40051b:       48 8d 55 d0             lea    -0x30(%rbp),%rdx<br>  40051f:       b9 f5 04 40 00          mov    $0x4004f5,%ecx<br>  400524:       66 c7 00 41 bb          movw   $0xbb41,(%rax)<br>  400529:       89 48 02                mov    %ecx,0x2(%rax)<br>  40052c:       66 c7 40 06 49 ba       movw   $0xba49,0x6(%rax)<br>  400532:       48 89 50 08             mov    %rdx,0x8(%rax)<br>  400536:       c7 40 10 49 ff e3 90    movl   $0x90e3ff49,0x10(%rax)<br>  40053d:       48 8d 45 d0             lea    -0x30(%rbp),%rax<br>  400541:       48 83 c0 04             add    $0x4,%rax<br>  400545:       48 89 45 f8             mov    %rax,-0x8(%rbp)<br>  400549:       8b 45 d0                mov    -0x30(%rbp),%eax<br>  40054c:       48 8b 55 f8             mov    -0x8(%rbp),%rdx<br>  400550:       89 c7                   mov    %eax,%edi<br>  400552:       ff d2                   callq  *%rdx<br>  400554:       c9                      leaveq<br>  400555:       c3                      retq<br>[/asm]<br>读生成的汇编，我们可以看出堆栈大体这样：</p>
+<p><pre><br>[  xxx     ] &lt;-rsp<br>[  eax     ]<br>[  0xbb41  ]<br>[  addr    ]<br>[  0xba49  ]<br>[   rsp    ]<br>[0x90e3ff49]<br>…<br>[ xxx      ] &lt;- rbp<br></pre><br>其中addr是指nested_function.2079的地址。这里最让我们困惑的应该那三个常数，它们是什么？根据上面的定义你应该可以猜出，是指令！到底是什么指令呢？我们手工反汇编一下：<br>[c]<br>unsigned short arrary[] = {0xbb41, 0xffff, 0xffff};<br>unsigned short array2[] = {0xba49, 0xffff, 0xffff};<br>unsigned short arrary3 [] = {0xff49, 0x90e3};<br>[/c]<br>其中0xffff仅仅是用作标记。把此文件保存为decode.c，然后：</p>
+<p><pre><br>cr0% gcc -c decode.c<br>cr0% objdump -D decode.o<br></pre><br>我们可以得到，它们大体就是下面三条指令：</p>
+<p><pre><br>movl $nested_function.2079,%r11<br>movl %rsp, %r10<br>jmp *%r11<br>nop<br></pre><br>根据nested_function.2079里的代码，我们可以看出%r10传递的是参数的地址，然后就直接jmp到nested_function.2079里去了。这就是传说中的trampoline！</p>
+<p>注：此时的stack必须是可执行的，因为有代码放在了里面，查看其maps可以看出：</p>
+<p>bfebe000-bfed3000 rwxp 00000000 00:00 0          [stack]</p>
+<p>提到nested function，不能不提一个trick，就是用nested function<a href="http://gcc.gnu.org/ml/gcc-help/2010-08/msg00229.html" target="_blank" rel="external">来实现C的lambda</a>！如下：<br>[c]</p>
+<h1 id="define_lambda(l_ret_type,_l_arguments,_l_body)">define lambda(l_ret_type, l_arguments, l_body)</h1>
+<pre><code>({                                                           
+  l_ret_type l_anonymous_functions_name l_arguments          
+    l_body                                                   
+  &amp;amp;l_anonymous_functions_name;                               
+})
+
+qsort (<span class="built_in">array</span>, <span class="keyword">sizeof</span> (<span class="built_in">array</span>) / <span class="keyword">sizeof</span> (<span class="built_in">array</span>[<span class="number">0</span>]), <span class="keyword">sizeof</span> (<span class="built_in">array</span>[<span class="number">0</span>]),
+       lambda (<span class="keyword">int</span>, (<span class="keyword">const</span> <span class="keyword">void</span> *a, <span class="keyword">const</span> <span class="keyword">void</span> *b),
+               {
+                 dump ();
+                 <span class="built_in">printf</span> (<span class="string">"Comparison %d: %d and %dn"</span>,
+                         ++ comparison,
+                         *(<span class="keyword">const</span> <span class="keyword">int</span> *) a, *(<span class="keyword">const</span> <span class="keyword">int</span> *) b);
+                 <span class="keyword">return</span> *(<span class="keyword">const</span> <span class="keyword">int</span> *) a - *(<span class="keyword">const</span> <span class="keyword">int</span> *) b;
+               }));
+</code></pre><p>[/c]<br>怎么样？很有意思吧。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-09-27T05:33:53.000Z"><a href="/2010/09/26/-e7-97-9b-e8-8b-a6-e5-8d-b3-e4-ba-ba-e7-94-9f/">Sep 26 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/09/26/-e7-97-9b-e8-8b-a6-e5-8d-b3-e4-ba-ba-e7-94-9f/">痛苦即人生</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><a href="http://book.douban.com/subject/1039208/" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
+<p>以前对凡高了解很少，只知道他是一个割耳、开枪自杀的怪才。读了这本《凡高画传》才知道，原来他一生都是生活在痛苦之中！</p>
+<p>他一生默默无闻，穷困潦倒，基本上一直在靠他弟弟提奥的经济支持活着。开枪自杀时年仅三十七岁。</p>
+<p>作为一个画家，他一生仅卖出去一幅画——《红葡萄园》，而非他死后被拍出天价的《向日葵》。他一生仅办过一次个人画展，还是在他弟弟提奥的家里。无论怎么看都不能称得上成功。</p>
+<p>作为一个普通人，他与这个社会似乎格格不入，还经常被人们驱赶，送进精神病院。他与别人能和谐相处的时候并不多，都是喜欢让他作画的农民，更多的人则是厌恶他，把他当作一个疯子来看。</p>
+<p>作为一个男人，他终身未婚。他追求过两个姑娘，均遭到无情地拒绝。好不容易遇到一个喜欢他的姑娘，结果姑娘的家人极力反对，最后以这位痴情的姑娘的自尽而告终。</p>
+<p>无怪乎他的临终遗言是“痛苦即人生”了！这是对他一生最好的写照。</p>
+<p>在他这一生当中唯一对他关心备至的就是他的弟弟提奥，他的画他都细心的保管着，他写给他的信他都仔细珍藏着，直到去世他也是死在了这位弟弟的怀里。可见，人生得一知己足以！</p>
+<p>所以，年轻人，你还有什么看不开的啊？你那点儿痛苦和凡高这痛苦的一生比起来又算得了什么！</p>
+<p>加上萨特那句名言，正好凑成一对：<strong>他人即地狱。痛苦即人生。</strong>这或许才是对人生最好的概括……</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-09-26T04:18:33.000Z"><a href="/2010/09/25/-e3-80-8a-e7-94-9f-e6-b4-bb-e5-a4-a7-e7-88-86-e7-82-b8-e3-80-8b-e7-ac-ac-e5-9b-9b-e5-ad-a3/">Sep 25 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/09/25/-e3-80-8a-e7-94-9f-e6-b4-bb-e5-a4-a7-e7-88-86-e7-82-b8-e3-80-8b-e7-ac-ac-e5-9b-9b-e5-ad-a3/">《生活大爆炸》第四季</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><a href="http://movie.douban.com/subject/4804079/" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
+<p>出去旅行一趟差点把《生活大爆炸》要出第四季这事给忘了。今天在搜狐上看了<a href="http://tv.sohu.com/20100924/n275228720.shtml" target="_blank" rel="external">第四季第一集</a>，少儿不宜，相当给力。</p>
+<p>貌似搜狐买下了版权，所以国内的geek们再也不用愁四处去找随时可能被删除的视频了。</p>
+<p>下面是搜狐上的《生活大爆炸》主页：</p>
+<p><a href="http://tv.sohu.com/s2010/bigbang/" target="_blank" rel="external">http://tv.sohu.com/s2010/bigbang/</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-09-24T23:32:30.000Z"><a href="/2010/09/24/jump-label/">Sep 24 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/09/24/jump-label/">Jump Label</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>从gcc 4.5开始，<a href="http://gcc.gnu.org/onlinedocs/gcc/Extended-Asm.html" target="_blank" rel="external">gcc 内嵌汇编</a>开始支持一个叫jump label的东西。说白了，其实就是在gcc 内嵌汇编中支持外面C语言的goto label。不能访问外面C语言的goto label一直以来都是gcc内嵌汇编的一大缺陷。来自Red Hat 的 Richard Henderson向gcc社区提交了<a href="http://gcc.gnu.org/ml/gcc-patches/2009-07/msg01556.html" target="_blank" rel="external">这个想法</a>。</p>
+<p>最初的动机是因为内核要tracer需要这个东西，因为现在的tracer都是静态实现的，类似于：</p>
+<p>[c]<br>if (unlikely(tracer_is_enabled))<br>    trace();<br>[/c]</p>
+<p>这样显然增加了一个额外的 if 开销，每次都要判断是否需要调用trace()。</p>
+<p>而如果jump label 实现的话，那么我们就可以用汇编把需要调用trace()的那部分代码放到一个goto label之下，把这个goto label存放到一个单独的 section 里。而当启用或禁用某个tracer时，我们就可以修改里面的代码！换句话说，如果tracer没有启用，它里面放的就是nop指令，而如果tracer开启，那么我们就把一个jmp指令复制到那个位置，让它跳转到那个label从而去调用trace()！</p>
+<p>下面就是用jump label来实现的这个功能的最重要的部分：<br>[c]</p>
+<h1 id="define_JUMP_LABEL_INITIAL_NOP_“-byte_0xe9_nt_-long_0nt”">define JUMP_LABEL_INITIAL_NOP “.byte 0xe9 nt .long 0nt”</h1>
+<h1 id="define_JUMP_LABEL(key,_label)">define JUMP_LABEL(key, label)</h1>
+<pre><code>   <span class="keyword">do</span> {                                                    
+           <span class="keyword">asm</span> <span class="keyword">goto</span>(<span class="string">"1:"</span>                                   
+                   JUMP_LABEL_INITIAL_NOP                  
+                    <span class="string">".pushsection __jump_table,  "</span>a<span class="string">" nt"</span>
+                    _ASM_PTR <span class="string">"1b, %l["</span> <span class="preprocessor">#label <span class="title">"], %c0 nt"</span> </span>
+                    <span class="string">".popsection nt"</span>                      
+                    : :  <span class="string">"i"</span> (key) :  : label);            
+    } <span class="keyword">while</span> (<span class="number">0</span>)
+</code></pre><p>[/c]</p>
+<p>所谓.pushsection和.popsection就是把当前的section也保存起来，然后建立一个新的section，名字就是在后面指定。可见，所有的label都是放在了__jump_table这个section里，格式固定如下：</p>
+<p>[instruction address] [jump target] [tracepoint key]</p>
+<p>先前代码的地址也是要保存的，因为jmp需要一个offset。更详细的介绍可以参考<a href="http://marc.info/?l=linux-kernel&amp;m=128473626321092&amp;w=2" target="_blank" rel="external">Jump Label的内核文档</a>。</p>
+<p>要完全理解它的原理，你还需要读一下<a href="http://marc.info/?l=linux-kernel&amp;m=128473631621154&amp;w=2" target="_blank" rel="external">整个patch set</a>，尤其是arch_jump_label_transform()的实现。代码不难理解，而且读起来很有意思。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+
+  <nav id="pagination">
+  
+    <a href="/archives/2010/" class="alignleft prev">Prev</a>
+  
+  
+    <a href="/archives/2010/page/3/" class="alignright next">Next</a>
+  
+  <div class="clearfix"></div>
+</nav>
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:wangcong.org">
+  </form>
 </div>
 
-      </div>
-      <footer><div id="footer" >
-	
-	
-	<div class="social-font" class="clearfix">
-		
-		
-		<a href="https://github.com/congwang" target="_blank" class="icon-github" title="github"></a>
-		
-		
-		
-		<a href="https://twitter.com/conglinux" target="_blank" class="icon-twitter" title="twitter"></a>
-		
-		
-		
-		
-		
-		
-		
-	</div>
-		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2016 
-		
-		<a href="http://wangcong.org/about" target="_blank" title="Cong Wang">Cong Wang</a>
-		
-		</p>
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Book-Reviews/">Book Reviews</a><small>18</small></li>
+  
+    <li><a href="/categories/China/">China</a><small>2</small></li>
+  
+    <li><a href="/categories/Collection/">Collection</a><small>25</small></li>
+  
+    <li><a href="/categories/Life/">Life</a><small>324</small></li>
+  
+    <li><a href="/categories/Linux-Application/">Linux Application</a><small>73</small></li>
+  
+    <li><a href="/categories/Linux-Kernel/">Linux Kernel</a><small>64</small></li>
+  
+    <li><a href="/categories/Love/">Love</a><small>6</small></li>
+  
+    <li><a href="/categories/Movies/">Movies</a><small>19</small></li>
+  
+    <li><a href="/categories/Programming/">Programming</a><small>152</small></li>
+  
+    <li><a href="/categories/Science-Fiction/">Science Fiction</a><small>8</small></li>
+  
+    <li><a href="/categories/Travel/">Travel</a><small>19</small></li>
+  
+  </ul>
 </div>
-</footer>
-      <script src="/js/jquery-2.0.3.min.js"></script>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/geek/">geek</a><small>1</small></li>
+  
+    <li><a href="/tags/handling/">handling</a><small>1</small></li>
+  
+    <li><a href="/tags/joke/">joke</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/tags/signal/">signal</a><small>1</small></li>
+  
+    <li><a href="/tags/unix/">unix</a><small>1</small></li>
+  
+    <li><a href="/tags/vim/">vim</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2017 Cong Wang
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 <script src="/js/jquery.imagesloaded.min.js"></script>
 <script src="/js/gallery.js"></script>
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.navbar').click(function(){
-    $('header nav').toggleClass('shownav');
-  });
-  var myWidth = 0;
-  function getSize(){
-    if( typeof( window.innerWidth ) == 'number' ) {
-      myWidth = window.innerWidth;
-    } else if( document.documentElement && document.documentElement.clientWidth) {
-      myWidth = document.documentElement.clientWidth;
-    };
-  };
-  var m = $('#main'),
-      a = $('#asidepart'),
-      c = $('.closeaside'),
-      o = $('.openaside');
-  $(window).resize(function(){
-    getSize(); 
-    if (myWidth >= 1024) {
-      $('header nav').removeClass('shownav');
-    }else
-    {
-      m.removeClass('moveMain');
-      a.css('display', 'block').removeClass('fadeOut');
-      o.css('display', 'none');
-        
-    }
-  });
-  c.click(function(){
-    a.addClass('fadeOut').css('display', 'none');
-    o.css('display', 'block').addClass('fadeIn');
-    m.addClass('moveMain');
-  });
-  o.click(function(){
-    o.css('display', 'none').removeClass('beforeFadeIn');
-    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
-    m.removeClass('moveMain');
-  });
-  $(window).scroll(function(){
-    o.css("top",Math.max(80,260-$(this).scrollTop()));
-  });
-});
-</script>
-
-
-
-
 
 <script type="text/javascript">
-
 var disqus_shortname = 'disqus_ciEwcJAF0E';
 
-(function(){
-  var dsq = document.createElement('script');
-  dsq.type = 'text/javascript';
-  dsq.async = true;
-  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-}());
 (function(){
   var dsq = document.createElement('script');
   dsq.type = 'text/javascript';
@@ -327,33 +649,13 @@ var disqus_shortname = 'disqus_ciEwcJAF0E';
 
 
 
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
 
-
-
-
-
-<!-- Analytics Begin -->
-
-
-
-
-
-<!-- Analytics End -->
-
-<!-- Totop Begin -->
-
-	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
-	</div>
-	<script src="/js/totop.js"></script>
-
-<!-- Totop End -->
-
-<!-- MathJax Begin -->
-<!-- mathjax config similar to math.stackexchange -->
-
-
-<!-- MathJax End -->
-
-    </body>
-   </html>
+</body>
+</html>

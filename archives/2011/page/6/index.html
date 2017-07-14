@@ -1,321 +1,577 @@
-
-  <!DOCTYPE HTML>
-<html >
+<!DOCTYPE HTML>
+<html>
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   
-    <title>Archives: 2011 | A Geek&#39;s Page</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
-    
-    <meta name="author" content="Cong Wang">
-    
-    
-    <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="A Geek's Page">
-<meta property="og:url" content="http://wangcong.org/archives/2011/page/6/">
-<meta property="og:site_name" content="A Geek's Page">
-<meta property="og:description">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="A Geek's Page">
-<meta name="twitter:description">
-<meta name="twitter:creator" content="@conglinux">
+  <title>Page 6 | Archives: 2011 | A Geek&#39;s Page</title>
+  <meta name="author" content="Cong Wang">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
+  
+  <meta property="og:site_name" content="A Geek&#39;s Page"/>
 
-    
-    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
-    
-    
-    <link rel="icon" href="/img/favicon.ico">
-    
-    
-    <link rel="apple-touch-icon" href="/img/jacman.jpg">
-    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
-    
-    <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
 
 </head>
 
-    <body>
-      <header>
-        <div>
-		
-			<div id="imglogo">
-				<a href="/"><img src="/img/logo.png" alt="A Geek&#39;s Page" title="A Geek&#39;s Page"/></a>
-			</div>
-			
-			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="A Geek&#39;s Page">A Geek&#39;s Page</a></h1>
-				<h2 class="blog-motto"></h2>
-			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
-			</a></div>
-			<nav class="animated">
-				<ul>
-					<ul>
-					 
-						<li><a href="/">Home</a></li>
-					
-						<li><a href="/archives">Archives</a></li>
-					
-						<li><a href="/about-2">About</a></li>
-					
-					<li>
- 					
-					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
-						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
-						<input type="hidden" name="q" value="site:wangcong.org">
-					</form>
-					
-					</li>
-				</ul>
-			</nav>			
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">A Geek&#39;s Page</a></h1>
+  <h2><a href="/"></a></h2>
 </div>
-      </header>
-      <div id="container">
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title">2011</h2>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2011-03-02T06:30:52.000Z"><a href="/2011/03/01/fedora-e4-b8-8a-e9-82-a3-e4-ba-9b-e5-86-85-e6-a0-b8-e5-8c-85/">Mar 1 2011</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2011/03/01/fedora-e4-b8-8a-e9-82-a3-e4-ba-9b-e5-86-85-e6-a0-b8-e5-8c-85/">Fedora 上那些内核包</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Fedora 上和内核相关的包很多，运行下面的命令看一下：</p>
+<p><pre><br>~% repoquery -q ‘kernel*’<br>kernel-0:2.6.35.11-83.fc14.x86_64<br>kernel-debug-0:2.6.35.11-83.fc14.x86_64<br>kernel-debug-debuginfo-0:2.6.35.6-45.fc14.x86_64<br>kernel-debug-devel-0:2.6.35.11-83.fc14.x86_64<br>kernel-debuginfo-0:2.6.35.6-45.fc14.x86_64<br>kernel-debuginfo-common-x86_64-0:2.6.35.6-45.fc14.x86_64<br>kernel-devel-0:2.6.35.11-83.fc14.x86_64<br>kernel-doc-0:2.6.35.11-83.fc14.noarch<br>kernel-headers-0:2.6.35.11-83.fc14.x86_64<br></pre><br><br><br>我们一一看一下这些包的内容和用途。</p>
+<p>kernel 这个包不言而喻了，必备的，里面包含了vmlinuz，initramfs，以及所有内核模块，也就是/lib/modules/<code>uname -r</code>下面的东东。</p>
+<p>kernel-devel 这个包是给开发内核驱动，写内核模块的人用的，里面包含了内核源代码中的头文件，Kconfig文件，Makefile等等。</p>
+<p>kernel-headers 这个包是给glibc 等用户空间的库、程序使用的，它提供内核导出到用户空间的所有头文件，主要在/usr/include/linux/中，这样以来用户空间就可以和内核使用相同的常量，结构体定义等等。</p>
+<p>kernel-doc 这个包提供内核文档，即源代码 Documentation/目录下的文档，不过里面包含了make htmldocs 和 make mandocs 之后的文档。</p>
+<p>kernel-debug 和 kernel 包类似，但编译时使用的是带debug选项的config文件。</p>
+<p>kernel-debug-devel 同理，和 kernel-devel 包类似。</p>
+<p>kernel-debuginfo，给SystemTap在 kernel 上使用的。 kernel-debug-debuginfo 同理，供 SystemTap在 kernel-debug 上使用。 而 kernel-debuginfo-common 包为它们提供一些共同的源文件。注意，kernel-debuginfo 包提供vmlinux！ 像 crash 这样的工具也需要它。</p>
+<p>这里似乎少了一个 kernel-firmware，原来在 Fedora 上它已经改名为 linux-firmware 了，但是在RHEL上面没改，里面提供内核源代码目录 firmware/ 里面的固件。</p>
+<p>当然了，因为 perf 也在内核源代码树中，所以 perf 这个包也是从同一个spec文件生成的。</p>
+
+      
+    </div>
+    <footer>
+      
         
-
-<div class="archive-title" >
-  <h2 class="archive-icon">2011</h2>
-  
-  <div class="archiveslist archive-float clearfix">
-   <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">Aug 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">Jan 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">Dec 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">Oct 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">Sep 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">Aug 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">Jul 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">Feb 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01/">Jan 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12/">Dec 2012</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">Nov 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">Oct 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">Sep 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">Aug 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/07/">Jul 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">Jun 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">Apr 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">Mar 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">Feb 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">Jan 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/12/">Dec 2011</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">Nov 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/10/">Oct 2011</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">Sep 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08/">Aug 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/07/">Jul 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/06/">Jun 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/05/">May 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04/">Apr 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03/">Mar 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/02/">Feb 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/01/">Jan 2011</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/12/">Dec 2010</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/11/">Nov 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/10/">Oct 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/09/">Sep 2010</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08/">Aug 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07/">Jul 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06/">Jun 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05/">May 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04/">Apr 2010</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03/">Mar 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02/">Feb 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01/">Jan 2010</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12/">Dec 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11/">Nov 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10/">Oct 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09/">Sep 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08/">Aug 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07/">Jul 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/06/">Jun 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/05/">May 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04/">Apr 2009</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03/">Mar 2009</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02/">Feb 2009</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01/">Jan 2009</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12/">Dec 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/11/">Nov 2008</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/10/">Oct 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09/">Sep 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08/">Aug 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07/">Jul 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06/">Jun 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05/">May 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04/">Apr 2008</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03/">Mar 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02/">Feb 2008</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01/">Jan 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12/">Dec 2007</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11/">Nov 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10/">Oct 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09/">Sep 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08/">Aug 2007</a><span class="archive-list-count">31</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07/">Jul 2007</a><span class="archive-list-count">34</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06/">Jun 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05/">May 2007</a><span class="archive-list-count">25</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04/">Apr 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03/">Mar 2007</a><span class="archive-list-count">50</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02/">Feb 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01/">Jan 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12/">Dec 2006</a><span class="archive-list-count">5</span></li></ul>
- </div>
-  
-</div>
-<div id="main" class="archive-part clearfix">
-  <div id="archive-page">
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2011/03/01/fedora-e4-b8-8a-e9-82-a3-e4-ba-9b-e5-86-85-e6-a0-b8-e5-8c-85/" title="Fedora 上那些内核包" itemprop="url">
-  
-
-    <time datetime="2011-03-02T06:30:52.000Z" itemprop="datePublished">Mar 1 2011</time>
-
-
-    <h1 itemprop="name">Fedora 上那些内核包</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2011/02/24/rhel6-e4-b8-8a-e5-88-b6-e4-bd-9crhel5-srpm/" title="RHEL6上制作RHEL5 srpm" itemprop="url">
-  
-
-    <time datetime="2011-02-25T02:14:49.000Z" itemprop="datePublished">Feb 24 2011</time>
-
-
-    <h1 itemprop="name">RHEL6上制作RHEL5 srpm</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2011/02/16/-e8-bf-99-e6-89-8d-e5-88-9a-e5-88-9a-e5-bc-80-e5-a7-8b/" title="这才刚刚开始" itemprop="url">
-  
-
-    <time datetime="2011-02-17T07:32:39.000Z" itemprop="datePublished">Feb 16 2011</time>
-
-
-    <h1 itemprop="name">这才刚刚开始</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2011/02/05/-e6-b2-a1-e9-82-a3-e4-b9-88-e7-ae-80-e5-8d-95/" title="没那么简单" itemprop="url">
-  
-
-    <time datetime="2011-02-06T07:35:37.000Z" itemprop="datePublished">Feb 5 2011</time>
-
-
-    <h1 itemprop="name">没那么简单</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2011/02/03/10-e5-b9-b4-e6-80-bb-e7-bb-93-ef-bc-8c11-e5-b9-b4-e8-ae-a1-e5-88-92/" title="10年总结，11年计划" itemprop="url">
-  
-
-    <time datetime="2011-02-04T06:11:52.000Z" itemprop="datePublished">Feb 3 2011</time>
-
-
-    <h1 itemprop="name">10年总结，11年计划</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2011/02/02/-e7-a5-9d-e6-82-a8-e5-9c-a82011-e5-b9-b4/" title="祝您在二零一一年……" itemprop="url">
-  
-
-    <time datetime="2011-02-03T00:51:53.000Z" itemprop="datePublished">Feb 2 2011</time>
-
-
-    <h1 itemprop="name">祝您在二零一一年……</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2011/01/31/-e7-bb-a7-e7-bb-ad-e7-95-99-e5-9c-a8-e7-ba-a2-e5-b8-bd/" title="继续在红帽工作" itemprop="url">
-  
-
-    <time datetime="2011-02-01T07:57:30.000Z" itemprop="datePublished">Jan 31 2011</time>
-
-
-    <h1 itemprop="name">继续在红帽工作</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2011/01/30/linux-reboot-magic/" title="LINUX_REBOOT_MAGIC" itemprop="url">
-  
-
-    <time datetime="2011-01-31T07:01:29.000Z" itemprop="datePublished">Jan 30 2011</time>
-
-
-    <h1 itemprop="name">LINUX_REBOOT_MAGIC</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2011/01/29/-e8-ae-a1-e6-97-b6-e8-bf-90-e8-a1-8c-e5-91-bd-e4-bb-a4/" title="计时运行命令" itemprop="url">
-  
-
-    <time datetime="2011-01-29T08:20:50.000Z" itemprop="datePublished">Jan 29 2011</time>
-
-
-    <h1 itemprop="name">计时运行命令</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2011/01/27/-e6-9c-89-e8-88-8d-e6-89-8d-e6-9c-89-e5-be-97/" title="有舍才有得" itemprop="url">
-  
-
-    <time datetime="2011-01-28T07:29:49.000Z" itemprop="datePublished">Jan 27 2011</time>
-
-
-    <h1 itemprop="name">有舍才有得</h1>
-
-  </a>
-</section>
-
-
-  <nav id="page-nav" class="clearfix archive-nav">
-    <a class="extend prev" rel="prev" href="/archives/2011/page/5/"><span></span>Prev</a><a class="page-number" href="/archives/2011/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/2011/page/4/">4</a><a class="page-number" href="/archives/2011/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/archives/2011/page/7/">7</a><a class="extend next" rel="next" href="/archives/2011/page/7/">Next<span></span></a>
-  </nav>
-
+        
+      
+      <div class="clearfix"></div>
+    </footer>
   </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2011-02-25T02:14:49.000Z"><a href="/2011/02/24/rhel6-e4-b8-8a-e5-88-b6-e4-bd-9crhel5-srpm/">Feb 24 2011</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2011/02/24/rhel6-e4-b8-8a-e5-88-b6-e4-bd-9crhel5-srpm/">RHEL6上制作RHEL5 srpm</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>如果直接在rhel6上面制作rhel5的srpm的话，编译的时候会出错：</p>
+<p>error: unpacking of archive failed on file /builddir/build/SOURCES/98-kexec.rules;4cea13ae: cpio: MD5 sum mismatch</p>
+<p>google 了一下发现这是因为从 Fedora 12 开始 RPM 压缩算法改变了。一个解决方法是创建一个脚本 /usr/bin/rpmbuild-md5，其内容如下：</p>
+<p>[bash]</p>
+<h1 id="!/bin/bash">!/bin/bash</h1>
+<p>rpmbuild —define “_source_filedigest_algorithm 1”<br>         —define “_binary_filedigest_algorithm 1”<br>         —define “_binary_payload w9.gzdio”<br>         —define “_source_payload w9.gzdio”<br>         —define “_default_patch_fuzz 2” “$@”<br>[/bash]</p>
+<p>然后制作srpm的时候调用 rpmbuild-md5 就行了。</p>
+<p>在Fedora上，fedora-packager 这个包已经提供了这个命令，但在RHEL6上面没有。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2011-02-17T07:32:39.000Z"><a href="/2011/02/16/-e8-bf-99-e6-89-8d-e5-88-9a-e5-88-9a-e5-bc-80-e5-a7-8b/">Feb 16 2011</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2011/02/16/-e8-bf-99-e6-89-8d-e5-88-9a-e5-88-9a-e5-bc-80-e5-a7-8b/">这才刚刚开始</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><a href="http://wangcong.org/blog/wp-content/uploads/2011/02/kaishi.jpeg" target="_blank" rel="external"><img src="/images/" alt="" title="我怎么觉得刚开始啊？"></a></p>
+<p>这些天饭局不断，北京的朋友们排队给我送行，搞得真有点儿离别的惆怅了。不过我觉得，离开北京并不是生活的结束，真正的生活才刚刚开始啊！</p>
+<p>一</p>
+<p>那天，公司的几个同事打着团队建设的旗号给我送行，问我想吃啥，我提出以下几点要求：“要有风儿，要有肉，要有火锅儿，要有雾，要有美女儿，要有驴”。那个姑娘想了半天没想明白，还是我机灵，仔细琢磨了一下，我发现符合这个要求的只能是带着美女去吃驴肉火锅了！</p>
+<p>二</p>
+<p>给我送别的姑娘不少，我就怕哪一个想不开了又哭鼻子又抹眼泪的。唉，你说我不走的时候你们都干嘛去了，这一走反倒倍儿感亲切了！悲喜交加啊！所以我吃饭之前就和她们提前说好，“不许流泪也不能反对！”</p>
+<p>三</p>
+<p>那天早上，我突然收到一张奖状，真的是一张奖状，是公司经理表彰该同志对公司作出的贡献。于是，我要求，等我走之后，公司给我保留一把空椅子，并把我这张奖状摆上面，美其名曰，红帽和平奖。有同事认为这还不够，还应该放一个iPad在上面，把我的照片放上，并调成黑白模式。我觉得再上一柱香才更加完整……</p>
+<p>四</p>
+<p>这些天我被问到的最多的问题是，你要去南方哪里，我统一的回答是，你猜。结果鲜有人猜对，很多人能猜到它东边那个，也能猜到它西边那个，唯独猜不中它。所以，那些不知道的人，你们就别猜了！</p>
+<p>五</p>
+<p>我认为，世界癫痫病日和情人节是同一天并不是巧合！这充分说明谈恋爱其实和癫痫差不多！都是一种病，而且还都容易上瘾，得治，不，得电！所以那天晚上我看到那么多人在放烟花时，我就感叹，你看人家家里的癫痫病病人终于治好了，庆祝呢！你再看街上那一对对失散多年的姐弟们，今天能相聚多不容易啊！</p>
+<p>六</p>
+<p>等到了那里，我要养一只狗，狗的名字还没想好，不过已经有人出主意了，说叫二奶，这样我逢人就可以自豪地说，“我养了一个二奶！”倍儿有面子！就这么定了！叫小三也成。小二不行，搞得跟店里的伙计似的。小四也不行，郭四姐不愿意，韩寒更不愿意。沉默同学对此有贡献。</p>
+<p>七</p>
+<p>北京以后很可能不会再回来了，回来也只是路过，匆匆过客而已。你们真要是想我了就去南方找我，我随时恭候，到时我定会摆酒设宴招待各位朋友。“不惜歌者苦，但伤知音稀！”有道是，“酒逢知己千杯少！”</p>
+<p>八</p>
+<p>我这哪里是在享受生活啊，分明是在反抗生活！</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2011-02-06T07:35:37.000Z"><a href="/2011/02/05/-e6-b2-a1-e9-82-a3-e4-b9-88-e7-ae-80-e5-8d-95/">Feb 5 2011</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2011/02/05/-e6-b2-a1-e9-82-a3-e4-b9-88-e7-ae-80-e5-8d-95/">没那么简单</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>有些事情没有你想的那么简单，那么浪漫。</p>
+<p>你们可能觉得我要离开北京了，要去美丽温柔的南方了，要过一个与世隔绝的清净日子了，很潇洒很浪漫是吧？可是你们没有看到，我离开北京放弃了什么。我这里有很多的朋友，我当然也不舍得离开。北京就算是再脏再挤，可这里毕竟还是首都，有各种便利，比如网上买书免快递费，第一天买第二天基本上就能到，而到了一个小城市就不会。你们没有想到，我自己去了那个人生地不熟的地方什么都要一个人去折腾，租到房子之前还得住旅馆，朋友还得重新认识。我作出离开北京的决定之前我都考虑过这些，我只是想说，这并不是像你想的那么浪漫，或者说，浪漫也是要付出代价的。</p>
+<p>你们可能都觉得我自己经常出门旅行，头一天想走第二天就可以背着背包出发，很自由很自在是吧？可是你们没有看到，我为了制定行程，安排住宿，预订机票所花费的精力。你们没有看到我旅途上的各种疲惫，各种劳累，各种孤单。有的时候都晚上八九点了我还没找到住的地方；去青海湖骑车的时候适应不了那里的昼夜温差，晚上感冒连药都没得吃，拖着疲惫的身子去给服务员要几片药，要了一壶热水；在拉萨的时候感冒得厉害，还以为会挂在高原上了；晚上爬峨眉山的时候，在海南夜里骑自行车的时候，很长时间连个人影都看不到……自由自在也是要付出代价的。</p>
+<p>和看那些名人一样，我们往往只看到人家光辉的外表，殊不知人家为了今天这份荣耀所付出的努力，人家说不定熬了多少个日日夜夜，经历了多少的失败坎坷。那句话说得好，“荣耀的背后刻着一道孤独！”我虽不是什么名人，可是那份孤独我还是能理解的。不光荣耀，我觉得任何好的、光鲜的事情都是如此，一切都得靠自己的努力才行。</p>
+<p>之所以说这些是因为今天和一个同学谈起了这个话题，她觉得我是一个理想主义的浪漫主义者。是，我骨子里确实如此，可是我也很理性很现实，我深知要得到这些需要付出怎样的努力，需要作出怎样的取舍。还是那句话，有舍才有得，能放得下的人才能拿得起！</p>
+<p>她还感慨，为什么找个合适的人就那么难？这种感慨我也发过不止一次。没错，就是这么难，而且是很难很难很难！拿我来说，我有时候就想，我想要的只不过是一个谈得来的姑娘啊！看似不难，其实呢，“谈得来”本身就已经很难的。每个人都有自己的脾气，性格，家庭背景，教育背景，生活习惯，人生观价值观……想谈得来真不是那么简单的事儿！更何况，现实中你还得看姑娘的长相，年龄，身高，体重……好，就算都合适，你看上人家了，可人家能看上你么？嗯，就算彼此都看上了，那么你能让姑娘的父母看上么？你的父母能看上这个姑娘么？等等。问题很多很多。你看到别的情侣甜甜蜜蜜，却不知人家背后经历了多少坷坷绊绊，吵吵闹闹，彼此有过多少迁就、容忍、让步，甚至牺牲，才走到了一起？所以谈恋爱这种事儿更是没那么简单。</p>
+<p>所以我就给她推荐看那个<a href="http://is.gd/IqYUsF" target="_blank" rel="external">MV《没那么简单》</a>。我觉得，人活着理想一些、浪漫一些，没错，挺好的，关键是为了得到这种理想这种浪漫，你必须付出努力，甚至你努力过之后仍然可能会得不到。浪漫和理想不是简单想想就能有的，有时甚至是需要牺牲别的来换的。最后我送她那句话：耐得住寂寞，才能守得住繁华！</p>
+<p>我就是这样一个人，一个理想主义的浪漫主义者，但同时也是一个极度悲观的乐观主义者。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2011-02-04T06:11:52.000Z"><a href="/2011/02/03/10-e5-b9-b4-e6-80-bb-e7-bb-93-ef-bc-8c11-e5-b9-b4-e8-ae-a1-e5-88-92/">Feb 3 2011</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2011/02/03/10-e5-b9-b4-e6-80-bb-e7-bb-93-ef-bc-8c11-e5-b9-b4-e8-ae-a1-e5-88-92/">10年总结，11年计划</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>翻看去年这个时候给自己制定的目标，发现大多又都是悲剧。看下面，</p>
+<p>&gt;1. 找到一个女朋友，感叹号！愿春哥保佑啊！</p>
+<p>事实证明，连春哥都救不了我。。。</p>
+<p>&gt;2. 做好自己现在的工作，学到更多的东西。</p>
+<p>翻了翻自己一年来写的那些“半月报告”，感觉这一年下来确实踏踏实实做了不少东西。有付出就有收获，一定要坚信这一点。</p>
+<p>&gt;3. 写的书希望可以圆满完成并出版。</p>
+<p>书也会像代码一样，写得多了也是乱，代码需要重构，书亦如此。今年无论如何都不能再拖了，一定给大家一个交代。</p>
+<p>&gt;4. 认识更多的人，结识更多的朋友。</p>
+<p>出去旅行和户外活动中确实认识了不少新朋友。</p>
+<p>&gt;5. 希望7月份可以回葡萄牙一趟；如果条件允许，还准备去山西，河南，甘肃，内蒙古等地旅旅游。</p>
+<p>因为经济原因，葡萄牙没有去成。不过今年应该没问题了，钱已经攒够了。再加上可以远程办公，所以今年去葡萄牙这事就很靠谱了，准备去那里待上一个月，在m@rco家蹭吃蹭住蹭无线。。。roflol</p>
+<p>去年一年去了内蒙古的库布齐沙漠，河南郭亮，山西大同、平遥、太原，青海湖环湖骑车，西藏拉萨、川藏线，江苏南京，浙江杭州、宁波，单车环海南岛，现在我自己看着都觉得挺吃惊，我怎么一年之内去了那么多地方？！呃，如果我只能给你推荐一个地方的话，我希望是青海湖，一定要自己一个人去骑一圈。</p>
+<p>今年主要是想去葡萄牙，去欧洲，如果还有时间的话，我还希望去新疆，甘南，贵州转一转。</p>
+<p>&gt;6. 学到更多的非专业知识；了解更多的“好想法”。</p>
+<p>书倒是看了不少，杂而不精。除了技术的书，我看书很少有目的性，每次都是想到什么了就看什么。</p>
+<p>&gt;7. 想买一个单反，学学摄影知识；想买把吉他，重新学一下弹吉他。</p>
+<p>两样都没买，玩单反太烧钱，玩吉他没时间练。希望今年有所改观。</p>
+<p>现在，我很快就要离开北京了，要开始一种全新的生活了，未来会是什么样子我自己也不清楚。</p>
+<p>我幻想着等我到了那个向往的地方，自己租一个小院子，依山傍水，里面种一些花花草草，还要养一只狗。白天努力工作，晚上坐在院子里弹吉他唱歌。周末没事的时候还可以画一些素描。想出门远行的时候，背着背包拖着行囊四处游荡，奔波在车站、机场、码头……多年以后，你或许还会看到我依然在路上……</p>
+<p>去年一年经历了太多事情，来年只图一个安逸，只为一个平静。淡泊名利，与人无争，与世无争。我觉得，如果一个人什么都可以放下，那么这个人一定是不可战胜的，因为无欲则刚。</p>
+<p>这就是我今年的计划，也算是另一个小小的梦想。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2011-02-03T00:51:53.000Z"><a href="/2011/02/02/-e7-a5-9d-e6-82-a8-e5-9c-a82011-e5-b9-b4/">Feb 2 2011</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2011/02/02/-e7-a5-9d-e6-82-a8-e5-9c-a82011-e5-b9-b4/">祝您在二零一一年……</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>祝大家像TNS人民一样高！像AJ人民一样硬！又高又硬！</p>
+<p>祝所有没钱、没权、爸爸不是李刚的人都肉身翻墙成功！到美利坚去，到英格兰去，到法兰西去……</p>
+<p>祝所有程序员的项目需求都不用改，祝所有QA的测试都不需重提，祝所有PM的项目都不必延期！</p>
+<p>祝所有北漂的童鞋都能找到一个月才77块钱的45平的房子！向党和人民保证：我们可以承受！</p>
+<p>祝大家的生活像新闻联播里一样，比花儿还要幸福！</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2011-02-01T07:57:30.000Z"><a href="/2011/01/31/-e7-bb-a7-e7-bb-ad-e7-95-99-e5-9c-a8-e7-ba-a2-e5-b8-bd/">Jan 31 2011</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2011/01/31/-e7-bb-a7-e7-bb-ad-e7-95-99-e5-9c-a8-e7-ba-a2-e5-b8-bd/">继续在红帽工作</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>前两天和我美国的经理通了一次电话聊了聊我的情况和想法，她想让我继续在红帽工作，而我不想留在北京。经过评估之后，她决定让我远程办公，这下可以放心离开北京了。:-)</p>
+<p>我们部门的这个经理是个华人，但不懂汉语。她绝对是整个红帽公司最忙碌的人之一，有时我甚至觉得“之一”也不用加。她手下管理一批内核牛人，比如耳熟能详的David Miller大牛。有人说，管理程序员就像是在放养一群猫，可见她的工作也不轻松。</p>
+<p>当初我来红帽的时候就是她面试我，于是我就成了红帽北京这边第一个做内核开发的了。所以，她对我的赏识和信任我感激不尽，绝对不是别的公司给我开出几倍的工资能换得来的，这也是我为什么一直留在红帽工作的原因之一。</p>
+<p>在红帽北京这边工作，工资不算高，尤其是和Google这种公司比，但是工作环境很宽松。每天没有固定上下班时间，早来早走，晚来晚走，有个同事还经常吃完午饭才来上班。虽然说是每天要上够八个小时，但绝对没有什么打卡之类的东西监督你，全靠自觉。平时有事还可以在家办公，所以有的同事没干净的裤子穿了在家办公我们见怪不怪了。</p>
+<p>这里每人每年都有15天年假，比起国外来不多，但比起国内的很多公司来不少。调休就不用说了，看我就知道，每次都是眼花缭乱。开放和自由是红帽在社区一直倡导的，其实在公司内部也大抵如此，从上面你也看得出来。这是我为什么一直留在红帽工作的原因之二。</p>
+<p>我写这些东西不是恭维，即使是我要离职我也会这么写，因为事实就是如此。写这些也是为了让那些觉得红帽公司很神秘的人有进一步的了解，免得每次见我都要反复问。;-)</p>
+<p>如果一切顺利的话，我会于2月19号离开北京。再见，北京！</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2011-01-31T07:01:29.000Z"><a href="/2011/01/30/linux-reboot-magic/">Jan 30 2011</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2011/01/30/linux-reboot-magic/">LINUX_REBOOT_MAGIC</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>include/linux/reboot.h 中有五个魔数：</p>
+<h1 id="define_LINUX_REBOOT_MAGIC1_0xfee1dead">define LINUX_REBOOT_MAGIC1     0xfee1dead</h1>
+<h1 id="define_LINUX_REBOOT_MAGIC2_672274793">define LINUX_REBOOT_MAGIC2     672274793</h1>
+<h1 id="define_LINUX_REBOOT_MAGIC2A_85072278">define LINUX_REBOOT_MAGIC2A    85072278</h1>
+<h1 id="define_LINUX_REBOOT_MAGIC2B_369367448">define LINUX_REBOOT_MAGIC2B    369367448</h1>
+<h1 id="define_LINUX_REBOOT_MAGIC2C_537993216">define LINUX_REBOOT_MAGIC2C    537993216</h1>
+<p>第一个的意思很了然，是feel dead的hex表示，类似于0xdeadbeef。</p>
+<p>而后面四个就有意思了，今天在公司的邮件列表上看到一个讨论说这些其实是Linus和他女儿的生日。猛一看看不懂，这么一看就了然了：</p>
+<p>% awk ‘/MAGIC2/ {printf “%Xn”,$3}’ include/linux/reboot.h<br>28121969<br>5121996<br>16041998<br>20112000</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2011-01-29T08:20:50.000Z"><a href="/2011/01/29/-e8-ae-a1-e6-97-b6-e8-bf-90-e8-a1-8c-e5-91-bd-e4-bb-a4/">Jan 29 2011</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2011/01/29/-e8-ae-a1-e6-97-b6-e8-bf-90-e8-a1-8c-e5-91-bd-e4-bb-a4/">计时运行命令</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>见过好几个人问怎样可以计时运行某一个命令？比如我可能想运行某个交互式的命令（像fdisk），但我又不想让它一直永远等待输入，我就得给它指定一个时间，若没有输入则自动退出。</p>
+<p>我之前也遇到过这个问题，当时找到的是timed-run。而最近我发现coreutils里面已经默默包含了一个等价的命令——timeout。</p>
+<p>timed-run来自expect包，很明显是用expect脚本写的：</p>
+<pre>
+% cat /usr/bin/timed-run
+#!/bin/sh
+# 
+exec expect -f "$0" ${1+"$@"}
+# run a program for a given amount of time
+# i.e. time 20 long_running_program
+
+set timeout [lindex $argv 0]
+eval spawn [lrange $argv 1 end]
+expect
+</pre>
+
+<p>而timeout则来自coreutils，应该是用C写的。它们的用法都一样，后面第一个参数是指定的时间，在后面就是要运行的命令，比如：timeout 1 sleep 10。timeout还能接受一些选项，更强大一些。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2011-01-28T07:29:49.000Z"><a href="/2011/01/27/-e6-9c-89-e8-88-8d-e6-89-8d-e6-9c-89-e5-be-97/">Jan 27 2011</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2011/01/27/-e6-9c-89-e8-88-8d-e6-89-8d-e6-9c-89-e5-be-97/">有舍才有得</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>前一篇文章下面的留言我都看了，很感动，谢谢你们的关心和理解！</p>
+<p>这些天也收到好些邮件，接到好几个电话，上网也有很多朋友和我聊天，收到了来自湖南长沙、四川成都、广东深圳、海南三亚的朋友的邀请，都说，你来吧，有你吃的也有你住的！也有上海和杭州的朋友给我介绍工作的。你们对我的好我都一一记得，有机会也一定要当面感谢！我想去的那个地方允许我暂时保密，等我到了那里你们自然就会知道了。:-)</p>
+<p>这两天也和公司里我的两个经理聊了聊，他们都问我以后有什么打算。我说要是有机会肯定还是会找和Linux相关的工作，这是毋庸置疑的，但是找不到我也不担心，总会有别的工作我会喜欢，或者干脆就当一个自由职业者。以后挣得钱或许会少了，但是我本来就要求不多，能够我自己花的，还能给父母寄一些，对我来说就已经足够了。</p>
+<p>你要是问我会不会放弃现在做的这些？当然不会。我很喜欢我现在做的东西，引以为豪，它们已经是我生活中的一部分了。而且这些东西都是开源的，并不会因为我的正式工作是什么而有太大的改变。</p>
+<p>我觉得，既然我决定离开北京去寻找一种更好的生活，那么我同时也必须放弃些什么，有所舍才能有所得。这很公平，不是吗？所以我从不担心失去工作会怎么样，因为“上帝为你关上一扇窗时，就会为你开启另一扇窗。”离开北京未尝不是一种机会，一种希望。那首歌里唱得好：“之所以活得洒脱是因为懂得取舍！之所以淡漠是把一切都看破！”</p>
+<p>我很喜欢ogmw的那句留言：</p>
+<blockquote>
+<p><strong>内心强大，坚定并且总能保持平静的人是美的，因为犹豫不定，懦弱而产生欺骗，躲闪，那样的人和事都很丑。</strong><br>（请问这句话是吴虹飞说的吗？^_^）</p>
+</blockquote>
+<p>我还要加上《恋爱的犀牛》里面那句：“<strong>上天会厚待那些勇敢的、坚强的、多情的人。</strong>”</p>
+<p>别的不敢说，做人方面咱绝对是很优秀的，说到做到，敢做敢当，从不亏欠别人什么。那些懦弱的，虚伪的人和咱一比，很丑，真的！</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+
+  <nav id="pagination">
+  
+    <a href="/archives/2011/page/5/" class="alignleft prev">Prev</a>
+  
+  
+    <a href="/archives/2011/page/7/" class="alignright next">Next</a>
+  
+  <div class="clearfix"></div>
+</nav>
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:wangcong.org">
+  </form>
 </div>
 
-      </div>
-      <footer><div id="footer" >
-	
-	
-	<div class="social-font" class="clearfix">
-		
-		
-		<a href="https://github.com/congwang" target="_blank" class="icon-github" title="github"></a>
-		
-		
-		
-		<a href="https://twitter.com/conglinux" target="_blank" class="icon-twitter" title="twitter"></a>
-		
-		
-		
-		
-		
-		
-		
-	</div>
-		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2016 
-		
-		<a href="http://wangcong.org/about" target="_blank" title="Cong Wang">Cong Wang</a>
-		
-		</p>
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Book-Reviews/">Book Reviews</a><small>18</small></li>
+  
+    <li><a href="/categories/China/">China</a><small>2</small></li>
+  
+    <li><a href="/categories/Collection/">Collection</a><small>25</small></li>
+  
+    <li><a href="/categories/Life/">Life</a><small>324</small></li>
+  
+    <li><a href="/categories/Linux-Application/">Linux Application</a><small>73</small></li>
+  
+    <li><a href="/categories/Linux-Kernel/">Linux Kernel</a><small>64</small></li>
+  
+    <li><a href="/categories/Love/">Love</a><small>6</small></li>
+  
+    <li><a href="/categories/Movies/">Movies</a><small>19</small></li>
+  
+    <li><a href="/categories/Programming/">Programming</a><small>152</small></li>
+  
+    <li><a href="/categories/Science-Fiction/">Science Fiction</a><small>8</small></li>
+  
+    <li><a href="/categories/Travel/">Travel</a><small>19</small></li>
+  
+  </ul>
 </div>
-</footer>
-      <script src="/js/jquery-2.0.3.min.js"></script>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/geek/">geek</a><small>1</small></li>
+  
+    <li><a href="/tags/handling/">handling</a><small>1</small></li>
+  
+    <li><a href="/tags/joke/">joke</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/tags/signal/">signal</a><small>1</small></li>
+  
+    <li><a href="/tags/unix/">unix</a><small>1</small></li>
+  
+    <li><a href="/tags/vim/">vim</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2017 Cong Wang
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 <script src="/js/jquery.imagesloaded.min.js"></script>
 <script src="/js/gallery.js"></script>
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.navbar').click(function(){
-    $('header nav').toggleClass('shownav');
-  });
-  var myWidth = 0;
-  function getSize(){
-    if( typeof( window.innerWidth ) == 'number' ) {
-      myWidth = window.innerWidth;
-    } else if( document.documentElement && document.documentElement.clientWidth) {
-      myWidth = document.documentElement.clientWidth;
-    };
-  };
-  var m = $('#main'),
-      a = $('#asidepart'),
-      c = $('.closeaside'),
-      o = $('.openaside');
-  $(window).resize(function(){
-    getSize(); 
-    if (myWidth >= 1024) {
-      $('header nav').removeClass('shownav');
-    }else
-    {
-      m.removeClass('moveMain');
-      a.css('display', 'block').removeClass('fadeOut');
-      o.css('display', 'none');
-        
-    }
-  });
-  c.click(function(){
-    a.addClass('fadeOut').css('display', 'none');
-    o.css('display', 'block').addClass('fadeIn');
-    m.addClass('moveMain');
-  });
-  o.click(function(){
-    o.css('display', 'none').removeClass('beforeFadeIn');
-    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
-    m.removeClass('moveMain');
-  });
-  $(window).scroll(function(){
-    o.css("top",Math.max(80,260-$(this).scrollTop()));
-  });
-});
-</script>
-
-
-
-
 
 <script type="text/javascript">
-
 var disqus_shortname = 'disqus_ciEwcJAF0E';
 
-(function(){
-  var dsq = document.createElement('script');
-  dsq.type = 'text/javascript';
-  dsq.async = true;
-  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-}());
 (function(){
   var dsq = document.createElement('script');
   dsq.type = 'text/javascript';
@@ -327,33 +583,13 @@ var disqus_shortname = 'disqus_ciEwcJAF0E';
 
 
 
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
 
-
-
-
-
-<!-- Analytics Begin -->
-
-
-
-
-
-<!-- Analytics End -->
-
-<!-- Totop Begin -->
-
-	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
-	</div>
-	<script src="/js/totop.js"></script>
-
-<!-- Totop End -->
-
-<!-- MathJax Begin -->
-<!-- mathjax config similar to math.stackexchange -->
-
-
-<!-- MathJax End -->
-
-    </body>
-   </html>
+</body>
+</html>

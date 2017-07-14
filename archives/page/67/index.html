@@ -1,321 +1,591 @@
-
-  <!DOCTYPE HTML>
-<html >
+<!DOCTYPE HTML>
+<html>
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   
-    <title>Archives | A Geek&#39;s Page</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
-    
-    <meta name="author" content="Cong Wang">
-    
-    
-    <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="A Geek's Page">
-<meta property="og:url" content="http://wangcong.org/archives/page/67/">
-<meta property="og:site_name" content="A Geek's Page">
-<meta property="og:description">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="A Geek's Page">
-<meta name="twitter:description">
-<meta name="twitter:creator" content="@conglinux">
+  <title>Page 67 | Archives | A Geek&#39;s Page</title>
+  <meta name="author" content="Cong Wang">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
+  
+  <meta property="og:site_name" content="A Geek&#39;s Page"/>
 
-    
-    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
-    
-    
-    <link rel="icon" href="/img/favicon.ico">
-    
-    
-    <link rel="apple-touch-icon" href="/img/jacman.jpg">
-    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
-    
-    <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
 
 </head>
 
-    <body>
-      <header>
-        <div>
-		
-			<div id="imglogo">
-				<a href="/"><img src="/img/logo.png" alt="A Geek&#39;s Page" title="A Geek&#39;s Page"/></a>
-			</div>
-			
-			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="A Geek&#39;s Page">A Geek&#39;s Page</a></h1>
-				<h2 class="blog-motto"></h2>
-			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
-			</a></div>
-			<nav class="animated">
-				<ul>
-					<ul>
-					 
-						<li><a href="/">Home</a></li>
-					
-						<li><a href="/archives">Archives</a></li>
-					
-						<li><a href="/about-2">About</a></li>
-					
-					<li>
- 					
-					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
-						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
-						<input type="hidden" name="q" value="site:wangcong.org">
-					</form>
-					
-					</li>
-				</ul>
-			</nav>			
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">A Geek&#39;s Page</a></h1>
+  <h2><a href="/"></a></h2>
 </div>
-      </header>
-      <div id="container">
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title">Archives</h2>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-03-17T06:58:57.000Z"><a href="/2007/03/16/-e9-82-a3-e7-82-b9-e5-8e-86-e5-8f-b2-e2-94-80-e2-94-80c-e8-af-ad-e8-a8-80-e5-8e-86-e5-8f-b2/">Mar 16 2007</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2007/03/16/-e9-82-a3-e7-82-b9-e5-8e-86-e5-8f-b2-e2-94-80-e2-94-80c-e8-af-ad-e8-a8-80-e5-8e-86-e5-8f-b2/">那点儿历史──C语言历史</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <pre><code><span class="keyword">C</span>语言的历史非常有趣，它的祖先可以上溯到古老的Algol <span class="number">60</span>语言──最早的块结构语言。
+
+<span class="number">1963</span>年，剑桥大学将Algol <span class="number">60</span>语言发展成为CPL（Combined Programming <span class="keyword">Language</span>）语言。CPL的最大缺点就是它太大了，以至于不能在很多应用程序中使用。到<span class="number">1967</span>年，剑桥大学的Matin Richards在访问MIT时，对CPL语言进行了简化，设计出了BCPL（Basic CPL）语言。
+
+<span class="number">1970</span>年，美国贝尔实验室的Ken Thompson发现BCPL太慢了，而且缺乏运行时的支持，他将BCPL进行了实验性的修改，并为它起了一个有趣的名字──B语言，意思是将CPL语言进行压缩，提炼出它的精华。B是BCPL的一个简化版，而且被设计成专门用来进行系统编程，但它依然不能满足程序员们的要求：它的字符处理机制太丑陋了，而且浮点数运算被实现得并不是很理想，处理指针时开销太大。
+
+在<span class="number">1972</span>年，当PDP-<span class="number">11</span>进入贝尔实验室时，Ken Thompson的同伴，同样在贝尔实验室的Dennis M. Ritchie，在从BCPL中抽取了一些共性放入B语言中，对B进行了改进，并且在里面加入了数据类型，他把这个扩展的语言称为NB（New B）。随后，他又继续对新语言进行大量修改，似乎可以用新的名字来重新命名它了，于是他取了B后面的那个字母作为这种语言的名字，这就是<span class="keyword">C</span>语言。（曾几何时，人们猜测 <span class="keyword">C</span> 的后裔会被命名为P──BCPL的第三个字母，而不是<span class="keyword">D</span>，但如今最显见的<span class="keyword">C</span>的后裔语言是叫<span class="keyword">C</span>++。）
+
+<span class="number">1973</span>年，Ritchie完成了<span class="keyword">C</span>语言核心，并用<span class="keyword">C</span>重写了整个Unix内核。为了使Unix操作系统推广，<span class="number">1977</span>年Dennis M. Ritchie发表了不依赖于具体机器系统的<span class="keyword">C</span>语言编译文本《可移植的<span class="keyword">C</span>语言编译程序》。
+
+<span class="number">1978</span>年，Brian W. Kernighian和Dennis M. Ritchie出版了长久不衰的经典之作──《The <span class="keyword">C</span> Programming <span class="keyword">Language</span>》，把<span class="keyword">C</span>从贝尔实验室推向世界，从而使<span class="keyword">C</span>语言成为目前世界上流行最广泛的程序设计语言之一。
+</code></pre>
+      
+    </div>
+    <footer>
+      
         
-
-<div class="archive-title" >
-  <h2 class="archive-icon">Archives</h2>
-  
-  <div class="archiveslist archive-float clearfix">
-   <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">Aug 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">Jan 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">Dec 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">Oct 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">Sep 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">Aug 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">Jul 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">Feb 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01/">Jan 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12/">Dec 2012</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">Nov 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">Oct 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">Sep 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">Aug 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/07/">Jul 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">Jun 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">Apr 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">Mar 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">Feb 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">Jan 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/12/">Dec 2011</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">Nov 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/10/">Oct 2011</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">Sep 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08/">Aug 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/07/">Jul 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/06/">Jun 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/05/">May 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04/">Apr 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03/">Mar 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/02/">Feb 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/01/">Jan 2011</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/12/">Dec 2010</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/11/">Nov 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/10/">Oct 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/09/">Sep 2010</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08/">Aug 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07/">Jul 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06/">Jun 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05/">May 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04/">Apr 2010</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03/">Mar 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02/">Feb 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01/">Jan 2010</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12/">Dec 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11/">Nov 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10/">Oct 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09/">Sep 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08/">Aug 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07/">Jul 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/06/">Jun 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/05/">May 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04/">Apr 2009</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03/">Mar 2009</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02/">Feb 2009</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01/">Jan 2009</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12/">Dec 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/11/">Nov 2008</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/10/">Oct 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09/">Sep 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08/">Aug 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07/">Jul 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06/">Jun 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05/">May 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04/">Apr 2008</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03/">Mar 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02/">Feb 2008</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01/">Jan 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12/">Dec 2007</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11/">Nov 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10/">Oct 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09/">Sep 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08/">Aug 2007</a><span class="archive-list-count">31</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07/">Jul 2007</a><span class="archive-list-count">34</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06/">Jun 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05/">May 2007</a><span class="archive-list-count">25</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04/">Apr 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03/">Mar 2007</a><span class="archive-list-count">50</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02/">Feb 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01/">Jan 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12/">Dec 2006</a><span class="archive-list-count">5</span></li></ul>
- </div>
-  
-</div>
-<div id="main" class="archive-part clearfix">
-  <div id="archive-page">
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2007/03/16/-e9-82-a3-e7-82-b9-e5-8e-86-e5-8f-b2-e2-94-80-e2-94-80c-e8-af-ad-e8-a8-80-e5-8e-86-e5-8f-b2/" title="那点儿历史──C语言历史" itemprop="url">
-  
-
-    <time datetime="2007-03-17T06:58:57.000Z" itemprop="datePublished">Mar 16 2007</time>
-
-
-    <h1 itemprop="name">那点儿历史──C语言历史</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2007/03/15/-e4-b8-ba-e5-9b-9b-e5-8d-81-e5-b2-81-e5-81-9a-e5-87-86-e5-a4-87/" title="为四十岁做准备" itemprop="url">
-  
-
-    <time datetime="2007-03-16T03:57:46.000Z" itemprop="datePublished">Mar 15 2007</time>
-
-
-    <h1 itemprop="name">为四十岁做准备</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2007/03/14/-e4-bb-8ecc-e5-88-b0java-ef-bc-88-e6-ac-a2-e8-bf-8e-e8-a1-a5-e5-85-85-ef-bc-89/" title="从C/C++到Java（一）" itemprop="url">
-  
-
-    <time datetime="2007-03-15T03:52:03.000Z" itemprop="datePublished">Mar 14 2007</time>
-
-
-    <h1 itemprop="name">从C/C++到Java（一）</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2007/03/13/-e7-bd-97-e7-b4-a0-e8-87-aa-e4-bc-a0-e5-ba-8f-e8-a8-80-e6-88-91-e4-b8-ba-e4-bb-80-e4-b9-88-e6-b4-bb-e7-9d-80/" title="罗素自传序言—我为什么活着" itemprop="url">
-  
-
-    <time datetime="2007-03-14T04:02:43.000Z" itemprop="datePublished">Mar 13 2007</time>
-
-
-    <h1 itemprop="name">罗素自传序言—我为什么活着</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2007/03/12/-e5-9c-a8lkml-e4-b8-8a-e6-8f-90-e7-9a-84-e4-b8-80-e4-b8-aa-e9-97-ae-e9-a2-98/" title="在LKML上提的一个问题" itemprop="url">
-  
-
-    <time datetime="2007-03-12T22:36:47.000Z" itemprop="datePublished">Mar 12 2007</time>
-
-
-    <h1 itemprop="name">在LKML上提的一个问题</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2007/03/11/-e5-81-87-e6-9c-9f-e6-80-bb-e7-bb-93-e6-96-b0-e5-ad-a6-e6-9c-9f-e8-ae-a1-e5-88-92/" title="假期总结&amp;新学期计划" itemprop="url">
-  
-
-    <time datetime="2007-03-11T19:59:36.000Z" itemprop="datePublished">Mar 11 2007</time>
-
-
-    <h1 itemprop="name">假期总结&amp;新学期计划</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2007/03/09/linux-e5-86-85-e6-a0-b8-e4-b8-ad-e7-9a-84-e5-87-a0-e4-b8-aa-e6-a6-82-e5-bf-b5-2/" title="Linux内核中的几个概念" itemprop="url">
-  
-
-    <time datetime="2007-03-10T07:08:12.000Z" itemprop="datePublished">Mar 9 2007</time>
-
-
-    <h1 itemprop="name">Linux内核中的几个概念</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2007/03/09/-e4-b8-96-e7-95-8c-e4-b8-8a-e6-9c-80-e9-81-a5-e8-bf-9c-e7-9a-84-e8-b7-9d-e7-a6-bb-ef-bc-88-e6-b3-b0-e6-88-88-e5-b0-94-ef-bc-89-2/" title="世界上最遥远的距离（泰戈尔）" itemprop="url">
-  
-
-    <time datetime="2007-03-10T07:07:21.000Z" itemprop="datePublished">Mar 9 2007</time>
-
-
-    <h1 itemprop="name">世界上最遥远的距离（泰戈尔）</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2007/03/09/-e5-bc-80-e5-8f-91-e5-86-85-e6-a0-b8-e7-9a-84-e5-87-a0-e6-9d-a1-e7-bb-8f-e9-aa-8c-3/" title="开发内核的几条经验" itemprop="url">
-  
-
-    <time datetime="2007-03-10T07:07:02.000Z" itemprop="datePublished">Mar 9 2007</time>
-
-
-    <h1 itemprop="name">开发内核的几条经验</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2007/03/09/-e5-9c-a8-e8-bf-99-e4-b8-aa-e8-82-ae-e8-84-8f-e7-9a-84-e4-b8-96-e7-95-8c-ef-bc-8c-e4-bd-a0-e6-98-af-e6-88-91-e7-9a-84-e6-9c-80-e7-88-b1/" title="在这个肮脏的世界，你是我的最爱" itemprop="url">
-  
-
-    <time datetime="2007-03-10T07:03:19.000Z" itemprop="datePublished">Mar 9 2007</time>
-
-
-    <h1 itemprop="name">在这个肮脏的世界，你是我的最爱</h1>
-
-  </a>
-</section>
-
-
-  <nav id="page-nav" class="clearfix archive-nav">
-    <a class="extend prev" rel="prev" href="/archives/page/66/"><span></span>Prev</a><a class="page-number" href="/archives/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/65/">65</a><a class="page-number" href="/archives/page/66/">66</a><span class="page-number current">67</span><a class="page-number" href="/archives/page/68/">68</a><a class="page-number" href="/archives/page/69/">69</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/71/">71</a><a class="extend next" rel="next" href="/archives/page/68/">Next<span></span></a>
-  </nav>
-
+        
+      
+      <div class="clearfix"></div>
+    </footer>
   </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-03-16T03:57:46.000Z"><a href="/2007/03/15/-e4-b8-ba-e5-9b-9b-e5-8d-81-e5-b2-81-e5-81-9a-e5-87-86-e5-a4-87/">Mar 15 2007</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2007/03/15/-e4-b8-ba-e5-9b-9b-e5-8d-81-e5-b2-81-e5-81-9a-e5-87-86-e5-a4-87/">为四十岁做准备</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>“十八岁是美丽的，而人生的旅程中最绚丽的一页应该在生命的四十岁时翻开。不要说四十岁有多么遥远，二十年其实是弹指一挥间。虽说四十岁就在眼前，但二十年的时间跨越足以让我们眼花缭乱。虚度今日，等待你的将是无穷的悔恨和遗憾。追求先贤成材路，浩瀚人世间，我们定会发现，四十岁的辉煌来自于十八岁的志向和二十年的血汗。珍视你拥有的青春年华，好好地把握现在，才能真正赢得未来，才能将你如日中天的四十岁勾画得绚丽灿烂。”</p>
+<p>记得高中时看过上面这段话，据说还是我们那里某个中学的校训。时过境迁，高中生活已经过去快三年了，高中的同学和朋友一个个都变化不小，想起来就不禁感慨万千 。高中时虽然面临高考的压力，但总能忙中偷闲，和几个哥们经常背着班主任偷偷上网，经常一下课就骑着车子去外面抢着买饭，还能经常在放学路上遇到她……再对比一下现在，一切似乎都只是回忆了，还是那首诗说得好：</p>
+<p>“去年今日此门中，人面桃花相映红。人面不知何处去，桃花依旧笑春风。 ”</p>
+<p>哎，该走的总是要走的。走吧，走吧，让往事都随风去吧。二十年或许真的很快，希望二十年后自己不会为今天的所做所为后悔。那时回想起现在的自己，或许还只是那句：“年轻人……”</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-03-15T03:52:03.000Z"><a href="/2007/03/14/-e4-bb-8ecc-e5-88-b0java-ef-bc-88-e6-ac-a2-e8-bf-8e-e8-a1-a5-e5-85-85-ef-bc-89/">Mar 14 2007</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2007/03/14/-e4-bb-8ecc-e5-88-b0java-ef-bc-88-e6-ac-a2-e8-bf-8e-e8-a1-a5-e5-85-85-ef-bc-89/">从C/C++到Java（一）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>1. Java中的long是64位，char占两个字节，比C多了byte和boolen类型。所以，Java没有sizeof操作符。而且，Java没有“无符号”类型，里面的整数全都是有符号的。</p>
+<p>2. Java中的switch语句更严格，它规定switch中的表达式的值的类型必须是int或char，即使是short和long也是不允许的。</p>
+<p>3. Java的任何表达式中都不能使用逗号运算符，但是在for循环中，逗号作为一个特殊的语法被支持。</p>
+<p>4. Java没有指针，有的只是数组和引用。NULL在Java里被叫做null。需要特别指出的一点是：虽然Java中的函数参数是通过引用传递，但在被调函数中会存有对参数的本地拷贝。</p>
+<p>5. Java不需要自己释放内存，因为它带有垃圾回收器。</p>
+<p>6. Java不支持多重继承，C++支持。一种替代的方案是Java的interface。</p>
+<p>7. 即使是在C++中，string和字符数组也有某种联系，而Java中的String已经基本上脱离了这种关系（仅有的一点儿联系也是你应该避免的）。</p>
+<p>8. Java代码是被编译成byte code，而C和C++都是直接被编译成二进制机器码。因此，编写可移植的Java代码比编写可移植的C/C++要容易得多。（感谢孔建军补充这一点）</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-03-14T04:02:43.000Z"><a href="/2007/03/13/-e7-bd-97-e7-b4-a0-e8-87-aa-e4-bc-a0-e5-ba-8f-e8-a8-80-e6-88-91-e4-b8-ba-e4-bb-80-e4-b9-88-e6-b4-bb-e7-9d-80/">Mar 13 2007</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2007/03/13/-e7-bd-97-e7-b4-a0-e8-87-aa-e4-bc-a0-e5-ba-8f-e8-a8-80-e6-88-91-e4-b8-ba-e4-bb-80-e4-b9-88-e6-b4-bb-e7-9d-80/">罗素自传序言—我为什么活着</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>What I Have Lived For</p>
+<p>&nbsp;</p>
+<p>————我为什么活着</p>
+<p>&nbsp;</p>
+<p>Three passions, simple but overwhelmingly strong, have governed my life: the longing for love, the search for knowledge, and unbearable pity for the suffering of mankind. These passions, like great winds, have blown me hither and thither, in a wayward course, over a great ocean of anguish, reaching to the very verge of despair.</p>
+<p>　　三种朴素而又异常强烈的感情一直统治着我的一生：渴望爱，追求知识和对人类苦难的无法容忍的怜悯。这三种感情像飓风一样，把我在痛苦的海洋中吹得忽东忽西，难以捉摸，直把我吹到绝望的边缘。</p>
+<p>I have sought love, first, because it brings ecstasy - ecstasy so great that I would often have sacrificed all the rest of life for a few hours of this joy. I have sought it, next, because it relieves loneliness—that terrible loneliness in which one shivering consciousness looks over the rim of the world into the cold unfathomable lifeless abyss. I have sought it finally, because in the union of love I have seen, in a mystic miniature, the prefiguring vision of the heaven that saints and poets have imagined. This is what I sought, and though it might seem too good for human life, this is what—at last—I have found.</p>
+<p><span id="BlogViewId">　　我寻求爱，首先是因为爱给我带来如此之大的欣喜，使我心醉神迷以致我常常愿意牺牲我的余生来换取几个小时的欣喜之情。我寻求爱，其次是因为爱可以解脱孤独－－那可怕的孤独就好像一个毛骨悚然的人从世界的边缘探望令人胆战心寒的毫无生气的人们所幻想的天堂神秘雏型。这就是我所寻求的，虽然这可能似乎是人生难以得 到的美好事物，可这就是－－终于－－我所找到的。</span></p>
+<p>With equal passion I have sought knowledge. I have wished to understand the hearts of men. I have wished to know why the stars shine. And I have tried to apprehend the Pythagorean power by which number holds sway above the flux. A little of this, but not much, I have achieved.</p>
+<p>　　我以同样的感情探索知识。我想理解人们的心。我想知道为什么星星会发光。我尽力领悟毕达哥拉斯使数字支配变化着的事物的才能。在探索知识方面，我只取得了一点儿成绩，但还不很多。</p>
+<p>Love and knowledge, so far as they were possible, led upward toward the heavens. But always pity brought me back to earth. Echoes of cries of pain reverberate in my heart. Children in famine, victims tortured by oppressors, helpless old people a burden to their sons, and the whole world of loneliness, poverty, and pain make a mockery of what human life should be. I long to alleviate this evil, but I cannot, and I too suffer.</p>
+<p>　　爱和知识，尽其可能把人引向天堂。可是不断的怜悯把我带回到人间。痛苦的呼号声在我心中激荡。饥饿的儿童，在压迫者折磨下的受难者，孤独无 助已成为子女们厌恶的负担的老人们，整个孤独、贫困与痛苦的世界都在嘲弄人生的本来面目。我渴望减轻邪恶，但我力所不及，我也在受苦难。</p>
+<p>This has been my life. I have found it worth living, and would gladly live it again if the chance were offered me.</p>
+<p>　　这就是我的一生。我一直觉得我的一生过得很有价值。如果可能，我愿意再过这样的一生。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-03-12T22:36:47.000Z"><a href="/2007/03/12/-e5-9c-a8lkml-e4-b8-8a-e6-8f-90-e7-9a-84-e4-b8-80-e4-b8-aa-e9-97-ae-e9-a2-98/">Mar 12 2007</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2007/03/12/-e5-9c-a8lkml-e4-b8-8a-e6-8f-90-e7-9a-84-e4-b8-80-e4-b8-aa-e9-97-ae-e9-a2-98/">在LKML上提的一个问题</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>发件人         Cong WANG<br>收件人         linux-kernel@vger.kernel.org<br>日期        2007-3-11 下午10:15<br>主题        Style Question<br>邮送域        gmail.com<br>Hi, list!</p>
+<p>I have a question about coding style in linux kernel. In<br>Documention/CodingStyle, it is said that “Linux style for comments is<br>the C89 “/<em> … </em>/“ style. Don’t use C99-style “// …” comments.”<br><em>But</em> I see a lot of ‘//‘ style comments in current kernel code.</p>
+<p>Which is wrong? The documentions or the code, or neither? And why?</p>
+<p>Another question is about NULL. AFAIK, in user space, using NULL is<br>better than directly using 0 in C. In kernel, I know it used its own<br>NULL, which may be defined as ((void*)0), but it’s <em>still</em> different<br>from raw zero. So can I say using NULL is better than 0 in kernel?</p>
+<p>Any reply is welcome. Thanks and have a nice day!</p>
+<p>Bernd Petrovitsch 第一个回答到：</p>
+<p>On Sun, 2007-03-11 at 22:15 +0800, Cong WANG wrote:<br>[…]<br>&gt; Another question is about NULL. AFAIK, in user space, using NULL is<br>&gt; better than directly using 0 in C. In kernel, I know it used its own<br>&gt; NULL, which may be defined as ((void*)0),</p>
+<p>Userspace has the usually same definition.</p>
+<p>&gt;                                           but it’s <em>still</em> different<br>&gt; from raw zero.</p>
+<p>It is different that “0” as such has the type “int”. But this int is<br>automatically promoted to a “0 pointer”.</p>
+<p>&gt;                So can I say using NULL is better than 0 in kernel?</p>
+<p>Yes, because it is immediately clear that a pointer is (or should be)<br>there (and not an int).<br>And the same holds for userspace since this is a pure C question.</p>
+<p>Bernd</p>
+<p>Jan Engelhardt 回复到：</p>
+<p>On Mar 11 2007 22:15, Cong WANG wrote:<br>&gt;<br>&gt; I have a question about coding style in linux kernel. In<br>&gt; Documention/CodingStyle, it is said that “Linux style for comments is<br>&gt; the C89 “/<em> … </em>/“ style. Don’t use C99-style “// …” comments.”<br>&gt; <em>But</em> I see a lot of ‘//‘ style comments in current kernel code.<br>&gt;<br>&gt; Which is wrong? The documentions or the code, or neither? And why?</p>
+<p>The code. And because it’s not always reviewed but silently pushed.</p>
+<p>&gt; Another question is about NULL. AFAIK, in user space, using NULL is<br>&gt; better than directly using 0 in C. In kernel, I know it used its own<br>&gt; NULL, which may be defined as ((void*)0), but it’s <em>still</em> different<br>&gt; from raw zero.</p>
+<p>In what way?</p>
+<p>&gt;So can I say using NULL is better than 0 in kernel?</p>
+<p>On what basis? Do you even know what NULL is defined as in<br>(C, not C++) userspace? Think about it.</p>
+<p>Jan</p>
+<p>我看到后回复：</p>
+<p>2007/3/12, Jan Engelhardt:<br>&gt;<br>&gt; On Mar 11 2007 22:15, Cong WANG wrote:<br>&gt; &gt;<br>&gt; &gt; I have a question about coding style in linux kernel. In<br>&gt; &gt; Documention/CodingStyle, it is said that “Linux style for comments is<br>&gt; &gt; the C89 “/<em> … </em>/“ style. Don’t use C99-style “// …” comments.”<br>&gt; &gt; <em>But</em> I see a lot of ‘//‘ style comments in current kernel code.<br>&gt; &gt;<br>&gt; &gt; Which is wrong? The documentions or the code, or neither? And why?<br>&gt;<br>&gt; The code. And because it’s not always reviewed but silently pushed.<br>&gt;<br>&gt; &gt; Another question is about NULL. AFAIK, in user space, using NULL is<br>&gt; &gt; better than directly using 0 in C. In kernel, I know it used its own<br>&gt; &gt; NULL, which may be defined as ((void*)0), but it’s <em>still</em> different<br>&gt; &gt; from raw zero.<br>&gt;<br>&gt; In what way?</p>
+<p>The following code is picked from drivers/kvm/kvm_main.c:</p>
+<p>static struct kvm_vcpu <em>vcpu_load(struct kvm </em>kvm, int vcpu_slot)<br>{<br>struct kvm_vcpu *vcpu = &amp;kvm-&gt;vcpus[vcpu_slot];</p>
+<p>mutex_lock(&amp;vcpu-&gt;mutex);<br>if (unlikely(!vcpu-&gt;vmcs)) {<br>mutex_unlock(&amp;vcpu-&gt;mutex);<br>return 0;<br>}<br>return kvm_arch_ops-&gt;vcpu_load(vcpu);<br>}</p>
+<p>Obviously, it used 0 rather than NULL when returning a pointer to<br>indicate an error. Should we fix such issue?</p>
+<p>&gt;<br>&gt; &gt;So can I say using NULL is better than 0 in kernel?<br>&gt;<br>&gt; On what basis? Do you even know what NULL is defined as in<br>&gt; (C, not C++) userspace? Think about it.<br>&gt;</p>
+<p>I think it’s more clear to indicate we are using a pointer rather than<br>an integer when we use NULL in kernel. But in userspace, using NULL is<br>for portbility of the program, although most (<em>just</em> most, NOT all) of<br>NULL’s defination is ((void*)0).</p>
+<p>一些其它的回复如下：</p>
+<p>Robert Hancock 写道：</p>
+<p>Cong WANG wrote:<br>&gt; Hi, list!<br>&gt;<br>&gt; I have a question about coding style in linux kernel. In<br>&gt; Documention/CodingStyle, it is said that “Linux style for comments is<br>&gt; the C89 “/<em> … </em>/“ style. Don’t use C99-style “// …” comments.”<br>&gt; <em>But</em> I see a lot of ‘//‘ style comments in current kernel code.<br>&gt;<br>&gt; Which is wrong? The documentions or the code, or neither? And why?</p>
+<p>The code.. As with a lot of coding style issues, it’s likely just that<br>nobody saw it and bothered to complain when it went in.</p>
+<p>&gt; Another question is about NULL. AFAIK, in user space, using NULL is<br>&gt; better than directly using 0 in C. In kernel, I know it used its own<br>&gt; NULL, which may be defined as ((void*)0), but it’s <em>still</em> different<br>&gt; from raw zero. So can I say using NULL is better than 0 in kernel?</p>
+<p>It’s the preferred style, Sparse will complain about using 0 for a null<br>pointer for example..</p>
+<p>Mac的Kyle Moffett 如是说：</p>
+<p>On Mar 11, 2007, at 16:41:51, Daniel Hazelton wrote:<br>&gt; On Sunday 11 March 2007 16:35:50 Jan Engelhardt wrote:<br>&gt;&gt; On Mar 11 2007 22:15, Cong WANG wrote:<br>&gt;&gt;&gt; So can I say using NULL is better than 0 in kernel?<br>&gt;&gt;<br>&gt;&gt; On what basis? Do you even know what NULL is defined as in (C, not<br>&gt;&gt; C++) userspace? Think about it.<br>&gt;<br>&gt; IIRC, the glibc and GCC headers define NULL as (void*)0  :)</p>
+<p>On the other hand when <strong>cplusplus is defined they define it to the<br>“</strong>null” builtin, which GCC uses to give type conversion errors for<br>“int foo = NULL” but not “char <em>foo = NULL”.  A “((void </em>)0)”<br>definition gives C++ type errors for both due to the broken C++ void<br>pointer conversion problems.</p>
+<p>Cheers,</p>
+<p>Nicholas Miell这样说：</p>
+<p>On Mon, 2007-03-12 at 06:40 +0100, Jan Engelhardt wrote:<br>&gt; On Mar 12 2007 13:37, Cong WANG wrote:<br>&gt; &gt;<br>&gt; &gt; The following code is picked from drivers/kvm/kvm_main.c:<br>&gt; &gt;<br>&gt; &gt; static struct kvm_vcpu <em>vcpu_load(struct kvm </em>kvm, int vcpu_slot)<br>&gt; &gt; {<br>&gt; &gt; struct kvm_vcpu <em>vcpu = &amp;kvm-&gt;vcpus[vcpu_slot];<br>&gt; &gt;<br>&gt; &gt; mutex_lock(&amp;vcpu-&gt;mutex);<br>&gt; &gt; if (unlikely(!vcpu-&gt;vmcs)) {<br>&gt; &gt; mutex_unlock(&amp;vcpu-&gt;mutex);<br>&gt; &gt; return 0;<br>&gt; &gt; }<br>&gt; &gt; return kvm_arch_ops-&gt;vcpu_load(vcpu);<br>&gt; &gt; }<br>&gt; &gt;<br>&gt; &gt; Obviously, it used 0 rather than NULL when returning a pointer to<br>&gt; &gt; indicate an error. Should we fix such issue?<br>&gt;<br>&gt; Indeed. If it was for me, something like that should throw a compile error.<br>&gt;<br>&gt; &gt;&gt;[…]<br>&gt; &gt; I think it’s more clear to indicate we are using a pointer rather than<br>&gt; &gt; an integer when we use NULL in kernel. But in userspace, using NULL is<br>&gt; &gt; for portbility of the program, although most (</em>just<em> most, NOT all) of<br>&gt; &gt; NULL’s defination is ((void</em>)0).</p>
+<p>&gt;<br>&gt; NULL has the same bit pattern as the number zero. (I’m not saying the bit<br>&gt; pattern is all zeroes. And I am not even sure if NULL ought to have the same<br>&gt; pattern as zero.) So C++ could use (void *)0, if it would let itself :p</p>
+<p>Not necessarily. You can use 0 at the source level, but the compiler has<br>to convert it to the actual NULL pointer bit pattern, whatever it may<br>be.</p>
+<p>In C++, NULL is typically defined to 0 (with no void* cast) by most<br>compilers because 0 (and only 0) can be implicitly converted to to null<br>pointer of any ponter type without a cast.</p>
+<p>GCC introduced the __null extension so that NULL still works correctly<br>in C++ when passed to a varargs function on 64-bit platforms.</p>
+<p>(This just works in C because C makes NULL ((void<em>)0) is thus is the<br>right size. In C++, the 0 ends up being an int instead of a pointer when<br>passed to a varargs function, and things tend to blow up when they read<br>the garbage high bits. Of course, nobody else does this, so you still<br>have to use (void</em>)NULL to be portable.)</p>
+<p>Randy.Dunlap 给以肯定回答：</p>
+<p>On Mon, 12 Mar 2007, Jan Engelhardt wrote:</p>
+<p>&gt;<br>&gt; On Mar 12 2007 13:37, Cong WANG wrote:<br>&gt; &gt;<br>&gt; &gt; The following code is picked from drivers/kvm/kvm_main.c:<br>&gt; &gt;<br>&gt; &gt; static struct kvm_vcpu <em>vcpu_load(struct kvm </em>kvm, int vcpu_slot)<br>&gt; &gt; {<br>&gt; &gt; struct kvm_vcpu *vcpu = &amp;kvm-&gt;vcpus[vcpu_slot];<br>&gt; &gt;<br>&gt; &gt; mutex_lock(&amp;vcpu-&gt;mutex);<br>&gt; &gt; if (unlikely(!vcpu-&gt;vmcs)) {<br>&gt; &gt; mutex_unlock(&amp;vcpu-&gt;mutex);<br>&gt; &gt; return 0;<br>&gt; &gt; }<br>&gt; &gt; return kvm_arch_ops-&gt;vcpu_load(vcpu);<br>&gt; &gt; }<br>&gt; &gt;<br>&gt; &gt; Obviously, it used 0 rather than NULL when returning a pointer to<br>&gt; &gt; indicate an error. Should we fix such issue?<br>&gt;<br>&gt; Indeed. If it was for me, something like that should throw a compile error.</p>
+<p>At least it does throw a sparse warning, and yes, it should<br>be fixed.</p>
+<p>最后我决定提交补丁：</p>
+<p>[PATCH]Replace 0 with NULL when returning a pointer</p>
+<p>Use NULL to indicate we are returning a pointer rather than an integer<br>and to eliminate some sparse warnings.</p>
+<p>Signed-off-by: Cong WANG &lt;xiyou.wangcong@gmail.com&gt;</p>
+<hr>
+<p>—- drivers/kvm/kvm_main.c.orig 2007-03-11 21:41:23.000000000 +0800<br>+++ drivers/kvm/kvm_main.c      2007-03-12 14:26:17.000000000 +0800<br>@@ -205,7 +205,7 @@ static struct kvm_vcpu *vcpu_load(struct<br>mutex_lock(&amp;vcpu-&gt;mutex);<br>if (unlikely(!vcpu-&gt;vmcs)) {<br>mutex_unlock(&amp;vcpu-&gt;mutex);</p>
+<ul>
+<li>return 0;</li>
+</ul>
+<ul>
+<li>return NULL;<br>}<br>return kvm_arch_ops-&gt;vcpu_load(vcpu);<br>}<br>@@ -799,7 +799,7 @@ struct kvm_memory_slot *gfn_to_memslot(s<br>&amp;&amp; gfn &lt; memslot-&gt;base_gfn + memslot-&gt;npages)<br>return memslot;<br>}</li>
+</ul>
+<ul>
+<li>return 0;</li>
+</ul>
+<ul>
+<li>return NULL;<br>}<br>EXPORT_SYMBOL_GPL(gfn_to_memslot);</li>
+</ul>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-03-11T19:59:36.000Z"><a href="/2007/03/11/-e5-81-87-e6-9c-9f-e6-80-bb-e7-bb-93-e6-96-b0-e5-ad-a6-e6-9c-9f-e8-ae-a1-e5-88-92/">Mar 11 2007</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2007/03/11/-e5-81-87-e6-9c-9f-e6-80-bb-e7-bb-93-e6-96-b0-e5-ad-a6-e6-9c-9f-e8-ae-a1-e5-88-92/">假期总结&amp;新学期计划</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>其实这早就应该写的，只是因为网通到现在才把网络接好，所以推到现在才写。</p>
+<p>寒假在家事情比较多，书基本上没怎么看，比原定计划差了不少，具体如下：</p>
+<p>1. LDD应该读完，结果留了三章没看完，USB，网络和TTY这三章还没看。 不过基本上还算可以；</p>
+<p>2. TAOUP是看了几页，主要是把它当小说看了，而且是想起来就看看，想不起来就算，这学期应该把它读完 ；</p>
+<p>3. CM就别提了，翻了也就两三页，主要是看书的时候懒得动笔，不适合看这种数学类的（极其拙劣的借口），不知道后面还有没有时间去读它。</p>
+<p>4. 寒假中意外的收获是把Python顺带学会了（起码会最基本的了）， 主要是《Perl To Python Migration》一书讲解得好，正好适合我这种会Perl而不懂Python的。</p>
+<p>既然寒假没怎么好好利用，这学期就得抓紧了，大体计划如下：</p>
+<p>1. 熟悉使用Python编程，除Linux Kernel外尽量不再用C；</p>
+<p>2. 熟悉Unix上的Network Programming，顺带把TCP/IP协议弄清楚，这是重中之重 ；</p>
+<p>3. 加入Linux Kernel开发，感觉并不难，不过确实要花不少时间，此项也列为重点；</p>
+<ol>
+<li>自学编译器原理和编程语言，能学多少是多少；</li>
+</ol>
+<p>5. 如果有时间，把Lisp和Smalltalk 看一下，毕竟那才是“优美”的计算机语言。</p>
+<p>如此而已。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-03-10T07:08:12.000Z"><a href="/2007/03/09/linux-e5-86-85-e6-a0-b8-e4-b8-ad-e7-9a-84-e5-87-a0-e4-b8-aa-e6-a6-82-e5-bf-b5-2/">Mar 9 2007</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2007/03/09/linux-e5-86-85-e6-a0-b8-e4-b8-ad-e7-9a-84-e5-87-a0-e4-b8-aa-e6-a6-82-e5-bf-b5-2/">Linux内核中的几个概念</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Sunday, 25. February 2007, 07:19:10</p>
+<p></p><p align="right"><span class="alignright">王聪@西邮</span></p>
+<p>软中断（softirq）是内核使用的一种推后执行任务的一种机制，由于一些中断处理必须要在短期内完成，所以内核不得不把一些相对不重要的工作推后执行，软中断就是专门用来执行这种后退的工作。它在某种程度上有点像硬件中断，来得“随时随地”，而且不在进程上下文之中。千万不要把它和“软件中断（software interrupts）”这个概念混了，后者是因为在编程中使用了中断指令（比如：int 0x80）而产生一个硬件上实际存在的中断信号，而前者更本就不和硬件扯关系。</p>
+<p>小任务（tasklet）是在软中断的基础上实现的一种后推执行方式。软中断是在编译时就已经确定好的，而小任务则可以在运行时分配和初始化；软中断可以在不同的CPU上同时执行，而同一类型的tasklet只能在调度它们的同一CPU上运行，因此软中断函数必须是可重入的，而小任务的函数则没有这个必要。</p>
+<p>工作队列（work queue）是另一种后推方式，但它和小任务有着很大的区别，小任务是在中断上下文中执行的，而工作队列是在进程上下文中执行的，所以工作队列是可以休眠的，也就不一定是原子的。执行工作队列的线程是ksoftirqd/n（n是cpu的编号，在UP是ksoftirqd/0），这是一个内核线程，因此也不能访问用户内存。</p>
+<p>下半部（bottom half）是后推执行任务的一个统称，它主要是完成上半部未完成的一些工作。一般来说，在处理中断时，在中断处理例程（上半部）中做的工作越少越好，其余一些相对不那么迫切的工作可以后推给下半部来完成，当然了，下半部可以是小任务，也可以是工作队列。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-03-10T07:07:21.000Z"><a href="/2007/03/09/-e4-b8-96-e7-95-8c-e4-b8-8a-e6-9c-80-e9-81-a5-e8-bf-9c-e7-9a-84-e8-b7-9d-e7-a6-bb-ef-bc-88-e6-b3-b0-e6-88-88-e5-b0-94-ef-bc-89-2/">Mar 9 2007</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2007/03/09/-e4-b8-96-e7-95-8c-e4-b8-8a-e6-9c-80-e9-81-a5-e8-bf-9c-e7-9a-84-e8-b7-9d-e7-a6-bb-ef-bc-88-e6-b3-b0-e6-88-88-e5-b0-94-ef-bc-89-2/">世界上最遥远的距离（泰戈尔）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Tuesday, 20. February 2007, 07:12:24</p>
+<div class="content"><div id="excerpt"></div>By The furthest distance in the world<br>世界上最遥远的距离<br>Is not between life and death<br>不是生与死<br>But when I stand in front of you<br>而是 我就站在你面前<br>Yet you don’t know that I love you<br>你却不知道我爱你<br>The furthest distance in the world<br>世界上最遥远的距离<br>Is not when I stand in front of you<br>不是 我就站在你面前<br>Yet you can’t see my love<br>你却不知道我爱你<br>But when undoubtedly knowing the love from both<br>而是 明明知道彼此相爱<br>Yet cannot be together<br>却不能在一起<br>The furthest distance in the world<br>世界上最遥远的距离<br>Is not being apart while being in love<br>不是 明明知道彼此相爱 却不能在一起<br>But when painly cannot resist the yearning<br>而是 明明无法抵挡这股思念<br>Yet pretending you have never been in my heart<br>却还得故意装作丝毫没有把你放在心里<br>The furthest distance in the world<br>世界上最遥远的距离<br>Is not but using one’s indifferent heart<br>不是 明明无法抵挡这股思念 却还得故意装作丝毫没有把你放在心里<br>To dig an uncrossable river<br>而是 用自己冷漠的心对爱你的人<br>For the one who loves you<br>掘了一条无法跨越的沟渠<br></div>
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-03-10T07:07:02.000Z"><a href="/2007/03/09/-e5-bc-80-e5-8f-91-e5-86-85-e6-a0-b8-e7-9a-84-e5-87-a0-e6-9d-a1-e7-bb-8f-e9-aa-8c-3/">Mar 9 2007</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2007/03/09/-e5-bc-80-e5-8f-91-e5-86-85-e6-a0-b8-e7-9a-84-e5-87-a0-e6-9d-a1-e7-bb-8f-e9-aa-8c-3/">开发内核的几条经验</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Wednesday, 14. February 2007, 12:20:41</p>
+<div class="content"><div id="excerpt"></div><span class="alignright">作者：王聪@西邮</span><br><br>1. 永远不要使用sleep_on及其变种，那是不安全的，而且即将被剔出。<br>2. 老的/proc接口是有害的，如果你不能彻底理解它，千万别使用！尽量不要再往/proc里面放东西了，因为那里现在已经够乱了。<br>3. wait_event的一个变种──wait_event_interruptible_exclusive──是可以执行独占等待的。LDD中这一点错了，不，过时了。<br>4. 不要使用lock_kernel()，这个锁太大了，会让系统性能下降。<br>5. 信号量本身就是一种高级的lock，它能比普通的lock，比如spinlock，实现更多的语义。就像分配了内存后必须释放一样，一个进程对一个信号量进行down操作后，必须在退出前执行up。切记：不要在拥有锁时睡眠！<br>6. Unix的errno具有丰富的含义，请认真小心地处理它们，在用户空间如此，在内核空间更要如此，因为内核空间的一个错误状态直接影响到现有用户程序的表现。<br>7. oops是严重的错误，不能信任存在oops的内核。<br>8.<br>关于补丁：<br>a) 稳定内核的补丁只能应用于基版本的内核，比如：2.6.17.*补丁只能应用于2.6.17版本的内核；<br>b) 基版本内核补丁只能应用于上一个版本的内核，比如：2.6.18补丁只能应用于2.6.17；<br>c) 增量型补丁只能从一个指定的版本应用于另一个指定版本，比如：补丁patch-2.6.17.10-11.bz2只能应用于2.6.17.10，把它升级为2.6.17.11；<br>d) 如果你需要升级的版本间隔比较大，比如从2.6.17.1到2.6.17.11，可以先从2.6.17.1退回到2.6.17，然后再一次升级到2.6.17.11；<br>e) 稳定内核的补丁和基版本内核补丁都在源代码目录中，而增量型补丁在一个单独的目录/pub/linux/kernel/v2.6/incr中。<br></div>
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-03-10T07:03:19.000Z"><a href="/2007/03/09/-e5-9c-a8-e8-bf-99-e4-b8-aa-e8-82-ae-e8-84-8f-e7-9a-84-e4-b8-96-e7-95-8c-ef-bc-8c-e4-bd-a0-e6-98-af-e6-88-91-e7-9a-84-e6-9c-80-e7-88-b1/">Mar 9 2007</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2007/03/09/-e5-9c-a8-e8-bf-99-e4-b8-aa-e8-82-ae-e8-84-8f-e7-9a-84-e4-b8-96-e7-95-8c-ef-bc-8c-e4-bd-a0-e6-98-af-e6-88-91-e7-9a-84-e6-9c-80-e7-88-b1/">在这个肮脏的世界，你是我的最爱</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Thursday, 1. March 2007, 12:48:24</p>
+<div class="content"><div id="excerpt"></div><br>不是不能等你，也不是不再喜欢你了。只是觉得现在确实是该离开你的时候了，你已经有自己喜欢的人了，有一个能在你身边照顾你的人了，离开你虽然我还是不舍得但是终于放心了。不管你们之间出现了什么矛盾，我都希望你们还能和好如初，只要相爱就一定会在一起的。<br><br>关于我们之间的事，我觉得你做得对，换成我我也会这么做，你不用自责。你说过，我们之间有太多的不适合，我爱你只是一种习惯，我想你也是对的。生活也许本来就是这样，什么事都不可能十全十美，不能改变的事只能接受。三年了，我太累了，不想再纠缠于这种问题了。我想开始一种新的生活，开始不再想你。这两年离开你的日子里我也过得很充实，因为只要一想起那些和你在一起的点点滴滴，就能让我心里饱满很久很久。这两年我一直想让自己成为你的骄傲，好让你回到我身边，可我发现我错了，但现在看看又有什么关系呢？这些年来因为你我得到的甚至远比我失去的要多。所以，我还是得谢谢你。这辈子能认识你我就很满足了，也不能再奢求别的了。<br><br>关于未来，谁也说不准。中国的教育制度是一种失败，别太在意自己的学校。你可能很快就毕业了吧？希望你能找一个自己喜欢的工作（你那么喜欢孩子，怎么不考虑一下去幼儿园当老师呢？），哪怕它并不起眼，因为做自己喜欢做的事本身就是一种快乐，这是金钱换不来的。如果有人用金钱来衡量你，不要理他们。你是一个好姑娘，应该拥有属于你自己的幸福。<br><br>希望你能天天快乐！</div>
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+
+  <nav id="pagination">
+  
+    <a href="/archives/page/66/" class="alignleft prev">Prev</a>
+  
+  
+    <a href="/archives/page/68/" class="alignright next">Next</a>
+  
+  <div class="clearfix"></div>
+</nav>
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:wangcong.org">
+  </form>
 </div>
 
-      </div>
-      <footer><div id="footer" >
-	
-	
-	<div class="social-font" class="clearfix">
-		
-		
-		<a href="https://github.com/congwang" target="_blank" class="icon-github" title="github"></a>
-		
-		
-		
-		<a href="https://twitter.com/conglinux" target="_blank" class="icon-twitter" title="twitter"></a>
-		
-		
-		
-		
-		
-		
-		
-	</div>
-		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2016 
-		
-		<a href="http://wangcong.org/about" target="_blank" title="Cong Wang">Cong Wang</a>
-		
-		</p>
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Book-Reviews/">Book Reviews</a><small>18</small></li>
+  
+    <li><a href="/categories/China/">China</a><small>2</small></li>
+  
+    <li><a href="/categories/Collection/">Collection</a><small>25</small></li>
+  
+    <li><a href="/categories/Life/">Life</a><small>324</small></li>
+  
+    <li><a href="/categories/Linux-Application/">Linux Application</a><small>73</small></li>
+  
+    <li><a href="/categories/Linux-Kernel/">Linux Kernel</a><small>64</small></li>
+  
+    <li><a href="/categories/Love/">Love</a><small>6</small></li>
+  
+    <li><a href="/categories/Movies/">Movies</a><small>19</small></li>
+  
+    <li><a href="/categories/Programming/">Programming</a><small>152</small></li>
+  
+    <li><a href="/categories/Science-Fiction/">Science Fiction</a><small>8</small></li>
+  
+    <li><a href="/categories/Travel/">Travel</a><small>19</small></li>
+  
+  </ul>
 </div>
-</footer>
-      <script src="/js/jquery-2.0.3.min.js"></script>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/geek/">geek</a><small>1</small></li>
+  
+    <li><a href="/tags/handling/">handling</a><small>1</small></li>
+  
+    <li><a href="/tags/joke/">joke</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/tags/signal/">signal</a><small>1</small></li>
+  
+    <li><a href="/tags/unix/">unix</a><small>1</small></li>
+  
+    <li><a href="/tags/vim/">vim</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2017 Cong Wang
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 <script src="/js/jquery.imagesloaded.min.js"></script>
 <script src="/js/gallery.js"></script>
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.navbar').click(function(){
-    $('header nav').toggleClass('shownav');
-  });
-  var myWidth = 0;
-  function getSize(){
-    if( typeof( window.innerWidth ) == 'number' ) {
-      myWidth = window.innerWidth;
-    } else if( document.documentElement && document.documentElement.clientWidth) {
-      myWidth = document.documentElement.clientWidth;
-    };
-  };
-  var m = $('#main'),
-      a = $('#asidepart'),
-      c = $('.closeaside'),
-      o = $('.openaside');
-  $(window).resize(function(){
-    getSize(); 
-    if (myWidth >= 1024) {
-      $('header nav').removeClass('shownav');
-    }else
-    {
-      m.removeClass('moveMain');
-      a.css('display', 'block').removeClass('fadeOut');
-      o.css('display', 'none');
-        
-    }
-  });
-  c.click(function(){
-    a.addClass('fadeOut').css('display', 'none');
-    o.css('display', 'block').addClass('fadeIn');
-    m.addClass('moveMain');
-  });
-  o.click(function(){
-    o.css('display', 'none').removeClass('beforeFadeIn');
-    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
-    m.removeClass('moveMain');
-  });
-  $(window).scroll(function(){
-    o.css("top",Math.max(80,260-$(this).scrollTop()));
-  });
-});
-</script>
-
-
-
-
 
 <script type="text/javascript">
-
 var disqus_shortname = 'disqus_ciEwcJAF0E';
 
-(function(){
-  var dsq = document.createElement('script');
-  dsq.type = 'text/javascript';
-  dsq.async = true;
-  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-}());
 (function(){
   var dsq = document.createElement('script');
   dsq.type = 'text/javascript';
@@ -327,33 +597,13 @@ var disqus_shortname = 'disqus_ciEwcJAF0E';
 
 
 
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
 
-
-
-
-
-<!-- Analytics Begin -->
-
-
-
-
-
-<!-- Analytics End -->
-
-<!-- Totop Begin -->
-
-	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
-	</div>
-	<script src="/js/totop.js"></script>
-
-<!-- Totop End -->
-
-<!-- MathJax Begin -->
-<!-- mathjax config similar to math.stackexchange -->
-
-
-<!-- MathJax End -->
-
-    </body>
-   </html>
+</body>
+</html>

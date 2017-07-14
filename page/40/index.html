@@ -1,100 +1,65 @@
-
- <!DOCTYPE HTML>
-<html >
+<!DOCTYPE HTML>
+<html>
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   
-    <title>A Geek&#39;s Page</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
-    
-    <meta name="author" content="Cong Wang">
-    
-    
-    <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="A Geek's Page">
-<meta property="og:url" content="http://wangcong.org/page/40/">
-<meta property="og:site_name" content="A Geek's Page">
-<meta property="og:description">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="A Geek's Page">
-<meta name="twitter:description">
-<meta name="twitter:creator" content="@conglinux">
+  <title>Page 40 | A Geek&#39;s Page</title>
+  <meta name="author" content="Cong Wang">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
+  
+  <meta property="og:site_name" content="A Geek&#39;s Page"/>
 
-    
-    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
-    
-    
-    <link rel="icon" href="/img/favicon.ico">
-    
-    
-    <link rel="apple-touch-icon" href="/img/jacman.jpg">
-    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
-    
-    <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
 
 </head>
 
-  <body>
-    <header>
-      <div>
-		
-			<div id="imglogo">
-				<a href="/"><img src="/img/logo.png" alt="A Geek&#39;s Page" title="A Geek&#39;s Page"/></a>
-			</div>
-			
-			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="A Geek&#39;s Page">A Geek&#39;s Page</a></h1>
-				<h2 class="blog-motto"></h2>
-			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
-			</a></div>
-			<nav class="animated">
-				<ul>
-					<ul>
-					 
-						<li><a href="/">Home</a></li>
-					
-						<li><a href="/archives">Archives</a></li>
-					
-						<li><a href="/about-2">About</a></li>
-					
-					<li>
- 					
-					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
-						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
-						<input type="hidden" name="q" value="site:wangcong.org">
-					</form>
-					
-					</li>
-				</ul>
-			</nav>			
-</div>
-    </header>
-    <div id="container">
-      <div id="main">
 
-   
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">A Geek&#39;s Page</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
     
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
+      <li><a href="/">Home</a></li>
     
-      <a href="/2008/04/13/-e6-af-94-e8-be-83-e4-b8-a4-e4-b8-aa-e6-96-87-e4-bb-b6-e7-9a-84-e7-9b-b8-e5-90-8c/" title="比较两个文件的相同" itemprop="url">比较两个文件的相同</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2008-04-13T20:30:02.000Z" itemprop="datePublished"> Published Apr 13 2008</time>
+      <li><a href="/archives">Archives</a></li>
     
-  </p>
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
 </header>
-    <div class="article-content">
-        
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2008-04-13T20:30:02.000Z"><a href="/2008/04/13/-e6-af-94-e8-be-83-e4-b8-a4-e4-b8-aa-e6-96-87-e4-bb-b6-e7-9a-84-e7-9b-b8-e5-90-8c/">Apr 13 2008</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2008/04/13/-e6-af-94-e8-be-83-e4-b8-a4-e4-b8-aa-e6-96-87-e4-bb-b6-e7-9a-84-e7-9b-b8-e5-90-8c/">比较两个文件的相同</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>恐怕地球人都知道比较两个文件的不同得用diff(1)，现在有个问题是：如何找出两个文件的相同之处？</p>
 <p>经过简单查找，我发现可以用comm(1)。可是看了一下它的man我们就发现，不妥，它没diff(1)那么简单。首先它的选项有些特别；其次，很重要的是，它要求文件必须是排好序的！这时候恐怕我们就得想，哎，又得用bash脚本了。不行，那不符合hack精神，我就不信在一行里整不出它来！于是下面的一行就出来乐：</p>
 <p>% comm -1 -2 &lt;(cat 1.txt | sort) &lt;(cat 2.txt |sort)</p>
@@ -104,62 +69,37 @@
 <p>课后作业：不看源代码，猜猜上面的技巧<strong>大体上</strong>是怎么实现的？（想知道“答案”的拖住最后一行。;-）</p>
 <p><span style="color:#ffffff;">提示：把comm换成diff看看，是不是用的/proc/self？</span></p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Programming/">Programming</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2008/04/13/-e6-af-94-e8-be-83-e4-b8-a4-e4-b8-aa-e6-96-87-e4-bb-b6-e7-9a-84-e7-9b-b8-e5-90-8c/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2008/04/12/-e8-b7-a8-e8-a1-8c-e6-90-9c-e7-b4-a2-e8-84-9a-e6-9c-ac-ef-bc-9amgrep/" title="跨行搜索脚本：mgrep" itemprop="url">跨行搜索脚本：mgrep</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2008-04-12T16:45:04.000Z" itemprop="datePublished"> Published Apr 12 2008</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2008-04-12T16:45:04.000Z"><a href="/2008/04/12/-e8-b7-a8-e8-a1-8c-e6-90-9c-e7-b4-a2-e8-84-9a-e6-9c-ac-ef-bc-9amgrep/">Apr 12 2008</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2008/04/12/-e8-b7-a8-e8-a1-8c-e6-90-9c-e7-b4-a2-e8-84-9a-e6-9c-ac-ef-bc-9amgrep/">跨行搜索脚本：mgrep</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>写了做跨行搜索的脚本，用Perl。我知道也可以在bash里用sed，但我认为用那的话灵活性就不如用Perl了，因为我还要给它扩展各种我需要的功能。</p>
 <p>闲话少说，上代码！</p>
 <p>[perl]</p>
@@ -275,62 +215,37 @@ closedir IN_DIR;
 </code></pre><p>}</p>
 <p>[/perl] </p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Programming/">Programming</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2008/04/12/-e8-b7-a8-e8-a1-8c-e6-90-9c-e7-b4-a2-e8-84-9a-e6-9c-ac-ef-bc-9amgrep/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2008/04/11/python-e5-92-8cperl-e9-83-bd-e6-b2-a1-e6-b6-88-e9-99-a4-e8-87-aa-e6-8c-87-ef-bc-9f/" title="Python和Perl都没消除自指？" itemprop="url">Python和Perl都没消除自指？</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2008-04-11T22:41:19.000Z" itemprop="datePublished"> Published Apr 11 2008</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2008-04-11T22:41:19.000Z"><a href="/2008/04/11/python-e5-92-8cperl-e9-83-bd-e6-b2-a1-e6-b6-88-e9-99-a4-e8-87-aa-e6-8c-87-ef-bc-9f/">Apr 11 2008</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2008/04/11/python-e5-92-8cperl-e9-83-bd-e6-b2-a1-e6-b6-88-e9-99-a4-e8-87-aa-e6-8c-87-ef-bc-9f/">Python和Perl都没消除自指？</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>[perl]</p>
 <h1 id="!/usr/bin/perl">!/usr/bin/perl</h1>
 <p>use strict;<br>use warnings;</p>
@@ -349,62 +264,37 @@ closedir IN_DIR;
 <p>C语言显然不会出现这种情况，因为要用指针的话这两种指针显然不是一个层次上的，必须通过强制转化。而Python和Perl之所以都会出现这种情况是因为他们的的list都太NB了，啥都能放，包括它本身！！</p>
 <p>或者是我最近看《集异璧》看多了？？</p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Programming/">Programming</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2008/04/11/python-e5-92-8cperl-e9-83-bd-e6-b2-a1-e6-b6-88-e9-99-a4-e8-87-aa-e6-8c-87-ef-bc-9f/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2008/04/09/-e5-8f-91-e5-b8-83qbak-e9-a1-b9-e7-9b-ae/" title="发布Qbak项目" itemprop="url">发布Qbak项目</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2008-04-10T06:10:07.000Z" itemprop="datePublished"> Published Apr 9 2008</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2008-04-10T06:10:07.000Z"><a href="/2008/04/09/-e5-8f-91-e5-b8-83qbak-e9-a1-b9-e7-9b-ae/">Apr 9 2008</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2008/04/09/-e5-8f-91-e5-b8-83qbak-e9-a1-b9-e7-9b-ae/">发布Qbak项目</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>Qbak 是 “Quick Backup” 的缩写。Qbak 是 Linux 上使用的备份工具，目前只有 命令行界面。但我会考虑以后为它加入图形界面。</p>
 <p>Qbak 的使用和配置非常简单，它读取~/.qbakrc作为配置文件，并把里面指定的目录作为“输出目录”，即存放备份文件归档的目录。建议设置为”~/.qbak”。 关于配置项请看源代码中的示例配置文件。</p>
 <p>Qbak 使用了一种半“堆栈式”的管理方式，即通过push和pull来加入和导出备份文件。Qbak 的接口有点像git，通过其子命令来完成各种功能。想了解更多请去<a href="http://wangcong.org/projects/qbak.html" target="_blank" rel="external">项目主页</a>。</p>
@@ -412,121 +302,71 @@ closedir IN_DIR;
 <p>下载地址：<br><a href="http://wangcong.org/projects/qbak-0.1.tar.gz" target="_blank" rel="external">http://wangcong.org/projects/qbak-0.1.tar.gz</a></p>
 <p>Qbak 项目主页：<br><a href="http://wangcong.org/projects/qbak.html" target="_blank" rel="external">http://wangcong.org/projects/qbak.html</a></p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Programming/">Programming</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2008/04/09/-e5-8f-91-e5-b8-83qbak-e9-a1-b9-e7-9b-ae/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2008/04/08/-e8-bf-99-e5-bc-a0-e5-9b-be-e7-9c-9f-e7-9a-84-e8-bf-98-e6-98-af-e5-81-87-e7-9a-84-ef-bc-9f/" title="这张图真的还是假的？" itemprop="url">这张图真的还是假的？</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2008-04-09T06:54:02.000Z" itemprop="datePublished"> Published Apr 8 2008</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2008-04-09T06:54:02.000Z"><a href="/2008/04/08/-e8-bf-99-e5-bc-a0-e5-9b-be-e7-9c-9f-e7-9a-84-e8-bf-98-e6-98-af-e5-81-87-e7-9a-84-ef-bc-9f/">Apr 8 2008</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2008/04/08/-e8-bf-99-e5-bc-a0-e5-9b-be-e7-9c-9f-e7-9a-84-e8-bf-98-e6-98-af-e5-81-87-e7-9a-84-ef-bc-9f/">这张图真的还是假的？</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p><img src="/images/" alt=""></p>
 <p>今天王冬同学发给我的。哪位如果用搜狗输入法能否帮忙确认一下真假？怎么看也不像PS的啊！（真要是话的说明那人PS水平不低～！）不知道是哪位高人做的？或者是西邮在搜狐有卧底？</p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Life/">Life</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2008/04/08/-e8-bf-99-e5-bc-a0-e5-9b-be-e7-9c-9f-e7-9a-84-e8-bf-98-e6-98-af-e5-81-87-e7-9a-84-ef-bc-9f/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2008/04/07/assembler-e7-9a-84-e4-b8-80-e4-b8-aahack/" title="assembler的一个hack" itemprop="url">assembler的一个hack</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2008-04-08T03:25:36.000Z" itemprop="datePublished"> Published Apr 7 2008</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2008-04-08T03:25:36.000Z"><a href="/2008/04/07/assembler-e7-9a-84-e4-b8-80-e4-b8-aahack/">Apr 7 2008</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2008/04/07/assembler-e7-9a-84-e4-b8-80-e4-b8-aahack/">assembler的一个hack</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>如果编译一个relocatable目标文件，你通过反汇编不难发现所有的call指令竟然都是同一个机器码！即：e8 fc ff ff ff。</p>
 <p>我们知道，不同的函数有不同的入口，可这里怎么都会用这么一个奇怪的地址呢？</p>
 <p>翻一下Intel指令手册，我们很容易就能在3-104 Vol. 2A中找到call指令的各种编码方式。根据这里的opcode为e8我们不难确定这个call是用的下面这种方式：</p>
@@ -541,62 +381,37 @@ closedir IN_DIR;
 <p><pre>80483ba:       e8 18 00 00 00          call   80483d7 &lt;foo&gt;</pre><br>0x80483ba+0x18明显不是0x80483d7。嘿嘿，这里就不一样了，因为这里需要修正的是-0x5。差的那个会是啥呢？猜猜吧？（用鼠标拖住最后一行看答案。;-）</p>
 <p><span style="color:#ffffff;">就是那个e8啊！</span></p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Programming/">Programming</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2008/04/07/assembler-e7-9a-84-e4-b8-80-e4-b8-aahack/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2008/04/05/-e5-85-b3-e4-ba-8elinux-e7-9a-84syslog/" title="关于Linux的syslog" itemprop="url">关于Linux的syslog</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2008-04-06T05:34:34.000Z" itemprop="datePublished"> Published Apr 5 2008</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2008-04-06T05:34:34.000Z"><a href="/2008/04/05/-e5-85-b3-e4-ba-8elinux-e7-9a-84syslog/">Apr 5 2008</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2008/04/05/-e5-85-b3-e4-ba-8elinux-e7-9a-84syslog/">关于Linux的syslog</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>内核中printk发出的消息是这样传递到用户空间的。</p>
 <p>内核留给用户空间的接口是syslog(2)，glibc对它进行了包装，于是就有了klogctl(3)和syslog(3)。</p>
 <p>先由klogd通过klogctl(3)搜集内核消息（见<a href="http://cvs.infodrom.org/sysklogd/klogd.c?rev=1.26" target="_blank" rel="external">sysklogd/klogd.c</a>），并通过自己实现的syslog()（注意：和syslog(2)，syslog(3)都不一样）传递给 syslogd。syslogd根据/etc/syslog.conf的配置情况进行记录。syslogd提供的是一个统一的方式，它不单单记录内核的消息，还包括其它服务器进程的消息，比如Apache，vsftp。</p>
@@ -610,62 +425,37 @@ closedir IN_DIR;
 <p>如果想了解更多关于syslogd的东西，可以参考<a href="http://blog.chinaunix.net/u/24390/showart_226830.html" target="_blank" rel="external">这篇文章</a>。</p>
 <p>想了解内核的中对syslog(2)的实现，可以参考内核源代码：kernel/printk.c。</p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Linux-Kernel/">Linux Kernel</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2008/04/05/-e5-85-b3-e4-ba-8elinux-e7-9a-84syslog/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2008/04/03/-e5-8f-88hack-e4-ba-86-e4-b8-80-e4-b8-aashell-e8-84-9a-e6-9c-ac/" title="又hack了一个shell脚本" itemprop="url">又hack了一个shell脚本</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2008-04-03T20:35:56.000Z" itemprop="datePublished"> Published Apr 3 2008</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2008-04-03T20:35:56.000Z"><a href="/2008/04/03/-e5-8f-88hack-e4-ba-86-e4-b8-80-e4-b8-aashell-e8-84-9a-e6-9c-ac/">Apr 3 2008</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2008/04/03/-e5-8f-88hack-e4-ba-86-e4-b8-80-e4-b8-aashell-e8-84-9a-e6-9c-ac/">又hack了一个shell脚本</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>正如<a href="http://cocobear.cn" target="_blank" rel="external">董溥同学</a>给我留的言，coolcode插件不支持C语言，这是事实。而且用coolcode插件往wordpress里贴代码也是不很爽～！</p>
 <p>于是乎，我就hack了一个脚本，调用vim来生成html，然后往博客里贴时复制里面的html代码就是了。恩，我知道emacs有个htmlize插件，可惜它生成的html是CSS的，貌似wordpress不支持直接贴那玩意（未经验证）。我用它更新了一下前面一篇文章中的代码，效果还不错，代码如下：</p>
 <font color="#8080ff">#!/bin/bash</font>
@@ -689,62 +479,37 @@ closedir IN_DIR;
 <p>vim <font color="#ff40ff">-n</font>&nbsp;<font color="#ff40ff">-c</font>&nbsp;<font color="#ffff00">‘</font><font color="#ff6060">:so $VIMRUNTIME/syntax/2html.vim</font><font color="#ffff00">‘</font>&nbsp;<font color="#ff40ff">-c</font>&nbsp;<font color="#ffff00">&quot;</font><font color="#ff6060">:w </font><font color="#ff40ff">$1</font><font color="#ff6060">.html</font><font color="#ffff00">&quot;</font>&nbsp;<font color="#ffff00"></font></p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#ff40ff">-c</font>&nbsp;<font color="#ffff00">&quot;</font><font color="#ff6060">:qa</font><font color="#ffff00">&quot;</font>&nbsp;<font color="#ff40ff">$1</font>&nbsp;&nbsp;<font color="#ffff00">&gt;</font>&nbsp;/dev/null <font color="#ff6060">2</font><font color="#ffff00">&gt;</font>&nbsp;/dev/null</p>
 <font color="#ffff00">exit</font>&nbsp;<font color="#ff6060">0</font>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Programming/">Programming</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2008/04/03/-e5-8f-88hack-e4-ba-86-e4-b8-80-e4-b8-aashell-e8-84-9a-e6-9c-ac/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2008/04/02/-e7-94-9f-e6-b4-bb-e7-9a-84-e6-84-8f-e4-b9-89-e5-9c-a8-e4-ba-8e-e6-8a-98-e8-85-be/" title="生活的意义在于折腾" itemprop="url">生活的意义在于折腾</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2008-04-03T06:18:09.000Z" itemprop="datePublished"> Published Apr 2 2008</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2008-04-03T06:18:09.000Z"><a href="/2008/04/02/-e7-94-9f-e6-b4-bb-e7-9a-84-e6-84-8f-e4-b9-89-e5-9c-a8-e4-ba-8e-e6-8a-98-e8-85-be/">Apr 2 2008</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2008/04/02/-e7-94-9f-e6-b4-bb-e7-9a-84-e6-84-8f-e4-b9-89-e5-9c-a8-e4-ba-8e-e6-8a-98-e8-85-be/">生活的意义在于折腾</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <p>有句话说得好：“生，容易。活，容易。生活，不容易！”</p>
 <p>生活很多时候都会是很平淡的，时间长了就会觉得无趣。这时候别着急，你得学着折腾，没事折腾点事来做。这样的生活才会精彩！ 折腾够了这个，歇歇再折腾那个。让生活不再那么无聊！</p>
 <p>有时候，生活也会不那么顺心，别着急，把它当成生活给你提供的“折腾”，这样省得你再自己折腾！折腾过去了再回头看看，生活不还是得继续么？还是得重回无趣？</p>
@@ -752,62 +517,37 @@ closedir IN_DIR;
 <p>生命不息，折腾不止！</p>
 <p><img src="/images/" alt=""></p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Life/">Life</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2008/04/02/-e7-94-9f-e6-b4-bb-e7-9a-84-e6-84-8f-e4-b9-89-e5-9c-a8-e4-ba-8e-e6-8a-98-e8-85-be/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2008/04/01/-e8-81-aa-e6-98-8e-e7-9a-84-e5-a2-99/" title="聪明的墙" itemprop="url">聪明的墙</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://wangcong.org/about" title="Cong Wang" target="_blank" itemprop="author">Cong Wang</a>
-		
-  <p class="article-time">
-    <time datetime="2008-04-02T01:50:43.000Z" itemprop="datePublished"> Published Apr 1 2008</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+    <footer>
+      
         
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2008-04-02T01:50:43.000Z"><a href="/2008/04/01/-e8-81-aa-e6-98-8e-e7-9a-84-e5-a2-99/">Apr 1 2008</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2008/04/01/-e8-81-aa-e6-98-8e-e7-9a-84-e5-a2-99/">聪明的墙</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
         <blockquote>
 <p>“这些墙很有趣。刚入狱的时候，你痛恨周围的高墙；慢慢地，你习惯了生活在其中；最终你会发现自己不得不依靠它而生存。这就叫体制化。 ”——《肖申克的救赎》<br>我发现，墙忒有才了！</p>
 </blockquote>
@@ -818,213 +558,109 @@ closedir IN_DIR;
 <p>哎，墙啊，你这玩笑开得太突然了！突然没了你俺受不了啊！俺这心挖凉挖凉的！</p>
 <p>（今天距离北京闹运会结束还有145天。。。）</p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Life/">Life</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2008/04/01/-e8-81-aa-e6-98-8e-e7-9a-84-e5-a2-99/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-
-  <nav id="page-nav" class="clearfix">
-    <a class="extend prev" rel="prev" href="/page/39/"><span></span>Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/38/">38</a><a class="page-number" href="/page/39/">39</a><span class="page-number current">40</span><a class="page-number" href="/page/41/">41</a><a class="page-number" href="/page/42/">42</a><span class="space">&hellip;</span><a class="page-number" href="/page/71/">71</a><a class="extend next" rel="next" href="/page/41/">Next<span></span></a>
-  </nav>
-
-</div>
-      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
-
-<div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
-<aside class="clearfix">
-
-  
-<div class="categorieslist">
-	<p class="asidetitle">Categories</p>
-		<ul>
-		
-			<li><a href="/categories/Book-Reviews/" title="Book Reviews">Book Reviews<sup>18</sup></a></li>
-		
-			<li><a href="/categories/China/" title="China">China<sup>2</sup></a></li>
-		
-			<li><a href="/categories/Collection/" title="Collection">Collection<sup>25</sup></a></li>
-		
-			<li><a href="/categories/Life/" title="Life">Life<sup>324</sup></a></li>
-		
-			<li><a href="/categories/Linux-Application/" title="Linux Application">Linux Application<sup>73</sup></a></li>
-		
-			<li><a href="/categories/Linux-Kernel/" title="Linux Kernel">Linux Kernel<sup>64</sup></a></li>
-		
-			<li><a href="/categories/Love/" title="Love">Love<sup>6</sup></a></li>
-		
-			<li><a href="/categories/Movies/" title="Movies">Movies<sup>19</sup></a></li>
-		
-			<li><a href="/categories/Programming/" title="Programming">Programming<sup>152</sup></a></li>
-		
-			<li><a href="/categories/Science-Fiction/" title="Science Fiction">Science Fiction<sup>8</sup></a></li>
-		
-			<li><a href="/categories/Travel/" title="Travel">Travel<sup>19</sup></a></li>
-		
-		</ul>
-</div>
-
-
-  
-<div class="tagslist">
-	<p class="asidetitle">Tags</p>
-		<ul class="clearfix">
-		
-			<li><a href="/tags/vim/" title="vim">vim<sup>1</sup></a></li>
-		
-			<li><a href="/tags/joke/" title="joke">joke<sup>1</sup></a></li>
-		
-			<li><a href="/tags/geek/" title="geek">geek<sup>1</sup></a></li>
-		
-			<li><a href="/tags/unix/" title="unix">unix<sup>1</sup></a></li>
-		
-			<li><a href="/tags/signal/" title="signal">signal<sup>1</sup></a></li>
-		
-			<li><a href="/tags/linux/" title="linux">linux<sup>1</sup></a></li>
-		
-			<li><a href="/tags/handling/" title="handling">handling<sup>1</sup></a></li>
-		
-		</ul>
-</div>
-
-
-  <div class="linkslist">
-  <p class="asidetitle">Links</p>
-    <ul>
+    <footer>
+      
         
-    </ul>
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+<nav id="pagination">
+  
+    <a href="/page/39/" class="alignleft prev">Prev</a>
+  
+  
+    <a href="/page/41/" class="alignright next">Next</a>
+  
+  <div class="clearfix"></div>
+</nav></div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:wangcong.org">
+  </form>
 </div>
 
-  <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Book-Reviews/">Book Reviews</a><small>18</small></li>
+  
+    <li><a href="/categories/China/">China</a><small>2</small></li>
+  
+    <li><a href="/categories/Collection/">Collection</a><small>25</small></li>
+  
+    <li><a href="/categories/Life/">Life</a><small>324</small></li>
+  
+    <li><a href="/categories/Linux-Application/">Linux Application</a><small>73</small></li>
+  
+    <li><a href="/categories/Linux-Kernel/">Linux Kernel</a><small>64</small></li>
+  
+    <li><a href="/categories/Love/">Love</a><small>6</small></li>
+  
+    <li><a href="/categories/Movies/">Movies</a><small>19</small></li>
+  
+    <li><a href="/categories/Programming/">Programming</a><small>152</small></li>
+  
+    <li><a href="/categories/Science-Fiction/">Science Fiction</a><small>8</small></li>
+  
+    <li><a href="/categories/Travel/">Travel</a><small>19</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/geek/">geek</a><small>1</small></li>
+  
+    <li><a href="/tags/handling/">handling</a><small>1</small></li>
+  
+    <li><a href="/tags/joke/">joke</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/tags/signal/">signal</a><small>1</small></li>
+  
+    <li><a href="/tags/unix/">unix</a><small>1</small></li>
+  
+    <li><a href="/tags/vim/">vim</a><small>1</small></li>
+  
+  </ul>
 </div>
 
 </aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2017 Cong Wang
+  
 </div>
-    </div>
-    <footer><div id="footer" >
-	
-	
-	<div class="social-font" class="clearfix">
-		
-		
-		<a href="https://github.com/congwang" target="_blank" class="icon-github" title="github"></a>
-		
-		
-		
-		<a href="https://twitter.com/conglinux" target="_blank" class="icon-twitter" title="twitter"></a>
-		
-		
-		
-		
-		
-		
-		
-	</div>
-		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2016 
-		
-		<a href="http://wangcong.org/about" target="_blank" title="Cong Wang">Cong Wang</a>
-		
-		</p>
-</div>
-</footer>
-    <script src="/js/jquery-2.0.3.min.js"></script>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 <script src="/js/jquery.imagesloaded.min.js"></script>
 <script src="/js/gallery.js"></script>
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.navbar').click(function(){
-    $('header nav').toggleClass('shownav');
-  });
-  var myWidth = 0;
-  function getSize(){
-    if( typeof( window.innerWidth ) == 'number' ) {
-      myWidth = window.innerWidth;
-    } else if( document.documentElement && document.documentElement.clientWidth) {
-      myWidth = document.documentElement.clientWidth;
-    };
-  };
-  var m = $('#main'),
-      a = $('#asidepart'),
-      c = $('.closeaside'),
-      o = $('.openaside');
-  $(window).resize(function(){
-    getSize(); 
-    if (myWidth >= 1024) {
-      $('header nav').removeClass('shownav');
-    }else
-    {
-      m.removeClass('moveMain');
-      a.css('display', 'block').removeClass('fadeOut');
-      o.css('display', 'none');
-        
-    }
-  });
-  c.click(function(){
-    a.addClass('fadeOut').css('display', 'none');
-    o.css('display', 'block').addClass('fadeIn');
-    m.addClass('moveMain');
-  });
-  o.click(function(){
-    o.css('display', 'none').removeClass('beforeFadeIn');
-    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
-    m.removeClass('moveMain');
-  });
-  $(window).scroll(function(){
-    o.css("top",Math.max(80,260-$(this).scrollTop()));
-  });
-});
-</script>
-
-
-
-
 
 <script type="text/javascript">
-
 var disqus_shortname = 'disqus_ciEwcJAF0E';
 
-(function(){
-  var dsq = document.createElement('script');
-  dsq.type = 'text/javascript';
-  dsq.async = true;
-  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-}());
 (function(){
   var dsq = document.createElement('script');
   dsq.type = 'text/javascript';
@@ -1036,33 +672,13 @@ var disqus_shortname = 'disqus_ciEwcJAF0E';
 
 
 
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
 
-
-
-
-
-<!-- Analytics Begin -->
-
-
-
-
-
-<!-- Analytics End -->
-
-<!-- Totop Begin -->
-
-	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
-	</div>
-	<script src="/js/totop.js"></script>
-
-<!-- Totop End -->
-
-<!-- MathJax Begin -->
-<!-- mathjax config similar to math.stackexchange -->
-
-
-<!-- MathJax End -->
-
-  </body>
- </html>
+</body>
+</html>

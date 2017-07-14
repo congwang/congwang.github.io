@@ -1,321 +1,699 @@
-
-  <!DOCTYPE HTML>
-<html >
+<!DOCTYPE HTML>
+<html>
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   
-    <title>Archives | A Geek&#39;s Page</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
-    
-    <meta name="author" content="Cong Wang">
-    
-    
-    <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="A Geek's Page">
-<meta property="og:url" content="http://wangcong.org/archives/page/4/">
-<meta property="og:site_name" content="A Geek's Page">
-<meta property="og:description">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="A Geek's Page">
-<meta name="twitter:description">
-<meta name="twitter:creator" content="@conglinux">
+  <title>Page 4 | Archives | A Geek&#39;s Page</title>
+  <meta name="author" content="Cong Wang">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
+  
+  <meta property="og:site_name" content="A Geek&#39;s Page"/>
 
-    
-    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
-    
-    
-    <link rel="icon" href="/img/favicon.ico">
-    
-    
-    <link rel="apple-touch-icon" href="/img/jacman.jpg">
-    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
-    
-    <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
 
 </head>
 
-    <body>
-      <header>
-        <div>
-		
-			<div id="imglogo">
-				<a href="/"><img src="/img/logo.png" alt="A Geek&#39;s Page" title="A Geek&#39;s Page"/></a>
-			</div>
-			
-			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="A Geek&#39;s Page">A Geek&#39;s Page</a></h1>
-				<h2 class="blog-motto"></h2>
-			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
-			</a></div>
-			<nav class="animated">
-				<ul>
-					<ul>
-					 
-						<li><a href="/">Home</a></li>
-					
-						<li><a href="/archives">Archives</a></li>
-					
-						<li><a href="/about-2">About</a></li>
-					
-					<li>
- 					
-					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
-						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
-						<input type="hidden" name="q" value="site:wangcong.org">
-					</form>
-					
-					</li>
-				</ul>
-			</nav>			
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">A Geek&#39;s Page</a></h1>
+  <h2><a href="/"></a></h2>
 </div>
-      </header>
-      <div id="container">
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title">Archives</h2>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2012-10-10T20:56:42.000Z"><a href="/2012/10/10/rp-filter-e7-9a-84-e4-b8-80-e4-b8-aa-e4-be-8b-e5-ad-90/">Oct 10 2012</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2012/10/10/rp-filter-e7-9a-84-e4-b8-80-e4-b8-aa-e4-be-8b-e5-ad-90/">rp_filter 的一个例子</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>我们都知道 Linux 反向路由查询，它的原理很简单，检查流入本机的 IP 地址是否合法，是否可能路由进来，是否是最佳路由。但是像多数网络问题，理论很简单，代码你看了也能懂，可实际情况往往比较复杂。之前一直没有碰到过实际中的例子，最近总算碰到一个。</p>
+<p>情况是这样的，我有两个 vlan 设备，eth0.7 和 eth0.9，都是经过 vconfig 创建的虚拟网卡，eth0 硬件本身不能处理 vlan tag。现在的问题是，我给这两个网卡配置了同一个 IP 地址，192.168.122.74。你也许会感觉奇怪，但这是可行的，毕竟 eth0.7 和 eth0.9 不在同一个 vlan！你可以想象成它们的网线接在不同的局域网中。好了，问题出来了，现在我们在另外一台机器，物理上连接着 eth0，上面分别发送 vlan tag 是 7 和 9 的两个 arp request，结果是只有先被 ifup 起来的那个网卡回应！为什么？</p>
+<p>我一开始的想法这可能是内核的bug，毕竟 vlan 那一部分经常出现一些问题。但经过人肉跟踪 vlan tag 的处理流程，发现基本上不太可能是内核的问题，至少不是内核 vlan 处理代码的问题。其实，这部分内核代码经过重写之后还是很清晰的，推荐你有时间阅读一下。</p>
+<p>所以问题一定是在 arp 处理的代码中，所以最后锁定到了 arp_process()。分析一下里面的代码你不难看到里面调用了 ip_route_input_noref()，所以路由有可能是其中一个因素。所以我们看一下路由表：</p>
+<h1 id="ip_r_s">ip r s</h1>
+<p>default via 192.168.122.1 dev eth0<br>192.168.122.0/24 dev eth0.7  proto kernel  scope link  src 192.168.122.74<br>192.168.122.0/24 dev eth0.9  proto kernel  scope link  src 192.168.122.74</p>
+<p>然后尝试换一个顺序对 eth0.7 和 eth0.9 进行 ifup，你会发现其实是路由的顺序决定了你能得到哪个 arp reply！这时你应该能明白了，是 rp_filter 在起作用。查看一下它们的 /proc/sys/net/ipv4/conf/X/rp_filter 设置，果然都是1，那么在这种情况下，eth0.9 因为不是最佳路由，因此发送给它的 arp request 就被丢弃了。我们也可以把  /proc/sys/net/ipv4/conf/eth0.9/log_martians 打开，很容易看到下面的log：</p>
+<p>[87317.980514] IPv4: martian source 192.168.122.74 from 192.168.122.1, on dev eth0.9<br>[87317.998162] ll header: 00000000: ff ff ff ff ff ff 52 54 00 2e 23 92 08 06 00 01  ……RT..#…..<br>[87318.015159] ll header: 00000010: 08 00                                            ..</p>
+<p>另外，分析过程中用到的两条相关的 tcpdump 命令：</p>
+<h1 id="tcpdump_arp_-xx_-ni_eth0">tcpdump arp -xx -ni eth0</h1>
+<h1 id="tcpdump_-xx_-ni_eth0_vlan">tcpdump -xx -ni eth0 vlan</h1>
+
+      
+    </div>
+    <footer>
+      
         
-
-<div class="archive-title" >
-  <h2 class="archive-icon">Archives</h2>
-  
-  <div class="archiveslist archive-float clearfix">
-   <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">Aug 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">Jan 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">Dec 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">Oct 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">Sep 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">Aug 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">Jul 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">Feb 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01/">Jan 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12/">Dec 2012</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">Nov 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">Oct 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">Sep 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">Aug 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/07/">Jul 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">Jun 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">Apr 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">Mar 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">Feb 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">Jan 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/12/">Dec 2011</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">Nov 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/10/">Oct 2011</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">Sep 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08/">Aug 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/07/">Jul 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/06/">Jun 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/05/">May 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04/">Apr 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03/">Mar 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/02/">Feb 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/01/">Jan 2011</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/12/">Dec 2010</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/11/">Nov 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/10/">Oct 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/09/">Sep 2010</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08/">Aug 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07/">Jul 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06/">Jun 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05/">May 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04/">Apr 2010</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03/">Mar 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02/">Feb 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01/">Jan 2010</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12/">Dec 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11/">Nov 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10/">Oct 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09/">Sep 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08/">Aug 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07/">Jul 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/06/">Jun 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/05/">May 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04/">Apr 2009</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03/">Mar 2009</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02/">Feb 2009</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01/">Jan 2009</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12/">Dec 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/11/">Nov 2008</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/10/">Oct 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09/">Sep 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08/">Aug 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07/">Jul 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06/">Jun 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05/">May 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04/">Apr 2008</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03/">Mar 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02/">Feb 2008</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01/">Jan 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12/">Dec 2007</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11/">Nov 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10/">Oct 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09/">Sep 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08/">Aug 2007</a><span class="archive-list-count">31</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07/">Jul 2007</a><span class="archive-list-count">34</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06/">Jun 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05/">May 2007</a><span class="archive-list-count">25</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04/">Apr 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03/">Mar 2007</a><span class="archive-list-count">50</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02/">Feb 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01/">Jan 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12/">Dec 2006</a><span class="archive-list-count">5</span></li></ul>
- </div>
-  
-</div>
-<div id="main" class="archive-part clearfix">
-  <div id="archive-page">
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2012/10/10/rp-filter-e7-9a-84-e4-b8-80-e4-b8-aa-e4-be-8b-e5-ad-90/" title="rp_filter 的一个例子" itemprop="url">
-  
-
-    <time datetime="2012-10-10T20:56:42.000Z" itemprop="datePublished">Oct 10 2012</time>
-
-
-    <h1 itemprop="name">rp_filter 的一个例子</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2012/09/16/-e4-b8-ba-e4-bb-80-e4-b9-88-e4-bd-a0-e4-b8-8d-e5-ba-94-e8-af-a5-e7-88-b1-e5-9b-bd/" title="为什么你不应该爱国" itemprop="url">
-  
-
-    <time datetime="2012-09-17T00:02:38.000Z" itemprop="datePublished">Sep 16 2012</time>
-
-
-    <h1 itemprop="name">为什么你不应该爱国</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2012/09/03/c-binary-literals/" title="C binary literals" itemprop="url">
-  
-
-    <time datetime="2012-09-03T17:01:40.000Z" itemprop="datePublished">Sep 3 2012</time>
-
-
-    <h1 itemprop="name">C binary literals</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2012/08/21/bash-e7-bd-91-e7-bb-9c-e6-8e-a5-e5-8f-a3/" title="bash 网络接口" itemprop="url">
-  
-
-    <time datetime="2012-08-21T16:58:12.000Z" itemprop="datePublished">Aug 21 2012</time>
-
-
-    <h1 itemprop="name">bash 网络接口</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2012/08/15/linux-e5-86-85-e6-a0-b8-e4-b8-ad-e7-9a-84-kmp-e5-ae-9e-e7-8e-b0/" title="Linux 内核中的 KMP 实现" itemprop="url">
-  
-
-    <time datetime="2012-08-16T05:52:17.000Z" itemprop="datePublished">Aug 15 2012</time>
-
-
-    <h1 itemprop="name">Linux 内核中的 KMP 实现</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2012/08/09/git-reflog/" title="撤销 git 操作" itemprop="url">
-  
-
-    <time datetime="2012-08-09T20:54:28.000Z" itemprop="datePublished">Aug 9 2012</time>
-
-
-    <h1 itemprop="name">撤销 git 操作</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2012/08/04/-e5-85-b3-e4-ba-8e-schedule-e5-87-bd-e6-95-b0/" title="关于 schedule() 函数" itemprop="url">
-  
-
-    <time datetime="2012-08-04T20:30:00.000Z" itemprop="datePublished">Aug 4 2012</time>
-
-
-    <h1 itemprop="name">关于 schedule() 函数</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2012/07/26/-e5-9c-a8-kvm-e4-b8-ad-e6-90-ad-e5-bb-ba-vlan-e5-92-8c-ipv6-e6-b5-8b-e8-af-95-e7-8e-af-e5-a2-83/" title="KVM 中搭建 VLAN 和 IPv6 环境" itemprop="url">
-  
-
-    <time datetime="2012-07-27T05:37:11.000Z" itemprop="datePublished">Jul 26 2012</time>
-
-
-    <h1 itemprop="name">KVM 中搭建 VLAN 和 IPv6 环境</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2012/07/20/-e5-8e-bb-e5-b0-bc-e7-8e-9b-e7-9a-84-e7-8e-b0-e5-ae-9e-e5-a5-bd-e4-b9-88-ef-bc-81/" title="去尼玛的现实好么！" itemprop="url">
-  
-
-    <time datetime="2012-07-20T22:53:33.000Z" itemprop="datePublished">Jul 20 2012</time>
-
-
-    <h1 itemprop="name">去尼玛的现实好么！</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2012/07/16/parallelism-concurrency/" title="Parallelism != Concurrency" itemprop="url">
-  
-
-    <time datetime="2012-07-17T01:13:23.000Z" itemprop="datePublished">Jul 16 2012</time>
-
-
-    <h1 itemprop="name">Parallelism != Concurrency</h1>
-
-  </a>
-</section>
-
-
-  <nav id="page-nav" class="clearfix archive-nav">
-    <a class="extend prev" rel="prev" href="/archives/page/3/"><span></span>Prev</a><a class="page-number" href="/archives/">1</a><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/archives/page/5/">5</a><a class="page-number" href="/archives/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/71/">71</a><a class="extend next" rel="next" href="/archives/page/5/">Next<span></span></a>
-  </nav>
-
+        
+      
+      <div class="clearfix"></div>
+    </footer>
   </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2012-09-17T00:02:38.000Z"><a href="/2012/09/16/-e4-b8-ba-e4-bb-80-e4-b9-88-e4-bd-a0-e4-b8-8d-e5-ba-94-e8-af-a5-e7-88-b1-e5-9b-bd/">Sep 16 2012</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2012/09/16/-e4-b8-ba-e4-bb-80-e4-b9-88-e4-bd-a0-e4-b8-8d-e5-ba-94-e8-af-a5-e7-88-b1-e5-9b-bd/">为什么你不应该爱国</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <blockquote>
+<p>极权最有效的统治术是仇恨教育，塑造一个远在天边的外在敌人，人们就会忘记身边的痛苦。</p>
+<p>——《1984》<br>在我们这个世界上，有些东西比爱国要重要一万倍，那就是生命与尊严、自由与民主、公平与正义。这些都是整个人类生存和发展的基础，是普世价值观，不会因为国家、种族的不同而有所改变。任何一个国家，尤其是你的国家，如果维护不了它们，那么这个国家就没有存在的必要和基础，就根本不值得你去爱。如果你的国家连为何要在一起组成这个国家都回答不了，那么这个国家就没有必要去爱。</p>
+</blockquote>
+<p>自由就像空气，拥有它时，你甚至感觉不到它的存在。一旦没有自由时，它比什么都重要，值得你用生命去捍卫。而爱国，只是在此基础上可有可无的东西。没有自由，没有尊严就去谈爱国纯属扯淡，毫无意义。任何形式的爱国都不应该和这些普世价值观冲突，如果有，那你应该毫不犹豫地抛弃爱国，去捍卫自由和尊严，不管他们是不是你的同胞。</p>
+<p>退一步讲，就算我们应该爱国，那爱国的前提至少也得是这个国家属于你才行吧？问题是，你觉得这个国家哪里属于你了？你买的房子，70年之后就不是你的了；代表你去开会的人，也不是你投票选出来的；你纳税养的人民公仆，也是先为领导服务；除了你必须纳税是真实的外，这个国家有哪个地方算是属于你的了？一个不属于你的国家你凭什么去爱？</p>
+<p>更何况爱国本身就是不对的。如果爱国是正确的，那么纳粹统治期间的德国人民效忠纳粹就是正确的；如果爱国正确的，那么军国主义时期的日本人民崇尚战争就是正确的。既然你反对侵略战争，反对军国主义，那何必举着爱自己国家的旗号去反对别人爱国？既然你赞同普世价值观，那么当你自己同胞的自由受到侵害，社会正义得不到伸张时，你为什么不上街？而当一个遥远的假想的敌人购买了一个你这辈子都不会去的小岛时你反而上街了？就算这个小岛收回了又如何？你的自由会收回嘛？你国家的社会正义会多哪怕一点嘛？贪污腐败会减少一点嘛？不会！</p>
+<p>相反，如果我们从今天起，不爱国，爱自由，爱公平，爱民主，努力争取自己的权利，那么我们的国家过不了多久就会变成一个自由、公平、民主的国家，就会变成一个真正值得你去爱的国家，到那时候爱国只是一个自然而然的感情罢了。</p>
+<p>“<strong>除非你能消除人类的爱国之心，否则世界就永远不会太平。</strong>”</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2012-09-03T17:01:40.000Z"><a href="/2012/09/03/c-binary-literals/">Sep 3 2012</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2012/09/03/c-binary-literals/">C binary literals</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>众所周知，C 语言中只有十进制、十六进制和八进制的常数表示（literal），没有二进制的常数表示。有时候我们很想用二进制的常数，因为它设置了哪些位一目了然。当然了，十六进制和八进制在某种程度上也行，对于熟练的人或许一眼就能看出，但是有二进制的常数表示不是更好嘛？</p>
+<p><a href="http://bytes.com/topic/c/answers/219656-literal-binary" target="_blank" rel="external">这里</a>有人就给出了一个解决方法，构造一个宏接受二进制的“常量”，这样我们就可以通过它来直接使用二进制常量了。其实代码很容易理解，见下：</p>
+<p>[c]<br>/<em> Binary constant generator macro<br>By Tom Torfs - donated to the public domain
+</em>/</p>
+<p>/<em> All macro’s evaluate to compile-time constants </em>/</p>
+<p>/<em> **</em> helper macros <em>*</em>/</p>
+<p>/<em> turn a numeric literal into a hex constant<br>(avoids problems with leading zeroes)<br>8-bit constants max value 0x11111111, always fits in unsigned long
+</em>/</p>
+<h1 id="define_HEX__(n)_0x##n##LU">define HEX__(n) 0x##n##LU</h1>
+<p>/<em> 8-bit conversion function </em>/</p>
+<h1 id="define_B8__(x)_((x&amp;0x0000000FLU)?1:0)">define B8__(x) ((x&amp;0x0000000FLU)?1:0)</h1>
+<pre><code>    +((<span class="tag">x</span>&amp;<span class="tag">amp</span>;0<span class="tag">x000000F0LU</span>)?2<span class="pseudo">:0)</span> 
+    +((<span class="tag">x</span>&amp;<span class="tag">amp</span>;0<span class="tag">x00000F00LU</span>)?4<span class="pseudo">:0)</span> 
+    +((<span class="tag">x</span>&amp;<span class="tag">amp</span>;0<span class="tag">x0000F000LU</span>)?8<span class="pseudo">:0)</span> 
+    +((<span class="tag">x</span>&amp;<span class="tag">amp</span>;0<span class="tag">x000F0000LU</span>)?16<span class="pseudo">:0)</span> 
+    +((<span class="tag">x</span>&amp;<span class="tag">amp</span>;0<span class="tag">x00F00000LU</span>)?32<span class="pseudo">:0)</span> 
+    +((<span class="tag">x</span>&amp;<span class="tag">amp</span>;0<span class="tag">x0F000000LU</span>)?64<span class="pseudo">:0)</span> 
+    +((<span class="tag">x</span>&amp;<span class="tag">amp</span>;0<span class="tag">xF0000000LU</span>)?128<span class="pseudo">:0)</span>
+</code></pre><p>/<em> **</em> user macros <em>*</em>/</p>
+<p>/<em> for upto 8-bit binary constants </em>/</p>
+<h1 id="define_B8(d)_((unsigned_char)B8(HEX(d)))">define B8(d) ((unsigned char)B8<strong>(HEX</strong>(d)))</h1>
+<p>/<em> for upto 16-bit binary constants, MSB first </em>/</p>
+<h1 id="define_B16(dmsb,dlsb)_(((unsigned_short)B8(dmsb)&lt;&lt;8)">define B16(dmsb,dlsb) (((unsigned short)B8(dmsb)&lt;&lt;8)</h1>
+<pre><code>        + <span class="function">B8</span>(dlsb))
+</code></pre><p>/<em> for upto 32-bit binary constants, MSB first </em>/</p>
+<h1 id="define_B32(dmsb,db2,db3,dlsb)_(((unsigned_long)B8(dmsb)&lt;&lt;24)">define B32(dmsb,db2,db3,dlsb) (((unsigned long)B8(dmsb)&lt;&lt;24)</h1>
+<pre><code>            + ((unsigned long)B8(db2)&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;<span class="number">16</span>) 
+            + ((unsigned long)B8(db3)&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;<span class="number">8</span>) 
+            + B8(dlsb))
+</code></pre><p>/<em> Sample usage:<br>B8(01010101) = 85<br>B16(10101010,01010101) = 43605<br>B32(10000000,11111111,10101010,01010101) = 2164238933
+</em>/</p>
+<p>[/c]</p>
+<p>把这段代码放到头文件中，使用的时候 #include 进去就行了。当然了，这最好还是编译器支持才行，幸运的是，gcc 从<a href="http://gcc.gnu.org/gcc-4.3/changes.html" target="_blank" rel="external">4.3</a> 开始就已经支持二进制常数了！以0b或者0B为前缀即可，比如：0b01010101。</p>
+<p>示例代码如下：</p>
+<p>[c]</p>
+<h1 id="include">include</h1>
+<p>int main(void)<br>{<br>    assert(B8(01010101) == 85);<br>    assert(B8(01010101) == 0b01010101); //gcc extension!!<br>    assert(B8(11111111) == 0xff);<br>    assert(B8(00111111) == 077);<br>    assert(B16(10101010,01010101) == 43605);<br>    assert(B32(10000000,11111111,10101010,01010101) == 2164238933);<br>    return 0;<br>}<br>[/c]</p>
+<p>顺便说一句，在C++中你可以使用 <a href="http://www.cplusplus.com/reference/bitset/bitset/" target="_blank" rel="external">std::bitset</a>。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2012-08-21T16:58:12.000Z"><a href="/2012/08/21/bash-e7-bd-91-e7-bb-9c-e6-8e-a5-e5-8f-a3/">Aug 21 2012</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2012/08/21/bash-e7-bd-91-e7-bb-9c-e6-8e-a5-e5-8f-a3/">bash 网络接口</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>我很早以前就见过 /dev/tcp/&lt;host&gt;/&lt;port&gt; 这个接口，但一直以为是某个 BSD 内核实现了一个特殊的文件系统，因为 Linux 上面很明显没有 /dev/tcp 这个目录。直到今天我才发现，这个目录其实是 bash 自己实现的！！这么以来就可以不借助wget，nc 来实现网络连接了！设计这么一个接口是要逆天了嘛！</p>
+<p>使用这个接口很简单，如下所示：</p>
+<p><pre>bash-4.2$ cat &lt;/dev/tcp/time.nist.gov/13</pre></p>
+<p>56188 12-09-18 15:34:26 50 0 0 733.5 UTC(NIST) *</p>
+<p>bash-4.2$ exec 3&lt;&gt;/dev/tcp/www.w3.org/80<br>bash-4.2$ echo -e “GET / HTTP/1.0nn” &gt;&amp;3<br>bash-4.2$ cat &lt;&amp;3<br>HTTP/1.1 200 OK<br>Date: Tue, 18 Sep 2012 15:41:08 GMT<br>Server: Apache/2<br>Content-Location: Home.html<br>Vary: negotiate,accept<br>TCN: choice<br>Last-Modified: Tue, 18 Sep 2012 14:06:27 GMT<br>ETag: “8f75-4c9fa65657ec0;89-3f26bd17a2f00”<br>Accept-Ranges: bytes<br>Content-Length: 36725<br>Cache-Control: max-age=600<br>Expires: Tue, 18 Sep 2012 15:51:08 GMT<br>P3P: policyref=”<a href="http://www.w3.org/2001/05/P3P/p3p.xml" target="_blank" rel="external">http://www.w3.org/2001/05/P3P/p3p.xml</a>“<br>Connection: close<br>Content-Type: text/html; charset=utf-8<br>…<br>在 bash 的源代码树 redir.c 文件中，我们不难发现下面的代码：</p>
+<p>[c]<br>/<em> A list of pattern/value pairs for filenames that the redirection<br>   code handles specially. </em>/<br>static STRING_INT_ALIST _redir_special_filenames[] = {</p>
+<h1 id="if_!defined_(HAVE_DEV_FD)">if !defined (HAVE_DEV_FD)</h1>
+<p>  { “/dev/fd/[0-9]*”, RF_DEVFD },</p>
+<h1 id="endif">endif</h1>
+<h1 id="if_!defined_(HAVE_DEV_STDIN)">if !defined (HAVE_DEV_STDIN)</h1>
+<p>  { “/dev/stderr”, RF_DEVSTDERR },<br>  { “/dev/stdin”, RF_DEVSTDIN },<br>  { “/dev/stdout”, RF_DEVSTDOUT },</p>
+<h1 id="endif-1">endif</h1>
+<h1 id="if_defined_(NETWORK_REDIRECTIONS)">if defined (NETWORK_REDIRECTIONS)</h1>
+<p>  { “/dev/tcp/<em>/</em>“, RF_DEVTCP },<br>  { “/dev/udp/<em>/</em>“, RF_DEVUDP },</p>
+<h1 id="endif-2">endif</h1>
+<p>  { (char *)NULL, -1 }<br>};</p>
+<p>…<br>static int<br>redir_open (filename, flags, mode, ri)<br>     char *filename;<br>     int flags, mode;<br>     enum r_instruction ri;<br>{<br>  int fd, r;</p>
+<p>  r = find_string_in_alist (filename, _redir_special_filenames, 1);<br>  if (r &gt;= 0)<br>    return (redir_special_open (r, filename, flags, mode, ri));</p>
+<p>  /<em> If we are in noclobber mode, you are not allowed to overwrite<br>     existing files.  Check before opening. </em>/<br>  if (noclobber &amp;&amp; CLOBBERING_REDIRECT (ri))<br>    {<br>      fd = noclobber_open (filename, flags, mode, ri);<br>      if (fd == NOCLOBBER_REDIRECT)<br>        return (NOCLOBBER_REDIRECT);<br>    }<br>  else<br>    {<br>      fd = open (filename, flags, mode);</p>
+<h1 id="if_defined_(AFS)">if defined (AFS)</h1>
+<pre><code>  <span class="keyword">if</span> ((fd &amp;lt; <span class="number">0</span>) &amp;amp;&amp;amp; (<span class="variable">errno =</span>= EACCES))
+    {
+      <span class="variable">fd =</span> open (filename, flags &amp;amp; ~O_CREAT, mode);
+      <span class="variable">errno =</span> EACCES;       <span class="comment">/* restore errno */</span>
+    }
+</code></pre><h1 id="endif_/_AFS_/">endif /<em> AFS </em>/</h1>
+<pre><code>}
+</code></pre><p>  return fd;<br>}</p>
+<p>[/c]</p>
+<p>可见，当 bash 发现重定向时它会先查看重定向的文件是不是特殊文件，如果是截获它，自行解释之，否则就打开这个文件。当然了，真正解释 /dev/tcp/HOST/PORT 的代码是在 lib/sh/netopen.c 中。</p>
+<p>bash 的手册中也提到了这些特殊接口：</p>
+<blockquote>
+<p>/dev/fd/fd<br>                     If fd is a valid integer, file descriptor fd is duplicated.<br>              /dev/stdin<br>                     File descriptor 0 is duplicated.<br>              /dev/stdout<br>                     File descriptor 1 is duplicated.<br>              /dev/stderr<br>                     File descriptor 2 is duplicated.<br>              /dev/tcp/host/port<br>                     If host is a valid hostname or Internet address, and port is an integer port number or service name, bash attempts<br>                     to open a TCP connection to the corresponding socket.<br>              /dev/udp/host/port<br>                     If host is a valid hostname or Internet address, and port is an integer port number or service name, bash attempts<br>                     to open a UDP connection to the corresponding socket.</p>
+</blockquote>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2012-08-16T05:52:17.000Z"><a href="/2012/08/15/linux-e5-86-85-e6-a0-b8-e4-b8-ad-e7-9a-84-kmp-e5-ae-9e-e7-8e-b0/">Aug 15 2012</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2012/08/15/linux-e5-86-85-e6-a0-b8-e4-b8-ad-e7-9a-84-kmp-e5-ae-9e-e7-8e-b0/">Linux 内核中的 KMP 实现</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Linux 内核中使用到了字符串搜索，所以它也有<a href="http://en.wikipedia.org/wiki/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm" target="_blank" rel="external"> KMP 算法</a>的实现，代码在 lib/ts_kmp.c 中。</p>
+<p>Linux 内核中用到 KMP 算法的地方有三处：iptables string match 模块、iptables conntrack amanda 模块（不知道这个是用来干什么的）、以及 ematch qdisc。iptables string match 是通过字符串搜索来匹配一个包，然后进行相应的处理，比如用下面的命令可以阻止对domain.com服务器的HTTP请求：</p>
+<p>iptables -I INPUT 1 -p tcp —dport 80 -m string —string “domain.com” —algo kmp -j DROP</p>
+<p>至于 ematch qdisc，和它类似，可以通过字符串匹配到对应的包进行 QoS，比如<a href="http://lwn.net/Articles/141160/" target="_blank" rel="external">这个例子</a>：</p>
+<p>tc filter add dev eth0 parent 10:12 prio 10 protocol ip basic match ‘text(kmp foobar from 0 to 200)’ flowid 10:1</p>
+<p>总之，在内核中实现 KMP 算法是有必要的。下面来看具体实现。</p>
+<p>我们知道，KMP 算法中最核心的地方就是 prefix 的计算，也称为 next 数组，它用来表示当字符 pattern[i] 匹配失败后应该从 pattern[next[i]] 字符继续进行匹配，而不总是从头开始，因此它的时间复杂度是O(n)。如果你对 KMP 不熟悉的话，网上有很多介绍，我觉得<a href="http://chaoswork.com/blog/2011/06/14/kmp%E7%AE%97%E6%B3%95%E5%B0%8F%E7%BB%93/" target="_blank" rel="external">这篇文章</a>还算不错，在继续看下面的代码之前可以读一下它。</p>
+<p>内核中实现比网上的很多代码都更容易理解，因为在匹配开始之前，它就先把 prefix 计算好了。计算 prefix 的函数是：</p>
+<p>[c]<br>static inline void compute_prefix_tbl(const u8 <em>pattern, unsigned int len,<br>                                      unsigned int </em>prefix_tbl, int flags)<br>{<br>        unsigned int k, q;<br>        const u8 icase = flags &amp; TS_IGNORECASE;</p>
+<pre><code>    <span class="keyword">for</span> (k = <span class="number">0</span>, q = <span class="number">1</span>; q  <span class="number">0</span> &amp;amp;&amp;amp; (icase ? <span class="keyword">toupper</span>(pattern[k]) : pattern[k])
+                != (icase ? <span class="keyword">toupper</span>(pattern[q]) : pattern[q]))
+                    k = prefix_tbl[k-<span class="number">1</span>];
+            <span class="keyword">if</span> ((icase ? <span class="keyword">toupper</span>(pattern[k]) : pattern[k])
+                == (icase ? <span class="keyword">toupper</span>(pattern[q]) : pattern[q]))
+                    k++;
+            prefix_tbl[q] = k;
+    }
+</code></pre><p>}<br>[/c]</p>
+<p>结合 KMP 实现的主函数来理解更一目了然：</p>
+<p>[c]<br>static unsigned int kmp_find(struct ts_config <em>conf, struct ts_state </em>state)<br>{<br>        struct ts_kmp <em>kmp = ts_config_priv(conf);<br>        unsigned int i, q = 0, text_len, consumed = state-&gt;offset;<br>        const u8 </em>text;<br>        const int icase = conf-&gt;flags &amp; TS_IGNORECASE;</p>
+<pre><code>    <span class="keyword">for</span> (;;) {
+            text_len = conf-&amp;<span class="keyword">gt</span>;get_next_block(consumed, &amp;amp;text, conf, <span class="keyword">state</span>);
+
+            <span class="keyword">if</span> (unlikely(text_len == <span class="number">0</span>))
+                    <span class="keyword">break</span>;
+
+            <span class="keyword">for</span> (i = <span class="number">0</span>; i  <span class="number">0</span> &amp;amp;&amp;amp; kmp-&amp;<span class="keyword">gt</span>;pattern[<span class="keyword">q</span>]
+                        != (icase ? toupper(text[i]) : text[i]))
+                            <span class="keyword">q</span> = kmp-&amp;<span class="keyword">gt</span>;prefix_tbl[<span class="keyword">q</span> - <span class="number">1</span>];
+                    <span class="keyword">if</span> (kmp-&amp;<span class="keyword">gt</span>;pattern[<span class="keyword">q</span>]
+                        == (icase ? toupper(text[i]) : text[i]))
+                            <span class="keyword">q</span>++;
+                    <span class="keyword">if</span> (unlikely(<span class="keyword">q</span> == kmp-&amp;<span class="keyword">gt</span>;pattern_len)) {
+                            <span class="keyword">state</span>-&amp;<span class="keyword">gt</span>;offset = consumed + i + <span class="number">1</span>;
+                            <span class="keyword">return</span> <span class="keyword">state</span>-&amp;<span class="keyword">gt</span>;offset - kmp-&amp;<span class="keyword">gt</span>;pattern_len;
+                    }
+            }
+
+            consumed += text_len;
+    }
+
+    <span class="keyword">return</span> UINT_MAX;
+</code></pre><p>}<br>[/c]</p>
+<p>内核中的 KMP 函数接口是封装过的，你不能直接调用它。如果你的内核模块中要使用它，可以参考 lib/textsearch.c 中给的例子：</p>
+<p>[c]<br>int pos;<br>struct ts_config <em>conf;<br>struct ts_state state;<br>const char </em>pattern = “chicken”;<br>const char *example = “We dance the funky chicken”;</p>
+<p>conf = textsearch_prepare(“kmp”, pattern, strlen(pattern),<br>                             GFP_KERNEL, TS_AUTOLOAD);<br>if (IS_ERR(conf)) {<br>    err = PTR_ERR(conf);<br>    goto errout;<br>}</p>
+<p>pos = textsearch_find_continuous(conf, &amp;state, example, strlen(example));<br>if (pos != UINT_MAX)<br>    panic(“Oh my god, dancing chickens at %dn”, pos);</p>
+<p>textsearch_destroy(conf);<br>[/c]</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2012-08-09T20:54:28.000Z"><a href="/2012/08/09/git-reflog/">Aug 9 2012</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2012/08/09/git-reflog/">撤销 git 操作</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>今天脑抽了一下，在做 <code>git rebase -i</code> 的时候无意识地把某一个 commit 给合并到前一个 commit 里去了，结果是该 commit 丢失，而且前一个 commit 也搞砸了。怎么能撤销这个操作呢？</p>
+<p>Google 搜索了一下，<a href="http://stackoverflow.com/questions/2510276/undoing-git-reset" target="_blank" rel="external">发现了</a>还有 <code>git reflog</code> 这个命令，可以查看 git 命令的历史记录，比如我刚才的操作：</p>
+<p>324c85e HEAD@{0}: rebase -i (finish): returning to refs/heads/ipv6<br>324c85e HEAD@{1}: checkout: moving from ipv6 to 324c85e<br>324c85e HEAD@{2}: rebase -i (finish): returning to refs/heads/ipv6<br>324c85e HEAD@{3}: rebase -i (pick): ipv6: use xxxx<br>9fc8e64 HEAD@{4}: rebase -i (fixup): ipv6: unify xxxx<br>2ea2149 HEAD@{5}: rebase -i (fixup): updating HEAD<br>8d1f07b HEAD@{6}: checkout: moving from ipv6 to 8d1f07b<br>0e118d2 HEAD@{7}: commit: ipv6: separate xxxx</p>
+<p>可以看出 HEAD@{7} 这个点就是我应该重置回去的，然后执行 <code>git reset HEAD@{7}</code> 就行了！</p>
+<p>通过 <code>git reflog</code> 也可以撤销 <code>git reset</code> 的操作，非常实用。</p>
+<p>另外，我很惊讶似乎还有不少人不知道 <code>git rebase -i</code> 这个命令。这个命令真的十分强大，我几乎天天都在用，它既可以用来合并补丁，也可以用来切割补丁，还能修改 commit 的记录（具体可自行参考 git-rebase 的手册），可以说是 git 命令中的一把瑞士军刀啊！不过如果你的 git tree 是 public 的，最好不用或者少用 <code>git rebase</code>，我用 <code>git rebase</code> 大多都是在自己的非 public 的树上。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2012-08-04T20:30:00.000Z"><a href="/2012/08/04/-e5-85-b3-e4-ba-8e-schedule-e5-87-bd-e6-95-b0/">Aug 4 2012</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2012/08/04/-e5-85-b3-e4-ba-8e-schedule-e5-87-bd-e6-95-b0/">关于 schedule() 函数</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>今天在 LKML 上看到一个补丁：<a href="http://permalink.gmane.org/gmane.linux.kernel/1337629" target="_blank" rel="external">http://permalink.gmane.org/gmane.linux.kernel/1337629</a>，它对 schedule() 函数做了很好的注释，分享一下：</p>
+<pre>
++ *
++ * The main means of driving the scheduler and thus entering this function are:
++ *
++ *   1\. Explicit blocking: mutex, semaphore, waitqueue, etc.
++ *
++ *   2\. TIF_NEED_RESCHED flag is checked on interrupt and userspace return
++ *      paths. For example, see arch/x86/entry_64.S.
++ *
++ *      To drive preemption between tasks, the scheduler sets the flag in timer
++ *      interrupt handler scheduler_tick().
++ *
++ *   3\. Wakeups don't really cause entry into schedule(). They add a
++ *      task to the run-queue and that's it.
++ *
++ *      Now, if the new task added to the run-queue preempts the current
++ *      task, then the wakeup sets TIF_NEED_RESCHED and schedule() gets
++ *      called on the nearest possible occasion:
++ *
++ *       - If the kernel is preemptible (CONFIG_PREEMPT=y):
++ *
++ *         - in syscall or exception context, at the next outmost
++ *           preempt_enable(). (this might be as soon as the wake_up()'s
++ *           spin_unlock()!)
++ *
++ *         - in IRQ context, return from interrupt-handler to
++ *           preemptible context
++ *
++ *       - If the kernel is not preemptible (CONFIG_PREEMPT is not set)
++ *         then at the next:
++ *
++ *          - cond_resched() call
++ *          - explicit schedule() call
++ *          - return from syscall or exception to user-space
++ *          - return from interrupt-handler to user-space
+</pre>
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2012-07-27T05:37:11.000Z"><a href="/2012/07/26/-e5-9c-a8-kvm-e4-b8-ad-e6-90-ad-e5-bb-ba-vlan-e5-92-8c-ipv6-e6-b5-8b-e8-af-95-e7-8e-af-e5-a2-83/">Jul 26 2012</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2012/07/26/-e5-9c-a8-kvm-e4-b8-ad-e6-90-ad-e5-bb-ba-vlan-e5-92-8c-ipv6-e6-b5-8b-e8-af-95-e7-8e-af-e5-a2-83/">KVM 中搭建 VLAN 和 IPv6 环境</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>普通的 IPv4 环境很简单，如果你使用 virt-manager 的话它自动都给你搭好了。每个 kvm guest 都在同一个子网内，通过 bridge 连接到一起，然后通过 host 上的 NAT 访问外网，如下所示：</p>
+<p><pre># brctl show<br>bridge name    bridge id        STP enabled    interfaces<br>virbr0        8000.5254002e2392    yes        virbr0-nic<br>                            vnet0<br>                            vnet1</pre></p>
+<h1 id="iptables_-L_-t_nat">iptables -L -t nat</h1>
+<p>Chain PREROUTING (policy ACCEPT)<br>target     prot opt source               destination</p>
+<p>Chain INPUT (policy ACCEPT)<br>target     prot opt source               destination</p>
+<p>Chain OUTPUT (policy ACCEPT)<br>target     prot opt source               destination</p>
+<p>Chain POSTROUTING (policy ACCEPT)<br>target     prot opt source               destination<br>MASQUERADE  tcp  —  192.168.122.0/24    !192.168.122.0/24     masq ports: 1024-65535<br>MASQUERADE  udp  —  192.168.122.0/24    !192.168.122.0/24     masq ports: 1024-65535<br>MASQUERADE  all  —  192.168.122.0/24    !192.168.122.0/24<br>稍微有点儿困难的是在此基础上搭建 VLAN 和 IPv6 环境。</p>
+<p>先看VLAN，虽然我们现在还没有 openvswitch，我们可以通过 bridge 设置一个简单的 vlan 局域网。因为 virt-manager 默认使用的是 192.168.122.0/24，我为VLAN单独开了一个 192.168.1.0/24，有两台机器 A 和 B，A 上运行此VLAN的 DHCP 服务，B 就可以直接动态获取地址了。</p>
+<p>机器 A 上运行：</p>
+<p><pre>vconfig add eth0 2<br>ifconfig eth0.2 192.168.1.1<br>dnsmasq —listen-address=192.168.1.1 -i eth0.2 —dhcp-range=192.168.1.2,192.168.1.240</pre><br>机器 B 上运行：</p>
+<p><pre>vconfig add eth0 2<br>dhclient eth0.2</pre><br>注：vconfig 已经过时了，现在都使用 ip，我之所以还使用它是因为整个命令比较短。;-)</p>
+<p>再来看 IPv6，因为我对 IPv6 不熟悉，所以折腾了好长时间最后还是不得不使用 sit tunnel，而且 IP 地址也是静态手工设置的。还是假设 A 和 B 两台机器，先让 IPv4 在上面跑起来，然后在两台机器上分别运行下面的命令：</p>
+<p><pre>echo 1 &gt; /proc/sys/net/ipv4/conf/all/forwarding<br>echo 1 &gt; /proc/sys/net/ipv6/conf/all/forwarding<br>ip tunnel add sit1 mode sit local ${SELF} remote ${REMOTE} dev eth0<br>ip -6 addr add fd00:1:2:3::2/64 dev sit1<br>ip -6 route add fd00:1:2:3::1/64 dev sit1<br>ifconfig sit1 up</pre><br>${SELF} 为自己的IPv4地址；${REMOTE}为对方的IPv4地址，即在A上面为B的地址，B上面为A的地址。他们的IPv6地址分别是fd00:1:2:3::1 和 fd00:1:2:3::2。</p>
+<p>Update：如果使用 libvirt 的话，可以用 virsh net-edit &lt;NET&gt; 编辑网络配置，添加下面两行：</p>
+<p>&lt;ip family=’ipv6’ address=’fd00:1:2:3::1’ prefix=’64’&gt;<br>&lt;/ip&gt;</p>
+<p>可参考<a href="http://libvirt.org/formatnetwork.html#elementsAddress" target="_blank" rel="external">这里</a>。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2012-07-20T22:53:33.000Z"><a href="/2012/07/20/-e5-8e-bb-e5-b0-bc-e7-8e-9b-e7-9a-84-e7-8e-b0-e5-ae-9e-e5-a5-bd-e4-b9-88-ef-bc-81/">Jul 20 2012</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2012/07/20/-e5-8e-bb-e5-b0-bc-e7-8e-9b-e7-9a-84-e7-8e-b0-e5-ae-9e-e5-a5-bd-e4-b9-88-ef-bc-81/">去尼玛的现实好么！</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>时间过得真快，离开大理已经四个多月了。早就开始各种怀念在大理的日子了，尤其是在这么炎热的夏天，一想到大理现在那只有20多度的气温就恨不得买张机票马上飞过去。可是很无奈，现实中有各种各样的事儿让我无法回到大理。</p>
+<p>仿佛离开大理之后再也回不到那种无忧无虑的日子了。在大理的时候每天都那么悠闲，喝喝茶、晒晒太阳、摆摆地摊，从来不用为现在为将来发愁，因为来大理的人们大多数也都是这个状态。似乎也只有在大理这种地方，你才能活在当下，不为前途顾虑，不为现实烦恼，无所事事地活在当下……</p>
+<p>仔细想想人这一生：小时候不太懂事，可以毫无顾虑地去玩，这应该是人生最快乐的时光；长大了上了学就开始顾虑各种考试；好不容易挨到高中毕业，上了大学又开始顾虑找工作，找对象；大学毕业了又开始顾虑工作薪水，买车买房子，结婚生孩子；有了孩子顾虑就更多了，一直到孩子长大成人，可那时候我们也已经老了，然后又不得不顾虑自己的身体健康……</p>
+<p>你看看，我们这一辈子能够完完全全只为自己活着的时间能有多少？这其中，能够完完全全活在当下，不去考虑将来的时间更是少之又少！更何况，有些时候为了自己活着和为了别人活着会有很大的冲突，我们不得不在两者之间放弃一个。人这样活着能不累么！</p>
+<p>有时候真想竖起中指对现实说：去尼玛的现实好么！去尼玛的前途好么！老子只想活在当下！</p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/07/1135817454.1783079362.jpg" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2012-07-17T01:13:23.000Z"><a href="/2012/07/16/parallelism-concurrency/">Jul 16 2012</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2012/07/16/parallelism-concurrency/">Parallelism != Concurrency</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Parallelism，中文一般翻译成“并行”；Concurrency，中文一般翻译成“并发”。这两个词往往被混淆使用，即使在英文资料中，中文翻译使得这种情况变得更糟糕。其实这两个词的含义是完全不同的，这里并不是在咬文嚼字，而是想说明它们本质上确实有不同。为了表达方便，下文一律使用英文中的原词。</p>
+<p>Wikipedia 上对 <a href="http://en.wikipedia.org/wiki/Concurrent_programming" target="_blank" rel="external">Concurrency 的定义</a>如下：</p>
+<blockquote>
+<p>Concurrent computing is a form of computing in which programs are designed as collections of <strong>interacting</strong> computational processes that <strong>may be</strong> executed in parallel. Concurrent programs (processes or threads) <strong>can be executed on a single processor</strong> by interleaving the execution steps of each in a time-slicing way, or can be executed in parallel by assigning each computational process to one of a set of processors that may be close or distributed across a network.<br>可见，concurrency 并不意味着一定是 parallelism，它是把多个互相作用的计算过程（注：<strong>上文第一句中的 processes 不是进程的意思！</strong>）组合起来的一种计算形式。为了完成一个大的任务，我们可以把它切割成几个独立的几个步骤，然后把每个步骤交给单独的线程去完成，那么在 UP 上 concurrency 看起来就像是这样：</p>
+</blockquote>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/07/concurrent.gif" target="_blank" rel="external"><img src="/images/" alt="" title="Concurrenncy"></a></p>
+<p><a href="http://en.wikipedia.org/wiki/Parallel_computing" target="_blank" rel="external">Parallelism 的定义</a>如下：</p>
+<blockquote>
+<p>Parallel computing is a form of computation in which many calculations are carried out <strong>simultaneously</strong>, operating on the principle that large problems can often be divided into smaller ones, which are then solved concurrently (“in parallel”).<br>也就是多个计算同时执行，在 SMP 上如下图所示：</p>
+</blockquote>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/07/parallelism.gif" target="_blank" rel="external"><img src="/images/" alt="" title="Parallelism"></a></p>
+<p>这里需要注意的是：广义上 parallelism 并不总是指 SMP，广义的 parallelism 也可以发生在指令上，比如支持 SIMD 的 CPU，像 Intel 的 SSE 指令；也可以发生在 CPU 内部的<a href="http://en.wikipedia.org/wiki/Instruction_pipeline" target="_blank" rel="external">指令 pipeline</a> 上。请结合上下文去理解。</p>
+<p>考虑到现在流行的操作系统都是多任务的，那么 UP 也可以达到 SMP 的效果，对于用户空间的程序来说，多任务操作系统即使运行在 UP 上也是和 SMP 上一样的。<strong><em>因此下文中我们将不再区分 UP 和 SMP，并且假设操作系统就是多任务的，即所有多线程的程序都是并行运行的。</em></strong></p>
+<p>这时候，另一个问题随之而来：有 parallelism 的程序一定是 concurrent 的么？未必！根据上面 concurrency 的定义，不同的处理步骤之间需要是互相作用的（interacting），我们完全可以写一个多线程程序，线程之间没有任何互相的作用：比如我们要处理 [1 ~ 40000] 这个数组，我们可以启动4个线程，让它们分别处理 [1 ~ 10000]、[10000 ~ 20000]、[20000 ~ 30000]、[30000 ~ 40000]，最后主线程把 4 个结果汇总成一个。这个多线程程序显然可以做到 parallelism，但它没有 concurrency！</p>
+<p><a href="http://www.linux-mag.com/id/7411/" target="_blank" rel="external">有人这么认为</a>，说 concurrency 是程序的属性；而 parallelism 程序执行时机器的属性。现在我们可以知道，这是<strong>不严格的</strong>。只有当 parallel 的程序的线程之间有了互相作用之后才会有 concurrency！concurrency 比 parallelism 要难得多。</p>
+<p>Rob Pike 大牛是这么<a href="http://concur.rspace.googlecode.com/hg/talk/concur.html#title-slide" target="_blank" rel="external">概括</a>它们的区别的：</p>
+<blockquote>
+<p><strong>Concurrency is a way to structure a program by breaking it into pieces that can be executed independently. Communication is the means to coordinate the independent executions.</strong><br>所以，concurrency 和 parallelism 的本质区别是，<strong>多个线程/进程（或程序的多个部分）之间有没有互相作用和交流</strong>。这种交流分两种：一种是共享内存，一种是消息传递。前者我们很熟悉，我们最常用的锁（<a href="http://en.wikipedia.org/wiki/Lock_(computer_science" target="_blank" rel="external">Lock</a>)）或者信号量（<a href="http://en.wikipedia.org/wiki/Semaphore_%28programming%29" target="_blank" rel="external">Semaphore</a>）就属于共享内存的一种。</p>
+</blockquote>
+<p>另外，需要说明的是，并不是所有的 paraellel 的程序都使用多线程/进程，它们也可以使用 <a href="http://en.wikipedia.org/wiki/Coroutine" target="_blank" rel="external">coroutine</a>，使用 events。一言以蔽之，parallelism 是建立在同步（synchronous ）代码的基础上，同步代码同时运行；而把一个程序分成几个同步的部分，它们之间允许进行 communication 就有 concurrency 了！</p>
+<p>借用 Rob Pike 使用的图来说明一下就是：</p>
+<p><strong>Original Program</strong></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/07/gophersimple1.jpg" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
+<p><strong>Parallel Program</strong></p>
+<p><strong><a href="http://wangcong.org/blog/wp-content/uploads/2012/07/gophersimple4.jpg" target="_blank" rel="external"><img src="/images/" alt=""></a>
+</strong></p>
+<p><strong>Concurrent Program</strong></p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/07/gophercomplex0.jpg" target="_blank" rel="external"><img src="/images/" alt=""></a></p>
+<p>从图中我们可以一目了然地看出两者之间并没有直接的关系。最后，在《<a href="http://existentialtype.wordpress.com/2011/03/17/parallelism-is-not-concurrency/" target="_blank" rel="external">Parallelism is not concurrency</a>》一文中对此有更精辟的概括：</p>
+<blockquote>
+<p>Concurrency is concerned with nondeterministic composition of programs (or their components).  Parallelism is concerned with asymptotic efficiency of programs with deterministic behavior.  Concurrency is all about managing the unmanageable[… ] Parallelism, on the other hand, is all about dependencies among the subcomputations of a deterministic computation.<br>参考资料：</p>
+</blockquote>
+<p>1. <a href="http://stackoverflow.com/questions/1050222/concurrency-vs-parallelism-what-is-the-difference" target="_blank" rel="external">http://stackoverflow.com/questions/1050222/concurrency-vs-parallelism-what-is-the-difference</a><br>2. <a href="http://existentialtype.wordpress.com/2011/03/17/parallelism-is-not-concurrency/" target="_blank" rel="external">http://existentialtype.wordpress.com/2011/03/17/parallelism-is-not-concurrency/</a><br>3. <a href="http://ghcmutterings.wordpress.com/2009/10/06/parallelism-concurrency/" target="_blank" rel="external">http://ghcmutterings.wordpress.com/2009/10/06/parallelism-concurrency/</a><br>4. <a href="http://stackoverflow.com/questions/1897993/difference-between-concurrent-programming-and-parallel-programming" target="_blank" rel="external">http://stackoverflow.com/questions/1897993/difference-between-concurrent-programming-and-parallel-programming</a><br>5. <a href="http://concur.rspace.googlecode.com/hg/talk/concur.html#title-slide" target="_blank" rel="external">http://concur.rspace.googlecode.com/hg/talk/concur.html#title-slide</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+
+  <nav id="pagination">
+  
+    <a href="/archives/page/3/" class="alignleft prev">Prev</a>
+  
+  
+    <a href="/archives/page/5/" class="alignright next">Next</a>
+  
+  <div class="clearfix"></div>
+</nav>
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:wangcong.org">
+  </form>
 </div>
 
-      </div>
-      <footer><div id="footer" >
-	
-	
-	<div class="social-font" class="clearfix">
-		
-		
-		<a href="https://github.com/congwang" target="_blank" class="icon-github" title="github"></a>
-		
-		
-		
-		<a href="https://twitter.com/conglinux" target="_blank" class="icon-twitter" title="twitter"></a>
-		
-		
-		
-		
-		
-		
-		
-	</div>
-		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2016 
-		
-		<a href="http://wangcong.org/about" target="_blank" title="Cong Wang">Cong Wang</a>
-		
-		</p>
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Book-Reviews/">Book Reviews</a><small>18</small></li>
+  
+    <li><a href="/categories/China/">China</a><small>2</small></li>
+  
+    <li><a href="/categories/Collection/">Collection</a><small>25</small></li>
+  
+    <li><a href="/categories/Life/">Life</a><small>324</small></li>
+  
+    <li><a href="/categories/Linux-Application/">Linux Application</a><small>73</small></li>
+  
+    <li><a href="/categories/Linux-Kernel/">Linux Kernel</a><small>64</small></li>
+  
+    <li><a href="/categories/Love/">Love</a><small>6</small></li>
+  
+    <li><a href="/categories/Movies/">Movies</a><small>19</small></li>
+  
+    <li><a href="/categories/Programming/">Programming</a><small>152</small></li>
+  
+    <li><a href="/categories/Science-Fiction/">Science Fiction</a><small>8</small></li>
+  
+    <li><a href="/categories/Travel/">Travel</a><small>19</small></li>
+  
+  </ul>
 </div>
-</footer>
-      <script src="/js/jquery-2.0.3.min.js"></script>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/geek/">geek</a><small>1</small></li>
+  
+    <li><a href="/tags/handling/">handling</a><small>1</small></li>
+  
+    <li><a href="/tags/joke/">joke</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/tags/signal/">signal</a><small>1</small></li>
+  
+    <li><a href="/tags/unix/">unix</a><small>1</small></li>
+  
+    <li><a href="/tags/vim/">vim</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2017 Cong Wang
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 <script src="/js/jquery.imagesloaded.min.js"></script>
 <script src="/js/gallery.js"></script>
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.navbar').click(function(){
-    $('header nav').toggleClass('shownav');
-  });
-  var myWidth = 0;
-  function getSize(){
-    if( typeof( window.innerWidth ) == 'number' ) {
-      myWidth = window.innerWidth;
-    } else if( document.documentElement && document.documentElement.clientWidth) {
-      myWidth = document.documentElement.clientWidth;
-    };
-  };
-  var m = $('#main'),
-      a = $('#asidepart'),
-      c = $('.closeaside'),
-      o = $('.openaside');
-  $(window).resize(function(){
-    getSize(); 
-    if (myWidth >= 1024) {
-      $('header nav').removeClass('shownav');
-    }else
-    {
-      m.removeClass('moveMain');
-      a.css('display', 'block').removeClass('fadeOut');
-      o.css('display', 'none');
-        
-    }
-  });
-  c.click(function(){
-    a.addClass('fadeOut').css('display', 'none');
-    o.css('display', 'block').addClass('fadeIn');
-    m.addClass('moveMain');
-  });
-  o.click(function(){
-    o.css('display', 'none').removeClass('beforeFadeIn');
-    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
-    m.removeClass('moveMain');
-  });
-  $(window).scroll(function(){
-    o.css("top",Math.max(80,260-$(this).scrollTop()));
-  });
-});
-</script>
-
-
-
-
 
 <script type="text/javascript">
-
 var disqus_shortname = 'disqus_ciEwcJAF0E';
 
-(function(){
-  var dsq = document.createElement('script');
-  dsq.type = 'text/javascript';
-  dsq.async = true;
-  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-}());
 (function(){
   var dsq = document.createElement('script');
   dsq.type = 'text/javascript';
@@ -327,33 +705,13 @@ var disqus_shortname = 'disqus_ciEwcJAF0E';
 
 
 
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
 
-
-
-
-
-<!-- Analytics Begin -->
-
-
-
-
-
-<!-- Analytics End -->
-
-<!-- Totop Begin -->
-
-	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
-	</div>
-	<script src="/js/totop.js"></script>
-
-<!-- Totop End -->
-
-<!-- MathJax Begin -->
-<!-- mathjax config similar to math.stackexchange -->
-
-
-<!-- MathJax End -->
-
-    </body>
-   </html>
+</body>
+</html>

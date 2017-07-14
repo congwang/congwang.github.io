@@ -1,321 +1,675 @@
-
-  <!DOCTYPE HTML>
-<html >
+<!DOCTYPE HTML>
+<html>
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   
-    <title>Archives: 2008/11 | A Geek&#39;s Page</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
-    
-    <meta name="author" content="Cong Wang">
-    
-    
-    <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="A Geek's Page">
-<meta property="og:url" content="http://wangcong.org/archives/2008/11/">
-<meta property="og:site_name" content="A Geek's Page">
-<meta property="og:description">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="A Geek's Page">
-<meta name="twitter:description">
-<meta name="twitter:creator" content="@conglinux">
+  <title>Archives: 2008/11 | A Geek&#39;s Page</title>
+  <meta name="author" content="Cong Wang">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
+  
+  <meta property="og:site_name" content="A Geek&#39;s Page"/>
 
-    
-    <link rel="alternative" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
-    
-    
-    <link rel="icon" href="/img/favicon.ico">
-    
-    
-    <link rel="apple-touch-icon" href="/img/jacman.jpg">
-    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
-    
-    <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="A Geek&#39;s Page" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
 
 </head>
 
-    <body>
-      <header>
-        <div>
-		
-			<div id="imglogo">
-				<a href="/"><img src="/img/logo.png" alt="A Geek&#39;s Page" title="A Geek&#39;s Page"/></a>
-			</div>
-			
-			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="A Geek&#39;s Page">A Geek&#39;s Page</a></h1>
-				<h2 class="blog-motto"></h2>
-			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
-			</a></div>
-			<nav class="animated">
-				<ul>
-					<ul>
-					 
-						<li><a href="/">Home</a></li>
-					
-						<li><a href="/archives">Archives</a></li>
-					
-						<li><a href="/about-2">About</a></li>
-					
-					<li>
- 					
-					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
-						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
-						<input type="hidden" name="q" value="site:wangcong.org">
-					</form>
-					
-					</li>
-				</ul>
-			</nav>			
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">A Geek&#39;s Page</a></h1>
+  <h2><a href="/"></a></h2>
 </div>
-      </header>
-      <div id="container">
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title">2008/11</h2>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2008-11-29T05:41:50.000Z"><a href="/2008/11/28/c-e6-a0-87-e5-87-86-e5-87-bd-e6-95-b0-e6-9f-a5-e8-af-a2/">Nov 28 2008</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2008/11/28/c-e6-a0-87-e5-87-86-e5-87-bd-e6-95-b0-e6-9f-a5-e8-af-a2/">C++标准函数查询</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>man page只能查Linux系统调用，C标准函数和其它一些glibc函数，不能查C++标准库函数。怎么才能像man那样查询C++的函数呢？我写了下面这么个Perl脚本来完成。</p>
+<p>用法：</p>
+<p>$ ./mancpp cmath::sin<br>$ ./mancpp cmath::cos<br>$ ./mancpp vector::size<br>$ ./mancpp algorithm::count_if</p>
+<p>代码：</p>
+<p>[perl]</p>
+<h1 id="!/usr/bin/perl">!/usr/bin/perl</h1>
+<p>use strict;<br>use warnings;<br>use LWP::Simple;</p>
+<p>die “Please provide one argument.n” unless @ARGV==1;<br>die “Use class::function format.n” unless $ARGV[0] =~ /S::S/;</p>
+<p>my ($class, $func) = split(/::/, $ARGV[0]);<br>my $file = “/tmp/$class.$func.html”;</p>
+<p>if ( ! -f “$file”) {<br>    my $url;</p>
+<pre><code><span class="keyword">if</span> (<span class="variable">$class</span> <span class="subst">=</span>~ <span class="subst">/</span>^c<span class="subst">/</span>) {
+    <span class="variable">$url</span> <span class="subst">=</span> <span class="string">"http://www.cplusplus.com/reference/clibrary/$class"</span><span class="built_in">.</span><span class="string">"/"</span><span class="built_in">.</span><span class="variable">$func.</span><span class="string">".html"</span>;
+} elsif (<span class="variable">$class</span> <span class="literal">eq</span> <span class="string">"filebuf"</span> <span class="subst">||</span> <span class="variable">$class</span> <span class="literal">eq</span> <span class="string">"fstream"</span>
+    <span class="subst">||</span> <span class="variable">$class</span> <span class="literal">eq</span> <span class="string">"ifstream"</span> <span class="subst">||</span> <span class="variable">$class</span> <span class="literal">eq</span> <span class="string">"ios"</span>
+    <span class="subst">||</span> <span class="variable">$class</span> <span class="literal">eq</span> <span class="string">"iostream"</span> <span class="subst">||</span> <span class="variable">$class</span> <span class="literal">eq</span> <span class="string">"ios_base"</span>
+    <span class="subst">||</span> <span class="variable">$class</span> <span class="literal">eq</span> <span class="string">"istream"</span> <span class="subst">||</span> <span class="variable">$class</span> <span class="literal">eq</span> <span class="string">"istringstream"</span>
+    <span class="subst">||</span> <span class="variable">$class</span> <span class="literal">eq</span> <span class="string">"ofstream"</span> <span class="subst">||</span> <span class="variable">$class</span> <span class="literal">eq</span> <span class="string">"ostream"</span>
+    <span class="subst">||</span> <span class="variable">$class</span> <span class="literal">eq</span> <span class="string">"ostringstream"</span> <span class="subst">||</span> <span class="variable">$class</span> <span class="literal">eq</span> <span class="string">"streambuf"</span>
+    <span class="subst">||</span> <span class="variable">$class</span> <span class="literal">eq</span> <span class="string">"stringbuf"</span> <span class="subst">||</span> <span class="variable">$class</span> <span class="literal">eq</span> <span class="string">"stringstream"</span>){
+    <span class="variable">$url</span> <span class="subst">=</span> <span class="string">"http://www.cplusplus.com/reference/iostream/$class"</span><span class="built_in">.</span><span class="string">"/"</span><span class="built_in">.</span><span class="variable">$func.</span><span class="string">".html"</span>;
+} elsif(<span class="variable">$class</span> <span class="literal">eq</span> <span class="string">"vector"</span> <span class="subst">||</span> <span class="variable">$class</span> <span class="literal">eq</span> <span class="string">"bitset"</span> <span class="subst">||</span> <span class="variable">$class</span> <span class="literal">eq</span> <span class="string">"deque"</span>
+    <span class="subst">||</span> <span class="variable">$class</span> <span class="literal">eq</span> <span class="string">"list"</span> <span class="subst">||</span> <span class="variable">$class</span> <span class="literal">eq</span> <span class="string">"stack"</span> <span class="subst">||</span> <span class="variable">$class</span> <span class="literal">eq</span> <span class="string">"map"</span>
+    <span class="subst">||</span> <span class="variable">$class</span> <span class="literal">eq</span> <span class="string">"queue"</span> <span class="subst">||</span> <span class="variable">$class</span> <span class="literal">eq</span> <span class="string">"set"</span> <span class="subst">||</span> <span class="variable">$class</span> <span class="literal">eq</span> <span class="string">"multiset"</span>
+    <span class="subst">||</span> <span class="variable">$class</span> <span class="literal">eq</span> <span class="string">"priority_queue"</span> <span class="subst">||</span> <span class="variable">$class</span> <span class="literal">eq</span> <span class="string">"multimap"</span>) {
+    <span class="variable">$url</span> <span class="subst">=</span> <span class="string">"http://www.cplusplus.com/reference/stl/$class"</span><span class="built_in">.</span><span class="string">"/"</span><span class="built_in">.</span><span class="variable">$func.</span><span class="string">".html"</span>;
+} elsif (<span class="variable">$class</span> <span class="literal">eq</span> <span class="string">"functional"</span> <span class="subst">||</span> <span class="variable">$class</span> <span class="literal">eq</span> <span class="string">"iterator"</span>
+    <span class="subst">||</span> <span class="variable">$class</span> <span class="literal">eq</span> <span class="string">"memory"</span> <span class="subst">||</span> <span class="variable">$class</span> <span class="literal">eq</span> <span class="string">"utility"</span>) {
+    <span class="variable">$url</span> <span class="subst">=</span> <span class="string">"http://www.cplusplus.com/reference/misc/$class"</span><span class="built_in">.</span><span class="string">"/"</span><span class="built_in">.</span><span class="variable">$func.</span><span class="string">".html"</span>;
+} elsif (<span class="variable">$class</span> <span class="literal">eq</span> <span class="string">"algorithm"</span>) {
+    <span class="variable">$url</span> <span class="subst">=</span> <span class="string">"http://www.cplusplus.com/reference/$class"</span><span class="built_in">.</span><span class="string">"/"</span><span class="built_in">.</span><span class="variable">$func.</span><span class="string">".html"</span>;
+} elsif (<span class="variable">$class</span> <span class="literal">eq</span> <span class="string">"string"</span>) {
+    <span class="variable">$url</span> <span class="subst">=</span> <span class="string">"http://www.cplusplus.com/reference/string/$class"</span><span class="built_in">.</span><span class="string">"/"</span><span class="built_in">.</span><span class="variable">$func.</span><span class="string">".html"</span>;
+}
+
+print <span class="string">"Retrieving $url"</span>, <span class="string">"...n"</span>;
+LWP<span class="tag">::Simple</span><span class="tag">::getstore</span>(<span class="variable">$url</span>, <span class="string">"$file"</span>);
+</code></pre><p>}</p>
+<p>open my $fd, “$file” or die “No such class or function!n”;<br>my $found = 0;<br>my @ret;</p>
+<p>while(){<br>    if (m/<td align="right" valign="bottom">/) {<br>        $found = 1;<br>    }<br>    if ($found) {<br>        s/]*&gt;//g;<br>        s//g;<br>        s/&lt;/&lt;/g;<br>        s/Parameters/n==Parameters==/;<br>        s/Example/n==Example==/;<br>        s/See also/n==See also==/;<br>        push @ret, $_;<br>    }<br>    if (m/SuOptions()/) {<br>        $found = 0;<br>        pop @ret;<br>    }<br>}</td></p>
+<p>open my $hd, &quot;|less&quot; or die &quot;Can&#039;t open pipe!n&quot;;</p>
+<p>foreach (@ret){<br>    print $hd $_;<br>}</p>
+<p>close $hd;</p>
+<p>close $fd;<br>exit 0;</p>
+<p>[/perl]</p>
+
+      
+    </div>
+    <footer>
+      
         
-
-<div class="archive-title" >
-  <h2 class="archive-icon">2008/11</h2>
-  
-  <div class="archiveslist archive-float clearfix">
-   <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">Aug 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">Jan 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">Dec 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">Oct 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">Sep 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">Aug 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">Jul 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">Feb 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01/">Jan 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12/">Dec 2012</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">Nov 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">Oct 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">Sep 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">Aug 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/07/">Jul 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">Jun 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">Apr 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">Mar 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">Feb 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">Jan 2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/12/">Dec 2011</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">Nov 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/10/">Oct 2011</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">Sep 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08/">Aug 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/07/">Jul 2011</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/06/">Jun 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/05/">May 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04/">Apr 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03/">Mar 2011</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/02/">Feb 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/01/">Jan 2011</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/12/">Dec 2010</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/11/">Nov 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/10/">Oct 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/09/">Sep 2010</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08/">Aug 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07/">Jul 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06/">Jun 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05/">May 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04/">Apr 2010</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03/">Mar 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02/">Feb 2010</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01/">Jan 2010</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12/">Dec 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11/">Nov 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10/">Oct 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09/">Sep 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08/">Aug 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07/">Jul 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/06/">Jun 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/05/">May 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04/">Apr 2009</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03/">Mar 2009</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02/">Feb 2009</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01/">Jan 2009</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12/">Dec 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/11/">Nov 2008</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/10/">Oct 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09/">Sep 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08/">Aug 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07/">Jul 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06/">Jun 2008</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05/">May 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04/">Apr 2008</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03/">Mar 2008</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02/">Feb 2008</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01/">Jan 2008</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12/">Dec 2007</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11/">Nov 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10/">Oct 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09/">Sep 2007</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08/">Aug 2007</a><span class="archive-list-count">31</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07/">Jul 2007</a><span class="archive-list-count">34</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06/">Jun 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05/">May 2007</a><span class="archive-list-count">25</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04/">Apr 2007</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03/">Mar 2007</a><span class="archive-list-count">50</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02/">Feb 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01/">Jan 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12/">Dec 2006</a><span class="archive-list-count">5</span></li></ul>
- </div>
-  
-</div>
-<div id="main" class="archive-part clearfix">
-  <div id="archive-page">
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2008/11/28/c-e6-a0-87-e5-87-86-e5-87-bd-e6-95-b0-e6-9f-a5-e8-af-a2/" title="C++标准函数查询" itemprop="url">
-  
-
-    <time datetime="2008-11-29T05:41:50.000Z" itemprop="datePublished">Nov 28 2008</time>
-
-
-    <h1 itemprop="name">C++标准函数查询</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2008/11/26/-e8-b0-81-e9-83-bd-e6-b2-a1-e9-94-99-ef-bc-9f/" title="谁都没错？" itemprop="url">
-  
-
-    <time datetime="2008-11-26T10:23:59.000Z" itemprop="datePublished">Nov 26 2008</time>
-
-
-    <h1 itemprop="name">谁都没错？</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2008/11/26/-e7-bc-96-e8-af-91python-e4-bb-a3-e7-a0-81/" title="编译Python代码" itemprop="url">
-  
-
-    <time datetime="2008-11-26T10:12:36.000Z" itemprop="datePublished">Nov 26 2008</time>
-
-
-    <h1 itemprop="name">编译Python代码</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2008/11/24/-e6-98-9f-e6-98-9f-e5-b1-b1-e4-b9-8b-e8-a1-8c/" title="星星山之行" itemprop="url">
-  
-
-    <time datetime="2008-11-24T13:57:49.000Z" itemprop="datePublished">Nov 24 2008</time>
-
-
-    <h1 itemprop="name">星星山之行</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2008/11/22/gcc-43-e6-94-b9-e5-8f-98-e4-ba-86-wconversion/" title="gcc 4.3 改变了 -Wconversion" itemprop="url">
-  
-
-    <time datetime="2008-11-22T08:06:51.000Z" itemprop="datePublished">Nov 22 2008</time>
-
-
-    <h1 itemprop="name">gcc 4.3 改变了 -Wconversion</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2008/11/15/-e9-94-ae-e7-9b-98-e7-ac-a6-e5-8f-b7-e7-9a-84-e8-8b-b1-e6-96-87-e8-af-bb-e6-b3-95/" title="键盘符号的英文读法" itemprop="url">
-  
-
-    <time datetime="2008-11-15T15:17:25.000Z" itemprop="datePublished">Nov 15 2008</time>
-
-
-    <h1 itemprop="name">键盘符号的英文读法</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2008/11/11/-e5-85-89-e6-a3-8d-e8-8a-82-e5-bf-ab-e4-b9-90-ef-bc-81/" title="光棍节快乐！" itemprop="url">
-  
-
-    <time datetime="2008-11-11T19:11:19.000Z" itemprop="datePublished">Nov 11 2008</time>
-
-
-    <h1 itemprop="name">光棍节快乐！</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2008/11/10/linux-e4-b8-8b-e7-9a-84console-e5-92-8cterminal/" title="Linux下的console和terminal" itemprop="url">
-  
-
-    <time datetime="2008-11-10T15:01:31.000Z" itemprop="datePublished">Nov 10 2008</time>
-
-
-    <h1 itemprop="name">Linux下的console和terminal</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2008/11/10/make-pthread-suck-less/" title="Make pthread suck less" itemprop="url">
-  
-
-    <time datetime="2008-11-10T11:52:06.000Z" itemprop="datePublished">Nov 10 2008</time>
-
-
-    <h1 itemprop="name">Make pthread suck less</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2008/11/08/-e6-9f-a5-e8-af-a2snmp-oid-e7-9a-84-e7-a8-8b-e5-ba-8f/" title="查询SNMP OID的程序" itemprop="url">
-  
-
-    <time datetime="2008-11-08T17:03:14.000Z" itemprop="datePublished">Nov 8 2008</time>
-
-
-    <h1 itemprop="name">查询SNMP OID的程序</h1>
-
-  </a>
-</section>
-
-
-  <nav id="page-nav" class="clearfix archive-nav">
-    <span class="page-number current">1</span><a class="page-number" href="/archives/2008/11/page/2/">2</a><a class="extend next" rel="next" href="/archives/2008/11/page/2/">Next<span></span></a>
-  </nav>
-
+        
+      
+      <div class="clearfix"></div>
+    </footer>
   </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2008-11-26T10:23:59.000Z"><a href="/2008/11/26/-e8-b0-81-e9-83-bd-e6-b2-a1-e9-94-99-ef-bc-9f/">Nov 26 2008</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2008/11/26/-e8-b0-81-e9-83-bd-e6-b2-a1-e9-94-99-ef-bc-9f/">谁都没错？</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>$ cat abs.cpp</p>
+<h1 id="include_&lt;cstdlib&gt;">include &lt;cstdlib&gt;</h1>
+<h1 id="include_&lt;iostream&gt;">include &lt;iostream&gt;</h1>
+<p>using namespace std;</p>
+<p>int main()<br>{<br>cout&lt;&lt;abs(-19.50)&lt;&lt;endl;<br>return 0;<br>}</p>
+<p>编译你会得到如下错误：</p>
+<p>abs.cpp: In function ‘int main()’:<br>abs.cpp:7: error: call of overloaded ‘abs(double)’ is ambiguous<br>/usr/include/stdlib.h:699: note: candidates are: int abs(int)<br>/usr/lib/gcc/i386-redhat-linux/4.3.0/../../../../include/c++/4.3.0/cstdlib:175: note:                 long long int __gnu_cxx::abs(long long int)<br>/usr/lib/gcc/i386-redhat-linux/4.3.0/../../../../include/c++/4.3.0/cstdlib:144: note:                 long int std::abs(long int)</p>
+<p>为啥呢？因为abs()在&lt;cmath&gt;中，而不是C++标准参考手册中提到的&lt;cstdlib&gt;！</p>
+<p>谁错了捏？其实谁都没错。<a href="http://www.velocityreviews.com/forums/t281597-c-abs-function.html" target="_blank" rel="external">这里</a>解释到：</p>
+<blockquote>
+<p>The Standard C++ library is <em>supposed</em> to<br>overload abs the way you expect, but it’s common for implementations<br>to omit the overloads, or put them in the <strong>wrong</strong> place (&lt;cmath&gt; instead<br>of &lt;math.h&gt;).<br>这个真的让人很无语，一边是出错，另一边是明知道出错也这么做。。。冏。。。</p>
+</blockquote>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2008-11-26T10:12:36.000Z"><a href="/2008/11/26/-e7-bc-96-e8-af-91python-e4-bb-a3-e7-a0-81/">Nov 26 2008</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2008/11/26/-e7-bc-96-e8-af-91python-e4-bb-a3-e7-a0-81/">编译Python代码</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>我没写错标题，我确实是想说如何编译Python代码。:-)</p>
+<p>见下：</p>
+<p><pre class="python">$ cat foo.py</pre></p>
+<p>print “hello”</p>
+<p>$ ls<br>foo.py<br>$ python -mpy_compile foo.py<br>$ ls<br>foo.py  foo.pyc<br>$ python foo.pyc<br>hello<br>或者另一种方式：</p>
+<p>$ ls dummy/<br>foo.py<br>$ python -mcompileall dummy/<br>Listing dummy/ …<br>Compiling dummy/foo.py …<br>$ ls dummy/<br>foo.py  foo.pyc</p>
+<p>参考：</p>
+<p>1. <a href="http://pyfaq.infogami.com/how-do-i-create-a-pyc-file" target="_blank" rel="external">http://pyfaq.infogami.com/how-do-i-create-a-pyc-file</a><br>2. <a href="http://effbot.org/zone/python-compile.htm" target="_blank" rel="external">http://effbot.org/zone/python-compile.htm</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2008-11-24T13:57:49.000Z"><a href="/2008/11/24/-e6-98-9f-e6-98-9f-e5-b1-b1-e4-b9-8b-e8-a1-8c/">Nov 24 2008</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2008/11/24/-e6-98-9f-e6-98-9f-e5-b1-b1-e4-b9-8b-e8-a1-8c/">星星山之行</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><img src="/images/" alt="" title="Mario and me"></p>
+<p>周六和Marco一起去了传说中的葡萄牙（陆地）最高峰，星星山。</p>
+<p>星星山离Marco家Lapa很近，所以我们先到了他家，吃完中午饭之后才动身。走之前他还叫上了他的小外甥，一个才上小学四年级的小鬼，于是我们三个一起上路了。那个小鬼叫Mario，就是“超级玛里”中的“玛里”，是个活泼，聪明伶俐的孩子。小鬼的英语比我的葡语还糟，他和我说的英语还不如我和他说的葡语多。不过对于这个年纪的孩子来说已经很不错了。</p>
+<p>我们在路上花了相当多的时间，本来是计划到了山顶之后下来再去附近的一个城堡，所以我们绕道走了另一条比较远的路上山。谁知道那条路那个长啊，先是在山下的镇上绕来绕去，还好我们有GPS，终于绕到山上去了。到山上还是得继续绕，山路绕得比F1赛道还多，绕得坐到后面那个小鬼昏昏欲睡。</p>
+<p>最后终于绕到了山顶，可是天色已经渐暗，山上天黑得很快，才拍了没多少张照片天色就基本上已经全黑了。山顶上风很大，气温很低，只有三四度，还好我们有提前准备的衣服，拍照时也不得不裹得严严实实的。那小鬼似乎带的衣服太少，只好又穿上了Marco的外套，那对他来说太大啦，结果看起来很是滑稽。</p>
+<p>山顶上有商店，我们钻进去看了看，我在那里买了个小纪念品。然后我们又进了旁边的一家咖啡吧，我要了一杯热咖啡热身，喝完感觉暖和多了。在国内，在山顶的商店卖的东西一般是山下的N倍，而这里的东西比山下贵了不多少，让我感到一丝惊讶，大概因为能开车到这里的缘故吧。</p>
+<p>等我们出来天已经完全黑了，本来计划要去看的湖泊和城堡也只好作罢了。匆匆忙忙赶回去吃晚饭去了。</p>
+<p>吃完饭准备回Coimbra时，我们又去了那个酒吧。那老板娘还记得我，这次又和我开玩笑，她问我喝什么啤酒？大瓶的还是小瓶的？我说小瓶的，然后比划了一下小的有多小，过了一会儿她拿来一个小瓶的，说你要的是这个吧？我看了看说是，谁知道她后面还藏着一个更小的呢。。。她后面的人都笑了。然后她还拿出一个特大号的来，说让我下次再来喝那个。。。</p>
+<p>喝完要走时，遇到一个喝醉的，非得拉着我和我说葡萄牙语，我站在那里无语得很，用葡语告诉他我不说葡语，谁知道他说，你这不就是在说葡语嘛，冏。。。。要不是其他人给我解围我是走不出那个酒吧了～</p>
+<p>非常难忘的一个周末～！</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2008-11-22T08:06:51.000Z"><a href="/2008/11/22/gcc-43-e6-94-b9-e5-8f-98-e4-ba-86-wconversion/">Nov 22 2008</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2008/11/22/gcc-43-e6-94-b9-e5-8f-98-e4-ba-86-wconversion/">gcc 4.3 改变了 -Wconversion</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>gcc 4.3之前，-Wconversion是这样的：</p>
+<blockquote>
+<p>Warn if a prototype causes a type conversion that is different from what would<br>happen to the same argument in the absence of a prototype.</p>
+<p>Also, warn if a negative integer constant expression is implicitly converted to<br>an unsigned type.<br>到了4.3就变了，<a href="http://gcc.gnu.org/gcc-4.3/changes.html" target="_blank" rel="external">发布日志</a>上解释到：<br>The -Wconversion option has been modified. Its purpose now is to warn for<br>implicit conversions that may alter a value. This new behavior is available for<br>both C and C++. Warnings about conversions between signed and unsigned integers<br>can be disabled by using -Wno-sign-conversion. In C++, they are disabled by<br>default unless -Wsign-conversion is explicitly requested. The old behavior of<br>-Wconversion, that is, warn for prototypes causing a type conversion that is<br>different from what would happen to the same argument in the absence of a<br>prototype, has been moved to a new option -Wtraditional-conversion, which is<br>only available for C</p>
+</blockquote>
+<p>这个改变其实挺大的，下面通过这个程序就可以展示这个问题：</p>
+<p>[c]<br>void foo(short i);</p>
+<p>void foo(short i)<br>{<br>    i++; //dummy<br>}</p>
+<p>int main(void)<br>{<br>    int a = 1;<br>    short b =2;<br>    b = a;<br>    foo(a);<br>    return 0;<br>}<br>[/c]</p>
+<p>$ gcc -Wall -Wtraditional-conversion -o conv conv.c<br>conv.c: In function ‘main’:<br>conv.c:14: warning: passing argument 1 of ‘foo’ with different width due to prototype<br>$ gcc -Wall -o conv conv.c<br>$ gcc -Wall -Wconversion -o conv conv.c<br>conv.c: In function ‘main’:<br>conv.c:13: warning: conversion to ‘short int’ from ‘int’ may alter its value<br>conv.c:14: warning: conversion to ‘short int’ from ‘int’ may alter its value</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2008-11-15T15:17:25.000Z"><a href="/2008/11/15/-e9-94-ae-e7-9b-98-e7-ac-a6-e5-8f-b7-e7-9a-84-e8-8b-b1-e6-96-87-e8-af-bb-e6-b3-95/">Nov 15 2008</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2008/11/15/-e9-94-ae-e7-9b-98-e7-ac-a6-e5-8f-b7-e7-9a-84-e8-8b-b1-e6-96-87-e8-af-bb-e6-b3-95/">键盘符号的英文读法</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>键盘上一些符号的英文读法真的让人头疼，很多根本就没有统一的念法。上葡语课时我问老师dash在葡语里怎么用，结果她不知道什么是dash，最后经过探讨我们达成共识，我问的是hyphen…… 因为我整天和程序打交道，“-”更多被读作dash，而非程序员更多读作hyphen。比较烦～～</p>
+<p>这里简单整理一下键盘上所有特殊符号的英文读法，最后还有葡语中特殊符号的英文读法。参考资料见本文最后。</p>
+<p>! 叹号 exclamation mark/bang<br>? 问号 question mark<br>, 逗号 comma<br>. 点号 dot/period/point<br>: 冒号 colon<br>; 分号 semicolon<br>“ 双引号 quotation marks/double quote<br>‘ 单引号/撇号 apostrophe/single quote<br>` 重音号 backquote/grave accent</p>
+<ul>
+<li>星号 asterisk/star</li>
+</ul>
+<ul>
+<li>加号 plus sign</li>
+</ul>
+<ul>
+<li>减号/横线 hyphen/dash/minus sign/<br>= 等号 equal sign<br>/ 斜线 slash<br>反斜线 backslash/escape<br>| 竖线 bar/pipe/vertical bar<br>_ 下划线 underline/underscore<br>$ 美元符号 dollar sign<br>@ at at sign<h1 id="井号_crosshatch/sharp/hash">井号 crosshatch/sharp/hash</h1>
+% 百分号 percent sign/mod<br>&amp; and/和/兼 and/ampersand<br>^ 折音号 circumflex/caret<br>~ 波浪号 tilde<br>{} （左右）花括号/大括号 (left/right|open/close) braces<br>[] （左右）方括号/中括号 (left/right|open/close) brackets<br>() （左右）圆括号/小括号 (left/right|open/close) parentheses<br>&lt;&gt; 尖括号 angle brackets<br>&lt; 大于号 less than<br>&gt; 小于号 greater than</li>
+</ul>
+<p>葡语中的变音符号（diacritic mark）在英文中的读法：</p>
+<p>^ circumflex/caret<br>~ tilde/squiggle<br>´ acute<br>` grave<br>ç cedilla</p>
+<p>参考资料：</p>
+<p>1. <a href="http://www.codinghorror.com/blog/archives/001133.html" target="_blank" rel="external">http://www.codinghorror.com/blog/archives/001133.html</a><br>2. <a href="http://ascii-table.com/pronunciation-guide.php" target="_blank" rel="external">http://ascii-table.com/pronunciation-guide.php</a><br>3. <a href="http://www.learningportuguese.co.uk/language/diacritics.html" target="_blank" rel="external">http://www.learningportuguese.co.uk/language/diacritics.html</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2008-11-11T19:11:19.000Z"><a href="/2008/11/11/-e5-85-89-e6-a3-8d-e8-8a-82-e5-bf-ab-e4-b9-90-ef-bc-81/">Nov 11 2008</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2008/11/11/-e5-85-89-e6-a3-8d-e8-8a-82-e5-bf-ab-e4-b9-90-ef-bc-81/">光棍节快乐！</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>一年过了又一年，只是每年这个节日还是没变。:-)</p>
+<p>希望明年有所改观，不过貌似我每年都这么说……</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2008-11-10T15:01:31.000Z"><a href="/2008/11/10/linux-e4-b8-8b-e7-9a-84console-e5-92-8cterminal/">Nov 10 2008</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2008/11/10/linux-e4-b8-8b-e7-9a-84console-e5-92-8cterminal/">Linux下的console和terminal</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><a href="http://en.wikipedia.org/wiki/Computer_console" target="_blank" rel="external">console</a>和<a href="http://en.wikipedia.org/wiki/Computer_terminal" target="_blank" rel="external">terminal</a>是很容易让人迷惑的两个概念。根据wikipedia上的定义，小型计算机的console应该就是键盘加显示器；而terminal则是输入数据进去，和显示数据来源的设备，通常是一个计算机系统。</p>
+<p>Linux下的console除了真实的硬件设备外，还有virtual console，也就是你按alt+Fn或者alt+ctrl+Fn切换到的东西。所谓虚拟就是这些console共享同一个真实的设备，只有一个活动的console才显示在前面。这些console对应的设备是：/dev/ttyN，其中1 ≤ N ≤ 63。而/dev/tty0则是指向当前的terminal；/dev/console是指向当前console，但它现在并<em>不是</em>对/dev/tty0的符号链接。更多可参考console(4)。</p>
+<p>/dev/tty是另一个特殊设备，它指向控制终端（controlling terminal）。如果某个进程的控制终端是/dev/tty3，那么/dev/tty就指向/dev/tty3了。控制终端是什么概念？它是一个进程的某个属性，是依附带该进程上的终端。比如我们在某个终端下输入ctrl+C，那么它控制的前台进程就会收到SIGINT，而后台进程会收到SIGTTIN或SIGTTOU ，如果它们读写该终端的话。被同一个终端控制的所有进程被称为一个会话（session），会话的领导就是创建改会话的进程，其子进程也会被该终端控制。所以，1) 需要交互的命令行程序通常会从/dev/tty这个设备进行读写；2) Unix后台进程都需要在fork之后调用setsid(2)，3) 需要加O_NOCTTY，当你open一个可能是终端的文件时。</p>
+<p>另外，想要确定/dev/tty究竟是指向哪个设备，可以调用TIOCCONS ioctl。参考tty(4)。</p>
+<p>下面是另外一个概念——伪终端（pseudo-terminal），根据pty(7)的介绍，伪终端一对虚拟设备，提供端到端双向通信的通路，一端称为master，另一端称为slave。在slave那端看到的和在真实终端看到的效果一样。所以伪终端一般被ssh等网络登录程序使用。历史上，有两套伪终端接口，一个是Unix 98伪终端，另一个是BSD伪终端。</p>
+<p>BSD提供的接口很简单：/dev/pty[p-za-e][0-9a-f] 是master; /dev/tty[p-za-e][0-9a-f] 是slave，它们都是配好对的。这样看起来很简单，但对程序员来说不容易，要找到一个合适的终端需要一个个从头尝试。所以这种方式已经被遗弃。而Unix 98伪终端则完全不同，它始终使用/dev/ptmx作为master复制设备，然后在每次打开它的时候才得到一个master设备的fd，同时在/dev/pts/目录下得到一个slave设备。这样编程就相对容易了，根据pts(4)介绍，需要三个新的API： ptsname(3)，grantpt(3)和unlockpt(3)。我们可以通过一个实例看一下如何使用：</p>
+<p>（以下代码摘自netvirt）<br>[c]<br>char    <em>mptname = “/dev/ptmx”;    /</em> master pseudo-tty device */<br>//…<br>void<br>getmaster()<br>{<br>    struct stat stb;</p>
+<pre><code><span class="keyword">if</span> ((master = open(mptname, O_RDWR)) &amp;gt;= <span class="number">0</span>) { <span class="comment">/* a pseudo-tty is free */</span>
+    (<span class="keyword">void</span>) ioctl(<span class="number">0</span>, TCGETS, (<span class="keyword">char</span> *)&amp;amp;b);
+    (<span class="keyword">void</span>) ioctl(<span class="number">0</span>, TIOCGWINSZ, (<span class="keyword">char</span> *)&amp;amp;<span class="keyword">size</span>);
+    <span class="keyword">return</span>;
+} <span class="keyword">else</span> {                <span class="comment">/* out of pseudo-tty's */</span>
+    perror(mptname);
+    fprintf(stderr, <span class="keyword">gettext</span>(<span class="string">"Out of pseudo-tty'sn"</span>));
+    fail();
+}
+</code></pre><p>}</p>
+<p>void<br>getslave()<br>{<br>    char <em>slavename;    /</em> name of slave pseudo-tty */</p>
+<pre><code>grantpt(master);        /<span class="keyword">*</span> change permissions of slave <span class="keyword">*</span>/
+unlockpt(master);            /<span class="keyword">*</span> unlock slave <span class="keyword">*</span>/
+slavename = ptsname(master);        /<span class="keyword">*</span> get name of slave <span class="keyword">*</span>/
+slave = open(slavename, O_RDWR);    /<span class="keyword">*</span> open slave <span class="keyword">*</span>/
+if (slave &amp;lt; 0) {            /<span class="keyword">*</span> error on opening slave <span class="keyword">*</span>/
+    perror(slavename);
+    fail();
+}
+ioctl(slave, I_PUSH, &amp;quot;ptem&amp;quot;);    /<span class="keyword">*</span> push pt hw emulation module <span class="keyword">*</span>/
+ioctl(slave, I_PUSH, &amp;quot;ldterm&amp;quot;);        /<span class="keyword">*</span> push line discipline <span class="keyword">*</span>/
+
+(void) ioctl(slave, TCSETSF, (char <span class="keyword">*</span>)&amp;amp;b);
+(void) ioctl(slave, TIOCSWINSZ, (char <span class="keyword">*</span>)&amp;amp;size);
+</code></pre><p>}<br>[/c]<br>然后我们再来看一下glibc中对ptsname(3)的实现：</p>
+<p>（源文件sysdeps/unix/sysv/linux/ptsname.c）<br>[c]</p>
+<h1 id="define__PATH_DEVPTS_&quot;/dev/pts/&quot;">define _PATH_DEVPTS &quot;/dev/pts/&quot;</h1>
+<p>char *<br>ptsname (int fd)<br>{<br>  return __ptsname_r (fd, buffer, sizeof (buffer)) != 0 ? NULL : buffer;<br>}</p>
+<p>int<br>__ptsname_r (int fd, char *buf, size_t buflen)<br>{</p>
+<p>…</p>
+<p>  if (<strong>ioctl (fd, TIOCGPTN, &amp;ptyno) == 0)<br>…<br>     numbuf[sizeof (numbuf) - 1] = &#039;&#039;;<br>      p = _itoa_word (ptyno, &amp;numbuf[sizeof (numbuf) - 1], 10, 0);<br>…<br>      memcpy (</strong>stpcpy (buf, devpts), p, &amp;numbuf[sizeof (numbuf)] - p);<br>[/c]</p>
+<p>我们可以看出，实际上是调用ioctl TIOCGPTN，通过内核，而Linux内核又是通过devpts这种文件系统实现了这一切：</p>
+<p>$ mount | grep devpts<br>devpts on /dev/pts type devpts (rw,gid=5,mode=620)</p>
+<p>这样我们终于把一切搞清楚了。:-)</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2008-11-10T11:52:06.000Z"><a href="/2008/11/10/make-pthread-suck-less/">Nov 10 2008</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2008/11/10/make-pthread-suck-less/">Make pthread suck less</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>pthread的API一直让我感到头疼，种类多而且名字又长，今天下决心把它们理清楚。</p>
+<p>仅从名字上来看，pthread的API可以分为这么几类：</p>
+<p><strong>pthread_XXX</strong>:<br>此类API一般是对thread本身进行管理的。共包括如下API：</p>
+<p>pthread_atfork()<br>pthread_create()<br>pthread_exit()<br>pthread_cancel()<br>pthread_join()<br>pthread_once()<br>pthread_self()<br>pthread_equal()<br>pthread_kill()<br>pthread_detach()<br>pthread_yeild()<br>pthread_sigmask()<br>pthread_key_create()<br>pthread_key_delete()<br>pthread_cleanup_push()<br>pthread_cleanup_pop()<br>pthread_testcancel()</p>
+<p>它还可以分出两个子类，包括pthread_setWWW和pthread_getWWW，其中有：</p>
+<p>pthread_getconcurrency()<br>pthread_getcpuclockid()<br>pthread_getschedparam()<br>pthread_getspecific()</p>
+<p>pthread_setcancelstate()<br>pthread_setconcurrency()<br>pthread_setschedparam()<br>pthread_setschedprio()<br>pthread_setspecific()</p>
+<p><strong>pthread_attr_YYY</strong>:<br>YYY一般包括：init, destory, setZZZ, getZZZ。此类API是对thread本身的属性进行管理的。共包括如下API：</p>
+<p>pthread_attr_destroy()<br>pthread_attr_getinheritsched()<br>pthread_attr_getschedparam()<br>pthread_attr_getschedpolicy()<br>pthread_attr_getscope()<br>pthread_attr_getstackaddr()<br>pthread_attr_getstack()<br>pthread_attr_init()<br>pthread_attr_setdetachstate()<br>pthread_attr_setguardsize()<br>pthread_attr_setinheritsched()<br>pthread_attr_setschedparam()<br>pthread_attr_setschedpolicy()<br>pthread_attr_setscope()<br>pthread_attr_setstackaddr()<br>pthread_attr_setstack()<br>pthread_attr_setstacksize()</p>
+<p><strong>pthread_MMM_XXX</strong>:<br>XXX一般是上面和那个XXX集合类似的操作，但MMM一般是thread的一个工具，比如：mutex，cond等。此类API是对thread的MMM工具进行操作。共包括如下API：</p>
+<p>mutex类：<br>pthread_mutex_init()<br>pthread_mutex_destroy()<br>pthread_mutex_lock()<br>pthread_mutex_unlock()<br>pthread_mutex_trylock()<br>pthread_mutex_setprioceiling()<br>pthread_mutex_getprioceiling()</p>
+<p>cond类：<br>pthread_cond_init()<br>pthread_cond_destroy()<br>pthread_cond_signal()<br>pthread_cond_broadcast()<br>pthread_cond_wait()<br>pthread_cond_timedwait()</p>
+<p>rwlock类：<br>pthread_rwlock_destroy()<br>pthread_rwlock_init()<br>pthread_rwlock_rdlock()<br>pthread_rwlock_timedrdlock()<br>pthread_rwlock_timedwrlock()<br>pthread_rwlock_tryrdlock()<br>pthread_rwlock_trywrlock()<br>pthread_rwlock_unlock()<br>pthread_rwlock_wrlock()</p>
+<p>spin类：<br>pthread_spin_destroy()<br>pthread_spin_init()<br>pthread_spin_lock()<br>pthread_spin_trylock()<br>pthread_spin_unlock()</p>
+<p>barrier类：<br>pthread_barrier_destroy()<br>pthread_barrier_init()<br>pthread_barrier_wait()</p>
+<p><strong>pthread_MMMattr_YYY</strong>:<br>MMM和YYY同上（spin除外），此类API是对MMM工具的属性进行操作。和上面有着密切的关系。共包括如下API：</p>
+<p>mutex类：<br>pthread_mutexattr_destroy()<br>pthread_mutexattr_getprioceiling()<br>pthread_mutexattr_getprotocol()<br>pthread_mutexattr_getpshared()<br>pthread_mutexattr_gettype()<br>pthread_mutexattr_init()<br>pthread_mutexattr_setprioceiling()<br>pthread_mutexattr_setprotocol()<br>pthread_mutexattr_setpshared()<br>pthread_mutexattr_settype()</p>
+<p>cond类：<br>pthread_condattr_destroy()<br>pthread_condattr_getclock()<br>pthread_condattr_getpshared()<br>pthread_condattr_init()<br>pthread_condattr_setclock()<br>pthread_condattr_setpshared()</p>
+<p>rwlock类：<br>pthread_rwlockattr_destroy()<br>pthread_rwlockattr_getpshared()<br>pthread_rwlockattr_init()<br>pthread_rwlockattr_setpshared()</p>
+<p>barrier类：<br>pthread_barrierattr_destroy()<br>pthread_barrierattr_getpshared()<br>pthread_barrierattr_init()<br>pthread_barrierattr_setpshared()</p>
+<p>这还没完，还有N多的新类型，比如pthread_t，pthread_attr_t，pthread_once_t，以及随之而来的宏。。。我在这就不总结了。</p>
+<p>最后，介绍pthread的书籍有：</p>
+<p>“PThreads Primer”. Lewis, Bill and Daniel J. Berg. California: Prentice Hall.<br>“Pthreads Programming”. B. Nichols et al. O’Reilly and Associates.<br>“Programming With POSIX Threads”. D. Butenhof. Addison Wesley<br>“Programming With Threads”. S. Kleiman et al. Prentice Hall</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2008-11-08T17:03:14.000Z"><a href="/2008/11/08/-e6-9f-a5-e8-af-a2snmp-oid-e7-9a-84-e7-a8-8b-e5-ba-8f/">Nov 8 2008</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2008/11/08/-e6-9f-a5-e8-af-a2snmp-oid-e7-9a-84-e7-a8-8b-e5-ba-8f/">查询SNMP OID的程序</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>网上有个查询的网站，可惜什么结果都查不出来！靠！我实在看不下去了，动手写一个python程序来搞定，不过仍有局限性，那就是只能查询.iso.org子树。。。啥也不说了，上代码！</p>
+<p>[python]</p>
+<h1 id="!/usr/bin/env_python">!/usr/bin/env python</h1>
+<p>import os,sys<br>import string<br>import re<br>import urllib2</p>
+<p>if <strong>name</strong> == ‘<strong>main</strong>‘:</p>
+<pre><code><span class="keyword">if</span> len(sys.argv) != <span class="number">2</span>:
+    sys.stderr.<span class="keyword">write</span>(<span class="string">"Please provide one OID number or string to lookup.n"</span>);
+    sys.<span class="keyword">exit</span>(<span class="number">1</span>)
+
+flag = <span class="number">0</span>
+found = False
+
+r = re.compile(<span class="string">'^[0-9\.]+$'</span>)
+<span class="keyword">if</span> r.match(sys.argv[<span class="number">1</span>]):
+    r = re.compile(<span class="string">'^1\.3'</span>)
+    <span class="keyword">if</span> r.match(sys.argv[<span class="number">1</span>]):
+        flag = <span class="number">1</span>
+    <span class="keyword">else</span>:
+        sys.stderr.<span class="keyword">write</span>(<span class="string">"Please provide the full OID number under .iso.org!n"</span>)
+        sys.<span class="keyword">exit</span>(<span class="number">1</span>)
+
+try:
+    req = urllib2.Request(<span class="string">'http://www.kix.in/plan9/mirror/sources/contrib/gabidiaz/root/lib/ndb/snmp'</span>)
+    resp = urllib2.urlopen(req)
+    oid = resp.<span class="keyword">readline</span>()
+    name = resp.<span class="keyword">readline</span>()
+    <span class="keyword">while</span> oid <span class="keyword">and</span> name:
+        <span class="keyword">if</span> flag == <span class="number">1</span>:
+            <span class="keyword">if</span> oid.find(sys.argv[<span class="number">1</span>]) != -<span class="number">1</span>:
+                <span class="keyword">print</span> name
+                found = True
+                <span class="keyword">break</span>
+        <span class="keyword">else</span>:
+            n = name.lower().find(sys.argv[<span class="number">1</span>].lower())
+            <span class="keyword">if</span> n != -<span class="number">1</span>:
+                <span class="keyword">print</span> oid
+                found = True
+                <span class="keyword">if</span> n+len(sys.argv[<span class="number">1</span>]) &amp;<span class="keyword">lt</span>; len(name)-<span class="number">1</span>:
+                    <span class="keyword">print</span> name
+        oid = resp.<span class="keyword">readline</span>()
+        name = resp.<span class="keyword">readline</span>()
+    <span class="keyword">if</span> <span class="keyword">not</span> found:
+        <span class="keyword">print</span> &amp;quot;Not found!&amp;quot;
+    sys.<span class="keyword">exit</span>(<span class="number">0</span>)
+except IOError:
+    sys.stderr.<span class="keyword">write</span>(&amp;quot;Probably you don&amp;<span class="comment">#039;t have Internet.n&amp;quot;)</span>
+    sys.<span class="keyword">exit</span>(<span class="number">1</span>)
+</code></pre><p>[/python] </p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+
+  <nav id="pagination">
+  
+  
+    <a href="/archives/2008/11/page/2/" class="alignright next">Next</a>
+  
+  <div class="clearfix"></div>
+</nav>
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:wangcong.org">
+  </form>
 </div>
 
-      </div>
-      <footer><div id="footer" >
-	
-	
-	<div class="social-font" class="clearfix">
-		
-		
-		<a href="https://github.com/congwang" target="_blank" class="icon-github" title="github"></a>
-		
-		
-		
-		<a href="https://twitter.com/conglinux" target="_blank" class="icon-twitter" title="twitter"></a>
-		
-		
-		
-		
-		
-		
-		
-	</div>
-		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2016 
-		
-		<a href="http://wangcong.org/about" target="_blank" title="Cong Wang">Cong Wang</a>
-		
-		</p>
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Book-Reviews/">Book Reviews</a><small>18</small></li>
+  
+    <li><a href="/categories/China/">China</a><small>2</small></li>
+  
+    <li><a href="/categories/Collection/">Collection</a><small>25</small></li>
+  
+    <li><a href="/categories/Life/">Life</a><small>324</small></li>
+  
+    <li><a href="/categories/Linux-Application/">Linux Application</a><small>73</small></li>
+  
+    <li><a href="/categories/Linux-Kernel/">Linux Kernel</a><small>64</small></li>
+  
+    <li><a href="/categories/Love/">Love</a><small>6</small></li>
+  
+    <li><a href="/categories/Movies/">Movies</a><small>19</small></li>
+  
+    <li><a href="/categories/Programming/">Programming</a><small>152</small></li>
+  
+    <li><a href="/categories/Science-Fiction/">Science Fiction</a><small>8</small></li>
+  
+    <li><a href="/categories/Travel/">Travel</a><small>19</small></li>
+  
+  </ul>
 </div>
-</footer>
-      <script src="/js/jquery-2.0.3.min.js"></script>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/geek/">geek</a><small>1</small></li>
+  
+    <li><a href="/tags/handling/">handling</a><small>1</small></li>
+  
+    <li><a href="/tags/joke/">joke</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/tags/signal/">signal</a><small>1</small></li>
+  
+    <li><a href="/tags/unix/">unix</a><small>1</small></li>
+  
+    <li><a href="/tags/vim/">vim</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2017 Cong Wang
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 <script src="/js/jquery.imagesloaded.min.js"></script>
 <script src="/js/gallery.js"></script>
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.navbar').click(function(){
-    $('header nav').toggleClass('shownav');
-  });
-  var myWidth = 0;
-  function getSize(){
-    if( typeof( window.innerWidth ) == 'number' ) {
-      myWidth = window.innerWidth;
-    } else if( document.documentElement && document.documentElement.clientWidth) {
-      myWidth = document.documentElement.clientWidth;
-    };
-  };
-  var m = $('#main'),
-      a = $('#asidepart'),
-      c = $('.closeaside'),
-      o = $('.openaside');
-  $(window).resize(function(){
-    getSize(); 
-    if (myWidth >= 1024) {
-      $('header nav').removeClass('shownav');
-    }else
-    {
-      m.removeClass('moveMain');
-      a.css('display', 'block').removeClass('fadeOut');
-      o.css('display', 'none');
-        
-    }
-  });
-  c.click(function(){
-    a.addClass('fadeOut').css('display', 'none');
-    o.css('display', 'block').addClass('fadeIn');
-    m.addClass('moveMain');
-  });
-  o.click(function(){
-    o.css('display', 'none').removeClass('beforeFadeIn');
-    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
-    m.removeClass('moveMain');
-  });
-  $(window).scroll(function(){
-    o.css("top",Math.max(80,260-$(this).scrollTop()));
-  });
-});
-</script>
-
-
-
-
 
 <script type="text/javascript">
-
 var disqus_shortname = 'disqus_ciEwcJAF0E';
 
-(function(){
-  var dsq = document.createElement('script');
-  dsq.type = 'text/javascript';
-  dsq.async = true;
-  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-}());
 (function(){
   var dsq = document.createElement('script');
   dsq.type = 'text/javascript';
@@ -327,33 +681,13 @@ var disqus_shortname = 'disqus_ciEwcJAF0E';
 
 
 
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
 
-
-
-
-
-<!-- Analytics Begin -->
-
-
-
-
-
-<!-- Analytics End -->
-
-<!-- Totop Begin -->
-
-	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
-	</div>
-	<script src="/js/totop.js"></script>
-
-<!-- Totop End -->
-
-<!-- MathJax Begin -->
-<!-- mathjax config similar to math.stackexchange -->
-
-
-<!-- MathJax End -->
-
-    </body>
-   </html>
+</body>
+</html>
