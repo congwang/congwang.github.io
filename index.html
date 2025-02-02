@@ -1,0 +1,31 @@
+---
+layout: default
+title: My Blog
+---
+
+<div class="home">
+  <h1>Recent Posts</h1>
+
+  {% for post in site.posts limit:10 %}
+    <article class="post-preview">
+      <h2>
+        <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+      </h2>
+      
+      <div class="post-meta">
+        {{ post.date | date: "%B %-d, %Y" }}
+      </div>
+
+      <div class="post-excerpt">
+        {{ post.excerpt }}
+      </div>
+      
+      <a href="{{ post.url | relative_url }}" class="read-more">Read More →</a>
+    </article>
+    <hr>
+  {% endfor %}
+
+  <p class="all-posts">
+    <a href="/archive">View All Posts</a>
+  </p>
+</div>
