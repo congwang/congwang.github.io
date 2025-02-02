@@ -1,0 +1,35 @@
+---
+layout: post
+title: Integer format conversion
+date: 2010-02-23 18:38:37.000000000 -08:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Programming
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '994'
+  _wp_old_slug: '994'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2010/02/23/integer-format-conversion/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body>
+<p>我们知道 C99 中引入了uint32_t，uintmax_t 这样的标准整数类型，可有一个随之而来的问题，那就是它们在 printf()/scanf() 中对应的是 format conversion 该用什么呢？</p>
+<p>其实这个问题由来已久，比如之前就有的标准类型：ptrdiff_t，printf()有专门的一个 "t" length modifier 来对应它。再比如非标准的 pid_t，我们是没有对应的 length modifier 可用的，这时该怎么办？其实这种问题的一般处理原则是，先把它们转化成可能的最大整数类型，比如这个 pid_t，POSIX 只要求它是一个 signed integer type，所以至少转化成 long 才比较安全，所以我们可以：</p>
+<p>printf("%ldn", (long)pid);</p>
+<p>所以我们最开始的那个问题也可以这么处理，但是很明显这种处理方式并不优雅，尤其是对于标准整数类型来说。一种解决方案是像 ptrdiff_t 那样引入新的 length modifier，但这恐怕需要增加不少，所以C99采取了另一种方式——添加标准的宏来代替直接使用字符串，比如针对 uint32_t，uintmax_t 我们可以使用 PRIu32 和 PRIuMAX，像这样：</p>
+<p>printf("%" PRIu32 "%" PRIuMAX "n", uint32, uintmax);</p>
+<p>这些宏可以在 C99 标准附录 B.7 找到，可以在 &lt;inttypes.h&gt; 中看到其定义（在 glibc 源代码中对应 sysdeps/generic/inttypes.h）。有兴趣的可以直接去看一下源代码，其实就是对已有的 format conversion 进行的宏封装。</p>
+<p>那些宏也挺好记的：PRI 代表 printf，SCN 代表 scanf，PRI/SCN后面的第一个字母其实就是对应的常见的 conversion specifier，比如 uint32_t 肯定对应一个u。再后面要么对应长度比如uint32_t中的32，要么对应max什么的。</p>
+<p>最后，对于 intmax_t 和 uintmax_t 这两个类型，printf()有对对应的 "j" length modifier 可以直接用，对于 size_t 和 ssize_t ，有对应的 "z"。</p>
+<p></body></html></p>

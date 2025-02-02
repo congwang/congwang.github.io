@@ -1,0 +1,51 @@
+---
+layout: post
+title: time为啥是关键字？
+date: 2008-05-10 19:03:07.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Programming
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '348'
+  _wp_old_slug: '348'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2008/05/10/time%e4%b8%ba%e5%95%a5%e6%98%af%e5%85%b3%e9%94%ae%e5%ad%97%ef%bc%9f/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body>
+<p>前面提到time其实是shell的一个关键字。</p>
+<p>大家看了都奇怪为啥它非得是关键字？我今天仔细琢磨了一下，觉得有这么两个理由：</p>
+<p>1. 为了让time也可以对cd之类的内置命令进行计时，比如：</p>
+<p>$ time cd /</p>
+<p>real    0m0.000s<br />
+user    0m0.000s<br />
+sys     0m0.000s</p>
+<p>如果time是外部命令，或者shell内置命令的话，它根本就不好识别shell内置的cd，所以得是关键字。或者说只有是关键字才是这里最好的解决方案。</p>
+<p>2. 为了重定向的考虑，比如：</p>
+<p>$ time ls -l &gt; /dev/null 2&gt;&amp;1</p>
+<p>real    0m0.193s<br />
+user    0m0.005s<br />
+sys     0m0.005s</p>
+<p>如果time是个命令，它的输出也会被重定向了，而它是关键字，所以它本身不会受影响。同理，管道也影响不了它：</p>
+<p>$ ls -l | wc -l<br />
+25<br />
+$ time ls -l | wc -l<br />
+25</p>
+<p>real    0m0.056s<br />
+user    0m0.006s<br />
+sys     0m0.007s</p>
+<p>问题：那究竟如何重定向time自己的输出呢？？</p>
+<p>答：$ { time ls; } 2&gt; /dev/null</p>
+<p>参考：<a href="http://www.cs.tut.fi/~jarvi/tips/bash.html" target="_blank">http://www.cs.tut.fi/~jarvi/tips/bash.html</a></p>
+<p></body></html></p>

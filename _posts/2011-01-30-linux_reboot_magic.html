@@ -1,0 +1,40 @@
+---
+layout: post
+title: LINUX_REBOOT_MAGIC
+date: 2011-01-30 23:01:29.000000000 -08:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Linux Kernel
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '1460'
+  _wp_old_slug: '1460'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2011/01/30/linux_reboot_magic/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body>
+<p>include/linux/reboot.h 中有五个魔数：</p>
+<p>#define LINUX_REBOOT_MAGIC1     0xfee1dead<br />
+#define LINUX_REBOOT_MAGIC2     672274793<br />
+#define LINUX_REBOOT_MAGIC2A    85072278<br />
+#define LINUX_REBOOT_MAGIC2B    369367448<br />
+#define LINUX_REBOOT_MAGIC2C    537993216</p>
+<p>第一个的意思很了然，是feel dead的hex表示，类似于0xdeadbeef。</p>
+<p>而后面四个就有意思了，今天在公司的邮件列表上看到一个讨论说这些其实是Linus和他女儿的生日。猛一看看不懂，这么一看就了然了：</p>
+<p>% awk '/MAGIC2/ {printf "%Xn",$3}' include/linux/reboot.h<br />
+28121969<br />
+5121996<br />
+16041998<br />
+20112000</p>
+<p></body></html></p>

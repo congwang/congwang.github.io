@@ -1,0 +1,48 @@
+---
+layout: post
+title: 随机选择午饭
+date: 2009-06-15 21:15:10.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Programming
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '739'
+  _wp_old_slug: '739'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2009/06/15/%e9%9a%8f%e6%9c%ba%e9%80%89%e6%8b%a9%e5%8d%88%e9%a5%ad/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body>
+<p>您是否也像我们一样为吃午饭而烦恼？工作日午饭时间不多，周围的餐馆也不多，翻来复去吃的也就那么几样，而且都快吃腻了！怎么办？</p>
+<p>这个脚本可以为您解除这个烦恼，每天为您随即选择午饭，并且会在午饭时间提醒您和您的饭友该去吃午饭！从此您再也不用为午饭该吃什么而苦恼！</p>
+<p>注意：</p>
+<p>1. 用 crontab -e 来定时，你知道该怎么做。:)<br />
+2. sendpatchset是我们发送补丁的一个脚本，你完全可以把它替换成别的，比如mutt。我之所以没用是因为我的那个台式机上没有配置mutt。恩，用git send-email应该也可以。<br />
+3. 你如果想用，你知道该修改哪里。</p>
+<p>[bash]<br />
+#!/bin/bash</p>
+<p>RESTAURANTS=('Ji Tian Xiao Chi' 'Lao Jia Rou Bing. Huh?' '-1 floor! Bad bad...' 'Xin Jiang Mian Guan' 'Kuai Le Jia Yuan' 'Tan Zi Rou')</p>
+<p>choice=$((${RANDOM}%${#RESTAURANTS[*]}))<br />
+everything=""<br />
+for ((i=0; i$choice_file &lt;$control_file &lt;&lt;eof<br />
+SMTP: smtp.corp.redhat.com<br />
+From: Amerigo Wang<br />
+To: xxxxxx@redhat.com<br />
+Cc: xxxxxx@redhat.com<br />
+Subject: [LUNCH] $subject<br />
+File: $choice_file<br />
+EOF</p>
+<p>sendpatchset $control_file<br />
+[/bash] </p>
+<p></body></html></p>

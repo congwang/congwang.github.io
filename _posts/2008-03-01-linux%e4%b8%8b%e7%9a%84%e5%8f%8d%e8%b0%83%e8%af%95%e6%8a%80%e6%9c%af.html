@@ -1,0 +1,156 @@
+---
+layout: post
+title: Linux下的反调试技术
+date: 2008-03-01 23:35:15.000000000 -08:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Programming
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '310'
+  _wp_old_slug: '310'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2008/03/01/linux%e4%b8%8b%e7%9a%84%e5%8f%8d%e8%b0%83%e8%af%95%e6%8a%80%e6%9c%af/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body></p>
+<p align="right">作者：西邮 王聪</p>
+<p>如何防止自己的程序被调试器跟踪，这是一个很有趣的话题，也是反逆向工程中的一个重要话题。这里简单介绍一下Linux平台上的反调试技术。</p>
+<p>（本文主要参考：<a href="http://blog.txipinet.com/2006/10/05/37-tecnicas-anti-debugging-sencillas-para-gnu-linux/" target="_blank">http://blog.txipinet.com/2006/10/05/37-tecnicas-anti-debugging-sencillas-para-gnu-linux/</a>。<br />
+<strong>做人要厚道，转载请指明出处！</strong>）</p>
+<p>一. int3指令</p>
+<p>Intel Software Developer’s Manual Volume 2A中提到：</p>
+<blockquote><p>The INT 3 instruction generates a special one byte opcode (CC) that is intended for<br />
+calling the debug exception handler. (This one byte form is valuable because it can be<br />
+used to replace the first byte of any instruction with a breakpoint, including other one<br />
+byte instructions, without over-writing other code). </p></blockquote>
+<p>int3是一个特殊的中断指令（从名字上也看得出来），专门用来给调试器使用。这时，我们应该很容易想到，要反调试，只要插入int3来迷惑调试器即可。不过，这会不会影响正常的程序？会！因为int3会在用户空间产生SIGTRAP。没关系，我们只要忽略这个信号就可以了。</p>
+<p>#include<br />
+#include </p>
+<p>void handler(int signo)<br />
+{}</p>
+<p>int main(void)<br />
+{<br />
+	signal(SIGTRAP, handler);<br />
+	__asm__("nopnt"<br />
+		"int3nt");<br />
+	printf("Hello from main!n");<br />
+	return 0;<br />
+}</p>
+<p>二. 文件描述符</p>
+<p>这是一个很巧妙的办法，不过它只对gdb之类的调试器有效。方法如下：</p>
+<p>#include<br />
+#include<br />
+#include </p>
+<p>int main(void)<br />
+{<br />
+	if(close(3) == -1) {<br />
+		printf("OKn");<br />
+	} else {<br />
+		printf("traced!n");<br />
+		exit(-1);<br />
+	}<br />
+	return 0;<br />
+}</p>
+<p>gdb要调试这个程序时会打开一个额外的文件描述符来读这个可执行文件，而这个程序正是利用了这个“弱点”。当然，你应该能猜到，这个技巧对strace是无效的。</p>
+<p>三. 利用getppid</p>
+<p>和上面一个手法类似，不过这个更高明，它利用getppid来进行探测。我们知道，在Linux上要跟踪一个程序，必须是它的父进程才能做到，因此，如果一个程序的父进程不是意料之中的bash等（而是gdb，strace之类的），那就说明它被跟踪了。程序代码如下：</p>
+<p>#include<br />
+#include<br />
+#include<br />
+#include<br />
+#include<br />
+#include<br />
+#include </p>
+<p>int get_name_by_pid(pid_t pid, char* name)<br />
+{<br />
+	int fd;<br />
+	char buf[1024] = {0};<br />
+	snprintf(buf, 1024, "/proc/%d/cmdline", pid);<br />
+	if ((fd = open(buf, O_RDONLY)) == -1)<br />
+		return -1;<br />
+	read(fd, buf, 1024);<br />
+	strncpy(name, buf, 1023);<br />
+	return 0;<br />
+}</p>
+<p>int main(void)<br />
+{<br />
+	char name[1024];<br />
+	pid_t ppid = getppid();<br />
+	printf("getppid: %dn", ppid);</p>
+<p>        if (get_name_by_pid(ppid, name))<br />
+		return -1;<br />
+	if (strcmp(name, "bash") == 0 ||<br />
+		strcmp(name, "init") == 0)<br />
+        	printf("OK!n");<br />
+	else if (strcmp(name, "gdb") == 0 ||<br />
+		strcmp(name, "strace") == 0 ||<br />
+		strcmp(name, "ltrace") == 0)<br />
+		printf("Traced!n");<br />
+	else<br />
+		printf("Unknown! Maybe traced!n");</p>
+<p>	return 0;<br />
+}</p>
+<p>同样的手法，一个更简单的方式是利用session id。我们知道，不论被跟踪与否，session id是不变的，而ppid会变！下面的程序就利用了这一点。</p>
+<p>#include<br />
+#include<br />
+#include </p>
+<p>int main(void)<br />
+{<br />
+	printf("getsid: %dn", getsid(getpid()));<br />
+	printf("getppid: %dn", getppid());</p>
+<p>        if (getsid(getpid()) != getppid()) {<br />
+		printf("traced!n");<br />
+		exit(EXIT_FAILURE);<br />
+	}<br />
+        printf("OKn");</p>
+<p>	return 0;<br />
+}</p>
+<p>四. 利用环境变量</p>
+<p>bash有一个环境变量叫$_，它保存的是上一个执行的命令的最后一个参数。如果在被跟踪的状态下，这个变量的值是会发生变化的（为什么？）。下面列出了几种情况：</p>
+<pre>
+                argv[0]                    getenv("_")
+shell           ./test                     ./test
+strace          ./test                     /usr/bin/strace
+ltrace          ./test                     /usr/bin/ltrace
+gdb              /home/user/test           (NULL)
+</pre>
+<p>所以我们也可以据此来判断。</p>
+<p>#include<br />
+#include<br />
+#include </p>
+<p>int main( int argc, char *argv[])<br />
+{<br />
+	printf("getenv(_): %sn", getenv("_"));<br />
+	printf("argv[0]: %sn", argv[0]);</p>
+<p>	if(strcmp(argv[0], (char *)getenv("_"))) {<br />
+		printf("traced!n");<br />
+		exit(-1);<br />
+	}</p>
+<p>	printf("OKn");<br />
+        return 0;<br />
+}</p>
+<p>五. 利用ptrace</p>
+<p>很简单，如果被跟踪了还再调用ptrace(PTRACE_TRACEME...)自然会不成功。</p>
+<p>#include<br />
+#include </p>
+<p>int main(void)<br />
+{<br />
+	 if ( ptrace(PTRACE_TRACEME, 0, 1, 0) &lt; 0 ) {<br />
+		printf("traced!n");<br />
+		return 1;<br />
+	}<br />
+	printf("OKn");<br />
+	return 0;<br />
+}</p>
+<p>Happy hacking!</body></html></p>

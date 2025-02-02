@@ -1,0 +1,48 @@
+---
+layout: post
+title: TCP Closure
+date: 2007-11-24 23:51:25.000000000 -08:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Programming
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '265'
+  _wp_old_slug: '265'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2007/11/24/tcp-closure/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body></p>
+<p>今天在看TCP的释放时遇到几个问题，查了一下《TCP/IP详解 卷一》和RFC793，也请教了一下Herbert Xu，基本上都解决了。在这里总结一下。</p>
+<p>TCP的释放过程如下图所示（取自《TCP/IP详解 卷一》）：</p>
+<p style="text-align:center;"><img src="{{site.baseurl}}/assets/2007/11/half-close.gif" height="356" width="500"></p>
+<p>问题1：既然TCP的CLOSE是单工的，那么，一方在收到FIN的ACK之后可能会过很长一段时间才收到对方的FIN。那么如果这个时间里这方已经关闭该进程，谁又来ACK对方的FIN呢？</p>
+<p>Herbert解释到：</p>
+<blockquote><p>For you particular scenario, the key is that the TCP socket is<br />
+maintained by the OS, not the process.</p>
+<p>So even after your process has called close(2) and exited, the<br />
+OS will continue to respond in ways required by RFC793 until<br />
+such a time when the socket has been CLOSEed in the sense of the<br />
+protocol.</p></blockquote>
+<p>问题2：两方同时发送FIN又如何呢？</p>
+<p>没想到这个问题连RFC里都有，里面这样解释：</p>
+<blockquote><p>     A simultaneous CLOSE by users at both ends of a connection causes<br />
+FIN segments to be exchanged.  When all segments preceding the FINs<br />
+have been processed and acknowledged, each TCP can ACK the FIN it<br />
+has received.  Both will, upon receiving these ACKs, delete the<br />
+connection.</p></blockquote>
+<p>也就是像下图所示（也是取自TCP/IP详解）：</p>
+<p style="text-align:center;"><img src="{{site.baseurl}}/assets/2007/11/simult-close.gif"></p>
+<p>问题3：关于MSL。</p>
+<p>MSL是maximum segment lifetime的缩写。TCP状态机里有个TIME_WAIT状态，设置它是为了防止最后一个ACK丢失，这个时间一般就是2MSL。而且，在这个2MSL的时间中，这个socket是不能被重用的，除非我们setsockopt(...,SO_REUSEADDR,...)。</body></html></p>

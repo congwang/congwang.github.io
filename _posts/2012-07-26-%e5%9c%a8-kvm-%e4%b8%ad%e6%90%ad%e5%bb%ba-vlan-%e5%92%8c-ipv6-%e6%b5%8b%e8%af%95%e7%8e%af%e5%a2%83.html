@@ -1,0 +1,70 @@
+---
+layout: post
+title: KVM 中搭建 VLAN 和 IPv6 环境
+date: 2012-07-26 22:37:11.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Linux Application
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '2084'
+  _wp_old_slug: '2084'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2012/07/26/%e5%9c%a8-kvm-%e4%b8%ad%e6%90%ad%e5%bb%ba-vlan-%e5%92%8c-ipv6-%e6%b5%8b%e8%af%95%e7%8e%af%e5%a2%83/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body></p>
+<p>普通的 IPv4 环境很简单，如果你使用 virt-manager 的话它自动都给你搭好了。每个 kvm guest 都在同一个子网内，通过 bridge 连接到一起，然后通过 host 上的 NAT 访问外网，如下所示：</p>
+<pre># brctl show
+bridge name	bridge id		STP enabled	interfaces
+virbr0		8000.5254002e2392	yes		virbr0-nic
+							vnet0
+							vnet1
+
+# iptables -L -t nat
+Chain PREROUTING (policy ACCEPT)
+target     prot opt source               destination
+
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination
+
+Chain POSTROUTING (policy ACCEPT)
+target     prot opt source               destination
+MASQUERADE  tcp  --  192.168.122.0/24    !192.168.122.0/24     masq ports: 1024-65535
+MASQUERADE  udp  --  192.168.122.0/24    !192.168.122.0/24     masq ports: 1024-65535
+MASQUERADE  all  --  192.168.122.0/24    !192.168.122.0/24</pre>
+<p>稍微有点儿困难的是在此基础上搭建 VLAN 和 IPv6 环境。</p>
+<p>先看VLAN，虽然我们现在还没有 openvswitch，我们可以通过 bridge 设置一个简单的 vlan 局域网。因为 virt-manager 默认使用的是 192.168.122.0/24，我为VLAN单独开了一个 192.168.1.0/24，有两台机器 A 和 B，A 上运行此VLAN的 DHCP 服务，B 就可以直接动态获取地址了。</p>
+<p>机器 A 上运行：</p>
+<pre>vconfig add eth0 2
+ifconfig eth0.2 192.168.1.1
+dnsmasq --listen-address=192.168.1.1 -i eth0.2 --dhcp-range=192.168.1.2,192.168.1.240</pre>
+<p>机器 B 上运行：</p>
+<pre>vconfig add eth0 2
+dhclient eth0.2</pre>
+<p>注：vconfig 已经过时了，现在都使用 ip，我之所以还使用它是因为整个命令比较短。;-)</p>
+<p>再来看 IPv6，因为我对 IPv6 不熟悉，所以折腾了好长时间最后还是不得不使用 sit tunnel，而且 IP 地址也是静态手工设置的。还是假设 A 和 B 两台机器，先让 IPv4 在上面跑起来，然后在两台机器上分别运行下面的命令：</p>
+<pre>echo 1 &gt; /proc/sys/net/ipv4/conf/all/forwarding
+echo 1 &gt; /proc/sys/net/ipv6/conf/all/forwarding
+ip tunnel add sit1 mode sit local ${SELF} remote ${REMOTE} dev eth0
+ip -6 addr add fd00:1:2:3::2/64 dev sit1
+ip -6 route add fd00:1:2:3::1/64 dev sit1
+ifconfig sit1 up</pre>
+<p>${SELF} 为自己的IPv4地址；${REMOTE}为对方的IPv4地址，即在A上面为B的地址，B上面为A的地址。他们的IPv6地址分别是fd00:1:2:3::1 和 fd00:1:2:3::2。</p>
+<p>Update：如果使用 libvirt 的话，可以用 virsh net-edit &lt;NET&gt; 编辑网络配置，添加下面两行：</p>
+<p>&lt;ip family='ipv6' address='fd00:1:2:3::1' prefix='64'&gt;<br />
+&lt;/ip&gt;</p>
+<p>可参考<a href="http://libvirt.org/formatnetwork.html#elementsAddress" target="_blank">这里</a>。</body></html></p>

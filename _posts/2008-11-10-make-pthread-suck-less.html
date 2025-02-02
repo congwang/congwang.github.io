@@ -1,0 +1,150 @@
+---
+layout: post
+title: Make pthread suck less
+date: 2008-11-10 03:52:06.000000000 -08:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Programming
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '419'
+  _wp_old_slug: '419'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2008/11/10/make-pthread-suck-less/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body>
+<p>pthread的API一直让我感到头疼，种类多而且名字又长，今天下决心把它们理清楚。</p>
+<p>仅从名字上来看，pthread的API可以分为这么几类：</p>
+<p><strong>pthread_XXX</strong>:<br />
+此类API一般是对thread本身进行管理的。共包括如下API：</p>
+<p>pthread_atfork()<br />
+pthread_create()<br />
+pthread_exit()<br />
+pthread_cancel()<br />
+pthread_join()<br />
+pthread_once()<br />
+pthread_self()<br />
+pthread_equal()<br />
+pthread_kill()<br />
+pthread_detach()<br />
+pthread_yeild()<br />
+pthread_sigmask()<br />
+pthread_key_create()<br />
+pthread_key_delete()<br />
+pthread_cleanup_push()<br />
+pthread_cleanup_pop()<br />
+pthread_testcancel()</p>
+<p>它还可以分出两个子类，包括pthread_setWWW和pthread_getWWW，其中有：</p>
+<p>pthread_getconcurrency()<br />
+pthread_getcpuclockid()<br />
+pthread_getschedparam()<br />
+pthread_getspecific()</p>
+<p>pthread_setcancelstate()<br />
+pthread_setconcurrency()<br />
+pthread_setschedparam()<br />
+pthread_setschedprio()<br />
+pthread_setspecific()</p>
+<p><strong>pthread_attr_YYY</strong>:<br />
+YYY一般包括：init, destory, setZZZ, getZZZ。此类API是对thread本身的属性进行管理的。共包括如下API：</p>
+<p>pthread_attr_destroy()<br />
+pthread_attr_getinheritsched()<br />
+pthread_attr_getschedparam()<br />
+pthread_attr_getschedpolicy()<br />
+pthread_attr_getscope()<br />
+pthread_attr_getstackaddr()<br />
+pthread_attr_getstack()<br />
+pthread_attr_init()<br />
+pthread_attr_setdetachstate()<br />
+pthread_attr_setguardsize()<br />
+pthread_attr_setinheritsched()<br />
+pthread_attr_setschedparam()<br />
+pthread_attr_setschedpolicy()<br />
+pthread_attr_setscope()<br />
+pthread_attr_setstackaddr()<br />
+pthread_attr_setstack()<br />
+pthread_attr_setstacksize()</p>
+<p><strong>pthread_MMM_XXX</strong>:<br />
+XXX一般是上面和那个XXX集合类似的操作，但MMM一般是thread的一个工具，比如：mutex，cond等。此类API是对thread的MMM工具进行操作。共包括如下API：</p>
+<p>mutex类：<br />
+pthread_mutex_init()<br />
+pthread_mutex_destroy()<br />
+pthread_mutex_lock()<br />
+pthread_mutex_unlock()<br />
+pthread_mutex_trylock()<br />
+pthread_mutex_setprioceiling()<br />
+pthread_mutex_getprioceiling()</p>
+<p>cond类：<br />
+pthread_cond_init()<br />
+pthread_cond_destroy()<br />
+pthread_cond_signal()<br />
+pthread_cond_broadcast()<br />
+pthread_cond_wait()<br />
+pthread_cond_timedwait()</p>
+<p>rwlock类：<br />
+pthread_rwlock_destroy()<br />
+pthread_rwlock_init()<br />
+pthread_rwlock_rdlock()<br />
+pthread_rwlock_timedrdlock()<br />
+pthread_rwlock_timedwrlock()<br />
+pthread_rwlock_tryrdlock()<br />
+pthread_rwlock_trywrlock()<br />
+pthread_rwlock_unlock()<br />
+pthread_rwlock_wrlock()</p>
+<p>spin类：<br />
+pthread_spin_destroy()<br />
+pthread_spin_init()<br />
+pthread_spin_lock()<br />
+pthread_spin_trylock()<br />
+pthread_spin_unlock()</p>
+<p>barrier类：<br />
+pthread_barrier_destroy()<br />
+pthread_barrier_init()<br />
+pthread_barrier_wait()</p>
+<p><strong>pthread_MMMattr_YYY</strong>:<br />
+MMM和YYY同上（spin除外），此类API是对MMM工具的属性进行操作。和上面有着密切的关系。共包括如下API：</p>
+<p>mutex类：<br />
+pthread_mutexattr_destroy()<br />
+pthread_mutexattr_getprioceiling()<br />
+pthread_mutexattr_getprotocol()<br />
+pthread_mutexattr_getpshared()<br />
+pthread_mutexattr_gettype()<br />
+pthread_mutexattr_init()<br />
+pthread_mutexattr_setprioceiling()<br />
+pthread_mutexattr_setprotocol()<br />
+pthread_mutexattr_setpshared()<br />
+pthread_mutexattr_settype()</p>
+<p>cond类：<br />
+pthread_condattr_destroy()<br />
+pthread_condattr_getclock()<br />
+pthread_condattr_getpshared()<br />
+pthread_condattr_init()<br />
+pthread_condattr_setclock()<br />
+pthread_condattr_setpshared()</p>
+<p>rwlock类：<br />
+pthread_rwlockattr_destroy()<br />
+pthread_rwlockattr_getpshared()<br />
+pthread_rwlockattr_init()<br />
+pthread_rwlockattr_setpshared()</p>
+<p>barrier类：<br />
+pthread_barrierattr_destroy()<br />
+pthread_barrierattr_getpshared()<br />
+pthread_barrierattr_init()<br />
+pthread_barrierattr_setpshared()</p>
+<p>这还没完，还有N多的新类型，比如pthread_t，pthread_attr_t，pthread_once_t，以及随之而来的宏。。。我在这就不总结了。</p>
+<p>最后，介绍pthread的书籍有：</p>
+<p>"PThreads Primer". Lewis, Bill and Daniel J. Berg. California: Prentice Hall.<br />
+"Pthreads Programming". B. Nichols et al. O'Reilly and Associates.<br />
+"Programming With POSIX Threads". D. Butenhof. Addison Wesley<br />
+"Programming With Threads". S. Kleiman et al. Prentice Hall</p>
+<p></body></html></p>

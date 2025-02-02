@@ -1,0 +1,42 @@
+---
+layout: post
+title: 为什么void main是愚蠢的？
+date: 2007-08-02 22:07:52.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Programming
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '172'
+  _wp_old_slug: '172'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2007/08/02/%e4%b8%ba%e4%bb%80%e4%b9%88void-main%e6%98%af%e6%84%9a%e8%a0%a2%e7%9a%84%ef%bc%9f/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body>
+<p>a) 最直接的回答：因为标准就是这么规定的。C99第5.1.2.2.1节“Program startup”<br />
+中明确规定好了的，不服不行。当然了，您要写不可移植的C就得另说了。</p>
+<p>b) main函数的返回值用于说明程序的退出状态。如果返回 0，则代表程序正常退出；<br />
+返回其它数字的含义则由系统决定。通常，返回非零代表程序异常退出。在Win下<br />
+你可能觉得这并不重要，但请想想Unix/Linux下面那些依靠程序“返回值”工作的<br />
+脚本和Makefile！</p>
+<p>c) main函数被认为要返回int（main is supposed to return an int.）。调用main的<br />
+程序假设它会返回一个int，并且把它压栈。如果它没有返回，就**有可能**导致<br />
+程序崩溃！</p>
+<p>d) 在Win上可行并不代表都可行，在所有i386上可行也不代表都可行。世界是丰富多彩<br />
+的，除了Window$和i386，还有很多系统和构架。这里有一个void main导致程序崩溃<br />
+的例子，是在ARM上的RISC OS中，见下：<br />
+<a href="http://users.aber.ac.uk/auj/voidmain.shtml">http://users.aber.ac.uk/auj/voidmain.shtml</a></p>
+<p>e) C++之父在其主页上<a href="http://www.research.att.com/~bs/bs_faq2.html#void-main">这样评价void main</a>：“这种定义从来没有在C++中出现过，也没在C中出现。” “一致的实现可能提供多种main的版本，但他们必须都是int返回类型。” “即使你的编译器接受void main，你也要避免它。”</p>
+<p>所以，你不应该，更不能教别人，使用void main。如果你的老师上课时教给你写void main，你应该毫不犹豫地站起来告诉他/她：这样是不对的！ 同理，任何讲C语言的书中带有void main的例子都是不严谨的！</p>
+<p></body></html></p>

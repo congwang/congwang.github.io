@@ -1,0 +1,58 @@
+---
+layout: post
+title: 在窗口中显示X桌面
+date: 2011-12-16 18:59:47.000000000 -08:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Linux Application
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '1835'
+  _wp_old_slug: '1835'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2011/12/16/%e5%9c%a8%e7%aa%97%e5%8f%a3%e4%b8%ad%e6%98%be%e7%a4%bax%e6%a1%8c%e9%9d%a2/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body>
+<p>最近在鼓捣 awesome 的时候看到这么一个脚本，可以在 gnome (或其它任何桌面) 的窗口中显示 X 桌面，这样以来测试 awesome 的配置就很方便了！Xephyr 真是个好东西啊！</p>
+<p>[bash]<br />
+#!/bin/sh<br />
+##<br />
+## test.sh<br />
+## Login :<br />
+## Started on  Thu Sep  3 15:29:14 2009 Cedric GESTES<br />
+## $Id$<br />
+##<br />
+## Author(s):<br />
+##  - Cedric GESTES<br />
+##<br />
+## Copyright (C) 2009 Cedric GESTES<br />
+## This program is free software; you can redistribute it and/or modify<br />
+## it under the terms of the GNU General Public License as published by<br />
+## the Free Software Foundation; either version 3 of the License, or<br />
+## (at your option) any later version.<br />
+##<br />
+## This program is distributed in the hope that it will be useful,<br />
+## but WITHOUT ANY WARRANTY; without even the implied warranty of<br />
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the<br />
+## GNU General Public License for more details.<br />
+##<br />
+## You should have received a copy of the GNU General Public License<br />
+## along with this program; if not, write to the Free Software<br />
+## Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA<br />
+##</p>
+<p>Xephyr -ac -br -noreset -screen 800x600 :1 &amp;<br />
+sleep 1<br />
+DISPLAY=:1.0 awesome -c ~/.config/awesome/rc.lua<br />
+[/bash] </p>
+<p></body></html></p>

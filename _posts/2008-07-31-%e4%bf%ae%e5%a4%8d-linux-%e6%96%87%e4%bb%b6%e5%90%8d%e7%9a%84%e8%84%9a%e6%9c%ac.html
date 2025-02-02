@@ -1,0 +1,238 @@
+---
+layout: post
+title: 修复 Linux 文件名的脚本
+date: 2008-07-31 20:23:20.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Programming
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '372'
+  _wp_old_slug: '372'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2008/07/31/%e4%bf%ae%e5%a4%8d-linux-%e6%96%87%e4%bb%b6%e5%90%8d%e7%9a%84%e8%84%9a%e6%9c%ac/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body>
+<p>肯定还有bug，欢迎指正。;-)</p>
+<p>（下面的语法加亮有问题。。。）<br />
+[bash]<br />
+#!/bin/bash</p>
+<p>posix_chars="a-zA-Z._0-9-"<br />
+bad_chars="][|#?&gt;&lt;*$'"(){}&amp;"</p>
+<p>only_query=0<br />
+only_print=0<br />
+only_posix=0<br />
+only_whitespace=0<br />
+replace_char='_'<br />
+append_chars="_2"<br />
+remove_dup_underscores=0<br />
+allow_recursion=0<br />
+start_with_dash=0</p>
+<p>function test_name<br />
+{<br />
+	if [ $only_posix -eq 0 ]<br />
+	then<br />
+		test_chars="[${bad_chars}]"<br />
+		ret=0<br />
+		while(($#!=0))<br />
+		do<br />
+			ret=$(($(echo "$1" | wc -l)-1))<br />
+			echo "$1" | perl -n -l -e "exit 1 if m/[s]/;"<br />
+			ret=$(($ret+$?))<br />
+			case "$1" in<br />
+				"" | -* | *${test_chars}*) ret=$(($ret+1))<br />
+				;;<br />
+				*"\"*) ret=$(($ret+1)) #'' is special !!<br />
+				;;<br />
+			esac<br />
+			shift<br />
+		done<br />
+	else<br />
+		test_chars="[!$posix_chars]"<br />
+		ret=0<br />
+		while(($#!=0))<br />
+		do<br />
+			case "$1" in<br />
+				"" | -* | *${test_chars}*) ret=$(($ret+1))<br />
+				;;<br />
+			esac<br />
+			shift<br />
+		done<br />
+	fi<br />
+	return $ret<br />
+}</p>
+<p>function good_name<br />
+{<br />
+	rpl="${2:-_}"<br />
+	tmp=$(echo -n "$1" | tr '[ trn]' "$rpl")<br />
+	if [ $only_whitespace -eq 0 ]<br />
+	then<br />
+		echo $(echo "$tmp" | sed -e "s/[$bad_chars]/$rpl/g" | sed -e "s/[\]/$rpl/g")<br />
+	fi<br />
+}</p>
+<p>function no_dup_underscore<br />
+{<br />
+	echo "$(echo "$1" | sed -e 's/__*/_/g')"<br />
+}</p>
+<p>#assume in pwd directory<br />
+#get_new_name bad_name replace_char append<br />
+function get_new_name<br />
+{<br />
+	if test_name "$1"<br />
+	then<br />
+		if [ $remove_dup_underscores -eq 1 ]<br />
+		then<br />
+			echo "$(no_dup_underscore "$1")"<br />
+		else<br />
+			echo "$1"<br />
+		fi<br />
+		return<br />
+	fi<br />
+	apd="$3"<br />
+	new_name="$(good_name "$1" $2)"<br />
+	if [ $remove_dup_underscores -eq 1 ]<br />
+	then<br />
+		new_name=$(no_dup_underscore "${new_name}")<br />
+	fi<br />
+	if [ -e "${new_name}" ]<br />
+	then<br />
+		if [ ${new_name##*.} = ${new_name} ]<br />
+		then<br />
+			echo "${new_name%.*}${apd}"<br />
+		else<br />
+			echo "${new_name%.*}${apd}.${new_name##*.}"<br />
+		fi<br />
+	else<br />
+		echo "${new_name}"<br />
+	fi<br />
+}</p>
+<p>function print_version<br />
+{<br />
+	echo "Copyright (C) WANG Cong, 2008."<br />
+	echo "Version 1.5"<br />
+}</p>
+<p>function print_help<br />
+{<br />
+	prog=$(basename $0)<br />
+	cat &lt;&amp;2<br />
+			echo &gt;&amp;2<br />
+			print_help &gt;&amp;2<br />
+			return 1<br />
+		fi<br />
+		test_name "$@"<br />
+		return $?<br />
+	else<br />
+		if [ $only_print -eq 0 ]<br />
+		then<br />
+			[ -e "$1" ] || (echo "No such file or directory." &gt;&amp;2 &amp;&amp; return 2)<br />
+		fi<br />
+		last_name=$(get_new_name "$1" "${replace_char}" "${append_chars}")<br />
+		if [ $only_print -eq 1 ]<br />
+		then<br />
+			if [ $allow_recursion -eq 1 ]<br />
+			then<br />
+				echo "-p conflicts with -r." &gt;&amp;2<br />
+				print_help &gt;&amp;2<br />
+				return 3<br />
+			else<br />
+				echo "$last_name"<br />
+			fi<br />
+		else<br />
+			[ "$1" != "$last_name" ] &amp;&amp; mv "$1" "$last_name"<br />
+			if [ $allow_recursion -eq 1 ]<br />
+			then<br />
+				if [ ! -d "$last_name" ]<br />
+				then<br />
+					echo "$1"" was not a directory!" &gt;&amp;2<br />
+					return 4<br />
+				fi<br />
+				(cd "$last_name"<br />
+				ls | while read file<br />
+				do<br />
+					echo "$file"<br />
+					if [ -d "$file" ]<br />
+					then<br />
+						main "$file"<br />
+					else<br />
+						allow_recursion=0<br />
+						main "$file"<br />
+					fi<br />
+				done)</p>
+<p>			fi<br />
+		fi<br />
+	fi<br />
+	return 0<br />
+}</p>
+<p>while getopts "rvhsuoqx:a:c:p" var<br />
+do<br />
+	case $var in<br />
+		v)<br />
+			print_version<br />
+			exit 0<br />
+			;;<br />
+		h)<br />
+			print_help<br />
+			exit 0<br />
+			;;<br />
+		c)<br />
+			replace_char=$OPTARG<br />
+			if [ ${#OPTARG} -ne 1 ]<br />
+			then<br />
+				echo "-c must be followed by a char." &gt;&amp;2<br />
+				print_help<br />
+				exit 1<br />
+			fi<br />
+			;;<br />
+		a)<br />
+			append_chars=$OPTARG<br />
+			;;<br />
+		q)<br />
+			only_query=1<br />
+			;;<br />
+		p)<br />
+			only_print=1<br />
+			;;<br />
+		o)<br />
+			only_posix=1<br />
+			;;<br />
+		r)<br />
+			allow_recursion=1<br />
+			;;<br />
+		u)<br />
+			remove_dup_underscores=1<br />
+			;;<br />
+		s)<br />
+			only_whitespace=1<br />
+			;;<br />
+		x)<br />
+			start_with_dash=1<br />
+			tmp=$OPTARG<br />
+			;;<br />
+		*)<br />
+			echo "Bad options!" &gt;&amp;2<br />
+			print_help<br />
+			exit 1<br />
+	esac<br />
+done</p>
+<p>shift $(($OPTIND - 1))<br />
+if [ $start_with_dash -eq 0 ]<br />
+then<br />
+	main "$@"<br />
+else<br />
+	tmp=$(perl -e '$foo="'"$tmp"'";$bar=$foo;$foo=~s/^-*//;rename("$bar", "$foo");print $foo;')<br />
+	main "$tmp"<br />
+fi<br />
+exit $?</p>
+<p>[/bash] </p>
+<p></body></html></p>

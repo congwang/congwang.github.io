@@ -1,0 +1,56 @@
+---
+layout: post
+title: 关于Haskell中的类型
+date: 2007-03-09 22:39:05.000000000 -08:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Programming
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '34'
+  _wp_old_slug: '34'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2007/03/09/%e5%85%b3%e4%ba%8ehaskell%e4%b8%ad%e7%9a%84%e7%b1%bb%e5%9e%8b/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body></p>
+<p class="postdate">Friday, 5. January 2007, 15:39:47</p>
+<p><br>
+<div class="content">
+<div id="excerpt"></div>
+<p>Haskell的类型独特，变化较多，第一次接触感觉确实有点摸不到头脑。</p>
+<p>:t命令用来查看变量/函数/表达式的类型，比如：</p>
+<pre>
+:t "hello"
+"hello" :: [Char]
+</pre>
+<p>"hello"是由Char类型组成的List。</p>
+<pre>
+:t tail
+tail :: [a] -&lt; [a]
+</pre>
+<p>-&lt;前面的是函数接收的参数类型，后面的是返回值类型。上面表明tail可以接收任何类型，并且返回一个同类型的值。<br />
+这很容易理解，比如：<br />
+<code>tail [1,2,3,4]</code><br><br />
+就得到：<br><br />
+[2,3,4]<br><br />
+而<code>tail "hello"</code>也可以，就能得到：<br><br />
+"ello"<br><br />
+<br><br />
+这是简单的情况，下面看个稍微复杂的：<br><br />
+假设函数f的类型是Float -&lt; Float，也就是说它接收一个Float参数，并返回Float值，这和C/C++还不一样，因为Haskell是functional语言，所以Float -&lt; Float只能单纯地做数值计算，换句话说，就是不能做一些额外的其他东西，比如打印最后的结果。</p>
+<p>现在，我们想要f计算并打印出结果，那么f的类型就变了，就应该是：<br />
+Float -&lt; (Float,String)<br />
+。</p>
+</div>
+<p></body></html></p>

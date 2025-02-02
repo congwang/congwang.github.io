@@ -1,0 +1,71 @@
+---
+layout: post
+title: 八皇后问题的非递归解法
+date: 2007-11-29 19:13:28.000000000 -08:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Programming
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '267'
+  _wp_old_slug: '267'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2007/11/29/%e5%85%ab%e7%9a%87%e5%90%8e%e9%97%ae%e9%a2%98%e7%9a%84%e9%9d%9e%e9%80%92%e5%bd%92%e8%a7%a3%e6%b3%95/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body>
+<p>用C++实现了八皇后问题的非递归算法。原理很简单，看代码就是了，无须多说。</p>
+<p>BTW: C++的algorithm就是好用啊！</p>
+<p>#include<br />
+#include<br />
+#include<br />
+#include </p>
+<p>using namespace std;<br />
+const int MAX = 8;</p>
+<p>vector board(MAX);</p>
+<p>void show_result()<br />
+{<br />
+	for(size_t i = 0; i &lt; board.size(); i++)<br />
+		cout&lt;&lt;"("&lt;&lt;i&lt;&lt;","&lt;&lt;board[i]&lt;&lt;")";<br />
+	cout&lt;&lt;endl;<br />
+}</p>
+<p>int check_cross()<br />
+{<br />
+	for(size_t i = 0; i &lt; board.size()-1; i++)<br />
+	{<br />
+		for(size_t j = i+1; j &lt; board.size(); j++)<br />
+		{<br />
+			if((j-i) == (size_t)abs(board[i]-board[j]))<br />
+				return 1;<br />
+		}<br />
+	}<br />
+	return 0;<br />
+}</p>
+<p>void put_chess()<br />
+{<br />
+	while(next_permutation(board.begin(), board.end()))<br />
+	{<br />
+		if(!check_cross())<br />
+		{<br />
+			show_result();<br />
+		}<br />
+	}<br />
+}</p>
+<p>int main()<br />
+{<br />
+	for(size_t i =0; i &lt; board.size(); i++)<br />
+		board[i] = i;<br />
+	put_chess();<br />
+	return 0;<br />
+}</p>
+<p></body></html></p>

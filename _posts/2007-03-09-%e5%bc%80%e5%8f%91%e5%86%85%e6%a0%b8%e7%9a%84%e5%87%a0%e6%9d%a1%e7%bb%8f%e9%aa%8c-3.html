@@ -1,0 +1,33 @@
+---
+layout: post
+title: 开发内核的几条经验
+date: 2007-03-09 23:07:02.000000000 -08:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Linux Kernel
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '47'
+  _wp_old_slug: '47'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2007/03/09/%e5%bc%80%e5%8f%91%e5%86%85%e6%a0%b8%e7%9a%84%e5%87%a0%e6%9d%a1%e7%bb%8f%e9%aa%8c-3/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body></p>
+<p class="postdate">Wednesday, 14. February 2007, 12:20:41</p>
+<p><br>
+<div class="content">
+<div id="excerpt"></div>
+<p><span class="alignright">作者：王聪@西邮</span><br><br><br>1. 永远不要使用sleep_on及其变种，那是不安全的，而且即将被剔出。<br>2. 老的/proc接口是有害的，如果你不能彻底理解它，千万别使用！尽量不要再往/proc里面放东西了，因为那里现在已经够乱了。<br>3. wait_event的一个变种──wait_event_interruptible_exclusive──是可以执行独占等待的。LDD中这一点错了，不，过时了。<br>4. 不要使用lock_kernel()，这个锁太大了，会让系统性能下降。<br>5. 信号量本身就是一种高级的lock，它能比普通的lock，比如spinlock，实现更多的语义。就像分配了内存后必须释放一样，一个进程对一个信号量进行down操作后，必须在退出前执行up。切记：不要在拥有锁时睡眠！<br>6. Unix的errno具有丰富的含义，请认真小心地处理它们，在用户空间如此，在内核空间更要如此，因为内核空间的一个错误状态直接影响到现有用户程序的表现。<br>7. oops是严重的错误，不能信任存在oops的内核。<br>8. <br>关于补丁：<br>a) 稳定内核的补丁只能应用于基版本的内核，比如：2.6.17.*补丁只能应用于2.6.17版本的内核；<br>b) 基版本内核补丁只能应用于上一个版本的内核，比如：2.6.18补丁只能应用于2.6.17；<br>c) 增量型补丁只能从一个指定的版本应用于另一个指定版本，比如：补丁patch-2.6.17.10-11.bz2只能应用于2.6.17.10，把它升级为2.6.17.11；<br>d) 如果你需要升级的版本间隔比较大，比如从2.6.17.1到2.6.17.11，可以先从2.6.17.1退回到2.6.17，然后再一次升级到2.6.17.11；<br>e) 稳定内核的补丁和基版本内核补丁都在源代码目录中，而增量型补丁在一个单独的目录/pub/linux/kernel/v2.6/incr中。<br>
+</div>
+<p></body></html></p>

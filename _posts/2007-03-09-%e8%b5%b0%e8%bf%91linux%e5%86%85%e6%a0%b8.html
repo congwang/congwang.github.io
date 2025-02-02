@@ -1,0 +1,227 @@
+---
+layout: post
+title: 走近Linux内核
+date: 2007-03-09 22:43:14.000000000 -08:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Linux Kernel
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '39'
+  _wp_old_slug: '39'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2007/03/09/%e8%b5%b0%e8%bf%91linux%e5%86%85%e6%a0%b8/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body></p>
+<p class="postdate">Monday, 15. January 2007, 13:54:04</p></p>
+<div class="content">
+<div id="excerpt"></div>
+<div class="Section1">
+<h1 align="center" style="text-align:center;">走近<span lang="EN" xml:lang="EN">Linux</span>内核</h1>
+<p class="MsoNormal" align="right" style="text-align:right;">作者：王聪<span lang="EN" xml:lang="EN"><br><br />
+&gt;<a href="mailto:xiyou.wangcong@gmail.com.NO_SPAM">xiyou.wangcong@gmail.com</a>&lt;</span></p>
+<blockquote>
+<p class="MsoNormal"><span lang="EN" xml:lang="EN"></span></p>
+<p class="MsoNormal"><i>不要理会任何一个告诉你内核开发是困难，特别或者不同的人。它是一个大的程序，而且<span lang="EN" xml:lang="EN">bug</span>修复或驱动编写是一个最佳起点。它也没有什么魔力，也不是使用只有留着络腮胡的老手才能读懂的语言编写。<span lang="EN" xml:lang="EN"></span></i></p>
+<p class="MsoNormal" align="right" style="text-align:right;"><i>──Alan Cox</i></p>
+</blockquote>
+<p class="MsoNormal"><span lang="EN" xml:lang="EN"></span></p>
+<h2>简介</h2>
+<p>这篇文章是专门写给那些对<span lang="EN" xml:lang="EN">Linux</span>内核感兴趣，却又不知道如何着手去读懂那么多代码的内核新手。也许你刚刚了解<span lang="EN" xml:lang="EN">Linux</span>，又急于探索<span lang="EN" xml:lang="EN">Linux</span>的内部秘密；也许你是一个<span lang="EN" xml:lang="EN">Linux</span>开发者，熟悉应用程序的开发，又雄心勃勃准备向内核世界进发。那么这篇文章正是你需要的，它会带你走进内核的世界，伴你渡过危险的沼泽。通过分享我们自己的经历，希望有更多的人能够加入到<span lang="EN" xml:lang="EN">Linux</span>内核开发者行列。</p>
+<p>内核开发向来被视为非常神秘的工作，仿佛只有传说中的留着长长的络腮胡的黑客们才能从事它。其实不然，<span lang="EN" xml:lang="EN">Linux</span>内核的开发和其它大型项目没有多少差别，只不过它的调试确实有点特别，需要一些特别的技巧。不要恐慌（<span lang="EN" xml:lang="EN">Don't Panic!</span>），只要你下功夫，你也能参与内核的开发，它的确是一件非常好玩的事。</p>
+<h2>需要准备什么</h2>
+<p>当然，你首先要有一台可供支配的电脑，最好装有<span lang="EN" xml:lang="EN">Linux</span>。如果可以，最好再有一台专门供你调试代码的机器，因为没人能保证调试内核的过程中不会让你的文件系统崩溃。或者，至少有一块专门给调试内核使用的硬盘。</p>
+<p>最好还有一个固定的互联网接口，毕竟<span lang="EN" xml:lang="EN">Linux</span>内核开发是在网络上进行的，而且你也会经常在互联网上<span lang="EN" xml:lang="EN"><a href="http://www.google.com"><span lang="EN" xml:lang="EN"><span lang="EN" xml:lang="EN">搜索</span></span></a></span>一些有用的信息。</p>
+<p>如果你是一位超级<span lang="EN" xml:lang="EN">geek</span>的话，再准备一根双机串口线，它能帮助你从一台机器上<span lang="EN" xml:lang="EN">“</span>聆听<span lang="EN" xml:lang="EN">”</span>另一台机器上内核运行中的<span lang="EN" xml:lang="EN">“</span>抱怨<span lang="EN" xml:lang="EN">”</span>。嗯，有点像是外科医生给病人听诊，这看起来很酷，不是吗？</p>
+<p>如果你准备在一台非计算机设备上调试你的内核（这没什么奇怪的，<span lang="EN" xml:lang="EN">Linux</span>早已经被移植到千奇百怪的系统上），那么你还需要准备相应的硬件，或者它的模拟器，或者其它一些工具。如果你有在非计算机设备上调试Linux内核的经验，请在这里自由添加相应的内容。</p>
+<h2>开始</h2>
+<p>我们假设上面的东西你都准备好了，整装待发，现在可以正式进军内核了。当然了，如果你对<span lang="EN" xml:lang="EN">Linux</span>上的开发已经很熟悉了，你可以安全地跳过这一节。好了，出发，水手们！</p>
+<h3>
+<span lang="EN" xml:lang="EN">1. </span>精通<span lang="EN" xml:lang="EN">C</span>语言编程</h3>
+<p>不是我们一味推崇<span lang="EN" xml:lang="EN">C</span>语言，而是<span lang="EN" xml:lang="EN">C</span>语言的的确确太适合做内核开发了。<span lang="EN" xml:lang="EN">C</span>语言的诞生源于编写<span lang="EN" xml:lang="EN">Unix</span>内核代码，它精练的设计哲学确实做到了这一点。甚至有人这样评价<span lang="EN" xml:lang="EN">C</span>语言<span lang="EN" xml:lang="EN">──“</span>它联合了汇编的所有威力。<span lang="EN" xml:lang="EN">”</span>如果你还不懂<span lang="EN" xml:lang="EN">C</span>，赶快去学吧。</p>
+<p>如果你是一名编程新手，不推荐用<span lang="EN" xml:lang="EN">C</span>作为你的入门语言，原因如下： </p>
+<p>编程新手最需要了解的是编程的概念和对编程的基本认识，而过多的接触<span lang="EN" xml:lang="EN">C</span>语言往往会把你引出这一目的，会让你把注意力集中到一些奇怪的语言特性上，而不是编程语言本身。</p>
+<p>编程新手往往对计算机了解不够深刻，不清楚计算机的内部结构，而<span lang="EN" xml:lang="EN">C</span>语言恰恰就是和计算机内存<span lang="EN" xml:lang="EN">/</span>编码<span lang="EN" xml:lang="EN">/CPU</span>打交道，最起码，调试那些<span lang="EN" xml:lang="EN">“</span>隐晦<span lang="EN" xml:lang="EN">”</span>的错误时如此。（想想你是不是没有把一个指向指针的指针的指针指向正确的位置。）</p>
+<p>学好<span lang="EN" xml:lang="EN">C</span>语言需要下很大的功夫，最起码不能低于两年。（当然如果你不打算学好那得另说了。）</p></p>
+<p class="MsoNormal">所以，最好先学一门比较简单的编程语言作为铺垫。不妨试一下<span lang="EN" xml:lang="EN"><a href="http://www.python.org/">Python</a></span>，它比<span lang="EN" xml:lang="EN"><a href="http://www.cn-java.com/">Java</a></span>还要简单。当然了，这并非绝对，因人而异。如果你真的决定开始学习<span lang="EN" xml:lang="EN">C</span>语言，那么推荐的入门书籍仍然是<span lang="EN" xml:lang="EN">K&amp;R</span>的<span lang="EN" xml:lang="EN"><a href="http://cm.bell-labs.com/cm/cs/cbook/"><span lang="EN" xml:lang="EN"><span lang="EN" xml:lang="EN">《The C Programming Language</span></span><span lang="EN" xml:lang="EN"><span lang="EN" xml:lang="EN">》</span></span></a></span>。过去这么多年了，它仍然被奉为入门的首选，可见其有多么经典。</p>
+<p>不过仅仅了解<span lang="EN" xml:lang="EN">C</span>的语法，能编写一些小的程序是远远不够的。你必须能够熟练地操纵<span lang="EN" xml:lang="EN">C</span>语言，了解它的一些缺陷和陷阱，让它变成你的利器。有句话说得好：<span lang="EN" xml:lang="EN">“C</span>语言就像一把刻刀，简单，锋利，并且在技师手中非常有用。和任何锋利的工具一样，<span lang="EN" xml:lang="EN">C</span>会伤到那些不能驾驭它的人。<span lang="EN" xml:lang="EN">”</span>读一读《<span lang="EN" xml:lang="EN">C<br><br />
+Traps and Pitfalls</span>》和《<span lang="EN" xml:lang="EN">Expert C Programming</span>》吧，它们能让你有一个大的提升，成为一名<span lang="EN" xml:lang="EN">C</span>语言高手。</p>
+<p>如果碰巧你是一位<span lang="EN" xml:lang="EN">C++</span>的推崇者，那么下面的一些引用或许能说服你开发<span lang="EN" xml:lang="EN">Linux</span>内核不使用<span lang="EN" xml:lang="EN">C++</span>（摘自<span lang="EN" xml:lang="EN">LKML FAQ</span>）。</p>
+<blockquote>
+<p class="MsoNormal"><span lang="EN" xml:lang="EN">Linus</span>在<span lang="EN" xml:lang="EN">2004</span>年说：<span lang="EN" xml:lang="EN"><br><br />
+In fact, in Linux we did try C++ once already, back in 1992.<br><br />
+It sucks. Trust me - writing kernel code in C++ is a BLOODY STUPID IDEA.</span></p>
+<p>他认为：<span lang="EN" xml:lang="EN"><br><br />
+C++</span>编译器是不可靠的，<span lang="EN" xml:lang="EN">1992</span>年的时候更糟，有一些基础性的东西没有改变：</p></p>
+<p>（不知道怎么翻译这个词好）的，对内核来说它更是<span lang="EN" xml:lang="EN">broken</span>。</p>
+<p>任何一个喜欢把内存分配藏到你背后的编译器或者语言，都不是你编写内核的好的选择。</p>
+<p>你可以用<span lang="EN" xml:lang="EN">C</span>来编写<span lang="EN" xml:lang="EN">OO</span>代码，而不用<span lang="EN" xml:lang="EN">C++</span>的一些<span lang="EN" xml:lang="EN">“</span>废话<span lang="EN" xml:lang="EN">”</span>。</p></p>
+<p class="MsoNormal"><span lang="EN" xml:lang="EN">Andrew D. Balsa</span>如是说：<span lang="EN" xml:lang="EN"><br><br />
+Linux</span>一开始的时候<span lang="EN" xml:lang="EN">gcc</span>还没有很好的<span lang="EN" xml:lang="EN">C++</span>实现，而且当时<span lang="EN" xml:lang="EN">C</span>程序员比<span lang="EN" xml:lang="EN">C++</span>程序员要多。<span lang="EN" xml:lang="EN"></span></p>
+<p>Richard E. Gooch 解释到：<span lang="EN" xml:lang="EN"><br><br />
+</span>在<span lang="EN" xml:lang="EN">Linux</span>诞生之前，也有内核在<span lang="EN" xml:lang="EN">g++</span>下编译，但是人们抱怨它的性能。据证明，把<span lang="EN" xml:lang="EN">C</span>代码放到<span lang="EN" xml:lang="EN">g++</span>下编译会产生更糟糕的代码。它不应该有差别，但的的确确有！ </p>
+</blockquote>
+<h3>
+<span lang="EN" xml:lang="EN">2. </span>熟悉常用的工具</h3>
+<h4>掌握至少一种编辑器</h4>
+<p>掌握一种你喜欢的编辑器是非常有必要的，它能为你节省很多时间。在<span lang="EN" xml:lang="EN">Linux</span>上，最著名的编辑器莫过于<span lang="EN" xml:lang="EN"><a href="http://www.emacs.cn/">emacs</a></span>和<span lang="EN" xml:lang="EN"><a href="http://www.vim.org/">vi</a></span>了。一些内核开发者介绍，他们大多数人就是在使用这两种编辑器中的一种。可能一开始你并不能适应这种环境，没关系，熟练之后你的效率会有质的飞跃。</p>
+<p>&gt;p<b>vi</b></p>
+</div>
+<p>在内核开发中使用<span lang="EN" xml:lang="EN">vi</span>有如下好处：<span lang="EN" xml:lang="EN"><br><br />
+1. </span>占用内存少，加载速度快；<span lang="EN" xml:lang="EN"><br><br />
+2. </span>高度可定制化，经配置的<span lang="EN" xml:lang="EN">vi</span>可以很好地重映射命令按键；<span lang="EN" xml:lang="EN"><br><br />
+3. </span>可以自动补齐一些函数名和变量名；<span lang="EN" xml:lang="EN"><br><br />
+4. </span>可以和<span lang="EN" xml:lang="EN">ctags</span>很好地配合使用，通过<span lang="EN" xml:lang="EN">ctrl+]</span>能很快定位函数的定义位置。<span lang="EN" xml:lang="EN"></span></p>
+<p>了解更多的<span lang="EN" xml:lang="EN">vi</span>使用说明，请参考：《Learning the vi Editor, Fifth Edition》<span lang="EN" xml:lang="EN">, L.Lamb, 1990, O'Reilly</span></p>
+<p><b>emacs</b></p>
+<p><span lang="EN" xml:lang="EN">emacs</span>的优点如下：<span lang="EN" xml:lang="EN"><br><br />
+1. Lisp</span>扩展可以大幅度提高效率；<span lang="EN" xml:lang="EN"><br><br />
+2. </span>和<span lang="EN" xml:lang="EN">etags</span>的良好整合；<span lang="EN" xml:lang="EN"><br><br />
+3. </span>按键组合更具指导性。<span lang="EN" xml:lang="EN"></span></p>
+<p>更多的<span lang="EN" xml:lang="EN">emacs</span>使用知识请参考：《Learning GNU Emacs, Third Edition</p>
+<p>》<span lang="EN" xml:lang="EN">, Debra Cameron, James Elliott and<br><br />
+Marc Loy, 2004, O'Reilly</span></p>
+<h4>熟悉<span lang="EN" xml:lang="EN">Linux</span>命令行工具</h4>
+<p>内核开发者一般都在命令行下面工作，是的，图形界面有时会让事情变得更糟，对内核开发尤为如此。你应该能在命令行下面进行一些简单的工作，比如：编译程序，提交补丁，控制版本，收发邮件等。一些常用的命令行技巧会有帮助，所以也不妨去了解一些<span lang="EN" xml:lang="EN">shell</span>编程知识。下面仅介绍一些常用的：</p>
+<p><b>gcc</b></p>
+<p><span lang="EN" xml:lang="EN">gcc</span>是<span lang="EN" xml:lang="EN">GNU</span>提供的优秀的软件之一，其性能不亚于任何商业编译器。它具有惊人的可移植性，而它也号称其最优化功能非常强大，所以<span lang="EN" xml:lang="EN">Linux</span>内核就是采用了<span lang="EN" xml:lang="EN">gcc</span>作为编译器。<span lang="EN" xml:lang="EN">gcc</span>的选项这里无法一一列举，只能介绍一些常用的选项。<span lang="EN" xml:lang="EN"></span></p>
+<p><i>-o filename</i>：这可能是你最常用的一个选项了。它用来产生以指定名字的可执行输出文件。如果不指定文件名，<span lang="EN" xml:lang="EN">gcc</span>产生默认的<span lang="EN" xml:lang="EN">a.out</span>。<span lang="EN" xml:lang="EN"></span></p>
+<p><i>-c</i>: 只编译不链接，产生以<span lang="EN" xml:lang="EN">.o</span>结尾的目标文件。当然它也可以同时编译多个文件。 </p>
+<blockquote>
+<p><span lang="EN" xml:lang="EN">$ <span class="GramE">gcc</span> -c hello.c </span></p>
+</blockquote>
+<p class="MsoNormal" style="margin-left:36pt;"><i><span lang="EN" xml:lang="EN">-I<u>dir</u></span></i><span lang="EN" xml:lang="EN">: </span>要求<span lang="EN" xml:lang="EN">gcc</span>在搜寻头文件时除了默认的目录<span lang="EN" xml:lang="EN">/usr/include</span>，也要到指定的目录<span lang="EN" xml:lang="EN">dir</span>中去找。<span lang="EN" xml:lang="EN"><br><br />
+</span>比如，编译<span lang="EN" xml:lang="EN">test.c</span>时要用到<span lang="EN" xml:lang="EN">/home/myname/test.h</span>，我们可以：</p>
+<p><span lang="EN" xml:lang="EN">$gcc<br><br />
+-I/home/myname test.c -o test </span></p>
+<p><i><span lang="EN" xml:lang="EN">-O<u>n</u></span></i><span lang="EN" xml:lang="EN">: </span>最优化选项。后面的<span lang="EN" xml:lang="EN">n</span>越大最优化程度越大。一般最常用的是<span lang="EN" xml:lang="EN">-O2</span>。<span lang="EN" xml:lang="EN">-O0</span>是不优化，这也是默认的。 </p>
+<p><span lang="EN" xml:lang="EN">$gcc -O2 -o foo<br><br />
+foo.c </span></p>
+<p><i><span lang="EN" xml:lang="EN">-Wall/-w</span></i><span lang="EN" xml:lang="EN">:<br><br />
+-Wall</span>将打开所有警告，而<span lang="EN" xml:lang="EN">-w</span>将关闭所有警告。在编译<span lang="EN" xml:lang="EN">C</span>程序时，强烈建议你加上<span lang="EN" xml:lang="EN">-Wall</span>选项，因为<span lang="EN" xml:lang="EN">gcc</span>给出的很多警告都是相当有用的。当然还有折中的选择，具体请参阅<span lang="EN" xml:lang="EN">man</span>手册。<span lang="EN" xml:lang="EN"></span></p>
+<p><i>-W</i>: 打开一些额外的警告。<span lang="EN" xml:lang="EN"></span></p>
+<p><i>-S</i>:用来产生相应的汇编源文件，默认的文件名是<i><span lang="EN" xml:lang="EN">filename.s</span></i></p>
+<p><b>make</b></p>
+<p><span lang="EN" xml:lang="EN">make</span>是一个通用的工程管理工具，它可以<span lang="EN" xml:lang="EN">“</span>自动化编译<span lang="EN" xml:lang="EN">”</span>，极大地提高了软件开发的效率。<span lang="EN" xml:lang="EN">make</span>的使用是根据预先设定的规则来运行的，这些设定的规则记录在一个文件中，即<i><span lang="EN" xml:lang="EN">makefile</span></i>。<span lang="EN" xml:lang="EN"></span></p>
+<p>make命令的格式是： </p>
+<blockquote>
+<p><span class="GramE"><span lang="EN" xml:lang="EN">make</span></span><span lang="EN" xml:lang="EN"> [ -f makefile ] [ option ] ...<br><br />
+target ...</span></p>
+</blockquote>
+<p><i><span lang="EN" xml:lang="EN">-c dir </span></i>：将指定目录设为<span lang="EN" xml:lang="EN">make</span>开始运行后的工作目录。<span lang="EN" xml:lang="EN"><br><br />
+<i>-f filename </i></span>：将指定的文件作为<span lang="EN" xml:lang="EN">makefile<br><br />
+<i>-k </i></span>：使<span lang="EN" xml:lang="EN">make</span>尽可能地编译，即使命令调用返回一个错误，<span lang="EN" xml:lang="EN">make</span>也不会停止运行。这个功能很有用，例如，当需要移植的时候；你可以创建尽可能多的目标文件，然后可以在不用等待中间文件创建的同时，移植到不能创建的文件处。<span lang="EN" xml:lang="EN"> </span></p>
+<p>makefile的书写规则是一个大的话题，我们在这里难以展开论述。这里<span lang="EN" xml:lang="EN">&gt;<a href="http://www.wlug.org.nz/MakefileHowto"></a><a href="http://www.wlug.org.nz/MakefileHowto" target="_blank">http://www.wlug.org.nz/MakefileHowto</a>&lt;</span>有一篇介绍<span lang="EN" xml:lang="EN">makefile</span>书写的<span lang="EN" xml:lang="EN">Howto</span>，不妨仔细读一下。要对<span lang="EN" xml:lang="EN">make</span>进行更深入的了解，请参考<span lang="EN" xml:lang="EN"><a href="http://www.oreilly.com/catalog/make3/"><span lang="EN" xml:lang="EN"><span lang="EN" xml:lang="EN">《Managing<br><br />
+Projects with GNU make</span></span><span lang="EN" xml:lang="EN"><span lang="EN" xml:lang="EN">》</span></span></a></span>一书。</p>
+<p><span lang="EN" xml:lang="EN"></span></p>
+<p><b>grep</b></p>
+<p><span lang="EN" xml:lang="EN">grep</span>用来在文件中查找一个给定的字符串模式，比如可以快速定位函数或结构体定义。它还可以自动匹配一些正则表达式，非常强大。比如：你要搜索<span lang="EN" xml:lang="EN">task_struct</span>的定义， 你可以：</p>
+<blockquote>
+<p><span lang="EN" xml:lang="EN">$grep -r<br><br />
+task_struct * | less </span></p>
+</blockquote>
+<p><span lang="EN" xml:lang="EN">-r</span>选项或许是你需要的，它可以帮你扫描源代码树中的所有源代码文件。查看<span lang="EN" xml:lang="EN">grep</span>的<span lang="EN" xml:lang="EN">man</span>手册来了解更多信息。</p>
+<p><span lang="EN" xml:lang="EN"></span></p>
+<p><b><span lang="EN" xml:lang="EN">diff/patch</span></b></p>
+<p>如果你在维护包含很多源文件的一个大型项目，每次更新后都推出完整的源程序是不太可行的，所以最好就用<span lang="EN" xml:lang="EN">patch</span>程序来更新原来的程序。这样，当你的程序升级时，你只要推出源文件对应的<span lang="EN" xml:lang="EN">patch</span>文件，其他人就能通过执行<span lang="EN" xml:lang="EN">patch</span>来使用那个<span lang="EN" xml:lang="EN">patch</span>文件，以获得最新版本的程序。<span lang="EN" xml:lang="EN"><br><br />
+    </span>比如我们有一个程序<span lang="EN" xml:lang="EN">foo</span>，我们把它更新为<span lang="EN" xml:lang="EN">bar</span>，我们可以用<span lang="EN" xml:lang="EN">diff</span>程序这样产生<span lang="EN" xml:lang="EN">patch</span>文件：</p>
+<blockquote>
+<p class="MsoNormal" style="margin-left:36pt;"><span lang="EN" xml:lang="EN">$diff -u foo bar<br><br />
+&lt; foo.patch </span></p>
+</blockquote>
+<p class="MsoNormal" style="margin-left:36pt;"><i><span lang="EN" xml:lang="EN">-u</span></i>参数指定使用特殊的<span lang="EN" xml:lang="EN">diff</span>输出格式，否则得到的<span lang="EN" xml:lang="EN">patch</span>格式怪异，一般人都没法看懂。<i><span lang="EN" xml:lang="EN">foo.patch</span></i>就包含了描述<span lang="EN" xml:lang="EN">foo</span>和<span lang="EN" xml:lang="EN">bar</span>不同的信息，我们将用这个文件来更新。<span lang="EN" xml:lang="EN"></span></p>
+<p>提示：一定要注意<span lang="EN" xml:lang="EN">diff</span>命令后面的文件名顺序，一定是旧的文件在前，新的文件在后！</p>
+<p><span lang="EN" xml:lang="EN"></span></p>
+<p>接下来，我们用<span lang="EN" xml:lang="EN">patch</span>来更新： </p>
+<p class="MsoNormal" style="margin-left:36pt;"><span lang="EN" xml:lang="EN">$patch foo &gt;<br><br />
+foo.patch </span></p>
+<p class="MsoNormal" style="margin-left:36pt;">使用过某个<span lang="EN" xml:lang="EN">patch</span>文件后，若要再次使用该<span lang="EN" xml:lang="EN">patch</span>文件，<span lang="EN" xml:lang="EN">patch</span>程序会产生警告信息：询问是否以<span lang="EN" xml:lang="EN">-R</span>方式执行，<span lang="EN" xml:lang="EN">-R</span>将还原文件。这样很好，防止进行了误操作。当然，有时你想更新的是整个目录中的所有源文件，比如<span lang="EN" xml:lang="EN">foo</span>和<span lang="EN" xml:lang="EN">bar</span>两个目录，我们可以：</p>
+<p class="MsoNormal" style="margin-left:36pt;"><span lang="EN" xml:lang="EN">$diff -cr foo<br><br />
+bar &lt;foo.patch<br><br />
+$patch -p0 &gt; foo.patch</span></p>
+<p class="MsoNormal" style="margin-left:36pt;"><span lang="EN" xml:lang="EN">diff</span>的<i><span lang="EN" xml:lang="EN">-c</span></i>参数表示输出上下文格式，<i><span lang="EN" xml:lang="EN">-r</span></i>参数表示递归的比较两个目录。<br><br />
+<i><span lang="EN" xml:lang="EN">-p0</span></i>告诉<span lang="EN" xml:lang="EN">patch</span>程序被更新的文件的路径名并没改变。<span lang="EN" xml:lang="EN"><br><br />
+    diffstat</span>是一个很有用的工具，它可以列出<span lang="EN" xml:lang="EN">patch </span>所引起的变更的统计（加入或移出的代码行）。输出关于<span lang="EN" xml:lang="EN">patch</span>的信息，执行：</p>
+<p class="MsoNormal" style="margin-left:36pt;"><span lang="EN" xml:lang="EN">$diffstat -p1<br><br />
+foo.patch </span></p>
+<p class="MsoNormal" style="margin-left:36pt;">更多选项请参阅<span lang="EN" xml:lang="EN">patch</span>和<span lang="EN" xml:lang="EN">diff</span>的使用手册。 </p>
+<h3>
+<span lang="EN" xml:lang="EN">3. </span>良好的英文阅读能力和表达能力</h3>
+<p>不管是在<span lang="EN" xml:lang="EN">Linux</span>内核中，还是在<span lang="EN" xml:lang="EN">Linux</span>大多数应用程序中，文档基本上都是用英语写成的，到目前为止，大多数还没有对应的汉语翻译。而且<span lang="EN" xml:lang="EN">Linux</span>内核黑客之间也是用英语交流的，虽然他们可能来自世界各地。熟练地驾驭英文肯定让你受益非浅。</p>
+<p>引用<span lang="EN" xml:lang="EN">ESR</span>在<span lang="EN" xml:lang="EN"><a href="http://www.kerneltravel.net/jiqiao/hacker.html"><span lang="EN" xml:lang="EN"><span lang="EN" xml:lang="EN">《如何成为一名黑客》</span></span></a></span>一文中的话： </p>
+<blockquote style="margin-top:5pt;margin-bottom:5pt;">
+<p class="MsoNormal"><span lang="EN" xml:lang="EN">“</span>当前英语有着比其他语言丰富得多的技术词汇，因此是一个对于工作来说相当好的工具。基于类似的原因，英文技术书籍的翻译通常不令人满意（如果有翻译的话）。<span lang="EN" xml:lang="EN">”</span></p>
+<p>“Linus Torvalds，一个芬兰人，用英语注释他的代码（很明显这对他来说不是凑巧）。他流利的英语成为他能够管理全球范围的<span lang="EN" xml:lang="EN">Linux</span>开发人员社区的重要因素。这是一个值得学习的例子。<span lang="EN" xml:lang="EN">” </span></p>
+</blockquote>
+<p>如果你不懂实用性的英语，赶快去学习吧。</p>
+<h2>进阶</h2>
+<p>如果你能来到这里，那说明你已经是一名合格的<span lang="EN" xml:lang="EN">Unix/Linux</span>程序员了。但是，如果你要成为一名内核程序员，还需要下面的一些知识。</p>
+<h3>
+<span lang="EN" xml:lang="EN">1. </span>理解操作系统原理</h3>
+<p>内核是操作系统的核心和灵魂，要理解内核的原理和运作，必须具备基本的操作系统知识。操作系统课上的一些理论性的东西很有帮助，比如信号量的定义和使用，死锁的预防，内存页面的置换等等。列举如下：</p>
+<p>1. 进程管理</p>
+<p>进程的定义和<span lang="EN" xml:lang="EN">PCB</span>，进程和线程的区别，进程的三个基本状态及它们之间的转换关系，进程的同步，竞争和死锁，进程间通信</p>
+<p>2. 内存管理</p>
+<p style="margin-left:36pt;">分页式管理，分段式管理，虚拟内存的概念，页面置换算法，内存分配算法</p>
+<p>3. 设备管理</p>
+<p>中断的概念，中断处理，I/O控制方式，缓冲区管理，设备驱动，磁盘调度和高速缓存</p>
+<p>4. 文件管理</p>
+<p>文件的概念，文件的管理，文件系统</p>
+<p>5. 系统调用</p>
+<p>系统调用的概念，系统调用的处理，系统调用类型</p>
+<p class="MsoNormal">关于操作系统理论方面的书籍，推荐<span lang="EN" xml:lang="EN">Andrew S. Tanenbaum</span>编写的《<span lang="EN" xml:lang="EN">Operating Systems: Design and Implementation</span>》一书。 </p>
+<h3>
+<span lang="EN" xml:lang="EN">2. </span>一些硬件知识</h3>
+<p>由于内核本身的特殊性，一些时候你不得不和计算机硬件打交道，尤其是<span lang="EN" xml:lang="EN">CPU</span>。以<span lang="EN" xml:lang="EN">i386</span>为例说明： </p>
+<p>常用寄存器，常见指令</p>
+<p>实模式和保护模式</p>
+<p>分段和分页机制</p>
+<p>TSS和任务管理</p>
+<p>中断机制</p>
+<p>时钟机制</p>
+<p>高速缓存</p></p>
+<p class="MsoNormal">关于<span lang="EN" xml:lang="EN">Intel CPU</span>最权威的资料莫过于<span lang="EN" xml:lang="EN">Intel</span>的官方手册，它们可以在<span lang="EN" xml:lang="EN">Intel</span>网站上免费下载： <span lang="EN" xml:lang="EN"><a href="http://www.intel.com/products/processor/manuals/index.htm"></a><a href="http://www.intel.com/products/processor/manuals/index.htm" target="_blank">http://www.intel.com/products/processor/manuals/index.htm</a></span>。其实你只要读一下<span lang="EN" xml:lang="EN">System Programming Guide</span>就够了。 </p>
+<p>如果你在做嵌入式<span lang="EN" xml:lang="EN">Linux</span>或者<span lang="EN" xml:lang="EN">Linux</span>设备驱动，相关的硬件知识更是必须的，可惜这里无法一一列举。</p>
+<h3>
+<span lang="EN" xml:lang="EN">3. </span>其它</h3>
+<p>你还需要足够的耐心和一些运气，毕竟内核调试不像用户程序那么容易，一些<span lang="EN" xml:lang="EN">bug</span>让整个社区好几天都食不甘味了。用户程序的调试经验或许有用，但用处不大。这就更要求你对内核本身有足够多的了解了，实际上，你对内核越是了解，<span lang="EN" xml:lang="EN">bug</span>就越容易清除。</p>
+<p>最后，你可能还需要一些想像力。没错，<span lang="EN" xml:lang="EN">Linux</span>内核开发者有着丰富的想像力，他们经常使用一些<span lang="EN" xml:lang="EN">“</span>神来之笔<span lang="EN" xml:lang="EN">”</span>来解决令旁人苦恼的问题，或者为内核添加一项新奇的功能来让内核运行更流畅。</p></p>
+<h2>推荐相关书籍：</h2>
+<p>《Linux内核完全剖析》</p>
+<p>讲述<span lang="EN" xml:lang="EN">Linux 0.11</span>版的源代码，是一个不错的起点。</p>
+<p>Understanding the Linux Kernel, 3rd Edition</p>
+<p>中文版是《深入理解Linux内核》，第三版即将上市。第三版主要是讲解<span lang="EN" xml:lang="EN">2.6</span>版的内核，保持了前两版的风格，是深入学习内核的必读书籍。</p>
+<p><i>Linux Kernel Development, 2nd Edition</i></p>
+<p>中文版是《<span lang="EN" xml:lang="EN">Linux</span>内核开发》。其内容朴实，风格简练，便于整体把握<span lang="EN" xml:lang="EN">Linux</span>内核架构。当了解操作系统原理后，便可阅读这本书。</p>
+<p><i>The Linux Kernel Primer - A Top Down Approach For x86 and PowerPC Architectures</i></p>
+<p>中文版是《Linux内核编程》，此书最大的特色是能够把<span lang="EN" xml:lang="EN">x86</span>和<span lang="EN" xml:lang="EN">ppc</span>两个平台结合起来讲述内核，从用户程序讲起，深入到内核，而且每章后面还配有练习题。</p>
+<p><i>Linux Device Drivers, 3rd Edition</i></p>
+<p>中文译本是《Linux设备驱动程序》，该书是设备驱动开发的最好工具书。其中的例子对于内核开发者来讲是最好的启蒙教材。</p>
+<p>《Linux操作系统原理与应用》</p>
+<p>陈老师写的一本不错的内核书籍，从原理、设计思想的角度对<span lang="EN" xml:lang="EN">Linux</span>操作系统的核心内容进行全面的阐述。</p>
+<p>《Linux内核情景分析》</p>
+<p>本书采取类似于英语教学中行之有效的情景会话的教学方法，全面深入地剖析了Linux 2.4.0内核源代码，并对Linux核心的独特优点和需要进一步改进的问题作了精辟的评述。 全书分上下两册。</p>
+<h2>一些有用的链接：</h2>
+<p><a href="http://www.kernelnewbies.org" target="_top">KernelNewbies</a></p>
+<p><a href="http://www.kerneltrap.com" target="_top">KernelTrap</a></p>
+<p><a href="http://www.lwn.net" target="_top">Linux Weekly News</a></p>
+<p><a href="http://www.kerneltravel.net" target="_top">Linux内核之旅</a></p>
+<p><a href="http://jungla.dit.upm.es/~jmseyas/linux/kernel/hackers-docs.html" target="_top">Kernel Links</a></p>
+<p><a href="http://kernelbook.sourceforge.net/" target="_top">The Linux Kernel</a></p>
+<p><a href="http://whatisthekernel.blogspot.com/" target="_top">What is the Kernel</a></p>
+<h2>结束语</h2>
+<p>讲了这么多了，现在该轮到你了。如果你对上面的知识还有没全部掌握，那么不妨从你不熟悉的地方入手，一步步去了解和熟悉<span lang="EN" xml:lang="EN">Linux</span>内核。如果你是一位高手，对<span lang="EN" xml:lang="EN">Linux</span>内核有初步的了解和认识，不妨去动手写一些驱动程序或者内核模块，尝试对<span lang="EN" xml:lang="EN">Linux</span>内核做一些自己的修改。如果可以，加入<span lang="EN" xml:lang="EN">Linux</span>内核邮件列表，看看里面的内核黑客在做些什么，试着帮他们测试新的内核，修复一些<span lang="EN" xml:lang="EN">bug</span>。</p>
+<p>祝你在Linux内核世界走得更远！ </p>
+</div>
+<p></body></html></p>

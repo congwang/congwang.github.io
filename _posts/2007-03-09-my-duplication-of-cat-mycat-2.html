@@ -1,0 +1,130 @@
+---
+layout: post
+title: My Duplication of Cat — MyCat
+date: 2007-03-09 22:21:55.000000000 -08:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Linux Application
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '24'
+  _wp_old_slug: '24'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2007/03/09/my-duplication-of-cat-mycat-2/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body></p>
+<p class="postdate">Wednesday, 6. December 2006, 12:40:26</p>
+<p class="content">
+<p id="excerpt">自己重写的Unix上的cat命令。</p>
+<pre>
+<font color="#a020f0">#include </font><font color="#ff00ff">&lt;stdio.h&gt;</font>
+<font color="#a020f0">#include </font><font color="#ff00ff">&lt;stdlib.h&gt;</font>
+<font color="#a020f0">#include </font><font color="#ff00ff">&lt;string.h&gt;</font>
+<font color="#a020f0">#include </font><font color="#ff00ff">&lt;unistd.h&gt;</font>
+<font color="#a020f0">#include </font><font color="#ff00ff">&lt;errno.h&gt;</font>
+<font color="#a020f0">#include </font><font color="#ff00ff">&lt;sys/types.h&gt;</font>
+<font color="#a020f0">#include </font><font color="#ff00ff">&lt;sys/stat.h&gt;</font>
+<font color="#a020f0">#include <font color="#ff00ff">&lt;</font></font><font color="#ff00ff">fcntl.h&gt;</font>
+<font color="#a020f0">#include </font><font color="#ff00ff">&lt;getopt.h&gt;</font>
+
+<font color="#a020f0">#define MAX_LINE_LEN </font><font color="#ff00ff">1024</font>
+
+<font color="#2e8b57"><strong>static</strong></font> <font color="#2e8b57"><strong>struct</strong></font> option <font color="#2e8b57"><strong>const</strong></font> long_options[] =
+{
+    {<font color="#ff00ff">"number-nonblank"</font>, no_argument, <font color="#ff00ff">NULL</font>, <font color="#ff00ff">'b'</font>},
+    {<font color="#ff00ff">"number"</font>, no_argument, <font color="#ff00ff">NULL</font>, <font color="#ff00ff">'n'</font>},
+    {<font color="#ff00ff">"squeeze-blank"</font>, no_argument, <font color="#ff00ff">NULL</font>, <font color="#ff00ff">'s'</font>},
+    {<font color="#ff00ff">"show-nonprinting"</font>, no_argument, <font color="#ff00ff">NULL</font>, <font color="#ff00ff">'v'</font>},
+    {<font color="#ff00ff">"show-ends"</font>, no_argument, <font color="#ff00ff">NULL</font>, <font color="#ff00ff">'E'</font>},
+    {<font color="#ff00ff">"show-tabs"</font>, no_argument, <font color="#ff00ff">NULL</font>, <font color="#ff00ff">'T'</font>},
+    {<font color="#ff00ff">"show-all"</font>, no_argument, <font color="#ff00ff">NULL</font>, <font color="#ff00ff">'A'</font>},
+    {<font color="#ff00ff">"help"</font>, no_argument, <font color="#ff00ff">0</font>, -<font color="#ff00ff">2</font>},
+    {<font color="#ff00ff">"version"</font>, no_argument, <font color="#ff00ff">0</font>, -<font color="#ff00ff">3</font>},
+    {<font color="#ff00ff">NULL</font>, <font color="#ff00ff">0</font>, <font color="#ff00ff">NULL</font>, <font color="#ff00ff">0</font>}
+};
+
+<font color="#2e8b57"><strong>extern</strong></font> <font color="#2e8b57"><strong>int</strong></font> errno;
+<font color="#2e8b57"><strong>int</strong></font> mark_line_ends = <font color="#ff00ff">0</font>;
+<font color="#2e8b57"><strong>int</strong></font> show_tabs = <font color="#ff00ff">0</font>;
+<font color="#2e8b57"><strong>int</strong></font> number_nempty_lines = <font color="#ff00ff">0</font>;
+<font color="#2e8b57"><strong>int</strong></font> number_all = <font color="#ff00ff">0</font>;
+<font color="#2e8b57"><strong>int</strong></font> show_non = <font color="#ff00ff">0</font>;
+<font color="#2e8b57"><strong>int</strong></font> squeeze_empty_lines = <font color="#ff00ff">0</font>;
+
+<font color="#2e8b57"><strong>void</strong></font> version()
+{
+        puts(<font color="#ff00ff">"This is my cat. 1.0"</font>);
+        puts(<font color="#ff00ff">"Copyleft (c) WANG Cong, XIPT."</font>);
+        puts(<font color="#ff00ff">"This is free software. You may redistribute copies of it under the terms of the GNU General Public License &gt;<a href="http://www.gnu.org/licenses/gpl.html"></a><a href="http://www.gnu.org/licenses/gpl.html" target="_blank">http://www.gnu.org/licenses/gpl.html</a>&lt;. There is NO WARRANTY, to the extent permitted by law."</font>);
+        puts(<font color="#ff00ff">"Author: WANG Cong &gt;xiyou.wangcong@gmail.com&lt;"</font>);
+}
+<font color="#2e8b57"><strong>void</strong></font> usage(<font color="#2e8b57"><strong>int</strong></font> status)
+{
+        <font color="#2e8b57"><strong>FILE</strong></font>* fp;
+        <font color="#a52a2a"><strong>if</strong></font>(status!=<font color="#ff00ff">0</font>)
+                fp = <font color="#ff00ff">stderr</font>;
+        <font color="#a52a2a"><strong>else</strong></font>
+                fp = <font color="#ff00ff">stdout</font>;
+        fprintf(fp,<font color="#ff00ff">"Usage: cat [OPTION] [FILE]...</font><font color="#6a5acd">n</font><font color="#ff00ff">"</font>
+<font color="#ff00ff">"Concatenate FILE(s), or standard input, to standard output.</font><font color="#6a5acd">nn</font><font color="#ff00ff">"</font>);
+        fprintf(fp,
+<font color="#ff00ff">"  -A, --show-all           equivalent to -vET</font><font color="#6a5acd">n</font><font color="#ff00ff">"</font>
+<font color="#ff00ff">"  -b, --number-nonblank    number nonblank output lines</font><font color="#6a5acd">n</font><font color="#ff00ff">"</font>
+<font color="#ff00ff">"  -e                       equivalent to -vE</font><font color="#6a5acd">n</font><font color="#ff00ff">"</font>
+<font color="#ff00ff">"  -E, --show-ends          display $ at end of each line</font><font color="#6a5acd">n</font><font color="#ff00ff">"</font>
+<font color="#ff00ff">"  -n, --number             number all output lines</font><font color="#6a5acd">n</font><font color="#ff00ff">"</font>);
+        fprintf(fp,
+<font color="#ff00ff">"  -s, --squeeze-blank      never more than one single blank line</font><font color="#6a5acd">n</font><font color="#ff00ff">"</font>
+<font color="#ff00ff">"  -t                       equivalent to -vT</font><font color="#6a5acd">n</font><font color="#ff00ff">"</font>
+<font color="#ff00ff">"  -T, --show-tabs          display TAB characters as ^I</font><font color="#6a5acd">n</font><font color="#ff00ff">"</font>
+<font color="#ff00ff">"  -u                       (ignored)</font><font color="#6a5acd">n</font><font color="#ff00ff">"</font>
+<font color="#ff00ff">"  -v, --show-nonprinting   use ^ and M- notation, except for LFD and TAB</font><font color="#6a5acd">n</font><font color="#ff00ff">"</font>
+<font color="#ff00ff">"      --help     display this help and exit</font><font color="#6a5acd">n</font><font color="#ff00ff">"</font>
+<font color="#ff00ff">"      --version  output version information and exit</font><font color="#6a5acd">nn</font><font color="#ff00ff">"</font>
+);
+        fprintf(fp,
+<font color="#ff00ff">"With no FILE, or when FILE is -, read standard input.</font><font color="#6a5acd">nn</font><font color="#ff00ff">"</font>
+
+<font color="#ff00ff">"Examples:</font><font color="#6a5acd">n</font><font color="#ff00ff">"</font>
+<font color="#ff00ff">"  cat f - g  Output f's contents, then standard input, then g's contents.</font><font color="#6a5acd">n</font><font color="#ff00ff">"</font>
+<font color="#ff00ff">"  cat        Copy standard input to standard output.</font><font color="#6a5acd">n</font><font color="#ff00ff">"</font>
+        );
+}
+
+<font color="#2e8b57"><strong>void</strong></font> bad_usage(<font color="#2e8b57"><strong>char</strong></font>* unrecognize)
+{
+        <font color="#a52a2a"><strong>if</strong></font>(unrecognize!=<font color="#ff00ff">NULL</font>)
+                fprintf(<font color="#ff00ff">stderr</font>, <font color="#ff00ff">"mycat:  unrecognized option '</font><font color="#6a5acd">%s</font><font color="#ff00ff">'</font><font color="#6a5acd">n</font><font color="#ff00ff">"</font>, unrecognize);
+        fprintf(<font color="#ff00ff">stderr</font>, <font color="#ff00ff">"Try `mycat --help' for more information.</font><font color="#6a5acd">n</font><font color="#ff00ff">"</font>);
+}
+
+<font color="#2e8b57"><strong>int</strong></font> readline(<font color="#2e8b57"><strong>int</strong></font> fd, <font color="#2e8b57"><strong>char</strong></font> *buf, <font color="#2e8b57"><strong>int</strong></font> nbytes)
+{
+   <font color="#2e8b57"><strong>int</strong></font> numread = <font color="#ff00ff">0</font>;
+   <font color="#2e8b57"><strong>int</strong></font> returnval;
+
+   <font color="#a52a2a"><strong>while</strong></font> (numread &gt; nbytes - <font color="#ff00ff">1</font>) {
+      returnval = read(fd, buf + numread, <font color="#ff00ff">1</font>);
+      <font color="#a52a2a"><strong>if</strong></font> ((returnval == -<font color="#ff00ff">1</font>) &amp;&amp; (errno == <font color="#ff00ff">EINTR</font>))
+         <font color="#a52a2a"><strong>continue</strong></font>;
+      <font color="#a52a2a"><strong>if</strong></font> ( (returnval == <font color="#ff00ff">0</font>) &amp;&amp; (numread == <font color="#ff00ff">0</font>) )
+         <font color="#a52a2a"><strong>return</strong></font> <font color="#ff00ff">0</font>;
+      <font color="#a52a2a"><strong>if</strong></font> (returnval == <font color="#ff00ff">0</font>)
+         <font color="#a52a2a"><strong>break</strong></font>;
+      <font color="#a52a2a"><strong>if</strong></font> (returnval == -<font color="#ff00ff">1</font>)
+         <font color="#a52a2a"><strong>return</strong></font> -<font color="#ff00ff">1</font>;
+      numread++;
+      <font color="#a52a2a"><strong>if</strong></font> (buf[numread-<font color="#ff00ff">1</font>] == <font color="#6a5acd">'n'</font>) {
+         buf[numread] = <font color="#6a5acd">'</font></pre>
+<p></body></html></p>

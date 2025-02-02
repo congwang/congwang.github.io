@@ -1,0 +1,79 @@
+---
+layout: post
+title: 分享一些 shell 函数和 alias
+date: 2011-01-17 23:05:08.000000000 -08:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Linux Application
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '1450'
+  _wp_old_slug: '1450'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2011/01/17/%e5%88%86%e4%ba%ab%e4%b8%80%e4%ba%9b-shell-%e5%87%bd%e6%95%b0%e5%92%8c-alias/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body>
+<p>省略掉公司内部用的一些东西。其中的calc()和isdigit()是从网上抄来的。:-) 希望对你有用。</p>
+<p>[bash]<br />
+alias gts="git send-email --cc-cmd='./scripts/get_maintainer.pl --norolestats' --to linux-kernel@vger.kernel.org --smtp-server XXXX"<br />
+alias v="vim -O"<br />
+alias e="emacs -q -nw"<br />
+alias wpas="wpa_supplicant -Dwext -iwlan0 -c/etc/wpa_supplicant.conf -B"<br />
+alias mutt="LC_ALL=zh_CN.UTF-8 mutt"<br />
+alias wget="wget --no-check-certificate"</p>
+<p>function calc () { awk "BEGIN{ print $* }" ;}</p>
+<p>function isdigit ()<br />
+{<br />
+  [ $# -eq 1 ] || return 1;</p>
+<p>  case $1 in<br />
+    *[!0-9]*|"") return 1;;<br />
+              *) return 0;;<br />
+  esac<br />
+}</p>
+<p>function errno ()<br />
+{<br />
+	if [ "$#" -eq 0 ]<br />
+	then<br />
+		echo "Usage: errno [ERRNO | N]"<br />
+		return 1<br />
+	fi<br />
+	pattern=$1<br />
+	if isdigit "$pattern"<br />
+	then<br />
+		msg="$(awk '$3~// {print $0}' /usr/include/asm-generic/errno-base.h /usr/include/asm-generic/errno.h)"<br />
+	else<br />
+		msg="$(awk '$2~// {print $0}' /usr/include/asm-generic/errno-base.h /usr/include/asm-generic/errno.h)"<br />
+	fi</p>
+<p>	if [ -z "$msg" ]<br />
+	then<br />
+		echo "BAD ERRNO!"<br />
+	else<br />
+		echo "$(echo "$msg" | sed -e 's#.*/* (.*) */#1#g')"<br />
+	fi<br />
+}</p>
+<p>function kcgrep ()<br />
+{<br />
+	local dest<br />
+	local str<br />
+	if [ -z $2 ]<br />
+	then<br />
+		dest="."<br />
+	else<br />
+		dest="$2"<br />
+	fi<br />
+	str=$(echo "$1" | sed -e 's/^CONFIG_//')<br />
+	find "$dest" -iname 'kconfig*' -exec grep "$str" -nwH '{}' ;<br />
+}<br />
+[/bash] </p>
+<p></body></html></p>

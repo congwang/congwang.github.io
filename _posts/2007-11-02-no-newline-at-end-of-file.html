@@ -1,0 +1,47 @@
+---
+layout: post
+title: No newline at end of file!
+date: 2007-11-02 23:38:52.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Programming
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '247'
+  _wp_old_slug: '247'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2007/11/02/no-newline-at-end-of-file/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body></p>
+<p>初学gcc的人通常会遇到这种警告：</p>
+<p>$ echo -n -e "t" | gcc -xc -E -<br />
+# 1 "&lt;stdin&gt;"<br />
+# 1 "&lt;built-in&gt;"<br />
+# 1 "&lt;command line&gt;"<br />
+# 1 "&lt;stdin&gt;"<br />
+&lt;stdin&gt;:1:2: warning: no newline at end of file</p>
+<p>一些聪明的人很快就可以修复这个警告，在文件结尾回车一下就行了。可以很少会有人去仔细探究，为什么gcc会给出这么一个警告？</p>
+<p>原因其实也很简单，因为标准规定如此。C99第5.1.1.2节这样写道：</p>
+<blockquote><p>  Each instance of a backslash character () immediately<br />
+followed by a new-line character is deleted,  splicing<br />
+physical  source  lines  to form logical source lines.<br />
+Only the last backslash on any  physical  source  line<br />
+shall  be eligible for being part of such a splice.  A<br />
+source file that is not empty shall end in a  new-line<br />
+character,  which shall not be immediately preceded by<br />
+a backslash character before any such  splicing  takes<br />
+place.</p></blockquote>
+<p>C99 Rationale中进一步指出：</p>
+<blockquote><p>A backslash immediately before a newline has long been used to continue string literals, as well as preprocessing command lines. In the interest of easing machine generation of C, and of transporting code to machines with restrictive physical line lengths, the C89 Committee generalized this mechanism to permit any token to be continued by interposing a backslash/newline sequence.</p></blockquote>
+<p>这么规定的初衷有两个：一是为了每一行都要以换行结束。二是，因为行尾的表示连接下一行，如果一个文件最后一行行尾有，那么，紧跟它也被包含进来的下一个源文件的第一行就会被连接！而如果一个文件以一个空行结束就会避免这种情况的发生。</body></html></p>

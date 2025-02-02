@@ -1,0 +1,158 @@
+---
+layout: post
+title: 跨行搜索脚本：mgrep
+date: 2008-04-12 09:45:04.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Programming
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '333'
+  _wp_old_slug: '333'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2008/04/12/%e8%b7%a8%e8%a1%8c%e6%90%9c%e7%b4%a2%e8%84%9a%e6%9c%ac%ef%bc%9amgrep/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body>
+<p>写了做跨行搜索的脚本，用Perl。我知道也可以在bash里用sed，但我认为用那的话灵活性就不如用Perl了，因为我还要给它扩展各种我需要的功能。</p>
+<p>闲话少说，上代码！</p>
+<p>[perl]<br />
+#!/usr/bin/perl -w</p>
+<p>#From: http://www.kclug.org/pipermail/kclug/2005-June/028106.html<br />
+#Hacked by WANG Cong.<br />
+#Copyright (C) 2008, WANG Cong</p>
+<p>#Usage<br />
+# mgrep.pl -s  -e  [--nonum] </p>
+<p>use strict;<br />
+use warnings;<br />
+use Getopt::Long;</p>
+<p>my($start, $end, $file);<br />
+my $num = 1;<br />
+#my $allow_nest = 0;<br />
+my $allow_recursion = 0;<br />
+my $allow_binary = 0;</p>
+<p>GetOptions(<br />
+    "start=s"   =&gt; $start,<br />
+    "end=s"     =&gt; $end,<br />
+    "nonum"     =&gt; sub { $num = 0; },<br />
+    "recursion" =&gt; sub { $allow_recursion = 1 },<br />
+    "binary"    =&gt; sub { $allow_binary = 1 }<br />
+#    "nest"      =&gt; sub { $allow_nest = 1; }<br />
+    );</p>
+<p>$file = shift;</p>
+<p>die "$start and $end options are both required. And so is the file name."<br />
+    unless ($start &amp;&amp; $end &amp;&amp; $file);</p>
+<p>my $start_reg = eval {qr/$start/};<br />
+die "The start pattern is not correct!" if $@;<br />
+my $end_reg = eval {qr/$end/};<br />
+die "The end pattern is not correct!" if $@;</p>
+<p>######## sub ########</p>
+<p>sub mgrep_file<br />
+{<br />
+    my @matches;<br />
+    #my @nest_stack;<br />
+    my $matching; #boolean<br />
+    my $added = 0; #boolean<br />
+    my $linecount = 0;<br />
+    my $file = shift;</p>
+<p>    open( IN, $file ) or return undef;</p>
+<p>    while( my $line = readline *IN)<br />
+    {<br />
+	$linecount++;<br />
+	if( $line =~ /($start_reg.*)/ )<br />
+	{<br />
+	    $matching = 1;<br />
+	    if(!$added){<br />
+		push @matches, "==", $file, "==n";<br />
+		$added = 1;<br />
+	    }<br />
+	    if ($num) {<br />
+		push( @matches, $linecount . ": " . $1 . "n" );<br />
+	    }else{<br />
+		push( @matches, $1 . "n" );<br />
+	    }</p>
+<p>	    if( $1 =~ /$end_reg/){ $matching = 0; }<br />
+	    next;<br />
+	}</p>
+<p>	if( $matching )<br />
+	{<br />
+	    if( $line =~ /(.*$end_reg)/ )<br />
+	    {<br />
+		if ($num){<br />
+		    push( @matches, $linecount . ": " . $1 . "n" );<br />
+		}else{<br />
+		    push( @matches, $1 . "n" );<br />
+		}<br />
+		$matching = 0;<br />
+	    }<br />
+	    else<br />
+	    {<br />
+		if ($num){<br />
+		    push( @matches, $linecount . ": " . $line );<br />
+		}else{<br />
+		    push( @matches, $line);<br />
+		}<br />
+	    }<br />
+	}<br />
+    }<br />
+    close IN;<br />
+    return @matches;<br />
+}</p>
+<p>sub mgrep_dir<br />
+{<br />
+    my $dir = shift;<br />
+    my @file_list;<br />
+    my @match_list = ();<br />
+    my $ret;<br />
+    my @lret;</p>
+<p>    opendir(IN_DIR, $dir) || return undef;<br />
+    @file_list = grep { $_ ne '.' and $_ ne '..' } readdir IN_DIR;</p>
+<p>    if (@file_list){<br />
+	for my $one (@file_list) {<br />
+	    my $fname = "$dir/$one";<br />
+	    if (-f $fname){<br />
+		next if(!-T $fname &amp;&amp; !$allow_binary);<br />
+		$ret = mgrep_file($fname);<br />
+		next unless @$ret;<br />
+		push @match_list, @$ret;<br />
+	    }<br />
+	    if ($allow_recursion &amp;&amp; -d $fname){<br />
+		@lret = mgrep_dir($fname);<br />
+		next unless @lret;<br />
+		push @match_list, @lret;<br />
+	    }<br />
+	}<br />
+    }</p>
+<p>    closedir IN_DIR;<br />
+    return @match_list;<br />
+}</p>
+<p>########### main ##########</p>
+<p>while ($file)<br />
+{<br />
+    my $ret;<br />
+    my @list;</p>
+<p>    if (-f $file){<br />
+	next if(!-T $file &amp;&amp; !$allow_binary);<br />
+	$ret = mgrep_file($file);<br />
+	print @$ret;<br />
+    }<br />
+    elsif (-d $file){<br />
+	@list = mgrep_dir($file);<br />
+	print @list;<br />
+    }else{<br />
+	die "$file is not existed!";<br />
+    }</p>
+<p>    $file = shift;<br />
+}</p>
+<p>[/perl] </p>
+<p></body></html></p>

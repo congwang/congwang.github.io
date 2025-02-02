@@ -1,0 +1,30 @@
+---
+layout: post
+title: 引号带来的一个问题
+date: 2010-07-15 23:10:27.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Programming
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '1161'
+  _wp_old_slug: '1161'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2010/07/15/%e5%bc%95%e5%8f%b7%e5%b8%a6%e6%9d%a5%e7%9a%84%e4%b8%80%e4%b8%aa%e9%97%ae%e9%a2%98/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body>
+<p>可能你也发现了，不少/etc 下面的配置文件其实就是 bash 脚本，用到它们的bash程序都是直接source进来的。这种情况下没什么问题。可以如果你不是source进行来的配置文件，因为格式的原因，而是一行一行read进来的，那就可能有问题了。我们的配置文件格式如下：</p>
+<p>OPTION VALUE</p>
+<p>直接read一般不会有问题，可有一种情况很特殊，那就是当某个option接受字符串值的时候。字符串值要是不允许带引号吧，可值中有空格就不好办了，虽然read可以处理，但配置文件读起来很奇怪。值要是带引号吧，嘿嘿，read又不好办了，因为引号本身不是值的一部分。这时候你可能会想用sed把引号去掉，仔细一想这个方法行不通，因为引号的情况完全比你想象得要复杂，不信你试试。我的解决方法是用eval：OPTION=`eval echo $VALUE`，让bash自己处理这该死的引号去好了！</p>
+<p></body></html></p>

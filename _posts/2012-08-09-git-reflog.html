@@ -1,0 +1,40 @@
+---
+layout: post
+title: 撤销 git 操作
+date: 2012-08-09 13:54:28.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Linux Application
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '2081'
+  _wp_old_slug: '2081'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2012/08/09/git-reflog/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body>
+<p>今天脑抽了一下，在做 `git rebase -i` 的时候无意识地把某一个 commit 给合并到前一个 commit 里去了，结果是该 commit 丢失，而且前一个 commit 也搞砸了。怎么能撤销这个操作呢？</p>
+<p>Google 搜索了一下，<a href="http://stackoverflow.com/questions/2510276/undoing-git-reset">发现了</a>还有 `git reflog` 这个命令，可以查看 git 命令的历史记录，比如我刚才的操作：</p>
+<p>324c85e HEAD@{0}: rebase -i (finish): returning to refs/heads/ipv6<br />
+324c85e HEAD@{1}: checkout: moving from ipv6 to 324c85e<br />
+324c85e HEAD@{2}: rebase -i (finish): returning to refs/heads/ipv6<br />
+324c85e HEAD@{3}: rebase -i (pick): ipv6: use xxxx<br />
+9fc8e64 HEAD@{4}: rebase -i (fixup): ipv6: unify xxxx<br />
+2ea2149 HEAD@{5}: rebase -i (fixup): updating HEAD<br />
+8d1f07b HEAD@{6}: checkout: moving from ipv6 to 8d1f07b<br />
+0e118d2 HEAD@{7}: commit: ipv6: separate xxxx</p>
+<p>可以看出 HEAD@{7} 这个点就是我应该重置回去的，然后执行 `git reset HEAD@{7}` 就行了！</p>
+<p>通过 `git reflog` 也可以撤销 `git reset` 的操作，非常实用。</p>
+<p>另外，我很惊讶似乎还有不少人不知道 `git rebase -i` 这个命令。这个命令真的十分强大，我几乎天天都在用，它既可以用来合并补丁，也可以用来切割补丁，还能修改 commit 的记录（具体可自行参考 git-rebase 的手册），可以说是 git 命令中的一把瑞士军刀啊！不过如果你的 git tree 是 public 的，最好不用或者少用 `git rebase`，我用 `git rebase` 大多都是在自己的非 public 的树上。</p>
+<p></body></html></p>

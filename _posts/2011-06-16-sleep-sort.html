@@ -1,0 +1,72 @@
+---
+layout: post
+title: Sleep sort
+date: 2011-06-16 23:28:41.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Programming
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '1669'
+  _wp_old_slug: '1669'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2011/06/16/sleep-sort/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body>
+<p>4chan BBS 上一个排序的程序火了，它叫<a href="http://dis.4chan.org/read/prog/1295544154/" target="_blank">休眠排序</a>，很有意思。</p>
+<p>[bash]<br />
+#!/bin/bash<br />
+function f() {<br />
+    sleep "$1"<br />
+    echo "$1"<br />
+}<br />
+while [ -n "$1" ]<br />
+do<br />
+    f "$1" &amp;<br />
+    shift<br />
+done<br />
+wait</p>
+<p>[/bash]</p>
+<p>其实它的原理很简单，就是，要对N个整数进行排序的话，启动N个进程（线程），每个进程休眠对应的整数指定的秒数，然后再打印该数，最后你在终端上看到的肯定是排序之后的结果了……看了之后你会不会也觉得这太坑爹了？！可是，它就是能工作，而且占用CPU很少！</p>
+<p>值得一提的是底下回复中给出的OpenMP版本（如果要尝试的话需要安装openmpi）和Perl版本。</p>
+<p>[c]<br />
+/*<br />
+ * @file sleepsort.c<br />
+ * @brief sorts numbers<br />
+ *<br />
+ * @compile gcc sleepsort.c -fopenmp -o sleepsort<br />
+ *<br />
+ * @author Gerald Jay Sussman (Massachvsetts Institvte of Technology)<br />
+ */</p>
+<p>#include<br />
+#include<br />
+#include </p>
+<p>int main(int argc, char **argv) {<br />
+  int i;</p>
+<p>  omp_set_num_threads(argc);</p>
+<p>#pragma omp parallel for<br />
+  for (i = 0; i &lt; argc - 1; i++) {<br />
+    long int this = atol(argv[i+1]);</p>
+<p>    sleep(this);</p>
+<p>    printf("%ldn", this);<br />
+    fflush(stdout);<br />
+  }</p>
+<p>  return 0;<br />
+}</p>
+<p>[/c]<br />
+[perl]<br />
+fork and sleep $_, say, last for @ARGV; 1 while 1  -wait<br />
+[/perl]</p>
+<p>除了不能对浮点数和负数进行排序，它还有一个缺点，那就是其中某个进程需要睡眠最大的那个数指定的时间，然后才能得出最后结果。下面有人提出了改进，我试了试，没有一个完美的。理想的情况下它应该能够对正负整数、浮点数进行排序，而且最坏也不要花太多时间，感兴趣的同学可以自己改进一下。</p>
+<p></body></html></p>

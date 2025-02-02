@@ -1,0 +1,33 @@
+---
+layout: post
+title: DNS漏洞
+date: 2008-08-14 17:30:45.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Linux Application
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '377'
+  _wp_old_slug: '377'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2008/08/14/dns%e6%bc%8f%e6%b4%9e/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body>
+<p>最近DNS漏洞狠火啊！！搞得沸沸扬扬，鸡犬不宁的～</p>
+<p>我仔细看了一下这个漏洞的原理，发现其实很简单。我这里说简单并不是事后诸葛，而是指相对于其它互联网协议的漏洞，比如 <a href="http://tools.ietf.org/html/rfc4987" target="_blank">SYN Flood</a>，它早在1994年就被发现了。我觉得这个DNS漏洞也应该被发现得更早才对，没想到直到现在才暴露出来。</p>
+<p>说到底，这个DNS漏洞的成因是因为QID计算过于简单，只是简单地加一，这导致猜解很容易，可“屋漏偏逢连夜雨”，偏偏DNS server的实现中发送DNS请求的UDP端口又是不变的，这就造成了本次“全球DNS变暖”的问题。而且，不光光是BIND，其它很多实现都是这样，恩哼，那么这个问题就很严重了。解决方法也很简单，随机QID和UDP端口，注意，光随机QID似乎仍然是不够的。</p>
+<p>好了，现在我们反思一下为啥这个DNS漏洞这么简单却到现在才暴露出来？我觉得（停顿），是因为DNS太普通以至于几乎没人重视它了（too to 结构）。想想啊，我们似乎都觉得敲入一个域名就理应得到相应的主机，以至于连其IP是什么都看不到，也没必要看到（绝大多数情况）。这不光是普通用户的心态，连很多程序员也是，因为gethostbyname(3)替我们完成了这个工作。总之，几乎人人觉得这是理所应当的，所以几乎没人重视DNS问题，除了DNS服务器管理员和某些geek到家的人，而<a href="http://www.comsharp.com/GetKnowledge/zh-CN/TeamBlogTimothyPage_K455.aspx" target="_blank">Dan Kaminsky</a>就是后者中的一个。当然了，Dan的人品也是很好的，他充分估计到了这件事的严重性，不光自己没利用它做啥坏事，而且最初的保密工作也做得很好！</p>
+<p>这件事再次提醒我们，不管什么事情做得很细了都很可怕。牛人就是这样炼成的！</p>
+<p>快打上补丁吧，哼哼哈兮～！</p>
+<p></body></html></p>

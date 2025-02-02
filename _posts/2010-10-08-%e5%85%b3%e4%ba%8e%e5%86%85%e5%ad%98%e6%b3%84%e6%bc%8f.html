@@ -1,0 +1,31 @@
+---
+layout: post
+title: 关于内存泄漏
+date: 2010-10-08 20:08:40.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Programming
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '1309'
+  _wp_old_slug: '1309'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2010/10/08/%e5%85%b3%e4%ba%8e%e5%86%85%e5%ad%98%e6%b3%84%e6%bc%8f/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body>
+<p>不少编写用户空间程序的人都关心内存泄漏到底会造成多少影响。这里简单澄清一下。</p>
+<p>无论用户空间是通过malloc()也好，mmap()也好，最终都是通过Linux内核管理的。只要内核没有bug，这些和这个进程相关的页面都是会被记录的，而且会在进程exit()的时候由Linux内核全部释放掉。所以对于运行时间不长的应用程序，有一些内存泄漏一般是没多大问题的。作为用户程序的编写者，如果释放内存真的很麻烦，或者说会让你的某一块代码变得很难读，你完全可以直接exit()。虽然很多时候我并不建议你这么做，道理很简单，因为你申请了资源就应该自己去释放，这不光是资源浪费的问题，而且是你代码逻辑和你作为开发者职责的问题。</p>
+<p>实际上，Linux内核根本就不会注意到用户空间的泄漏不泄漏，它只关心你申请的这个页面有没有被它记录，所以进程退出时所有和此相关的内存页面都会被内核释放掉，管你是因为泄漏留下的还是用作其它用途的。</p>
+<p>但是，你也知道，有些进程是不会主动退出的，那就是后台进程。这样的程序要是存在内存泄漏的话，还是可能会很浪费系统的内存资源的，因为内核没机会去释放这些页面，而且对用户空间的泄漏情况完全不知，它只会不停地给用户空间分配内存，直到用户空间地址耗尽或者物理内存趋近用完。</p>
+<p></body></html></p>

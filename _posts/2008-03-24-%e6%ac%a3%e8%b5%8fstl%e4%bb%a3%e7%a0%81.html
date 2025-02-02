@@ -1,0 +1,141 @@
+---
+layout: post
+title: 欣赏STL代码
+date: 2008-03-24 22:33:53.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Programming
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '319'
+  _wp_old_slug: '319'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2008/03/24/%e6%ac%a3%e8%b5%8fstl%e4%bb%a3%e7%a0%81/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body>
+<p>无意间看到STL代码，忍不住读了一下，写得很简练，值得我们学习。在这里贴出来和大家分享一下。</p>
+<p>最先看的是algorithm里的next_permutation的实现，非递归，代码很精炼，值得好好研究。</p>
+<p>template<br />
+bool next_permutation(_BidirectionalIter __first, _BidirectionalIter __last)<br />
+{<br />
+  // concept requirements<br />
+  glibcpp_function_requires(BidirectionalIteratorConcept);<br />
+  glibcpp_function_requires(LessThanComparableConcept&lt;<br />
+        typename iterator_traits::value_type&gt;);</p>
+<p>  if (__first == __last)<br />
+    return false;<br />
+  _BidirectionalIter __i = __first;<br />
+  ++__i;<br />
+  if (__i == __last)<br />
+    return false;<br />
+  __i = __last;<br />
+  --__i;</p>
+<p>  for(;;) {<br />
+    _BidirectionalIter __ii = __i;<br />
+    --__i;<br />
+    if (*__i &lt; *__ii) {<br />
+      _BidirectionalIter __j = __last;<br />
+      while (!(*__i &lt; *--__j))<br />
+        {}<br />
+      iter_swap(__i, __j);<br />
+      reverse(__ii, __last);<br />
+      return true;<br />
+    }<br />
+    if (__i == __first) {<br />
+      reverse(__first, __last);<br />
+      return false;<br />
+    }<br />
+  }<br />
+}</p>
+<p>去重方法unique的实现：</p>
+<p>template  template<br />
+void list::unique(_BinaryPredicate __binary_pred)<br />
+{<br />
+  iterator __first = begin();<br />
+  iterator __last = end();<br />
+  if (__first == __last) return;<br />
+  iterator __next = __first;<br />
+  while (++__next != __last) {<br />
+    if (__binary_pred(*__first, *__next))<br />
+      erase(__next);<br />
+    else<br />
+      __first = __next;<br />
+    __next = __first;<br />
+  }<br />
+}</p>
+<p>看完了代码才想起来，使用unique的前提是list必须是有序的。</p>
+<p>为了看后面的reverse方法，我们先看看它用到的transfer方法，这个一个很重要的方法，好几个方法都用到了它。transfer的作用是把[first, last)之间的元素都移动到position之前。</p>
+<p>protected:<br />
+  void transfer(iterator __position, iterator __first, iterator __last) {<br />
+    if (__position != __last) {<br />
+      // Remove [first, last) from its old position.<br />
+      ((_Node*) (__last._M_node-&gt;_M_prev))-&gt;_M_next     = __position._M_node;<br />
+      ((_Node*) (__first._M_node-&gt;_M_prev))-&gt;_M_next    = __last._M_node;<br />
+      ((_Node*) (__position._M_node-&gt;_M_prev))-&gt;_M_next = __first._M_node;</p>
+<p>      // Splice [first, last) into its new position.<br />
+      _Node* __tmp = (_Node*) (__position._M_node-&gt;_M_prev);<br />
+      __position._M_node-&gt;_M_prev = __last._M_node-&gt;_M_prev;<br />
+      __last._M_node-&gt;_M_prev      = __first._M_node-&gt;_M_prev;<br />
+      __first._M_node-&gt;_M_prev    = __tmp;<br />
+    }<br />
+  }</p>
+<p>然后reverse出场：</p>
+<p>template<br />
+void list::reverse()<br />
+{<br />
+  // Do nothing if the list has length 0 or 1.<br />
+  if (_M_node-&gt;_M_next != _M_node &amp;&amp;<br />
+      ((_Node*) (_M_node-&gt;_M_next))-&gt;_M_next != _M_node) {<br />
+    iterator __first = begin();<br />
+    ++__first;<br />
+    while (__first != end()) {<br />
+      iterator __old = __first;<br />
+      ++__first;<br />
+      transfer(begin(), __old, __first);<br />
+    }<br />
+  }<br />
+}</p>
+<p>连接操作splice，这里看的这个splice是把list上的i移到position位置上。</p>
+<p> void splice(iterator __position, list&amp;, iterator __i) {<br />
+    iterator __j = __i;<br />
+    ++__j;<br />
+    if (__position == __i || __position == __j) return;<br />
+    transfer(__position, __i, __j);<br />
+  }</p>
+<p>最后是sort方法，据说用了quick sort算法，不过还没看太懂……</p>
+<p>template<br />
+void list::sort()<br />
+{<br />
+  // Do nothing if the list has length 0 or 1.<br />
+  if (_M_node-&gt;_M_next != _M_node &amp;&amp;<br />
+      ((_Node*) (_M_node-&gt;_M_next))-&gt;_M_next != _M_node) {<br />
+    list __carry;<br />
+    list __counter[64];<br />
+    int __fill = 0;<br />
+    while (!empty()) {<br />
+      __carry.splice(__carry.begin(), *this, begin());<br />
+      int __i = 0;<br />
+      while(__i &lt; __fill &amp;&amp; !__counter[__i].empty()) {<br />
+        __counter[__i].merge(__carry);<br />
+        __carry.swap(__counter[__i++]);<br />
+      }<br />
+      __carry.swap(__counter[__i]);<br />
+      if (__i == __fill) ++__fill;<br />
+    }</p>
+<p>    for (int __i = 1; __i &lt; __fill; ++__i)<br />
+      __counter[__i].merge(__counter[__i-1]);<br />
+    swap(__counter[__fill-1]);<br />
+  }<br />
+}</p>
+<p></body></html></p>

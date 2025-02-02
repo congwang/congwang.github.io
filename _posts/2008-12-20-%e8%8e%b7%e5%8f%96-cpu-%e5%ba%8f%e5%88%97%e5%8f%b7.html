@@ -1,0 +1,73 @@
+---
+layout: post
+title: 获取 CPU 序列号
+date: 2008-12-20 20:37:55.000000000 -08:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Programming
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '471'
+  _wp_old_slug: '471'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2008/12/20/%e8%8e%b7%e5%8f%96-cpu-%e5%ba%8f%e5%88%97%e5%8f%b7/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body>
+<p>受lshw的启发，自己动手写了一个获取Intel CPU序列号的小程序，顺便练练gcc内嵌汇编。过程中参考了Intel手册和<a href="http://ezix.org/project/wiki/HardwareLiSter" target="_blank">lshw源代码</a>。:-)</p>
+<p>注意：并不是所有的Intel CPU都有序列号。我的CPU就不行，又在别的机器上测的。</p>
+<p>[c]<br />
+#include </p>
+<p>typedef struct {<br />
+	unsigned int eax;<br />
+	unsigned int edx;<br />
+	unsigned int ecx;<br />
+} cpusn_t;</p>
+<p>int get_cpusn(cpusn_t *sn)<br />
+{<br />
+	sn-&gt;eax = 1;<br />
+	__asm__ (<br />
+		"cpuidnt"<br />
+		:"=c"(sn-&gt;ecx), "=d"(sn-&gt;edx), "=a" (sn-&gt;eax)<br />
+		:"2" (sn-&gt;eax)<br />
+	);<br />
+	if ((sn-&gt;edx &amp; (1&lt;eax = 3;<br />
+	__asm__ (<br />
+		"cpuidnt"<br />
+		:"=c"(sn-&gt;ecx), "=d"(sn-&gt;edx), "=a" (sn-&gt;eax)<br />
+		:"2" (sn-&gt;eax)<br />
+	);<br />
+	return 0;<br />
+}<br />
+void print_cpusn(cpusn_t sn)<br />
+{<br />
+	char buf[30];<br />
+	snprintf(buf, sizeof(buf), "%04X-%04X-%04X-%04X-%04X-%04X",<br />
+		sn.eax &gt;&gt; 16, sn.eax &amp; 0xffff,<br />
+		sn.edx &gt;&gt; 16, sn.edx &amp; 0xffff,<br />
+		sn.ecx &gt;&gt; 16, sn.ecx &amp; 0xffff);<br />
+	printf("%sn", buf);</p>
+<p>}</p>
+<p>int main(void)<br />
+{<br />
+	cpusn_t sn = {0, 0, 0};<br />
+	if (get_cpusn(&amp;sn) == 0) {<br />
+		print_cpusn(sn);<br />
+	} else {<br />
+		//printf("edx = %xn", sn.edx);<br />
+		printf("Doesn't support this.n");<br />
+	}<br />
+	return 0;<br />
+}<br />
+[/c] </p>
+<p></body></html></p>

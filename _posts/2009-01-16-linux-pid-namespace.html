@@ -1,0 +1,108 @@
+---
+layout: post
+title: Linux PID namespace
+date: 2009-01-16 22:52:49.000000000 -08:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Linux Kernel
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '498'
+  _wp_old_slug: '498'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2009/01/16/linux-pid-namespace/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body>
+<p>一直对linux内核的namespace感到困惑，今天看了一下代码才知道，原来所谓的namespace其实就是给虚拟化用的，<a href="http://lwn.net/Articles/259217/">PID namespace</a>其实就是建立一个新的PID空间，这样内部可以使用一套新的PID，而且不会和外部冲突。这也就是说某个进程其实会有两个PID，一个空间一个。</p>
+<p>我写了段C代码来展示这个问题。<br />
+[c]<br />
+#include<br />
+#include<br />
+#include<br />
+#include<br />
+#include<br />
+#include </p>
+<p>static int fork_child(void *arg)<br />
+{<br />
+	int a = (int)arg;<br />
+	int i;<br />
+	pid_t pid;</p>
+<p>	printf("In the container, my pid is: %dn", getpid());<br />
+	for (i = 0; i &lt; a; i++) {<br />
+		pid = fork();<br />
+		if (pid &lt; 0)<br />
+			return pid;<br />
+		else if (pid)<br />
+			printf("pid of my child is %dn", pid);<br />
+		else if (pid == 0) {<br />
+			sleep(3);<br />
+			exit(0);<br />
+		}<br />
+	}<br />
+	return 0;<br />
+}</p>
+<p>int main(int argc, char *argv[])<br />
+{<br />
+	int cpid;<br />
+	void *childstack, *stack;<br />
+	int flags;<br />
+	int ret = 0;<br />
+	int stacksize = getpagesize() * 4;</p>
+<p>	if (argc != 2) {<br />
+		fprintf(stderr, "Wrong usage.n");<br />
+		return -1;<br />
+	}</p>
+<p>	stack = malloc(stacksize);<br />
+	if (!stack) {<br />
+		perror("malloc");<br />
+		return -1;<br />
+	}</p>
+<p>	printf("Out of the container, my pid is: %dn", getpid());</p>
+<p>	childstack = stack + stacksize;<br />
+	flags = CLONE_NEWPID | CLONE_NEWNS;</p>
+<p>	cpid = clone(fork_child, childstack, flags, (void *)atoi(argv[1]));<br />
+	printf("cpid: %dn", cpid);</p>
+<p>	if (cpid &lt; 0) {<br />
+		perror("clone");<br />
+		ret = -1;<br />
+		goto out;<br />
+	}</p>
+<p>	fprintf(stderr, "Parent sleeping 20 secondsn");<br />
+	sleep(20);<br />
+	ret = 0;</p>
+<p>out:<br />
+	free(stack);<br />
+	return ret;<br />
+}<br />
+[/c]</p>
+<p>运行结果：</p>
+<p>$ sudo ./pid_container 3<br />
+Out of the container, my pid is: 7061<br />
+cpid: 7062<br />
+In the container, my pid is: 1<br />
+Parent sleeping 20 seconds<br />
+pid of my child is 2<br />
+pid of my child is 3<br />
+pid of my child is 4</p>
+<p>其实被namespace化的不只是PID，还有很多东西，貌似它们合起来被称为container。可以看 include/linux/nsproxy.h：</p>
+<p>struct nsproxy {<br />
+        atomic_t count;<br />
+        struct uts_namespace *uts_ns;<br />
+        struct ipc_namespace *ipc_ns;<br />
+        struct mnt_namespace *mnt_ns;<br />
+        struct pid_namespace *pid_ns;<br />
+        struct net           *net_ns;<br />
+};</p>
+<p>虚拟化的东西是越来越让人摸不清头脑了。。。。</p>
+<p></body></html></p>

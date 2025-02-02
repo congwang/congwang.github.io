@@ -1,0 +1,75 @@
+---
+layout: post
+title: perfbook 读书笔记：livelock
+date: 2012-03-24 15:44:17.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Linux Kernel
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '1930'
+  _wp_old_slug: '1930'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2012/03/24/perfbook-%e8%af%bb%e4%b9%a6%e7%ac%94%e8%ae%b0%ef%bc%9alivelock/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body></p>
+<p>注：本文以及后面的文章中提到的 perfbook 均是指大牛 Paul E. McKenney 的书，《Is Parallel Programming Hard, And, If So, What Can You Do About It?》，书名太长，故简写之。</p>
+<p>最近一直在读这本 perfbook，它算是少有的全面而专门介绍 locking 的书，值得每个系统程序员去读。在读的过程中发现有的地方它介绍的并不是很详细，所以就写几篇读书笔记也算是对它的小小补充。</p>
+<p>书中 6.1.2 节讲到了 livelock，即所谓的“活锁”，相对于死锁（deadlock）而言。因为上过操作系统课的原因，我估计很多人对 deadlock 并不陌生，但是 livelock 相对不那么熟悉。livelock 无非是饥饿（starvation）的极端情况。饥饿是由竞争引起，所谓竞争（contention）是指尝试获取一个已经被锁住的锁，长时间竞争会导致这些得不到锁的进程饥饿，所以饥饿的极端情况就是多个进程一直在尝试获取某一（几）把锁，但一直都得不到满足。</p>
+<p>书中给出的例子很简单，解决方法是给两个进程加上不同延迟，也同时增加了 overhead，所以这个例子并不是很好。我们看一个现实中的例子，Linux 内核中的一个 livelock 的 bug：</p>
+<blockquote><p>
+commit eaf5f9073533cde21c7121c136f1c3f072d9cf59<br />
+Author: Miklos Szeredi<br />
+Date:   Tue Jan 10 18:22:25 2012 +0100</p>
+<p>fix shrink_dcache_parent() livelock
+</p></blockquote>
+<p>发生 livelock 的地方是 shrink_dcache_parent()，看其定义：<br />
+[c]<br />
+void shrink_dcache_parent(struct dentry * parent)<br />
+{<br />
+        LIST_HEAD(dispose);<br />
+        int found;</p>
+<p>        while ((found = select_parent(parent, &amp;dispose)) != 0)<br />
+                shrink_dentry_list(&amp;dispose);<br />
+}<br />
+[/c]</p>
+<p>根据这个 commit 的描述，我们可以发现存在下面这种情况：</p>
+<p>1. CPU0 上的进程调用 select_parent(P) 找到了 dentry C，并把它放入 dispose 链表中，返回1；</p>
+<p>2. 与此同时，CPU1 上的另一个进程也调用了select_parent(P)，获取了 dentry P 的 -&gt;d_lock；</p>
+<p>3. CPU0 上的进程继续调用 shrink_dentry_list()，获取了 dentry C 的 -&gt;d_lock，然后又调用 try_prune_one_dentry(C)，dentry_kill(C)：</p>
+<p>[c]<br />
+...<br />
+        if (inode &amp;&amp; !spin_trylock(&amp;inode-&gt;i_lock)) {<br />
+relock:<br />
+                spin_unlock(&amp;dentry-&gt;d_lock);<br />
+                cpu_relax();<br />
+                return dentry; /* try again with same dentry */<br />
+        }<br />
+        if (IS_ROOT(dentry))<br />
+                parent = NULL;<br />
+        else<br />
+                parent = dentry-&gt;d_parent;<br />
+        if (parent &amp;&amp; !spin_trylock(&amp;parent-&gt;d_lock)) {<br />
+                if (inode)<br />
+                        spin_unlock(&amp;inode-&gt;i_lock);<br />
+                goto relock;<br />
+        }<br />
+[/c]</p>
+<p>因为另一个进程持有dentry P的-&gt;d_lock，所以 dentry_kill() 中 spin_trylock(&amp;parent-&gt;d_lock) 失败，转而 spin_unlock(&amp;dentry-&gt;d_lock) 并返回；</p>
+<p>4. CPU1 上的进程此时仍在调用 select_parent(P)，并找到了 dentry C，锁住了它的-&gt;d_lock，放入 dispose 链表并返回1（其实就是重复步骤(1)）；</p>
+<p>5. CPU0 上的进程继续 shrink_dentry_list() 中的循环，发现 dispose 链表已经为空，退出循环并返回；</p>
+<p>6. CPU1 的进程开始重复步骤(3)；</p>
+<p>7. CPU0 的进程开始重复步骤(2)。</p>
+<p>Livelock 产生了！</p>
+<p>这里问题的关键在于那个 dispose list，如果 dentry C被某个进程加入到 dispose list 中，另外的进程不应该再找到它，所以修复就是加一个标志位 DCACHE_SHRINK_LIST，来标示这个 dentry 有没有被加入。</body></html></p>

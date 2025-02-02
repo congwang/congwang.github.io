@@ -1,0 +1,87 @@
+---
+layout: post
+title: C中的宏预处理
+date: 2009-02-08 23:43:33.000000000 -08:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Programming
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '559'
+  _wp_old_slug: '559'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2009/02/08/c%e4%b8%ad%e7%9a%84%e5%ae%8f%e9%a2%84%e5%a4%84%e7%90%86/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body></p>
+<p>宏的预处理这个坑看起来浅，其实还蛮深的。它也是最容易被忽视的几个地方之一。这里斗胆来谈谈，说实话，在写这句话时我也不清楚这坑究竟有多深，没关系，我们摸着石头过河，一起看看到最后这坑能有多深！同时这篇文章也将会是《C语言编程艺术》中的一部分。</p>
+<p>从一个相对简单的例子说起吧。<br />
+[c]<br />
+#define f(a,b) a##b<br />
+#define g(a)   #a<br />
+#define h(a) g(a)<br />
+h(f(1,2))<br />
+g(f(1,2))<br />
+[/c]<br />
+相信不少人都见过这个例子。我们不妨再仔细分析一下它的解析过程。应该是这样的：</p>
+<p>对于g(f(1,2))，预处理器看到的先是g，然后是(，说明这是一个函数式的宏，好，然后替换后面的实参f(1, 2)，得到#f(1,2)（注：直接这么写非法，这里只是为了表示方便而已），因为它前面有个#，所以下一步是不会替换f的参数的！所以进一步得到"f(1, 2)"，解析结束。而对于h(f(1,2))，预处理器看到的先是h，然后(，对其参数f(1, 2)进行替换，得到g(f(1,2))，注意这里的下一步是，预处理器就继续往后走，处理刚得到的f(1,2)，而不是回过头去再处理g！得到12，到了这里我们的得到的是一个：g(12)，然后重新扫描整个宏，替换g，最后得到"12"。</p>
+<p>标准第6.10.3.1节中对此描述的还比较清晰，它这样写道：</p>
+<blockquote><p>After the arguments for the invocation of a function-like macro have been<br />
+identified, argument substitution takes place. A parameter in the replacement<br />
+list, <strong>unless preceded by a # or ## preprocessing token or followed by a ##</strong><br />
+<strong>preprocessing token </strong>(see below), is replaced by the corresponding argument<br />
+after all macros contained therein have been expanded.</p></blockquote>
+<p>注意加粗的部分。到了在这里，我们可以简单总结一下函数式宏的基本替换流程：</p>
+<p>首先要识别出这是一个函数式宏，通过什么？通过调用中出现的(，没错是左括号！到这里后下一步是参数替换，就是根据该宏的定义把实参全部替换进去，然后接着向后走，除非是遇到了#和##（正如上面例子中的g），把后面替换后的东西中如果还有已知宏的话，进行替换或者同样的展开，直到解析到末尾：所有的参数都已经替换完（或者#或##已经处理完）；最后，预处理器还会对整个宏再进行一次扫描，因为前一轮替换中有可能在前面替换出一些新的东西来（比如上面例子中的h）。</p>
+<p>这里咋看之下没什么问题，其实问题很多！为什么？因为宏替换不仅允许发生在“调用”宏的时候，而且还发生在它定义时！</p>
+<p>问题1：宏的名字本身会被替换吗？</p>
+<p>这个问题也可以这样问：宏允许被重新定义吗？不允许，但是允许相同的重新定义。标准这样写道：</p>
+<blockquote><p>An identifier currently defined as an object-like macro shall not be<br />
+redefined by another #define preprocessing directive unless the second definition<br />
+is an object-like macro definition and the two replacement lists are identical.<br />
+Likewise, an identifier currently defined as a function-like macro shall not be<br />
+redefined by another #define preprocessing directive unless the second definition<br />
+is a function-like macro definition that has the same number and spelling of<br />
+parameters, and the two replacement lists are identical.</p></blockquote>
+<p>问题2：宏的参数（形参）会被替换吗？</p>
+<p>先举个例子说明这个问题：</p>
+<p>#define foo 1<br />
+#define bar(foo) foo + 2<br />
+bar(a)</p>
+<p>我们是得到a+2还是1+2？a+2！因为形参是不会被替换掉的，你想想啊，如果形参都被替换掉了这个宏就没什么作用了！那实参呢？实参会的，因为实参的替换发生在传递这个参数之前：</p>
+<blockquote><p>Before being substituted, each argument’s preprocessing tokens are<br />
+completely macro replaced as if they formed the rest of the preprocessing file</p></blockquote>
+<p>问题3：宏中参数之外的符号会被替换吗？</p>
+<p>会，上面提到过“after all macros contained therein have been expanded”，也就是说这个发生在参数替换之前。但是，这里有个非常诡异的问题：如果被替换出来的符号正好和形参一样怎么办？就像下面这个例子：</p>
+<p>#define foo bar<br />
+#define baz(bar) bar + foo<br />
+baz(1)</p>
+<p>我们会得到1+1还是1+bar？后者，因为替换出来的那个bar是不会计算在形参之内的，虽然标准并没有明确这一点。想想吧，如果是的话那个宏的定义也会被破坏了！</p>
+<p>另一个例子：</p>
+<p> #define foo bar<br />
+ #define mac(x) x(foo)<br />
+mac(foo)</p>
+<p>根据上面所说，我们首先得到foo(foo)，然后foo再被替换成bar，最后得到bar(bar)。</p>
+<p>好了，到这里我们终于可以看一下更复杂的例子了：</p>
+<p>#define m !(m)+n<br />
+#define n(n) n(m)<br />
+m(m)</p>
+<p>这个例子相当复杂，是我见过的最复杂的一个宏。:-) 刚看到我们可能都有点蒙，没关系，咱们一步一步地来。</p>
+<p>第一步很好走，第一个m直接被替换，得到：!(m)+n(m)，别犹豫，接着往下走，替换最后一个m，得到：!(m)+n(!(m)+n)，这时这一遍扫描已经完成。到这里我们得提出另外一个东西才能继续，你可能知道，递归。标准对此的描述是：</p>
+<blockquote><p>If the name of the macro being replaced is found during this scan of the<br />
+replacement list (not including the rest of the source file’s preprocessing<br />
+tokens), it is not replaced.</p></blockquote>
+<p>在上次替换中，被替换的是m，所以m<strong>在这里</strong>的再次出现将不会被替换，所以下一步是会替换第一个n，得到：!(m)+!(m)+n(m)，注意这里又替换出一个<strong>新的</strong>m来，这个m会被替换，因为这次扫描还没完成！下一步得到：!(m)+!(m)+n(!(m)+n)，第二遍扫描结束，全部的替换完成。</p>
+<p>综上，我们可以总结出两条重要的宏替换规则：1)再复杂的宏也只是被扫描两遍，而且递归是不允许发生的，即使在第2遍时；2)一个替换完成后如果还没扫描完，要从被替换的那里继续。</p>
+<p>（全文完）<br />
+</body></html></p>

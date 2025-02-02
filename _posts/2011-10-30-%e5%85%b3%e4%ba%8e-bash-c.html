@@ -1,0 +1,47 @@
+---
+layout: post
+title: 关于 bash -c
+date: 2011-10-30 23:09:12.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Linux Application
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '1795'
+  _wp_old_slug: '1795'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2011/10/30/%e5%85%b3%e4%ba%8e-bash-c/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body></p>
+<p>我们知道 -c 的意思是 command，所以 bash -c 后面应该跟一个 command。连 bash 的 man page 中都这么说：</p>
+<blockquote><p>-c string If the -c option is present, then commands are read from string.<br />
+If there are arguments after the string,  they  are  assigned  to  the positional parameters, starting with $0.</p></blockquote>
+<p>而实际上不对。我们看下面的例子：</p>
+<p>% bash -c "echo a b c"<br />
+a b c<br />
+% bash -c echo a b c</p>
+<p>% bash -cx "echo a"<br />
++ echo a<br />
+a</p>
+<p>如果 -c 后面跟一个参数 string的话，那么第三个例子中的 -cx 应该会报错，找不到x这个命令，而实际上没有报错，也就是说，-c 和 -x 一样，后面不跟任何参数。</p>
+<p>再看上面第二个例子中，为什么只有换行输出？手册中说，如果后面还有参数的话，那么它们被赋值给$0，$1，$2等等，也就是说，bash -c echo a b c，实际上只执行了 bash -c echo，所以只输出了换行！我们可以看更好的例子：</p>
+<p>% bash -c 'echo "$0 is $0, $1 is $1, $2 is $2"' foo bar biz<br />
+$0 is foo, $1 is bar, $2 is biz</p>
+<p>% echo 'echo "$0 is $0, $1 is $1, $2 is $2"' &gt; /tmp/args<br />
+% chmod +x /tmp/args<br />
+% bash -c /tmp/args foo bar biz<br />
+$0 is /tmp/args, $1 is , $2 is</p>
+<p>% bash -c '/tmp/args; echo $0 is $0, $1 is $1, $2 is $2' foo bar biz<br />
+$0 is /tmp/args, $1 is , $2 is<br />
+$0 is foo, $1 is bar, $2 is biz</body></html></p>

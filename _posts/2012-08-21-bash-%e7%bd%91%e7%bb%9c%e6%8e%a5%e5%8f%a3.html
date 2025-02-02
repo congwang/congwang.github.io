@@ -1,0 +1,121 @@
+---
+layout: post
+title: bash 网络接口
+date: 2012-08-21 09:58:12.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Linux Application
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '2099'
+  _wp_old_slug: '2099'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2012/08/21/bash-%e7%bd%91%e7%bb%9c%e6%8e%a5%e5%8f%a3/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body></p>
+<p>我很早以前就见过 /dev/tcp/&lt;host&gt;/&lt;port&gt; 这个接口，但一直以为是某个 BSD 内核实现了一个特殊的文件系统，因为 Linux 上面很明显没有 /dev/tcp 这个目录。直到今天我才发现，这个目录其实是 bash 自己实现的！！这么以来就可以不借助wget，nc 来实现网络连接了！设计这么一个接口是要逆天了嘛！</p>
+<p>使用这个接口很简单，如下所示：</p>
+<pre>bash-4.2$ cat &lt;/dev/tcp/time.nist.gov/13
+
+56188 12-09-18 15:34:26 50 0 0 733.5 UTC(NIST) *
+
+bash-4.2$ exec 3&lt;&gt;/dev/tcp/www.w3.org/80
+bash-4.2$ echo -e "GET / HTTP/1.0nn" &gt;&amp;3
+bash-4.2$ cat &lt;&amp;3
+HTTP/1.1 200 OK
+Date: Tue, 18 Sep 2012 15:41:08 GMT
+Server: Apache/2
+Content-Location: Home.html
+Vary: negotiate,accept
+TCN: choice
+Last-Modified: Tue, 18 Sep 2012 14:06:27 GMT
+ETag: "8f75-4c9fa65657ec0;89-3f26bd17a2f00"
+Accept-Ranges: bytes
+Content-Length: 36725
+Cache-Control: max-age=600
+Expires: Tue, 18 Sep 2012 15:51:08 GMT
+P3P: policyref="http://www.w3.org/2001/05/P3P/p3p.xml"
+Connection: close
+Content-Type: text/html; charset=utf-8
+...</pre>
+<p>在 bash 的源代码树 redir.c 文件中，我们不难发现下面的代码：</p>
+<p>[c]<br />
+/* A list of pattern/value pairs for filenames that the redirection<br />
+   code handles specially. */<br />
+static STRING_INT_ALIST _redir_special_filenames[] = {<br />
+#if !defined (HAVE_DEV_FD)<br />
+  { "/dev/fd/[0-9]*", RF_DEVFD },<br />
+#endif<br />
+#if !defined (HAVE_DEV_STDIN)<br />
+  { "/dev/stderr", RF_DEVSTDERR },<br />
+  { "/dev/stdin", RF_DEVSTDIN },<br />
+  { "/dev/stdout", RF_DEVSTDOUT },<br />
+#endif<br />
+#if defined (NETWORK_REDIRECTIONS)<br />
+  { "/dev/tcp/*/*", RF_DEVTCP },<br />
+  { "/dev/udp/*/*", RF_DEVUDP },<br />
+#endif<br />
+  { (char *)NULL, -1 }<br />
+};</p>
+<p>...<br />
+static int<br />
+redir_open (filename, flags, mode, ri)<br />
+     char *filename;<br />
+     int flags, mode;<br />
+     enum r_instruction ri;<br />
+{<br />
+  int fd, r;</p>
+<p>  r = find_string_in_alist (filename, _redir_special_filenames, 1);<br />
+  if (r &gt;= 0)<br />
+    return (redir_special_open (r, filename, flags, mode, ri));</p>
+<p>  /* If we are in noclobber mode, you are not allowed to overwrite<br />
+     existing files.  Check before opening. */<br />
+  if (noclobber &amp;&amp; CLOBBERING_REDIRECT (ri))<br />
+    {<br />
+      fd = noclobber_open (filename, flags, mode, ri);<br />
+      if (fd == NOCLOBBER_REDIRECT)<br />
+        return (NOCLOBBER_REDIRECT);<br />
+    }<br />
+  else<br />
+    {<br />
+      fd = open (filename, flags, mode);<br />
+#if defined (AFS)<br />
+      if ((fd &lt; 0) &amp;&amp; (errno == EACCES))<br />
+        {<br />
+          fd = open (filename, flags &amp; ~O_CREAT, mode);<br />
+          errno = EACCES;       /* restore errno */<br />
+        }<br />
+#endif /* AFS */<br />
+    }</p>
+<p>  return fd;<br />
+}</p>
+<p>[/c]</p>
+<p>可见，当 bash 发现重定向时它会先查看重定向的文件是不是特殊文件，如果是截获它，自行解释之，否则就打开这个文件。当然了，真正解释 /dev/tcp/HOST/PORT 的代码是在 lib/sh/netopen.c 中。</p>
+<p>bash 的手册中也提到了这些特殊接口：</p>
+<blockquote><p>
+              /dev/fd/fd<br />
+                     If fd is a valid integer, file descriptor fd is duplicated.<br />
+              /dev/stdin<br />
+                     File descriptor 0 is duplicated.<br />
+              /dev/stdout<br />
+                     File descriptor 1 is duplicated.<br />
+              /dev/stderr<br />
+                     File descriptor 2 is duplicated.<br />
+              /dev/tcp/host/port<br />
+                     If host is a valid hostname or Internet address, and port is an integer port number or service name, bash attempts<br />
+                     to open a TCP connection to the corresponding socket.<br />
+              /dev/udp/host/port<br />
+                     If host is a valid hostname or Internet address, and port is an integer port number or service name, bash attempts<br />
+                     to open a UDP connection to the corresponding socket.</p></blockquote>
+<p></body></html></p>

@@ -1,0 +1,132 @@
+---
+layout: post
+title: 关于 extern inline
+date: 2012-03-07 15:27:04.000000000 -08:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Programming
+tags: []
+meta:
+  _publicize_pending: '1'
+  _oembed_810b6b480cb131ffcbc4e9c2d5e1d115: "{{unknown}}"
+  _oembed_a9f6dba0b4671ee4102f0072eedb6f24: "{{unknown}}"
+  _oembed_ff72ff031d4ae0e011395bd3c77b82ff: "{{unknown}}"
+  _oembed_1994d6d431eea07463b56fe50b9c83ec: "{{unknown}}"
+  original_post_id: '2021'
+  _wp_old_slug: '2021'
+  _oembed_346f9259280b3e6865fad3b95a499b02: "{{unknown}}"
+  _oembed_7d2eb676dfa2227588d26beba9a8f0b3: "{{unknown}}"
+  _oembed_eba14bcbd0781f786b52394b5d69b49e: "{{unknown}}"
+  _oembed_334928ac6adeeb6311d51d19d68c6560: "{{unknown}}"
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2012/03/07/%e5%85%b3%e4%ba%8e-extern-inline/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body></p>
+<p>（本文是《C语言编程艺术》的一部分，转载请注明出处，勿用于商业用途。）</p>
+<p>大家一定对C语言 inline 关键字不陌生，甚至经常用到 static inline 的函数。可能感到陌生的是 extern inline。C11 标准在6.7.4 p7 中对此进行了描述，不过比较生涩难读。简单地讲，static line 和 extern inline 的区别，从名字上也能看得出来，就是编译单元之外可见性的问题。把一个普通函数给内联掉之后，一个显著的区别就是外部可见性没了，怎么能同时既能内联又能保留外部的可见性呢？为了解决这个问题就有了extern inline。</p>
+<p>static inline 是说这个函数就这么一个，而且没有外部可见性，在所有的编译单元中大家必须共用这么一个定义，这也是为什么 static inline 通常要放到头文件中的原因；而 extern inline 就不一样了，它是说这个函数虽然只有一个定义，但是既有内联的版本，也有非内联的版本，如果你能看得到它的定义。即在同一个编译单元中，那么你就可以用它的内联版本；看不到的话，你就可以用非内联版本，即和其它普通函数一模一样。</p>
+<p>而如果既不带 static 也不带 extern 的话，含义又不同了：前面的 extern inline 只需要定义一次，只是不同的地方看到的版本不同，有的地方看到的是内联的版本，而有的地方看到的只是个 external reference。而仅用 inline 的话，就变成了要定义两次，带 inline 关键字的这个定义就是内联版本，在这个编译单元中都用这个版本，而在外部，还是使用普通的非内联定义。换句话说，带 inline 的定义遮盖住了外部的定义。既然有两个不同的版本，那么也就需要保持这两个版本的定义相同，否则就会有问题。</p>
+<p>以上是标准C的定义，而 GNU89 的定义就不同了，基本上是把"extern inline"和"inline"的含义给交换了，“static line” 的含义都是相同的。看下面的标准C的例子：</p>
+<p>[c]<br />
+//a.c<br />
+//C99<br />
+extern inline int max(int a, int b)<br />
+{<br />
+	return a &gt; b ? a : b;<br />
+}</p>
+<p>int a = 10;<br />
+int b = 20;<br />
+int foo(void)<br />
+{<br />
+	return max(a, b);<br />
+}</p>
+<p>extern int bar(void);</p>
+<p>int main(void)<br />
+{<br />
+	return foo() + bar();<br />
+}</p>
+<p>//b.c<br />
+//C99<br />
+extern int max(int a, int b);</p>
+<p>int bar(void)<br />
+{<br />
+	int a = 10;<br />
+	int b = 20;<br />
+	return max(a, b);<br />
+}<br />
+[/c]</p>
+<p>我们这么编译：<br />
+% gcc -std=c99 -O2 -Wall -W a.c b.c -o c</p>
+<p>而我们如果把它编译成 GNU89 的话，就会报错：<br />
+% gcc -std=gnu89 -O2 -Wall -W a.c b.c -o c<br />
+/tmp/ccAJTzwY.o: In function `bar':<br />
+b.c:(.text+0xb): undefined reference to `max'<br />
+collect2: ld returned 1 exit status</p>
+<p>很明显，因为 GNU89 中的 extern inline 需要两个定义，明显我们少了一个。修改后的代码如下：</p>
+<p>[c]<br />
+//a.c<br />
+//GNU89<br />
+extern inline int max(int a, int b)<br />
+{<br />
+	return a &gt; b ? a : b;<br />
+}</p>
+<p>int a = 10;<br />
+int b = 20;<br />
+int foo(void)<br />
+{<br />
+	return max(a, b);<br />
+}</p>
+<p>extern int bar(void);</p>
+<p>int main(void)<br />
+{<br />
+	return foo() + bar();<br />
+}</p>
+<p>// b.c<br />
+//GNU89<br />
+int max(int a, int b)<br />
+{<br />
+	return a &gt; b ? a : b;<br />
+}</p>
+<p>int bar(void)<br />
+{<br />
+	int a = 10;<br />
+	int b = 20;<br />
+	return max(a, b);<br />
+}<br />
+[/c]</p>
+<p>glibc 中就用到了 GNU89 的extern inline 特性，在 ctype.h 中，tolower()/toupper() 的定义是：<br />
+[c]<br />
+# ifdef __USE_EXTERN_INLINES<br />
+__extern_inline int<br />
+__NTH (tolower (int __c))<br />
+{<br />
+  return __c &gt;= -128 &amp;&amp; __c = -128 &amp;&amp; __c = -128 &amp;&amp; c = -128 &amp;&amp; c &lt; 256 ? __ctype_toupper[c] : c;<br />
+}<br />
+[/c]</p>
+<p>顺便说一句，gcc 提供了-fgnu89-inline 和 -fno-gnu89-inline 选项可在编译时控制上述 inline 的行为。</p>
+<p><a href="http://stackoverflow.com/questions/216510/extern-inline" target="_blank">Stackoverflow 上</a>有人做了一个很好的总结，我翻译了一下：</p>
+<p><strong>GNU89:</strong></p>
+<p>    "inline"： 函数可能会被内联掉，非内联的版本总是会生成，而且外部可见，因此内联的定义在本编译单元中只能有一次，其它地方看到的是非内联版本。</p>
+<p>    "static inline"：不会生成外部可见的非内联版本，可能会生成一个 static 的非内联版本。它当然可以被定义多次，因为外部看不到它。</p>
+<p>    "extern inline"：不会生成一个非内联的版本，但是可以调用一个非内联版本（因此你必须在其它编译单元中定义它）。只能有一个定义的规则当然也适用，非内联版本和内联版本的代码必须是一样的。</p>
+<p><strong>C99 (or GNU99):</strong></p>
+<p>    "inline"：和 GNU89 的 "extern inline" 一样，没有外部可见的函数生成，但是外部可见的函数必须存在，因为有可能会用到它。</p>
+<p>    "extern inline"：和 GNU89 的 "inline" 一样， 会生成外部可见的代码，最多一个编译单元可以使用它。</p>
+<p>    "static inline"：和 GNU89 的 "static inline" 一样，这是唯一一个在 GNU89 和 C99之间可移植的。</p>
+<p>最后，我们可以看大神 Linus Torvalds <a href="http://markmail.org/message/xeew3yiesyzjcp7r#query:+page:1+mid:xzwxrr5xdictqmw4+state:results" target="_blank">如何描述</a> extern inline：</p>
+<blockquote><p>"static inline" means "we have to have this function, if you use it, but don't inline it, then make a static version of it in this compilation unit". "extern inline" means "I actually _have_ an extern for this function, but if you want to inline it, here's the inline-version". </p></blockquote>
+<p>参考资料：<br />
+http://www.greenend.org.uk/rjk/tech/inline.html<br />
+http://gcc.gnu.org/ml/gcc/2006-11/msg00006.html<br />
+http://stackoverflow.com/questions/6312597/is-inline-without-static-or-extern-ever-useful-in-c99<br />
+http://www.cnblogs.com/cnmaizi/archive/2011/01/19/1939686.html</body></html></p>

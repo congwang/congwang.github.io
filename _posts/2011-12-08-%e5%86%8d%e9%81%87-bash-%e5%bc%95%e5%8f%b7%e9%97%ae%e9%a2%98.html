@@ -1,0 +1,31 @@
+---
+layout: post
+title: 再遇 bash 引号问题
+date: 2011-12-08 23:45:51.000000000 -08:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Programming
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '1833'
+  _wp_old_slug: '1833'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2011/12/08/%e5%86%8d%e9%81%87-bash-%e5%bc%95%e5%8f%b7%e9%97%ae%e9%a2%98/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body>
+<p>最近在工作中再次遇到引号的问题，与以往不同，这次这个更加棘手。</p>
+<p>问题是这样的：我要在某个 bash 脚本中调用某个命令，根据配置文件来决定应该传递哪些参数给调用的那个命令。而且，该命令的其中一个参数中带有空格，所以必须使用双引号把这一参数作为整体传递进去。你可以试一下，无论怎么使用引号都无法解决这个问题。</p>
+<p>最后，我在 <a href="http://mywiki.wooledge.org/BashFAQ/050" target="_blank">Bash FAQ 中</a>找到了答案！解决方法是，把该命令的每一个参数作为 bash 数组的一个元素，最后用 "${args[@]}" 一起传递给该命令即可！</p>
+<p>另，<a href="http://mywiki.wooledge.org/BashFAQ" target="_blank">Bash FAQ</a> 质量非常高，强烈推荐认真读一下。</p>
+<p></body></html></p>

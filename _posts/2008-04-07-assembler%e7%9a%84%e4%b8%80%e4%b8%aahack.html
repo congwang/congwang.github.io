@@ -1,0 +1,48 @@
+---
+layout: post
+title: assembler的一个hack
+date: 2008-04-07 20:25:36.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Programming
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '328'
+  _wp_old_slug: '328'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2008/04/07/assembler%e7%9a%84%e4%b8%80%e4%b8%aahack/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body></p>
+<p>如果编译一个relocatable目标文件，你通过反汇编不难发现所有的call指令竟然都是同一个机器码！即：e8 fc ff ff ff。</p>
+<p>我们知道，不同的函数有不同的入口，可这里怎么都会用这么一个奇怪的地址呢？</p>
+<p>翻一下Intel指令手册，我们很容易就能在3-104 Vol. 2A中找到call指令的各种编码方式。根据这里的opcode为e8我们不难确定这个call是用的下面这种方式：</p>
+<pre>E8 cd CALL rel32</pre>
+<p>这就告诉我们，opcode后面其实是一个32位相当的相对地址。如果你肯在往后翻几页的话，就会发现这种方式的执行过程，如下：</p>
+<pre>tempEIP ←EIP +DEST; (* DEST is rel32 *)
+IF tempEIP is not within code segment limit THEN #GP(0); FI;
+IF stack not large enough for a 4-byte return address
+THEN #SS(0); FI;
+Push(EIP);
+EIP ←tempEIP;</pre>
+<p>也就是说会用当前的EIP加上那个相对地址作为最终的call转移地址。别慌，还没完，我们继续。</p>
+<p>我们知道，relocatable目标文件的符号地址都是不能使用的，因为还没经过linker转化。linker转化后的地址才是最终的地址，也就是说从上面那个地址到最后的地址还有一段过程，由ld来完成。</p>
+<p>我们知道，这里正确的地址应该是该符号实际的地址与这个call地址之间的偏移。而这等于这个函数的实际入口与.text section之间的偏移减去这个符号相对.text的偏移！后者由ELF格式直接给出，而前者也很容易计算。</p>
+<p>到这里你会发现，不对，我们那个fc ff ff ff还没用上！是，因为我们前面忽视了很重要的一点，EIP是指向下一条指令的而不是当前这条的地址！也就是说，我们前面的结果需要修正！具体说是需要修正一个 <strong>-</strong>0x4。再看一下fc ff ff ff，不正是-4么？！（x86是little endian！）对，正是这个由assembler故意安排的-4修正了我们call指令！</p>
+<p>当然了，如果符号不是一个函数地址，而是一个全局变量的地址，这就不需要修正，相应的relocatable文件里就是0。</p>
+<p>不得不说这是一个很聪明的hack！</p>
+<p>还有，如果你看最后executable文件，你可能又困惑了，call后面的修正似乎和上面不一样。举个例子：</p>
+<pre>80483ba:       e8 18 00 00 00          call   80483d7 &lt;foo&gt;</pre>
+<p>0x80483ba+0x18明显不是0x80483d7。嘿嘿，这里就不一样了，因为这里需要修正的是-0x5。差的那个会是啥呢？猜猜吧？（用鼠标拖住最后一行看答案。;-）</p>
+<p><span style="color:#ffffff;">就是那个e8啊！</span><br />
+</body></html></p>

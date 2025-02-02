@@ -1,0 +1,40 @@
+---
+layout: post
+title: symlink，chroot 和 mount
+date: 2009-12-20 23:57:07.000000000 -08:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Linux Application
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '878'
+  _wp_old_slug: '878'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2009/12/20/symlink%ef%bc%8cchroot%ef%bc%8cmount/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body></p>
+<p>前两天在处理一个关于 selinux 的 bug 时遇到一个比较有意思的问题，顺着仔细往下想了想，发现更多相关的话题，遂整理成一篇文章记录一下。实际上我想到的这几个问题和 selinux 基本上毫无关系，先从简单的谈起，然后顺着我的思路一步步往下走。</p>
+<p>最初的问题是，如果我在一个目录中建立了一个符号链接，那么我 chroot 进去之后会得到什么？这个问题比较简单，如果符号链接的目标文件路径在 chroot jail 里也存在，那么你就会得到 chroot jail 里面的那个文件；否则就无法访问到目标文件。这一点有个比较有趣的应用就是，你可以建立一个符号链接，让它在 chroot jail 里面和外面都有效，当你在 jail 外面时你就用外面那个，当你在 jail 里面时里面那个就会“立刻生效”。</p>
+<p>接下来的一个问题是，要是我建立的是一个硬链接呢？这个也不难，硬链接会直接访问到目标文件，不存在目标文件存在不存在的问题。那么，如果一个 chroot jail 中有那么一个硬链接，那么你就可以逃出 jail 了？答案是否定的，因为硬链接是不允许建立在目录之上的！至少在 Linux 上如此。在 Linux 上，除了目录“.”“..”你是看不到其它任何硬链接的目录的，为什么？因为如果允许了对目录的硬链接，那么文件系统树状结构层次就会被打破，会出现环。你会说，软链接也不是一样出现环吗？是啊，可是我们对它可以选择 follow 还是不 follow，比如 find(1)，默认的情况就是不去 follow 软链接。</p>
+<p>呃，在继续向前走之前，这里还有另一个关于 chroot 的问题，那就是 chroot(2) 并不会自己去 chdir(2)，也不会关闭任何在此之前打开的文件，无论其是在 jail 里还是 jail外！瞧瞧，Unix 的设计哲学运用得多么好，绝对不多做一件不属于自己的事！但这会带来问题，如果你忘记自己去 chdir(2) 的话你完全可以在 jail 之外通过“..”跳出 jail。这是意料之中的行为，Al Viro解释到：</p>
+<blockquote><p>"If you are within chroot jail and capable of chroot(), you can chdir to its root, then chroot() to subdirectory and you've got cwd outside of your new root. After that you can chdir all way out to original root. Again, this is standard behaviour. Changing it will not yield any security improvements, so kindly give that a rest."</p></blockquote>
+<p>好了，继续向前走。硬链接有个天生的缺陷，就是无法跨文件系统，估计你也能隐约感觉到。想想如果我要 chroot 的是一个U盘目录，比如：/mnt/USB，那么我就无法在里面使用硬链接来链接到外面的文件了。为了解决这个问题，我们可以使用 Linux 上的 bind mount，也就是说把一个文件通过“挂载”的方式给“绑定”到一个地方，从而到达和硬链接一样的效果！但这个可以跨任何文件系统！我们完全可以chroot jail 里使用 bind mount 进来的文件。但是，它是有缺点的，相对于硬链接来说。一，它不会像硬链接那样“永久”存在，一重启就没有了，当然了，你可以修改 fstab，但这并不总是一个好办法；二，bind mount 需要 root 权限，即使两个文件的所有者都不是 root （内核邮件列表中有人提交过 unprivileged bind mounts 的<a href="http://lwn.net/Articles/273729/" target="_blank">补丁</a>，不知道最后情况如何，至少我在 Fedora 上还是需要 root 权限的）。</p>
+<p>从上面可以看出 mount 是个很有意思的东西，如果你觉得 bind mount 比较神奇，别慌，下面还有更神奇的呢。</p>
+<p>mount 还提供一个 move 功能，可以帮助你把一个已经 mount 上来的东东移动到另一个地方去，免得你先 umount 再 mount。</p>
+<p>还有呢，从 2.6. 15 之后mount 还提供了一个非常强大的功能，shared subtrees。这个稍微有些复杂，它的目的是这样的，比如我想在我的用户目录下克隆一个根目录的结构，通常我该怎么做呢？恩，cp -R，或者 rsync 一下。这么做有个明显的缺点：复制了东西，占用了更多硬盘空间。所以我们用 bind mount 比较合适，但是仅仅这么做还不完美：首先，我的用户目录本身也是在根目录下的，本身也会被 bind mount 进去；其次，如果后来我又在 /mnt 下挂载了新的东西呢？那在我的克隆目录中就看不到了。基于此，mount引入了个新玩意儿叫 shared subtrees，于是你可以这么做：</p>
+<blockquote><p>mount --bind /home/wangcong /home/wangcong<br />
+mount --make-unbindable /home/wangcong<br />
+mount --bind /mnt /mnt<br />
+mount --make-shared /mnt</p></blockquote>
+<p>如此一来，你就可以在 bind mount 上来的所有 /mnt 中看到新挂载的内容了。非常牛叉。</body></html></p>

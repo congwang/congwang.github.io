@@ -1,0 +1,35 @@
+---
+layout: post
+title: mutt+fetchmail+procmail
+date: 2007-04-01 22:56:39.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Linux Application
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '68'
+  _wp_old_slug: '68'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2007/04/01/muttfetchmailprocmail/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body>
+<p>今天试图搞定这三个东西，实在不容易。</p>
+<p>从开学到现在还一直是在Opera里收发gmail邮件，人懒了就这样。今天向Andrew提交patch时猛然发现该正式换一下mutt发邮件了，浏览器里有很多不方便的地方，最大的问题就是回复mailing list时不会把这个thread中的人都cc到。于是决定重拾mutt。</p>
+<p>首先解决的是编码问题。鉴于xterm用的是gb2312，而邮件有中文的也有英文的，所以决定文件采用utf-8编码，而muttrc设置成us-ascii:gb2312:utf-8。但仍有一个问题没解决，刘洋使用的是evolution，而且还是gb18130这种相对少见的编码，所以他的邮件到现在仍然是乱码！然后就是mbox的问题，~/Mail/目录下有三个文件：from，from_me，sent，mbox，对应muttrc中设置：</p>
+<p>set mbox=~/Mail/mbox<br />
+set spoolfile=~/Mail/mbox<br />
+set record=~/Mail/sent</p>
+<p>这弄了半天也终于弄好了。</p>
+<p>mutt先到此为止，还有就是procmail和fetchmail的问题。fetchmail可以以daemon的形式运行，可以在fetchmailrc中指定：set daemon 60。不过我试了试 ，发现似乎过了1分钟也没收到什么新邮件。kill掉fetchmail后再fetchmail -d0就马上收到一封！很奇怪。另一种解决方案是用crontab，不过这也有问题，crontab似乎只发送一个通知，而并没有把邮件弄到mutt里，因为我一直没收到邮件。这似乎还牵扯到procmailrc。彻底被搞糊涂了……</p>
+<p></body></html></p>

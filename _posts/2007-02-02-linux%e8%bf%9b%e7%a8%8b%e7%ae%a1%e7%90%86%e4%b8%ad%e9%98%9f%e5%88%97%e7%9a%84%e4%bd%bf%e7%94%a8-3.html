@@ -1,0 +1,58 @@
+---
+layout: post
+title: Linux进程管理中队列的使用
+date: 2007-02-02 22:56:46.000000000 -08:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Linux Kernel
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '11'
+  _wp_old_slug: '11'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2007/02/02/linux%e8%bf%9b%e7%a8%8b%e7%ae%a1%e7%90%86%e4%b8%ad%e9%98%9f%e5%88%97%e7%9a%84%e4%bd%bf%e7%94%a8-3/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body></p>
+<p class="postdate">Friday, 2. February 2007, 05:58:24</p>
+<p class="content">
+<p align="right"><span class="alignright">王聪@西邮</span></p>
+<p>Linux内核中大量使用了队列，这里仅列举它在进程管理中的几处应用。</p>
+<p>状态为TASK_RUNNING的进程都会被放入运行队列（runqueue）中，这是通过task_struct（定义在include/linux/sched.h）中的run_list成员来链接的。不过，为了让内核每次都能选取优先级最合适的进程，Linux为每个优先级构建了一个queue！这是通过struct prio_array来实现的，struct prio_array的定义（在kernel/sched.c）大致如下：</p>
+<pre>
+struct prio_array {
+int nr_active;
+unsigned long bitmap[BITMAP_SIZE];
+struct list_head queue[MAX_PRIO];
+};</pre>
+<p>queue成员就是队列数组。每个CPU有各自的runqueue，每一个runqueue又有包含两个prio_array，一个是活动队列，一个是时间片耗尽的队列。当运行队列空时，内核便会交换两个队列的指针！原来的耗尽队列就成了新的活动队列！这和prio_array中的bitmap是决定调度算法为O(1)的关键！</p>
+<p>状态为TASK_STOPPED，EXIT_ZOMBIE或EXIT_DEAD的进程不会被放入专门的队列中，它们直接通过pid或者通过父进程的孩子队列来访问。</p>
+<p>TASK_INTERRUPTIBLE和TASK_UNINTERRUPTIBLE状态的进程会被放入等待队列。不同的是，每个等待事件都会有一个等待队列，该队列中的进程等待同一事件的完成（不要惊慌！“事件”一个动态的过程，不好通过具体的结构来定义一个“事件”。这里等待一个事件就是查看某个条件是否为真，比如某个标志变量是否为真。）。wait_queue_head_t的定义（include/linux/wait.h）如下：</p>
+<pre>
+typedef struct _ _wait_queue_head {
+        spinlock_t lock;
+        struct list_head task_list;
+    }wait_queue_head_t;</pre>
+<p>wait_queue_t的定义如下：</p>
+<pre>
+typedef struct _ _wait_queue {
+        unsigned int flags;
+        struct task_struct * task;
+        wait_queue_func_t func;
+        struct list_head task_list;
+    }wait_queue_t;</pre>
+<p>进入等待状态的接口有两类：<br />
+prepare_to_wait*()/finish_wait()<br />
+wait_event*()<br />
+其实wait_event*()内部也是调用prepare_to_wait*()，把它放入一个循环中。而且wait_event*()在事件完成时会自动调用finish_wait()。决定使用哪个要看情况而定。sleep_on*()是遗弃的接口，现在已经不再使用，虽然还支持。等待队列中的进程有两种，一种是exclusive的进程，另一种是nonexclusive的进程。所谓exclusive是指唤醒的进程等待的资源是互斥的，每次只唤醒一个（唤醒多个也可以，不过最后还是只有一个会被唤醒，其余的又被重新添加到等待队列中，这样效率会大打折扣）。一般，等待函数会把进程设为nonexclusive和uninterruptible，带“interruptible”的会专门指定状态为interruptible；而带“timeout”的会在超时后退出，因为它会调用schedule_timeout()；带“exclusive”的则会把进程设为exclusive。</p>
+<p>唤醒的接口虽然只有wake_up*()，但它内部也分成好几种。带“interruptible”的唤醒函数只会唤醒状态是TASK_INTERRUPTIBLE的进程，而不带的则会唤醒TASK_INTERRUPTIBLE和TASK_UNINTERRUPTIBLE的进程；所有唤醒函数都会把等待同一事件的nonexclusive进程全部唤醒，或者把其中一个exclusive的进程唤醒；而带“nr”的则会唤醒指定个数的exclusive的进程，带“all”的会把全部exclusive进程唤醒。带“sync”会忽略优先级的检查，高优先级的进程可能会被延迟。最后，持有自旋锁时只能调用wait_up_locked()。</body></html></p>

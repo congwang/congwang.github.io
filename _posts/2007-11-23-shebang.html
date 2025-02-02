@@ -1,0 +1,79 @@
+---
+layout: post
+title: shebang
+date: 2007-11-23 15:10:45.000000000 -08:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Programming
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '264'
+  _wp_old_slug: '264'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2007/11/23/shebang/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body></p>
+<p>在Unix中，shebang其实就是指“#!”，它取自#(SHArp)和!(bang)。</p>
+<p>它是很多脚本文件中第一行的前两个字符，用来告诉Unix系统要用shebang后面指定的解释器<br />
+来解释该脚本。所以，在很多脚本中，第一行往往都是这么写的：</p>
+<pre>
+#! /abs/path/to/interpreter</pre>
+<p>根据<a href="http://en.wikipedia.org/wiki/Shebang_(Unix)">wikipedia上的解释</a>，shebang最初由<br />
+Dennis Ritchie引入的，时间大概是在Version 7和Version 8之间。也正是因为shebang是以#<br />
+开头，所以很多Unix上的脚本都是用#作为注释的开始。常见的有：</p>
+<pre>
+#!/bin/sh
+#!/usr/bin/perl -w
+#!/bin/awk -f
+#!/usr/bin/env python
+#!/usr/bin/ruby</pre>
+<p>shebang没有你想象得这么简单。首先，它后面的解释器路径一般来说必须是绝对路径。（当然了，<br />
+有人也说像#!python这样的也能执行。）如果不是，可能就会出现类似的错误：</p>
+<pre>
+bash: ./foo.py: python: bad interpreter: No such file or directory</pre>
+<p>因为shell会直接用execve去执行这个文件，出错马上就退出。而execve会通过shebang辨认出这个一<br />
+个脚本文件，然后尝试用后面的解释器去执行，但它并没有在PATH中寻找解释器，而是完全依靠<br />
+你给出的路径。如果你不想指定绝对路径或者出于可移植的原因不好指定，那么你应该试试用env(1)<br />
+，就上面的python的shebang一样，它会帮你在PATH中搜索。python之所以更倾向于这个还有个原因，<br />
+就是env一般固定在/usr/bin目录下，而python的安装位置就相对不那么固定。</p>
+<p>用env时你应该注意这么一个事实：传递给解释器的argv和你想象得并不一样。下面这个就是不对的：</p>
+<pre>
+#!/usr/bin/env perl -w</pre>
+<p>shell会提示：/usr/bin/env: perl -w: No such file or directory<br />
+错误的根源就是perl -w被当成了整体传递给env。</p>
+<p>用下面的程序来看一下参数传递过程：</p>
+<pre>
+/*test.c*/
+#include &lt;stdio.h&gt;
+int main(int argc, char** argv) {
+        int i;
+        for (i=0; i&lt;argc; i++)
+            fprintf(stdout, "argv[%d]: "%s"n", i, argv[i]);
+        return 0;
+} </pre>
+<p>然后把编译出的test当作解释器：</p>
+<pre>
+$ cat invoker.sh
+#!/home/wangcong/test -1 -2 -3</pre>
+<p>结果如下：</p>
+<pre>
+$ ./invoker.sh a b c
+argv[0]: "/home/wangcong/test"
+argv[1]: "-1 -2 -3"
+argv[2]: "./invoker.sh"
+argv[3]: "a"
+argv[4]: "b"
+argv[5]: "c"</pre>
+<p>当然了，并不是所有的Unix都是这样，但最起码Linux上的bash和zsh上就是如此。所以，要编写可移植<br />
+的脚本，你应该当心这一点！</body></html></p>

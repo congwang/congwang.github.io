@@ -1,0 +1,77 @@
+---
+layout: post
+title: 一个实用的shell脚本
+date: 2008-03-31 20:52:06.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Programming
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '323'
+  _wp_old_slug: '323'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2008/03/31/%e4%b8%80%e4%b8%aa%e5%ae%9e%e7%94%a8%e7%9a%84shell%e8%84%9a%e6%9c%ac/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body>
+<p>刚写的一个编译C/C++用的脚本，觉得好用的话把它保存起来加上可执行权限放到$PATH目录中去。<br />
+emacs虽然mode-cc很不错，可惜执行还得另开一个shell的window，不如用这个了。<br />
+<font color="#8080ff">#!/bin/bash</font><br><br />
+<font color="#8080ff">#Copyright (C) 2008, WANG Cong</font><br><br />
+<font color="#8080ff">#GPLv3 applies.</font><br><br />
+<br><br />
+<font color="#ffff00">if</font> <font color="#ff40ff">((</font> <font color="#ff40ff">$#</font> <font color="#ffff00">&lt;</font> <font color="#ff6060">1</font><font color="#ff40ff">))</font><font color="#ffff00">;</font> <font color="#ffff00">then</font><br><br />
+        <font color="#ffff00">echo</font><font color="#ff6060"> </font><font color="#ffff00">"</font><font color="#ff6060">Bad usage!</font><font color="#ffff00">"</font><br><br />
+        <font color="#ffff00">exit</font> <font color="#ff6060">1</font><br><br />
+<font color="#ffff00">fi</font><br><br />
+<font color="#00ffff">FILENAME</font>=<font color="#ff40ff">$1</font><br><br />
+<font color="#00ffff">CC</font>=<font color="#ffff00">"</font><font color="#ff6060">gcc</font><font color="#ffff00">"</font><br><br />
+<font color="#00ffff">CFLAGS</font>=<font color="#ffff00">"</font><font color="#ff6060">-Wall -W -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align </font><br><br />
+<font color="#ff40ff">        </font><font color="#ff6060">-Wnested-externs -Waggregate-return -Wundef </font><br><br />
+<font color="#ff40ff">        </font><font color="#ff6060">-Wbad-function-cast -Wmissing-prototypes -Wstrict-prototypes </font><br><br />
+<font color="#ff40ff">        </font><font color="#ff6060">-Wmissing-declarations -Wconversion -Winline -Wformat-nonliteral </font><br><br />
+<font color="#ff40ff">        </font><font color="#ff6060">-Wformat-security -Wunknown-pragmas -Wredundant-decls </font><br><br />
+<font color="#ff40ff">        </font><font color="#ff6060">-std=c99 -s -g3 -O</font><font color="#ffff00">"</font><br><br />
+<font color="#00ffff">CPPFLAGS</font>=<font color="#ffff00">"</font><font color="#ff6060">-Wall -W -Wshadow -std=c++98 -ffor-scope -Wpointer-arith -s -g3 -O</font><font color="#ffff00">"</font><br><br />
+<br><br />
+<font color="#ffff00">while</font><font color="#ffff00"> </font><font color="#ff40ff">[[</font> <font color="#ffff00">"</font><font color="#ff40ff">$FILENAME</font><font color="#ffff00">"</font> <font color="#ffff00">!=</font> <font color="#ffff00">""</font> <font color="#ff40ff">]]</font><br><br />
+<font color="#ffff00">do</font><br><br />
+        <font color="#00ffff">OUTFILE</font>=<font color="#ff40ff">${</font><font color="#ff40ff">FILENAME</font><font color="#ffff00">%</font>.*<font color="#ff40ff">}</font><br><br />
+        <font color="#00ffff">POSTFIX</font>=<font color="#ff40ff">${</font><font color="#ff40ff">FILENAME</font><font color="#ffff00">##</font>*.<font color="#ff40ff">}</font><br><br />
+        <font color="#ffff00">if</font> <font color="#ffff00">[</font> <font color="#ff40ff">$OUTFILE</font> <font color="#ffff00">=</font> <font color="#ff40ff">$FILENAME</font> <font color="#ffff00">]</font> <font color="#ffff00">||</font> <font color="#ffff00">[</font> <font color="#ff40ff">$POSTFIX</font> <font color="#ffff00">=</font> <font color="#ff40ff">$FILENAME</font> <font color="#ffff00">]</font> <font color="#ffff00">||</font> <br><br />
+                <font color="#ffff00">[</font> <font color="#ffff00">-z</font> <font color="#ff40ff">$OUTFILE</font> <font color="#ffff00">]</font> <font color="#ffff00">||</font> <font color="#ffff00">[</font> <font color="#ffff00">-z</font> <font color="#ff40ff">$POSTFIX</font> <font color="#ffff00">]</font><font color="#ffff00">;</font><br><br />
+        <font color="#ffff00">then</font><br><br />
+                <font color="#ffff00">echo</font><font color="#ff6060"> </font><font color="#ffff00">"</font><font color="#ff6060">Bad file name!</font><font color="#ffff00">"</font><br><br />
+                <font color="#ffff00">exit</font> <font color="#ff6060">2</font><br><br />
+        <font color="#ffff00">fi</font><br><br />
+        <font color="#ffff00">if</font> <font color="#ff40ff">[[</font> <font color="#ffff00">"</font><font color="#ff40ff">$POSTFIX</font><font color="#ffff00">"</font> <font color="#ffff00">=</font> <font color="#ff6060">"cpp"</font> <font color="#ff40ff">]]</font> <font color="#ffff00">||</font> <font color="#ff40ff">[[</font> <font color="#ffff00">"</font><font color="#ff40ff">$POSTFIX</font><font color="#ffff00">"</font> <font color="#ffff00">=</font> <font color="#ff6060">"cxx"</font> <font color="#ff40ff">]]</font> <font color="#ffff00">||</font> <br><br />
+                <font color="#ff40ff">[[</font> <font color="#ffff00">"</font><font color="#ff40ff">$POSTFIX</font><font color="#ffff00">"</font> <font color="#ffff00">=</font> <font color="#ff6060">"cc"</font> <font color="#ff40ff">]]</font> <font color="#ffff00">;</font><br><br />
+        <font color="#ffff00">then</font><br><br />
+                <font color="#00ffff">CC</font>=<font color="#ffff00">"</font><font color="#ff6060">g++</font><font color="#ffff00">"</font><br><br />
+                <font color="#00ffff">CFLAGS</font>=<font color="#ff40ff">$CPPFLAGS</font><br><br />
+        <font color="#ffff00">fi</font><br><br />
+        <font color="#ff40ff">$CC</font> <font color="#ff40ff">$CFLAGS</font> <font color="#ffff00">-o</font> <font color="#ff40ff">$OUTFILE</font> <font color="#ff40ff">$FILENAME</font><br><br />
+        <font color="#ffff00">if</font> <font color="#ff40ff">((</font><font color="#ff40ff">$?</font><font color="#ffff00">!=</font><font color="#ff6060">0</font><font color="#ff40ff">))</font><font color="#ffff00">;</font> <font color="#ffff00">then</font><br><br />
+                <font color="#ffff00">exit</font> <font color="#ff6060">1</font><br><br />
+        <font color="#ffff00">fi</font><br><br />
+        <font color="#ffff00">echo</font><font color="#ff6060"> </font><font color="#ffff00">"</font><font color="#ff6060">Result of exec </font><font color="#ff40ff">$OUTFILE</font><font color="#ff6060">:</font><font color="#ffff00">"</font><br><br />
+        /bin/bash <font color="#ffff00">-c</font> <font color="#ffff00">"</font><font color="#ff6060">./</font><font color="#ff40ff">$OUTFILE</font><font color="#ffff00">"</font><br><br />
+        <font color="#ffff00">echo</font><font color="#ff6060"> </font><font color="#ffff00">"</font><font color="#ff6060">End of </font><font color="#ff40ff">$FILENAME</font><font color="#ffff00">"</font><br><br />
+        <font color="#ffff00">echo</font><font color="#ff6060"> </font><font color="#ffff00">"</font><font color="#ff6060">========================</font><font color="#ffff00">"</font><br><br />
+        <font color="#ffff00">rm</font> <font color="#ffff00">-f</font> <font color="#ff40ff">$OUTFILE</font><br><br />
+        <font color="#ffff00">shift</font><br><br />
+        <font color="#00ffff">FILENAME</font>=<font color="#ff40ff">$1</font><br><br />
+<font color="#ffff00">done</font><br><br />
+<font color="#ffff00">exit</font> <font color="#ff6060">0</font><br><br />
+<br></p>
+<p></body></html></p>

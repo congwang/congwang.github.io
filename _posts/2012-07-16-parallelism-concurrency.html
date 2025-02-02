@@ -1,0 +1,59 @@
+---
+layout: post
+title: Parallelism != Concurrency
+date: 2012-07-16 18:13:23.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Programming
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '2054'
+  _wp_old_slug: '2054'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2012/07/16/parallelism-concurrency/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body></p>
+<p>Parallelism，中文一般翻译成“并行”；Concurrency，中文一般翻译成“并发”。这两个词往往被混淆使用，即使在英文资料中，中文翻译使得这种情况变得更糟糕。其实这两个词的含义是完全不同的，这里并不是在咬文嚼字，而是想说明它们本质上确实有不同。为了表达方便，下文一律使用英文中的原词。</p>
+<p>Wikipedia 上对 <a href="http://en.wikipedia.org/wiki/Concurrent_programming" target="_blank">Concurrency 的定义</a>如下：</p>
+<blockquote><p>Concurrent computing is a form of computing in which programs are designed as collections of <strong>interacting</strong> computational processes that <strong>may be</strong> executed in parallel. Concurrent programs (processes or threads) <strong>can be executed on a single processor</strong> by interleaving the execution steps of each in a time-slicing way, or can be executed in parallel by assigning each computational process to one of a set of processors that may be close or distributed across a network.</p></blockquote>
+<p>可见，concurrency 并不意味着一定是 parallelism，它是把多个互相作用的计算过程（注：<strong>上文第一句中的 processes 不是进程的意思！</strong>）组合起来的一种计算形式。为了完成一个大的任务，我们可以把它切割成几个独立的几个步骤，然后把每个步骤交给单独的线程去完成，那么在 UP 上 concurrency 看起来就像是这样：</p>
+<p style="text-align:center;"><a href="http://wangcong.org/blog/wp-content/uploads/2012/07/concurrent.gif"><img class="size-full wp-image-2055  aligncenter" title="Concurrenncy" src="{{site.baseurl}}/assets/2012/07/concurrent.gif" alt="" width="604" height="250"></a></p>
+<p><a href="http://en.wikipedia.org/wiki/Parallel_computing" target="_blank">Parallelism 的定义</a>如下：</p>
+<blockquote><p>Parallel computing is a form of computation in which many calculations are carried out <strong>simultaneously</strong>, operating on the principle that large problems can often be divided into smaller ones, which are then solved concurrently ("in parallel").</p></blockquote>
+<p>也就是多个计算同时执行，在 SMP 上如下图所示：</p>
+<p style="text-align:center;"><a href="http://wangcong.org/blog/wp-content/uploads/2012/07/parallelism.gif"><img class="size-full wp-image-2056    aligncenter" title="Parallelism" src="{{site.baseurl}}/assets/2012/07/parallelism.gif" alt="" width="683" height="372"></a></p>
+<p>这里需要注意的是：广义上 parallelism 并不总是指 SMP，广义的 parallelism 也可以发生在指令上，比如支持 SIMD 的 CPU，像 Intel 的 SSE 指令；也可以发生在 CPU 内部的<a href="http://en.wikipedia.org/wiki/Instruction_pipeline" target="_blank">指令 pipeline</a> 上。请结合上下文去理解。</p>
+<p>考虑到现在流行的操作系统都是多任务的，那么 UP 也可以达到 SMP 的效果，对于用户空间的程序来说，多任务操作系统即使运行在 UP 上也是和 SMP 上一样的。<strong><em>因此下文中我们将不再区分 UP 和 SMP，并且假设操作系统就是多任务的，即所有多线程的程序都是并行运行的。</em></strong></p>
+<p>这时候，另一个问题随之而来：有 parallelism 的程序一定是 concurrent 的么？未必！根据上面 concurrency 的定义，不同的处理步骤之间需要是互相作用的（interacting），我们完全可以写一个多线程程序，线程之间没有任何互相的作用：比如我们要处理 [1 ~ 40000] 这个数组，我们可以启动4个线程，让它们分别处理 [1 ~ 10000]、[10000 ~ 20000]、[20000 ~ 30000]、[30000 ~ 40000]，最后主线程把 4 个结果汇总成一个。这个多线程程序显然可以做到 parallelism，但它没有 concurrency！</p>
+<p><a href="http://www.linux-mag.com/id/7411/" target="_blank">有人这么认为</a>，说 concurrency 是程序的属性；而 parallelism 程序执行时机器的属性。现在我们可以知道，这是<strong>不严格的</strong>。只有当 parallel 的程序的线程之间有了互相作用之后才会有 concurrency！concurrency 比 parallelism 要难得多。</p>
+<p>Rob Pike 大牛是这么<a href="http://concur.rspace.googlecode.com/hg/talk/concur.html#title-slide" target="_blank">概括</a>它们的区别的：</p>
+<blockquote><p><strong>Concurrency is a way to structure a program by breaking it into pieces that can be executed independently. Communication is the means to coordinate the independent executions.</strong></p></blockquote>
+<p>所以，concurrency 和 parallelism 的本质区别是，<strong>多个线程/进程（或程序的多个部分）之间有没有互相作用和交流</strong>。这种交流分两种：一种是共享内存，一种是消息传递。前者我们很熟悉，我们最常用的锁（<a href="http://en.wikipedia.org/wiki/Lock_(computer_science)" target="_blank">Lock</a>）或者信号量（<a href="http://en.wikipedia.org/wiki/Semaphore_%28programming%29" target="_blank">Semaphore</a>）就属于共享内存的一种。</p>
+<p>另外，需要说明的是，并不是所有的 paraellel 的程序都使用多线程/进程，它们也可以使用 <a href="http://en.wikipedia.org/wiki/Coroutine" target="_blank">coroutine</a>，使用 events。一言以蔽之，parallelism 是建立在同步（synchronous ）代码的基础上，同步代码同时运行；而把一个程序分成几个同步的部分，它们之间允许进行 communication 就有 concurrency 了！</p>
+<p>借用 Rob Pike 使用的图来说明一下就是：</p>
+<p style="text-align:center;"><strong>Original Program</strong></p>
+<p style="text-align:center;"><a href="http://wangcong.org/blog/wp-content/uploads/2012/07/gophersimple1.jpg"><img class="aligncenter size-full wp-image-2058" src="{{site.baseurl}}/assets/2012/07/gophersimple1.jpg" alt="" width="560" height="202"></a></p>
+<p style="text-align:center;"><strong>Parallel Program</strong></p>
+<p style="text-align:center;"><strong><a href="http://wangcong.org/blog/wp-content/uploads/2012/07/gophersimple4.jpg"><img class="aligncenter size-full wp-image-2059" src="{{site.baseurl}}/assets/2012/07/gophersimple4.jpg" alt="" width="560" height="272"></a><br />
+</strong></p>
+<p style="text-align:center;"><strong>Concurrent Program</strong></p>
+<p style="text-align:center;"><a href="http://wangcong.org/blog/wp-content/uploads/2012/07/gophercomplex0.jpg"><img class="aligncenter size-full wp-image-2060" src="{{site.baseurl}}/assets/2012/07/gophercomplex0.jpg" alt="" width="560" height="187"></a></p>
+<p>从图中我们可以一目了然地看出两者之间并没有直接的关系。最后，在《<a href="http://existentialtype.wordpress.com/2011/03/17/parallelism-is-not-concurrency/" target="_blank">Parallelism is not concurrency</a>》一文中对此有更精辟的概括：</p>
+<blockquote><p>Concurrency is concerned with nondeterministic composition of programs (or their components).  Parallelism is concerned with asymptotic efficiency of programs with deterministic behavior.  Concurrency is all about managing the unmanageable[... ] Parallelism, on the other hand, is all about dependencies among the subcomputations of a deterministic computation.</p></blockquote>
+<p>参考资料：</p>
+<p>1. http://stackoverflow.com/questions/1050222/concurrency-vs-parallelism-what-is-the-difference<br />
+2. http://existentialtype.wordpress.com/2011/03/17/parallelism-is-not-concurrency/<br />
+3. http://ghcmutterings.wordpress.com/2009/10/06/parallelism-concurrency/<br />
+4. http://stackoverflow.com/questions/1897993/difference-between-concurrent-programming-and-parallel-programming<br />
+5. http://concur.rspace.googlecode.com/hg/talk/concur.html#title-slide</body></html></p>

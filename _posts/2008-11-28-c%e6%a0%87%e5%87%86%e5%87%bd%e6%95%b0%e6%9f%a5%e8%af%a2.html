@@ -1,0 +1,102 @@
+---
+layout: post
+title: C++标准函数查询
+date: 2008-11-28 21:41:50.000000000 -08:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Programming
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '448'
+  _wp_old_slug: '448'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2008/11/28/c%e6%a0%87%e5%87%86%e5%87%bd%e6%95%b0%e6%9f%a5%e8%af%a2/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body></p>
+<p>man page只能查Linux系统调用，C标准函数和其它一些glibc函数，不能查C++标准库函数。怎么才能像man那样查询C++的函数呢？我写了下面这么个Perl脚本来完成。</p>
+<p>用法：</p>
+<p>$ ./mancpp cmath::sin<br />
+$ ./mancpp cmath::cos<br />
+$ ./mancpp vector::size<br />
+$ ./mancpp algorithm::count_if</p>
+<p>代码：</p>
+<p>[perl]<br />
+#!/usr/bin/perl</p>
+<p>use strict;<br />
+use warnings;<br />
+use LWP::Simple;</p>
+<p>die "Please provide one argument.n" unless @ARGV==1;<br />
+die "Use class::function format.n" unless $ARGV[0] =~ /S::S/;</p>
+<p>my ($class, $func) = split(/::/, $ARGV[0]);<br />
+my $file = "/tmp/$class.$func.html";</p>
+<p>if ( ! -f "$file") {<br />
+	my $url;</p>
+<p>	if ($class =~ /^c/) {<br />
+		$url = "http://www.cplusplus.com/reference/clibrary/$class"."/".$func.".html";<br />
+	} elsif ($class eq "filebuf" || $class eq "fstream"<br />
+		|| $class eq "ifstream" || $class eq "ios"<br />
+		|| $class eq "iostream" || $class eq "ios_base"<br />
+		|| $class eq "istream" || $class eq "istringstream"<br />
+		|| $class eq "ofstream" || $class eq "ostream"<br />
+		|| $class eq "ostringstream" || $class eq "streambuf"<br />
+		|| $class eq "stringbuf" || $class eq "stringstream"){<br />
+		$url = "http://www.cplusplus.com/reference/iostream/$class"."/".$func.".html";<br />
+	} elsif($class eq "vector" || $class eq "bitset" || $class eq "deque"<br />
+		|| $class eq "list" || $class eq "stack" || $class eq "map"<br />
+		|| $class eq "queue" || $class eq "set" || $class eq "multiset"<br />
+		|| $class eq "priority_queue" || $class eq "multimap") {<br />
+		$url = "http://www.cplusplus.com/reference/stl/$class"."/".$func.".html";<br />
+	} elsif ($class eq "functional" || $class eq "iterator"<br />
+		|| $class eq "memory" || $class eq "utility") {<br />
+		$url = "http://www.cplusplus.com/reference/misc/$class"."/".$func.".html";<br />
+	} elsif ($class eq "algorithm") {<br />
+		$url = "http://www.cplusplus.com/reference/$class"."/".$func.".html";<br />
+	} elsif ($class eq "string") {<br />
+		$url = "http://www.cplusplus.com/reference/string/$class"."/".$func.".html";<br />
+	}</p>
+<p>	print "Retrieving $url", "...n";<br />
+	LWP::Simple::getstore($url, "$file");<br />
+}</p>
+<p>open my $fd, "$file" or die "No such class or function!n";<br />
+my $found = 0;<br />
+my @ret;</p>
+<p>while(){<br />
+	if (m/</p>
+<td align="right" valign="bottom">/) {<br />
+		$found = 1;<br />
+	}<br />
+	if ($found) {<br />
+		s/]*&gt;//g;<br />
+		s//g;<br />
+		s/&lt;/&lt;/g;<br />
+		s/Parameters/n==Parameters==/;<br />
+		s/Example/n==Example==/;<br />
+		s/See also/n==See also==/;<br />
+		push @ret, $_;<br />
+	}<br />
+	if (m/SuOptions()/) {<br />
+		$found = 0;<br />
+		pop @ret;<br />
+	}<br />
+}</p>
+<p>open my $hd, "|less" or die "Can't open pipe!n";</p>
+<p>foreach (@ret){<br />
+	print $hd $_;<br />
+}</p>
+<p>close $hd;</p>
+<p>close $fd;<br />
+exit 0;</p>
+<p>[/perl]</p>
+</td>
+<p></body></html></p>

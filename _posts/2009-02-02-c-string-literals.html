@@ -1,0 +1,62 @@
+---
+layout: post
+title: C++ string literals
+date: 2009-02-02 20:39:23.000000000 -08:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Programming
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '544'
+  _wp_old_slug: '544'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2009/02/02/c-string-literals/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body></p>
+<p>从一个例子谈起，下面的例子摘自《C++ Templates》。<br />
+[cpp]<br />
+#include<br />
+#include </p>
+<p>template<br />
+void ref (T const&amp; x)<br />
+{<br />
+    std::cout &lt;&lt; "x in ref(T const&amp;): "<br />
+              &lt;&lt; typeid(x).name() &lt;&lt; 'n';<br />
+}</p>
+<p>template<br />
+void nonref (T x)<br />
+{<br />
+    std::cout &lt;&lt; "x in nonref(T): "<br />
+              &lt;&lt; typeid(x).name() &lt;&lt; 'n';<br />
+}</p>
+<p>int main()<br />
+{<br />
+    ref("hello");<br />
+    nonref("hello");<br />
+}<br />
+[/cpp]</p>
+<p>用g++编译，得到运行结果如下：</p>
+<p>x in ref(T const&amp;): A6_c<br />
+x in nonref(T): PKc</p>
+<p>（注：A6_c表示：array(A) of 6 chars (c)；PKc表示：pointer (P) to const (K) char (c)。）</p>
+<p>初看到这个例子我有些惊讶，为什么同样是字符串常量，通过引用传递和非引用传递差别就这么大呢？其实真想想也没什么大惊小怪的。看下面的分析。</p>
+<p>首先，对于字符串常量，在C++标准里的类型已经发生了变化，以前是char []，现在是const char[]，参考C++06 2.13.4：</p>
+<blockquote><p>An ordinary string literal has type “array of n const char” and static storage duration,<br />
+where n is the size of the string as defined below, and is initialized with the given characters.</p></blockquote>
+<p>但为了保持兼容，一部分当char []来使用的代码仍然有效。这不像C99，C99照顾兼容照顾得更厉害，所以这点仍然没变，它只说了一句：</p>
+<blockquote><p>If the program attempts to modify such an array, the behavior is undefined.</p></blockquote>
+<p>有些跑题了……咳，所以，当引用传递时自然是原来的类型const char[]。</p>
+<p>而直接传递呢？直接传递其实也是const char[]！我没开玩笑！想想啊，它的类型怎么能会突然就变呢？不可能！问题是为什么typeid看到的是const char *？很简单啊，因为这是函数！当数组作为函数参数传递时会退化为指针，我们耳熟能详的这句话在C++里也适用啊！所以，这里拧把的不是模板，而是引用，别被模板给吓怕了！</p>
+<p>如果你仔细看看原书那一节，你会发现还有个问题比较拧把：不同长度的同类型数组其实也不是一个类型，这也不难理解，放C里看看你就知道了：C里的一切类型皆是连续的内存块，数组更是，不同长度的同类型数组长度还是不一样啊，怎么能是同一个类型呢？所以这就有问题了，不同长度的字符串常量还不能作为同一个类型直接传递进模板了？如果我们用引用传递的话，是，可如果不用的话就行了，这正是解决方法！或者更干脆，直接用std::string。</p>
+<p></body></html></p>

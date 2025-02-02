@@ -1,0 +1,34 @@
+---
+layout: post
+title: 关于e820
+date: 2008-03-26 15:44:20.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Linux Kernel
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '320'
+  _wp_old_slug: '320'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2008/03/26/%e5%85%b3%e4%ba%8ee820/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body>
+<p>很久没接触BIOS中断这么陈旧的东西，再次挖出来都有些生疏了。</p>
+<p>e820是和BIOS的一个中断相关的，具体说是int 0x15。之所以叫e820是因为在用这个中断时ax必须是0xe820。这个中断的作用是得到系统的内存布局。因为系统内存会有很多段，每段的类型属性也不一样，所以这个查询是“迭代式”的，每次求得一个段。</p>
+<p>我们看内核源代码。主要涉及两个文件：arch/x86/boot/memory.c和arch/x86/kernel/e820_32.c。我们已经很幸运了，这部分代码已经用C重写过了。你可能会奇怪，启动调用e820时我们还在实模式，怎么能用C呢？答案是，这里用的是16位的C。gcc早已经支持.code16gcc模式了。</p>
+<p>看detect_memory_e820()函数，里面就是e820的本质。它把int 0x15放到一个do-while循环里，每次得到的一个内存段放到struct e820entry里，而struct e820entry的结构正是e820返回结果的结构！而像其它启动时获得的结果一样，最终都会被放到boot_params里，e820被放到了boot_params.e820_map。</p>
+<p>如果你对struct e820entry还有疑问，你可以看一下arch/x86/kernel/e820_32.c::print_memory_map()，看看里面是怎么使用它的。</p>
+<p>当然了，在arch/x86/boot/memory.c里，你还会看到另外两个利用int 0x15查询内存的函数，不过用途不一样了。</p>
+<p>凡是弄过操作系统启动这块的，肯定都有这么一个感慨：我的东西该往哪里放啊！怎么个放法啊！恩，或许Linux这种方式值得我们借鉴，它的虽然很科学，但也很复杂。那有啥办法呢，BIOS这块本来就已经很乱了！</p>
+<p></body></html></p>

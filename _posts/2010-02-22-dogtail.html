@@ -1,0 +1,36 @@
+---
+layout: post
+title: dogtail
+date: 2010-02-22 20:48:52.000000000 -08:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Linux Application
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '992'
+  _wp_old_slug: '992'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2010/02/22/dogtail/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body><br />
+<img class="aligncenter" title="dogtail" src="{{site.baseurl}}/assets/2010/02/dogtail-index-sm.png" alt="" width="365" height="150"></p>
+<p>fedora 那边一哥们在搞自动化测试的东西，今天过去看了看，发现这哥们在用一个叫 <a href="https://fedorahosted.org/dogtail/" target="_blank">dogtail </a>的东西，一个 Python 模块，很酷的一个东东。看来我再一次 out 了，头一次听说这玩意儿。</p>
+<p>这玩意儿说白了其实就是图形界面程序的自动化测试工具。我们知道图形化的程序很难自动化的，它不像命令行的程序，写个脚本就搞定了。根本原因在于，点击鼠标和敲击键盘得由人来完成。这玩意儿的目的就是代替人来完成这些功能，比如点击鼠标按某个按钮。我在前一个公司时见过一个同事搞这种测试，不过他是在 M$ 平台上测的，我一直以为 Linux 上面没这个替代品。今天看来我错了，Linux 不光有，而且还有 Python 模块。</p>
+<p>它不光可以代替人输入，也可以输出，比如说你想读某个应用程序比如 firefox 文本框里面的文字，你也可以用它。如此一来，图形界面在很大程度上就和命令行界面变得一样“程序员友好”（相对于“用户友好”一词）了，你可以 grep 它的输出，你可以用脚本来对它进行输入。</p>
+<p>如果你看一下它的用法，你会发现如果单单是只有接口，它也是很难用的，因为我感觉它其实是对图形程序的“元数据”（其实是叫<a href="http://directory.fsf.org/project/at-spi/" target="_blank">AT-SPI</a> objects）进行读取，在图形接口层上，所以接口很面向图形界面，除非是天天搞图形界面的开发者，其他开发者很难一下子搞清楚这些东西。但是它还提供了一个很牛的 sniff 工具，通过它你可以对已有的图形程序的“元数据”有一个很直观的浏览，你想读哪一个程序的哪一部分数据很容易找到。所以配合着 sniff，这个东西就相当好用了。</p>
+<p>这个项目也是red hat的，<a href="https://fedorahosted.org/dogtail/" target="_blank">其主页</a>在 fedorahosted.org 上，也有<a href="http://fedorapeople.org/~zmc/dogtail/epydoc/" target="_blank">文档</a>和<a href="https://fedorahosted.org/dogtail/browser/examples" target="_blank">示例</a>。Red Hat Magazine 上也有一个系列来介绍它：</p>
+<p><a href="http://www.redhat.com/magazine/020jun06/features/dogtail/" target="_blank">Automated GUI testing with Dogtail</a><br />
+<a href="http://www.redhat.com/magazine/021jul06/features/dogtail/" target="_blank"> Dogtail's Python Modules (and how to use them)</a><br />
+<a href="http://www.redhat.com/magazine/024oct06/features/dogtail/" target="_blank"> Dogtail's object oriented tree API (and how to use it)</a><br />
+</body></html></p>

@@ -1,0 +1,69 @@
+---
+layout: post
+title: skbuff 内存模型
+date: 2014-05-31 12:54:06.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Linux Kernel
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '2337'
+  _wp_old_slug: '2337'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2014/05/31/skbuff-%e5%86%85%e5%ad%98%e6%a8%a1%e5%9e%8b/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body></p>
+<p>众所周知，struct sk_buff 是 Linux 内核网络子系统中最重要的一个结构体，它是内核对网络数据包的一个抽象表示。要了解 Linux 网络子系统除了了解网络协议之外，了解内核如何表示和操作数据包也是至关重要的。Linux 内核中的 struct sk_buff （以下简称 skb）提供了一套非常复杂的内存模型，也对它进行了大量的优化，这也是为什么 Linux 网络如此高效。</p>
+<p>我们从最简单的开始，分配一个最普通的 skb：</p>
+<p style="text-align:center;"><a href="http://wangcong.org/blog/wp-content/uploads/2014/06/skb_alloc.png"><img class="size-full wp-image-2338  aligncenter" title="skb_alloc" src="{{site.baseurl}}/assets/2014/05/skb_alloc.png" alt="" width="578" height="424"></a></p>
+<p>内核分配 skb 的函数是 __alloc_skb()，它有很多种包装供不同的场景使用。如上图所示，在这里我们分配了两部分内存：1) skb struct 本身，也叫元数据（ meta data）；2) 实际存放网络数据包的内存。这里你可以把 skb 看作是一堆指针，这些指针指向一块内存的不同区域。下面我们会看到，很多时候我们都是对指针本身进行操作。</p>
+<p style="text-align:left;"><strong>注意：其实严格的说上图中所示的指针并不一定都是指针，Linux 内核进行了优化。在 64 位系统上，一个指针也是64位，储存指针的开销太大。而数据包本身不可能太大（以太网 MTU 是 1500 字节，就算是 jumbo frame 也才 9000 字节），因此 Linux 内核仅仅把 head 和 data 保存为指针，其它的只要存储相对于它们的偏移即可。下面的所有图中把它们表示为指针仅仅是为了方便。</strong></p>
+<p style="text-align:center;"><strong><a href="http://wangcong.org/blog/wp-content/uploads/2014/06/skb1.png"><img class="size-full wp-image-2342  aligncenter" title="skb" src="{{site.baseurl}}/assets/2014/05/skb1.png" alt="" width="572" height="401"></a><br />
+</strong></p>
+<p style="text-align:left;">而一个完整的网络数据包在内存中的表示通常有四个部分：</p>
+<p style="text-align:left;">1) head room，位于 skb-&gt;head 和 skb-&gt;data 之间，也就是存放网络协议头的地方，比如 TCP，IP 头，以太网头都是位于此；</p>
+<p style="text-align:left;">2) 用户数据，通常由应用层通过系统调用填充，介于 skb-&gt;data 和 skb-&gt;tail 之间；</p>
+<p style="text-align:left;">3) tail room，介于 skb-&gt;tail 和 skb-&gt;end 之间，这部分是内核在用户数据后面填充的一部分；</p>
+<p style="text-align:left;">4) skb-&gt;end 之后存放的是一个特殊的结构体 struct skb_shared_info，下面会讲到它。</p>
+<p style="text-align:left;">刚分配出来的 skb 除了 skb-&gt;end 指向末尾的 struct skb_shared_info，其它指针都指向了开始处。通常第一步就是初始化 head room，调用 skb_reserve() 这个函数，如下图所示：</p>
+<p style="text-align:center;"><a href="http://wangcong.org/blog/wp-content/uploads/2014/06/skb_reserve.png"><img class="size-full wp-image-2340  aligncenter" title="skb_reserve" src="{{site.baseurl}}/assets/2014/05/skb_reserve.png" alt="" width="559" height="437"></a></p>
+<p style="text-align:left;">比如 TCP 层要发送一个数据包，head room 至少要是 tcphdr + iphdr + ethhdr。然后在协议头的后面开始预留数据区，调用的函数是 skb_put()，如下图所示：</p>
+<p style="text-align:center;"><a href="http://wangcong.org/blog/wp-content/uploads/2014/06/skb_put.png"><img class="size-full wp-image-2341    aligncenter" title="skb_put" src="{{site.baseurl}}/assets/2014/05/skb_put.png" alt="" width="572" height="401"></a></p>
+<p style="text-align:left;">到此为止，前面提到的四个部分才全部初始化完毕，通常情况下，这些操作要么是由传输层完成（发送），要么是由网卡驱动完成（接收）。一点一点往里填充数据或者向外读取数据则是各层协议的事情。数据包入栈时（即接收），数据是一层一层往里读取，协议头是一层一层剥掉。数据包出栈时（发送），协议头则是一层一层往外填写。</p>
+<p style="text-align:left;">内核提供的剥掉协议头的操作函数是 skb_pull()，如名字所示，它是往下拉 skb-&gt;data：</p>
+<p style="text-align:center;"><a href="http://wangcong.org/blog/wp-content/uploads/2014/06/skb_pull.png"><img class="size-full wp-image-2343  aligncenter" title="skb_pull" src="{{site.baseurl}}/assets/2014/05/skb_pull.png" alt="" width="551" height="482"></a></p>
+<p>类似地，往外推 skb-&gt;data 的操作叫做 skb_push()：</p>
+<p style="text-align:center;"><a href="http://wangcong.org/blog/wp-content/uploads/2014/06/skb_push.png"><img class="size-full wp-image-2344  aligncenter" title="skb_push" src="{{site.baseurl}}/assets/2014/05/skb_push.png" alt="" width="551" height="482"></a></p>
+<p>很形象吧？</p>
+<p>好，终于到前面一直默默无闻的 skb_shared_info 出场了。想象这么一种常见的情况：我们用 tcpdump 捕捉一个网卡收到的数据包。此时数据包入栈后会有两个部分同时进行读：一是协议栈本身，另一个就是 tcpdump 了。这种情况下要不要完全复制一份 skb 呢？没有必要，因为两部分都是读，网络数据本身是不变的，变的只是 strcut sk_buff 里面的指针，也就是说，我们只要复制一份 skb 让它指向同样的内存区域就行了！这正是 skb_clone() 所做的：</p>
+<p style="text-align:center;"><a href="http://wangcong.org/blog/wp-content/uploads/2014/06/skb_clone.png"><img class="size-full wp-image-2345  aligncenter" title="skb_clone" src="{{site.baseurl}}/assets/2014/05/skb_clone.png" alt="" width="582" height="275"></a></p>
+<p>如图所示，skb_shared_info 此时记录了一些变化，dataref 变成了2，代表有两个 skb 同时指向这块内存区域。由此可见，skb_shared_info 保存的是多个 skb 之间共享的，但又不属于网络数据的数据（也就是不会被传输的数据），所以才放在 skb-&gt;end 之后啊。</p>
+<p>这还没完，Linux 内核开发者觉得还不够，每次 clone 都还要分配一个 skb 结构体，对于要 clone 很多次的情形还可以进行优化——使用 fast clone（缩写为fclone）。fclone 很有技巧性，它在分配 skb 的 cache 里做了手脚，每次分配 skb 时，它都是分配一对，一个<strong>紧紧地</strong>跟在另一个后面，如下图所示：</p>
+<p style="text-align:center;"><a href="http://wangcong.org/blog/wp-content/uploads/2014/05/skb_fclone.png"><img class="aligncenter size-full wp-image-2356" title="skb_fclone" src="{{site.baseurl}}/assets/2014/05/skb_fclone.png" alt="" width="552" height="386"></a></p>
+<p>不用的时候你完全看不到它，用的时候通过 skb+1 就能找得到！当然了，它需要在 skb 结构体里保存一些状态信息表明这部分到底有没有用到。</p>
+<p>在写的情况下我们还是要完全拷贝 skb 及其数据的，调用 skb_copy() ：</p>
+<p style="text-align:center;"><a href="http://wangcong.org/blog/wp-content/uploads/2014/05/skb_copy.png"><img class="aligncenter size-large wp-image-2350" title="skb_copy" src="{{site.baseurl}}/assets/2014/05/skb_copy-1024x753.png" alt="" width="568" height="417"></a></p>
+<p>到此为止都比较简单，我们假设了所有的数据都是放在 skb-&gt;head 和 skb-&gt;end 之间，也就是所谓的线性（linear）。世界要是这么简单就好了，可惜现实远比这复杂。内核至少还提供了另外三种非线性的 skb 模型。</p>
+<p>一种是网卡驱动常用的模型，数据存放在物理页面的不同位置，skb_shared_info 里有一个数组，存放一组 (页面、偏移、大小) 的信息，用来记录这些数据：</p>
+<p style="text-align:center;"><a href="http://wangcong.org/blog/wp-content/uploads/2014/05/skb_fill_page_desc.png"><img class="aligncenter size-full wp-image-2351" title="skb_fill_page_desc" src="{{site.baseurl}}/assets/2014/05/skb_fill_page_desc.png" alt="" width="614" height="468"></a></p>
+<p>另一种是组装 IP 数据包分片（fragment）时用到的 frag_list 模型：</p>
+<p style="text-align:center;"><a href="http://wangcong.org/blog/wp-content/uploads/2014/05/skb_frag_add_head.png"><img class="aligncenter size-large wp-image-2352" title="skb_frag_add_head" src="{{site.baseurl}}/assets/2014/05/skb_frag_add_head-1024x646.png" alt="" width="645" height="407"></a></p>
+<p>分片的数据有各自的 skb 结构体，它们通过 skb-&gt;next 链接成一个单链表，表头是第一个 skb 的 shared_info 中的 frag_list。</p>
+<p>最后一种是 GSO 进行分段（segmentation）用到的一种模型，当一个大的 TCP 数据包被切割成几个 MTU 大小的数据时，它们也是通过 skb-&gt;next 链接到一起的：</p>
+<p style="text-align:center;"><a href="http://wangcong.org/blog/wp-content/uploads/2014/05/skb_segment.png"><img class="aligncenter size-full wp-image-2354" title="skb_segment" src="{{site.baseurl}}/assets/2014/05/skb_segment.png" alt="" width="576" height="690"></a></p>
+<p style="text-align:left;">与分片不同的是，相关的信息是记录在最前面一个 skb 的 skb_shared_info 里面的 gso_segs 和 gso_size 里。</p>
+<p style="text-align:left;">正因为存在以上各种复杂的模型，很多 skb API 的实现（比如 skb_segment()）非常复杂，其大部分代码都是用来处理非线性的这几种情况，这使得 skbuff.c 里的很多代码都不容易读懂。希望本文能够对你理解这部分代码有所帮助。</p>
+<p style="text-align:left;">参考资料：</p>
+<p>1. <a href="http://vger.kernel.org/~davem/skb_data.html" target="_blank">http://vger.kernel.org/~davem/skb_data.html</a><br />
+</body></html></p>

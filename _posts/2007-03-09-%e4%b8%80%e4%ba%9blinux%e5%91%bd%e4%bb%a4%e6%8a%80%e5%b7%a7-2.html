@@ -1,0 +1,131 @@
+---
+layout: post
+title: 一些Linux命令技巧
+date: 2007-03-09 22:23:50.000000000 -08:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Linux Application
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '29'
+  _wp_old_slug: '29'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2007/03/09/%e4%b8%80%e4%ba%9blinux%e5%91%bd%e4%bb%a4%e6%8a%80%e5%b7%a7-2/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body></p>
+<p class="postdate">Saturday, 16. December 2006, 12:59:07</p>
+<p><br>
+<div class="content">
+<div id="excerpt"></div>
+<p>1.<br />
+mkdir只能建立一级目录，要创建多级目录，使用mkdir -p。比如：<br></p>
+<pre>
+~ $ mkdir -p tmp/a/b/c
+</pre>
+<p>相当于：</p>
+<pre>
+~ $ mkdir tmp
+~ $ cd tmp
+~/tmp $ mkdir a
+~/tmp $ cd a
+~/tmp/a $ mkdir b
+~/tmp/a $ cd b
+~/tmp/a/b/ $ mkdir c
+~/tmp/a/b/ $ cd c
+~/tmp/a/b/c $
+</pre>
+<p><br><br />
+2.<br />
+&amp;&amp;和||有时会很有用，比如：<br></p>
+<pre>
+~ $ cd tmp/a/b/c || mkdir -p tmp/a/b/c
+</pre>
+<p>如果cd tmp/a/b/c失败，也就是没有此目录，那么就建立一个。如果成功，后面的就不用执行了。<br><br />
+类似，&amp;&amp;则是执行两个命令。如果前一个失败，则停止。<br><br><br />
+3.<br />
+长命令如果要分两行来写，也可以像宏那样使用来换行。<br><br><br />
+4.<br />
+``有时很好用（看清楚，是重音号），比如：（分清单引号和重音号）</p>
+<pre>
+./want_many_args `perl -e 'print "A"x202;'`
+</pre>
+<p><br><br />
+5.<br />
+grep本身就可以计数，有时根本就没必要使用wc。<br></p>
+<pre>
+grep and tmp/a/longfile.txt | wc -l
+</pre>
+<p>可替换为：</p>
+<pre>
+grep -c and tmp/a/longfile.txt
+</pre>
+<p>更没必要把grep和cat组合。</p>
+<pre>
+cat tmp/a/longfile.txt | grep and
+</pre>
+<p>上面是多此一举，试试下面的：</p>
+<pre>
+grep and tmp/a/longfile.txt
+</pre>
+<p><br><br />
+6.<br />
+sed和awk很好用。（awk比你想像中的还要强大~）对比下面的例子：<br></p>
+<pre>
+ $ ls -l /tmp/a/b/c | grep Dec
+-rw-r--r--  7 joe joe  12043 Jan 27 20:36 December_Report.pdf
+-rw-r--r--  1 root root  238 Dec 03 08:19 README
+-rw-r--r--  3 joe joe   5096 Dec 14 14:26 archive.tar
+</pre>
+<pre>
+$ ls -l | awk '$6 == "Dec"'
+-rw-r--r--  3 joe joe   5096 Dec 14 14:26 archive.tar
+-rw-r--r--  1 root root  238 Dec 03 08:19 READM
+</pre>
+<p>再来个sed的例子：<br></p>
+<pre>
+head -1000 foo.txt | tail -1
+</pre>
+<pre>
+sed -n '1000p;1000q' foo.txt
+</pre>
+<p>而且它们两个还有个不同之处。如果foo.txt没有1000行那么长，前者会输出最后一行，而后者什么都不会输出。<br><br><br />
+7.<br />
+你可能不知道的命令：pushd和popd。看看它们的用法：</p>
+<pre>
+$ pwd
+/Users/parrt
+$ pushd /tmp
+/tmp ~
+$ pwd
+/tmp
+$ popd
+~
+$ pwd
+/Users/parrt
+</pre>
+<p><br><br />
+8.<br />
+另外两个你可能没用过的命令：fuser和scp。查看一下它们的man手册就知道它们是干什么的了，很强大，不是吗？<br><br />
+<br><br />
+9.<br />
+耗尽你所有内存的命令：</p>
+<pre>
+$ :(){ :|:&amp; };:
+</pre>
+<p>解释如下：<br><br />
+:() #声明一个函数<br><br />
+{:|:&amp;} #函数定义，递归调用，而且还用了管道<br><br />
+;: #定义结束，调用函数<br>
+</div>
+<p></body></html></p>

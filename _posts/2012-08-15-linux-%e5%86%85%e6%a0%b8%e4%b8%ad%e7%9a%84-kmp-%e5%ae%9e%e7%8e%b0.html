@@ -1,0 +1,97 @@
+---
+layout: post
+title: Linux 内核中的 KMP 实现
+date: 2012-08-15 22:52:17.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Linux Kernel
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '2090'
+  _wp_old_slug: '2090'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2012/08/15/linux-%e5%86%85%e6%a0%b8%e4%b8%ad%e7%9a%84-kmp-%e5%ae%9e%e7%8e%b0/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body>
+<p>Linux 内核中使用到了字符串搜索，所以它也有<a href="http://en.wikipedia.org/wiki/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm"> KMP 算法</a>的实现，代码在 lib/ts_kmp.c 中。</p>
+<p>Linux 内核中用到 KMP 算法的地方有三处：iptables string match 模块、iptables conntrack amanda 模块（不知道这个是用来干什么的）、以及 ematch qdisc。iptables string match 是通过字符串搜索来匹配一个包，然后进行相应的处理，比如用下面的命令可以阻止对domain.com服务器的HTTP请求：</p>
+<p>iptables -I INPUT 1 -p tcp --dport 80 -m string --string "domain.com" --algo kmp -j DROP</p>
+<p>至于 ematch qdisc，和它类似，可以通过字符串匹配到对应的包进行 QoS，比如<a href="http://lwn.net/Articles/141160/">这个例子</a>：</p>
+<p>tc filter add dev eth0 parent 10:12 prio 10 protocol ip basic match 'text(kmp foobar from 0 to 200)' flowid 10:1</p>
+<p>总之，在内核中实现 KMP 算法是有必要的。下面来看具体实现。</p>
+<p>我们知道，KMP 算法中最核心的地方就是 prefix 的计算，也称为 next 数组，它用来表示当字符 pattern[i] 匹配失败后应该从 pattern[next[i]] 字符继续进行匹配，而不总是从头开始，因此它的时间复杂度是O(n)。如果你对 KMP 不熟悉的话，网上有很多介绍，我觉得<a href="http://chaoswork.com/blog/2011/06/14/kmp%E7%AE%97%E6%B3%95%E5%B0%8F%E7%BB%93/">这篇文章</a>还算不错，在继续看下面的代码之前可以读一下它。</p>
+<p>内核中实现比网上的很多代码都更容易理解，因为在匹配开始之前，它就先把 prefix 计算好了。计算 prefix 的函数是：</p>
+<p>[c]<br />
+static inline void compute_prefix_tbl(const u8 *pattern, unsigned int len,<br />
+                                      unsigned int *prefix_tbl, int flags)<br />
+{<br />
+        unsigned int k, q;<br />
+        const u8 icase = flags &amp; TS_IGNORECASE;</p>
+<p>        for (k = 0, q = 1; q  0 &amp;&amp; (icase ? toupper(pattern[k]) : pattern[k])<br />
+                    != (icase ? toupper(pattern[q]) : pattern[q]))<br />
+                        k = prefix_tbl[k-1];<br />
+                if ((icase ? toupper(pattern[k]) : pattern[k])<br />
+                    == (icase ? toupper(pattern[q]) : pattern[q]))<br />
+                        k++;<br />
+                prefix_tbl[q] = k;<br />
+        }<br />
+}<br />
+[/c]</p>
+<p>结合 KMP 实现的主函数来理解更一目了然：</p>
+<p>[c]<br />
+static unsigned int kmp_find(struct ts_config *conf, struct ts_state *state)<br />
+{<br />
+        struct ts_kmp *kmp = ts_config_priv(conf);<br />
+        unsigned int i, q = 0, text_len, consumed = state-&gt;offset;<br />
+        const u8 *text;<br />
+        const int icase = conf-&gt;flags &amp; TS_IGNORECASE;</p>
+<p>        for (;;) {<br />
+                text_len = conf-&gt;get_next_block(consumed, &amp;text, conf, state);</p>
+<p>                if (unlikely(text_len == 0))<br />
+                        break;</p>
+<p>                for (i = 0; i  0 &amp;&amp; kmp-&gt;pattern[q]<br />
+                            != (icase ? toupper(text[i]) : text[i]))<br />
+                                q = kmp-&gt;prefix_tbl[q - 1];<br />
+                        if (kmp-&gt;pattern[q]<br />
+                            == (icase ? toupper(text[i]) : text[i]))<br />
+                                q++;<br />
+                        if (unlikely(q == kmp-&gt;pattern_len)) {<br />
+                                state-&gt;offset = consumed + i + 1;<br />
+                                return state-&gt;offset - kmp-&gt;pattern_len;<br />
+                        }<br />
+                }</p>
+<p>                consumed += text_len;<br />
+        }</p>
+<p>        return UINT_MAX;<br />
+}<br />
+[/c]</p>
+<p>内核中的 KMP 函数接口是封装过的，你不能直接调用它。如果你的内核模块中要使用它，可以参考 lib/textsearch.c 中给的例子：</p>
+<p>[c]<br />
+int pos;<br />
+struct ts_config *conf;<br />
+struct ts_state state;<br />
+const char *pattern = "chicken";<br />
+const char *example = "We dance the funky chicken";</p>
+<p>conf = textsearch_prepare("kmp", pattern, strlen(pattern),<br />
+                             GFP_KERNEL, TS_AUTOLOAD);<br />
+if (IS_ERR(conf)) {<br />
+    err = PTR_ERR(conf);<br />
+    goto errout;<br />
+}</p>
+<p>pos = textsearch_find_continuous(conf, &amp;state, example, strlen(example));<br />
+if (pos != UINT_MAX)<br />
+    panic("Oh my god, dancing chickens at %dn", pos);</p>
+<p>textsearch_destroy(conf);<br />
+[/c]</p>
+<p></body></html></p>

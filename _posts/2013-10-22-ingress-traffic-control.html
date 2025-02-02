@@ -1,0 +1,126 @@
+---
+layout: post
+title: Ingress traffic control
+date: 2013-10-22 13:54:53.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Linux Kernel
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '2314'
+  _wp_old_slug: '2314'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2013/10/22/ingress-traffic-control/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body></p>
+<p>相信很多人都知道 Linux 内核很难做 ingress 流量控制的，毕竟发送方理论上可以无限制地发送包到达网络接口。即使你控制了从网络接口到达协议栈的流量，你也很难从根源上控制这个流量。</p>
+<p>利用 Linux 内核你可以轻松地完成前者，即控制从网络接口到达协议栈的流量。这个是通过一个叫做 ifb 的设备完成的，这个设备如此不起眼以至于很多人不知道它的存在。</p>
+<p>它的使用很简单，加载 ifb 模块后，激活 ifbX 设备：</p>
+<pre><code>modprobe ifb numifbs=1
+ip link set dev ifb0 up # ifb1, ifb2, ... 操作相同
+</code></pre>
+<p>然后就要通过 ingress tc filter 把流入某个网络接口的流量 redirect 到 ifbX 上：</p>
+<pre><code>tc qdisc add dev eth0 handle ffff: ingress
+tc filter add dev eth0 parent ffff: protocol ip u32 match u32 0 0 action mirred egress redirect dev ifb0</code></pre>
+<p>ingress 这个 qdisc 是不能加 class，但是我们这里使用了 ifb0，所以就可以在 ifb0 设备上添加各种 tc class，这样就和 egress 没有多少区别了。</p>
+<p>ifb 的实现其实很简单，因为流入网络接口的流量是无法直接控制的，那么我们必须要把流入的包导入（通过 tc action）到一个中间的队列，该队列在 ifb 设备上，然后让这些包重走 tc 层，最后流入的包再重新入栈，流出的包重新出栈。看代码一目了然：</p>
+<p>[c]</p>
+<p>        while ((skb = __skb_dequeue(&amp;dp-&gt;tq)) != NULL) {<br />
+                u32 from = G_TC_FROM(skb-&gt;tc_verd);</p>
+<p>                skb-&gt;tc_verd = 0;<br />
+                skb-&gt;tc_verd = SET_TC_NCLS(skb-&gt;tc_verd);</p>
+<p>                u64_stats_update_begin(&amp;dp-&gt;tsync);<br />
+                dp-&gt;tx_packets++;<br />
+                dp-&gt;tx_bytes += skb-&gt;len;<br />
+                u64_stats_update_end(&amp;dp-&gt;tsync);</p>
+<p>                rcu_read_lock();<br />
+                skb-&gt;dev = dev_get_by_index_rcu(dev_net(_dev), skb-&gt;skb_iif);<br />
+                if (!skb-&gt;dev) {<br />
+                        rcu_read_unlock();<br />
+                        dev_kfree_skb(skb);<br />
+                        _dev-&gt;stats.tx_dropped++;<br />
+                        if (skb_queue_len(&amp;dp-&gt;tq) != 0)<br />
+                                goto resched;<br />
+                        break;<br />
+                }<br />
+                rcu_read_unlock();<br />
+                skb-&gt;skb_iif = _dev-&gt;ifindex;</p>
+<p>                if (from &amp; AT_EGRESS) {<br />
+                        dev_queue_xmit(skb);<br />
+                } else if (from &amp; AT_INGRESS) {<br />
+                        skb_pull(skb, skb-&gt;dev-&gt;hard_header_len);<br />
+                        netif_receive_skb(skb);<br />
+                } else<br />
+                        BUG();<br />
+        }<br />
+[/c]</p>
+<p>这里有两个不太明显的地方值得注意：</p>
+<p>1) 不论流入还是流出，tc 层的代码都是工作在 L2 的，也就是说代码是可以重入的，尤其是 skb 里的一些 header pointer；</p>
+<p>2) 网络设备上的 ingress 队列只有一个，这也是为啥 ingress qdisc 只能做 filter 的原因，可以看下面的代码：</p>
+<p>[c]<br />
+static int ing_filter(struct sk_buff *skb, struct netdev_queue *rxq)<br />
+{<br />
+        struct net_device *dev = skb-&gt;dev;<br />
+        u32 ttl = G_TC_RTTL(skb-&gt;tc_verd);<br />
+        int result = TC_ACT_OK;<br />
+        struct Qdisc *q;</p>
+<p>        if (unlikely(MAX_RED_LOOP %d)n",<br />
+                                     skb-&gt;skb_iif, dev-&gt;ifindex);<br />
+                return TC_ACT_SHOT;<br />
+        }</p>
+<p>        skb-&gt;tc_verd = SET_TC_RTTL(skb-&gt;tc_verd, ttl);<br />
+        skb-&gt;tc_verd = SET_TC_AT(skb-&gt;tc_verd, AT_INGRESS);</p>
+<p>        q = rxq-&gt;qdisc;<br />
+        if (q != &amp;noop_qdisc) {<br />
+                spin_lock(qdisc_lock(q));<br />
+                if (likely(!test_bit(__QDISC_STATE_DEACTIVATED, &amp;q-&gt;state)))<br />
+                        result = qdisc_enqueue_root(skb, q);<br />
+                spin_unlock(qdisc_lock(q));<br />
+        }</p>
+<p>        return result;<br />
+}</p>
+<p>static inline struct sk_buff *handle_ing(struct sk_buff *skb,<br />
+                                         struct packet_type **pt_prev,<br />
+                                         int *ret, struct net_device *orig_dev)<br />
+{<br />
+        struct netdev_queue *rxq = rcu_dereference(skb-&gt;dev-&gt;ingress_queue);</p>
+<p>        if (!rxq || rxq-&gt;qdisc == &amp;noop_qdisc)<br />
+                goto out;</p>
+<p>        if (*pt_prev) {<br />
+                *ret = deliver_skb(skb, *pt_prev, orig_dev);<br />
+                *pt_prev = NULL;<br />
+        }</p>
+<p>        switch (ing_filter(skb, rxq)) {<br />
+        case TC_ACT_SHOT:<br />
+        case TC_ACT_STOLEN:<br />
+                kfree_skb(skb);<br />
+                return NULL;<br />
+        }</p>
+<p>out:<br />
+        skb-&gt;tc_verd = 0;<br />
+        return skb;<br />
+}<br />
+[/c]</p>
+<p>而经过 tc action 后是导入到了 ifb 设备的发送队列，见 net/sched/act_mirred.c 的 tcf_mirred() 函数：</p>
+<p>[c]<br />
+//...<br />
+        skb2-&gt;skb_iif = skb-&gt;dev-&gt;ifindex;<br />
+        skb2-&gt;dev = dev;<br />
+        err = dev_queue_xmit(skb2);<br />
+[/c]</p>
+<p>也就是说这样就会有多个队列了，可以添加 class 了。:) 这大体也是 ingress traffic control 如何工作的了，可见 ifb 的存在既简单又巧妙地粘合了 egress 上的流量控制。</p>
+<p>正如本文一开始讲到的，即使用 ifb 我们所做的流量控制仍然有限，很难从根本上控制发送方的速率。如果双方是通过交换机连接的话，或许通过 L2 上的一些协议可以控制速率，而如果中间经过路由器，那么所能做的就更加有限，只能期待传输层的协议进行控制，而不是靠传输层自身感受到丢包的多少去自动调整速率，因为这可能会花很长时间。</p>
+<p>参考资料：</p>
+<p>1. http://serverfault.com/questions/350023/tc-ingress-policing-and-ifb-mirroring<br />
+2. http://stackoverflow.com/questions/15881921/why-tc-cannot-do-ingress-shaping-does-ingress-shaping-make-sense</body></html></p>

@@ -1,0 +1,48 @@
+---
+layout: post
+title: 谁都没错？
+date: 2008-11-26 02:23:59.000000000 -08:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Programming
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '445'
+  _wp_old_slug: '445'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2008/11/26/%e8%b0%81%e9%83%bd%e6%b2%a1%e9%94%99%ef%bc%9f/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body></p>
+<p>$ cat abs.cpp<br />
+#include &lt;cstdlib&gt;<br />
+#include &lt;iostream&gt;<br />
+using namespace std;</p>
+<p>int main()<br />
+{<br />
+cout&lt;&lt;abs(-19.50)&lt;&lt;endl;<br />
+return 0;<br />
+}</p>
+<p>编译你会得到如下错误：</p>
+<p>abs.cpp: In function ‘int main()’:<br />
+abs.cpp:7: error: call of overloaded ‘abs(double)’ is ambiguous<br />
+/usr/include/stdlib.h:699: note: candidates are: int abs(int)<br />
+/usr/lib/gcc/i386-redhat-linux/4.3.0/../../../../include/c++/4.3.0/cstdlib:175: note:                 long long int __gnu_cxx::abs(long long int)<br />
+/usr/lib/gcc/i386-redhat-linux/4.3.0/../../../../include/c++/4.3.0/cstdlib:144: note:                 long int std::abs(long int)</p>
+<p>为啥呢？因为abs()在&lt;cmath&gt;中，而不是C++标准参考手册中提到的&lt;cstdlib&gt;！</p>
+<p>谁错了捏？其实谁都没错。<a href="http://www.velocityreviews.com/forums/t281597-c-abs-function.html" target="_blank">这里</a>解释到：</p>
+<blockquote><p>The Standard C++ library is *supposed* to<br />
+overload abs the way you expect, but it's common for implementations<br />
+to omit the overloads, or put them in the <strong>wrong</strong> place (&lt;cmath&gt; instead<br />
+of &lt;math.h&gt;).</p></blockquote>
+<p>这个真的让人很无语，一边是出错，另一边是明知道出错也这么做。。。冏。。。</body></html></p>

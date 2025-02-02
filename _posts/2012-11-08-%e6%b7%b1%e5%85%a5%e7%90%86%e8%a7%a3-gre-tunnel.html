@@ -1,0 +1,51 @@
+---
+layout: post
+title: 深入理解 GRE tunnel
+date: 2012-11-08 19:05:22.000000000 -08:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Linux Kernel
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '2149'
+  _wp_old_slug: '2149'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2012/11/08/%e6%b7%b1%e5%85%a5%e7%90%86%e8%a7%a3-gre-tunnel/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body></p>
+<p>我以前写过一篇<a href="http://wangcong.org/blog/archives/1683" target="_blank">介绍 tunnel 的文章</a>，只是做了大体的介绍。里面多数 tunnel 是很容易理解的，因为它们多是一对一的，换句话说，是直接从一端到另一端。比如 IPv6 over IPv4 的 tunnel，也就是 SIT，它的原理如下图所示：</p>
+<p style="text-align:center;"><a href="http://wangcong.org/blog/wp-content/uploads/2012/11/sit_tunnel1.jpg"><img class="aligncenter size-full wp-image-2151" src="{{site.baseurl}}/assets/2012/11/sit_tunnel1.jpg" alt="" width="707" height="398"></a></p>
+<p>显然，除了端点的 host A 和 host B之外，中间经过的任何设备都是看不到里面的 IPv6 的头，对于它们来说，经过 sit 发出的包和其它的 IPv4 的包没有任何区别。</p>
+<p><a href="http://en.wikipedia.org/wiki/Generic_Routing_Encapsulation">GRE tunnel</a> 却不一样了，它的原理从根本上和 sit，ipip 这样的 tunnel 就不一样。除了外层的 IP 头和内层的 IP 头之间多了一个 GRE 头之外，它最大的不同是，<strong>tunnel 不是建立在最终的 host 上，而是在中间的 router 上</strong>！换句话说，对于端点 host A 和 host B 来说，该 tunnel 是透明的（对比上面的 sit tunnel）。这是网上很多教程里没有直接告诉你的。理解这一点非常关键，正是因为它这么设计的，所以它才能解决 ipip tunnel 解决不了的问题。</p>
+<p>所以，经过 GRE tunnel 发送的包（从 host A 发送到 host B）大体过程是这样子的（仍然借用了<a href="http://lartc.org/howto/lartc.tunnel.gre.html" target="_blank"> LARTC 中的例子</a>）：</p>
+<p style="text-align:center;"><a href="http://wangcong.org/blog/wp-content/uploads/2012/11/gre_tunnel1.jpg"><img class="aligncenter size-full wp-image-2150" src="{{site.baseurl}}/assets/2012/11/gre_tunnel1.jpg" alt="" width="762" height="401"></a></p>
+<p>我们可以看出，从 host A 发出的包其实就是一个很普通的 IP 包，除了目的地址不直接可达外。该 GRE tunnel 的一端是建立在 router A上，另一段是建立在 router B上，所以添加外部的 IP 头是在 router A 上完成的，而去掉外面的 IP 头是在 router B上完成的，两个端点的 host 上几乎什么都不用做（除了配置路由，把发送到 10.0.2.0 的包路由到 router A）！</p>
+<p>这么设计的好处也就很容易看出来了，ipip tunnel 是端对端的，通信也就只能是点对点的，而 GRE tunnel 却可以进行多播。</p>
+<p>现在让我们看看Linux内核是怎么实现的，我们必须假设 router A 和 B 上都是运行的 Linux，而 host A 和 B上运行什么是无所谓的。</p>
+<p>发送过程是很简单的，因为 router A 上配置了一条路由规则，凡是发往 10.0.2.0 网络的包都要经过 netb 这个 tunnel 设备，在内核中经过 forward 之后就最终到达这个 GRE tunnel 设备的 ndo_start_xmit()，也就是 ipgre_tunnel_xmit() 函数。这个函数所做的事情无非就是通过 tunnel 的 header_ops 构造一个新的头，并把对应的外部 IP 地址填进去，最后发送出去。</p>
+<p>稍微难理解的是接收过程，即 router B 上面进行的操作。这里需要指出的一点是，GRE tunnel 自己定义了一个新的 IP proto，也就是 IPPROTO_GRE。当 router B 收到从 router A 过来的这个包时，它暂时还不知道这个是 GRE 的包，它首先会把它当作普通的 IP 包处理。因为外部的 IP 头的目的地址是该路由器的地址，所以它自己会接收这个包，把它交给上层，到了 IP 层之后才发现这个包不是 TCP，UDP，而是 GRE，这时内核会转交给 GRE 模块处理。</p>
+<p>GRE 模块注册了一个 hook：</p>
+<p>[c]<br />
+static const struct gre_protocol ipgre_protocol = {<br />
+        .handler     = ipgre_rcv,<br />
+        .err_handler = ipgre_err,<br />
+};<br />
+[/c]</p>
+<p>所以真正处理这个包的函数是 ipgre_rcv() 。ipgre_rcv() 所做的工作是：通过外层IP 头找到对应的 tunnel，然后剥去外层 IP 头，把这个“新的”包重新交给 IP 栈去处理，像接收到普通 IP 包一样。到了这里，“新的”包处理和其它普通的 IP 包已经没有什么两样了：根据 IP 头中目的地址转发给相应的 host。注意：这里我所谓的“新的”包其实并不新，内核用的还是同一个copy，只是skbuff 里相应的指针变了。</p>
+<p>以上就是Linux 内核对 GRE tunnel 的整个处理过程。另外，GRE 的头如下所示（图片来自<a href="http://packetlife.net/blog/2012/feb/27/gre-vs-ipip-tunneling/">这里</a>）：</p>
+<p style="text-align:center;">IP header in GRE tunnel</p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/11/gre_encapsulation.png"><img class="aligncenter size-full wp-image-2156" src="{{site.baseurl}}/assets/2012/11/gre_encapsulation.png" alt="" width="527" height="35"></a></p>
+<p style="text-align:center;">GRE header</p>
+<p><a href="http://wangcong.org/blog/wp-content/uploads/2012/11/gre_header.png"><img class="aligncenter size-full wp-image-2157" src="{{site.baseurl}}/assets/2012/11/gre_header.png" alt="" width="479" height="119"></a><br />
+</body></html></p>

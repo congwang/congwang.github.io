@@ -1,0 +1,54 @@
+---
+layout: post
+title: bash变量作用域
+date: 2008-10-07 21:50:15.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Programming
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '392'
+  _wp_old_slug: '392'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2008/10/07/bash%e5%8f%98%e9%87%8f%e4%bd%9c%e7%94%a8%e5%9f%9f/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body></p>
+<p>bash的变量作用域其实很简单，不过有些时候可能看起来很奇怪。下面简单总结一下。</p>
+<p>在默认的情况下，bash的变量都是全局的，除非你使用了local或者typeset命令来改变，那样就可以变成局部的了。</p>
+<p>export改变的是变量是否对其子进程可见，并不会影响父进程，如果想要改变父进程中的变量可以用source（或者“.”）。需要额外说明的是，source后面的脚本不能有exit，否者父进程就跟着一起退出了。</p>
+<p>在subshell中，对变量的改变不会影响到外面的shell。这似乎很容易理解，不过需要注意的是，一些管道（比如管道的一端是while循环时）也是通过subshell传递的，比如<a href="http://nion.modprobe.de/blog/archives/531-Altering-a-variable-outside-the-scope-of-a-loop-influenced-by-a-subshell.html" target="_blank">下面这个例子</a>：</p>
+<div class="perl" style="text-align:left;">
+<ol>
+<li style="font-family:'Courier New', Courier, monospace;color:black;font-weight:normal;font-style:normal;">
+<div style="font-family:'Courier New', Courier, monospace;font-weight:normal;">foo=<span style="color:#cc66cc;">123</span>
+</div>
+</li>
+<li style="font-family:'Courier New', Courier, monospace;color:black;font-weight:normal;font-style:normal;">
+<div style="font-family:'Courier New', Courier, monospace;font-weight:normal;">echo <span style="color:#cc66cc;">456</span> | <span style="color:#b1b100;">while</span> <a href="http://www.perldoc.com/perl5.6/pod/func/read.html"><span style="color:#000066;">read</span></a> line ; <span style="color:#b1b100;">do</span>
+</div>
+</li>
+<li style="font-family:'Courier New', Courier, monospace;color:black;font-weight:normal;font-style:normal;">
+<div style="font-family:'Courier New', Courier, monospace;font-weight:normal;">foo=<span style="color:#0000ff;">$line</span>
+</div>
+</li>
+<li style="font-family:'Courier New', Courier, monospace;color:black;font-weight:normal;font-style:normal;">
+<div style="font-family:'Courier New', Courier, monospace;font-weight:normal;">done</div>
+</li>
+<li style="font-family:'Courier New', Courier, monospace;color:black;font-weight:normal;font-style:normal;">
+<div style="font-family:'Courier New', Courier, monospace;font-weight:normal;">echo <span style="color:#0000ff;">$foo</span>
+</div>
+</li>
+</ol>
+</div>
+<p>这时就不那么容易觉察了。解决方法是，用重定向去替换管道。</body></html></p>

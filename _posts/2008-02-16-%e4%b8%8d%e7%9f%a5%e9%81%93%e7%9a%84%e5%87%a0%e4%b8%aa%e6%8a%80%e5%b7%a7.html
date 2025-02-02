@@ -1,0 +1,36 @@
+---
+layout: post
+title: 不知道的几个技巧
+date: 2008-02-16 23:38:14.000000000 -08:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Linux Application
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '301'
+  _wp_old_slug: '301'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2008/02/16/%e4%b8%8d%e7%9f%a5%e9%81%93%e7%9a%84%e5%87%a0%e4%b8%aa%e6%8a%80%e5%b7%a7/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body>
+<p>以前俺好傻好天真。。。</p>
+<p>俺以前总以为，一个文档内容要是不停地变化，查看其最新的内容就得先less foo然后不停地按End键。现在，俺终于知道了，tail这东西，它有个选项叫-f，就是干这事儿的！这就省去俺多按N次End键的工夫！</p>
+<p>俺以前总以为，要打印某个文件第m行到第n行之间的内容必须用awk，或者head与tail的管道组合。现在，俺总算是明白了，做个事的其实是sed，它短短一句就可以完成！比如，打印第3行到第10行之间的内容就用：</p>
+<p>sed -n '3,10p' warnings.txt</p>
+<p>俺以前总以为，查找某个进程就得ps aux | grep xxx，现在，俺知道了，其实还有个东西，它叫pgrep，所以可以这样用：</p>
+<p>pgrep -l xxx</p>
+<p>类似，也有个东西叫pkill。</p>
+<p>俺以前居然不知道还有个叫disown的东西，现在，俺终于知道了，挺有用。</p>
+<p>俺以前不知道rm还可以这样删除名字以-开头的文件：rm -- -xxxx。</p>
+<p></body></html></p>
