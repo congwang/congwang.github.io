@@ -1,9 +1,9 @@
 title: A Geek's Page
-description: Personal Blog Posts
-baseurl: "/congwang.github.io" # if your site is in a project folder
-url: "http://wangcong.org"
+description: Cong Wang's Personal Blog Posts
+baseurl: "" # remove the /congwang.github.io
+url: "https://congwang.github.io" # change this to GitHub Pages URL first
 github_username: congwang
 
 # Build settings
 markdown: kramdown
-theme: minima # or your preferred theme
+theme: minima
