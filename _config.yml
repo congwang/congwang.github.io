@@ -8,7 +8,7 @@ github_username: congwang
 markdown: kramdown
 theme: minima
 encoding: utf-8
-permalink: /:year/:month/:day/:title/
+permalink: /:year-:month-:day-:title.html
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
