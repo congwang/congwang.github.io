@@ -1,29 +1,13 @@
 ---
-layout: post
-title: UTF-8版的strlen
-date: 2008-06-04 23:14:40.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Programming
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '357'
-  _wp_old_slug: '357'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2008/06/04/utf-8%e7%89%88%e7%9a%84strlen/"
+date: 2008-06-04 23:14:40-07:00
+layout: post
+permalink: /2008/06/04/utf-8%e7%89%88%e7%9a%84strlen/
+title: UTF-8版的strlen
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body>
+<p><br />
+
 <p>在<a href="http://canonical.org/~kragen/strlen-utf8.html">这里</a>看到这么一个计算UTF-8字符串长度的程序：</p>
 <p>[c]<br />
 int my_strlen_utf8_c(char *s) {<br />
@@ -41,4 +25,4 @@ int my_strlen_utf8_c(char *s) {<br />
 00000000 xxxxyyyy yyzzzzzz	1110xxxx 10yyyyyy 10zzzzzz<br />
 000wwwxx xxxxyyyy yyzzzzzz	11110www 10xxxxxx 10yyyyyy 10zzzzzz</p>
 <p>顿悟。</p>
-<p></body></html></p>
+<p></p>

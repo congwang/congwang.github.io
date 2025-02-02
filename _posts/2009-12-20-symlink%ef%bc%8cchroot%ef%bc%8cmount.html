@@ -1,29 +1,13 @@
 ---
-layout: post
-title: symlink，chroot 和 mount
-date: 2009-12-20 23:57:07.000000000 -08:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Linux Application
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '878'
-  _wp_old_slug: '878'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2009/12/20/symlink%ef%bc%8cchroot%ef%bc%8cmount/"
+date: 2009-12-20 23:57:07-08:00
+layout: post
+permalink: /2009/12/20/symlink%ef%bc%8cchroot%ef%bc%8cmount/
+title: symlink，chroot 和 mount
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body></p>
+<p><br />
+</p>
 <p>前两天在处理一个关于 selinux 的 bug 时遇到一个比较有意思的问题，顺着仔细往下想了想，发现更多相关的话题，遂整理成一篇文章记录一下。实际上我想到的这几个问题和 selinux 基本上毫无关系，先从简单的谈起，然后顺着我的思路一步步往下走。</p>
 <p>最初的问题是，如果我在一个目录中建立了一个符号链接，那么我 chroot 进去之后会得到什么？这个问题比较简单，如果符号链接的目标文件路径在 chroot jail 里也存在，那么你就会得到 chroot jail 里面的那个文件；否则就无法访问到目标文件。这一点有个比较有趣的应用就是，你可以建立一个符号链接，让它在 chroot jail 里面和外面都有效，当你在 jail 外面时你就用外面那个，当你在 jail 里面时里面那个就会“立刻生效”。</p>
 <p>接下来的一个问题是，要是我建立的是一个硬链接呢？这个也不难，硬链接会直接访问到目标文件，不存在目标文件存在不存在的问题。那么，如果一个 chroot jail 中有那么一个硬链接，那么你就可以逃出 jail 了？答案是否定的，因为硬链接是不允许建立在目录之上的！至少在 Linux 上如此。在 Linux 上，除了目录“.”“..”你是看不到其它任何硬链接的目录的，为什么？因为如果允许了对目录的硬链接，那么文件系统树状结构层次就会被打破，会出现环。你会说，软链接也不是一样出现环吗？是啊，可是我们对它可以选择 follow 还是不 follow，比如 find(1)，默认的情况就是不去 follow 软链接。</p>
@@ -37,4 +21,4 @@ permalink: "/2009/12/20/symlink%ef%bc%8cchroot%ef%bc%8cmount/"
 mount --make-unbindable /home/wangcong<br />
 mount --bind /mnt /mnt<br />
 mount --make-shared /mnt</p></blockquote>
-<p>如此一来，你就可以在 bind mount 上来的所有 /mnt 中看到新挂载的内容了。非常牛叉。</body></html></p>
+<p>如此一来，你就可以在 bind mount 上来的所有 /mnt 中看到新挂载的内容了。非常牛叉。</p>

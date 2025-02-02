@@ -1,32 +1,16 @@
 ---
-layout: post
-title: 被vim骗了
-date: 2007-12-21 20:41:23.000000000 -08:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Programming
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '275'
-  _wp_old_slug: '275'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2007/12/21/%e8%a2%abvim%e9%aa%97%e4%ba%86/"
+date: 2007-12-21 20:41:23-08:00
+layout: post
+permalink: /2007/12/21/%e8%a2%abvim%e9%aa%97%e4%ba%86/
+title: 被vim骗了
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body></p>
+<p><br />
+</p>
 <p>今天董溥同学在写一个脚本，遇到一个很奇怪的问题。为什么用awk提取出来的字符串总是带一个'r'？</p>
 <p>首先被处理的文本没问题，因为我们在vim里看了。那就有可能是他写的脚本有问题。分析来分析去，发现最有可能是awk的print出问题。可是我们在shell交互模式下无法重现这个问题！无奈之下，把awk改成等价的head+tail+cut，可问题仍然存在！！</p>
 <p>实在是无语了，思考了一段时间后，决定无论我们看到什么也要确定是文件本身有问题！可是究竟怎么才能直接证明文件有问题呢？ vim看得好好的，没有证据啊！正在山穷水尽之际，董溥同学突然看到了vim在刚打开一个文件时闪现的几个字符！如下图所示（下图是我为写本文人工制造的）：</p>
 <p style="text-align:center;"><img src="{{site.baseurl}}/assets/2007/12/dos.jpg"></p>
 <p>这样就什么问题都弄清楚了！！原来vim把那些每行都以'r'结尾的文件直接识别成dos格式！直接用dos2unix一转换就可以了！</p>
-<p>看起来挺多时候眼见不一定就为实。。。</body></html></p>
+<p>看起来挺多时候眼见不一定就为实。。。</p>

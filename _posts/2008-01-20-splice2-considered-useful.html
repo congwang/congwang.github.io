@@ -1,29 +1,13 @@
 ---
-layout: post
-title: splice(2) considered useful?
-date: 2008-01-20 00:07:22.000000000 -08:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Programming
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '284'
-  _wp_old_slug: '284'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2008/01/20/splice2-considered-useful/"
+date: 2008-01-20 00:07:22-08:00
+layout: post
+permalink: /2008/01/20/splice2-considered-useful/
+title: splice(2) considered useful?
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body>
+<p><br />
+
 <p>无意中发现Linux还有splice(2)这么个玩意儿，而且<a href="http://kerneltrap.org/node/6505">Linus本人对其很是赞赏</a>，还一门心思地给它做广告……那我们就来看看它到底是何方神圣。</p>
 <p>splice(2)绝对比我想象中要难以理解，一开始以为它的功能和dup2(2)差不多，然后觉得不对，似乎和sendfile(2)差不多，后来发现也不对！（否则还加这么一个系统调用干嘛？！）它和sendfile(2)的差别还算是比较大的，后面我们会细谈。</p>
 <p>splice(2)这东西，其实它的名字就已经告诉我们它是做什么的了，可因为它牵扯到了pipe，所以就变得不好理解了。我们知道，Unix里的pipe有两端，一个写另一个读。我们通常都用pipe来实现进程间的fifo通信。而splice却用pipe来连接一些东西，所以，它名字就可以告诉我们，它是用来把其它fd和pipe的某一端拼接到一起的！也就是说，splice(2)的两个fd参数中必须有一个是pipe的一端，否则就会产生EINVAL。而且，当某个fd是pipe一端时，其对应的offset pointer必须是NULL。而且而且，splice(2)不会block，读不到数据时它会返回0。还有一点格外重要，一定要注意数据流动的方向，splice(2)对这个方向是很敏感的。</p>
@@ -33,4 +17,4 @@ permalink: "/2008/01/20/splice2-considered-useful/"
 <p>注意2：man pages里对splice(2)原型的描述是错的！那两个表示offset的参数的类型都应该是loff_t*，而不是off_t*！我已经做了一个补丁提交给man pages的维护者。</p>
 <p>补丁：<a href="http://wangcong.org/down/man-2-splice-loff_t.diff">http://wangcong.org/down/man-2-splice-loff_t.diff</a></p>
 <p>代码：<a href="http://wangcong.org/down/splice_copy.c">http://wangcong.org/down/splice_copy.c</a></p>
-<p></body></html></p>
+<p></p>

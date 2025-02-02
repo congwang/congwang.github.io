@@ -1,29 +1,13 @@
 ---
-layout: post
-title: 一个典型的 off-by-one bug
-date: 2009-11-26 23:26:38.000000000 -08:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Programming
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '867'
-  _wp_old_slug: '867'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2009/11/26/%e4%b8%80%e4%b8%aa%e5%85%b8%e5%9e%8b%e7%9a%84-off-by-one-bug/"
+date: 2009-11-26 23:26:38-08:00
+layout: post
+permalink: /2009/11/26/%e4%b8%80%e4%b8%aa%e5%85%b8%e5%9e%8b%e7%9a%84-off-by-one-bug/
+title: 一个典型的 off-by-one bug
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body>
+<p><br />
+
 <p>今天美国人民过节，所以我今天上班基本上没啥事做。闲得发慌时无意中看到有人在邮件列表中报告 hexdump 有一个 bug，重现方法很简单，你只要通过 -s 把 skip 设置成该文件的大小就可以了，你可以用你手头上的 hexdump 试试，你会发现你可以看到全部文件的内容。这一下子激起了我的兴趣。</p>
 <p>我一开始的想法是，hexdump 是个老命令了，虽然不能说像 ls 那些命令经过“千锤百炼”吧，但说“基本上不可能有bug”还是可以的。于是我抱着这个心态去翻源代码，虽然我在此之前从来没看过 hexdump 的源代码，但我还是信心满怀地找到了下面这么一句：skip -= sbuf.st_size; ，恩，看来是知道这种情况了，只是把它“折回”处理了，所以我回答说可能是一个 feature 而不是 bug。</p>
 <p>但那个人后来的回复一下子惊醒了我，把 skip 再多加上一就是另一种结果了，什么都没有。所以这确实是一个 bug！当时我绕着源代码转了半天也没头绪，而且被里面那么多的全局变量和 static 变量给绕晕了，思考方向走错了。后来等我回到家做完晚饭一想，我靠，多一个或少一就没有 bug，这不就是 <a href="http://en.wikipedia.org/wiki/Off-by-one_error" target="_blank">off-by-one</a> 的症状嘛！肯定是哪里少算或者多算了一个临界值！抱着这个想法去找就简单了，很快就可以定位到问题所在，于是<a href="http://article.gmane.org/gmane.linux.utilities.util-linux-ng/2804" target="_blank">补丁自然而然地出来了</a>。</p>
@@ -35,4 +19,4 @@ permalink: "/2009/11/26/%e4%b8%80%e4%b8%aa%e5%85%b8%e5%9e%8b%e7%9a%84-off-by-one
 <p><strong>没有掌握全部证据以前，先作出假设，这是决大的错误，那样会使判断产生偏差。</strong></p>
 <p><strong>猜想是很不好的习惯，它有害于作逻辑推理。</strong></p>
 <p>内牛满面地把这几句话收藏起来作为 debug 时的座右铭…… T_T</p>
-<p></body></html></p>
+<p></p>

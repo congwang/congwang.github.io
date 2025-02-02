@@ -1,29 +1,13 @@
 ---
-layout: post
-title: 关于 tun/tap 设备
-date: 2011-06-19 23:30:06.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Linux Application
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '1679'
-  _wp_old_slug: '1679'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2011/06/19/%e5%85%b3%e4%ba%8e-tuntap/"
+date: 2011-06-19 23:30:06-07:00
+layout: post
+permalink: /2011/06/19/%e5%85%b3%e4%ba%8e-tuntap/
+title: 关于 tun/tap 设备
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body></p>
+<p><br />
+</p>
 <p>长期以来对tun和tap这对兄弟分不太清，今天下定决心研究了一下代码，总算是搞明白了。</p>
 <p>首先它们都是从/dev/net/tun里ioctl出来的虚拟设备，一个是通过IFF_TUN，另一个是 IFF_TAP。最好的例子莫过于vpnc里面的代码了。</p>
 <p>[c]<br />
@@ -188,4 +172,4 @@ static int emulator_pio_in_emulated(int size, unsigned short port, void *val,<br
                         break;<br />
                 }<br />
 [/c]<br />
-kvm__emulate_io() 就会调用在 virtio/net.c 注册的 virtio_net_pci_io_in()，数据就这样流向了 tap 网卡了。</body></html></p>
+kvm__emulate_io() 就会调用在 virtio/net.c 注册的 virtio_net_pci_io_in()，数据就这样流向了 tap 网卡了。</p>

@@ -1,29 +1,13 @@
 ---
-layout: post
-title: Fedora 上那些内核包
-date: 2011-03-01 22:30:52.000000000 -08:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Linux Kernel
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '1506'
-  _wp_old_slug: '1506'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2011/03/01/fedora-%e4%b8%8a%e9%82%a3%e4%ba%9b%e5%86%85%e6%a0%b8%e5%8c%85/"
+date: 2011-03-01 22:30:52-08:00
+layout: post
+permalink: /2011/03/01/fedora-%e4%b8%8a%e9%82%a3%e4%ba%9b%e5%86%85%e6%a0%b8%e5%8c%85/
+title: Fedora 上那些内核包
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body></p>
+<p><br />
+</p>
 <p>Fedora 上和内核相关的包很多，运行下面的命令看一下：</p>
 <pre>
 ~% repoquery -q 'kernel*'
@@ -47,4 +31,4 @@ kernel-headers-0:2.6.35.11-83.fc14.x86_64
 <p>kernel-debuginfo，给SystemTap在 kernel 上使用的。 kernel-debug-debuginfo 同理，供 SystemTap在 kernel-debug 上使用。 而 kernel-debuginfo-common 包为它们提供一些共同的源文件。注意，kernel-debuginfo 包提供vmlinux！ 像 crash 这样的工具也需要它。</p>
 <p>这里似乎少了一个 kernel-firmware，原来在 Fedora 上它已经改名为 linux-firmware 了，但是在RHEL上面没改，里面提供内核源代码目录 firmware/ 里面的固件。</p>
 <p>当然了，因为 perf 也在内核源代码树中，所以 perf 这个包也是从同一个spec文件生成的。<br />
-</body></html></p>
+</p>

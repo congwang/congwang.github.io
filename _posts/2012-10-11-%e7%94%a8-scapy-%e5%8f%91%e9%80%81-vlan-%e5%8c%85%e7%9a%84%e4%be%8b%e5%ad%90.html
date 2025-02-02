@@ -1,29 +1,13 @@
 ---
-layout: post
-title: 用 scapy 发送 vlan 包的例子
-date: 2012-10-11 15:21:14.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Linux Application
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '2126'
-  _wp_old_slug: '2126'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2012/10/11/%e7%94%a8-scapy-%e5%8f%91%e9%80%81-vlan-%e5%8c%85%e7%9a%84%e4%be%8b%e5%ad%90/"
+date: 2012-10-11 15:21:14-07:00
+layout: post
+permalink: /2012/10/11/%e7%94%a8-scapy-%e5%8f%91%e9%80%81-vlan-%e5%8c%85%e7%9a%84%e4%be%8b%e5%ad%90/
+title: 用 scapy 发送 vlan 包的例子
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body><br />
+<p><br />
+<br />
 <a href="http://www.secdev.org/projects/scapy/">scapy</a> 绝对是你应该学习的一大利器，功能十分强大，把 Python 的优势发挥的淋漓尽致。用它发送定制的数据包比你用C写快好几个数量级。。。</p>
 <p>下面是我在测试前面文章中的 vlan 问题时发送带指定 vlan tag 的 arp request，不到10行代码就可以搞定！</p>
 <p>[python]<br />
@@ -36,4 +20,4 @@ arp=ARP(hwtype=0x0001,ptype=0x0800,op=0x0001,hwsrc=mac,psrc='192.168.122.1',pdst
 a=eth/arp<br />
 a.show()<br />
 sendp(a, iface="virbr0")</p>
-<p>[/python] </body></html></p>
+<p>[/python] </p>

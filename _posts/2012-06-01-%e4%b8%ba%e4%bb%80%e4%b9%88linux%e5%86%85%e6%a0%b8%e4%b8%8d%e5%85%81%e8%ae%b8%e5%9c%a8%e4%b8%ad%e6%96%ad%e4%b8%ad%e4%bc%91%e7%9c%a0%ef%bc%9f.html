@@ -1,29 +1,13 @@
 ---
-layout: post
-title: 为什么Linux内核不允许在中断中休眠？
-date: 2012-06-01 12:31:45.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Linux Kernel
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '2005'
-  _wp_old_slug: '2005'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2012/06/01/%e4%b8%ba%e4%bb%80%e4%b9%88linux%e5%86%85%e6%a0%b8%e4%b8%8d%e5%85%81%e8%ae%b8%e5%9c%a8%e4%b8%ad%e6%96%ad%e4%b8%ad%e4%bc%91%e7%9c%a0%ef%bc%9f/"
+date: 2012-06-01 12:31:45-07:00
+layout: post
+permalink: /2012/06/01/%e4%b8%ba%e4%bb%80%e4%b9%88linux%e5%86%85%e6%a0%b8%e4%b8%8d%e5%85%81%e8%ae%b8%e5%9c%a8%e4%b8%ad%e6%96%ad%e4%b8%ad%e4%bc%91%e7%9c%a0%ef%bc%9f/
+title: 为什么Linux内核不允许在中断中休眠？
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body>
+<p><br />
+
 <p>我以前一直以为 Linux 内核之所以不允许在中断中休眠是因为中断上下文中无法获取 thread_info，task_struct 等进程相关的结构体，从而无法调度。</p>
 <p>今天又重新看了一下相关的代码，发现实际上不是。在最新的代码中，x86 32 使用的 irq stack 中也保存了thread_info，我们可以看 execute_on_irq_stack() 的定义：</p>
 <p>[c]<br />
@@ -103,4 +87,4 @@ int request_threaded_irq(unsigned int irq, irq_handler_t handler,<br />
                          const char *devname, void *dev_id)<br />
 [/c]</p>
 <p>所以一部分中断处理可以在进程上下文中完成了。</p>
-<p></body></html></p>
+<p></p>

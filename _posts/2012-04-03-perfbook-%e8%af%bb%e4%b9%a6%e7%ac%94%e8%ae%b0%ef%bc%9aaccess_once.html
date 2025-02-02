@@ -1,29 +1,13 @@
 ---
-layout: post
-title: perfbook 读书笔记：ACCESS_ONCE()
-date: 2012-04-03 23:44:29.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Linux Kernel
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '1941'
-  _wp_old_slug: '1941'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2012/04/03/perfbook-%e8%af%bb%e4%b9%a6%e7%ac%94%e8%ae%b0%ef%bc%9aaccess_once/"
+date: 2012-04-03 23:44:29-07:00
+layout: post
+permalink: /2012/04/03/perfbook-%e8%af%bb%e4%b9%a6%e7%ac%94%e8%ae%b0%ef%bc%9aaccess_once/
+title: perfbook 读书笔记：ACCESS_ONCE()
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body></p>
+<p><br />
+</p>
 <p>如果你看过 Linux 内核中的 RCU 的实现，你应该注意到了这个叫做 ACCESS_ONCE() 宏，但是并没有很多人真正理解它的含义。网上<a href="http://blog.163.com/seven_7_one/blog/static/1626064122011513103514672/" target="_blank">有的地方</a>甚至对此有错误的解释，所以特写此文来澄清一下。</p>
 <p>虽然我早在读 perfbook 之前就了解了 ACCESS_ONCE() 的含义（通过询问大牛 Paul），但这本书中正好也没有很详细地介绍这个宏，所以就当是此书的读书笔记了。</p>
 <p><strong>定义</strong></p>
@@ -176,4 +160,4 @@ index 131d8a7..ab0966d 100644
  						 UDP_MIB_INDATAGRAMS,
 </pre>
 <p><strong>更多</strong></p>
-<p>或许看了上面的会让你有一种错觉，volatile 可以解决同步的问题，<a href="http://software.intel.com/en-us/blogs/2007/11/30/volatile-almost-useless-for-multi-threaded-programming/">其实不然</a>，它只解决其中一个方面。而且上面所有的例子有一个共同的特点：所有的写操作都是简单的赋值（相对于大于CPU字宽的结构体赋值），简单赋值操作在所有平台上都是原子性的，而如果是做加法操作，原子性未必可以保证，更不用说需要 memory barrier 的时候了。所以，不要滥用 volatile。</body></html></p>
+<p>或许看了上面的会让你有一种错觉，volatile 可以解决同步的问题，<a href="http://software.intel.com/en-us/blogs/2007/11/30/volatile-almost-useless-for-multi-threaded-programming/">其实不然</a>，它只解决其中一个方面。而且上面所有的例子有一个共同的特点：所有的写操作都是简单的赋值（相对于大于CPU字宽的结构体赋值），简单赋值操作在所有平台上都是原子性的，而如果是做加法操作，原子性未必可以保证，更不用说需要 memory barrier 的时候了。所以，不要滥用 volatile。</p>

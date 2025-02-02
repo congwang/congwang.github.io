@@ -1,29 +1,13 @@
 ---
-layout: post
-title: gcc 4.3 改变了 -Wconversion
-date: 2008-11-22 00:06:51.000000000 -08:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Programming
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '432'
-  _wp_old_slug: '432'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2008/11/22/gcc-43-%e6%94%b9%e5%8f%98%e4%ba%86-wconversion/"
+date: 2008-11-22 00:06:51-08:00
+layout: post
+permalink: /2008/11/22/gcc-43-%e6%94%b9%e5%8f%98%e4%ba%86-wconversion/
+title: gcc 4.3 改变了 -Wconversion
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body></p>
+<p><br />
+</p>
 <p>gcc 4.3之前，-Wconversion是这样的：</p>
 <blockquote><p>Warn if a prototype causes a type conversion that is different from what would<br />
 happen to the same argument in the absence of a prototype.</p>
@@ -63,4 +47,4 @@ $ gcc -Wall -Wconversion -o conv conv.c<br />
 conv.c: In function ‘main’:<br />
 conv.c:13: warning: conversion to ‘short int’ from ‘int’ may alter its value<br />
 conv.c:14: warning: conversion to ‘short int’ from ‘int’ may alter its value</p>
-<p></body></html></p>
+<p></p>

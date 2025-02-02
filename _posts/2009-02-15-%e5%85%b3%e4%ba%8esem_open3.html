@@ -1,29 +1,13 @@
 ---
-layout: post
-title: 关于sem_open(3)
-date: 2009-02-15 23:55:25.000000000 -08:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Programming
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '591'
-  _wp_old_slug: '591'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2009/02/15/%e5%85%b3%e4%ba%8esem_open3/"
+date: 2009-02-15 23:55:25-08:00
+layout: post
+permalink: /2009/02/15/%e5%85%b3%e4%ba%8esem_open3/
+title: 关于sem_open(3)
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body></p>
+<p><br />
+</p>
 <p>今天新闻组上有人问到这么个问题，为什么sem_open("/tmp/nimeni",O_CREAT|O_EXCL,SHM_MODE,1);总是得到ENOENT？</p>
 <p>翻开sem_open的man手册看看，我们大体就会知道，第一个参数有问题，man手册中这么说：</p>
 <blockquote><p>sem_open(3):</p>
@@ -67,4 +51,4 @@ semaphore by passing the same name to sem_open(3).</p></blockquote>
 [/c]</p>
 <p>所以这里的问题其实很简单，最根本的问题是那个path参数就究竟是用来干什么的？用一句话说，其实就是指定一个文件位置，这个位置是以tmpfs的挂载点为根目录的。也就是说，如果它以/开头，说明是从tmpfs根目录开始，而如果不是，就是从相对路径开始，不过“当前目录”也是根目录（这正是为什么sem_open()的实现中会去掉开头的/）。到了这里我们可以看出一开始那个问题的原因了，它传递的是"/tmp/nimeni"，也就假设了tmpfs的挂载目录（通常是/dev/shm）下有tmp这个目录，而事实上没有，所以即使他加上了O_CREAT|O_EXCL也会返回ENOENT。</p>
 <p>所以，传递给sem_open()的第一个参数究竟怎么写才好呢？"/somename"和"somename"都可以，都容易读而且也都对，但是名字中间有/就不行了。</p>
-<p>从上面我们也可以看出，对于程序员来说，有些时候啊，读文档真的还不如直接去读代码来得更快！所以这也提示我们：代码要写得像文档一样易读！我坚信好的代码就应该如此！</body></html></p>
+<p>从上面我们也可以看出，对于程序员来说，有些时候啊，读文档真的还不如直接去读代码来得更快！所以这也提示我们：代码要写得像文档一样易读！我坚信好的代码就应该如此！</p>

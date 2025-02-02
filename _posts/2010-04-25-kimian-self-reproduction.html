@@ -1,29 +1,13 @@
 ---
-layout: post
-title: Kimian Self Reproduction
-date: 2010-04-25 13:00:19.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Programming
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '1089'
-  _wp_old_slug: '1089'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2010/04/25/kimian-self-reproduction/"
+date: 2010-04-25 13:00:19-07:00
+layout: post
+permalink: /2010/04/25/kimian-self-reproduction/
+title: Kimian Self Reproduction
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body></p>
+<p><br />
+</p>
 <p>看《GEB》时看到了这个东西，感觉很有意思。<a href="http://www.egodeath.com/geb.htm" target="_blank">《GEB》</a>在第 16 章中提到了这个东西，中文版的把它翻译成了“凯姆式自复制”。其实它类似于<a href="http://en.wikipedia.org/wiki/Quine_(computing)" target="_blank">Quine</a>（如果你还不了解这个东西，可以在我的主页上找到我写的Quine），也是打印其本身，不过它是无意义的，也就是说编译器/解释器会报错，而错误信息本身就是它的内容！</p>
 <p>在网上搜了搜，发现就<a href="http://www.nyx.net/~gthompso/self_kim.txt" target="_blank">这么一个页面</a>介绍Kimian，里面给出的例子除了Perl的那个别的在Linux上都不行。所以我又自己特意写了几个：</p>
 <p><strong>zsh版的Kimian：</strong></p>
@@ -50,4 +34,4 @@ kimian.pl syntax OK</pre>
 kimian.c:1: error: expected '=', ',', ';', 'asm' or '__attribute__' before '.' token
 % gcc -w -c kimian.c
 kimian.c:1: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘.’ token</pre>
-<p>有兴趣的朋友可以自己尝试去写写。;)</body></html></p>
+<p>有兴趣的朋友可以自己尝试去写写。;)</p>

@@ -1,29 +1,13 @@
 ---
-layout: post
-title: git使用小结
-date: 2008-02-24 20:45:41.000000000 -08:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Linux Kernel
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '307'
-  _wp_old_slug: '307'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2008/02/24/git%e4%bd%bf%e7%94%a8%e5%b0%8f%e7%bb%93/"
+date: 2008-02-24 20:45:41-08:00
+layout: post
+permalink: /2008/02/24/git%e4%bd%bf%e7%94%a8%e5%b0%8f%e7%bb%93/
+title: git使用小结
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body>
+<p><br />
+
 <p>1. git-config</p>
 <p>配置git，一般需要配置的是user.name，user.email，有时sendemail.smtpserver也要配置，比如，我使用msmtp：</p>
 <p>git-config --global sendemail.smtpserver /usr/local/bin/msmtp</p>
@@ -50,4 +34,4 @@ $ git-diff v2.6.23 v2.6.24-rc1 init/main.c</p>
 <p>这个本身就会产生一个commit，如果用得多了会让你的log看起来不那么干净。;-)</p>
 <p>b) git-reset</p>
 <p>用这个要当心，它会把那个commit之后的commit全部删除。一个好的办法是：先建立一个临时的分支，然后再git-reset，再git-rebase，最后再删除临时的分支。 详细可以看<a href="http://git.or.cz/gitwiki/GitTips" target="_blank">这里</a>。</p>
-<p></body></html></p>
+<p></p>

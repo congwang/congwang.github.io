@@ -1,29 +1,13 @@
 ---
-layout: post
-title: bonding和bridge对netpoll的支持
-date: 2010-04-05 18:23:17.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Linux Kernel
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '1054'
-  _wp_old_slug: '1054'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2010/04/05/bonding%e5%92%8cbridge%e5%af%b9netpoll%e7%9a%84%e6%94%af%e6%8c%81/"
+date: 2010-04-05 18:23:17-07:00
+layout: post
+permalink: /2010/04/05/bonding%e5%92%8cbridge%e5%af%b9netpoll%e7%9a%84%e6%94%af%e6%8c%81/
+title: bonding和bridge对netpoll的支持
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body>
+<p><br />
+
 <p>最近我在做 netpoll 的东东，具体说是让 bridge 和 bonding 支持 netpoll，这样我们就可以通过 bridge 和 bonding 设备来使用 netconsole 和 netdump 了（注：netdump 已经被遗弃）。三个补丁见这里：</p>
 <p><a href="http://lkml.org/lkml/2010/4/5/13" target="_blank">http://lkml.org/lkml/2010/4/5/13</a></p>
 <p><a href="http://lkml.org/lkml/2010/4/5/14" target="_blank">http://lkml.org/lkml/2010/4/5/14</a></p>
@@ -32,4 +16,4 @@ permalink: "/2010/04/05/bonding%e5%92%8cbridge%e5%af%b9netpoll%e7%9a%84%e6%94%af
 <p>最气人的是，不少时候明明是一个成员忘了赋值，结果导致 lockdep 警告，有时甚至连警告都没有直接死掉，非常莫名其妙！所以我就说啊，你遇到 oops，soft lockup 不要紧张，你最起码是已经得到很多错误信息了，真要是一条错误信息都没有，那才紧张呢！你问我这时候怎么办？没什么好办法，只能尝试缩小可疑代码的范围，然后凭直觉去猜问题应该在哪里！比如我这个，我可以通过使用或不使用 netconsole 来判断问题是出在我的补丁上还是原有代码中（不要太迷信原有代码，它们也会有 bug 的），如果是出在我的补丁中，那到底是哪一块，哪个函数。如果没任何信息，系统死掉很可能是因为什么？当然是加锁了！重新检查锁到底有没有用对。如果还不行就老老实实地加 printk 吧！</p>
 <p>还有就是，不要迷恋现象，现象并不一定能正确表明问题所在，它只是问题带来的症状，仅此而已！换句话说，可能是前面的一个小问题引发了后面大的症状，这并不意味着问题就是后面的一个大问题，也不意味着问题就真如症状直接表明的那样。静下心来仔细分析症状的每一个细节，不要轻易下结论说问题应该在哪里。</p>
 <p>赤果果的教训啊！</p>
-<p></body></html></p>
+<p></p>

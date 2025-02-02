@@ -1,29 +1,13 @@
 ---
-layout: post
-title: gcc 太聪明了！
-date: 2010-10-14 23:17:32.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Programming
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '1314'
-  _wp_old_slug: '1314'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2010/10/14/gcc-%e5%a4%aa%e8%81%aa%e6%98%8e%e4%ba%86%ef%bc%81/"
+date: 2010-10-14 23:17:32-07:00
+layout: post
+permalink: /2010/10/14/gcc-%e5%a4%aa%e8%81%aa%e6%98%8e%e4%ba%86%ef%bc%81/
+title: gcc 太聪明了！
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body>
+<p><br />
+
 <p>gcc 越来越聪明了，有时候为了故意不让它优化某一部分代码（但同时还要开启-O！）我真可是费尽了心思。</p>
 <p>举两个简单的例子来说明一下。一个是exp()的问题，<strong>不带</strong>-lm编译下面这段代码：</p>
 <p>[c]<br />
@@ -48,4 +32,4 @@ int foo(struct non_exist *n)<br />
 [/c]</p>
 <p>我们这么编译：gcc -c foo.c，你会发现我们只有警告，没有错误！警告我们可以忽略，因为我们只关心为什么不会有错误，换句话说，为什么gcc依旧可以成功地编译出代码来？仔细想一下你会明白，其实在foo()里面，我们根本就不用关心n到底是一个什么样的指针，只要知道它是一个指针就可以了！因为我们一没有对它进行dereference操作，二没有进行++或者--运算！而所有指针在特定的机器上长度是一定的。这正是为什么它可以通得过编译，但警告是肯定不会少的。;-)</p>
 <p>如果你读过-O（或以上）生成的汇编的话，你还会发现一大坨gcc优化的例子，这可苦了我这种读汇编的人了，每次都得去猜gcc到底做了那些优化，不过这也相当有乐趣！</p>
-<p></body></html></p>
+<p></p>

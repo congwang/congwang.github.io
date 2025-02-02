@@ -1,29 +1,13 @@
 ---
-layout: post
-title: 关于mount的两个错误
-date: 2008-09-23 22:32:04.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Linux Application
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '388'
-  _wp_old_slug: '388'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2008/09/23/%e5%85%b3%e4%ba%8emount%e7%9a%84%e4%b8%a4%e4%b8%aa%e9%94%99%e8%af%af/"
+date: 2008-09-23 22:32:04-07:00
+layout: post
+permalink: /2008/09/23/%e5%85%b3%e4%ba%8emount%e7%9a%84%e4%b8%a4%e4%b8%aa%e9%94%99%e8%af%af/
+title: 关于mount的两个错误
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body>
+<p><br />
+
 <p>1. mount: could not find any free loop device</p>
 <p>解决方法：losetup -d /dev/loop7</p>
 <p>2. <code>umount: device is busy</code></p>
@@ -33,4 +17,4 @@ permalink: "/2008/09/23/%e5%85%b3%e4%ba%8emount%e7%9a%84%e4%b8%a4%e4%b8%aa%e9%94
 <p>解决方法二：</p>
 <p>umount -f /dev/sda3</p>
 <p>umount -l /dev/sda3</p>
-<p></body></html></p>
+<p></p>

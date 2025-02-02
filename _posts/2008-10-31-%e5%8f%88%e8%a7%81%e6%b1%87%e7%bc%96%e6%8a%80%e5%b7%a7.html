@@ -1,29 +1,13 @@
 ---
-layout: post
-title: 又见汇编技巧
-date: 2008-10-31 23:08:18.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Programming
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '404'
-  _wp_old_slug: '404'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2008/10/31/%e5%8f%88%e8%a7%81%e6%b1%87%e7%bc%96%e6%8a%80%e5%b7%a7/"
+date: 2008-10-31 23:08:18-07:00
+layout: post
+permalink: /2008/10/31/%e5%8f%88%e8%a7%81%e6%b1%87%e7%bc%96%e6%8a%80%e5%b7%a7/
+title: 又见汇编技巧
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body>
+<p><br />
+
 <p>在 arch/x86/include/asm/uaccess.h 中有这么一段代码：</p>
 <p>#define __range_not_ok(addr, size)                                     <br />
 ({                                                                     <br />
@@ -38,4 +22,4 @@ flag;                                     �
 <p>这段汇编写得很有技巧性，充分利用了<a href="http://www3.itu.edu.tr/~kesgin/mul06/intel/instr/sbb.html" target="_blank">sbb指令</a>和<a href="http://en.wikipedia.org/wiki/Carry_flag" target="_blank">carry flag</a>，值得你仔细体会一番。还有一个关于sbb的技巧：</p>
 <p><em class="quotelev2">sbb  eax,eax </em><br />
 <em class="quotelev2">sbb  eax,0FFFFFFFFh </em></p>
-<p></body></html></p>
+<p></p>

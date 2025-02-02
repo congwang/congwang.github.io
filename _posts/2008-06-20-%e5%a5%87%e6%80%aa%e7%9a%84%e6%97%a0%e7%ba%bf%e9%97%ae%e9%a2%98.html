@@ -1,29 +1,13 @@
 ---
-layout: post
-title: 奇怪的无线问题
-date: 2008-06-20 06:21:51.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Linux Application
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '363'
-  _wp_old_slug: '363'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2008/06/20/%e5%a5%87%e6%80%aa%e7%9a%84%e6%97%a0%e7%ba%bf%e9%97%ae%e9%a2%98/"
+date: 2008-06-20 06:21:51-07:00
+layout: post
+permalink: /2008/06/20/%e5%a5%87%e6%80%aa%e7%9a%84%e6%97%a0%e7%ba%bf%e9%97%ae%e9%a2%98/
+title: 奇怪的无线问题
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body>
+<p><br />
+
 <p>很奇怪，前几天一直都不能正常使用NetworkManager，今天居然可以了。。。无缘无故！</p>
 <p>难道是我人品的问题？？</p>
 <p>终于可以摆脱有线了。严重感谢George，帮了我很多忙，起码我现在知道在Linux上怎么使用无线了（以前从来没用过）。</p>
@@ -32,4 +16,4 @@ permalink: "/2008/06/20/%e5%a5%87%e6%80%aa%e7%9a%84%e6%97%a0%e7%ba%bf%e9%97%ae%e
 <p>然后再dhclient就完了。这边的网络都是用DHCP的，在公司也是，不过公司用的是有线。</p>
 <p>图形界面直接用NetworkManager就可以了，要开启NetworkManager和NetworkManagerDispatcher两项服务。其中遇到的一个问题是提示输入密钥环密码，不知所云为何，我简单尝试了一下，安装gnome-keyring-manager之后把login那个密钥环删掉就行了。</p>
 <p>现在比较郁闷的另一个问题是内核。在公司得用vmware，需要内核模块，于是又下了个新内核编译完装上，但是无线和声卡驱动似乎没弄好，不能用。而在Fedora自带的内核中，又不能用vmware。这是个问题，得想办法解决掉～！</p>
-<p></body></html></p>
+<p></p>

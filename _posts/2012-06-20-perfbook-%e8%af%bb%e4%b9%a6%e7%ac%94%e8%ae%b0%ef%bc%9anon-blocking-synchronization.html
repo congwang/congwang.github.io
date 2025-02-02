@@ -1,29 +1,13 @@
 ---
-layout: post
-title: perfbook 读书笔记：Non-Blocking Synchronization
-date: 2012-06-20 14:08:16.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Programming
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '2029'
-  _wp_old_slug: '2029'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2012/06/20/perfbook-%e8%af%bb%e4%b9%a6%e7%ac%94%e8%ae%b0%ef%bc%9anon-blocking-synchronization/"
+date: 2012-06-20 14:08:16-07:00
+layout: post
+permalink: /2012/06/20/perfbook-%e8%af%bb%e4%b9%a6%e7%ac%94%e8%ae%b0%ef%bc%9anon-blocking-synchronization/
+title: perfbook 读书笔记：Non-Blocking Synchronization
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body>
+<p><br />
+
 <p>perfbook 中对 <a href="http://en.wikipedia.org/wiki/Non-blocking_synchronization">NBS</a> 这一节的描述尚未完成。我来简单补充一下。</p>
 <p>Non-Blocking 其实很简单，它和 Blocking 相反，也就是非阻塞的意思。阻塞大家都知道，典型的 mutex，semaphore 就是阻塞型的锁，如果其它线程持有锁，该线程会进入阻塞状态，直到它可以获取锁。</p>
 <p>非阻塞型的锁就是竞争时不会阻塞的锁，最典型的就是家喻户晓的自旋锁了，在竞争的情况下它会一直自旋，即忙等（busy wait），而不是阻塞。所以 spin lock 是 NBS 的一种。</p>
@@ -66,4 +50,4 @@ static inline bool llist_add(struct llist_node *new, struct llist_head *head)<br
 3. http://burtleburtle.net/bob/hash/lockfree.html<br />
 4. http://en.wikipedia.org/wiki/Non-blocking_synchronization<br />
 5. http://en.wikipedia.org/wiki/Lock-free_and_wait-free_algorithms</p>
-<p></body></html></p>
+<p></p>

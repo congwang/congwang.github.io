@@ -1,37 +1,13 @@
 ---
-layout: post
-title: 关于 extern inline
-date: 2012-03-07 15:27:04.000000000 -08:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Programming
-tags: []
-meta:
-  _publicize_pending: '1'
-  _oembed_810b6b480cb131ffcbc4e9c2d5e1d115: "{{unknown}}"
-  _oembed_a9f6dba0b4671ee4102f0072eedb6f24: "{{unknown}}"
-  _oembed_ff72ff031d4ae0e011395bd3c77b82ff: "{{unknown}}"
-  _oembed_1994d6d431eea07463b56fe50b9c83ec: "{{unknown}}"
-  original_post_id: '2021'
-  _wp_old_slug: '2021'
-  _oembed_346f9259280b3e6865fad3b95a499b02: "{{unknown}}"
-  _oembed_7d2eb676dfa2227588d26beba9a8f0b3: "{{unknown}}"
-  _oembed_eba14bcbd0781f786b52394b5d69b49e: "{{unknown}}"
-  _oembed_334928ac6adeeb6311d51d19d68c6560: "{{unknown}}"
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2012/03/07/%e5%85%b3%e4%ba%8e-extern-inline/"
+date: 2012-03-07 15:27:04-08:00
+layout: post
+permalink: /2012/03/07/%e5%85%b3%e4%ba%8e-extern-inline/
+title: 关于 extern inline
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body></p>
+<p><br />
+</p>
 <p>（本文是《C语言编程艺术》的一部分，转载请注明出处，勿用于商业用途。）</p>
 <p>大家一定对C语言 inline 关键字不陌生，甚至经常用到 static inline 的函数。可能感到陌生的是 extern inline。C11 标准在6.7.4 p7 中对此进行了描述，不过比较生涩难读。简单地讲，static line 和 extern inline 的区别，从名字上也能看得出来，就是编译单元之外可见性的问题。把一个普通函数给内联掉之后，一个显著的区别就是外部可见性没了，怎么能同时既能内联又能保留外部的可见性呢？为了解决这个问题就有了extern inline。</p>
 <p>static inline 是说这个函数就这么一个，而且没有外部可见性，在所有的编译单元中大家必须共用这么一个定义，这也是为什么 static inline 通常要放到头文件中的原因；而 extern inline 就不一样了，它是说这个函数虽然只有一个定义，但是既有内联的版本，也有非内联的版本，如果你能看得到它的定义。即在同一个编译单元中，那么你就可以用它的内联版本；看不到的话，你就可以用非内联版本，即和其它普通函数一模一样。</p>
@@ -129,4 +105,4 @@ __NTH (tolower (int __c))<br />
 http://www.greenend.org.uk/rjk/tech/inline.html<br />
 http://gcc.gnu.org/ml/gcc/2006-11/msg00006.html<br />
 http://stackoverflow.com/questions/6312597/is-inline-without-static-or-extern-ever-useful-in-c99<br />
-http://www.cnblogs.com/cnmaizi/archive/2011/01/19/1939686.html</body></html></p>
+http://www.cnblogs.com/cnmaizi/archive/2011/01/19/1939686.html</p>

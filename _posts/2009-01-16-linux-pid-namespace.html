@@ -1,29 +1,13 @@
 ---
-layout: post
-title: Linux PID namespace
-date: 2009-01-16 22:52:49.000000000 -08:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Linux Kernel
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '498'
-  _wp_old_slug: '498'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2009/01/16/linux-pid-namespace/"
+date: 2009-01-16 22:52:49-08:00
+layout: post
+permalink: /2009/01/16/linux-pid-namespace/
+title: Linux PID namespace
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body>
+<p><br />
+
 <p>一直对linux内核的namespace感到困惑，今天看了一下代码才知道，原来所谓的namespace其实就是给虚拟化用的，<a href="http://lwn.net/Articles/259217/">PID namespace</a>其实就是建立一个新的PID空间，这样内部可以使用一套新的PID，而且不会和外部冲突。这也就是说某个进程其实会有两个PID，一个空间一个。</p>
 <p>我写了段C代码来展示这个问题。<br />
 [c]<br />
@@ -105,4 +89,4 @@ pid of my child is 4</p>
         struct net           *net_ns;<br />
 };</p>
 <p>虚拟化的东西是越来越让人摸不清头脑了。。。。</p>
-<p></body></html></p>
+<p></p>

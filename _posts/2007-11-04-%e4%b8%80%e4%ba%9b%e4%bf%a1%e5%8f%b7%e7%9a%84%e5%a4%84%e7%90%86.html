@@ -1,34 +1,14 @@
 ---
-layout: post
-title: 一些信号的处理
-date: 2007-11-04 17:10:54.000000000 -08:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Programming
-tags:
-- handling
-- linux
-- signal
-- unix
-meta:
-  _publicize_pending: '1'
-  original_post_id: '248'
-  _wp_old_slug: '248'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2007/11/04/%e4%b8%80%e4%ba%9b%e4%bf%a1%e5%8f%b7%e7%9a%84%e5%a4%84%e7%90%86/"
+date: 2007-11-04 17:10:54-08:00
+layout: post
+permalink: /2007/11/04/%e4%b8%80%e4%ba%9b%e4%bf%a1%e5%8f%b7%e7%9a%84%e5%a4%84%e7%90%86/
+title: 一些信号的处理
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body>
+<p><br />
+
 <p>SIGKILL和SIGSTOP都是既不能被捕捉，也不能被忽略的，他们是用来给系统管理用的。鉴于此，一般来说用SIGKILL结束一个进程是一个坏主意，因为受害进程将没有时间来做善后工作。所以，你应该优先考虑SIGTERM，然后才是SIGKILL。这也是为什么kill(1)和killall(1)默认发送SIGTERM的原因。同样，这也是关机时init首先发送SIGTERM，然后发送SIGKILL的原因。</p>
 <p>一个例外是init进程，它是可以忽略SIGKILL的。僵尸进程也有点儿特别，它们是等待其父进程收养的进程，因此也无法被KILL掉。（想想电视上就知道，僵尸都是杀不死的。^_^）</p>
 <p>SIGABRT是中止一个程序，它可以被捕捉，但不能被阻塞。处理函数返回后，所以打开的文件描述符将会被关闭，流也会被flush。程序会结束，有可能的话还会core dump。 当程序调用abort(3)时，该进程会向自己发送SIGABRT信号。所以，SIGABRT一般用于信号中一些关键的处理，assert失败时也会使用它。你不应该去捕捉SIGSEGV和SIGABRT信号，如果收到这种信号，说明进程处于一个不确定的状态，很可能会直接挂起。</p>
-<p></body></html></p>
+<p></p>

@@ -1,29 +1,13 @@
 ---
-layout: post
-title: glibc定义的系统调用
-date: 2010-04-27 21:19:57.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Programming
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '1098'
-  _wp_old_slug: '1098'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2010/04/27/glibc%e5%ae%9a%e4%b9%89%e7%9a%84%e7%b3%bb%e7%bb%9f%e8%b0%83%e7%94%a8/"
+date: 2010-04-27 21:19:57-07:00
+layout: post
+permalink: /2010/04/27/glibc%e5%ae%9a%e4%b9%89%e7%9a%84%e7%b3%bb%e7%bb%9f%e8%b0%83%e7%94%a8/
+title: glibc定义的系统调用
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body>
+<p><br />
+
 <p>最近有人问道，glibc 中对我们常见的那些系统调用的定义在哪里？比如<a href="http://groups.google.com/group/xiyoulinux/browse_thread/thread/dff7b19f301d1d11">write(2)</a>，<a href="http://sourceware.org/ml/libc-help/2010-04/msg00033.html">recv(2)</a>。</p>
 <p>这个问题我以前在看glibc的代码时注意到了。我们通常可以直接找到的所谓定义，比如下面这个：</p>
 <p>﻿[c]<br />
@@ -59,4 +43,4 @@ sysdeps/unix/syscall-template.S</p>
 <p>syscall-template.S顾名思义是个定义的模板，每个生成的系统调用都要参考这个模板，但是怎么用模板来“刻画”每一个系统调用呢？于是就有了syscalls.list，而make-syscalls.sh就是用模板和那个列表来构建生成系统调用定义的makefile，该makefile最终生成最后的定义。有兴趣的朋友应该仔细看看这几个文件。</p>
 <p>现在再想想，这么做其实是有道理的，在Linux下，系统调用的真正定义有很多相似的地方，确实可以通过“模板”来生成对应的汇编，但是否真值得花时间去构建那么抽象的一个模板和框架？我说不清楚，本着“懒惰”的原则确实应该如此，不过看看模板本身似乎原因不仅仅是“懒惰”。</p>
 <p>从这里我们也可以看出glibc的代码难读啊，比起Linux内核来，不仅仅是风格的问题，还有就是使用了太多的tricks，导致的结果也很显而易见，参与glibc开发的和参与linux内核开发的人明显不是一个数量级的。</p>
-<p></body></html></p>
+<p></p>

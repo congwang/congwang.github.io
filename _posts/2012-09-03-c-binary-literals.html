@@ -1,29 +1,13 @@
 ---
-layout: post
-title: C binary literals
-date: 2012-09-03 10:01:40.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Programming
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '2104'
-  _wp_old_slug: '2104'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2012/09/03/c-binary-literals/"
+date: 2012-09-03 10:01:40-07:00
+layout: post
+permalink: /2012/09/03/c-binary-literals/
+title: C binary literals
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body>
+<p><br />
+
 <p>众所周知，C 语言中只有十进制、十六进制和八进制的常数表示（literal），没有二进制的常数表示。有时候我们很想用二进制的常数，因为它设置了哪些位一目了然。当然了，十六进制和八进制在某种程度上也行，对于熟练的人或许一眼就能看出，但是有二进制的常数表示不是更好嘛？</p>
 <p><a href="http://bytes.com/topic/c/answers/219656-literal-binary">这里</a>有人就给出了一个解决方法，构造一个宏接受二进制的“常量”，这样我们就可以通过它来直接使用二进制常量了。其实代码很容易理解，见下：</p>
 <p>[c]<br />
@@ -79,4 +63,4 @@ int main(void)<br />
 }<br />
 [/c]</p>
 <p>顺便说一句，在C++中你可以使用 <a href="http://www.cplusplus.com/reference/bitset/bitset/">std::bitset</a>。</p>
-<p></body></html></p>
+<p></p>

@@ -1,29 +1,13 @@
 ---
-layout: post
-title: 各种 tunnel
-date: 2011-06-23 22:44:38.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Linux Application
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '1683'
-  _wp_old_slug: '1683'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2011/06/23/%e5%90%84%e7%a7%8d-tunnel/"
+date: 2011-06-23 22:44:38-07:00
+layout: post
+permalink: /2011/06/23/%e5%90%84%e7%a7%8d-tunnel/
+title: 各种 tunnel
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body></p>
+<p><br />
+</p>
 <p>网络中有各种各样的<a href="http://en.wikipedia.org/wiki/Tunneling_protocol"> tunnel</a>，让人眼花缭乱。这里简单分析一下各种 tunnel 的作用。</p>
 <p>概括地讲，所谓 tunnel 就是把下一层（比如IPv4层）的包封装到上一层（比如 SSH，HTTP）或者同一层（比如IPv6层）的协议中进行传输，从而实现网络之间的穿透。很明显，这种实现有个前提，那就是，发送端和接收端必须各有一个解析这种包的程序或者内核模块才能实现正常通信。</p>
 <p>看最简单的例子，SSH Tunnel，在贵国局域网中的大家都懂的。在本地你需要做端口映射，在中转的ssh 服务器上你需要做port forward。当然，把 HTTP 做到 SSH 之上，算是<a href="http://sites.inka.de/bigred/devel/tcp-tcp.html">TCP over TCP</a>了。不过还有更狠的，叫 <a href="http://www.cs.uit.no/~daniels/PingTunnel/">PingTunnel</a>，基于ICMP的。</p>
@@ -44,4 +28,4 @@ Usage: ip tunnel { add | change | del | show | prl | 6rd } [ NAME ]
 <p>sit 和 <a href="http://en.wikipedia.org/wiki/ISATAP">isatap</a> 都是 IPv6 over IPv4 的 tunnel，它们的源代码在 net/ipv6/sit.c 中。它们之间也不同，和IPv6的地址有关，写在这里恐怕放不下了，故省略。</p>
 <p>别慌，反过来的也有，叫 ip6_tunnel，IPv4 over IPv6。见源代码 net/ipv6/ip6_tunnel.c。</p>
 <p>我在前面一篇文章中介绍的 tun 设备，从名字你也看得出来，它不就是 tunnel 的前三个字母嘛！vpnc 使用的就是这个 tunnel，建立一个点对点的通讯，在本地机器上有守候进程vpnc，在远端有vpn服务器。</p>
-<p>IPSec 还用到一个叫 L2TP 的 tunnel，在内核源代码 net/l2tp 中，PPTP 是另外一个，在 drivers/net/pptp.c 中实现。这两个比较复杂，我也不熟悉。更多介绍请看内核文档 <a href="http://www.mjmwired.net/kernel/Documentation/networking/l2tp.txt">Documentation/networking/l2tp.txt</a>。</body></html></p>
+<p>IPSec 还用到一个叫 L2TP 的 tunnel，在内核源代码 net/l2tp 中，PPTP 是另外一个，在 drivers/net/pptp.c 中实现。这两个比较复杂，我也不熟悉。更多介绍请看内核文档 <a href="http://www.mjmwired.net/kernel/Documentation/networking/l2tp.txt">Documentation/networking/l2tp.txt</a>。</p>

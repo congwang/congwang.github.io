@@ -1,29 +1,13 @@
 ---
-layout: post
-title: Intel SMM 缓存中毒攻击
-date: 2009-04-24 13:24:09.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Programming
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '686'
-  _wp_old_slug: '686'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2009/04/24/intel-smm-%e7%bc%93%e5%86%b2%e4%b8%ad%e6%af%92%e6%94%bb%e5%87%bb/"
+date: 2009-04-24 13:24:09-07:00
+layout: post
+permalink: /2009/04/24/intel-smm-%e7%bc%93%e5%86%b2%e4%b8%ad%e6%af%92%e6%94%bb%e5%87%bb/
+title: Intel SMM 缓存中毒攻击
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body>
+<p><br />
+
 <p>一大早起来上网就看到<a href="http://theinvisiblethings.blogspot.com/2009/03/attacking-smm-memory-via-intel-cpu.html" target="_blank">这么一条劲爆的新闻</a>。其实这个漏洞由来已久，以前至少见过两次对它的介绍，而今天，我们终于看到实实在在的exploit了。</p>
 <p>我把<a href="http://invisiblethingslab.com/itl/Resources.html" target="_blank">官方的paper和exploit代码</a>通读了一遍，发现这个漏洞的原理其实很简单，大体如此：</p>
 <p>1. 把SMM内存区域设为write-back模式，这需要修改mtrr（/proc/mtrr）。很明显，在linux上这一步是需要root权限的。也就是说，这里也就已经决定了这个漏洞不是用来给你提升权限的，而是用来隐藏rootkit等东西的。</p>
@@ -35,4 +19,4 @@ permalink: "/2009/04/24/intel-smm-%e7%bc%93%e5%86%b2%e4%b8%ad%e6%af%92%e6%94%bb%
 <p>1. SMM，System Management Mode。Intel CPU的一种模式，和我们通常所说的实模式，保护模式类似。它和实模式差不多，只是寻址是32位的。设立它的目的是给BIOS和firmware使用的。详细描述见Intel Vol 3, Ch 24。</p>
 <p>2. MSR，MODEL-SPECIFIC REGISTERS，一些特殊的寄存器，有特殊的用途，比如sysenter。这些寄存器可以通过rdmsr来读取，通过wrmsr来写入。详细描述见 Intel Vol 3 8.4。</p>
 <p>3. MTRR，MEMORY TYPE RANGE REGISTERS，MSR中的一类，设置内存块的缓存属性，比如上面提到的缓存策略。具体描述见Intel Vol 3 10.11，也可参考Linux内核源代码arch/x86/kernel/cpu/mtrr/中的代码。</p>
-<p></body></html></p>
+<p></p>

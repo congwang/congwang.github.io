@@ -1,29 +1,13 @@
 ---
-layout: post
-title: How TSQ works
-date: 2012-11-03 17:42:36.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Linux Kernel
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '2142'
-  _wp_old_slug: '2142'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2012/11/03/tsq-%e7%9a%84%e5%8e%9f%e7%90%86/"
+date: 2012-11-03 17:42:36-07:00
+layout: post
+permalink: /2012/11/03/tsq-%e7%9a%84%e5%8e%9f%e7%90%86/
+title: How TSQ works
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body>
+<p><br />
+
 <p>通常看到 <a href="http://lwn.net/Articles/507065/" target="_blank">TCP Small Queue</a> （简称 TSQ）之后第一问题是，既然我们已经有 tcp_wmem 了，为何还需要一个新的 sysctl？</p>
 <p>这个问题是理解 TSQ 的关键，其实 tcp_wmem 仅仅是从 TCP socket 层限制队列（或 buffer）中最多可以 queue 多少数据包，而实际上，一个包从 TCP 层发出到最后到达网卡，中间还经历了很多个 queue，TCP socket 只是其中一层罢了。而 TSQ 用了一个非常聪明的技巧来限制在所有这些 queue 中的包，从而降低 latency。</p>
 <p><a href="http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=46d3ceabd8d98ed0ad10f20c595ca784e34786c5" target="_blank">TSQ 的代码</a>中最关键的一个地方是它实现了一个新的 skb destructor，也就是 tcp_wfree()，看它的定义：</p>
@@ -85,4 +69,4 @@ static void tcp_tasklet_func(unsigned long data)<br />
 <p>这里对加入到 TSQ 队列中的 socket 进行处理，对于没有 owner 的 socket（不是由用户使用的socket），直接发送；否则就是推迟到 tcp_release_cb() 中发送，即 release_sock() 的时候。</p>
 <p>现在，我们从总体上可以看出 TSQ 的用意了：当发送的包超过 sysctl_tcp_limit_output_bytes 时，就会发生抖动（throttle），这时就会把包推迟发送，推迟到什么时候呢？当然是该队列有空闲的时候！那么什么时候有空闲呢？包被丢弃的时候！内核发送的包是在即将被丢弃的时候（忽略tasklet，用tasklet仅仅是因为skb destructor 中不能进行发送），用户层发送的包则是关闭 socket 的时候，这种时候 TSQ 会有新的空间，所以可以重新入队。</p>
 <p>可见，TSQ 的聪明之处在于，它虽然有自己的所谓队列，但并没有计算该队列的长度，而是巧妙地利用了内核中几个关键点来判断何时可以入队！这当然需要对 TCP 实现非常熟悉才可以，由此亦可见作者水平之高。</p>
-<p></body></html></p>
+<p></p>

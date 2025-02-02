@@ -1,29 +1,13 @@
 ---
-layout: post
-title: rp_filter 的一个例子
-date: 2012-10-10 13:56:42.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Linux Kernel
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '2124'
-  _wp_old_slug: '2124'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2012/10/10/rp_filter-%e7%9a%84%e4%b8%80%e4%b8%aa%e4%be%8b%e5%ad%90/"
+date: 2012-10-10 13:56:42-07:00
+layout: post
+permalink: /2012/10/10/rp_filter-%e7%9a%84%e4%b8%80%e4%b8%aa%e4%be%8b%e5%ad%90/
+title: rp_filter 的一个例子
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body>
+<p><br />
+
 <p>我们都知道 Linux 反向路由查询，它的原理很简单，检查流入本机的 IP 地址是否合法，是否可能路由进来，是否是最佳路由。但是像多数网络问题，理论很简单，代码你看了也能懂，可实际情况往往比较复杂。之前一直没有碰到过实际中的例子，最近总算碰到一个。</p>
 <p>情况是这样的，我有两个 vlan 设备，eth0.7 和 eth0.9，都是经过 vconfig 创建的虚拟网卡，eth0 硬件本身不能处理 vlan tag。现在的问题是，我给这两个网卡配置了同一个 IP 地址，192.168.122.74。你也许会感觉奇怪，但这是可行的，毕竟 eth0.7 和 eth0.9 不在同一个 vlan！你可以想象成它们的网线接在不同的局域网中。好了，问题出来了，现在我们在另外一台机器，物理上连接着 eth0，上面分别发送 vlan tag 是 7 和 9 的两个 arp request，结果是只有先被 ifup 起来的那个网卡回应！为什么？</p>
 <p>我一开始的想法这可能是内核的bug，毕竟 vlan 那一部分经常出现一些问题。但经过人肉跟踪 vlan tag 的处理流程，发现基本上不太可能是内核的问题，至少不是内核 vlan 处理代码的问题。其实，这部分内核代码经过重写之后还是很清晰的，推荐你有时间阅读一下。</p>
@@ -39,4 +23,4 @@ default via 192.168.122.1 dev eth0<br />
 <p>另外，分析过程中用到的两条相关的 tcpdump 命令：</p>
 <p># tcpdump arp -xx -ni eth0</p>
 <p># tcpdump -xx -ni eth0 vlan</p>
-<p></body></html></p>
+<p></p>

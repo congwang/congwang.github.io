@@ -1,29 +1,13 @@
 ---
-layout: post
-title: shell 重定向的一处妙用
-date: 2011-10-18 11:41:30.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Programming
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '1780'
-  _wp_old_slug: '1780'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2011/10/18/shell-%e9%87%8d%e5%ae%9a%e5%90%91%e7%9a%84%e4%b8%80%e5%a4%84%e5%a6%99%e7%94%a8/"
+date: 2011-10-18 11:41:30-07:00
+layout: post
+permalink: /2011/10/18/shell-%e9%87%8d%e5%ae%9a%e5%90%91%e7%9a%84%e4%b8%80%e5%a4%84%e5%a6%99%e7%94%a8/
+title: shell 重定向的一处妙用
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body>
+<p><br />
+
 <p>偶然在 dracut 的代码中发现一个使用重定向很巧妙的地方。见 modules.d/90kernel-modules/module-setup.sh 文件。</p>
 <p>之前的老代码是这样的：</p>
 <p>[bash]<br />
@@ -63,4 +47,4 @@ permalink: "/2011/10/18/shell-%e9%87%8d%e5%ae%9a%e5%90%91%e7%9a%84%e4%b8%80%e5%a
             # Use two parallel streams to filter alternating modules.<br />
             eval "( ( rotor ) ${_side2}&gt;&amp;1 | bmf1 ) ${_merge}&gt;&amp;1"</p>
 <p>[/bash] </p>
-<p></body></html></p>
+<p></p>

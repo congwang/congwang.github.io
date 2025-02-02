@@ -1,29 +1,13 @@
 ---
-layout: post
-title: 我的内核配置文件
-date: 2012-07-01 14:08:52.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Linux Kernel
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '2032'
-  _wp_old_slug: '2032'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2012/07/01/%e6%88%91%e7%9a%84%e5%86%85%e6%a0%b8%e9%85%8d%e7%bd%ae%e6%96%87%e4%bb%b6/"
+date: 2012-07-01 14:08:52-07:00
+layout: post
+permalink: /2012/07/01/%e6%88%91%e7%9a%84%e5%86%85%e6%a0%b8%e9%85%8d%e7%bd%ae%e6%96%87%e4%bb%b6/
+title: 我的内核配置文件
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body>
+<p><br />
+
 <p>我们知道，在KVM里测试内核会碰到一个很严重的问题：那就是在 host 编译的内核不能直接在 guest 里使用。有两个原因：一是 host 和 guest 的硬件可能不一样，所以需要的 config 不一样；二是内核模块即便是安装进了 initramfs 也仍有很多需要安装到 /lib/modules/`uname -r`。</p>
 <p>有三种解决办法：</p>
 <p>1. host 和 guest 都使用发行版自带的 config，这个 config 是可以在很多机器上运行，所以基本上一定可以在你的guest 里使用，然后用 guestfish 把编译的内核模块拷贝进 guest；这么做的好处是 host 和 guest 都使用同一个 config；坏处也显然，需要进行太多host =&gt; guest 拷贝操作。</p>
@@ -73,4 +57,4 @@ CONFIG_NETPOLL=y</p>
 <p>kprobe，jump label 相关：<br />
 CONFIG_KPROBES=y<br />
 CONFIG_JUMP_LABEL=y</p>
-<p></body></html></p>
+<p></p>

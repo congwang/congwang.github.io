@@ -1,29 +1,13 @@
 ---
-layout: post
-title: fakeroot vs sudo
-date: 2008-10-13 22:44:46.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Linux Application
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '393'
-  _wp_old_slug: '393'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2008/10/13/fakeroot-vs-sudo/"
+date: 2008-10-13 22:44:46-07:00
+layout: post
+permalink: /2008/10/13/fakeroot-vs-sudo/
+title: fakeroot vs sudo
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body></p>
+<p><br />
+</p>
 <p>1. sudo是一个setuid程序，而fakeroot不是。</p>
 <p>2. sudo真正地给与root权限，而fakeroot不会，它只会欺骗程序看起来像是以root身份执行得到的效果。</p>
 <p>3. fakeroot最初是为了创建debian包使用的，Fedora上也有fakeroot包，但不知为何找不到其man手册……</p>
@@ -42,4 +26,4 @@ empty file, but remember that it was a device node (along with the<br />
 relevant details) so that if you subsequently do an "ls -l", you'll see<br />
 it as a device node.</p></blockquote>
 <p>所以fakeroot并不会对静态链接的程序起作用。</p>
-<p>5. fakeroot使用了很多trick，不信的话查看<a href="http://ftp.de.debian.org/debian/pool/main/f/fakeroot/fakeroot_1.5.10.tar.gz" target="_blank">其源代码</a>（看看里面那个awk脚本！）。</body></html></p>
+<p>5. fakeroot使用了很多trick，不信的话查看<a href="http://ftp.de.debian.org/debian/pool/main/f/fakeroot/fakeroot_1.5.10.tar.gz" target="_blank">其源代码</a>（看看里面那个awk脚本！）。</p>

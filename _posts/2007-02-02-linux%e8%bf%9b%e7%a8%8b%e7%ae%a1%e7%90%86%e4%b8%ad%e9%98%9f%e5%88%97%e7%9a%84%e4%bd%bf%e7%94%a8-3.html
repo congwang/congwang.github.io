@@ -1,29 +1,13 @@
 ---
-layout: post
-title: Linux进程管理中队列的使用
-date: 2007-02-02 22:56:46.000000000 -08:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Linux Kernel
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '11'
-  _wp_old_slug: '11'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2007/02/02/linux%e8%bf%9b%e7%a8%8b%e7%ae%a1%e7%90%86%e4%b8%ad%e9%98%9f%e5%88%97%e7%9a%84%e4%bd%bf%e7%94%a8-3/"
+date: 2007-02-02 22:56:46-08:00
+layout: post
+permalink: /2007/02/02/linux%e8%bf%9b%e7%a8%8b%e7%ae%a1%e7%90%86%e4%b8%ad%e9%98%9f%e5%88%97%e7%9a%84%e4%bd%bf%e7%94%a8-3/
+title: Linux进程管理中队列的使用
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body></p>
+<p><br />
+</p>
 <p class="postdate">Friday, 2. February 2007, 05:58:24</p>
 <p class="content">
 <p align="right"><span class="alignright">王聪@西邮</span></p>
@@ -55,4 +39,4 @@ typedef struct _ _wait_queue {
 prepare_to_wait*()/finish_wait()<br />
 wait_event*()<br />
 其实wait_event*()内部也是调用prepare_to_wait*()，把它放入一个循环中。而且wait_event*()在事件完成时会自动调用finish_wait()。决定使用哪个要看情况而定。sleep_on*()是遗弃的接口，现在已经不再使用，虽然还支持。等待队列中的进程有两种，一种是exclusive的进程，另一种是nonexclusive的进程。所谓exclusive是指唤醒的进程等待的资源是互斥的，每次只唤醒一个（唤醒多个也可以，不过最后还是只有一个会被唤醒，其余的又被重新添加到等待队列中，这样效率会大打折扣）。一般，等待函数会把进程设为nonexclusive和uninterruptible，带“interruptible”的会专门指定状态为interruptible；而带“timeout”的会在超时后退出，因为它会调用schedule_timeout()；带“exclusive”的则会把进程设为exclusive。</p>
-<p>唤醒的接口虽然只有wake_up*()，但它内部也分成好几种。带“interruptible”的唤醒函数只会唤醒状态是TASK_INTERRUPTIBLE的进程，而不带的则会唤醒TASK_INTERRUPTIBLE和TASK_UNINTERRUPTIBLE的进程；所有唤醒函数都会把等待同一事件的nonexclusive进程全部唤醒，或者把其中一个exclusive的进程唤醒；而带“nr”的则会唤醒指定个数的exclusive的进程，带“all”的会把全部exclusive进程唤醒。带“sync”会忽略优先级的检查，高优先级的进程可能会被延迟。最后，持有自旋锁时只能调用wait_up_locked()。</body></html></p>
+<p>唤醒的接口虽然只有wake_up*()，但它内部也分成好几种。带“interruptible”的唤醒函数只会唤醒状态是TASK_INTERRUPTIBLE的进程，而不带的则会唤醒TASK_INTERRUPTIBLE和TASK_UNINTERRUPTIBLE的进程；所有唤醒函数都会把等待同一事件的nonexclusive进程全部唤醒，或者把其中一个exclusive的进程唤醒；而带“nr”的则会唤醒指定个数的exclusive的进程，带“all”的会把全部exclusive进程唤醒。带“sync”会忽略优先级的检查，高优先级的进程可能会被延迟。最后，持有自旋锁时只能调用wait_up_locked()。</p>

@@ -1,29 +1,13 @@
 ---
-layout: post
-title: sudo和tee
-date: 2008-01-30 22:50:20.000000000 -08:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Linux Application
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '289'
-  _wp_old_slug: '289'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2008/01/30/sudo%e5%92%8ctee/"
+date: 2008-01-30 22:50:20-08:00
+layout: post
+permalink: /2008/01/30/sudo%e5%92%8ctee/
+title: sudo和tee
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body>
+<p><br />
+
 <p>今天<a href="http://amankwahly.cn/blog">刘洋同学</a>问到一个问题，为什么sudo下面的命令还是无权限</p>
 <p><font size="3">$sudo echo '1' &gt; ip_forward<br />
 bash: ip_forward: Permission denied</font></p>
@@ -37,4 +21,4 @@ bash: ip_forward: Permission denied</font></p>
 <p>或者：</p>
 <p><font size="3">$echo '1' | sudo tee ip_forward | cat &gt; /dev/null</font></p>
 <p>刘洋问tee(1)是不是和tea有关系？不是！tee其实取自大写字母T的发音，而T不正是最后一个命令中流的流向么？！多么形象的名字啊！</p>
-<p></body></html></p>
+<p></p>

@@ -1,29 +1,13 @@
 ---
-layout: post
-title: 内核紧急升级
-date: 2008-02-11 16:47:58.000000000 -08:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Linux Kernel
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '297'
-  _wp_old_slug: '297'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2008/02/11/%e5%86%85%e6%a0%b8%e7%b4%a7%e6%80%a5%e5%8d%87%e7%ba%a7/"
+date: 2008-02-11 16:47:58-08:00
+layout: post
+permalink: /2008/02/11/%e5%86%85%e6%a0%b8%e7%b4%a7%e6%80%a5%e5%8d%87%e7%ba%a7/
+title: 内核紧急升级
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body>
+<p><br />
+
 <p>vmsplice(2)惹祸了，爆出了一个安全漏洞，可以很容易提升root权限～！受影响的内核一大片。详细见下面这个bugreport：</p>
 <p><a href="https://bugzilla.redhat.com/show_bug.cgi?id=432229" target="_blank">https://bugzilla.redhat.com/show_bug.cgi?id=432229</a></p>
 <p>这个bug很快就被修复：</p>
@@ -37,4 +21,4 @@ permalink: "/2008/02/11/%e5%86%85%e6%a0%b8%e7%b4%a7%e6%80%a5%e5%8d%87%e7%ba%a7/"
 <a target="_blank" href="http://lkml.org/lkml/2008/2/11/27">http://lkml.org/lkml/2008/2/11/27</a></p>
 <p>Fedora似乎也已经推出了新的kernel package，各位Fedora用户请尽快升级。</p>
 <p>BTW，在Fedora7上试了试那个expliot，怎么不起作用呢？总是段错误～～</p>
-<p></body></html></p>
+<p></p>

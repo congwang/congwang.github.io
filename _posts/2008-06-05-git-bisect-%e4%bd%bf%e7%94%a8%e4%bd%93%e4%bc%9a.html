@@ -1,29 +1,13 @@
 ---
-layout: post
-title: git-bisect 使用体会
-date: 2008-06-05 17:36:24.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Linux Kernel
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '359'
-  _wp_old_slug: '359'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2008/06/05/git-bisect-%e4%bd%bf%e7%94%a8%e4%bd%93%e4%bc%9a/"
+date: 2008-06-05 17:36:24-07:00
+layout: post
+permalink: /2008/06/05/git-bisect-%e4%bd%bf%e7%94%a8%e4%bd%93%e4%bc%9a/
+title: git-bisect 使用体会
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body>
+<p><br />
+
 <p>今天试着使用了一下git-bisect，收获颇多。总结一下教训：</p>
 <p>1. 不要做git-reset( --hard)，它可能会带来一些很严重的错误，比如：</p>
 <p>fatal: Untracked working tree file 'drivers/char/hw_random/virtio-rng.c' would be overwritten by merge.</p>
@@ -31,4 +15,4 @@ permalink: "/2008/06/05/git-bisect-%e4%bd%bf%e7%94%a8%e4%bd%93%e4%bc%9a/"
 <p>2. 一定要找准good的起点，可以通过git-checkout -b来一个个测试寻找。</p>
 <p>3. 多利用branch，不仅仅是针对bisect，其它场合也适用。</p>
 <p>David Miller用的<a href="http://vger.kernel.org/~davem/cgi-bin/blog.cgi/2008/04/30" target="_blank">方法</a>不错，推荐一下。</p>
-<p></body></html></p>
+<p></p>

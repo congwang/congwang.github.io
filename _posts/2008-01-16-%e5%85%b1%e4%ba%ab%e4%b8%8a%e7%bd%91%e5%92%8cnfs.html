@@ -1,29 +1,13 @@
 ---
-layout: post
-title: 共享上网和NFS
-date: 2008-01-16 17:43:24.000000000 -08:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Linux Application
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '282'
-  _wp_old_slug: '282'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2008/01/16/%e5%85%b1%e4%ba%ab%e4%b8%8a%e7%bd%91%e5%92%8cnfs/"
+date: 2008-01-16 17:43:24-08:00
+layout: post
+permalink: /2008/01/16/%e5%85%b1%e4%ba%ab%e4%b8%8a%e7%bd%91%e5%92%8cnfs/
+title: 共享上网和NFS
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body></p>
+<p><br />
+</p>
 <p>有两台电脑，一个上网帐号，为了让两台电脑都能上网，得动手搭建一个小型局域网，“自己动手，丰衣足食”啊！前提是拨入网络的电脑必须配有两个网卡。</p>
 <p>物理设备齐全后开始进行配置。先配置拨号的电脑（简称为S），两个网卡，一个用来拨号，一个用来和另一台电脑（简称为C）通信。eth0和ppp0就留作拨号，而eth1配置成192.168.1.1，和C连接。C的IP配置为192.168.1.2，网关为192.168.1.1。这还没完，此时C还够不到外网，必须还得用S做个代理，要是在Windows上恐怕得用sysgate了，可咱用的是Linux，两条命令搞定：</p>
 <pre>
@@ -55,4 +39,4 @@ Either use "-o nolocks" to keep locks local, or start statd.</pre>
 <pre>
 sudo /sbin/service rpcbind start</pre>
 <pre>sudo /sbin/service nfslock start</pre>
-<p>这样再mount就可以使用NFS了。</body></html></p>
+<p>这样再mount就可以使用NFS了。</p>

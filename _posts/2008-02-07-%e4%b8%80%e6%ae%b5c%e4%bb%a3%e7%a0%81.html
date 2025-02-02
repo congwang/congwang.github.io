@@ -1,29 +1,13 @@
 ---
-layout: post
-title: 那段C代码
-date: 2008-02-07 16:02:07.000000000 -08:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Programming
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '294'
-  _wp_old_slug: '294'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2008/02/07/%e4%b8%80%e6%ae%b5c%e4%bb%a3%e7%a0%81/"
+date: 2008-02-07 16:02:07-08:00
+layout: post
+permalink: /2008/02/07/%e4%b8%80%e6%ae%b5c%e4%bb%a3%e7%a0%81/
+title: 那段C代码
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body>
+<p><br />
+
 <p>上次提到了一些C语言的题目，留了两个没解决。其中第8个已经被“木天”解释了，我就不赘述了，有兴趣的看那篇文章下面的评论。还有一个，第26个，今天仔细看了看，其实也很简单。</p>
 <p>[再链接一次原题：<a href="http://www.gowrikumar.com/c/">http://www.gowrikumar.com/c/</a>]</p>
 <p>具体原理如下：</p>
@@ -31,4 +15,4 @@ permalink: "/2008/02/07/%e4%b8%80%e6%ae%b5c%e4%bb%a3%e7%a0%81/"
 <p>它是怎么做到的呢？很简单，既然是“点阵”，它就肯定要把“字体”存放好，然后读出。“字体”就存放在那个数组里面！ 对比输出，和循环中的代码，我们不难发现，这个点阵是6x6的，因为屏幕输出的原因，必须是从上到下先逐行打印，每行必须是从左到右。而每行有多少个点，在哪个位置有点，这些信息都存放在一个数的比特位中！</p>
 <p>再来看那个数组，一个数字表示一行，6个数就能存在一个字符的字体。所以这个数组也可以6个一组划分开。需要说明的是，A是从下标6开始的。至于前面的那6个0，主要是起保护作用，防止输入字符超出字母的范围时数组越界。</p>
 <p>也是不错的一段代码。Enjoy it!</p>
-<p></body></html></p>
+<p></p>

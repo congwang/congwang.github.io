@@ -1,29 +1,13 @@
 ---
-layout: post
-title: auto_ptr 和 shared_ptr
-date: 2009-01-29 20:19:10.000000000 -08:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Programming
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '527'
-  _wp_old_slug: '527'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2009/01/29/auto_ptr-%e5%92%8c-shared_ptr/"
+date: 2009-01-29 20:19:10-08:00
+layout: post
+permalink: /2009/01/29/auto_ptr-%e5%92%8c-shared_ptr/
+title: auto_ptr 和 shared_ptr
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body>
+<p><br />
+
 <p>偶然的机会看到boost里还有一个shared_ptr型智能指针，费解，C++标准库里不是有auto_ptr了已经？我们先翻出源代码来看看。</p>
 <p>先看auto_ptr，因为它比较简单。既然它在标准库里，那么我们就在gcc的代码中找，恩，最后确定在libstdc++-v3/include/backward/auto_ptr.h里面。说实话，auto_ptr真是太简单了，里面的私有变量就一个：</p>
 <p>private:<br />
@@ -202,4 +186,4 @@ using std::auto_ptr;</p>
 <p>	return 0;<br />
 }<br />
 [/cpp] </a></p>
-<p></body></html></p>
+<p></p>

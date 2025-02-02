@@ -1,29 +1,13 @@
 ---
-layout: post
-title: 关于 OVS GRE tunnel
-date: 2013-07-08 15:23:09.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Linux Kernel
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '2282'
-  _wp_old_slug: '2282'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2013/07/08/%e5%85%b3%e4%ba%8e-ovs-gre-tunnel/"
+date: 2013-07-08 15:23:09-07:00
+layout: post
+permalink: /2013/07/08/%e5%85%b3%e4%ba%8e-ovs-gre-tunnel/
+title: 关于 OVS GRE tunnel
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body></p>
+<p><br />
+</p>
 <p>在 korg 内核的 openvswitch 支持 GRE 之前，我们都是<a href="http://wangcong.org/blog/archives/2163" target="_blank">用内核原生的 GRE tunnel 来配置</a>，而现在， korg 内核中的 openvswitch 也已经支持 GRE tunnel 了。有兴趣的可以看 <a href="https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7d5437c709ded4f152cb8b305d17972d6707f20c" target="_blank">openvswitch: Add tunneling interface.</a> 和   <a href="https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=aa310701e787087dbfbccf1409982a96e16c57a6" target="_blank">openvswitch: Add gre tunnel support.</a> 这两个 commit。</p>
 <p>其实在 OVS 中添加 GRE 很简单，它无非就是把对 GRE 头和外部 IP 头的一些操作从原来的代码中抽象出来，做成内核“库函数”的形式，然后 OVS 中就可以直接调用它们了。难的是要从旧的 ip_gre 模块代码中抽象出这些“库函数”。详见 <a href="https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=c54419321455631079c7d6e60bc732dd0c5914c5" target="_blank">GRE: Refactor GRE tunneling code.</a></p>
 <p>值得注意的是，OVS GRE tunnel 没有注册网络设备，也就是说你无法通过 `ip link` 看到它，它只是一个 vport 而已，所以能通过 ovs-vsctl show 可以看到。这是故意这么设计的，虽然这简化了用户的操作，但刚注意到时难免会感觉有些奇怪。</p>
@@ -47,4 +31,4 @@ ovs-vsctl add-port grebr0 gre1 -- set Interface gre1 type=gre options:remote_ip=
 <p>这里有两种解决方法：</p>
 <p>1) 把 VM 里的网卡 MTU 调小，比如 1400，这样 host 上的 GRE 加上额外的头也不会超过 1500；</p>
 <p>2) 让 VM 里发出来的包依旧维持 GSO，这样 host 上收到的包也是 GSO，它们最终会被分段（segment），而不是分片（fragment）。这个可以通过给 qemu 传递 vnet_hdr=on 来完成（我没有试过，仅分析了源代码）。</p>
-<p>关于这个问题的进一步讨论可以看<a href="http://marc.info/?l=linux-netdev&amp;m=137331558900547&amp;w=2" target="_blank">我提的问题</a>。</body></html></p>
+<p>关于这个问题的进一步讨论可以看<a href="http://marc.info/?l=linux-netdev&amp;m=137331558900547&amp;w=2" target="_blank">我提的问题</a>。</p>

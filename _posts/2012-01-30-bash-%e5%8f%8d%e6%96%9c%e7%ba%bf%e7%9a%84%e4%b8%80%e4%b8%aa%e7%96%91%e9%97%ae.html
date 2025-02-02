@@ -1,29 +1,13 @@
 ---
-layout: post
-title: bash 反斜线的一个疑问
-date: 2012-01-30 22:59:24.000000000 -08:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Linux Application
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '1853'
-  _wp_old_slug: '1853'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2012/01/30/bash-%e5%8f%8d%e6%96%9c%e7%ba%bf%e7%9a%84%e4%b8%80%e4%b8%aa%e7%96%91%e9%97%ae/"
+date: 2012-01-30 22:59:24-08:00
+layout: post
+permalink: /2012/01/30/bash-%e5%8f%8d%e6%96%9c%e7%ba%bf%e7%9a%84%e4%b8%80%e4%b8%aa%e7%96%91%e9%97%ae/
+title: bash 反斜线的一个疑问
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body><br />
+<p><br />
+<br />
 <a href="http://tldp.org/LDP/abs/html/escapingsection.html">ABS 里</a>在讲解 echo 的转义时，给出过下面这几个例子：</p>
 <p>bash-4.2$ echo \z<br />
 z<br />
@@ -38,4 +22,4 @@ z</p>
 <p>第二个也不难，"\z"中前两个反斜线同样输出""，后面剩下"z"，因为 echo 默认不解释转义，所以就算是"z"有特殊含义也不会被解释，因此"z"中的""会把"z"的特殊含义（本身就没有）去掉，然后输出"z"，最后得到"z"。</p>
 <p>从第三个开始就复杂了。因为有了 subshell，所以里面的反斜线一定被处理过两次：一次是 subshell 中，另一次是外面的 shell。外面的shell开始处理，"\"同样被处理成""，处理完成后得到：echo `echo z`；然后 subshell 开始执行里面的"echo z"，处理""然后输出z，最后外面的shell 看到的是 echo z，输出"z"，结束。</p>
 <p>第四个更复杂一些，外面的shell处理反斜线后得到：echo `echo \z`，前两个"\"依旧被解释成""，剩下的"z"会原封不动，因为"z"对于外面的shell来说没兴趣，它只对"`"或"$"这样的转义感兴趣！subshell 执行“echo \z”，同第一个例子，输出z，这时外面的shell看到的是echo z，输出"z"，结束。</p>
-<p>例子虽简单，却能反映出我们确实对 bash 还有一些角落的地方没有理解清楚。理解 ABS 后面的例子就留给你作为课后作业了。:-) </body></html></p>
+<p>例子虽简单，却能反映出我们确实对 bash 还有一些角落的地方没有理解清楚。理解 ABS 后面的例子就留给你作为课后作业了。:-) </p>

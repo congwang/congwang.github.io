@@ -1,29 +1,13 @@
 ---
-layout: post
-title: 从 IPv4 到 IPv6
-date: 2012-10-15 00:00:06.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Linux Kernel
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '2129'
-  _wp_old_slug: '2129'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2012/10/15/%e4%bb%8e-ipv4-%e5%88%b0-ipv6/"
+date: 2012-10-15 00:00:06-07:00
+layout: post
+permalink: /2012/10/15/%e4%bb%8e-ipv4-%e5%88%b0-ipv6/
+title: 从 IPv4 到 IPv6
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body></p>
+<p><br />
+</p>
 <p>稍微熟悉 IPv6 的人都知道，IPv6 相对于 IPv4 并不只是简单地把地址从 32 位扩展到了 128 位，它同时还修复了 IPv4 协议设计中的一些不足。正如地址空间一样，当然设计 IPv4 时的不足已经逐渐凸显，理解这些 IPv4 的不足以及 IPv6 对它的改进对于深入理解 IPv6 至关重要。我在学习 IPv6 的时候就特别想找一个这样的文档，可惜一直没有发现，所以在这里简单总结一下，以方便初学 IPv6 的人。</p>
 <p><strong>1. 地址空间的划分</strong></p>
 <p>从 32 位一下子扩展到 128 位一个最明显的变化是，你很可能再也无法用脑子记住一个 IP 地址（除了 ::1 这种简单的地址）。玩笑。:-)</p>
@@ -51,4 +35,4 @@ permalink: "/2012/10/15/%e4%bb%8e-ipv4-%e5%88%b0-ipv6/"
 <p>IPv6 相比 IPv4 另一个显著的变化是没有了 ARP 协议，邻居发现协议使用的是 ICMPv6。ARP 协议是一个尴尬的存在，它处于第三层，但又不像 ICMP 协议那样基于 IP，而是和 IP 并列，从它的头部就可以看出：</p>
 <p style="text-align:center;"><a href="http://wangcong.org/blog/wp-content/uploads/2012/10/arp_en.png"><img class="size-full wp-image-2299  aligncenter" title="arp_en" src="{{site.baseurl}}/assets/2012/10/arp_en.png" alt="" width="507" height="227"></a>（图片来自<a href="http://sid.rstack.org/arp-sk/figs/arp_en.png" target="_blank">这里</a>）</p>
 <p>这种设计使得 OSI 分层模式变得含糊。而 IPv6 使用的 ICMPv6 则完全基于 IP 之上，无须设计另外一个并列于 IP 层的协议。正如前面提到，邻居发现协议使用的是 link-local 地址，所以不会造成更大链路范围上的影响。link-local 地址是根据 MAC 地址自动生成的（协议规定的算法），因此有了 link-local 地址就可以马上和路由器进行通信了，因此也就有了 IP 地址自动分配的功能，即类似于 IPv4 的 DHCP，在 IPv6 上这被称为自动配置（Stateless Address Autoconfiguration）。</p>
-<p>当然了，因为没有广播地址，邻居发现协议使用的是多播地址。具体协议的细节可以参考 ICMPv6 协议的定义，和 ICMP 并无显著的差别，故省略。</body></html></p>
+<p>当然了，因为没有广播地址，邻居发现协议使用的是多播地址。具体协议的细节可以参考 ICMPv6 协议的定义，和 ICMP 并无显著的差别，故省略。</p>

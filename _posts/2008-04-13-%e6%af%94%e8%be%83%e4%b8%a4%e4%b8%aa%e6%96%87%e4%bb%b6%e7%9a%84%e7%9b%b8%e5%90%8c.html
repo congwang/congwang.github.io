@@ -1,29 +1,13 @@
 ---
-layout: post
-title: 比较两个文件的相同
-date: 2008-04-13 13:30:02.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Programming
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '334'
-  _wp_old_slug: '334'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2008/04/13/%e6%af%94%e8%be%83%e4%b8%a4%e4%b8%aa%e6%96%87%e4%bb%b6%e7%9a%84%e7%9b%b8%e5%90%8c/"
+date: 2008-04-13 13:30:02-07:00
+layout: post
+permalink: /2008/04/13/%e6%af%94%e8%be%83%e4%b8%a4%e4%b8%aa%e6%96%87%e4%bb%b6%e7%9a%84%e7%9b%b8%e5%90%8c/
+title: 比较两个文件的相同
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body>
+<p><br />
+
 <p>恐怕地球人都知道比较两个文件的不同得用diff(1)，现在有个问题是：如何找出两个文件的相同之处？</p>
 <p>经过简单查找，我发现可以用comm(1)。可是看了一下它的man我们就发现，不妥，它没diff(1)那么简单。首先它的选项有些特别；其次，很重要的是，它要求文件必须是排好序的！这时候恐怕我们就得想，哎，又得用bash脚本了。不行，那不符合hack精神，我就不信在一行里整不出它来！于是下面的一行就出来乐：</p>
 <p>% comm -1 -2 &lt;(cat 1.txt | sort) &lt;(cat 2.txt |sort)</p>
@@ -32,4 +16,4 @@ permalink: "/2008/04/13/%e6%af%94%e8%be%83%e4%b8%a4%e4%b8%aa%e6%96%87%e4%bb%b6%e
 <p>zsh和bash都可以用的。可见，shell语法是够博大精深的……</p>
 <p>课后作业：不看源代码，猜猜上面的技巧<strong>大体上</strong>是怎么实现的？（想知道“答案”的拖住最后一行。;-）</p>
 <p><span style="color:#ffffff;">提示：把comm换成diff看看，是不是用的/proc/self？</span></p>
-<p></body></html></p>
+<p></p>

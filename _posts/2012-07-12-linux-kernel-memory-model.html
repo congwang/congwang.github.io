@@ -1,29 +1,13 @@
 ---
-layout: post
-title: Linux kernel memory model
-date: 2012-07-12 13:39:19.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Linux Kernel
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '2043'
-  _wp_old_slug: '2043'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2012/07/12/linux-kernel-memory-model/"
+date: 2012-07-12 13:39:19-07:00
+layout: post
+permalink: /2012/07/12/linux-kernel-memory-model/
+title: Linux kernel memory model
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body></p>
+<p><br />
+</p>
 <p>稍微了解 Linux 内核的人都知道，在 x86 上内核中所有的 struct page 是放在一个数组中管理的，它就是 mem_map，通过它我们就可以用 pfn 作为 index 来找到对应的 struct page 了：</p>
 <p>[c]<br />
 #define __pfn_to_page(pfn)      (mem_map + ((pfn) - ARCH_PFN_OFFSET))<br />
@@ -178,4 +162,4 @@ extern struct mem_section mem_section[NR_SECTION_ROOTS][SECTIONS_PER_ROOT];<br /
 #define __page_to_pfn(page)     (unsigned long)((page) - vmemmap)<br />
 [/c]</p>
 <p>不过额外的代价就是初始化的时候要对每一个 struct page 做 populate，参见 sparse_mem_map_populate() 函数。另外可参考内存热插拔代码中函数 __add_section() 和 __remove_section() 的实现。<br />
-</body></html></p>
+</p>

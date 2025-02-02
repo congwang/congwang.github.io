@@ -1,29 +1,13 @@
 ---
-layout: post
-title: 关于sed的N命令
-date: 2009-02-22 23:29:39.000000000 -08:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Programming
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '606'
-  _wp_old_slug: '606'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2009/02/22/%e5%85%b3%e4%ba%8esed%e7%9a%84n%e5%91%bd%e4%bb%a4/"
+date: 2009-02-22 23:29:39-08:00
+layout: post
+permalink: /2009/02/22/%e5%85%b3%e4%ba%8esed%e7%9a%84n%e5%91%bd%e4%bb%a4/
+title: 关于sed的N命令
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body>
+<p><br />
+
 <p>N命令很简单，就是把下一行追加到匹配空间中，我一直都是这么理解的，直到我遇到这么个问题：</p>
 <p>~% echo -e 'anbncndne' | sed -ne 'N;/$/{s/cnd/FF/;p}'<br />
 a<br />
@@ -51,4 +35,4 @@ c<br />
 d<br />
 e' | sed -ne ':t;N;$!bt;s/bn.*nd/FF/;p'</p>
 <p>可见，sed很拧把却又很强大！理解这个强大确实得下一番功夫！把文本编辑的逻辑抽象成一个个sed的命令，<a href="http://en.wikipedia.org/wiki/Lee_E._McMahon" target="_blank">Lee E. McMahon</a>很牛x！同时我们也可以看出：牛人们玩的都是抽象～！而我们这些非牛们只能玩玩实现了～ :-)</p>
-<p></body></html></p>
+<p></p>

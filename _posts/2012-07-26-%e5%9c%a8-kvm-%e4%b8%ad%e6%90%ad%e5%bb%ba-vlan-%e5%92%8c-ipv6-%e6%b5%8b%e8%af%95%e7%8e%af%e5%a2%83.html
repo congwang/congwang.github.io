@@ -1,29 +1,13 @@
 ---
-layout: post
-title: KVM 中搭建 VLAN 和 IPv6 环境
-date: 2012-07-26 22:37:11.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Linux Application
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '2084'
-  _wp_old_slug: '2084'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2012/07/26/%e5%9c%a8-kvm-%e4%b8%ad%e6%90%ad%e5%bb%ba-vlan-%e5%92%8c-ipv6-%e6%b5%8b%e8%af%95%e7%8e%af%e5%a2%83/"
+date: 2012-07-26 22:37:11-07:00
+layout: post
+permalink: /2012/07/26/%e5%9c%a8-kvm-%e4%b8%ad%e6%90%ad%e5%bb%ba-vlan-%e5%92%8c-ipv6-%e6%b5%8b%e8%af%95%e7%8e%af%e5%a2%83/
+title: KVM 中搭建 VLAN 和 IPv6 环境
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body></p>
+<p><br />
+</p>
 <p>普通的 IPv4 环境很简单，如果你使用 virt-manager 的话它自动都给你搭好了。每个 kvm guest 都在同一个子网内，通过 bridge 连接到一起，然后通过 host 上的 NAT 访问外网，如下所示：</p>
 <pre># brctl show
 bridge name	bridge id		STP enabled	interfaces
@@ -67,4 +51,4 @@ ifconfig sit1 up</pre>
 <p>Update：如果使用 libvirt 的话，可以用 virsh net-edit &lt;NET&gt; 编辑网络配置，添加下面两行：</p>
 <p>&lt;ip family='ipv6' address='fd00:1:2:3::1' prefix='64'&gt;<br />
 &lt;/ip&gt;</p>
-<p>可参考<a href="http://libvirt.org/formatnetwork.html#elementsAddress" target="_blank">这里</a>。</body></html></p>
+<p>可参考<a href="http://libvirt.org/formatnetwork.html#elementsAddress" target="_blank">这里</a>。</p>
