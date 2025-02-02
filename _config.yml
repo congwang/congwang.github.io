@@ -7,8 +7,11 @@ github_username: congwang
 # Build settings
 markdown: kramdown
 theme: minima
+encoding: utf-8
+permalink: /:year/:month/:day/:title/
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
 
-show_excerpts: true
+# Force GitHub Pages to use new Jekyll version
+github-pages: 232
