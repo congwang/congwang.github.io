@@ -1,29 +1,13 @@
 ---
-layout: post
-title: 发送 IGMP 包的 Perl 脚本
-date: 2012-11-30 23:22:20.000000000 -08:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Programming
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '2180'
-  _wp_old_slug: '2180'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2012/11/30/%e5%8f%91%e9%80%81-igmp-%e5%8c%85%e7%9a%84-perl-%e8%84%9a%e6%9c%ac/"
+date: 2012-11-30 23:22:20-08:00
+layout: post
+permalink: /2012/11/30/%e5%8f%91%e9%80%81-igmp-%e5%8c%85%e7%9a%84-perl-%e8%84%9a%e6%9c%ac/
+title: 发送 IGMP 包的 Perl 脚本
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body></p>
+<p><br />
+</p>
 <p>因为 Fedora 上的 scapy （2.2.0）还不支持 IGMP，所以我用 Perl 写了一个发送 IGMP 的脚本。最初代码来自<a href="http://code.google.com/p/perl-igmp-querier/">这里</a>，原脚本只能发送 IGMP query，我添加了 IGMP leave 和一些命令行选项。用法如下：</p></p>
 <pre>
 % ./igmp.pl -q 192.168.10.2 224.0.0.22
@@ -108,4 +92,4 @@ my ($dest) = pack('Sna4x8', AF_INET, 0, $dst_host);</p>
 <p># Send general query packet twice for reliability<br />
 send(RAW,$packet,0,$dest);<br />
 send(RAW,$packet,0,$dest);</p>
-<p>[/perl] </body></html></p>
+<p>[/perl] </p>

@@ -1,33 +1,17 @@
 ---
-layout: post
-title: Reverse Mapping in Linux kernel
-date: 2007-10-15 21:01:47.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Linux Kernel
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '233'
-  _wp_old_slug: '233'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2007/10/15/reverse-mapping-in-linux-kernel/"
+date: 2007-10-15 21:01:47-07:00
+layout: post
+permalink: /2007/10/15/reverse-mapping-in-linux-kernel/
+title: Reverse Mapping in Linux kernel
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body></p>
+<p><br />
+</p>
 <p>从vm_area找到其映射的struct page那叫mapping，反过来，从一个struct page找到所有映射上来的vm_area就叫reverse mapping。</p>
 <p>对于匿名映射，情况是这样的：</p>
 <p style="text-align:center;"><img src="{{site.baseurl}}/assets/2007/10/reverse-mapping.jpg"></p>
 <p>而对于非匿名映射，应该这样：</p>
 <p style="text-align:center;"><img src="{{site.baseurl}}/assets/2007/10/reverse-mapping2.gif"></p>
 <p>前者的技巧是加了anon_vma链表，而后者是加了一个layer——address_space。瞧～这名字起得多好，如果你第一次见绝对会把你绕晕～！</p>
-<p>上面的图片也清楚地向我们展示了这么一个结论：C语言编程其实就是Find a Needle in the Haystack～～！怎样？这次你信了吧～！</body></html></p>
+<p>上面的图片也清楚地向我们展示了这么一个结论：C语言编程其实就是Find a Needle in the Haystack～～！怎样？这次你信了吧～！</p>

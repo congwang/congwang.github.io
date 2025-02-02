@@ -1,29 +1,13 @@
 ---
-layout: post
-title: 'Benchmarking big number operations: C vs Python'
-date: 2007-11-08 14:49:13.000000000 -08:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Programming
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '252'
-  _wp_old_slug: '252'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2007/11/08/benchmarking-big-number-operations-c-vs-python/"
+date: 2007-11-08 14:49:13-08:00
+layout: post
+permalink: /2007/11/08/benchmarking-big-number-operations-c-vs-python/
+title: 'Benchmarking big number operations: C vs Python'
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body>
+<p><br />
+
 <p>最近在做RSA加密算法，急需要对大数（很大的数，一般来说是十进制500位以上的数字）进行加法和乘法操作。这就需要对如此大的数操作很快才可以。自然而然，我就想到了Python，它天生就支持大数操作。所以我的RSA也是用Python实现的。</p>
 <p>简单地搜了一下网上的一些实现，用C的基本上都采用了<a href="http://gmplib.org/">gmp库</a>，很牛的一个数字计算的库，接口很方便，而且效率也很乐观。下载一个其中一个还算漂亮的实现，速度超快。相比之下，我的Python程序就慢成马了，难以容忍，优化了一下循环，替换了一个判断素数的算法，效率还是低得出奇。无奈之下，向Herbert求救，在他的提示下，对C和Python的大数操作benchmark了一番。</p>
 <p>我用的源代码如下：（声明：C代码编写仓促，很是丑陋，勿模仿！）</p>
@@ -116,4 +100,4 @@ Multiply needs time: 207.901001 us</p>
 <p>-_-b 刚才搞错进制了。。。 1 second=1000*1000 microseconds 这下对了。Python确实比C慢。抑或是真正的问题出在这里？而不在我的算法？</p>
 <p>顺便也在这里问一下：有没有什么好的寻找大素数的算法？？<br />
 （整个RSA实现会在以后的文章中贴出。）</p>
-<p></body></html></p>
+<p></p>

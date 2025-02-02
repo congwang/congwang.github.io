@@ -1,29 +1,13 @@
 ---
-layout: post
-title: 又hack了一个shell脚本
-date: 2008-04-03 13:35:56.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Programming
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '326'
-  _wp_old_slug: '326'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2008/04/03/%e5%8f%88hack%e4%ba%86%e4%b8%80%e4%b8%aashell%e8%84%9a%e6%9c%ac/"
+date: 2008-04-03 13:35:56-07:00
+layout: post
+permalink: /2008/04/03/%e5%8f%88hack%e4%ba%86%e4%b8%80%e4%b8%aashell%e8%84%9a%e6%9c%ac/
+title: 又hack了一个shell脚本
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body>
+<p><br />
+
 <p>正如<a href="http://cocobear.cn">董溥同学</a>给我留的言，coolcode插件不支持C语言，这是事实。而且用coolcode插件往wordpress里贴代码也是不很爽～！<br />
 <br><br />
 于是乎，我就hack了一个脚本，调用vim来生成html，然后往博客里贴时复制里面的html代码就是了。恩，我知道emacs有个htmlize插件，可惜它生成的html是CSS的，貌似wordpress不支持直接贴那玩意（未经验证）。我用它更新了一下前面一篇文章中的代码，效果还不错，代码如下：<br />
@@ -44,4 +28,4 @@ vim <font color="#ff40ff">-n</font> <font color="#ff40ff">-c</font> <font colo
         <font color="#ff40ff">-c</font> <font color="#ffff00">"</font><font color="#ff6060">:qa</font><font color="#ffff00">"</font> <font color="#ff40ff">$1</font>  <font color="#ffff00">&gt;</font> /dev/null <font color="#ff6060">2</font><font color="#ffff00">&gt;</font> /dev/null<br><br />
 <font color="#ffff00">exit</font> <font color="#ff6060">0</font><br><br />
 <br></p>
-<p></body></html></p>
+<p></p>

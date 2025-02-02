@@ -1,29 +1,13 @@
 ---
-layout: post
-title: 为什么计数应该从零开始？
-date: 2013-01-26 22:26:38.000000000 -08:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Programming
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '2230'
-  _wp_old_slug: '2230'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2013/01/26/%e4%b8%ba%e4%bb%80%e4%b9%88%e8%ae%a1%e6%95%b0%e5%ba%94%e8%af%a5%e4%bb%8e%e9%9b%b6%e5%bc%80%e5%a7%8b%ef%bc%9f/"
+date: 2013-01-26 22:26:38-08:00
+layout: post
+permalink: /2013/01/26/%e4%b8%ba%e4%bb%80%e4%b9%88%e8%ae%a1%e6%95%b0%e5%ba%94%e8%af%a5%e4%bb%8e%e9%9b%b6%e5%bc%80%e5%a7%8b%ef%bc%9f/
+title: 为什么计数应该从零开始？
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body></p>
+<p><br />
+</p>
 <p>众所周知，C语言数组下标是从0开始，其它很多语言皆如此。而 FORTRAN 则是数组下标从1开始的典范。所以就有数组下标是从1开始好还是从0开始好之争。连《C专家编程》中都如此调侃：</p>
 <blockquote><p>数组的下标应该是从0还是从1开始？我提议的妥协方案是0.5，可惜他们未予认真考虑便一口回绝。—— Stan Kelly-Bootle</p></blockquote>
 <p>仔细思考一下这个问题很有意思，建议你不妨自己思考一下再继续往下看。</p>
@@ -39,4 +23,4 @@ permalink: "/2013/01/26/%e4%b8%ba%e4%bb%80%e4%b9%88%e8%ae%a1%e6%95%b0%e5%ba%94%e
 <p style="text-align:center;"><a href="http://wangcong.org/blog/wp-content/uploads/2013/01/ewd-2.png"><img class="size-full wp-image-2248    aligncenter" src="{{site.baseurl}}/assets/2013/01/Selection_022.png" alt="" width="584" height="461"></a></p>
 <p>当处理长度为 N 的序列时，我们期望通过下标来区分它的元素。下一个令人烦恼的问题就是，我们该给它的第一个元素赋予什么样下标值？坚持 a) 的方式，当下标从1开始时，下标范围为 1&lt;= i &lt; N+1；当下标从0开始时则是更好看的 0&lt;= i &lt; N。所以，让我们的序数从0开始：一个元素的序数（下标）等于序列中在它前面的元素个数。这个故事的寓意是我们最好尊重0最为一个最自然的数——过了这么多个世纪！</p>
 <p>---------</p>
-<p>顺便说一句，Python 选择了 a)，所以 range(0,3) 返回的是序列是 0，1，2。</body></html></p>
+<p>顺便说一句，Python 选择了 a)，所以 range(0,3) 返回的是序列是 0，1，2。</p>

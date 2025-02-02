@@ -1,29 +1,13 @@
 ---
-layout: post
-title: 一道智力题引发的数学问题
-date: 2007-09-27 14:46:52.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Life
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '223'
-  _wp_old_slug: '223'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2007/09/27/%e4%b8%80%e9%81%93%e6%99%ba%e5%8a%9b%e9%a2%98%e7%9a%84%e8%a7%a3/"
+date: 2007-09-27 14:46:52-07:00
+layout: post
+permalink: /2007/09/27/%e4%b8%80%e9%81%93%e6%99%ba%e5%8a%9b%e9%a2%98%e7%9a%84%e8%a7%a3/
+title: 一道智力题引发的数学问题
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body>
+<p><br />
+
 <p>林小峰同学在其博客上贴了<a href="http://windflush.cn/blog/?p=48">一道智力题</a>，我上次回复没仔细看题，还以为是老掉牙的称8个球的问题。刚才仔细一看原来不是，这题以前还真没见过。于是就仔细想了想，抱着“不走寻常路”的观念，花了15分钟本以为想出乐，结果发现其实不对。题目如下：</p>
 <p>题目：有12个乒乓球特征相同，其中只有一个重量异常，现在要求用一部没有砝码的天平称三次，将那个重量异常的球找出来。 （尤其特别注意：<strong>是异常，但不知是轻了还是重了</strong>）</p>
 <p>对比网上的答案又看了一下，发现以下两个问题：</p>
@@ -49,4 +33,4 @@ permalink: "/2007/09/27/%e4%b8%80%e9%81%93%e6%99%ba%e5%8a%9b%e9%a2%98%e7%9a%84%e
 <p>2. 把上面得到的三个结果进行按位与。</p>
 <p>3. 遍历完这12种情况，把每次得到的结果或起来。若是0xfff，符合要求；否则淘汰。</p>
 <p>这样，一个程序的雏形基本上就出来乐，如果不再进行优化的话，大概要进行237832111537020次计算。有兴趣的同学可以用Python来完成整个程序。（友情提示：Python里面的位操作和C里面的一样。）</p>
-<p></body></html></p>
+<p></p>

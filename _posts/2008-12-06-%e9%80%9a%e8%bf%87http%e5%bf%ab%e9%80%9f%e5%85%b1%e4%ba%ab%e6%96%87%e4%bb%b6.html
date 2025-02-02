@@ -1,29 +1,13 @@
 ---
-layout: post
-title: 通过http快速共享文件
-date: 2008-12-06 02:15:51.000000000 -08:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Programming
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '451'
-  _wp_old_slug: '451'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2008/12/06/%e9%80%9a%e8%bf%87http%e5%bf%ab%e9%80%9f%e5%85%b1%e4%ba%ab%e6%96%87%e4%bb%b6/"
+date: 2008-12-06 02:15:51-08:00
+layout: post
+permalink: /2008/12/06/%e9%80%9a%e8%bf%87http%e5%bf%ab%e9%80%9f%e5%85%b1%e4%ba%ab%e6%96%87%e4%bb%b6/
+title: 通过http快速共享文件
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body>
+<p><br />
+
 <p>一直有这么个想法，可以通过http像nfs那样快速共享文件。用apache吧，不至于动用那个大家伙，用C写一个吧，太麻烦。最后决定用Perl写，可无意间发现了Python有个更简单的模块——SimpleHTTPServer，于是就用Python写，几行就搞定了。</p>
 <p>代码见下：</p>
 <p>[python]<br />
@@ -41,4 +25,4 @@ httpd = SocketServer.TCPServer((addr, port), handler)<br />
 print "HTTP server is at: ", addr, port<br />
 httpd.serve_forever()</p>
 <p>[/python] </p>
-<p></body></html></p>
+<p></p>

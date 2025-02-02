@@ -1,29 +1,13 @@
 ---
-layout: post
-title: 深入理解 VXLAN
-date: 2012-11-17 22:03:14.000000000 -08:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Linux Kernel
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '2170'
-  _wp_old_slug: '2170'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2012/11/17/%e6%b7%b1%e5%85%a5%e7%90%86%e8%a7%a3-vxlan/"
+date: 2012-11-17 22:03:14-08:00
+layout: post
+permalink: /2012/11/17/%e6%b7%b1%e5%85%a5%e7%90%86%e8%a7%a3-vxlan/
+title: 深入理解 VXLAN
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body><br />
+<p><br />
+<br />
 <a href="http://tools.ietf.org/html/draft-mahalingam-dutt-dcops-vxlan-02" target="_blank">VXLAN</a> 是非常新的一个 tunnel 技术，它是一个 L2 tunnel。Linux 内核的 upstream 中也刚刚加入 VXLAN 的实现。相比 GRE tunnel 它有着很的扩展性，同时解决了很多其它问题。</p>
 <p><strong>一，GRE tunnel 的不足</strong></p>
 <p>网络很多介绍 VXLAN 的文章都没有直接告诉你相比较 GRE tunnel，VXLAN 的优势在哪里，或者说 GRE tunnel 的不足在哪里。为了更好的了解 VXLAN，我们有必要看一下 GRE tunnel 的不足。</p>
@@ -179,4 +163,4 @@ static const struct net_device_ops vxlan_netdev_ops = {<br />
 3. http://www.yellow-bricks.com/2012/11/02/vxlan-use-cases/<br />
 4. http://www.borgcube.com/blogs/2011/11/vxlan-primer-part-1/<br />
 5. http://www.borgcube.com/blogs/2012/03/vxlan-primer-part-2-lets-get-physical/<br />
-6. http://it20.info/2012/05/typical-vxlan-use-case/</body></html></p>
+6. http://it20.info/2012/05/typical-vxlan-use-case/</p>

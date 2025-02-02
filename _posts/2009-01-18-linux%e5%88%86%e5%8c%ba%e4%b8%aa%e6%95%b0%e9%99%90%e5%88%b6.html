@@ -1,29 +1,13 @@
 ---
-layout: post
-title: Linux分区个数限制
-date: 2009-01-18 00:58:18.000000000 -08:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Linux Kernel
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '502'
-  _wp_old_slug: '502'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2009/01/18/linux%e5%88%86%e5%8c%ba%e4%b8%aa%e6%95%b0%e9%99%90%e5%88%b6/"
+date: 2009-01-18 00:58:18-08:00
+layout: post
+permalink: /2009/01/18/linux%e5%88%86%e5%8c%ba%e4%b8%aa%e6%95%b0%e9%99%90%e5%88%b6/
+title: Linux分区个数限制
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body>
+<p><br />
+
 <p>在linux上，对于IDE硬盘来说，分区个数限制在63个；而对于SCSI硬盘限制在15个。</p>
 <p>我们可以直接在linux内核源代码中找到证据：</p>
 <p>include/linux/ide.h</p>
@@ -47,4 +31,4 @@ permalink: "/2009/01/18/linux%e5%88%86%e5%8c%ba%e4%b8%aa%e6%95%b0%e9%99%90%e5%88
 <p>Partitions are handled in the same way as for IDE<br />
 disks (see major number 3) except that the limit on<br />
 partitions is 15.</p>
-<p></body></html></p>
+<p></p>

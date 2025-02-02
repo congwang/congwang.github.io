@@ -1,29 +1,13 @@
 ---
-layout: post
-title: C中的宏预处理
-date: 2009-02-08 23:43:33.000000000 -08:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Programming
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '559'
-  _wp_old_slug: '559'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2009/02/08/c%e4%b8%ad%e7%9a%84%e5%ae%8f%e9%a2%84%e5%a4%84%e7%90%86/"
+date: 2009-02-08 23:43:33-08:00
+layout: post
+permalink: /2009/02/08/c%e4%b8%ad%e7%9a%84%e5%ae%8f%e9%a2%84%e5%a4%84%e7%90%86/
+title: C中的宏预处理
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body></p>
+<p><br />
+</p>
 <p>宏的预处理这个坑看起来浅，其实还蛮深的。它也是最容易被忽视的几个地方之一。这里斗胆来谈谈，说实话，在写这句话时我也不清楚这坑究竟有多深，没关系，我们摸着石头过河，一起看看到最后这坑能有多深！同时这篇文章也将会是《C语言编程艺术》中的一部分。</p>
 <p>从一个相对简单的例子说起吧。<br />
 [c]<br />
@@ -84,4 +68,4 @@ tokens), it is not replaced.</p></blockquote>
 <p>在上次替换中，被替换的是m，所以m<strong>在这里</strong>的再次出现将不会被替换，所以下一步是会替换第一个n，得到：!(m)+!(m)+n(m)，注意这里又替换出一个<strong>新的</strong>m来，这个m会被替换，因为这次扫描还没完成！下一步得到：!(m)+!(m)+n(!(m)+n)，第二遍扫描结束，全部的替换完成。</p>
 <p>综上，我们可以总结出两条重要的宏替换规则：1)再复杂的宏也只是被扫描两遍，而且递归是不允许发生的，即使在第2遍时；2)一个替换完成后如果还没扫描完，要从被替换的那里继续。</p>
 <p>（全文完）<br />
-</body></html></p>
+</p>

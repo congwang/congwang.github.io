@@ -1,29 +1,13 @@
 ---
-layout: post
-title: 解决 Fedora 10 键盘问题
-date: 2008-12-18 23:13:58.000000000 -08:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Linux Application
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '468'
-  _wp_old_slug: '468'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2008/12/18/%e8%a7%a3%e5%86%b3-fedora-10-%e9%94%ae%e7%9b%98%e9%97%ae%e9%a2%98/"
+date: 2008-12-18 23:13:58-08:00
+layout: post
+permalink: /2008/12/18/%e8%a7%a3%e5%86%b3-fedora-10-%e9%94%ae%e7%9b%98%e9%97%ae%e9%a2%98/
+title: 解决 Fedora 10 键盘问题
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body>
+<p><br />
+
 <p>升级到Fedora 10后遇到一个很奇怪的问题：敲Page Up键会输入/，而Page Down键，End键和四个方向键全不能用了。很是诡异，以前从来没遇到过，而且Fedora 9时还是好好的呢。</p>
 <p>我找了半天，最后发现，我虽然已经到Fedora 10了，但xorg-x11-drv-evdev包居然还是FC9的！而且还有两个不同版本的！！那很明显，问题应该就在这里了。直接升级它，不行，因为FC9的一个比FC10的还新。于是只好卸载了再装新的，可是因为依赖性关系，要卸载得关联一堆，怎么办呢？强制安装新的，然后再卸载旧的：</p>
 <p>sudo rpm --force -ivh Download/xorg-x11-drv-evdev-2.0.7-3.fc10.i386.rpm<br />
@@ -32,4 +16,4 @@ sudo rpm -e xorg-x11-drv-evdev-2.0.8-1.fc9.i386</p>
 <p>BTW，我在安装这个之前还修改了xorg，把keyborad对应的那部分中的Driver改成：</p>
 <p>Driver      "evdev"</p>
 <p>貌似这似乎也是必须的，我不确定。</p>
-<p></body></html></p>
+<p></p>

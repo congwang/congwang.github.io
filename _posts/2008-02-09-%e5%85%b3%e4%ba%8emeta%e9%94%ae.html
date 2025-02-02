@@ -1,29 +1,13 @@
 ---
-layout: post
-title: 关于Meta键
-date: 2008-02-09 23:21:23.000000000 -08:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Linux Application
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '295'
-  _wp_old_slug: '295'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2008/02/09/%e5%85%b3%e4%ba%8emeta%e9%94%ae/"
+date: 2008-02-09 23:21:23-08:00
+layout: post
+permalink: /2008/02/09/%e5%85%b3%e4%ba%8emeta%e9%94%ae/
+title: 关于Meta键
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body>
+<p><br />
+
 <p>最近在着手使用emacs，难免要和Meta键打交道。可是遇到一个小冲突。那就是，在FC上，Alt键被设置为Meta，而Alt又偏偏正好是某些窗口菜单的快捷键，比如gnome-terminal。这样问题就来了，如果我在gnome-terminal里使用emacs的话，本来是想使用M-b来移动光标，按Alt＋b却调出了gnome-terminal的一个菜单，也就是说这个按键被窗口先于emacs捕捉到了。</p>
 <p>简单搜了搜，没有太合适的方法。最理想的一个方法是把Win键映射成Meta，把Alt键上的Meta去掉。修改了一下~/.Xmodmap，倒是把Win键给映射过去了，但Alt仍然会被窗口捕捉到。估计还要修改xterm的配置，未果。最后找到的一个临时解决方法是，在gnome-terminal的“编辑-&gt;快捷键”里面把快捷键都禁用掉。反正我是基本上不会用Alt键来调用菜单～</p>
-<p></body></html></p>
+<p></p>

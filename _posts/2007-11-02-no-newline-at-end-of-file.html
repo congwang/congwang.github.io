@@ -1,29 +1,13 @@
 ---
-layout: post
-title: No newline at end of file!
-date: 2007-11-02 23:38:52.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Programming
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '247'
-  _wp_old_slug: '247'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2007/11/02/no-newline-at-end-of-file/"
+date: 2007-11-02 23:38:52-07:00
+layout: post
+permalink: /2007/11/02/no-newline-at-end-of-file/
+title: No newline at end of file!
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body></p>
+<p><br />
+</p>
 <p>初学gcc的人通常会遇到这种警告：</p>
 <p>$ echo -n -e "t" | gcc -xc -E -<br />
 # 1 "&lt;stdin&gt;"<br />
@@ -44,4 +28,4 @@ a backslash character before any such  splicing  takes<br />
 place.</p></blockquote>
 <p>C99 Rationale中进一步指出：</p>
 <blockquote><p>A backslash immediately before a newline has long been used to continue string literals, as well as preprocessing command lines. In the interest of easing machine generation of C, and of transporting code to machines with restrictive physical line lengths, the C89 Committee generalized this mechanism to permit any token to be continued by interposing a backslash/newline sequence.</p></blockquote>
-<p>这么规定的初衷有两个：一是为了每一行都要以换行结束。二是，因为行尾的表示连接下一行，如果一个文件最后一行行尾有，那么，紧跟它也被包含进来的下一个源文件的第一行就会被连接！而如果一个文件以一个空行结束就会避免这种情况的发生。</body></html></p>
+<p>这么规定的初衷有两个：一是为了每一行都要以换行结束。二是，因为行尾的表示连接下一行，如果一个文件最后一行行尾有，那么，紧跟它也被包含进来的下一个源文件的第一行就会被连接！而如果一个文件以一个空行结束就会避免这种情况的发生。</p>

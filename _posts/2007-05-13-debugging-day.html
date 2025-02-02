@@ -1,29 +1,13 @@
 ---
-layout: post
-title: Debugging Day
-date: 2007-05-13 23:25:27.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Programming
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '102'
-  _wp_old_slug: '102'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2007/05/13/debugging-day/"
+date: 2007-05-13 23:25:27-07:00
+layout: post
+permalink: /2007/05/13/debugging-day/
+title: Debugging Day
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body></p>
+<p><br />
+</p>
 <p>今天下午审查我们这边的Java代码时捕捉到N个bug，收获颇多。在这里小总结一下。</p>
 <p>1. 最难找的bug</p>
 <p>这个bug困惑我们很久了，我们为了它 已经有好几天食不甘味了。bug的症状是这样的，在通过ls读取数据连接的数据时，总是停在最后那里。我们一直以为是read的原因，而且网上也有讨论说是靠read()的返回值并不可靠。于是我们都在研究read()……但今天孔建军突然报告说是close()出问题了，而且把FTPOutStream.close()去了问题就没有了！最后分析发现，应该是Java中的stdout不能关闭。</p>
@@ -39,4 +23,4 @@ permalink: "/2007/05/13/debugging-day/"
 <p>FTPConnection.Status的值几乎总是不对，关键是处理异常后没有恢复原来的状态。因为它和异常处理缠绕在一起，所以不太好修复。</p>
 <p>4. 处理最巧妙的bug</p>
 <p>到最后，周晓炜发现一个问题，我们竟然无法区分close和quit，因为有控制连接时我们都把它翻译成了QUIT！在处理QUIT时无法对最初的输入进行判断。</p>
-<p>我想到的修复办法比较巧妙，那就是在quit对应的QUIT后面再加一个QUIT。发送第一个QUIT命令后，可以通过检查后一个命令是否还是QUIT来判断是quit还是close。这样问题就解决了。</body></html></p>
+<p>我想到的修复办法比较巧妙，那就是在quit对应的QUIT后面再加一个QUIT。发送第一个QUIT命令后，可以通过检查后一个命令是否还是QUIT来判断是quit还是close。这样问题就解决了。</p>

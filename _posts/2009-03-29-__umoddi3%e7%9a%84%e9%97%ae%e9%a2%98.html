@@ -1,29 +1,13 @@
 ---
-layout: post
-title: __umoddi3()的问题
-date: 2009-03-29 21:31:49.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Linux Kernel
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '654'
-  _wp_old_slug: '654'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2009/03/29/__umoddi3%e7%9a%84%e9%97%ae%e9%a2%98/"
+date: 2009-03-29 21:31:49-07:00
+layout: post
+permalink: /2009/03/29/__umoddi3%e7%9a%84%e9%97%ae%e9%a2%98/
+title: __umoddi3()的问题
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body></p>
+<p><br />
+</p>
 <p>在编译内核时有人遇到下面这个问题：</p>
 <pre>
 kernel/built-in.o: In function `getnstimeofday':
@@ -71,4 +55,4 @@ b = i;</p>
 <p>其实就是：</p>
 <p>a = 10;<br />
 b = 10;</p>
-<p>可见，编译优化是门大学问，写个编译器丝毫不比写个内核容易。:-P</body></html></p>
+<p>可见，编译优化是门大学问，写个编译器丝毫不比写个内核容易。:-P</p>

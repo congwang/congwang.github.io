@@ -1,29 +1,13 @@
 ---
-layout: post
-title: bash变量作用域
-date: 2008-10-07 21:50:15.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Programming
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '392'
-  _wp_old_slug: '392'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2008/10/07/bash%e5%8f%98%e9%87%8f%e4%bd%9c%e7%94%a8%e5%9f%9f/"
+date: 2008-10-07 21:50:15-07:00
+layout: post
+permalink: /2008/10/07/bash%e5%8f%98%e9%87%8f%e4%bd%9c%e7%94%a8%e5%9f%9f/
+title: bash变量作用域
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body></p>
+<p><br />
+</p>
 <p>bash的变量作用域其实很简单，不过有些时候可能看起来很奇怪。下面简单总结一下。</p>
 <p>在默认的情况下，bash的变量都是全局的，除非你使用了local或者typeset命令来改变，那样就可以变成局部的了。</p>
 <p>export改变的是变量是否对其子进程可见，并不会影响父进程，如果想要改变父进程中的变量可以用source（或者“.”）。需要额外说明的是，source后面的脚本不能有exit，否者父进程就跟着一起退出了。</p>
@@ -51,4 +35,4 @@ permalink: "/2008/10/07/bash%e5%8f%98%e9%87%8f%e4%bd%9c%e7%94%a8%e5%9f%9f/"
 </li>
 </ol>
 </div>
-<p>这时就不那么容易觉察了。解决方法是，用重定向去替换管道。</body></html></p>
+<p>这时就不那么容易觉察了。解决方法是，用重定向去替换管道。</p>

@@ -1,29 +1,13 @@
 ---
-layout: post
-title: perfbook 读书笔记：livelock
-date: 2012-03-24 15:44:17.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Linux Kernel
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '1930'
-  _wp_old_slug: '1930'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2012/03/24/perfbook-%e8%af%bb%e4%b9%a6%e7%ac%94%e8%ae%b0%ef%bc%9alivelock/"
+date: 2012-03-24 15:44:17-07:00
+layout: post
+permalink: /2012/03/24/perfbook-%e8%af%bb%e4%b9%a6%e7%ac%94%e8%ae%b0%ef%bc%9alivelock/
+title: perfbook 读书笔记：livelock
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body></p>
+<p><br />
+</p>
 <p>注：本文以及后面的文章中提到的 perfbook 均是指大牛 Paul E. McKenney 的书，《Is Parallel Programming Hard, And, If So, What Can You Do About It?》，书名太长，故简写之。</p>
 <p>最近一直在读这本 perfbook，它算是少有的全面而专门介绍 locking 的书，值得每个系统程序员去读。在读的过程中发现有的地方它介绍的并不是很详细，所以就写几篇读书笔记也算是对它的小小补充。</p>
 <p>书中 6.1.2 节讲到了 livelock，即所谓的“活锁”，相对于死锁（deadlock）而言。因为上过操作系统课的原因，我估计很多人对 deadlock 并不陌生，但是 livelock 相对不那么熟悉。livelock 无非是饥饿（starvation）的极端情况。饥饿是由竞争引起，所谓竞争（contention）是指尝试获取一个已经被锁住的锁，长时间竞争会导致这些得不到锁的进程饥饿，所以饥饿的极端情况就是多个进程一直在尝试获取某一（几）把锁，但一直都得不到满足。</p>
@@ -72,4 +56,4 @@ relock:<br />
 <p>6. CPU1 的进程开始重复步骤(3)；</p>
 <p>7. CPU0 的进程开始重复步骤(2)。</p>
 <p>Livelock 产生了！</p>
-<p>这里问题的关键在于那个 dispose list，如果 dentry C被某个进程加入到 dispose list 中，另外的进程不应该再找到它，所以修复就是加一个标志位 DCACHE_SHRINK_LIST，来标示这个 dentry 有没有被加入。</body></html></p>
+<p>这里问题的关键在于那个 dispose list，如果 dentry C被某个进程加入到 dispose list 中，另外的进程不应该再找到它，所以修复就是加一个标志位 DCACHE_SHRINK_LIST，来标示这个 dentry 有没有被加入。</p>

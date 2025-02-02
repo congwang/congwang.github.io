@@ -1,29 +1,13 @@
 ---
-layout: post
-title: 在 openvswitch 上配置 VXLAN
-date: 2013-02-04 17:40:16.000000000 -08:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Linux Application
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '2238'
-  _wp_old_slug: '2238'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2013/02/04/%e5%9c%a8-openvswitch-%e4%b8%8a%e9%85%8d%e7%bd%ae-vxlan/"
+date: 2013-02-04 17:40:16-08:00
+layout: post
+permalink: /2013/02/04/%e5%9c%a8-openvswitch-%e4%b8%8a%e9%85%8d%e7%bd%ae-vxlan/
+title: 在 openvswitch 上配置 VXLAN
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body></p>
+<p><br />
+</p>
 <p>（<strong>本文讲的是 korg 内核中的 openvswitch，而非 openvswitch.org 上提供的openvswitch模块。</strong>）</p>
 <p>之前讲过<a href="http://wangcong.org/blog/archives/2170"> VXLAN</a>，但是一直没有动手实践。其实配置 VXLAN 要比<a href="http://wangcong.org/blog/archives/2163">配置 GRE tunnel</a> 简单很多，你所需要做的只要两步：</p>
 <p>1. 添加 VXLAN 设备（需要比较新的 iproute2 和内核支持）：</p>
@@ -137,4 +121,4 @@ eth0      Link encap:Ethernet  HWaddr E8:39:35:30:1D:1E
         0x0080:  2425 2627 2829 2a2b 2c2d 2e2f 3031 3233
         0x0090:  3435 3637
 </pre>
-<p></body></html></p>
+<p></p>

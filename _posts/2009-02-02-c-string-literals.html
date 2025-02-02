@@ -1,29 +1,13 @@
 ---
-layout: post
-title: C++ string literals
-date: 2009-02-02 20:39:23.000000000 -08:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Programming
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '544'
-  _wp_old_slug: '544'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2009/02/02/c-string-literals/"
+date: 2009-02-02 20:39:23-08:00
+layout: post
+permalink: /2009/02/02/c-string-literals/
+title: C++ string literals
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body></p>
+<p><br />
+</p>
 <p>从一个例子谈起，下面的例子摘自《C++ Templates》。<br />
 [cpp]<br />
 #include<br />
@@ -59,4 +43,4 @@ where n is the size of the string as defined below, and is initialized with the 
 <p>有些跑题了……咳，所以，当引用传递时自然是原来的类型const char[]。</p>
 <p>而直接传递呢？直接传递其实也是const char[]！我没开玩笑！想想啊，它的类型怎么能会突然就变呢？不可能！问题是为什么typeid看到的是const char *？很简单啊，因为这是函数！当数组作为函数参数传递时会退化为指针，我们耳熟能详的这句话在C++里也适用啊！所以，这里拧把的不是模板，而是引用，别被模板给吓怕了！</p>
 <p>如果你仔细看看原书那一节，你会发现还有个问题比较拧把：不同长度的同类型数组其实也不是一个类型，这也不难理解，放C里看看你就知道了：C里的一切类型皆是连续的内存块，数组更是，不同长度的同类型数组长度还是不一样啊，怎么能是同一个类型呢？所以这就有问题了，不同长度的字符串常量还不能作为同一个类型直接传递进模板了？如果我们用引用传递的话，是，可如果不用的话就行了，这正是解决方法！或者更干脆，直接用std::string。</p>
-<p></body></html></p>
+<p></p>

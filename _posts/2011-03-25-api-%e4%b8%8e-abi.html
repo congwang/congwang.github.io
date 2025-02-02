@@ -1,29 +1,13 @@
 ---
-layout: post
-title: API 与 ABI
-date: 2011-03-25 23:29:16.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Programming
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '1573'
-  _wp_old_slug: '1573'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2011/03/25/api-%e4%b8%8e-abi/"
+date: 2011-03-25 23:29:16-07:00
+layout: post
+permalink: /2011/03/25/api-%e4%b8%8e-abi/
+title: API 与 ABI
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body>
+<p><br />
+
 <p>（本文亦是《C语言编程艺术》中的一部分，所以请勿用于商业用途。）</p>
 <p>一些程序员居然对API和ABI这两个概念都不清楚，我感到有些惊讶。这里以 Linux 内核为例简单解释一下。</p>
 <p>API，顾名思义，是<a href="http://en.wikipedia.org/wiki/Application_programming_interface" target="_blank">编程的接口</a>，换句话说也就是你编写“应用程序”时候调用的函数之类的东西。对于内核来说，它的“应用程序”有两种：一种是在它之上的，用户空间的真正的应用程序，内核给它们提供的是系统调用这种接口，比如 read(2)，write(2)；另一种就是内核模块了，它们和内核处于同一层，内核给它们提供的是导出的内核函数，比如 kmalloc()，printk()。这些接口都是你可以在<strong>编写</strong>程序的时候直接看到的，可以直接拿来用的。</p>
@@ -34,4 +18,4 @@ permalink: "/2011/03/25/api-%e4%b8%8e-abi/"
 <p>所以，你的驱动在不同版本的内核上不经修改直接运行那几乎是不太可能的，就算是你允许重新编译也未必就能不经修改编译成功。即使在同一个大版本的不同发行版上也可能不行。</p>
 <p>那你应该怎么办？最好的办法莫过于把你的驱动贡献到社区，汇入内核源代码树中，这样一旦内核的 API 有改动，改动这个 API 的人就<strong>有义务</strong>替你修改你的驱动的代码，你只需要 review 一下（或者这个也会有人帮你），也省去你不少时间，何乐而不为呢？另一种办法就是基于某个提供稳定 ABI 的内核，比如红帽的 RHEL （认为这是广告的人请使用 CentOS，谢谢！），红帽的企业版内核保证有稳定的 ABI，只要你没有跨大的版本，因为我们的源代码里会检测 ABI 的变化，为此我们实在付出了不少努力。</p>
 <p>当然了，如何<a href="http://ispras.linuxfoundation.org/index.php/ABI_compliance_checker" target="_blank">检查 ABI 变化</a>那就是另一个有意思的话题了，以后有机会慢慢说这个问题。</p>
-<p></body></html></p>
+<p></p>

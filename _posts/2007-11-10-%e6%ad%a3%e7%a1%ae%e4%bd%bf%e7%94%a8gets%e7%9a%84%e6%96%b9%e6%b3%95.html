@@ -1,29 +1,13 @@
 ---
-layout: post
-title: 一个正确使用gets的方法
-date: 2007-11-10 21:14:01.000000000 -08:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Programming
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '254'
-  _wp_old_slug: '254'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2007/11/10/%e6%ad%a3%e7%a1%ae%e4%bd%bf%e7%94%a8gets%e7%9a%84%e6%96%b9%e6%b3%95/"
+date: 2007-11-10 21:14:01-08:00
+layout: post
+permalink: /2007/11/10/%e6%ad%a3%e7%a1%ae%e4%bd%bf%e7%94%a8gets%e7%9a%84%e6%96%b9%e6%b3%95/
+title: 一个正确使用gets的方法
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body>
+<p><br />
+
 <p>gets太臭名昭著了，因为它是缓冲区溢出的最大祸根之一。连Linux Programmer’s Manual里都说：“Never use gets().”。没错，你几乎就没有能正确使用它的方法，因为它根本就不关心缓冲区到底够不够，只是一股脑地往里写数据。 如果你写了带gets的程序，gcc甚至会提示：“ warning: the `gets' function is dangerous and should not be used.”。</p>
 <p>可是，如果我们仔细想想，究竟有没有正确使用gets的时候？答案是肯定的。那怎么才能正确使用gets呢？其实也很简单，我们只要设置保卫页面（guard pages）来对付溢出就可以了。在Linux上，我们可以这么做：</p>
 <p>#include<br />
@@ -55,4 +39,4 @@ permalink: "/2007/11/10/%e6%ad%a3%e7%a1%ae%e4%bd%bf%e7%94%a8gets%e7%9a%84%e6%96%
 	return 0;<br />
 }</p>
 <p>这时，如果写入的数据超出我们的缓冲区，程序就会收到SIGSEGV而退出。</p>
-<p></body></html></p>
+<p></p>

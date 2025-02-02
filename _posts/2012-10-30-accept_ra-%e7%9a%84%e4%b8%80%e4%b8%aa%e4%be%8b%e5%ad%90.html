@@ -1,29 +1,13 @@
 ---
-layout: post
-title: accept_ra 的一个例子
-date: 2012-10-30 16:55:22.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Linux Kernel
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '2140'
-  _wp_old_slug: '2140'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2012/10/30/accept_ra-%e7%9a%84%e4%b8%80%e4%b8%aa%e4%be%8b%e5%ad%90/"
+date: 2012-10-30 16:55:22-07:00
+layout: post
+permalink: /2012/10/30/accept_ra-%e7%9a%84%e4%b8%80%e4%b8%aa%e4%be%8b%e5%ad%90/
+title: accept_ra 的一个例子
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body></p>
+<p><br />
+</p>
 <p>在 IPv6 中，Router Advertisement （简称 RA）是很关键的一个 ICMP 包，stateless autoconf 就是靠 RA 配置 IP 地址的，主机发送Router Solicitation（RS）广播，有点类似于 IPv4 中的 DHCP request，路由器就会回应 RA，类似于 DHCP reply。不同的是，DHCP 是 stateful 的，因为 DHCP 服务器必须维持一个地址表，而 IPv6 的路由器却不需要，所以是无状态的，而且 RA 的广播是周期性的。</p>
 <p>以上是技术背景。显然，一般情况下你是要接受这个包的。而我遇到一种情况却不得不禁止掉这个选项。</p>
 <p>情况是这样的，两台主机通过一个交换机连接，现在我们修改两台主机以及交换机的 MTU 为 9000，来发送大小为 8000 的 <a href="http://en.wikipedia.org/wiki/Jumbo_frame" target="_blank">Jumbo Frame</a>，IPv4 一切正常，可是到了 IPv6 下面却不行了，会收到 ICMPV6_PKT_TOOBIG。</p>
@@ -31,4 +15,4 @@ permalink: "/2012/10/30/accept_ra-%e7%9a%84%e4%b8%80%e4%b8%aa%e4%be%8b%e5%ad%90/
 <blockquote><p>In IPv4, routers perform fragmentation, whereas in IPv6, routers do not fragment, but drop the packets that are larger than the MTU.</p></blockquote>
 <p>而我这里所谓的主机完成是指 PMTU 的计算是由主机完成的：既然 IPv6 的 router 不进行分片，那么主机必须在发送之前知道整个 path 上最小的 MTU，即 PMTU。</p>
 <p>好了，既然我们修改了主机的 MTU，那么 PMTU 也需要更新，尤其是 IPv6 路由表中的 MTU。幸运的是，这个是由内核自动完成的，通过 NETDEV_CHANGEMTU 这个异步通知完成。`ip -6 r s` 也可以看出对应的 MTU 确实变成了 9000，但是，不一会儿我就发现该 MTU 还会自动变会成之前的 1500。这很奇怪，然后我就捕捉一些包看看，发现原来每当收到 RA 的时候这个 MTU 就会变化！不用看代码你也能马上理解，RA 里肯定也包含了一个 router 的 MTU，这个 MTU 是 1500，所以 PMTU 才会跳回到 1500！</p>
-<p>可是我们不是已经修改交换机的 MTU 了，为什么它还会发出 RA (MTU=1500) 的广播？连接上交换机一看，jumbo MTU 确实是改成了 9000，但 routing MTU 依旧是 1500，而且无法修改成 9000，毕竟千兆网卡还没有普及。所以现在的问题就是，这个配置其实是对的，8000 字节的包明显在<strong>物理上</strong>也是可以发送出去的，但 IPv6 就因为交换机的 routing MTU 是 1500 而无法发送，这种情况下我们就不得不禁止掉 accept_ra 这个选项了，地址的获取用 DHCPv6 了。</body></html></p>
+<p>可是我们不是已经修改交换机的 MTU 了，为什么它还会发出 RA (MTU=1500) 的广播？连接上交换机一看，jumbo MTU 确实是改成了 9000，但 routing MTU 依旧是 1500，而且无法修改成 9000，毕竟千兆网卡还没有普及。所以现在的问题就是，这个配置其实是对的，8000 字节的包明显在<strong>物理上</strong>也是可以发送出去的，但 IPv6 就因为交换机的 routing MTU 是 1500 而无法发送，这种情况下我们就不得不禁止掉 accept_ra 这个选项了，地址的获取用 DHCPv6 了。</p>

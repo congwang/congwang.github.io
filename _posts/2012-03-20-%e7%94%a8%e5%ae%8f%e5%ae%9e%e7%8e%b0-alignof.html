@@ -1,29 +1,13 @@
 ---
-layout: post
-title: 用宏实现 alignof
-date: 2012-03-20 21:29:14.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Programming
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '1924'
-  _wp_old_slug: '1924'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2012/03/20/%e7%94%a8%e5%ae%8f%e5%ae%9e%e7%8e%b0-alignof/"
+date: 2012-03-20 21:29:14-07:00
+layout: post
+permalink: /2012/03/20/%e7%94%a8%e5%ae%8f%e5%ae%9e%e7%8e%b0-alignof/
+title: 用宏实现 alignof
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body>
+<p><br />
+
 <p>我们知道在C2011标准中引入了 alignof 操作符，但是在 gcc 和 glibc 完全支持 C2011 之前，我们仍然不能使用它。其实我们可以自己用宏实现一个（<a href="https://groups.google.com/forum/?fromgroups#!topic/comp.lang.c/g3f3CHgX864" target="_blank">出自c.l.c</a>）：</p>
 <p>#define AlignOf(type_) (offsetof(struct { char c; type_ t; }, t))</p>
 <p>它巧妙地把参数指定的类型放入一个结构体中，在此结构体的最前面镶入一个 char 类型，这样该成员在结构体中的偏移就是它对齐的位置。看例子：</p>
@@ -48,4 +32,4 @@ sizeof foo: 16<br />
 AlignOf foo: 8<br />
 sizeof bar: 2048<br />
 AlignOf bar: 8</p>
-<p></body></html></p>
+<p></p>

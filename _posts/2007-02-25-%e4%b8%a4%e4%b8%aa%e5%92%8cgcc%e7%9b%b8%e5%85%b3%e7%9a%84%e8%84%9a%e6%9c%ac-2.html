@@ -1,29 +1,13 @@
 ---
-layout: post
-title: 两个和gcc相关的脚本
-date: 2007-02-25 23:07:48.000000000 -08:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Linux Kernel
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '13'
-  _wp_old_slug: '13'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2007/02/25/%e4%b8%a4%e4%b8%aa%e5%92%8cgcc%e7%9b%b8%e5%85%b3%e7%9a%84%e8%84%9a%e6%9c%ac-2/"
+date: 2007-02-25 23:07:48-08:00
+layout: post
+permalink: /2007/02/25/%e4%b8%a4%e4%b8%aa%e5%92%8cgcc%e7%9b%b8%e5%85%b3%e7%9a%84%e8%84%9a%e6%9c%ac-2/
+title: 两个和gcc相关的脚本
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body></p>
+<p><br />
+</p>
 <p class="postdate">Sunday, 25. February 2007, 07:16:44</p>
 <p class="content">Linux内核源代码中有这么一个脚本文件：scripts/gcc-version.sh。它的主要代码如下：</p>
 <pre>
@@ -41,4 +25,4 @@ permalink: "/2007/02/25/%e4%b8%a4%e4%b8%aa%e5%92%8cgcc%e7%9b%b8%e5%85%b3%e7%9a%8
      4  if [ "$?" -eq "0" ] ; then
      5          echo $2
      6  fi</pre>
-<p>-fstack-protector选项是指明要检查堆栈是否会溢出，这是为了保护程序免于缓冲区溢出的攻击；-mcmodel=kernel是指明要为内核模式生成代码，Linux内核似乎要使用此选项。第3行的命令使用得更妙，还把中间命令的错误重定向到了/dev/null，而且还为grep开启了安静模式。似乎是从生成的汇编中找到"%gs"这个寄存器就说明有堆栈保护，但原理还是不明白;-(。</body></html></p>
+<p>-fstack-protector选项是指明要检查堆栈是否会溢出，这是为了保护程序免于缓冲区溢出的攻击；-mcmodel=kernel是指明要为内核模式生成代码，Linux内核似乎要使用此选项。第3行的命令使用得更妙，还把中间命令的错误重定向到了/dev/null，而且还为grep开启了安静模式。似乎是从生成的汇编中找到"%gs"这个寄存器就说明有堆栈保护，但原理还是不明白;-(。</p>

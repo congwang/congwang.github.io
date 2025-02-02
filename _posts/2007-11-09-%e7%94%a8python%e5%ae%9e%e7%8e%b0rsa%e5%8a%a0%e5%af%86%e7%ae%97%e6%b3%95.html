@@ -1,29 +1,13 @@
 ---
-layout: post
-title: 用Python实现RSA加密算法
-date: 2007-11-09 17:33:33.000000000 -08:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Programming
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '253'
-  _wp_old_slug: '253'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2007/11/09/%e7%94%a8python%e5%ae%9e%e7%8e%b0rsa%e5%8a%a0%e5%af%86%e7%ae%97%e6%b3%95/"
+date: 2007-11-09 17:33:33-08:00
+layout: post
+permalink: /2007/11/09/%e7%94%a8python%e5%ae%9e%e7%8e%b0rsa%e5%8a%a0%e5%af%86%e7%ae%97%e6%b3%95/
+title: 用Python实现RSA加密算法
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body>
+<p><br />
+
 <p>这学期开了一门网络安全课，应老师要求，最近要做RSA加密算法。前一篇文章中已经提到，我是用Python来实现的整个程序，而且速度上嘛，比用C实现的慢了很多。我还不清楚到底是寻找素数的算法存在问题，还是Python本身的问题。</p>
 <p>关于RSA算法的讲解，最好的莫过于wikipedia上的<a href="http://en.wikipedia.org/wiki/RSA">RSA词条</a>。里面已经非常详细地说明了，这里就不再赘述。整个算法中要用到的数学算法有：<a href="http://en.wikipedia.org/wiki/Extended_Euclidean_algorithm">Extended Euclidean algorithm</a>，<a href="http://en.wikipedia.org/wiki/Miller-Rabin_primality_test">Miller-Rabin primality test</a>。当然，你还需要<a href="http://en.wikipedia.org/wiki/Modulo_operation">Modulo operation</a>的知识。</p>
 <p>整个算法最关键的是找到合适的P，Q，以及求D。前者尤为关键，它几乎决定了整个程序的运行速度。所以，找到一个搜索大素数的好算法是核心问题。关于求D，我并没有使用Extended Euclidean algorithm，而是用了蛮力求解，没关系，这影响不大，关键还是刚才说的那个。</p>
@@ -147,4 +131,4 @@ E= 65537</p>
 		print enc<br />
 	dec = rsa_decrypt(enc)<br />
 	print ''.join(dec)</p>
-<p></body></html></p>
+<p></p>

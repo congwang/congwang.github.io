@@ -1,29 +1,13 @@
 ---
-layout: post
-title: 获取C语言数据类型大小
-date: 2009-12-28 12:10:15.000000000 -08:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Programming
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '889'
-  _wp_old_slug: '889'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2009/12/28/%e8%8e%b7%e5%8f%96c%e8%af%ad%e8%a8%80%e6%95%b0%e6%8d%ae%e7%b1%bb%e5%9e%8b%e5%a4%a7%e5%b0%8f/"
+date: 2009-12-28 12:10:15-08:00
+layout: post
+permalink: /2009/12/28/%e8%8e%b7%e5%8f%96c%e8%af%ad%e8%a8%80%e6%95%b0%e6%8d%ae%e7%b1%bb%e5%9e%8b%e5%a4%a7%e5%b0%8f/
+title: 获取C语言数据类型大小
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body>
+<p><br />
+
 <p>一个简单的脚本，可以在命令行下获取C语言中数据类型的大小。在邮件列表的讨论中看到的这个主意，我用 Perl 重写了一下。</p>
 <p>代码很简单，见下。分享一下，希望对你有用。<br />
 [perl]<br />
@@ -62,4 +46,4 @@ EOF<br />
 my $result = qx(gcc -o $exe_file $exe_file.c &amp;&amp; $exe_file);<br />
 print $result;<br />
 [/perl]</p>
-<p></body></html></p>
+<p></p>

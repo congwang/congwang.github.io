@@ -1,29 +1,13 @@
 ---
-layout: post
-title: 从C/C++到Java（二）
-date: 2007-03-25 15:59:38.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Programming
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '63'
-  _wp_old_slug: '63'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2007/03/25/%e4%bb%8ecc%e5%88%b0java%ef%bc%88%e4%ba%8c%ef%bc%89/"
+date: 2007-03-25 15:59:38-07:00
+layout: post
+permalink: /2007/03/25/%e4%bb%8ecc%e5%88%b0java%ef%bc%88%e4%ba%8c%ef%bc%89/
+title: 从C/C++到Java（二）
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body>
+<p><br />
+
 <p>1. ISO C中的下列关键字在Java中被剔出：</p>
 <p>(1)goto：Java不需要goto，即使是在C中被很好使用的goto。Java的错误处理机制才用的throw/try/catch，有点像C++。<br />
 (2)sizeof：Java的基本类型都有固定的大小，而你不需要知道非基本类型的大小，所以Java不需要这个操作符。<br />
@@ -38,4 +22,4 @@ permalink: "/2007/03/25/%e4%bb%8ecc%e5%88%b0java%ef%bc%88%e4%ba%8c%ef%bc%89/"
 <p>7. Java中没有严格的声明，只有定义。C++不同，当你在花括号中描述了一个类的成员和方法时，它才算是被定义；否则就是声明。</p>
 <p>8. Java没有C++中的友元，在Java中，同一个Package中的类其实就是朋友关系，它们可以访问彼此的protected成员。</p>
 <p>9. Java和C++都有构造函数，名字都和类同名，而且可以被重载（overload）。不同的一点是Java没有析构函数，Java中的一个可替代的选择是finalize()函数，它会在适当的时候被GC调用。</p>
-<p></body></html></p>
+<p></p>

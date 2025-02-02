@@ -1,29 +1,13 @@
 ---
-layout: post
-title: An overview of Openvswitch implementation
-date: 2012-10-20 10:09:46.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Linux Kernel
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '2131'
-  _wp_old_slug: '2131'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2012/10/20/an-overview-of-openvswitch-implementation/"
+date: 2012-10-20 10:09:46-07:00
+layout: post
+permalink: /2012/10/20/an-overview-of-openvswitch-implementation/
+title: An overview of Openvswitch implementation
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<!-- 		@page { margin: 2cm } 		P { margin-bottom: 0.21cm } 		H1 { margin-bottom: 0.21cm } 		H1.western { font-family: "Liberation Sans", sans-serif; font-size: 16pt } 		H1.cjk { font-family: "WenQuanYi Zen Hei"; font-size: 16pt } 		H1.ctl { font-family: "Lohit Devanagari"; font-size: 16pt } 		A:link { so-language: zxx } --><html><body><br />
+<p><br />
+<!-- 		@page { margin: 2cm } 		P { margin-bottom: 0.21cm } 		H1 { margin-bottom: 0.21cm } 		H1.western { font-family: "Liberation Sans", sans-serif; font-size: 16pt } 		H1.cjk { font-family: "WenQuanYi Zen Hei"; font-size: 16pt } 		H1.ctl { font-family: "Lohit Devanagari"; font-size: 16pt } 		A:link { so-language: zxx } --><br />
 <strong>Author: Cong Wang &lt;xiyou.wangcong@gmail.com&gt;</strong></p>
 <p>This is NOT a tutorial on how to use openvswitch, this is for developers who want to know the implementation details of openvswitch project, thus, I assume you at least know the basic concepts of openvswitch and know how to use it. If not, see <a href="http://www.openvswitch.org/">www.openvswitch.org</a> to get some documents or slides.</p>
 <p>Let's start from the user-space part. Openvswitch user-space contains several components: they are a few daemons which actually implements the switch and the flow table, the core of openvswitch, and several utilities to manage the switch, the database, and even talk to the kernel directly.</p>
@@ -66,4 +50,4 @@ permalink: "/2012/10/20/an-overview-of-openvswitch-implementation/"
 <p style="text-align:center;"><a href="http://wangcong2015.files.wordpress.com/2012/10/openvswitch-kernel.jpg"><img class="aligncenter size-full wp-image-2134" src="{{site.baseurl}}/assets/2012/10/openvswitch-kernel.jpg" alt="" width="717" height="559"></a></p>
 <p>The most important one needs to mention is each struct sk_buff is associated with a struct sw_flow, which is via a pointer in ovs control block. And the above actions is associated with each flow, every time when a packet passed to openvswitch module, it first needs to lookup the flow table which is contained in a datapath which in turn either contains in a struct vport or in a global linked-list, with the key we mentioned. If a flow is found, the corresponding actions will be executed. Remember that datapath, flow, vport, all could be changed by the user-space with some specific genl command.</p>
 <p>As you can see, the kernel part only implements a mechanism and the fast path (except the first packet), and the user-space implements different policies upon the mechanism provided by the kernel, the slow path. The user-space is much more complicated, so I will not cover its details here.</p>
-<p>Update: Ben, one of the most active developers for openvswitch, pointed out some mistakes in the previous version, I updated this article as he suggested. Thanks to Ben!</body></html></p>
+<p>Update: Ben, one of the most active developers for openvswitch, pointed out some mistakes in the previous version, I updated this article as he suggested. Thanks to Ben!</p>

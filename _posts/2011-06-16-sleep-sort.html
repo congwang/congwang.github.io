@@ -1,29 +1,13 @@
 ---
-layout: post
-title: Sleep sort
-date: 2011-06-16 23:28:41.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Programming
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '1669'
-  _wp_old_slug: '1669'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2011/06/16/sleep-sort/"
+date: 2011-06-16 23:28:41-07:00
+layout: post
+permalink: /2011/06/16/sleep-sort/
+title: Sleep sort
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body>
+<p><br />
+
 <p>4chan BBS 上一个排序的程序火了，它叫<a href="http://dis.4chan.org/read/prog/1295544154/" target="_blank">休眠排序</a>，很有意思。</p>
 <p>[bash]<br />
 #!/bin/bash<br />
@@ -69,4 +53,4 @@ wait</p>
 fork and sleep $_, say, last for @ARGV; 1 while 1  -wait<br />
 [/perl]</p>
 <p>除了不能对浮点数和负数进行排序，它还有一个缺点，那就是其中某个进程需要睡眠最大的那个数指定的时间，然后才能得出最后结果。下面有人提出了改进，我试了试，没有一个完美的。理想的情况下它应该能够对正负整数、浮点数进行排序，而且最坏也不要花太多时间，感兴趣的同学可以自己改进一下。</p>
-<p></body></html></p>
+<p></p>

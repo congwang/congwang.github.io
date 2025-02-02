@@ -1,29 +1,13 @@
 ---
-layout: post
-title: Linux下的console和terminal
-date: 2008-11-10 07:01:31.000000000 -08:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Linux Application
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '423'
-  _wp_old_slug: '423'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2008/11/10/linux%e4%b8%8b%e7%9a%84console%e5%92%8cterminal/"
+date: 2008-11-10 07:01:31-08:00
+layout: post
+permalink: /2008/11/10/linux%e4%b8%8b%e7%9a%84console%e5%92%8cterminal/
+title: Linux下的console和terminal
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body><br />
+<p><br />
+<br />
 <a href="http://en.wikipedia.org/wiki/Computer_console" target="_blank">console</a>和<a href="http://en.wikipedia.org/wiki/Computer_terminal" target="_blank">terminal</a>是很容易让人迷惑的两个概念。根据wikipedia上的定义，小型计算机的console应该就是键盘加显示器；而terminal则是输入数据进去，和显示数据来源的设备，通常是一个计算机系统。</p>
 <p>Linux下的console除了真实的硬件设备外，还有virtual console，也就是你按alt+Fn或者alt+ctrl+Fn切换到的东西。所谓虚拟就是这些console共享同一个真实的设备，只有一个活动的console才显示在前面。这些console对应的设备是：/dev/ttyN，其中1 ≤ N ≤ 63。而/dev/tty0则是指向当前的terminal；/dev/console是指向当前console，但它现在并_不是_对/dev/tty0的符号链接。更多可参考console(4)。</p>
 <p>/dev/tty是另一个特殊设备，它指向控制终端（controlling terminal）。如果某个进程的控制终端是/dev/tty3，那么/dev/tty就指向/dev/tty3了。控制终端是什么概念？它是一个进程的某个属性，是依附带该进程上的终端。比如我们在某个终端下输入ctrl+C，那么它控制的前台进程就会收到SIGINT，而后台进程会收到SIGTTIN或SIGTTOU ，如果它们读写该终端的话。被同一个终端控制的所有进程被称为一个会话（session），会话的领导就是创建改会话的进程，其子进程也会被该终端控制。所以，1) 需要交互的命令行程序通常会从/dev/tty这个设备进行读写；2) Unix后台进程都需要在fork之后调用setsid(2)，3) 需要加O_NOCTTY，当你open一个可能是终端的文件时。</p>
@@ -90,4 +74,4 @@ __ptsname_r (int fd, char *buf, size_t buflen)<br />
 <p>$ mount | grep devpts<br />
 devpts on /dev/pts type devpts (rw,gid=5,mode=620)</p>
 <p>这样我们终于把一切搞清楚了。:-)<br />
-</body></html></p>
+</p>

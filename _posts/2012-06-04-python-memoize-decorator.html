@@ -1,29 +1,13 @@
 ---
-layout: post
-title: Python memoize decorator
-date: 2012-06-04 18:05:20.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Programming
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '2009'
-  _wp_old_slug: '2009'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2012/06/04/python-memoize-decorator/"
+date: 2012-06-04 18:05:20-07:00
+layout: post
+permalink: /2012/06/04/python-memoize-decorator/
+title: Python memoize decorator
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body></p>
+<p><br />
+</p>
 <p>偶然看 Python 代码，看到这么一个叫memoize decorator 的东西，你会发现它非常有用。</p>
 <p>看下面的例子，我们最常见的 fibonacci 数列的递归实现。</p>
 <pre>
@@ -82,4 +66,4 @@ def fib(n):<br />
    return fib(n-1) + fib(n-2)<br />
 [/python]</p>
 <p>为此，在 Python3 中还专门引入了一个<a href="http://docs.python.org/py3k/library/functools.html#functools.lru_cache"> lru_cache</a>。</p>
-<p>这个东西的牛逼之处在于，有了它你可以放心地去写递归的代码，不用为了效率去把它改成迭代形式，你也知道，有些时候递归代码比迭代代码更容易理解。这样可读性有了，效率也提升了，不用修改函数的实现，直接让它从次方级降到了线性级。</body></html></p>
+<p>这个东西的牛逼之处在于，有了它你可以放心地去写递归的代码，不用为了效率去把它改成迭代形式，你也知道，有些时候递归代码比迭代代码更容易理解。这样可读性有了，效率也提升了，不用修改函数的实现，直接让它从次方级降到了线性级。</p>

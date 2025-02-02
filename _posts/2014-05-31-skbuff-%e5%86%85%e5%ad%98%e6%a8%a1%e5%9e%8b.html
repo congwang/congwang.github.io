@@ -1,29 +1,13 @@
 ---
-layout: post
-title: skbuff 内存模型
-date: 2014-05-31 12:54:06.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Linux Kernel
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '2337'
-  _wp_old_slug: '2337'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2014/05/31/skbuff-%e5%86%85%e5%ad%98%e6%a8%a1%e5%9e%8b/"
+date: 2014-05-31 12:54:06-07:00
+layout: post
+permalink: /2014/05/31/skbuff-%e5%86%85%e5%ad%98%e6%a8%a1%e5%9e%8b/
+title: skbuff 内存模型
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body></p>
+<p><br />
+</p>
 <p>众所周知，struct sk_buff 是 Linux 内核网络子系统中最重要的一个结构体，它是内核对网络数据包的一个抽象表示。要了解 Linux 网络子系统除了了解网络协议之外，了解内核如何表示和操作数据包也是至关重要的。Linux 内核中的 struct sk_buff （以下简称 skb）提供了一套非常复杂的内存模型，也对它进行了大量的优化，这也是为什么 Linux 网络如此高效。</p>
 <p>我们从最简单的开始，分配一个最普通的 skb：</p>
 <p style="text-align:center;"><a href="http://wangcong.org/blog/wp-content/uploads/2014/06/skb_alloc.png"><img class="size-full wp-image-2338  aligncenter" title="skb_alloc" src="{{site.baseurl}}/assets/2014/05/skb_alloc.png" alt="" width="578" height="424"></a></p>
@@ -66,4 +50,4 @@ permalink: "/2014/05/31/skbuff-%e5%86%85%e5%ad%98%e6%a8%a1%e5%9e%8b/"
 <p style="text-align:left;">正因为存在以上各种复杂的模型，很多 skb API 的实现（比如 skb_segment()）非常复杂，其大部分代码都是用来处理非线性的这几种情况，这使得 skbuff.c 里的很多代码都不容易读懂。希望本文能够对你理解这部分代码有所帮助。</p>
 <p style="text-align:left;">参考资料：</p>
 <p>1. <a href="http://vger.kernel.org/~davem/skb_data.html" target="_blank">http://vger.kernel.org/~davem/skb_data.html</a><br />
-</body></html></p>
+</p>

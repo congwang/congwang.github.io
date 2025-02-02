@@ -1,29 +1,13 @@
 ---
-layout: post
-title: 在 openvswitch 上配置 GRE tunnel
-date: 2012-11-13 19:04:41.000000000 -08:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Linux Application
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '2163'
-  _wp_old_slug: '2163'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2012/11/13/%e5%9c%a8-openvswitch-%e4%b8%8a%e9%85%8d%e7%bd%ae-gre-tunnel/"
+date: 2012-11-13 19:04:41-08:00
+layout: post
+permalink: /2012/11/13/%e5%9c%a8-openvswitch-%e4%b8%8a%e9%85%8d%e7%bd%ae-gre-tunnel/
+title: 在 openvswitch 上配置 GRE tunnel
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body></p>
+<p><br />
+</p>
 <p>如果你是用 openvswitch 内置的 GRE tunnel，那么配置很简单，基本上就一条命令：</p></p>
 <pre>
 ovs-vsctl add-port br0 gre0 -- set interface gre0 type=gre options:remote_ip=192.168.1.10
@@ -60,7 +44,6 @@ default via 10.16.47.254 dev eth0
             Interface "gre1"
     ovs_version: "1.7.0"
 
-
 [root@host2 ~]# ip addr ls gre1 &amp;&amp; ip addr ls ovsbr0
 17: gre1:  mtu 1476 qdisc noqueue state UNKNOWN
     link/gre 10.16.43.215 peer 10.16.43.214
@@ -92,4 +75,4 @@ PING 192.168.1.2 (192.168.1.2) 56(84) bytes of data.
 4 packets transmitted, 4 received, 0% packet loss, time 3823ms
 rtt min/avg/max/mdev = 0.669/140.860/561.275/242.726 ms
 </pre>
-<p></body></html></p>
+<p></p>

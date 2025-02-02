@@ -1,29 +1,13 @@
 ---
-layout: post
-title: 深入理解 GRE tunnel
-date: 2012-11-08 19:05:22.000000000 -08:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Linux Kernel
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '2149'
-  _wp_old_slug: '2149'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2012/11/08/%e6%b7%b1%e5%85%a5%e7%90%86%e8%a7%a3-gre-tunnel/"
+date: 2012-11-08 19:05:22-08:00
+layout: post
+permalink: /2012/11/08/%e6%b7%b1%e5%85%a5%e7%90%86%e8%a7%a3-gre-tunnel/
+title: 深入理解 GRE tunnel
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body></p>
+<p><br />
+</p>
 <p>我以前写过一篇<a href="http://wangcong.org/blog/archives/1683" target="_blank">介绍 tunnel 的文章</a>，只是做了大体的介绍。里面多数 tunnel 是很容易理解的，因为它们多是一对一的，换句话说，是直接从一端到另一端。比如 IPv6 over IPv4 的 tunnel，也就是 SIT，它的原理如下图所示：</p>
 <p style="text-align:center;"><a href="http://wangcong.org/blog/wp-content/uploads/2012/11/sit_tunnel1.jpg"><img class="aligncenter size-full wp-image-2151" src="{{site.baseurl}}/assets/2012/11/sit_tunnel1.jpg" alt="" width="707" height="398"></a></p>
 <p>显然，除了端点的 host A 和 host B之外，中间经过的任何设备都是看不到里面的 IPv6 的头，对于它们来说，经过 sit 发出的包和其它的 IPv4 的包没有任何区别。</p>
@@ -48,4 +32,4 @@ static const struct gre_protocol ipgre_protocol = {<br />
 <p><a href="http://wangcong.org/blog/wp-content/uploads/2012/11/gre_encapsulation.png"><img class="aligncenter size-full wp-image-2156" src="{{site.baseurl}}/assets/2012/11/gre_encapsulation.png" alt="" width="527" height="35"></a></p>
 <p style="text-align:center;">GRE header</p>
 <p><a href="http://wangcong.org/blog/wp-content/uploads/2012/11/gre_header.png"><img class="aligncenter size-full wp-image-2157" src="{{site.baseurl}}/assets/2012/11/gre_header.png" alt="" width="479" height="119"></a><br />
-</body></html></p>
+</p>

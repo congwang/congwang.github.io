@@ -1,29 +1,13 @@
 ---
-layout: post
-title: Floyd's cycle-finding algorithm
-date: 2012-05-25 11:44:57.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Programming
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '1995'
-  _wp_old_slug: '1995'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2012/05/25/floyds-cycle-finding-algorithm/"
+date: 2012-05-25 11:44:57-07:00
+layout: post
+permalink: /2012/05/25/floyds-cycle-finding-algorithm/
+title: Floyd's cycle-finding algorithm
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body><br />
+<p><br />
+<br />
 <a href="http://en.wikipedia.org/wiki/Cycle_detection">Floyd's cycle-finding algorithm</a> 是一个经典的算法，用来检测一个链表中是否有环这种问题。因为它使用了两个指针，快的指针被称为兔子，慢的指针被称为乌龟，所以这个算法又被称为“龟兔算法”。</p>
 <p>Emacs 源代码中有它的一个完美实现，我们可以看 src/eval.c 中的 signal_error()。</p>
 <p>[c]<br />
@@ -72,4 +56,4 @@ list_has_cycle(NODE *list)<br />
     return true;</p>
 <p>  return false;<br />
 }<br />
-[/c] </body></html></p>
+[/c] </p>

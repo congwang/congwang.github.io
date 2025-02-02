@@ -1,29 +1,13 @@
 ---
-layout: post
-title: C 语言新标准——C11
-date: 2011-12-21 22:46:14.000000000 -08:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Programming
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '1843'
-  _wp_old_slug: '1843'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2011/12/21/c-%e8%af%ad%e8%a8%80%e6%96%b0%e6%a0%87%e5%87%86-c11/"
+date: 2011-12-21 22:46:14-08:00
+layout: post
+permalink: /2011/12/21/c-%e8%af%ad%e8%a8%80%e6%96%b0%e6%a0%87%e5%87%86-c11/
+title: C 语言新标准——C11
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body></p>
+<p><br />
+</p>
 <p>12月8号，ISO <a href="http://www.iso.org/iso/iso_catalogue/catalogue_tc/catalogue_detail.htm?csnumber=57853" target="_blank">发布了</a>新的 C 语言的新标准——C11，之前被称为C1X，官方名称 ISO/IEC 9899:2011。新的标准可以<a href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf" target="_blank">这里</a>下载。这个标准是基于今年4月发布的名为 N1570 的草稿，但据说并未做任何改动。</p>
 <p>根据 <a href="http://en.wikipedia.org/wiki/C1X" target="_blank">wikipedia 记载</a>，相比 C99，C11 做了以下重要的更新：</p>
 <p>1. 对齐处理操作符 alignof，函数 aligned_alloc()，以及  头文件 &lt;stdalign.h&gt;。见 7.15 节。</p>
@@ -46,4 +30,4 @@ permalink: "/2011/12/21/c-%e8%af%ad%e8%a8%80%e6%96%b0%e6%a0%87%e5%87%86-c11/"
 <p>13. <a href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1464.htm" target="_blank">创建复数</a>的宏， CMPLX()，见 7.3.9.3。</p>
 <p>14. 更多浮点数处理的宏 （More macros for querying the characteristics of floating point types, concerning subnormal floating point numbers and the number of decimal digits the type is able to store）。</p>
 <p>15. struct timespec 成为 time.h 的一部分，以及宏 TIME_UTC，函数 timespec_get()。</p>
-<p>gcc 4.6 中新增了新的选项 -std=c1x 来支持这一标准，更多支持参考<a href="http://gcc.gnu.org/gcc-4.6/changes.html#c" target="_blank">这里</a>。但是 glibc 相关的部分尚未实现，所以你还不能马上在 Linux 上体验最新的 C11 特性。</body></html></p>
+<p>gcc 4.6 中新增了新的选项 -std=c1x 来支持这一标准，更多支持参考<a href="http://gcc.gnu.org/gcc-4.6/changes.html#c" target="_blank">这里</a>。但是 glibc 相关的部分尚未实现，所以你还不能马上在 Linux 上体验最新的 C11 特性。</p>

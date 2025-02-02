@@ -1,29 +1,13 @@
 ---
-layout: post
-title: Linux 内核中的 KMP 实现
-date: 2012-08-15 22:52:17.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Linux Kernel
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '2090'
-  _wp_old_slug: '2090'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2012/08/15/linux-%e5%86%85%e6%a0%b8%e4%b8%ad%e7%9a%84-kmp-%e5%ae%9e%e7%8e%b0/"
+date: 2012-08-15 22:52:17-07:00
+layout: post
+permalink: /2012/08/15/linux-%e5%86%85%e6%a0%b8%e4%b8%ad%e7%9a%84-kmp-%e5%ae%9e%e7%8e%b0/
+title: Linux 内核中的 KMP 实现
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body>
+<p><br />
+
 <p>Linux 内核中使用到了字符串搜索，所以它也有<a href="http://en.wikipedia.org/wiki/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm"> KMP 算法</a>的实现，代码在 lib/ts_kmp.c 中。</p>
 <p>Linux 内核中用到 KMP 算法的地方有三处：iptables string match 模块、iptables conntrack amanda 模块（不知道这个是用来干什么的）、以及 ematch qdisc。iptables string match 是通过字符串搜索来匹配一个包，然后进行相应的处理，比如用下面的命令可以阻止对domain.com服务器的HTTP请求：</p>
 <p>iptables -I INPUT 1 -p tcp --dport 80 -m string --string "domain.com" --algo kmp -j DROP</p>
@@ -94,4 +78,4 @@ if (pos != UINT_MAX)<br />
     panic("Oh my god, dancing chickens at %dn", pos);</p>
 <p>textsearch_destroy(conf);<br />
 [/c]</p>
-<p></body></html></p>
+<p></p>

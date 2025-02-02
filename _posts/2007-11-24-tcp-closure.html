@@ -1,29 +1,13 @@
 ---
-layout: post
-title: TCP Closure
-date: 2007-11-24 23:51:25.000000000 -08:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Programming
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '265'
-  _wp_old_slug: '265'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2007/11/24/tcp-closure/"
+date: 2007-11-24 23:51:25-08:00
+layout: post
+permalink: /2007/11/24/tcp-closure/
+title: TCP Closure
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body></p>
+<p><br />
+</p>
 <p>今天在看TCP的释放时遇到几个问题，查了一下《TCP/IP详解 卷一》和RFC793，也请教了一下Herbert Xu，基本上都解决了。在这里总结一下。</p>
 <p>TCP的释放过程如下图所示（取自《TCP/IP详解 卷一》）：</p>
 <p style="text-align:center;"><img src="{{site.baseurl}}/assets/2007/11/half-close.gif" height="356" width="500"></p>
@@ -45,4 +29,4 @@ connection.</p></blockquote>
 <p>也就是像下图所示（也是取自TCP/IP详解）：</p>
 <p style="text-align:center;"><img src="{{site.baseurl}}/assets/2007/11/simult-close.gif"></p>
 <p>问题3：关于MSL。</p>
-<p>MSL是maximum segment lifetime的缩写。TCP状态机里有个TIME_WAIT状态，设置它是为了防止最后一个ACK丢失，这个时间一般就是2MSL。而且，在这个2MSL的时间中，这个socket是不能被重用的，除非我们setsockopt(...,SO_REUSEADDR,...)。</body></html></p>
+<p>MSL是maximum segment lifetime的缩写。TCP状态机里有个TIME_WAIT状态，设置它是为了防止最后一个ACK丢失，这个时间一般就是2MSL。而且，在这个2MSL的时间中，这个socket是不能被重用的，除非我们setsockopt(...,SO_REUSEADDR,...)。</p>

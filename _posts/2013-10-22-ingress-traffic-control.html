@@ -1,29 +1,13 @@
 ---
-layout: post
-title: Ingress traffic control
-date: 2013-10-22 13:54:53.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Linux Kernel
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '2314'
-  _wp_old_slug: '2314'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2013/10/22/ingress-traffic-control/"
+date: 2013-10-22 13:54:53-07:00
+layout: post
+permalink: /2013/10/22/ingress-traffic-control/
+title: Ingress traffic control
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body></p>
+<p><br />
+</p>
 <p>相信很多人都知道 Linux 内核很难做 ingress 流量控制的，毕竟发送方理论上可以无限制地发送包到达网络接口。即使你控制了从网络接口到达协议栈的流量，你也很难从根源上控制这个流量。</p>
 <p>利用 Linux 内核你可以轻松地完成前者，即控制从网络接口到达协议栈的流量。这个是通过一个叫做 ifb 的设备完成的，这个设备如此不起眼以至于很多人不知道它的存在。</p>
 <p>它的使用很简单，加载 ifb 模块后，激活 ifbX 设备：</p>
@@ -123,4 +107,4 @@ static int ing_filter(struct sk_buff *skb, struct netdev_queue *rxq)<br />
 <p>正如本文一开始讲到的，即使用 ifb 我们所做的流量控制仍然有限，很难从根本上控制发送方的速率。如果双方是通过交换机连接的话，或许通过 L2 上的一些协议可以控制速率，而如果中间经过路由器，那么所能做的就更加有限，只能期待传输层的协议进行控制，而不是靠传输层自身感受到丢包的多少去自动调整速率，因为这可能会花很长时间。</p>
 <p>参考资料：</p>
 <p>1. http://serverfault.com/questions/350023/tc-ingress-policing-and-ifb-mirroring<br />
-2. http://stackoverflow.com/questions/15881921/why-tc-cannot-do-ingress-shaping-does-ingress-shaping-make-sense</body></html></p>
+2. http://stackoverflow.com/questions/15881921/why-tc-cannot-do-ingress-shaping-does-ingress-shaping-make-sense</p>

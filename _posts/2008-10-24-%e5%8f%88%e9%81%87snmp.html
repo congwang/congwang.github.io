@@ -1,29 +1,13 @@
 ---
-layout: post
-title: 又遇SNMP
-date: 2008-10-24 01:23:19.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Programming
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '396'
-  _wp_old_slug: '396'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2008/10/24/%e5%8f%88%e9%81%87snmp/"
+date: 2008-10-24 01:23:19-07:00
+layout: post
+permalink: /2008/10/24/%e5%8f%88%e9%81%87snmp/
+title: 又遇SNMP
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body>
+<p><br />
+
 <p>差点被SNMP给整疯了……</p>
 <p>先是要从QoS中提取指定信息，要导出到SNMP。这看似简单但做起来相当麻烦，基本上就是左手拿着表格查对应的行和列，右手拿着QoS输出对比，然后脑子里要思考如何提取正则表达式。总共50多项，我是一项一项对出来的，哎，没办法，这根本不可能由机器完成（瞧瞧计算机有多笨！！不过它要是聪明到这种程度我们这些程序员就该失业啦～！）。</p>
 <p>然后要考虑整个程序的构架，看似一个简单的程序，如果什么都不考虑直接去写肯定也可以，50多个函数嘛，可问题是怎么把代码组织得更和逻辑？这确实得下一番功夫。一开始我想出一个颇为简洁的构架，后来发现不行，经过修改最后居然保持住了简洁，纯属侥幸～～最后再看看整个程序的构架，依然简洁而又合理，先得意一下。;-)</p>
@@ -35,4 +19,4 @@ permalink: "/2008/10/24/%e5%8f%88%e9%81%87snmp/"
 $output = &lt;$fd&gt; ;</p>
 <p>然后就可以这么匹配了：</p>
 <p>$output =~ m/class htb .* root rate ([0-9]+)Kbit .*ns*Sent ([0-9]+) bytes ([0-9]+) pkt (dropped ([0-9]+).*ns*rate ([0-9]+)bit/m</p>
-<p></body></html></p>
+<p></p>

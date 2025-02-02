@@ -1,29 +1,13 @@
 ---
-layout: post
-title: Slab, Slob, Slub
-date: 2007-08-17 21:14:14.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Linux Kernel
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '189'
-  _wp_old_slug: '189'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2007/08/17/slab-slob-slub/"
+date: 2007-08-17 21:14:14-07:00
+layout: post
+permalink: /2007/08/17/slab-slob-slub/
+title: Slab, Slob, Slub
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body>
+<p><br />
+
 <p>Linux内核真是变化太快了，内存管理这块就是一个好例子。</p>
 <p>本来Linux内核只有Slab的，现在好了，Slab多了两个兄弟：Slob和Slub。瞧！这就是内核的命名风格，让你光看名字就糊涂了！这也是我这两天读内核源代码的深刻体会，什么cache啊，cache_cache啊，free_area啊，绕不晕你才怪呢～！</p>
 <p>以前搞不懂这三个到底什么关系，为什么要有这三个 。今天搜了一下，明白了一些。简单的说：Slab是基础，是最早从Sun OS那引进的；Slub是在Slab上进行的改进，在大型机上表现出色（不知道在普通PC上如何），据说还被IA-64作为默认；而Slob是针对小型系统设计的，当然了，主要是嵌入式。相关文章如下：</p>
@@ -31,4 +15,4 @@ permalink: "/2007/08/17/slab-slob-slub/"
 <a href="http://lwn.net/Articles/229984/">The SLUB allocator</a><br />
 <a href="http://lwn.net/Articles/157944/">The SLOB allocator</a></p>
 <p>这也正好体现了一个Linux内核开发一贯的思想：<strong>提供一种机制，而不是一种策略（Provide mechanism not policy）</strong>。其它软件开发又何尝不是如此呢？</p>
-<p></body></html></p>
+<p></p>

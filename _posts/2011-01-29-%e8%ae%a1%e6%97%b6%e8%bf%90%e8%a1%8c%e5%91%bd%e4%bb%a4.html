@@ -1,29 +1,13 @@
 ---
-layout: post
-title: 计时运行命令
-date: 2011-01-29 00:20:50.000000000 -08:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Linux Application
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '1462'
-  _wp_old_slug: '1462'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2011/01/29/%e8%ae%a1%e6%97%b6%e8%bf%90%e8%a1%8c%e5%91%bd%e4%bb%a4/"
+date: 2011-01-29 00:20:50-08:00
+layout: post
+permalink: /2011/01/29/%e8%ae%a1%e6%97%b6%e8%bf%90%e8%a1%8c%e5%91%bd%e4%bb%a4/
+title: 计时运行命令
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body></p>
+<p><br />
+</p>
 <p>见过好几个人问怎样可以计时运行某一个命令？比如我可能想运行某个交互式的命令（像fdisk），但我又不想让它一直永远等待输入，我就得给它指定一个时间，若没有输入则自动退出。</p>
 <p>我之前也遇到过这个问题，当时找到的是timed-run。而最近我发现coreutils里面已经默默包含了一个等价的命令——timeout。</p>
 <p>timed-run来自expect包，很明显是用expect脚本写的：</p>
@@ -39,4 +23,4 @@ set timeout [lindex $argv 0]
 eval spawn [lrange $argv 1 end]
 expect
 </pre>
-<p>而timeout则来自coreutils，应该是用C写的。它们的用法都一样，后面第一个参数是指定的时间，在后面就是要运行的命令，比如：timeout 1 sleep 10。timeout还能接受一些选项，更强大一些。</body></html></p>
+<p>而timeout则来自coreutils，应该是用C写的。它们的用法都一样，后面第一个参数是指定的时间，在后面就是要运行的命令，比如：timeout 1 sleep 10。timeout还能接受一些选项，更强大一些。</p>

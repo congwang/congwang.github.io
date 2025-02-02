@@ -1,29 +1,13 @@
 ---
-layout: post
-title: 一段精彩的汇编代码！
-date: 2007-10-18 23:06:40.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Linux Kernel
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '235'
-  _wp_old_slug: '235'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2007/10/18/%e4%b8%80%e6%ae%b5%e7%b2%be%e5%bd%a9%e7%9a%84%e6%b1%87%e7%bc%96%e4%bb%a3%e7%a0%81%ef%bc%81/"
+date: 2007-10-18 23:06:40-07:00
+layout: post
+permalink: /2007/10/18/%e4%b8%80%e6%ae%b5%e7%b2%be%e5%bd%a9%e7%9a%84%e6%b1%87%e7%bc%96%e4%bb%a3%e7%a0%81%ef%bc%81/
+title: 一段精彩的汇编代码！
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body></p>
+<p><br />
+</p>
 <p>无意间在Linux内核中发现这么一段汇编代码，更准确地说应该是gcc内联汇编，写得很精彩，拿出来和大家分享一下。</p>
 <p>代码是在include/asm-i386/string.h中，是针对i386对memcpy做进一步优化。我们知道，一个简单的memcpy其实和strcpy差不多，区别只是前者检查的是复制的个数，而后者检查的是当前字符是否是''。</p>
 <p>而这显然还有很大的优化余地，首先像这种非常常用的库函数是可以用汇编重写来提高速度的。当然了，可移植性是降低了，但我们可以针对每个平台写一套汇编。这样速度上的提升还是蛮乐观的。其次，memcpy显然没必要一个一个字节地复制，其实我们最多每次也就复制4个字节（当然是在i386上），但如果复制数量大的话，这种提升还是很明显的。于是下面的汇编就出来乐～！</p>
@@ -40,4 +24,4 @@ permalink: "/2007/10/18/%e4%b8%80%e6%ae%b5%e7%b2%be%e5%bd%a9%e7%9a%84%e6%b1%87%e
 <p>40</p>
 <p>还有剩下的，好，把n%4剩下的一个一个字节地复制。</p>
 <p>41~44</p>
-<p>这里看不懂的就去学gcc的嵌入汇编语法吧！</body></html></p>
+<p>这里看不懂的就去学gcc的嵌入汇编语法吧！</p>

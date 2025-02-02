@@ -1,29 +1,13 @@
 ---
-layout: post
-title: 扩展文件属性
-date: 2012-01-19 10:52:55.000000000 -08:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Linux Application
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '1871'
-  _wp_old_slug: '1871'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2012/01/19/%e6%89%a9%e5%b1%95%e6%96%87%e4%bb%b6%e5%b1%9e%e6%80%a7/"
+date: 2012-01-19 10:52:55-08:00
+layout: post
+permalink: /2012/01/19/%e6%89%a9%e5%b1%95%e6%96%87%e4%bb%b6%e5%b1%9e%e6%80%a7/
+title: 扩展文件属性
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body></p>
+<p><br />
+</p>
 <p>我们知道，在 Linux 上最基本的文件属性是，</p>
 <pre>
 # ls -l foo
@@ -70,4 +54,4 @@ getxattr("foo", "system.posix_acl_access", 0xfffe455cca0, 132) = -1 ENODATA (No 
 stat("foo", {st_mode=S_IFREG|0644, st_size=0, ...}) = 0
 setxattr("foo", "system.posix_acl_access", "x02x00x00x00x01x00x06x00xffxffxffxffx02x00x06x00x00x00x00x00x04x00x04x00xffxffxffxffx10x00x06x00xffxffxffxff x00x04x00xffxffxffxff", 44, 0) = -1 EPERM (Operation not permitted)
 </pre>
-<p>之所以出现 ENODATA 是因为挂载文件系统时我没有指定"acl"，需要重新挂载：mount -o remount,acl /home 然后重新创建文件，因为旧的文件依旧是没有 ACL的。</body></html></p>
+<p>之所以出现 ENODATA 是因为挂载文件系统时我没有指定"acl"，需要重新挂载：mount -o remount,acl /home 然后重新创建文件，因为旧的文件依旧是没有 ACL的。</p>

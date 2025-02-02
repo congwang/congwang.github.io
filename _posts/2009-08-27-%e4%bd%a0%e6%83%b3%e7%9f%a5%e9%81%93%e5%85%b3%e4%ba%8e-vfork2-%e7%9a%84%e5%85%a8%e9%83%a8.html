@@ -1,29 +1,13 @@
 ---
-layout: post
-title: 你想知道的 vfork(2) 的全部
-date: 2009-08-27 23:29:22.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Programming
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '778'
-  _wp_old_slug: '778'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2009/08/27/%e4%bd%a0%e6%83%b3%e7%9f%a5%e9%81%93%e5%85%b3%e4%ba%8e-vfork2-%e7%9a%84%e5%85%a8%e9%83%a8/"
+date: 2009-08-27 23:29:22-07:00
+layout: post
+permalink: /2009/08/27/%e4%bd%a0%e6%83%b3%e7%9f%a5%e9%81%93%e5%85%b3%e4%ba%8e-vfork2-%e7%9a%84%e5%85%a8%e9%83%a8/
+title: 你想知道的 vfork(2) 的全部
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body></p>
+<p><br />
+</p>
 <p>最近vfork(2)的问题一再被问到，这里做一个总结，以求终止关于它的疑问。:-)</p>
 <p>1. 为啥会有vfork(2)这个东西？</p>
 <p>man page中说得很清楚：</p>
@@ -45,4 +29,4 @@ fully calling _exit(2) or one of the exec(3) family of functions.</p></blockquot
 <p>其次，为什么我不能从当前的函数中返回？很简单，因为vfork()的实现用的是CLONE_VM，它决定了父子进程之间是完全共享内存的（而不是COW）。所以如果子进程对堆栈内容做了修改，对父进程也会有影响。</p>
 <p>一个随之而来的问题是：既然它们共享内存，那为什么子进程执行execve(2)就不会覆盖父进程呢？因为虽然CLONE_VM让do_fork()跳过了复制mm_struct，但是do_execve()在bprm_mm_init()时又创建了一个新的mm_struct。</p>
 <p>3. 什么时候我应该使用vfork(2)而不是fork(2)？</p>
-<p>90%以上的情况下你不应该这么做。假设父子进程哪个先运行很可能是一个不好的设计，你应该重新设计一下你的程序，或者考虑用其它方法实现。</body></html></p>
+<p>90%以上的情况下你不应该这么做。假设父子进程哪个先运行很可能是一个不好的设计，你应该重新设计一下你的程序，或者考虑用其它方法实现。</p>

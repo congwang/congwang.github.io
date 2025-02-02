@@ -1,29 +1,13 @@
 ---
-layout: post
-title: Python heapq 模块的实现
-date: 2012-06-10 22:07:01.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Programming
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '2013'
-  _wp_old_slug: '2013'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2012/06/10/python-heapq-%e6%a8%a1%e5%9d%97%e7%9a%84%e5%ae%9e%e7%8e%b0/"
+date: 2012-06-10 22:07:01-07:00
+layout: post
+permalink: /2012/06/10/python-heapq-%e6%a8%a1%e5%9d%97%e7%9a%84%e5%ae%9e%e7%8e%b0/
+title: Python heapq 模块的实现
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body>
+<p><br />
+
 <p>无意间看了一下 Python heapq 模块的源代码，发现里面的源代码写得很棒，忍不住拿出来和大家分享一下。:)</p>
 <p>heapq 的意思是 heap queue，也就是基于 heap 的 <a href="http://en.wikipedia.org/wiki/Priority_queue">priority queue</a>。说到 priority queue，忍不住吐槽几句。我上学的时候学优先级队列的时候就没有碰到像 wikipedia 上那样透彻的解释，priority queue 并不是具体的某一个数据结构，而是对一类数据结构的概括！比如栈就可以看作是后进入的优先级总是大于先进入的，而队列就可以看成是先进入的优先级一定高于后进来的！这还没完！如果我们是用一个无序的数组实现一个priority queue，对它进行出队操作尼玛不就是选择排序么！尼玛用有序数组实现入队操作尼玛不就是插入排序么！尼玛用堆实现（即本文要介绍的）就是堆排序啊！用二叉树实现就是二叉树排序啊！数据结构课学的这些东西基本上都出来了啊！T_T</p>
 <p><a href="http://hg.python.org/cpython/file/2.7/Lib/heapq.py">heapq 的代码</a>也是用 Python 写的，用到了一些其它 Python 模块，如果你对 itertools 不熟悉，在阅读下面的代码之前<a href="http://docs.python.org/library/itertools.html">请先读文档</a>。heapq 模块主要有5个函数：heappush()，把一个元素放入堆中；heappop()，从堆中取出一个元素；heapify()，把一个列表变成一个堆；nlargest() 和 nsmallest() 分别提供列表中最大或最小的N个元素。</p>
@@ -140,4 +124,4 @@ def nsmallest(n, iterable):<br />
     return map(heappop, repeat(h, min(n, len(h))))<br />
 [/python]</p>
 <p>这里做了一个优化，如果 N 小于 list 长度的1/10的话，就直接用插入排序（因为之前就是有序的，所以很快）。如果 N 比较大的话，就用 heap 来实现了，把整个 list 作成一个堆，然后 heappop() 出来的前 N 个就是最后的结果了！不得不说最后一行代码写得太精炼了！</p>
-<p></body></html></p>
+<p></p>

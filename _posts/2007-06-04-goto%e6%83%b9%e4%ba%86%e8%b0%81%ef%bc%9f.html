@@ -1,32 +1,16 @@
 ---
-layout: post
-title: goto惹了谁？
-date: 2007-06-04 18:01:17.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Programming
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '118'
-  _wp_old_slug: '118'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2007/06/04/goto%e6%83%b9%e4%ba%86%e8%b0%81%ef%bc%9f/"
+date: 2007-06-04 18:01:17-07:00
+layout: post
+permalink: /2007/06/04/goto%e6%83%b9%e4%ba%86%e8%b0%81%ef%bc%9f/
+title: goto惹了谁？
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body>
+<p><br />
+
 <p>最近我是和goto卯上了，先是向内核邮件列表提交了<a href="http://lkml.org/lkml/2007/6/3/68">关于goto标签排版的补丁</a>，现在又准备在自己的书里详细论述一下goto的坏处和好处。</p>
 <p>发现这真不是一个聪明的决定，几个简单的搜索就已经把自己拉下goto的泥潭中了。 历史上，关于goto的争论似乎就没怎么停过。众所周知，最早论述goto的还是大牛Edsger Dijkstra，他早在1968年（那时候还没C语言呢）写了一篇流传颇广的paper——<a href="http://www.acm.org/classics/oct95/">Go To Statement Considered Harmful</a>，正是这篇短小的文章，向人们第一次揭示了goto的坏处，于是goto的名声就不怎么好了。直至今天，在我们的大学里，教授们也忠告我们不要使用goto，它会让你的程序变得很难读，云云～</p>
 <p>这当然还没完，自从有了Go To Statement Considered Harmful，XX Considered Harmful似乎就成了计算机界很流行的用语了，于是乎也就有了<a href="http://www.ecn.purdue.edu/ParaMount/papers/rubin87goto.pdf">"GOTO Considered Harmful" Considered Harmful</a>和<a href="http://www.ecn.purdue.edu/ParaMount/papers/acm_may87.pdf">"'GOTO Considered Harmful' Considered Harmful" Considered Harmful?</a>。再到后来（1974年），<a href="http://www-cs-faculty.stanford.edu/~knuth/">Knuth老大爷</a>看不惯了，他觉得该为goto平平反了，于是出手写了一篇<a href="http://pplab.snu.ac.kr/courses/adv_pl05/papers/p261-knuth.pdf">Structured Programming with go to Statements </a>，牛人不愧是牛人，从来不盲从别人不说，端的还是理论和实践两把手。</p>
 <p>另一个时髦的而且Considered Harmful的话题是<a href="http://www.kuro5hin.org/story/2002/11/18/22112/860">Threads Considered Harmful</a>。</p>
 <p>BTW：这篇文章也Considered Harmful？;)</p>
-<p></body></html></p>
+<p></p>

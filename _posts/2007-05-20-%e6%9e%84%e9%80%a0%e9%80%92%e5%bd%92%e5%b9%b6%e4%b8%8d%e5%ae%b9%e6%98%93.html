@@ -1,29 +1,13 @@
 ---
-layout: post
-title: 构造递归并不容易
-date: 2007-05-20 15:13:36.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Programming
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '107'
-  _wp_old_slug: '107'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2007/05/20/%e6%9e%84%e9%80%a0%e9%80%92%e5%bd%92%e5%b9%b6%e4%b8%8d%e5%ae%b9%e6%98%93/"
+date: 2007-05-20 15:13:36-07:00
+layout: post
+permalink: /2007/05/20/%e6%9e%84%e9%80%a0%e9%80%92%e5%bd%92%e5%b9%b6%e4%b8%8d%e5%ae%b9%e6%98%93/
+title: 构造递归并不容易
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body>
+<p><br />
+
 <p>递归绝对没有我们想像中那么容易构造，虽然这一点很早以前就有所体会，但今天在用Java写一个全排列的程序时才有了更深刻的认识，决定记录下来。</p>
 <p>题目是这样的：</p>
 <p>“用1、2、2、3、4、5这六个数字，用Java写一个程序，打印出所有不同的排列，如：512234、412345等，要求："4"不能在第三位，"3"与"5"不能相连。 ”</p>
@@ -33,4 +17,4 @@ permalink: "/2007/05/20/%e6%9e%84%e9%80%a0%e9%80%92%e5%bd%92%e5%b9%b6%e4%b8%8d%e
 <p>2. 递归过程用不用返回值，用的话返回什么样的值？</p>
 <p>3. 递归的终点是什么？</p>
 <p>经过几次尝试以后，我决定这样构造上面那个递归，传递的参数是进行全排的字符串，返回该字符串的全排列的一个Vector。 具体源代码见：<a href="http://wangcong.org/src/permute.java">http://wangcong.org/src/permute.java</a></p>
-<p></body></html></p>
+<p></p>

@@ -1,29 +1,13 @@
 ---
-layout: post
-title: 查找网络设备
-date: 2009-02-12 21:19:34.000000000 -08:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Programming
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '577'
-  _wp_old_slug: '577'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2009/02/12/%e6%9f%a5%e6%89%be%e7%bd%91%e7%bb%9c%e8%ae%be%e5%a4%87/"
+date: 2009-02-12 21:19:34-08:00
+layout: post
+permalink: /2009/02/12/%e6%9f%a5%e6%89%be%e7%bd%91%e7%bb%9c%e8%ae%be%e5%a4%87/
+title: 查找网络设备
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body>
+<p><br />
+
 <p>在新闻组上看到有人问如何通过名字查找某个网络设备，其实不难，首先想到的就是通过ioctl，示例代码见下：</p>
 <p>[c]<br />
 int get_interface(const char *interface)<br />
@@ -80,4 +64,4 @@ int get_interf(const char *interf)<br />
 }<br />
 [/c]</p>
 <p>我查了一下glibc中的实现，发现在linux上其实如果不用netlink的话，if_nameindex()也就是对ioctl(...SIOCGIFCONF...)的一个包装，具体可参考sysdeps/unix/sysv/linux/if_index.c。netlink这个东西够奇怪的，在这里居然也能派上用场，有机会要研究研究～</p>
-<p></body></html></p>
+<p></p>

@@ -1,29 +1,13 @@
 ---
-layout: post
-title: perfbook 读书笔记：SLAB_DESTROY_BY_RCU
-date: 2012-03-29 22:15:50.000000000 -07:00
-type: post
-parent_id: '0'
-published: true
-password: ''
-status: publish
 categories:
 - Linux Kernel
-tags: []
-meta:
-  _publicize_pending: '1'
-  original_post_id: '1934'
-  _wp_old_slug: '1934'
-author:
-  login: wangcong2015
-  email: wangcong@rocketmail.com
-  display_name: wangcong2015
-  first_name: ''
-  last_name: ''
-permalink: "/2012/03/29/perfbook-%e8%af%bb%e4%b9%a6%e7%ac%94%e8%ae%b0%ef%bc%9aslab_destroy_by_rcu/"
+date: 2012-03-29 22:15:50-07:00
+layout: post
+permalink: /2012/03/29/perfbook-%e8%af%bb%e4%b9%a6%e7%ac%94%e8%ae%b0%ef%bc%9aslab_destroy_by_rcu/
+title: perfbook 读书笔记：SLAB_DESTROY_BY_RCU
 ---
-<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
-<html><body>
+<p><br />
+
 <p>perfbook 书中第8.3.3.6节讲到了类型安全，提到了Linux内核中的 SLAB_DESTROY_BY_RCU。但是书中并没有更详细的介绍这个特性。这里更详细地说一下。</p>
 <p>要理解 SLAB_DESTROY_BY_RCU，最重要的是看 kmem_cache_destroy()，以 slub 为例，<br />
 [c]<br />
@@ -77,4 +61,4 @@ struct sighand_struct *__lock_task_sighand(struct task_struct *tsk,<br />
 [/c]</p>
 <p>注意，-&gt;siglock 是在 -&gt;ctor() 中初始化的，所以刚分配出来的 sighand 的 -&gt;siglock 也是已初始化的。</p>
 <p>在此基础上，Linux 内核中还衍生出一个新的哈希链表，hlist_nulls，具体可以参考 Documentation/RCU/rculist_nulls.txt。</p>
-<p></body></html></p>
+<p></p>
