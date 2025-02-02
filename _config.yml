@@ -1,7 +1,7 @@
 title: A Geek's Page
 description: Personal Blog Posts
-baseurl: "/blog" # if your site is in a project folder
-url: "https://congwang.github.io"
+baseurl: "/congwang.github.io" # if your site is in a project folder
+url: "http://wangcong.org"
 github_username: congwang
 
 # Build settings
