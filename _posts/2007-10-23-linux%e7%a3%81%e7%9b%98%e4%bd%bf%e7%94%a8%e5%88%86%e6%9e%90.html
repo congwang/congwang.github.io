@@ -1,0 +1,29 @@
+---
+layout: post
+title: Linux磁盘使用分析
+date: 2007-10-23 13:47:17.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Linux Application
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '239'
+  _wp_old_slug: '239'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2007/10/23/linux%e7%a3%81%e7%9b%98%e4%bd%bf%e7%94%a8%e5%88%86%e6%9e%90/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body></p>
+<p>以前分析都是用df和du，突然间发现了一个巨好用的图形化工具——磁盘使用分析器，英文名叫Baobab。看看下面的截图就知道它有多么友好。</p>
+<p style="text-align:center;"><img src="{{site.baseurl}}/assets/2007/10/df.png" height="357" width="544"></p>
+<p>经过仔细分析，发现/tmp目录下的某些cscope文件居然占据了很多空间，马上rm -rf掉。结果根分区的使用率一下从74%下降到60%。妈呀，虚惊一场。</body></html></p>

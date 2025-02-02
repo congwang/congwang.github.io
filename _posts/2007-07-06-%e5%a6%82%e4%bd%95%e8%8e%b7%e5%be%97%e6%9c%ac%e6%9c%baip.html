@@ -1,0 +1,38 @@
+---
+layout: post
+title: 如何获得本机IP
+date: 2007-07-06 23:59:01.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Programming
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '144'
+  _wp_old_slug: '144'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2007/07/06/%e5%a6%82%e4%bd%95%e8%8e%b7%e5%be%97%e6%9c%ac%e6%9c%baip/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body>
+<p>如何在程序中通过函数直接获取本机IP一直是讨论比较多的话题。我在做XylFTP项目的时候，碰巧编写了客户端和服务器端两边的获取本地IP的函数（方法）。</p>
+<p>服务器端在处理PASV命令时，需要回复自己的IP和进行数据连接的端口。由于服务器端是用C语言编写，所以可以使用底层的操作来实现。具体代码如下：</p>
+<p><img src="{{site.baseurl}}/assets/2007/07/getip1.jpg" align="middle"></p>
+<p>它使用了ioctl这个系统调用，主要是针对网卡驱动来使用。它的优点是即使本机有多个网卡，也可以正常工作。缺点是如果网卡驱动不支持ioctl操作，此函数则会失败。</p>
+<p>客户端在发送PORT命令时，也需要带上自己的IP。由于客户端是用Java编写，所以不方便使用底层的方法，幸运的是Java的Socket类为我们提供了一个getLocalAddress()方法。具体代码如下：</p>
+<p><img src="{{site.baseurl}}/assets/2007/07/getip2.jpg" align="middle"></p>
+<p>用这个方法获得IP的优点是简单，代码只有数行，但是它要求必须先建立Socket，否则得到的只是127.0.0.1。如果我们想不建立连接就获取IP，此法就不适用了。</p>
+<p>后来，在和<a href="http://amankwahly.cn/blog/">刘洋同学</a>商量此问题时，见到了另一种在Java中获取本机IP的方法，用的是Java包装的NetworkInterface类，具体代码如下：</p>
+<p><img src="{{site.baseurl}}/assets/2007/07/getip3.jpg" align="middle"></p>
+<p>这种方法相对比较麻烦，和最上面的用C实现的方法有相似之处。但在合适的条件下，仍然可以选择使用。</p>
+<p>还有没有其它方法？当然有！不过这些方法只能针对具体环境，比如，在局域网的UDP通信环境中如何不用NetworkInterface获得本机IP？一种可能的解决方法（仅仅理论，未实践）是：先在局域网内进行广播，让接受者接到广播包后获取源IP，并把此IP当作数据发送到广播主机，这样可以获取广播主机自己的IP。另一种方法是通过RARP，不过前提是此局域网里有一台RARP服务器。</p>
+<p></body></html></p>

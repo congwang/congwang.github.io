@@ -1,0 +1,48 @@
+---
+layout: post
+title: 你想知道的 vfork(2) 的全部
+date: 2009-08-27 23:29:22.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Programming
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '778'
+  _wp_old_slug: '778'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2009/08/27/%e4%bd%a0%e6%83%b3%e7%9f%a5%e9%81%93%e5%85%b3%e4%ba%8e-vfork2-%e7%9a%84%e5%85%a8%e9%83%a8/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body></p>
+<p>最近vfork(2)的问题一再被问到，这里做一个总结，以求终止关于它的疑问。:-)</p>
+<p>1. 为啥会有vfork(2)这个东西？</p>
+<p>man page中说得很清楚：</p>
+<blockquote><p>However, in the  bad  old  days  a  fork(2)  would  require  making a complete copy<br />
+of the caller’s data space, often needlessly, since usually immediately afterwards an<br />
+exec(3) is done.  Thus, for  greater  efficiency, BSD introduced the vfork() system call...</p></blockquote>
+<p>所以其实就是历史原因。从这里我们也可以看出，既然Linux的fork(2)实现使用了COW，所以现在再使用vfork(2)是没太大必要的。后面还提到：</p>
+<blockquote><p>This system call will be eliminated when<br />
+proper system sharing mechanisms are  implemented.   Users should not<br />
+depend  on  the memory sharing semantics of vfork() as it will, in that<br />
+case, be made synonymous to fork(2).</p></blockquote>
+<p>2. 为什么使用vfork(2)的限制有那么多？</p>
+<blockquote><p>the behavior is undefined if the process created by vfork()<br />
+either  modifies  any  data other than a variable of type pid_t used to<br />
+store the return value from vfork(), or returns from  the  function  in<br />
+which  vfork()  was called, or calls any other function before success-<br />
+fully calling _exit(2) or one of the exec(3) family of functions.</p></blockquote>
+<p>首先，为什么我只能在其后调用execve(2)和_exit(2)？看内核源代码，vfork(2)其实是通过completion实现的，在do_fork()时wait_for_completion()，而只有在do_execve()和do_exit()时才complete()（mm_release()），所以这就决定了你除了调用这两个系统调用外调用别的都是错的。</p>
+<p>其次，为什么我不能从当前的函数中返回？很简单，因为vfork()的实现用的是CLONE_VM，它决定了父子进程之间是完全共享内存的（而不是COW）。所以如果子进程对堆栈内容做了修改，对父进程也会有影响。</p>
+<p>一个随之而来的问题是：既然它们共享内存，那为什么子进程执行execve(2)就不会覆盖父进程呢？因为虽然CLONE_VM让do_fork()跳过了复制mm_struct，但是do_execve()在bprm_mm_init()时又创建了一个新的mm_struct。</p>
+<p>3. 什么时候我应该使用vfork(2)而不是fork(2)？</p>
+<p>90%以上的情况下你不应该这么做。假设父子进程哪个先运行很可能是一个不好的设计，你应该重新设计一下你的程序，或者考虑用其它方法实现。</body></html></p>

@@ -1,0 +1,40 @@
+---
+layout: post
+title: sudo和tee
+date: 2008-01-30 22:50:20.000000000 -08:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Linux Application
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '289'
+  _wp_old_slug: '289'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2008/01/30/sudo%e5%92%8ctee/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body>
+<p>今天<a href="http://amankwahly.cn/blog">刘洋同学</a>问到一个问题，为什么sudo下面的命令还是无权限</p>
+<p><font size="3">$sudo echo '1' &gt; ip_forward<br />
+bash: ip_forward: Permission denied</font></p>
+<p>而以root身份就可以？</p>
+<p><font size="3"># echo '1' &gt; ip_forward</font></p>
+<p>一开始没有看出原因来，后来仔细一琢磨，其实原因很简单，shell对‘&gt;’解释干扰了对这个命令含义的判断。我们本想应该是这样的意思：让sudo执行后面的这些“echo '1' &gt; ip_forward”，而实际上是：sudo echo '1' ，执行到这里，shell再把它的执行结果重定向到ip_forward里去！当然是无权限，因为流本身不会随echo那样被sudo“感染”上suid权限！</p>
+<p>解决方法是什么？也很简单，就让后面那一串东西搁一起执行：</p>
+<p><font size="3">$sudo sh -c 'echo 1 &gt; ip_forward'</font></p>
+<p>等等，还有没有更好的解决方法？有！刘洋同学认真思考了一下，觉得应该有这么个东西XX： echo '1' | sudo XX ip_forward。我擦亮眼睛一看，我靠，这不就是tee(1)么！！没错，另一种解决方法就是：</p>
+<p><font size="3">$echo '1' | sudo tee ip_forward  </font></p>
+<p>或者：</p>
+<p><font size="3">$echo '1' | sudo tee ip_forward | cat &gt; /dev/null</font></p>
+<p>刘洋问tee(1)是不是和tea有关系？不是！tee其实取自大写字母T的发音，而T不正是最后一个命令中流的流向么？！多么形象的名字啊！</p>
+<p></body></html></p>

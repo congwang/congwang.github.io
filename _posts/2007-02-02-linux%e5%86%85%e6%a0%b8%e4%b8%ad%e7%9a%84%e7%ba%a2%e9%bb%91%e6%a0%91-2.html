@@ -1,0 +1,145 @@
+---
+layout: post
+title: Linux内核中的红黑树
+date: 2007-02-02 22:56:58.000000000 -08:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Linux Kernel
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '12'
+  _wp_old_slug: '12'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2007/02/02/linux%e5%86%85%e6%a0%b8%e4%b8%ad%e7%9a%84%e7%ba%a2%e9%bb%91%e6%a0%91-2/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body></p>
+<p class="postdate">Friday, 2. February 2007, 06:07:27</p>
+<p class="content">
+<p align="right"><span class="alignright">王聪@西邮</span><br />
+红黑树是平衡二叉树的一种，它有很好的性质，树中的结点都是有序的，而且因为它本身就是平衡的，所以查找也不会出现非常恶劣的情况，基于二叉树的操作的时间复杂度是O(log(n))。Linux内核在管理vm_area_struct时就是采用了红黑树来维护内存块的。</p>
+<p>先到include/linux/rbtree.h中看一下rbtree的定义，如下：</p>
+<pre>
+struct rb_node
+{
+        unsigned long  rb_parent_color;
+#define RB_RED          0
+#define RB_BLACK        1
+        struct rb_node *rb_right;
+        struct rb_node *rb_left;
+} __attribute__((aligned(sizeof(long))));</pre>
+<p>struct rb_root只是struct rb_node*的一个包装，这样做的好处是看起来不用传递二级指针了。不错，很简单。再看一下下面几个重要的宏，细心的你一定会发现，rb_parent_color其实没那么简单，Andrea Arcangeli在这里使用了一个小的技巧，不过非常棒。正如名字所暗示，这个成员其实包含指向parent的指针和此结点的颜色！它是怎么做到的呢？很简单，对齐起了作用。既然是sizeof(long)大小的对齐，那么在IA-32上，任何rb_node结构体的地址的低两位肯定都是零，与其空着不用，还不如用它们表示颜色，反正颜色就两种，其实只要一位就够了（估计此处也是照顾16位的机器）。</p>
+<p>这样，提取parent指针只要把rb_parent_color成员的低两位清零即可：</p>
+<pre>
+#define rb_parent(r)   ((struct rb_node *)((r)-
+</pre>
+<p>取颜色只要看最后一位即可：</p>
+<pre>
+#define rb_color(r)   ((r)-
+</pre>
+<p>测试颜色和设置颜色也是水到渠成的事了。需要特别指出的是下面的一个内联函数：</p>
+<pre>
+static inline void rb_link_node(struct rb_node * node, struct rb_node * parent, struct rb_node ** rb_link);</pre>
+<p>它把parent设为node的父结点，并且让rb_link指向node。</p>
+<p>我们把重点集中在lib/rbtree.c上，看看一些和红黑树相关的重要算法。开始之前我们一起回忆一下红黑树的规则：</p>
+<p>1. 每个结点要么是红色要么是黑色；<br />
+2. 根结点必须是黑色；<br />
+3. 红结点如果有孩子，其孩子必须都是黑色；<br />
+4. 从根结点到叶子的每条路径必须包含相同数目的黑结点。</p>
+<p>这四条规则可以限制一棵排序树是平衡的。</p>
+<p>__rb_rotate_left是把以root为根的树中的node结点进行左旋，__rb_rotate_right是进行右旋。这两个函数是为后面的插入和删除服务，而不是为外部提供接口。</p>
+<p>新插入的结点都设为叶子，染成红色，插入后如果破坏了上述规则，通过调整颜色和旋转可以恢复，二叉树又重新平衡。插入操作的接口函数是</p>
+<pre>
+void rb_insert_color(struct rb_node *node, struct rb_root *root);</pre>
+<p>它把已确定父结点的node结点融入到以root为根的红黑树中，具体算法的分析可以参考MIT的《算法导论》第14.3节，这里的实现和书中的讲解几乎完全一样！怎么确定node的父结点应该在调用rb_insert_color之前通过手工迭带完成。值得指出的一点是，虽然插入操作需要一个循环迭代，但是总的旋转次数不会超过两次！所以效率还是很乐观的。</p>
+<p>删除操作多多少少都有点麻烦，它要先执行像普通二叉查找树的“删除”，然后根据删除结点的颜色来判断是否执行进一步的操作。删除的接口是</p>
+<pre>
+void rb_erase(struct rb_node *node, struct rb_root *root);</pre>
+<p>其实它并没有真正删除node，而只是让它和以root为根的树脱离关系，最后它还要判断是否调用__rb_erase_color来调整。具体算法的讲解看参考《算法导论》13.3和14.4节，__rb_erase_color对应书中的RB-DELETE-FIXUP。此处的实现和书上也基本上一致。</p>
+<p>其余的几个接口就比较简单了。</p>
+<pre>
+struct rb_node *rb_first(struct rb_root *root);</pre>
+<p>在以root为根的树中找出并返回最小的那个结点，只要从根结点一直向左走就是了。</p>
+<pre>
+struct rb_node *rb_last(struct rb_root *root);</pre>
+<p>是找出并返回最大的那个，一直向右走。</p>
+<pre>
+struct rb_node *rb_next(struct rb_node *node);</pre>
+<p>返回node在树中的后继，这个稍微复杂一点。如果node的右孩子不为空，它只要返回node的右子树中最小的结点即可；如果为空，它要向上查找，找到迭带结点是其父亲的左孩子的结点，返回父结点。如果一直上述到了根结点，返回NULL。</p>
+<pre>
+struct rb_node *rb_prev(struct rb_node *node);</pre>
+<p>返回node的前驱，和rb_next中的操作对称。</p>
+<pre>
+void rb_replace_node(struct rb_node *victim, struct rb_node *new, struct rb_root *root);</pre>
+<p>用new替换以root为根的树中的victim结点。</p>
+<p>红黑树接口使用的一个典型例子如下：</p>
+<pre>
+static inline struct page * rb_search_page_cache(struct inode * inode,
+                                                 unsigned long offset)
+{
+        struct rb_node * n = inode-<i>
+        struct page * page;
+
+        while (n)
+        {
+                page = rb_entry(n, struct page, rb_page_cache);
+
+                if (offset &gt; page-
+                        n = n-
+                else if (offset &lt; page-
+                        n = n-
+                else
+                        return page;
+        }
+        return NULL;
+}
+
+static inline struct page * __rb_insert_page_cache(struct inode * inode,
+                                                   unsigned long offset,
+                                                   struct rb_node * node)
+{
+        struct rb_node ** p = &amp;inode-<i>
+        struct rb_node * parent = NULL;
+        struct page * page;
+
+        while (*p)
+        {
+                parent = *p;
+                page = rb_entry(parent, struct page, rb_page_cache);
+
+                if (offset &gt; page-
+                        p = &amp;(*p)-
+                else if (offset &lt; page-
+                        p = &amp;(*p)-
+                else
+                        return page;
+        }
+
+        rb_link_node(node, parent, p);
+
+        return NULL;
+}
+
+static inline struct page * rb_insert_page_cache(struct inode * inode,
+                                                 unsigned long offset,
+                                                 struct rb_node * node)
+{
+        struct page * ret;
+        if ((ret = __rb_insert_page_cache(inode, offset, node)))
+                goto out;
+        rb_insert_color(node, &amp;inode-<i>
+ out:
+        return ret;
+}
+</i></i></i></pre>
+<p></body></html></p>

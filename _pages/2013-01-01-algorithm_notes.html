@@ -1,0 +1,71 @@
+---
+layout: page
+title: 算法笔记
+date: 2013-01-01 21:14:05.000000000 -08:00
+type: page
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories: []
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '2213'
+  _wp_old_slug: '2213'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/algorithm_notes/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body></p>
+<p>以下多摘自我读过的一些算法书。</p>
+<p><a href="http://book.douban.com/subject/4915945/" target="_blank">Python Algorithms</a>, CHAPTER 6 DIVIDE, COMBINE, AND CONQUER</p>
+<blockquote><p>
+This means that the best we can do is to use Ω(lg n!) yes/no questions (that is, comparisons) to get the right permutation (that is, to sort the numbers). And it just so happens that lg n! is asymptotically equivalent to n*lg(n). In other words, the running time in the worst case is Ω(lg n!) = Ω(n lg n).</p>
+<p>[...] In other words, in a very real sense, unless we know something substantial about the value range or distribution of our data, loglinear is the best we can do.</p></blockquote>
+<blockquote><p>
+The algorithm design strategy of divide and conquer involves a decomposition of a problem into roughly equal-sized subproblems, solving the subproblems (often by recursion), and combining the results. The main reason this is useful it that the workload is balanced, typically taking you from a quadratic to a loglinear running time. Important examples of this behavior include merge sort and quicksort, as well as algorithms for finding the closest pair or the convex hull of a point set. In some cases (such as when searching a sorted sequence or selecting the median element), all but one of the subproblems can be pruned, resulting in a traversal from root to leaf in the subproblem graph, yielding even more efficient algorithms.</p>
+<p>The subproblem structure can also be represented explicitly, as it is in binary search trees. Each node in a search tree is greater than the descendants in its left subtree but less than those in its right subtree. This means that a binary search can be implemented as a traversal from the root. Simply inserting random values haphazardly will yield a balanced enough tree on average (yielding logarithmic search times), but it is also possible to balance the tree, using node splitting or rotations, to guarantee logarithmic running times in the worst case.</p></blockquote>
+<p>CHAPTER 7 GREED IS GOOD? PROVE IT!</p>
+<blockquote><p>The common setting for greedy algorithms is a series of choices (just like, as you’ll see, for dynamic programming). The greed involves making each choice with local information, doing what looks most promising without regard for context or future consequences, and then, once the choice has been made, never looking back. If this is to lead to a solution, we must make sure that each choice is safe—that it doesn’t destroy our future prospects.</p></blockquote>
+<p>CHAPTER 8 TANGLED DEPENDENCIES AND MEMOIZATION</p>
+<blockquote><p>Commonly, DP algorithms turn the recursive formulation upside down, making it iterative, and filling out some data structure (such as a multidimensional array) step by step. Another option—one I think is particularly suited to high-level languages such as Python—is to implement the recursive formulation directly but to cache the return values. If a call is made more than once with the same arguments, the result is simply returned directly from the cache. This is called memoization.</p></blockquote>
+<p><a href="http://book.douban.com/subject/3072383/" target="_blank">The Algorithm Design Manual</a>, Sec. 4.3.1</p>
+<blockquote><p>Heaps are a simple and elegant data structure for efficiently supporting the priority queue operations insert and extract-min. They work by maintaining a partial order on the set of elements which is weaker than the sorted order (so it can be efficient to maintain) yet stronger than random order (so the minimum element can be quickly identified).</p></blockquote>
+<p>Sec. 4.6.2 Randomized Algorithms</p>
+<blockquote><p>Quicksort runs in Θ(n log n) time, with high probability, if you give me randomly ordered data to sort.</p></blockquote>
+<blockquote><p>Randomized quicksort runs in Θ(n log n) time on any input, with high probability.</p></blockquote>
+<blockquote><p>Randomization is a powerful tool to improve algorithms with bad worst-case but good average-case complexity. It can be used to make algorithms more robust to boundary cases and more efficient on highly structured input instances that confound heuristic decisions (such as sorted input to quicksort). It often lends itself to simple algorithms that provide randomized performance guarantees which are otherwise obtainable only using complicated deterministic algorithms.</p></blockquote>
+<p>Sec. 4.10 Divide-and-Conquer</p>
+<blockquote><p>
+Two important algorithm design paradigms are based on breaking problems down into smaller problems. In Chapter 8, we will see dynamic programming, which typically <strong>removes one element</strong> from the problem, solves the smaller problem, and then uses the solution to this smaller problem to add back the element in the proper way. Divide-and-conquer instead <strong>splits the problem in (say) halves</strong>, solves each half, then stitches the pieces back together to form a full solution.</p></blockquote>
+<blockquote><p>
+To use divide-and-conquer as an algorithm design technique, we must divide the problem into two smaller subproblems, solve each of them recursively, and then meld the two partial solutions into one solution to the full problem. Whenever the merging takes less time than solving the two subproblems, we get an efficient algorithm. Mergesort is the classic example of a divide-and-conquer algorithm. It takes only linear time to merge two sorted lists of n/2 elements, each of which was obtained in O(n lg n) time.
+</p></blockquote>
+<p>Sec. 7.1 Backtracking</p>
+<blockquote><p>Backtracking is a systematic way to iterate through all the possible configurations of a search space. These configurations may represent all possible arrangements of objects (permutations) or all possible ways of building a collection of them (subsets).</p></blockquote>
+<blockquote><p>
+What these problems have in common is that we must generate each one possible configuration exactly once. Avoiding both repetitions and missing configurations means that we must define a systematic generation order.
+</p></blockquote>
+<p>Chapter 8 Dynamic Programming</p>
+<blockquote><p>
+Algorithms for optimization problems require proof that they always return the best possible solution. Greedy algorithms that make the best local decision at each step are typically efficient but usually do not guarantee global optimality. Exhaustive search algorithms that try all possibilities and select the best always produce the optimum result, but usually at a prohibitive cost in terms of time complexity.</p></blockquote>
+<blockquote><p>
+<strong>Dynamic programming combines the best of both worlds.</strong> It gives us a way to design custom algorithms that systematically search all possibilities (thus guar-anteeing correctness) while storing results to avoid recomputing (thus providing efficiency). <strong>By storing the consequences of all possible decisions and using this information in a systematic way, the total amount of work is minimized.</strong>
+</p></blockquote>
+<blockquote><p>
+<strong>Once you understand it, dynamic programming is probably the easiest algorithm design technique to apply in practice. In fact, I find that dynamic programming algorithms are often easier to reinvent than to try to look up in a book. That said, until you understand dynamic programming, it seems like magic. You must figure out the trick before you can use it.</strong>
+</p></blockquote>
+<blockquote><p>Dynamic programming is a technique for efficiently implementing a recursive algorithm by storing partial results. The trick is seeing whether the naive recursive algorithm computes the same subproblems over and over and over again. If so, storing the answer for each subproblems in a table to look up instead of recompute can lead to an efficient algorithm. Start with a recursive algorithm or definition. Only once we have a correct recursive algorithm do we worry about speeding it up by using a results matrix.
+</p></blockquote>
+<blockquote><p>Dynamic programming is generally the right method for <strong>optimization</strong> problems on combinatorial objects that have an inherent left to right order among components. Left-to-right objects includes: character strings, rooted trees, polygons, and integer sequences. Dynamic programming is best learned by carefully studying examples until things start to click.
+</p></blockquote>
+<p>Sec. 14.1 SORTING</p>
+<blockquote><p>
+A stable sorting algorithm preserves the original ordering in case of ties. Most of the quadratic-time sorting algorithms are stable, while many of the O(n lg n) algorithms are not. If it is important that your sort be stable, it is probably better to explicitly use the initial position as a secondary key in your comparison function rather than trust the stability of your implementation.</p></blockquote>
+<p></body></html></p>

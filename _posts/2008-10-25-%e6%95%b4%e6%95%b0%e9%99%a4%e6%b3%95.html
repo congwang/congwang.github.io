@@ -1,0 +1,57 @@
+---
+layout: post
+title: 整数除法
+date: 2008-10-25 00:50:56.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Programming
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '397'
+  _wp_old_slug: '397'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2008/10/25/%e6%95%b4%e6%95%b0%e9%99%a4%e6%b3%95/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body></p>
+<p>C似乎没多少疑问，不过当有负数时还是需要特别注意的，因为标准要求是要向0对齐的。所以-5/2会是-2而不是-3。</p>
+<blockquote><p>6.5.5</p>
+<p>When integers are divided, the result of the / operator is the algebraic quotient<br />
+with any fractional part discarded [Footnote].</p>
+<p>...</p>
+<p>Footnote: This is often called "truncation toward zero"</p></blockquote>
+<p>在C89的时候，这个问题还是交由编译器决定的。C99加强了这一点。C为什么会选择这一点？其实原因很简单，因为这么做节省时间：直接舍去小数部分。</p>
+<p>Python在这一点上和C不同，因为它还保留了一个int()，这个和C在取整方向上是一致的：Python中的整数除法向负无穷对齐；而int()才是向0对齐的。见<a href="http://www.python.org/dev/peps/pep-0238/" target="_blank">PEP238</a>：</p>
+<blockquote><p>Note that classic division (and floor division) round towards negative infinity,<br />
+while int() rounds towards zero, giving different answers for  negative numbers.</p></blockquote>
+<p>不要被迷惑了，在Python里int(-5/2)依旧是-3而不是-2，你知道为什么。:-) 在PEP 238中，Python引入了一个新的运算符：//，它始终会向下截取除法的结果（数学上的取整，英文谓之floor），看下面的例子：</p>
+<p>&gt;&gt;&gt; -5//2<br />
+-3<br />
+&gt;&gt;&gt; -5.1/2.0<br />
+-2.5499999999999998<br />
+&gt;&gt;&gt; -5.1//2.0<br />
+-3.0</p>
+<p>Perl更不同，它只能通过int()来进行取整，因为普通除法在Perl里得到的结果是浮点数。《Programming Perl》中提到：</p>
+<blockquote><p>You should not use this function for generic rounding, because it truncates towards 0 and because machine representations of floating-point numbers can sometimes produce counterintuitive results.</p></blockquote>
+<p>所以这个也是向0对齐的。</p>
+<p>再看ruby，这个似乎很简单，一律是向负无穷对齐的：</p>
+<p>$ ruby -e 'puts -5/2; puts -5.div(2); puts Kernel.Integer(-5/2);'</p>
+<p>-3<br />
+-3<br />
+-3</p>
+<p>Bash和C一致：</p>
+<p>$ echo $[5/2] &amp;&amp; echo $[-5/2]<br />
+2<br />
+-2</p>
+<p>Java似乎也和C一致，不过我未验证。:-)</p>
+<p>这里还有一个问题值得思考：为什么这些编程语言要把整数除法和浮点数除法区别对待？对于C，这个问题很简单，因为很久很久以前C并没有浮点数，只有整数，而其它语言似乎是因为受到了这一影响，当然Perl例外。不过，在很多情况下整数除法已经够用，无须打扰浮点数。</body></html></p>

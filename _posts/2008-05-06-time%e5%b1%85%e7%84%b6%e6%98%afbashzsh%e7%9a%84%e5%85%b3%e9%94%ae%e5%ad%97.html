@@ -1,0 +1,40 @@
+---
+layout: post
+title: time居然是bash/zsh的关键字
+date: 2008-05-06 19:19:58.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Linux Application
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '345'
+  _wp_old_slug: '345'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2008/05/06/time%e5%b1%85%e7%84%b6%e6%98%afbashzsh%e7%9a%84%e5%85%b3%e9%94%ae%e5%ad%97/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body>
+<p>哎，没想到自己的知识还有这么个大的疏漏！</p>
+<p>我们平时最常用的time竟然是bash/zsh的一个关键字！！一直以为time就是/usr/bin/time！</p>
+<p>$ builtin time<br />
+bash: builtin: time: not a shell builtin<br />
+$ type time<br />
+time is a shell keyword</p>
+<p>% builtin time<br />
+zsh: no such builtin: time<br />
+% type time<br />
+time is a reserved word</p>
+<p>用strace也可以，strace一下看看有没有搜索PATH的过程就知道。</p>
+<p>$ strace /bin/bash -c 'time &gt; /dev/null'</p>
+<p>也可以证实time确实不是外部命令，不过它无法告诉我们到底是内置命令还是关键字。排除time是内置命令的另一个方法是看man手册，shell builtins里面并没有time。</p>
+<p></body></html></p>

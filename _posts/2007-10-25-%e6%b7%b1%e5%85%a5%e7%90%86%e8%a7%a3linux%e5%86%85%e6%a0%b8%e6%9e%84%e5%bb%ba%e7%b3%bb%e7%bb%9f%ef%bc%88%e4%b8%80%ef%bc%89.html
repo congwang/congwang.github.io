@@ -1,0 +1,93 @@
+---
+layout: post
+title: 深入理解Linux内核构建系统（一）
+date: 2007-10-25 19:29:47.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Linux Kernel
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '240'
+  _wp_old_slug: '240'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2007/10/25/%e6%b7%b1%e5%85%a5%e7%90%86%e8%a7%a3linux%e5%86%85%e6%a0%b8%e6%9e%84%e5%bb%ba%e7%b3%bb%e7%bb%9f%ef%bc%88%e4%b8%80%ef%bc%89/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body></p>
+<p align="center"><strong>Linux内核编译命令 </strong></p>
+<p align="right">作者：西邮 王聪</p>
+<p align="center">｛做人要厚道，转载请注明出处！｝</p>
+<p>make tags<br />
+生成tags文件，供浏览代码使用。<br />
+make cscope<br />
+生成cscope索引文件，也是为了方便浏览源代码。</p>
+<p>make oldconfig<br />
+在旧的.config基础上生成新的.config，非常有用。<br />
+make silentoldconfig<br />
+同上，但比较安静。;)<br />
+make defconfig<br />
+生成包含全部默认选项的.config文件。<br />
+make allyesconfig<br />
+生成包含全部选项的.config文件。<br />
+make allnoconfig<br />
+拒绝全部选项。<br />
+make randconfig<br />
+随机选择一些选项，一般供开发者测试使用。<br />
+make {config|xconfig|gconfig|menuconfig}<br />
+手工选择选项，只是用户界面不同，比如xconfig和gconfig都是图形界面的。</p>
+<p>make<br />
+默认编译。<br />
+make bzImage<br />
+编译生成压缩的内核二进制文件，一般你用到的是这个。<br />
+make vmlinux<br />
+编译生成纯二进制内核文件。<br />
+make modules<br />
+编译生成内核模块。<br />
+make modules_install<br />
+安装生成的内核模块。<br />
+make {bzdisk|fdimage|isoimage}<br />
+编译生成启动软盘镜像，或光盘镜像。<br />
+make install<br />
+安装编译生成的内核文件，包括设置你的Lilo或Grub。<br />
+make all<br />
+等价于vmlinux+modules+bzImage。<br />
+make rpm<br />
+构建内核rpm包。<br />
+make foo/bar/foobar.ko<br />
+编译单个内核源文件。<br />
+make headers_install<br />
+安装内核头文件，默认安装到usr目录。<br />
+make M=some/sub/dir<br />
+编译一个指定的目录。<br />
+make O=/path/to/some/dir<br />
+把编译过程中生成的文件都放到指定目录中去。<br />
+make C={1|2}<br />
+用sparse检查内核代码。<br />
+make V={0|1|2}<br />
+控制编译过程中输出信息的多少。</p>
+<p>make help<br />
+列出所有的make目标及其相关描述。<br />
+make kernelversion<br />
+输出Makefile里读到的内核版本信息。<br />
+make kernelrelease<br />
+输出内核发行标识。</p>
+<p>make {rpm-pkg|deb-pkg|tar-pkg|targz-pkg|tarbz2-pkg}<br />
+构建{rpm|deb|tar|tar.gz|tar.bz2}格式的内核包。</p>
+<p>make {htmldocs|mandocs|pdfdocs|psdocs|xmldocs}<br />
+生成{html|man|pdf|ps|xml}格式的内核文档。</p>
+<p>make clean<br />
+清理生成文件，但会保留.config和一些模块文件。<br />
+make mrproper<br />
+清理全部文件，包括.config和一些备份文件。<br />
+make distclean<br />
+在make mrproper的基础上还清理编辑器可能生成的备份文件，patch的rej文件等。</body></html></p>

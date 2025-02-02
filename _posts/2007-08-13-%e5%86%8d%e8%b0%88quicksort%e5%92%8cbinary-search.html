@@ -1,0 +1,36 @@
+---
+layout: post
+title: 再谈Quicksort和Binary Search
+date: 2007-08-13 01:12:55.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Programming
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '183'
+  _wp_old_slug: '183'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2007/08/13/%e5%86%8d%e8%b0%88quicksort%e5%92%8cbinary-search/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body></p>
+<p>众所周知，Quicksort是大牛<a href="http://en.wikipedia.org/wiki/C._A._R._Hoare">C.A.R. Hoare</a>于1962年发明的（wikipedia上说是1960，但paper上写的是1962），当时他那篇paper现在可以<a href="http://portal.acm.org/book_gateway.cfm?id=63445&amp;type=pdf&amp;bookpath=%2F70000%2F63445%2Fcb-p19-hoare.pdf&amp;coll=GUIDE&amp;dl=&amp;CFID=15151515&amp;CFTOKEN=6184618">免费下载</a>了。短短12页（其实是11页，而且每页利用率不高）就把quick sort分析得详详细细，头头是道了。其实这个算法只不过是这位牛人职业生涯中最琐碎的贡献，他的主要贡献还是Algol60。那个时候可是牛人辈出的年代，Ken Thompson牛当年可是用汇编写操作系统和编译器的，搁到现在连想都不敢想啊！偶滴神啊！咳咳，不好意思，跑题了……</p>
+<p>现在，凡是一本和“数据结构” 或者“算法”靠边的书就必然会提到Quicksort，很多还给出自己的实现。无奈，绝大多数代码都很丑陋（如果不能说非常丑陋的话）。好不容易，我在BWK的牛著《The Practice of Programming》中找到了一个简洁的实现。请欣赏：</p>
+<p style="text-align:center;"><img src="{{site.baseurl}}/assets/2007/08/quicksort.jpg"></p>
+<p> 接下来我们谈谈Binary Search。1946年，第一个Binary Search算法出现；1962年，第一个“正确”的Binary Search算法出现，最前面十八个都错了。1986年，Jon Bentley在课堂上和《Programming Pearls》这本书中，说明了这么简单的演算法(1962版)可以犯下多少的bug。2006年，书中那个大众引用的程式被<a href="http://googleresearch.blogspot.com/2006/06/extra-extra-read-all-about-it-nearly.html">抓到integer overflow bug</a>。这个bug是出在这个该死的语句上：</p>
+<pre>int mid =(low + high) / 2;</pre>
+<p>您看出哪里错来了么？其实是low+high超出int表示的正数范围时就会变成负数，这时mid也跟着错了，而后面用mid取数组元素自然也不对了。修补就很简单了：</p>
+<pre>int mid = low + ((high - low) / 2);</pre>
+<p>下面是《Practice of Programming》中的Binary Search，不那么通用，而且也存在上面说的bug！把它修改成通用（模仿一下标准C库函数bsearch(3)）而且bug-free的代码就留给您作为课后作业了。</p>
+<p style="text-align:center;"><img src="{{site.baseurl}}/assets/2007/08/binsearch.jpg"></p>
+<p>BTW：<a href="http://blog.csdn.net/drzhouweiming/archive/2007/04/12/1562717.aspx">这里</a>有篇小文章，分析了为什么90%的程序员写不出bug-free的binary search。里面确实道出了很多程序员的无奈，用某牛的话说就是我们只能证明bug的存在，而不能证明其不存在，代码越多越是如此！</body></html></p>

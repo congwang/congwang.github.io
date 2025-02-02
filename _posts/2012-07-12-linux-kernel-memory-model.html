@@ -1,0 +1,181 @@
+---
+layout: post
+title: Linux kernel memory model
+date: 2012-07-12 13:39:19.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Linux Kernel
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '2043'
+  _wp_old_slug: '2043'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2012/07/12/linux-kernel-memory-model/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body></p>
+<p>稍微了解 Linux 内核的人都知道，在 x86 上内核中所有的 struct page 是放在一个数组中管理的，它就是 mem_map，通过它我们就可以用 pfn 作为 index 来找到对应的 struct page 了：</p>
+<p>[c]<br />
+#define __pfn_to_page(pfn)      (mem_map + ((pfn) - ARCH_PFN_OFFSET))<br />
+#define __page_to_pfn(page)     ((unsigned long)((page) - mem_map) +<br />
+                                 ARCH_PFN_OFFSET)<br />
+[/c]</p>
+<p>这是以前旧的 memory model（这个词很流行，你应该在很多地方见过，比如 C/C++标准），现在情况变了。</p>
+<p>因为对 NUMA 和内存热插拔（memory hot-plug）的支持，Linux 内核中现在又引入两个新的 memory model，之前那个旧的被称为 Flat memory，新的两个被称为 Discontiguous memory 和 Sparse memory。它们对应的选项是：CONFIG_FLATMEM，CONFIG_DISCONTIGMEM，CONFIG_SPARSEMEM。让我们来看看这两个新的 memory model。</p>
+<p>顺便多说两句，NUMA 和内存热插拔并没有直接的联系，NUMA 系统不一定支持内存的热插拔，而可以进行内存热插拔的系统也不一定是 NUMA 的！NUMA 支持对应的选项是 CONFIG_NUMA，而内存热插拔对应的选项是 CONFIG_MEMORY_HOTPLUG 和 CONFIG_MEMORY_HOTREMOVE。由此也可以看出 Linux 内核配置是多么灵活，你可以任意搭配你需要的选项。</p>
+<p><strong>CONFIG_DISCONTIGMEM</strong></p>
+<p>mm/Kconfig 中对它的介绍是：</p>
+<blockquote><p>This option provides enhanced support for discontiguous memory systems, over FLATMEM. These systems have holes in their physical address spaces, and this option provides more efficient handling of these holes.  However, the vast          majority of hardware has quite flat address spaces, and can have degraded performance from the extra overhead that this option imposes.<br />
+<br><br />
+Many NUMA configurations will have this as the only option.
+</p></blockquote>
+<p>Discontiguous memory 其实很简单，它上从 flat memory 的基础上对 NUMA 进行扩展得出来的。每一个 node 都有一个 struct pglist_data，对于 discontiguous memory 其中记录了每个 node 的 node_start_pfn、node_spanned_pages、node_mem_map，分别表示该 node 的起始页的 PFN、物理页的数量、这些页面的 mem_map。我们可以看 alloc_node_mem_map() 是如何初始化这几个值的：</p>
+<p>[c]<br />
+static void __init_refok alloc_node_mem_map(struct pglist_data *pgdat)<br />
+{<br />
+        /* Skip empty nodes */<br />
+        if (!pgdat-&gt;node_spanned_pages)<br />
+                return;</p>
+<p>#ifdef CONFIG_FLAT_NODE_MEM_MAP<br />
+        /* ia64 gets its own node_mem_map, before this, without bootmem */<br />
+        if (!pgdat-&gt;node_mem_map) {<br />
+                unsigned long size, start, end;<br />
+                struct page *map;</p>
+<p>                /*<br />
+                 * The zone's endpoints aren't required to be MAX_ORDER<br />
+                 * aligned but the node_mem_map endpoints must be in order<br />
+                 * for the buddy allocator to function correctly.<br />
+                 */<br />
+                start = pgdat-&gt;node_start_pfn &amp; ~(MAX_ORDER_NR_PAGES - 1);<br />
+                end = pgdat-&gt;node_start_pfn + pgdat-&gt;node_spanned_pages;<br />
+                end = ALIGN(end, MAX_ORDER_NR_PAGES);<br />
+                size =  (end - start) * sizeof(struct page);<br />
+                map = alloc_remap(pgdat-&gt;node_id, size);<br />
+                if (!map)<br />
+                        map = alloc_bootmem_node_nopanic(pgdat, size);<br />
+                pgdat-&gt;node_mem_map = map + (pgdat-&gt;node_start_pfn - start);<br />
+        }<br />
+        //....<br />
+}<br />
+[/c]</p>
+<p>所以，它对应的 __pfn_to_page() 和 __page_to_pfn() 定义如下：</p>
+<p>[c]<br />
+#define arch_local_page_offset(pfn, nid)<br />
+        ((pfn) - NODE_DATA(nid)-&gt;node_start_pfn)</p>
+<p>#define __pfn_to_page(pfn)<br />
+({      unsigned long __pfn = (pfn);<br />
+        unsigned long __nid = arch_pfn_to_nid(__pfn);<br />
+        NODE_DATA(__nid)-&gt;node_mem_map + arch_local_page_offset(__pfn, __nid);<br />
+})</p>
+<p>#define __page_to_pfn(pg)<br />
+({      const struct page *__pg = (pg);<br />
+        struct pglist_data *__pgdat = NODE_DATA(page_to_nid(__pg));<br />
+        (unsigned long)(__pg - __pgdat-&gt;node_mem_map) +<br />
+         __pgdat-&gt;node_start_pfn;<br />
+})<br />
+[/c]</p>
+<p>两个 node 之间的内存未必是连续的，中间可能有内存空洞，空洞的单位是 64M，但整个内存依然是 flat 的：</p>
+<p>[c]<br />
+/*<br />
+ * generic node memory support, the following assumptions apply:<br />
+ *<br />
+ * 1) memory comes in 64Mb contiguous chunks which are either present or not<br />
+ * 2) we will not have more than 64Gb in total<br />
+ *<br />
+ * for now assume that 64Gb is max amount of RAM for whole system<br />
+ *    64Gb / 4096bytes/page = 16777216 pages<br />
+ */<br />
+#define MAX_NR_PAGES 16777216<br />
+#define MAX_SECTIONS 1024<br />
+#define PAGES_PER_SECTION (MAX_NR_PAGES/MAX_SECTIONS)</p>
+<p>extern s8 physnode_map[];</p>
+<p>static inline int pfn_to_nid(unsigned long pfn)<br />
+{<br />
+#ifdef CONFIG_NUMA<br />
+        return((int) physnode_map[(pfn) / PAGES_PER_SECTION]);<br />
+#else<br />
+        return 0;<br />
+#endif<br />
+}<br />
+[/c]</p>
+<p><strong>CONFIG_SPARSEMEM</strong></p>
+<p>Sparse memory 是一个相对比较复杂的模型。mm/Kconfig 中对它的介绍是：</p>
+<blockquote><p>This will be the only option for some systems, including memory hotplug systems. This is normal. For many other systems, this will be an alternative to "Discontiguous Memory".  This option provides some potential performance benefits, along with decreased code complexity, but it is newer, and more experimental.
+</p></blockquote>
+<p>它主要是因为支持内存热插拔引入的。对于支持内存热插拔的系统，系统中的某一个部分内存可以随时被移除和添加，这就是得原本连续的内存空间变得稀疏。这个内存模型是把所有的内存空间划分成一个个 section，每个 section 都是同样大小的，可以进行热插拔的内存大小就是以 section 为单位的。在 x86_64 上面，每个 section 是 128M：</p>
+<p>[c]<br />
+#ifdef CONFIG_X86_32<br />
+# ifdef CONFIG_X86_PAE<br />
+#  define SECTION_SIZE_BITS     29<br />
+#  define MAX_PHYSADDR_BITS     36<br />
+#  define MAX_PHYSMEM_BITS      36<br />
+# else<br />
+#  define SECTION_SIZE_BITS     26<br />
+#  define MAX_PHYSADDR_BITS     32<br />
+#  define MAX_PHYSMEM_BITS      32<br />
+# endif<br />
+#else /* CONFIG_X86_32 */<br />
+# define SECTION_SIZE_BITS      27 /* matt - 128 is convenient right now */<br />
+# define MAX_PHYSADDR_BITS      44<br />
+# define MAX_PHYSMEM_BITS       46<br />
+#endif<br />
+[/c]</p>
+<p>每个 section 有自己的 mem_map，所以其 __pfn_to_page 的定义如下：</p>
+<p>[c]<br />
+/*<br />
+ * Note: section's mem_map is encorded to reflect its start_pfn.<br />
+ * section[i].section_mem_map == mem_map's address - start_pfn;<br />
+ */<br />
+#define __page_to_pfn(pg)<br />
+({      const struct page *__pg = (pg);<br />
+        int __sec = page_to_section(__pg);<br />
+        (unsigned long)(__pg - __section_mem_map_addr(__nr_to_section(__sec)));<br />
+})</p>
+<p>#define __pfn_to_page(pfn)<br />
+({      unsigned long __pfn = (pfn);<br />
+        struct mem_section *__sec = __pfn_to_section(__pfn);<br />
+        __section_mem_map_addr(__sec) + __pfn;<br />
+})<br />
+[/c]</p>
+<p>Sparse memory 还有两个变异：SPARSEMEM_EXTREME 和 SPARSEMEM_VMEMMAP，前者是对更稀疏的内存做了优化，采用了两层 memory section，即二维数组：</p>
+<p>[c]<br />
+#ifdef CONFIG_SPARSEMEM_EXTREME<br />
+#define SECTIONS_PER_ROOT       (PAGE_SIZE / sizeof (struct mem_section))<br />
+#else<br />
+#define SECTIONS_PER_ROOT       1<br />
+#endif</p>
+<p>#define SECTION_NR_TO_ROOT(sec) ((sec) / SECTIONS_PER_ROOT)<br />
+#define NR_SECTION_ROOTS        DIV_ROUND_UP(NR_MEM_SECTIONS, SECTIONS_PER_ROOT)<br />
+#define SECTION_ROOT_MASK       (SECTIONS_PER_ROOT - 1)</p>
+<p>#ifdef CONFIG_SPARSEMEM_EXTREME<br />
+extern struct mem_section *mem_section[NR_SECTION_ROOTS];<br />
+#else<br />
+extern struct mem_section mem_section[NR_SECTION_ROOTS][SECTIONS_PER_ROOT];<br />
+#endif</p>
+<p>static inline struct mem_section *__nr_to_section(unsigned long nr)<br />
+{<br />
+        if (!mem_section[SECTION_NR_TO_ROOT(nr)])<br />
+                return NULL;<br />
+        return &amp;mem_section[SECTION_NR_TO_ROOT(nr)][nr &amp; SECTION_ROOT_MASK];<br />
+}<br />
+[/c]</p>
+<p>后者是针对 x86_64 这种虚拟地址空间比较大的平台做了速度的优化，把 mem_map 里所有 struct page 的地址一一映射进 vmemmap 地址中去，这样它们的虚拟地址就是连续的了：</p>
+<p>[c]<br />
+#define VMEMMAP_START    _AC(0xffffea0000000000, UL)</p>
+<p>#define vmemmap ((struct page *)VMEMMAP_START)</p>
+<p>/* memmap is virtually contiguous.  */<br />
+#define __pfn_to_page(pfn)      (vmemmap + (pfn))<br />
+#define __page_to_pfn(page)     (unsigned long)((page) - vmemmap)<br />
+[/c]</p>
+<p>不过额外的代价就是初始化的时候要对每一个 struct page 做 populate，参见 sparse_mem_map_populate() 函数。另外可参考内存热插拔代码中函数 __add_section() 和 __remove_section() 的实现。<br />
+</body></html></p>

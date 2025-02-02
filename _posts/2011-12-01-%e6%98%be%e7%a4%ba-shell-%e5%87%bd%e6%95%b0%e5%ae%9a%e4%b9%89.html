@@ -1,0 +1,40 @@
+---
+layout: post
+title: 显示 shell 函数定义
+date: 2011-12-01 13:44:02.000000000 -08:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Programming
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '1831'
+  _wp_old_slug: '1831'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2011/12/01/%e6%98%be%e7%a4%ba-shell-%e5%87%bd%e6%95%b0%e5%ae%9a%e4%b9%89/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body>
+<p>我们知道在 bash/zsh 中可以用 "typeset -f" 来显示某个函数的定义。如果不用这个内置命令的话我们应该怎么显示函数定义呢？</p>
+<p>下面这个技巧就可以用来显示函数定义：<br />
+[bash]<br />
+#!/bin/bash</p>
+<p>def() {<br />
+  eval "$1() $2"<br />
+  eval "function_$1="$1() $2""<br />
+}</p>
+<p>def foo '{<br />
+  echo bar<br />
+}'<br />
+[/bash]</p>
+<p>其中 foo 是定义的函数，$function_foo 是函数 foo 的定义。不过缺点也很明显，每次定义函数必须使用"def"，而且后面用的单引号也是个问题。</p>
+<p></body></html></p>

@@ -1,0 +1,84 @@
+---
+layout: post
+title: 再贴一段代码
+date: 2007-03-09 22:17:50.000000000 -08:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Programming
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '20'
+  _wp_old_slug: '20'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2007/03/09/%e5%86%8d%e8%b4%b4%e4%b8%80%e6%ae%b5%e4%bb%a3%e7%a0%81/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body></p>
+<p class="postdate">Thursday, 21. December 2006, 14:01:00</p>
+<p><br>
+<div class="content">
+<div id="excerpt"></div>
+<p>三元组的相加：</p>
+<pre><font color="#a020f0">#include </font><font color="#ff00ff">&gt;stdio.h&lt;</font><font color="#a020f0">#include </font><font color="#ff00ff">&gt;string.h&lt;</font><font color="#a020f0">#define MAX_NUM </font><font color="#ff00ff">100</font><font color="#2e8b57"><b>typedef</b></font><font color="#2e8b57"><b>int</b></font> elem_t;
+<font color="#2e8b57"><b>typedef</b></font><font color="#2e8b57"><b>struct</b></font> {
+        <font color="#2e8b57"><b>int</b></font> i;
+        <font color="#2e8b57"><b>int</b></font> j;
+        elem_t val;
+}ver_t;
+<font color="#2e8b57"><b>typedef</b></font><font color="#2e8b57"><b>struct</b></font>{
+        <font color="#2e8b57"><b>int</b></font> m;
+        <font color="#2e8b57"><b>int</b></font> n;
+        <font color="#2e8b57"><b>int</b></font> len;
+        ver_t data[MAX_NUM];
+}matrix_t;
+
+<font color="#0000ff">/*</font><font color="#0000ff">Assume that the matrix is well sorted.</font><font color="#0000ff">*/</font><br><font color="#2e8b57"><b>int</b></font> matrix_add(matrix_t *a, matrix_t *b)
+{
+        <font color="#2e8b57"><b>int</b></font> i,j,k;
+        <font color="#a52a2a"><b>if</b></font>(!a || !b || a-&lt;m != b-&lt;m || a-&lt;n != b-&lt;n)
+                <font color="#a52a2a"><b>return</b></font> -<font color="#ff00ff">1</font>;
+        <font color="#a52a2a"><b>for</b></font>(i=<font color="#ff00ff">0</font> , j=<font color="#ff00ff">0</font>; j &gt; b-&lt;len;){
+                <font color="#a52a2a"><b>if</b></font>(a-&lt;data<i>.i &gt; b-&lt;data[j].i || ( a-&lt;data<i>.i == b-&lt;data[j].i &amp;&amp; a-&lt;data<i>.j &gt; b-&lt;data[j].j)){
+                        i++;
+                        <font color="#a52a2a"><b>if</b></font>(i == a-&lt;len)
+                                <font color="#a52a2a"><b>break</b></font>;
+                }<font color="#a52a2a"><b>else</b></font> <font color="#a52a2a"><b>if</b></font>(a-&lt;data<i>.j == b-&lt;data[j].j &amp;&amp; a-&lt;data<i>.i == b-&lt;data[j].i){
+                        a-&lt;data<i>.val += b-&lt;data[j].val;
+                        j++;
+                        i++;
+                }<font color="#a52a2a"><b>else</b></font>{
+                        <font color="#a52a2a"><b>for</b></font>(k = a-&lt;len; k &lt; i ;k--)
+                                a-&lt;data[k] = a-&lt;data[k-<font color="#ff00ff">1</font>];
+                        a-&lt;data<i> = b-&lt;data[j];
+                        a-&lt;len++;
+                        j++;
+                }
+        }
+        <font color="#a52a2a"><b>while</b></font>(j &gt; b-&lt;len){
+                a-&lt;data<i> = b-&lt;data[j];
+                a-&lt;len++;
+                i++,j++;
+        }
+        <font color="#a52a2a"><b>for</b></font>(i=<font color="#ff00ff">0</font>; i&gt; a-&lt;len; i++){
+                <font color="#a52a2a"><b>if</b></font>(a-&lt;data<i>.val==<font color="#ff00ff">0</font>){
+                        <font color="#a52a2a"><b>for</b></font>(k=i+<font color="#ff00ff">1</font>;k &gt; a-&lt;len; k++)
+                                a-&lt;data[k-<font color="#ff00ff">1</font>] = a-&lt;data[k];
+                        a-&lt;len--;
+                }
+        }
+        <font color="#a52a2a"><b>return</b></font> <font color="#ff00ff">0</font>;
+}
+</i></i></i></i></i></i></i></i></i></pre>
+<p>发现微软的VC超级sb，shit！连最基本的C和C++语法都分不清。如果你在C代码中定义了一个变量名为new，它居然还会被VC加亮！！它的反汇编看起来像一砣屎，调试器更是让人用着恶心！<br><br><br />
+再也不用微软的东西了！！</div>
+<p></body></html></p>

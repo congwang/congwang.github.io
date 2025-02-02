@@ -1,0 +1,38 @@
+---
+layout: post
+title: emacs的一些设置
+date: 2008-02-10 21:46:16.000000000 -08:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Linux Application
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '296'
+  _wp_old_slug: '296'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2008/02/10/emacs%e7%9a%84%e4%b8%80%e4%ba%9b%e8%ae%be%e7%bd%ae/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body>
+<p>在上一篇博客中提到emacs和gnome-terminal在alt键上的冲突，今天在摆弄发现冲突远不止这个。</p>
+<p>最明显的一个就是和scim也有冲突！ctrl+space默认是调出scim输入法，而在emacs里其实是mark（我不想用ctrl+@，因为那要按三个键。;-）。如果在gnome-terminal下面用emacs的话就无法mark了。搜搜了，解决方法是，把mark功能映射到shift+space上，把原来的ctrl+space去了，如下：</p>
+<p>(when window-system<br />
+(global-unset-key [?C- ])<br />
+(global-set-key [?S- ] 'set-mark-command)<br />
+)</p>
+<p>还有一个就是，emacs默认（最起码在fc7上如此）要在启动时显示一个启动画面，这样每次都得ctrl+l，不爽，去了它。</p>
+<p>(setq inhibit-startup-message t)</p>
+<p>让ctrl+y也可以粘贴来自X粘贴板的内容：</p>
+<p>(setq x-select-enable-clipboard t)</p>
+<p>还没完，gnome-terminal还占用着一些ctrl+*键，比如：ctrl+-，这个虽然也能屏蔽掉，但其它还有一堆。算了算了，我还是换Konsole吧～！</p>
+<p></body></html></p>

@@ -1,0 +1,88 @@
+---
+layout: post
+title: How TSQ works
+date: 2012-11-03 17:42:36.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Linux Kernel
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '2142'
+  _wp_old_slug: '2142'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2012/11/03/tsq-%e7%9a%84%e5%8e%9f%e7%90%86/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body>
+<p>通常看到 <a href="http://lwn.net/Articles/507065/" target="_blank">TCP Small Queue</a> （简称 TSQ）之后第一问题是，既然我们已经有 tcp_wmem 了，为何还需要一个新的 sysctl？</p>
+<p>这个问题是理解 TSQ 的关键，其实 tcp_wmem 仅仅是从 TCP socket 层限制队列（或 buffer）中最多可以 queue 多少数据包，而实际上，一个包从 TCP 层发出到最后到达网卡，中间还经历了很多个 queue，TCP socket 只是其中一层罢了。而 TSQ 用了一个非常聪明的技巧来限制在所有这些 queue 中的包，从而降低 latency。</p>
+<p><a href="http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=46d3ceabd8d98ed0ad10f20c595ca784e34786c5" target="_blank">TSQ 的代码</a>中最关键的一个地方是它实现了一个新的 skb destructor，也就是 tcp_wfree()，看它的定义：</p>
+<p>[c]<br />
+static void tcp_wfree(struct sk_buff *skb)<br />
+{<br />
+        struct sock *sk = skb-&gt;sk;<br />
+        struct tcp_sock *tp = tcp_sk(sk);</p>
+<p>        if (test_and_clear_bit(TSQ_THROTTLED, &amp;tp-&gt;tsq_flags) &amp;&amp;<br />
+            !test_and_set_bit(TSQ_QUEUED, &amp;tp-&gt;tsq_flags)) {<br />
+                unsigned long flags;<br />
+                struct tsq_tasklet *tsq;</p>
+<p>                /* Keep a ref on socket.<br />
+                 * This last ref will be released in tcp_tasklet_func()<br />
+                 */<br />
+                atomic_sub(skb-&gt;truesize - 1, &amp;sk-&gt;sk_wmem_alloc);</p>
+<p>                /* queue this socket to tasklet queue */<br />
+                local_irq_save(flags);<br />
+                tsq = &amp;__get_cpu_var(tsq_tasklet);<br />
+                list_add(&amp;tp-&gt;tsq_node, &amp;tsq-&gt;head);<br />
+                tasklet_schedule(&amp;tsq-&gt;tasklet);<br />
+                local_irq_restore(flags);<br />
+        } else {<br />
+                sock_wfree(skb);<br />
+        }<br />
+}<br />
+[/c]</p>
+<p>我们知道在Linux内核网络子系统中，kfree_skb() 是内核丢包的地方，而 skb 的 destructor 就是在丢包时被调用的，用来清理和该 skb 相关的东西。TSQ 实现新的 destructor 就是想在包被丢弃的时候做一些动作，也就是如果条件合适（设置了 TSQ_THROTTLED，没有设置 TSQ_QUEUED），那么就把它加入进 TSQ。</p>
+<p>而在下一个 softIRQ 时，相应的 tasklet 就会调度，从而触发 tcp_tasklet_func()：</p>
+<p>[c]<br />
+static void tcp_tasklet_func(unsigned long data)<br />
+{<br />
+        struct tsq_tasklet *tsq = (struct tsq_tasklet *)data;<br />
+        LIST_HEAD(list);<br />
+        unsigned long flags;<br />
+        struct list_head *q, *n;<br />
+        struct tcp_sock *tp;<br />
+        struct sock *sk;</p>
+<p>        local_irq_save(flags);<br />
+        list_splice_init(&amp;tsq-&gt;head, &amp;list);<br />
+        local_irq_restore(flags);</p>
+<p>        list_for_each_safe(q, n, &amp;list) {<br />
+                tp = list_entry(q, struct tcp_sock, tsq_node);<br />
+                list_del(&amp;tp-&gt;tsq_node);</p>
+<p>                sk = (struct sock *)tp;<br />
+                bh_lock_sock(sk);</p>
+<p>                if (!sock_owned_by_user(sk)) {<br />
+                        tcp_tsq_handler(sk);<br />
+                } else {<br />
+                        /* defer the work to tcp_release_cb() */<br />
+                        set_bit(TCP_TSQ_DEFERRED, &amp;tp-&gt;tsq_flags);<br />
+                }<br />
+                bh_unlock_sock(sk);</p>
+<p>                clear_bit(TSQ_QUEUED, &amp;tp-&gt;tsq_flags);<br />
+                sk_free(sk);<br />
+        }<br />
+}<br />
+[/c]</p>
+<p>这里对加入到 TSQ 队列中的 socket 进行处理，对于没有 owner 的 socket（不是由用户使用的socket），直接发送；否则就是推迟到 tcp_release_cb() 中发送，即 release_sock() 的时候。</p>
+<p>现在，我们从总体上可以看出 TSQ 的用意了：当发送的包超过 sysctl_tcp_limit_output_bytes 时，就会发生抖动（throttle），这时就会把包推迟发送，推迟到什么时候呢？当然是该队列有空闲的时候！那么什么时候有空闲呢？包被丢弃的时候！内核发送的包是在即将被丢弃的时候（忽略tasklet，用tasklet仅仅是因为skb destructor 中不能进行发送），用户层发送的包则是关闭 socket 的时候，这种时候 TSQ 会有新的空间，所以可以重新入队。</p>
+<p>可见，TSQ 的聪明之处在于，它虽然有自己的所谓队列，但并没有计算该队列的长度，而是巧妙地利用了内核中几个关键点来判断何时可以入队！这当然需要对 TCP 实现非常熟悉才可以，由此亦可见作者水平之高。</p>
+<p></body></html></p>

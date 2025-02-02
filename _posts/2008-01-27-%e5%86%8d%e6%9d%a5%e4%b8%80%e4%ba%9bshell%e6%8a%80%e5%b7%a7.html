@@ -1,0 +1,61 @@
+---
+layout: post
+title: 再来一些shell技巧
+date: 2008-01-27 23:41:28.000000000 -08:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Linux Application
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '286'
+  _wp_old_slug: '286'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2008/01/27/%e5%86%8d%e6%9d%a5%e4%b8%80%e4%ba%9bshell%e6%8a%80%e5%b7%a7/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body></p>
+<p>1. 批量删除某些指定文件</p>
+<p>我们都知道用find，很快就可以给出：</p>
+<p>find . -name 'your_pattern*' -exec rm -f {} ;</p>
+<p>恩，不过还有更快更简洁的方法，用find自带的delete：</p>
+<p>find . -name 'your_pattern*' -delete</p>
+<p>2. 列出当前目录下的所有目录（不递归）</p>
+<p>你能想到几种方法？我这里有三种解决方法：</p>
+<p>(1) $ ls -l | egrep '^d'</p>
+<p>(2) $ find . -maxdepth 1 -type d</p>
+<p>(3) $ ls -d */.</p>
+<p>最后一个是从别处看来的，很巧妙。欢迎提供其它不同的方法。</p>
+<p>3. 打印文件的倒数第N行</p>
+<p>以倒数第2行为例，我的通常做法是：</p>
+<p>$ tail -2 my_file | head -1</p>
+<p>另一种方法是：</p>
+<p>$ gawk 'BEGIN {RS = "none_existed_pattern"; FS = "n"}; END {print $(NF-2)}' my_file</p>
+<p>[注：在一些awk（不是gawk）中，RS应该是一个字符，而不能是正则表达式。]</p>
+<p>4. 产生连续的数字</p>
+<p>常见的方法是用seq：</p>
+<p>比如产生1~10的数字，</p>
+<p>$ seq 1 10</p>
+<p>其实也可以用：</p>
+<p>$ echo {1..10}</p>
+<p>倒叙时这样：</p>
+<p>$ seq 10 -1 1</p>
+<p>或者：</p>
+<p>$ echo {10..1}</p>
+<p>用seq的好处是可以指定步长，但它只能针对数字； {..}虽然不能指定步长，但可以适用于字母。另外，很明显，seq的分隔符是n，而{..}是空格。</p>
+<p>5. *grep</p>
+<p>你最常用的很可能是grep，可是除此还有两个grep：fgrep和egrep。fgrep是Fixed grep的缩写，而<strong>不是</strong>fast grep，事实上，搜索同样的字符串时fgrep通常比grep要慢；egrep是Extended grep的所写，因为它采用了扩展的正则表达式和更好的算法，所以你应该更倾向于用egrep而不是grep。</p>
+<p>题外话：有多少人知道grep是什么缩写？我也是最近才知道的，它其实是Global Regular Expression Print的缩写，ms也有人说是Get Regular Expression And Print。grep如此常用，以至于连词典都把它收录为一个单词了。</p>
+<blockquote><p>[Jargon File]<br />
+grep</p>
+<p>/grep/ vi. [from the qed/ed editor idiom g/re/p, where re stands for a regular expression, to Globally search for the Regular Expression and Print the lines containing matches to it, via Unix `grep(1)'] To rapidly scan a file or set of files looking for a particular string or pattern (when browsing through a large set of files, one may speak of `grepping around'). By extension, to look for something by pattern. "Grep the bulletin board for the system backup schedule, would you?" See also vgrep.</p></blockquote>
+<p></body></html></p>

@@ -1,0 +1,40 @@
+---
+layout: post
+title: RHEL6上制作RHEL5 srpm
+date: 2011-02-24 18:14:49.000000000 -08:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Linux Application
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '1502'
+  _wp_old_slug: '1502'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2011/02/24/rhel6%e4%b8%8a%e5%88%b6%e4%bd%9crhel5-srpm/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body>
+<p>如果直接在rhel6上面制作rhel5的srpm的话，编译的时候会出错：</p>
+<p>error: unpacking of archive failed on file /builddir/build/SOURCES/98-kexec.rules;4cea13ae: cpio: MD5 sum mismatch</p>
+<p>google 了一下发现这是因为从 Fedora 12 开始 RPM 压缩算法改变了。一个解决方法是创建一个脚本 /usr/bin/rpmbuild-md5，其内容如下：</p>
+<p>[bash]<br />
+#!/bin/bash<br />
+rpmbuild --define "_source_filedigest_algorithm 1"<br />
+         --define "_binary_filedigest_algorithm 1"<br />
+         --define "_binary_payload w9.gzdio"<br />
+         --define "_source_payload w9.gzdio"<br />
+         --define "_default_patch_fuzz 2" "$@"<br />
+[/bash]</p>
+<p>然后制作srpm的时候调用 rpmbuild-md5 就行了。</p>
+<p>在Fedora上，fedora-packager 这个包已经提供了这个命令，但在RHEL6上面没有。</p>
+<p></body></html></p>

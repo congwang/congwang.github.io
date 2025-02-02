@@ -1,0 +1,69 @@
+---
+layout: post
+title: 用bash自己计算CPU和内存使用率
+date: 2009-02-24 23:30:33.000000000 -08:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Programming
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '614'
+  _wp_old_slug: '614'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2009/02/24/%e7%94%a8bash%e8%87%aa%e5%b7%b1%e8%ae%a1%e7%ae%97cpu%e5%92%8c%e5%86%85%e5%ad%98%e4%bd%bf%e7%94%a8%e7%8e%87/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body>
+<p>如果你不自己计算，最简单的办法就是去解析ps的输出（top的应该比较麻烦一些）。如果我们自己亲自来计算呢？</p>
+<p>我写了下面这么个脚本，可以粗略计算。为了对照方便，我同时给出了以这两种方式获取的结果。比较有趣的是，我在测试的过程中发现ps有时给出的CPU占用率结果竟然是101%！没看源代码，不知道它是怎么计算的……</p>
+<p>BTW：无意间发现还有个<a href="http://dag.wieers.com/home-made/dstat/">dstat</a>，貌似很酷～～8-)</p>
+<p>[bash]<br />
+#!/bin/bash</p>
+<p>if [ $# -gt 0 ] ;<br />
+then<br />
+	pid=$1<br />
+	if [ ! -d /proc/${pid} ] ;<br />
+	then<br />
+		echo "No such process!"<br />
+		exit 1<br />
+	fi<br />
+else<br />
+	pid=$$<br />
+fi<br />
+echo "the pid is: ${pid}"<br />
+tmp1=$(awk '/cpu /{print $2,$4;}' /proc/stat)<br />
+tmp2=$(sed -e 's/(.*)//' /proc/${pid}/stat | awk '{print $13, $14;}')<br />
+old_sys_stime=$(echo ${tmp1} | cut -d' ' -f 2)<br />
+old_sys_utime=$(echo ${tmp1} | cut -d' ' -f 1)<br />
+old_prc_stime=$(echo ${tmp2} | cut -d' ' -f 2)<br />
+old_prc_utime=$(echo ${tmp2} | cut -d' ' -f 1)</p>
+<p>#do some dummy stuffs<br />
+for((i=0;i /dev/null</p>
+<p>echo "ps reported its cpu usage was: $(ps -o pcpu -p ${pid} | tail -n 1)%"</p>
+<p>tmp1=$(awk '/cpu /{print $2,$4;}' /proc/stat)<br />
+tmp2=$(sed -e 's/(.*)//' /proc/${pid}/stat | awk '{print $13, $14;}')<br />
+new_sys_stime=$(echo ${tmp1} | cut -d' ' -f 2)<br />
+new_sys_utime=$(echo ${tmp1} | cut -d' ' -f 1)<br />
+new_prc_stime=$(echo ${tmp2} | cut -d' ' -f 2)<br />
+new_prc_utime=$(echo ${tmp2} | cut -d' ' -f 1)</p>
+<p>echo -n "my calculation is:"<br />
+echo $(awk "BEGIN { print (($new_prc_stime - $old_prc_stime) + ($new_prc_utime -$old_prc_utime))/(($new_sys_stime - $old_sys_stime) + ($new_sys_utime -$old_sys_utime));}")</p>
+<p>###########################</p>
+<p>echo "ps reported its memory usage was: $(ps -o pmem -p ${pid} | tail -n 1)%"<br />
+total=$(awk -F: '/MemTotal/{print $2}' /proc/meminfo | sed -e 's/[^0-9]//g')<br />
+mine=$(awk -F: '/VmRSS/{print $2}' /proc/${pid}/status | sed -e 's/[^0-9]//g')</p>
+<p>echo -n "my calculation is:"<br />
+echo $(awk "BEGIN{print $mine/$total;}")</p>
+<p>exit 0<br />
+[/bash] </p>
+<p></body></html></p>

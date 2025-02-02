@@ -1,0 +1,38 @@
+---
+layout: post
+title: Static -- A Pain From Past
+date: 2007-11-12 23:01:10.000000000 -08:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Programming
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '257'
+  _wp_old_slug: '257'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2007/11/12/static-a-pain-from-past/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body></p>
+<blockquote><p>Ken Thompson曾被问道如果他能重新设计UNIX他将做什么修改，他回答说：“我会在creat命令后加上个e。”</p>
+<p align="right"> --《Unix痛恨者手册》</p>
+</blockquote>
+<p>如果我们用上面类似的话来问Dennis M. Ritchie，他或许会说，“我会重新造个关键字来替换static。” 呵呵，读者不必当真，这个是玩笑的话。但足以反映static的不足了，它的含义和它的字面意思并不那么吻合，可以这么说，它是C语言中的一个小的瑕疵。</p>
+<p>让我们一起来看一看static究竟是如何偏离它的字面意思的。谈static，必须要明白scope，duration，linkage这三个概念。</p>
+<p>在C语言中，一个变量或函数有三个属性：scope，duration和linkage。</p>
+<p>scope是由它的位置来决定的，scope分为四种：file scope，function scope，block scope和function prototype scope。局部变量的scope就是函数体（function scope）或者局部块（block scope），即使它是static storage。函数和全局变量的scope肯定是整个文件（file scope）。</p>
+<p>duration是存活时间，它分两种：automatic和static（这个static不是关键字static）。它是由前面的修饰符和位置共同决定。局部变量默认的storage是auto，如果前面什么都没加。register指定的变量的duration和auto其实一样，也是automatic的。函数的duration都是static的。全局变量也是。局部变量加了static/extern关键字的duration才是static。</p>
+<p>linkage最复杂，它要视多种情况而定。linkage分三种：external linkage，internal linkage和no linkage。函数形参的linkage一定是none，局部变量的linkage也都是none的，除非加了extern关键字。对于全局变量/函数，加了static关键字就是internal，否则就*可能*是external。</p>
+<p>这里还有更让人困惑的就是定义和声明，no linkage的是变量其声明就是定义。而external的变量或函数可以有多个声明，但只有一个是定义。internal的变量或函数在本文件内也必须只有一个定义。尽管如此，但有这样一条原则不会改变：对于所有东西来说，带有初始化的一定是定义（如果我们把函数体看作是对函数的"初始化"）。</p>
+<p>从这里我们可以看出，static关键字影响了两种属性：duration，linkage。虽然说linkage和duration就是有那么点儿关系，可这个static的作用还是些许模糊。再加之和上面提到的其它一些东西混合，使得正确理解static/extern关键字更加困难。</p>
+<p>It's really a pain from past, for C.</body></html></p>

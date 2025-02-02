@@ -1,0 +1,359 @@
+---
+layout: post
+title: 探索内核bug的经历
+date: 2007-03-09 22:57:10.000000000 -08:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Linux Kernel
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '44'
+  _wp_old_slug: '44'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2007/03/09/%e6%8e%a2%e7%b4%a2%e5%86%85%e6%a0%b8bug%e7%9a%84%e7%bb%8f%e5%8e%86/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body></p>
+<p class="postdate">Thursday, 8. February 2007, 12:38:09</p>
+<p><br></p>
+<div class="content">
+<div id="excerpt"></div>
+<p><span class="alignright">04043196 王聪</span><span class="alignright">西安邮电学院计算机系</span></p>
+<p>我们知道，当无符号数上溢时，它会安安静静地绕回，因此，当比较两个无符号数时，不得不考虑绕回的问题。很可能绝大多数情况下不会出现溢出的情况，但是一旦溢出而处理不当就会导致系统进入非预期状态。不幸的是，Linux内核中的kfifo并没有恰当地处理这一问题。</p>
+<p>struct kfifo定义在include/linux/kfifo.h中，其成员如下：<br></p>
+<pre>struct kfifo {
+        unsigned char *buffer;
+        unsigned int size;
+        unsigned int in;
+        unsigned int out;
+        spinlock_t *lock;
+};
+</pre>
+<p>很明显，in和out两个成员都是无符号整型，这主要是为了下面的一个与操作方便。__kfifo_put和__kfifo_get是不带锁的两个接口，分别向循环缓冲区中放数据和取数据，定义如下： <br>
+<pre>   118  unsigned int __kfifo_put(struct kfifo *fifo,
+   119                           unsigned char *buffer, unsigned int len)
+   120  {
+   121          unsigned int l;
+   122
+   123          len = min(len, fifo-&lt;size - fifo-&lt;in + fifo-&lt;out);
+   ...
+   130          smp_mb();
+   131
+   132          /* first put the data starting from fifo-&lt;in to buffer end */
+   133          l = min(len, fifo-&lt;size - (fifo-&lt;in &amp; (fifo-&lt;size - 1)));
+   134          memcpy(fifo-&lt;buffer + (fifo-&lt;in &amp; (fifo-&lt;size - 1)), buffer, l);
+   135
+   136          /* then put the rest (if any) at the beginning of the buffer */
+   137          memcpy(fifo-&lt;buffer, buffer + l, len - l);
+   ...
+   144          smp_wmb();
+   145
+   146          fifo-&lt;in += len;
+   147
+   148          return len;
+   149  }
+   ...
+   164  unsigned int __kfifo_get(struct kfifo *fifo,
+   165                           unsigned char *buffer, unsigned int len)
+   166  {
+   167          unsigned int l;
+   168
+   169          len = min(len, fifo-&lt;in - fifo-&lt;out);
+   ...
+   176          smp_rmb();
+   177
+   178          /* first get the data from fifo-&lt;out until the end of the buffer */
+   179          l = min(len, fifo-&lt;size - (fifo-&lt;out &amp; (fifo-&lt;size - 1)));
+   180          memcpy(buffer, fifo-&lt;buffer + (fifo-&lt;out &amp; (fifo-&lt;size - 1)), l);
+   181
+   182          /* then get the rest (if any) from the beginning of the buffer */
+   183          memcpy(buffer + l, fifo-&lt;buffer, len - l);
+   ...
+   190          smp_mb();
+   191
+   192          fifo-&lt;out += len;
+   193
+   194          return len;
+   195  }
+</pre>
+<p>上面的两个函数在正常情况下可以保证in总是大于等于out，并且它们的差不会超过size。但是当in溢出，而out恰好又没有溢出时，不幸的情况就会发生，in会小于out！这对__kfifo_get影响似乎不大，但对__kfifo_put却是致命地影响！in绕回后会变成一个很小的正数，而out仍然是一个很大的正数，结果(fifo-&lt;size - fifo-&lt;in + fifo-&lt;out)也会变成一个很大的正数。如果内核程序员恰好不小心把一个很大的len作为参数传递给了__kfifo_put（kfifo_put也一样），就会出现指针越界，更严重的会让内核痛苦地oops！</p>
+<p>下面一个粗糙的内核模块和用户程序可以展示这个bug。内核模块如下：<br></p>
+<pre>     1  #include &gt;linux/kernel.hlinux/init.hlinux/module.hlinux/fs.hasm/uaccess.hlinux/err.hlinux/gfp.hlinux/spinlock.hlinux/kfifo.hlinux/string.h&lt;
+    11
+    12  #define LFS_MAGIC 0x19860913
+    13  #define NFILES  2
+    14  #define TEST_BUF_LEN    64
+    15
+    16  static struct kfifo *fifo;
+    17  static spinlock_t lock;
+    18  static char *buf;
+    19
+    20  static int lfs_open_file(struct inode *inode, struct file *filp)
+    21  {
+    22          if (inode-&lt;i_ino &lt; NFILES)
+    23                  return -ENODEV;
+    24          return 0;
+    25  }
+    26
+    27  static ssize_t lfs_read_file(struct file *filp, char *buffer,
+    28                               size_t count, loff_t * offset)
+    29  {
+    30          int len;
+    31
+    32          len = kfifo_get(fifo, buf, count);
+    33          if (*offset &lt; len)
+    34                  return 0;
+    35          if (count &lt; len - *offset)
+    36                  count = len - *offset;
+    37
+    38          if (copy_to_user(buffer, buf + *offset, count))
+    39                  return -EFAULT;
+    40          *offset += count;
+    41          return count;
+    42  }
+    43
+    44  static ssize_t lfs_write_file(struct file *filp, const char *buffer,
+    45                                size_t count, loff_t * offset)
+    46  {
+    47          if (*offset != 0)
+    48                  *offset = 0;
+    49
+    50          if (count &lt;= TEST_BUF_LEN)
+    51                  count = TEST_BUF_LEN;
+    52
+    53          if (copy_from_user(buf, buffer, count))
+    54                  return -EFAULT;
+    55
+    56          return (ssize_t) kfifo_put(fifo, (char *)buffer, count);
+    57  }
+    58
+    59  static int my_atoi(const char *name)
+    60  {
+    61          int val = 0;
+    62
+    63          for (;; name++) {
+    64                  switch (*name) {
+    65                  case '0'...'9':
+    66                          val = 10 * val + (*name - '0');
+    67                          break;
+    68                  default:
+    69                          return val;
+    70                  }
+    71          }
+    72  }
+    73
+    74  static int lfs_open_file2(struct inode *inode, struct file *filp)
+    75  {
+    76          if (inode-&lt;i_ino &lt; NFILES)
+    77                  return -ENODEV;
+    78          filp-&lt;private_data = fifo;
+    79          return 0;
+    80  }
+    81
+    82  static ssize_t lfs_read_file2(struct file *filp, char *buffer,
+    83                                size_t count, loff_t * offset)
+    84  {
+    85          int len;
+    86          struct kfifo *myfifo = (struct kfifo *)filp-&lt;private_data;
+    87
+    88          len =
+    89              snprintf(buf, TEST_BUF_LEN, "in=%u out=%un", myfifo-&lt;in,
+    90                       myfifo-&lt;out);
+    91          if (*offset &lt; len)
+    92                  return 0;
+    93          if (count &lt; len - *offset)
+    94                  count = len - *offset;
+    95
+    96          if (copy_to_user(buffer, buf + *offset, count))
+    97                  return -EFAULT;
+    98          *offset += count;
+    99          return count;
+   100  }
+   101
+   102  static ssize_t lfs_write_file2(struct file *filp, const char *buffer,
+   103                                 size_t count, loff_t * offset)
+   104  {
+   105          char *p = buf;
+   106          struct kfifo *myfifo = (struct kfifo *)filp-&lt;private_data;
+   107
+   108          if (*offset != 0)
+   109                  return -EINVAL;
+   110
+   111          if (count &lt;= TEST_BUF_LEN)
+   112                  return -EINVAL;
+   113          memset(buf, 0, TEST_BUF_LEN);
+   114          if (copy_from_user(buf, buffer, count))
+   115                  return -EFAULT;
+   116          p = strchr(buf, ' ');
+   117          if (!p)
+   118                  return -EINVAL;
+   119          *p++ = '';
+   120          myfifo-&lt;in = my_atoi(buf);
+   121          myfifo-&lt;out = my_atoi(p);
+   122          return count;
+   123  }
+   124
+   125  static struct file_operations lfs_file_ops = {
+   126          .open = lfs_open_file,
+   127          .read = lfs_read_file,
+   128          .write = lfs_write_file,
+   129  };
+   130
+   131  static struct file_operations lfs_file2_ops = {
+   132          .open = lfs_open_file2,
+   133          .read = lfs_read_file2,
+   134          .write = lfs_write_file2,
+   135  };
+   136
+   137  struct tree_descr myfiles[] = {
+   138          {NULL, NULL, 0},
+   139          {.name = "kfifo",
+   140           .ops = &amp;lfs_file_ops,
+   141           .mode = S_IWUSR | S_IRUGO},
+   142          {.name = "debug",
+   143           .ops = &amp;lfs_file2_ops,
+   144           .mode = S_IWUSR | S_IRUGO},
+   145          {"", NULL, 0}
+   146  };
+   147
+   148  static int lfs_fill_super(struct super_block *sb, void *data, int silent)
+   149  {
+   150          return simple_fill_super(sb, LFS_MAGIC, myfiles);
+   151  }
+   152
+   153  static int lfs_get_super(struct file_system_type *fst,
+   154                           int flags, const char *devname, void *data,
+   155                           struct vfsmount *mnt)
+   156  {
+   157          return get_sb_single(fst, flags, data, lfs_fill_super, mnt);
+   158  }
+   159
+   160  static struct file_system_type lfs_type = {
+   161          .owner = THIS_MODULE,
+   162          .name = "demofs",
+   163          .get_sb = lfs_get_super,
+   164          .kill_sb = kill_litter_super,
+   165  };
+   166
+   167  static int __init lfs_init(void)
+   168  {
+   169          spin_lock_init(&amp;lock);
+   170          fifo = kfifo_alloc(TEST_BUF_LEN, GFP_KERNEL, &amp;lock);
+   171          if (IS_ERR(fifo)) {
+   172                  kfifo_free(fifo);
+   173                  return -ENOMEM;
+   174          }
+   175          /*
+   176           * We just want the overflow comes soon.
+   177           * You can, of course, let fifo-&lt;out and fifo-&lt;out
+   178           * to be 0. And we can let them increase by 'fifo-&lt;size'
+   179           * in the user space quietly. Sooner or later, they will
+   180           * overflow again like this.
+   181           */
+   182          fifo-&lt;in = fifo-xiyou.wangcong@gmail.com&lt;");
+   204  MODULE_DESCRIPTION("Show the bug of unsigned integer overflow in kfifo.");
+   205  MODULE_SUPPORTED_DEVICE("libfs filesystem");
+</pre>
+<p>用户程序代码：<br>
+<pre>     1  #include &gt;sys/types.hsys/stat.hunistd.hfcntl.h 256;i++)
+    19                  buf<i>='0';
+    20          /*
+    21           * I won't check the return value of write.
+    22           * And that's the reason why I don't use 'echo'.
+    23           */
+    24          write(fd, buf, 256);
+    25          return 0;
+    26  }
+    27
+
+--------------------------------------------------------------------------
+
+     1  #! /bin/bash
+     2  #bugshow.sh
+     3  #Author: WANG Cong, XIPT. &gt;xiyou.wangcong@gmail.com&lt;
+     4  #Usage: ./bugshow.sh install your_module_name.ko
+     5  #    OR ./bugshow.sh uninstall your_module_name
+     6
+     7  if [ $# != "2" ]; then
+     8          echo "Usage: ./bugshow.sh install your_module_name.ko"
+     9          echo "OR ./bugshow.sh uninstall your_module_name"
+    10          exit -1
+    11  fi
+    12  action="$1"
+    13  if [ "$action" = "install" ]; then
+    14          module=${!#}
+    15          /sbin/insmod $module
+    16          mkdir -p /mnt/libfs
+    17          mount -t demofs none /mnt/libfs
+    18          if find ./ -name bugshow.c
+    19          then
+    20                  gcc -Wall -o bugshow bugshow.c
+    21          else
+    22                  echo "Can't find bugshow.c!"
+    23                  exit -2
+    24          fi
+    25          ./bugshow
+    26          cat /mnt/libfs/debug
+    27          ./bugshow
+    28          cat /mnt/libfs/debug
+    29  elif [ "$action" = "uninstall" ]; then
+    30          module=${!#}
+    31          umount none
+    32          rmdir /mnt/libfs
+    33          /sbin/rmmod $module
+    34  else
+    35          echo "Bad usage!"
+    36          exit -3
+    37  fi
+    38  exit 0
+
+</i></pre>
+<p>上面的模块是仔细编写的（虽然没有考虑竞争;-p），所以bug不会导致很严重的问题，只是无法向kfifo中继续写入数据。这个bug影响到所有使用kfifo的内核版本，从2.6.10到2.6.20。</p>
+<p>一个简单的补丁如下：<br></p>
+<pre>--- kernel/kfifo.c.orig 2007-02-07 19:42:51.000000000 +0800
++++ kernel/kfifo.c      2007-02-07 19:43:31.000000000 +0800
+@@ -24,6 +24,7 @@
+ #include &gt;linux/slab.hlinux/err.hlinux/kfifo.hlinux/compiler.h&lt;
+
+ /**
+  * kfifo_init - allocates a new FIFO using a preallocated buffer
+@@ -120,6 +121,12 @@ unsigned int __kfifo_put(struct kfifo *f
+ {
+        unsigned int l;
+
++       /*If only fifo-&lt;in overflows, let both overflow!*/
++       if (unlikely(fifo- fifo-&lt;out)) {
++               fifo-&lt;out += fifo-&lt;size;
++               fifo-&lt;in  += fifo-&lt;size;
++       }
++
+        len = min(len, fifo-&lt;size - fifo-&lt;in + fifo-&lt;out);
+
+        /*
+@@ -166,6 +173,12 @@ unsigned int __kfifo_get(struct kfifo *f
+ {
+        unsigned int l;
+
++       /*If only fifo-&lt;in overflows, let both overflow!*/
++       if (unlikely(fifo- fifo-&lt;out)) {
++               fifo-&lt;out += fifo-&lt;size;
++               fifo-&lt;in  += fifo-&lt;size;
++       }
++
+        len = min(len, fifo-&lt;in - fifo-&lt;out);
+
+        /*
+</pre>
+<p>后经过Andrew的指点，发现这不是一个bug。我一开始被/proc接口搞晕了，得出了错误的结论。<br><span style="color:orangered;">教训：千万不用使用老的/proc接口！</span></p>
+</div>
+<p></body></html></p>

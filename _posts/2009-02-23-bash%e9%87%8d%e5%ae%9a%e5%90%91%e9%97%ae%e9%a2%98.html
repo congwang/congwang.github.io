@@ -1,0 +1,41 @@
+---
+layout: post
+title: 一个Bash重定向的问题
+date: 2009-02-23 23:45:09.000000000 -08:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Programming
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '610'
+  _wp_old_slug: '610'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2009/02/23/bash%e9%87%8d%e5%ae%9a%e5%90%91%e9%97%ae%e9%a2%98/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body></p>
+<p>网上有人问到一个有意思的问题：如何把一个命令的输出<strong>同时</strong>重定向到3个文件？分别是：标准输出一个，标准错误输出一个，这两个都有又是一个。</p>
+<p>我一开始以为这个不难，但我仔细想想发现不是，根本就没那么简单！首先一个问题，你重定向某个文件句柄到文件（或者另一个句柄）后意味着后面你就得不到了；其次，复制一个流我们的工具只有tee。所以，我们可以看出，这里tee至少得被调用两次才可以，因为两个流被都被复制一次。我的想法是：先tee标准输出，然后交换1和2，再tee标准错误，然后再重定向1和2到文件。</p>
+<p>我还没来得及把想法付诸于实践，别人就有解答了，而且他的比我的还简单！看了他的我反省了一下自己的解法，第2步其实没必要交换，因为1已经被重定向过了，只需要一个临时的把它保存一下即可，下面是他的解答：</p>
+<p>{ { your_cmd | tee stdout; } 2&gt;&amp;1 1&gt;&amp;3 | tee stderr 1&gt;&amp;3; } 3&gt;stdout+err</p>
+<p>作者说应该还有更简单的，但我是想不起来了。有知道的还望不吝赐教！（自己重写个tee不算，请用已有的命令。）</p>
+<p>如果你觉得上面的重定向难理解，那下面这个呢？:-)</p>
+<pre>{
+  {
+    cmd1 3&gt;&amp;- |
+      cmd2 2&gt;&amp;3 3&gt;&amp;-
+  } 2&gt;&amp;1 &gt;&amp;4 4&gt;&amp;- |
+    cmd3 3&gt;&amp;- 4&gt;&amp;-
+
+} 3&gt;&amp;2 4&gt;&amp;1</pre>
+<p></body></html></p>

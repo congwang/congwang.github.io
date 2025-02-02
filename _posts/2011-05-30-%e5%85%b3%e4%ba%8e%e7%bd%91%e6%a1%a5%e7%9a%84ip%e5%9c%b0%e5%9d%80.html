@@ -1,0 +1,31 @@
+---
+layout: post
+title: 关于网桥的IP地址
+date: 2011-05-30 21:06:04.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Linux Application
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '1657'
+  _wp_old_slug: '1657'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2011/05/30/%e5%85%b3%e4%ba%8e%e7%bd%91%e6%a1%a5%e7%9a%84ip%e5%9c%b0%e5%9d%80/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body>
+<p>网桥的IP地址应该设置在网桥上面，而非网桥下面的从属设备。虽然内核完全允许你那么做，但那是不推荐的。</p>
+<p>原因有两个：</p>
+<p>一、最主要的原因是网桥本身是基于第二层，数据链路层的，网桥的作用是把从一个从属设备上接受来的数据包转发到合适的目标设备上，通过学习接受来的数据包中的目的物理地址。因此，如果网桥本身不需要和外界通信的话，任何IP地址都不需要！它只是一个透明的桥（不考虑STP），连接起了两个网络。</p>
+<p>二、试想如果网桥和它下面从属的设备都有IP地址的话，那么路由就可能会改变发送的包的出口，干扰了网桥本身学习到的“知识”，如果正好到达一个错误的出口设备上，包就会无法到达目的地址。类似地，bonding在一起的设备也一样，IP地址应该设置在master上面。</p>
+<p></body></html></p>

@@ -1,0 +1,48 @@
+---
+layout: post
+title: SUID, SGID and sticky bit
+date: 2008-03-11 11:28:46.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Linux Application
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '312'
+  _wp_old_slug: '312'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2008/03/11/suid-sgid-and-sticky-bit/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body>
+<p>stick bit以前表示要把这个可执行文件放到swap分区中来加快执行速度，现在这个显然用不着了，因为Linux/Unix的vm子系统会自动完成这种功能。为了“变废为宝”，这个sticky bit并没有被遗弃，现在它的功能是这样的：对于一个目录，如果它被设置了sticky bit，那么它里面的文件只能被文件所有者，目录所有者，或特权用户删除。最好的一个例子是/tmp目录，在Fedora上它的权限是：</p>
+<p>$ ls -ld /tmp/<br />
+drwxrwxrwt 50 root root 20480 03-09 21:08 /tmp/<br />
+$ test -k /tmp<br />
+$ echo $?<br />
+0</p>
+<p>我们可以看到最后一个x变成了t。而如果目录或者文件不具有x权限，那么t就会变成T，比如：</p>
+<p>$ touch foo.txt<br />
+$ chmod +t foo.txt<br />
+$ ls -l foo.txt<br />
+-rw-rw-r-T 1 wangcong wangcong 0 03-09 23:53 foo.txt</p>
+<p>suid和sgid类似，它们的符号是s或者S而不是t。suid的含义是让可执行文件执行时具有owner的权限，sgid的含义是让其具有owner所在group的权限。例如：</p>
+<p>$ ls -l /bin/ping<br />
+-rwsr-xr-x 1 root root 41748 2007-04-06 /bin/ping</p>
+<p>如果你用ls -l看，你会发现suid的s是在owner权限一组，sgid的s是在group权限一组。</p>
+<p>sgid用到目录上的含义是：里面的新文件或者子目录会继承这个group id。而在Linux上，suid用在目录上是被忽略的。</p>
+<p>参考资料：<br />
+1. <a href="http://www.zzee.com/solutions/linux-permissions.shtml#setuid" target="_blank">http://www.zzee.com/solutions/linux-permissions.shtml#setuid</a><br />
+2. <a href="http://www.unixguide.net/hp/faq/5.1.9.shtml." target="_blank">http://www.unixguide.net/hp/faq/5.1.9.shtml.</a><br />
+3. <a href="http://en.wikipedia.org/wiki/Sticky_bit" target="_blank">http://en.wikipedia.org/wiki/Sticky_bit</a><br />
+4. <a href="http://en.wikipedia.org/wiki/Setuid" target="_blank">http://en.wikipedia.org/wiki/Setuid</a></p>
+<p></body></html></p>

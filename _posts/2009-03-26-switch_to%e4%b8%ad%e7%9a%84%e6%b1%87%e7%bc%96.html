@@ -1,0 +1,112 @@
+---
+layout: post
+title: switch_to中的汇编
+date: 2009-03-26 18:46:13.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Linux Kernel
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '645'
+  _wp_old_slug: '645'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2009/03/26/switch_to%e4%b8%ad%e7%9a%84%e6%b1%87%e7%bc%96/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body></p>
+<p>switch_to()的代码在arch/x86/include/asm/system.h中，如下：<br />
+[c]<br />
+#define switch_to(prev, next, last)<br />
+do {<br />
+	/*<br />
+	 * Context-switching clobbers all registers, so we clobber<br />
+	 * them explicitly, via unused output variables.<br />
+	 * (EAX and EBP is not listed because EBP is saved/restored<br />
+	 * explicitly for wchan access and EAX is the return value of<br />
+	 * __switch_to())<br />
+	 */<br />
+	unsigned long ebx, ecx, edx, esi, edi;				</p>
+<p>	asm volatile("pushflnt"		/* save    flags */<br />
+		     "pushl %%ebpnt"		/* save    EBP   */<br />
+		     "movl %%esp,%[prev_sp]nt"	/* save    ESP   */<br />
+		     "movl %[next_sp],%%espnt"	/* restore ESP   */<br />
+		     "movl $1f,%[prev_ip]nt"	/* save    EIP   */<br />
+		     "pushl %[next_ip]nt"	/* restore EIP   */<br />
+		     "jmp __switch_ton"	/* regparm call  */<br />
+		     "1:t"<br />
+		     "popl %%ebpnt"		/* restore EBP   */<br />
+		     "popfln"			/* restore flags */	</p>
+<p>		     /* output parameters */<br />
+		     : [prev_sp] "=m" (prev-&gt;thread.sp),<br />
+		       [prev_ip] "=m" (prev-&gt;thread.ip),<br />
+		       "=a" (last),					</p>
+<p>		       /* clobbered output registers: */<br />
+		       "=b" (ebx), "=c" (ecx), "=d" (edx),<br />
+		       "=S" (esi), "=D" (edi)				</p>
+<p>		       /* input parameters: */<br />
+		     : [next_sp]  "m" (next-&gt;thread.sp),<br />
+		       [next_ip]  "m" (next-&gt;thread.ip),		</p>
+<p>		       /* regparm parameters for __switch_to(): */<br />
+		       [prev]     "a" (prev),<br />
+		       [next]     "d" (next)				</p>
+<p>		     : /* reloaded segment registers */<br />
+			"memory");<br />
+} while (0)<br />
+[/c]</p>
+<p>根据ABI约定和内联汇编，ebx, ecx, edx, esi, edi这几个寄存器是由编译器自动保存和恢复的。这一点可能不太好理解，举个例子，看下面的代码中的ecx：<br />
+[c]<br />
+#include </p>
+<p>void modify_ecx(void) {<br />
+  unsigned long ecx;</p>
+<p> __asm__ (<br />
+  "movl $1, %%ecxnt"<br />
+ :"=c"(ecx)<br />
+ :<br />
+ );<br />
+}</p>
+<p>void test(void) {<br />
+ unsigned long ecx;</p>
+<p> __asm__ volatile(<br />
+ "nopnt"<br />
+ "call modify_ecxnt"<br />
+ : "=c" (ecx)<br />
+ :<br />
+ : "memory"<br />
+ );<br />
+ printf("ecx=%ldn", ecx);<br />
+}</p>
+<p>int main(void) {<br />
+ test();<br />
+ return 0;<br />
+}<br />
+[/c]<br />
+这里的test()就相当于内核源代码中“调用”switch_to()的context_switch()，我们来查看其对应的汇编代码（注意要加-O0）：</p>
+<pre>
+main:
+        leal    4(%esp), %ecx
+        andl    $-16, %esp
+        pushl   -4(%ecx)
+        pushl   %ecx
+        subl    $8, %esp
+        call    test
+        movl    $0, %eax
+        addl    $8, %esp
+        popl    %ecx
+        leal    -4(%ecx), %esp
+        ret
+</pre>
+<p>可见，在调用test()之前，编译器已经自动完成了保存ecx的操作，而调用之后它又会恢复ecx的值。</p>
+<p>而ebp，eflags是手工压入堆栈，并在switch回来后恢复出来的。esp和eip保存在相应的task_struct结构体里。</p>
+<p>需要额外说明的是那个jmp，因为这里的参数传递是通过寄存器完成的，具体说是用了eax和edx这个两个寄存器，所以再jmp其实就和call一样了，不过call是要把ebp入栈的，而jmp不需要，这里也不需要。</p>
+<p>另外一个可能的问题是：为什么switch_to()有三个参数？我们切换的进程明明是两个啊！这里问题的所在是进程切换时堆栈的切换，如果不使用三个参数，切换的堆栈中仍然保存的是切换前的参数，再切换回来时prev很可能不对了，所以需要一个参数来修正，这个参数又正好是__switch_to的返回值。这样问题就解决了。<br />
+</body></html></p>

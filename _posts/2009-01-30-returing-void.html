@@ -1,0 +1,49 @@
+---
+layout: post
+title: Returning void
+date: 2009-01-30 20:34:37.000000000 -08:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Programming
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '531'
+  _wp_old_slug: '531'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2009/01/30/returing-void/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body></p>
+<p>在一个 void 函数中返回void是不是允许的？这是一个比较有意思的问题。为此我查了一下C99和C++标准，它们的规定是不同的。</p>
+<p>在标准C中，这是不允许的，参见C99 6.8.6.4：</p>
+<blockquote><p>A return statement with an expression shall not appear in a function whose return type<br />
+is void. A return statement without an expression shall only appear in a function<br />
+whose return type is void.</p></blockquote>
+<p>写得很清楚，没什么好说的。C++不同，C++标准是完全允许的，第6.6.3节第三段写道：</p>
+<blockquote><p>A return statement with an expression of type “cv void”can be used only in functions<br />
+with a return type of cv void; the expression is evaluated just before the function<br />
+returns to its caller.</p></blockquote>
+<p>我想C++之所以这么做是为了模板考虑的，看下面的代码片段：<br />
+[cpp]<br />
+template<br />
+T func(T (*pf)())<br />
+{<br />
+    return pf();<br />
+}</p>
+<p>void foo() {}</p>
+<p>int main()<br />
+{<br />
+        func(foo);<br />
+        return 0;<br />
+}<br />
+[/cpp] </body></html></p>

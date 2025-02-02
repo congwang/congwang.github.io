@@ -1,0 +1,91 @@
+---
+layout: post
+title: 解答 C Puzzles
+date: 2008-02-04 21:56:11.000000000 -08:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Programming
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '291'
+  _wp_old_slug: '291'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2008/02/04/%e8%a7%a3%e7%ad%94c-puzzles/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body>
+<p>今天看到某人列出了几十个C语言迷题，很有意思。顺手做了一下，发现其实大多数都是来自C Faq，Expert C Programming，和网上出现的一些C语言技巧，一些很好，连我自己都被难住了，一些却又狠简单狠基础。除了第8个和第26个需要进一步理解，剩下的我全都作了简单的解答，不明白的请留言提问。</p>
+<p>题目在这里：<a href="http://www.gowrikumar.com/c/">http://www.gowrikumar.com/c/</a></p>
+<p>我的解答如下：</p>
+<p>1. 见ECP第29页，一模一样的例子。</p>
+<p>2. OS_HP-UX_print这不是一个有效的名字。//blush 一开始我也没注意到！</p>
+<p>3. do-while的常识，你应该知道continue到哪里。如果不知道，看看C99第6.8.6.2节。</p>
+<p>4. 常见问题，因为stdout是带缓冲的，如果不换行的话，是会有问题的！</p>
+<p>5. h会被展开，而g不会。见C-FAQ，Question 11.17。</p>
+<p>6. case后面的是字符，不是整数。</p>
+<p>7.  IA-64是RISC，不能访问未对齐的地址。</p>
+<p>8. 感觉没错，但还未发掘出其原理。。。</p>
+<p>9. 直接比较浮点数被认为是有害的，说过多次了。</p>
+<p>10. 常识。如果很喜欢在初始化时用逗号运算符来标新立异，请加括号！</p>
+<p>11. 当然合法！谁还以为printf是void类型？！它返回的是成功输出字符的个数！</p>
+<p>12. duff's device，是用Tom Duff的名字来命名的。很有名的一个东西，用来优化拷贝的，据说和Rob Pike此牛还有点儿关系～！不过注意，<a href="http://www.lysator.liu.se/c/duffs-device.html">原始的duff's device</a>中的to可是不变的，因为它指向一个映射到内存的寄存器。</p>
+<p>13. 正确，逻辑很简单，每次都保留除最低位置的1之外的1，减去1，依次测试。</p>
+<p>14. 说过N^2次了，int foo()和int foo(void)是不一样滴！</p>
+<p>15. 第二个是把a的内存比特位模式用int来解释。<br />
+第一个比较有意思，因为类型不匹配，而且float在被压入压出的过程中会被扩展精度，因为IA-32的浮点数寄存器都是80bits的。所以，float会被扩展成double后再当int处理！！</p>
+<p>16. 声明的问题，指针不是数组。</p>
+<p>17. switch嘛，当然会跳过第一个case/default之前的东西，所以初始化就被跳过了。</p>
+<p>18. 切，形参写得再好数组也得退化啊！</p>
+<p>19. format string overflow？！</p>
+<p>20. C99 第7.19.6.2节，第5条。</p>
+<p>21. buffer overflow</p>
+<p>22. sizeof是操作符，编译时决定的，而非运行时。</p>
+<p>23. ECP，第25页。</p>
+<p>24. 等号优先级高于逗号。</p>
+<p>25. 减法和除法错误，减数和被减数反了，除法同理。</p>
+<p>26. 蛮牛的一段代码，还没看出其中的奥妙。以后看懂会另行说明。;-)</p>
+<p>27. 以0开头是8进制，而最后一个是十进制。</p>
+<p>28. scanf返回成功输入的个数。</p>
+<p>29. /和*会被当成注释处理，所以那一行实际上是y=y;</p>
+<p>30. -也要被输入。</p>
+<p>31. &amp;n</p>
+<p>32. 加号优先级高于左移。</p>
+<p>33. 当然不合法，return不能出现在表达式中。</p>
+<p>34. 把for括号里的最后一个i换成n。暂时就想到这一个解法。</p>
+<p>35. 显然ptr2不是指针。</p>
+<p>36. 错误！因为会被0除！</p>
+<p>37. 很明显是8。</p>
+<p>38. free的地址不对。</p>
+<p>39. 很简单，就是把a[n]换成了n[a]，本质上一样。</p>
+<p>40. 字符a前面的所有，见C99 7.19.6.2.12。</p>
+<p>41. 一个是定义，其余是声明。</p>
+<p>42. 取某个成员在其结构体中的偏移。</p>
+<p>43. 就是宏的常见错误，比如：SWAP(a++, ++b)。</p>
+<p>44. 某个表达式及其对应的值。</p>
+<p>45. 参见Python源代码，Objects/intobject.c::int_add。</p>
+<p>46. n/x向上圆整！</p>
+<p>47. c会被自加两次。</p>
+<p>48. 不能一个参数都没有就使用“...”。</p>
+<p>49. 用?:三元操作符。;-)</p>
+<p>50. 把输出字符的个数存入某个变量中，见过。</p>
+<p>51. -_-b</p>
+<p>52. %%</p>
+<p>53. 后一个指针只读，前一个指针指的东西只读。</p>
+<p>54. 前者不能重叠，后者可以。</p>
+<p>55. %lf, %f, %g。就记起来这仨。</p>
+<p>56. 写过N遍了。。。</p>
+<p>57. 厄，看我这个：</p>
+<p>#include &lt;stdio.h&gt;<br />
+int main(void)<br />
+{while(printf("Hello World!")&lt;0){}}</p>
+<p></body></html></p>

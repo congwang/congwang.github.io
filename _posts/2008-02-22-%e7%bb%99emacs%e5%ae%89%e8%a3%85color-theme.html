@@ -1,0 +1,48 @@
+---
+layout: post
+title: 给emacs安装color-theme
+date: 2008-02-22 12:27:49.000000000 -08:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Linux Application
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '305'
+  _wp_old_slug: '305'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2008/02/22/%e7%bb%99emacs%e5%ae%89%e8%a3%85color-theme/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body>
+<p>决定给emacs换个主题，因为默认的这个主题比较丑。</p>
+<p>简单搜索了一下，需要安装color-theme这个package。从这里下载：</p>
+<p><a target="_blank" href="http://download.gna.org/color-theme/">http://download.gna.org/color-theme/</a></p>
+<p>下载解压缩后，需要</p>
+<p>1) 把color-theme.el拷贝到某个load-path中，比如我的是~/.emacs.d</p>
+<p>2) 把themes目录也要拷贝到上面的路径中</p>
+<p>3) 在~/.emacs里添加下面几行：</p>
+<p>(require 'color-theme)<br />
+(color-theme-initialize)<br />
+(color-theme-oswald)</p>
+<p>注意：网上的很多教程并没提到第2行，但是它必须有，否则会出错。<br />
+最起码在我这里如此。</p>
+<p>第3行是我自己选择的一个主题，你可以换成你自己喜欢的，浏览里面<br />
+的主题可以用M-x color-theme-select，然后一个个地试，觉得哪个好<br />
+就把第三行替换成那个。</p>
+<p>最后，如果你有其它主题，把它下载到themes目录里，然后再修改<br />
+~/.emacs：</p>
+<p>(load-file "~/.emacs.d/themes/your-own-theme.el")<br />
+(color-theme-your-own)</p>
+<p>这样emacs看起来就很漂亮。</p>
+<p>BTW，<a href="http://www.emacswiki.org/cgi-bin/emacs/pink-bliss.el">这里</a>有一款为mm准备的粉红主题，很炫。不知道有没有mm使用emacs？</p>
+<p></body></html></p>

@@ -1,0 +1,37 @@
+---
+layout: post
+title: 学习C++的一些心得
+date: 2007-04-10 23:26:01.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Programming
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '75'
+  _wp_old_slug: '75'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2007/04/10/%e5%ad%a6%e4%b9%a0c%e7%9a%84%e4%b8%80%e4%ba%9b%e5%bf%83%e5%be%97/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body>
+<p>最近在看《Essential C++》 ，发现自己的C++学得很不及格！下面是学习的一些心得：</p>
+<p>1. 重载&lt;&lt;或&gt;&gt;操作符时千万注意，它不能是成员函数，如果不不幸把它声明成了类foo的成员函数，那你得这样用它了：<br />
+foo&lt;&lt;cout&lt;&lt;'n';<br />
+没有人阻止你这么做，但这几乎肯定不会是你想要的！</p>
+<p>2. 函数对象是一个好东西，它有点像是C中的函数指针。它其实就是重载了()的类，没什么奇特的。</p>
+<p>3. static类型的数据成员表示单一的实例，它被所有类的对象共享。static类型的函数和Java中一样，也是可以不通过实例就直接调用。</p>
+<p>4. 虚函数要么在声明它的类中定义，要么就被定义成纯虚函数。带有纯虚函数的类是不能有实例的。</p>
+<p>5. 基类的析构函数必须是虚函数。</p>
+<p>6. 使用dynamic_cast而不是static_cast。</p>
+<p>7. 模板中不是只能带类型，而且还能带变量，它能按照你指定的值去创建“带有”这些值的类，它的作用有点儿类似于“默认”。</p>
+<p></body></html></p>

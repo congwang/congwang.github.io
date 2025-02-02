@@ -1,0 +1,54 @@
+---
+layout: post
+title: 翠花儿，上代码～！
+date: 2007-08-08 21:29:47.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Programming
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '178'
+  _wp_old_slug: '178'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2007/08/08/%e7%bf%a0%e8%8a%b1%e5%84%bf%ef%bc%8c%e4%b8%8a%e4%bb%a3%e7%a0%81%ef%bd%9e%ef%bc%81/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body>
+<p>无意（确实是无意）间写了这么一个程序，它既没调用里面的打印"hello!"的函数，也没使用循环，却是无限循环地打印"hello!"！这个程序是不可移植的，在Win上应该不行，在Linux上可能也有差异。我是在FC5上编译运行的，效果不错。</p>
+<p>#include<br />
+#include </p>
+<p>void foo(char *arg)<br />
+{<br />
+	volatile int foo = 3;<br />
+	volatile int bar = 9;<br />
+	char str[8];<br />
+	strcpy(str, arg);<br />
+	printf("ret=%pn", (int *)(&amp;foo - 1));<br />
+}</p>
+<p>void hello()<br />
+{<br />
+	printf("hello!n");<br />
+}<br />
+int main(void)<br />
+{<br />
+	char t[32] = { 0 };<br />
+	memset(t, 'x90', 31);<br />
+	unsigned long *ptr = (unsigned long *)&amp;t[20];<br />
+	*ptr = (unsigned long)&amp;hello;<br />
+	ptr = (unsigned long *)&amp;t[24];<br />
+	*ptr = (unsigned long)&amp;main;<br />
+	printf("hello@%pn", hello);<br />
+	foo(t);<br />
+	return 0;<br />
+}</p>
+<p></body></html></p>

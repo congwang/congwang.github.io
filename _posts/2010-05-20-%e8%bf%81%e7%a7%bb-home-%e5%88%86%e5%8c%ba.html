@@ -1,0 +1,44 @@
+---
+layout: post
+title: 迁移 home 分区
+date: 2010-05-20 00:55:20.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Linux Application
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '1113'
+  _wp_old_slug: '1113'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2010/05/20/%e8%bf%81%e7%a7%bb-home-%e5%88%86%e5%8c%ba/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body>
+<p>之前装系统时用的是默认安装，结果/home没有单独分出。现在想装新的系统，所以备份/home里面的东西就成为一个问题了。后悔啊！还好，幸亏当时我用的是LVM，所以我可以动态调整分区。</p>
+<p>我天真地以为直接用lvm调整即可，事实不是这样的，直接操作你会发现没有足够的PE，换句话说，我的lvm已经被占满了，需要先腾出一些空间来。</p>
+<p>因为根分区是一个整体，所以必须得从别的系统进来然后进行操作。于是，我找了一个Fedora的LiveCD。首先检查已有的根分区：</p>
+<p>#e2fsck -f /dev/VolGroup00/LogVol00</p>
+<p>然后缩小根分区的大小到120G：</p>
+<p>#resize2fs -f /dev/VolGroup00/LogVol00 120G</p>
+<p>用LVM缩小根分区的逻辑卷大小到120G，这样就剩下100G给后面的/home：</p>
+<p>#lvm lvreduce -L120G /dev/VolGroup00/LogVol00</p>
+<p>添加新的卷：</p>
+<p>#lvm lvcreate -L100G -nLogVol01 VolGroup00</p>
+<p>好了，任务完成了一半，继续备份：</p>
+<p>#mount /dev/VolGroup00/LogVol00 /mnt/root<br />
+#mount /dev/VolGroup00/LogVol01 /mnt/home<br />
+#cp -R /mnt/root/home/wangcong /mnt/home</p>
+<p>经过了漫长的等待之后终于完成，然后就可以安装新的系统了，要把新的LogVol01选为/home，而且不格式化。安装完毕后：</p>
+<p>#chown wangcong -R /home/wangcong</p>
+<p>结束。</p>
+<p></body></html></p>

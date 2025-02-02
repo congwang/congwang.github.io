@@ -1,0 +1,33 @@
+---
+layout: post
+title: 用 gmail 发送补丁
+date: 2011-08-04 14:31:39.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Linux Application
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '1742'
+  _wp_old_slug: '1742'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2011/08/04/%e7%94%a8-gmail-%e5%8f%91%e9%80%81%e8%a1%a5%e4%b8%81/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body>
+<p>如果你使用 gmai l帐户，想通过 git send-email 发送补丁的话，需要加几个额外的参数，如下所示，</p>
+<p>git send-email --smtp-server smtp.gmail.com --from USER@gmail.com --smtp-encryption=tls --smtp-user=USER@gmail.com</p>
+<p>或者用git config进行相应的设置，</p>
+<p>git config --global sendemail.smtpserver smtp.gmail.com<br />
+git config --global sendemail.smtpencryption tls<br />
+git config --global sendemail.smtpuser USER@gmail.com</p>
+<p></body></html></p>

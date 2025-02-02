@@ -1,0 +1,50 @@
+---
+layout: post
+title: 关于 OVS GRE tunnel
+date: 2013-07-08 15:23:09.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Linux Kernel
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '2282'
+  _wp_old_slug: '2282'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2013/07/08/%e5%85%b3%e4%ba%8e-ovs-gre-tunnel/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body></p>
+<p>在 korg 内核的 openvswitch 支持 GRE 之前，我们都是<a href="http://wangcong.org/blog/archives/2163" target="_blank">用内核原生的 GRE tunnel 来配置</a>，而现在， korg 内核中的 openvswitch 也已经支持 GRE tunnel 了。有兴趣的可以看 <a href="https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7d5437c709ded4f152cb8b305d17972d6707f20c" target="_blank">openvswitch: Add tunneling interface.</a> 和   <a href="https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=aa310701e787087dbfbccf1409982a96e16c57a6" target="_blank">openvswitch: Add gre tunnel support.</a> 这两个 commit。</p>
+<p>其实在 OVS 中添加 GRE 很简单，它无非就是把对 GRE 头和外部 IP 头的一些操作从原来的代码中抽象出来，做成内核“库函数”的形式，然后 OVS 中就可以直接调用它们了。难的是要从旧的 ip_gre 模块代码中抽象出这些“库函数”。详见 <a href="https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=c54419321455631079c7d6e60bc732dd0c5914c5" target="_blank">GRE: Refactor GRE tunneling code.</a></p>
+<p>值得注意的是，OVS GRE tunnel 没有注册网络设备，也就是说你无法通过 `ip link` 看到它，它只是一个 vport 而已，所以能通过 ovs-vsctl show 可以看到。这是故意这么设计的，虽然这简化了用户的操作，但刚注意到时难免会感觉有些奇怪。</p>
+<p>网上最流行的一篇讲解 OVS GRE tunnel 配置的教程是<a href="http://blog.scottlowe.org/2013/05/07/using-gre-tunnels-with-open-vswitch/" target="_blank">这篇文章</a>，根据它我做了如下配置：</p>
+<pre>ovs-vsctl add-br grebr0
+ovs-vsctl add-br phybr0
+ovs-vsctl add-port phybr0 p1p1
+ovs-vsctl add-port phybr0 tep0 -- set Interface tep0 type=internal
+ifconfig tep0 192.168.88.1/24
+ifconfig p1p1 0.0.0.0
+ovs-vsctl add-port grebr0 vnet0
+ovs-vsctl add-port grebr0 gre1 -- set Interface gre1 type=gre options:remote_ip=192.168.88.2</pre>
+<p>但是仔细分析一下，其实完全没有必要使用两个 bridge，通过 gre1 的包其实可以直接进入 p1p1，即最后的物理网卡。所以优化后的配置如下：</p>
+<pre>ovs-vsctl add-br grebr0
+ifconfig p1p1 192.168.88.1/24
+ovs-vsctl add-port grebr0 vnet0
+ovs-vsctl add-port grebr0 gre1 -- set Interface gre1 type=gre options:remote_ip=192.168.88.2</pre>
+<p>通过 GRE tunnel 的包是重新注入网络栈中的，所以它们会直接流向 p1p1，最终流向物理层。</p>
+<p>注意，这并没有结束。虽然通过这个配置你已经可以 ping 通对方 host 上的 VM 了，但是，如果你运行 netperf 测试的话，你会发现吞吐量非常低。这也是网络上的教程没有提到的地方。</p>
+<p>这里的原因是从 vnet0 里出来数据包很多是 MTU 的大小，我这里是1500。而经过 GRE tunnel 后外面又添加了 GRE 头和外层的 IP 头，所以包就会大于 1500。而物理网卡的 MTU 也是 1500！并且，这些包本身并不是 GSO 的，所以这些包最终会被 IP 层分片（fragment），所以性能非常差！</p>
+<p>这里有两种解决方法：</p>
+<p>1) 把 VM 里的网卡 MTU 调小，比如 1400，这样 host 上的 GRE 加上额外的头也不会超过 1500；</p>
+<p>2) 让 VM 里发出来的包依旧维持 GSO，这样 host 上收到的包也是 GSO，它们最终会被分段（segment），而不是分片（fragment）。这个可以通过给 qemu 传递 vnet_hdr=on 来完成（我没有试过，仅分析了源代码）。</p>
+<p>关于这个问题的进一步讨论可以看<a href="http://marc.info/?l=linux-netdev&amp;m=137331558900547&amp;w=2" target="_blank">我提的问题</a>。</body></html></p>

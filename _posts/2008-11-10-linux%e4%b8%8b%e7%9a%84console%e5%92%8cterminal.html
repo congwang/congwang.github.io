@@ -1,0 +1,93 @@
+---
+layout: post
+title: Linux下的console和terminal
+date: 2008-11-10 07:01:31.000000000 -08:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Linux Application
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '423'
+  _wp_old_slug: '423'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2008/11/10/linux%e4%b8%8b%e7%9a%84console%e5%92%8cterminal/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body><br />
+<a href="http://en.wikipedia.org/wiki/Computer_console" target="_blank">console</a>和<a href="http://en.wikipedia.org/wiki/Computer_terminal" target="_blank">terminal</a>是很容易让人迷惑的两个概念。根据wikipedia上的定义，小型计算机的console应该就是键盘加显示器；而terminal则是输入数据进去，和显示数据来源的设备，通常是一个计算机系统。</p>
+<p>Linux下的console除了真实的硬件设备外，还有virtual console，也就是你按alt+Fn或者alt+ctrl+Fn切换到的东西。所谓虚拟就是这些console共享同一个真实的设备，只有一个活动的console才显示在前面。这些console对应的设备是：/dev/ttyN，其中1 ≤ N ≤ 63。而/dev/tty0则是指向当前的terminal；/dev/console是指向当前console，但它现在并_不是_对/dev/tty0的符号链接。更多可参考console(4)。</p>
+<p>/dev/tty是另一个特殊设备，它指向控制终端（controlling terminal）。如果某个进程的控制终端是/dev/tty3，那么/dev/tty就指向/dev/tty3了。控制终端是什么概念？它是一个进程的某个属性，是依附带该进程上的终端。比如我们在某个终端下输入ctrl+C，那么它控制的前台进程就会收到SIGINT，而后台进程会收到SIGTTIN或SIGTTOU ，如果它们读写该终端的话。被同一个终端控制的所有进程被称为一个会话（session），会话的领导就是创建改会话的进程，其子进程也会被该终端控制。所以，1) 需要交互的命令行程序通常会从/dev/tty这个设备进行读写；2) Unix后台进程都需要在fork之后调用setsid(2)，3) 需要加O_NOCTTY，当你open一个可能是终端的文件时。</p>
+<p>另外，想要确定/dev/tty究竟是指向哪个设备，可以调用TIOCCONS ioctl。参考tty(4)。</p>
+<p>下面是另外一个概念——伪终端（pseudo-terminal），根据pty(7)的介绍，伪终端一对虚拟设备，提供端到端双向通信的通路，一端称为master，另一端称为slave。在slave那端看到的和在真实终端看到的效果一样。所以伪终端一般被ssh等网络登录程序使用。历史上，有两套伪终端接口，一个是Unix 98伪终端，另一个是BSD伪终端。</p>
+<p>BSD提供的接口很简单：/dev/pty[p-za-e][0-9a-f] 是master; /dev/tty[p-za-e][0-9a-f] 是slave，它们都是配好对的。这样看起来很简单，但对程序员来说不容易，要找到一个合适的终端需要一个个从头尝试。所以这种方式已经被遗弃。而Unix 98伪终端则完全不同，它始终使用/dev/ptmx作为master复制设备，然后在每次打开它的时候才得到一个master设备的fd，同时在/dev/pts/目录下得到一个slave设备。这样编程就相对容易了，根据pts(4)介绍，需要三个新的API： ptsname(3)，grantpt(3)和unlockpt(3)。我们可以通过一个实例看一下如何使用：</p>
+<p>（以下代码摘自netvirt）<br />
+[c]<br />
+char	*mptname = "/dev/ptmx";	/* master pseudo-tty device */<br />
+//...<br />
+void<br />
+getmaster()<br />
+{<br />
+	struct stat stb;</p>
+<p>	if ((master = open(mptname, O_RDWR)) &gt;= 0) { /* a pseudo-tty is free */<br />
+		(void) ioctl(0, TCGETS, (char *)&amp;b);<br />
+		(void) ioctl(0, TIOCGWINSZ, (char *)&amp;size);<br />
+		return;<br />
+	} else {				/* out of pseudo-tty's */<br />
+		perror(mptname);<br />
+		fprintf(stderr, gettext("Out of pseudo-tty'sn"));<br />
+		fail();<br />
+	}<br />
+}</p>
+<p>void<br />
+getslave()<br />
+{<br />
+	char *slavename;	/* name of slave pseudo-tty */</p>
+<p>	grantpt(master);		/* change permissions of slave */<br />
+	unlockpt(master);			/* unlock slave */<br />
+	slavename = ptsname(master);		/* get name of slave */<br />
+	slave = open(slavename, O_RDWR);	/* open slave */<br />
+	if (slave &lt; 0) {			/* error on opening slave */<br />
+		perror(slavename);<br />
+		fail();<br />
+	}<br />
+	ioctl(slave, I_PUSH, "ptem");	/* push pt hw emulation module */<br />
+	ioctl(slave, I_PUSH, "ldterm");		/* push line discipline */</p>
+<p>	(void) ioctl(slave, TCSETSF, (char *)&amp;b);<br />
+	(void) ioctl(slave, TIOCSWINSZ, (char *)&amp;size);<br />
+}<br />
+[/c]<br />
+然后我们再来看一下glibc中对ptsname(3)的实现：</p>
+<p>（源文件sysdeps/unix/sysv/linux/ptsname.c）<br />
+[c]<br />
+#define _PATH_DEVPTS "/dev/pts/"</p>
+<p>char *<br />
+ptsname (int fd)<br />
+{<br />
+  return __ptsname_r (fd, buffer, sizeof (buffer)) != 0 ? NULL : buffer;<br />
+}</p>
+<p>int<br />
+__ptsname_r (int fd, char *buf, size_t buflen)<br />
+{</p>
+<p>...</p>
+<p>  if (__ioctl (fd, TIOCGPTN, &amp;ptyno) == 0)<br />
+...<br />
+     numbuf[sizeof (numbuf) - 1] = '';<br />
+      p = _itoa_word (ptyno, &amp;numbuf[sizeof (numbuf) - 1], 10, 0);<br />
+...<br />
+      memcpy (__stpcpy (buf, devpts), p, &amp;numbuf[sizeof (numbuf)] - p);<br />
+[/c]</p>
+<p>我们可以看出，实际上是调用ioctl TIOCGPTN，通过内核，而Linux内核又是通过devpts这种文件系统实现了这一切：</p>
+<p>$ mount | grep devpts<br />
+devpts on /dev/pts type devpts (rw,gid=5,mode=620)</p>
+<p>这样我们终于把一切搞清楚了。:-)<br />
+</body></html></p>

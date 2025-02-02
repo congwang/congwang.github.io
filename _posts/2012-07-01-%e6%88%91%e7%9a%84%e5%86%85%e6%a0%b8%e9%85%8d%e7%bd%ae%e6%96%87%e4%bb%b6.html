@@ -1,0 +1,76 @@
+---
+layout: post
+title: 我的内核配置文件
+date: 2012-07-01 14:08:52.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Linux Kernel
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '2032'
+  _wp_old_slug: '2032'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2012/07/01/%e6%88%91%e7%9a%84%e5%86%85%e6%a0%b8%e9%85%8d%e7%bd%ae%e6%96%87%e4%bb%b6/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body>
+<p>我们知道，在KVM里测试内核会碰到一个很严重的问题：那就是在 host 编译的内核不能直接在 guest 里使用。有两个原因：一是 host 和 guest 的硬件可能不一样，所以需要的 config 不一样；二是内核模块即便是安装进了 initramfs 也仍有很多需要安装到 /lib/modules/`uname -r`。</p>
+<p>有三种解决办法：</p>
+<p>1. host 和 guest 都使用发行版自带的 config，这个 config 是可以在很多机器上运行，所以基本上一定可以在你的guest 里使用，然后用 guestfish 把编译的内核模块拷贝进 guest；这么做的好处是 host 和 guest 都使用同一个 config；坏处也显然，需要进行太多host =&gt; guest 拷贝操作。</p>
+<p>2. 在 1) 的基础上进行改进，把 host 作为 build server，为 guest 提供 PXE，NFS 服务，这样 guest 里就可以直接使用编译好的内核以及内核模块。这个方法的缺点是，需要一些系统管理技巧，我暂时还没有时间折腾；优点是，如果你的 build server 搭建得比较好，你甚至可以给其它机器（非虚拟）提供服务。</p>
+<p>3. guest 使用和 host 不同的 config，guest 的 config 是经过专门定制的，只编译本机器所需要的内核特性和模块，并且把所有的模块都编译进内核（builtin），这样我们甚至不需要 initramfs！优点是，config 很少，即使重新编译花费时间也很少；缺点也很显然，config 很难用于别的机器，尤其是非虚拟化的机器。需要特别注意：<strong>如果你的系统用了 LVM 那么它将无法使用！因为内核无法自己检测 LVM！</strong>另外，编译进内核的模块和不像单独加载的模块那样灵活，比如 netconsole 模块，我们通常是通过模块参数来指定其功能，而一旦变成 builtin 我们就不得不通过 configfs 来进行操作了，也就是说测试脚本就得重写了。</p>
+<p>为了定制上述 3) 中专门的 config，我花了不少时间把我的 config 精简到最少，但同时又包含了 KVM 里需要功能以及我调试用到的选项，我把最终的 config 放到了 github 上进行管理：</p>
+<p><a href="https://github.com/congwang/kernelconfig/blob/master/kvm-mini-config">https://github.com/congwang/kernelconfig/blob/master/kvm-mini-config</a></p>
+<p>我的目标是让它可以在<strong>尽可能多</strong>的 KVM guest 上可以运行（显然不可能保证所有），同时尽量不破坏用户空间的程序比如 systemd（取决于发行版），当然还要保持编译出的内核可能的小。欢迎帮忙测试。:-)</p>
+<p>下一步是尝试实现第2种方法，我们需要搭建一个集编译内核、PXE服务器、NFS服务器于一身的服务器，准备弄一个新的 github 项目去搞一下。</p>
+<p>当然，如果你有其它更好的主意，希望不吝赐教！</p>
+<p>附我常用的一些内核调试选项：</p>
+<p>一定要有的：<br />
+CONFIG_DEBUG_KERNEL=y</p>
+<p>内存相关：<br />
+CONFIG_SLUB_DEBUG=y<br />
+CONFIG_DEBUG_VM=y<br />
+CONFIG_DEBUG_LIST=y</p>
+<p>内核加锁相关：<br />
+CONFIG_DEBUG_ATOMIC_SLEEP=y<br />
+CONFIG_LOCKDEP=y<br />
+CONFIG_DEBUG_SPINLOCK=y<br />
+CONFIG_DEBUG_MUTEXES=y<br />
+CONFIG_DEBUG_LOCK_ALLOC=y<br />
+CONFIG_PROVE_LOCKING=y<br />
+CONFIG_PROVE_RCU=y</p>
+<p>ftrace 相关：<br />
+CONFIG_FTRACE=y<br />
+CONFIG_FUNCTION_TRACER=y</p>
+<p>锁死检测：<br />
+CONFIG_LOCKUP_DETECTOR=y<br />
+CONFIG_HARDLOCKUP_DETECTOR=y<br />
+CONFIG_BOOTPARAM_HARDLOCKUP_PANIC=y<br />
+CONFIG_BOOTPARAM_HARDLOCKUP_PANIC_VALUE=1<br />
+CONFIG_BOOTPARAM_SOFTLOCKUP_PANIC=y<br />
+CONFIG_BOOTPARAM_SOFTLOCKUP_PANIC_VALUE=1<br />
+CONFIG_DETECT_HUNG_TASK=y<br />
+CONFIG_DEFAULT_HUNG_TASK_TIMEOUT=300</p>
+<p>kdump 相关：<br />
+CONFIG_KEXEC=y<br />
+CONFIG_CRASH_DUMP=y<br />
+CONFIG_PHYSICAL_START=0x1000000<br />
+CONFIG_RELOCATABLE=y</p>
+<p>netconsole 相关：<br />
+CONFIG_NETCONSOLE=y<br />
+CONFIG_NETCONSOLE_DYNAMIC=y<br />
+CONFIG_NETPOLL=y</p>
+<p>kprobe，jump label 相关：<br />
+CONFIG_KPROBES=y<br />
+CONFIG_JUMP_LABEL=y</p>
+<p></body></html></p>

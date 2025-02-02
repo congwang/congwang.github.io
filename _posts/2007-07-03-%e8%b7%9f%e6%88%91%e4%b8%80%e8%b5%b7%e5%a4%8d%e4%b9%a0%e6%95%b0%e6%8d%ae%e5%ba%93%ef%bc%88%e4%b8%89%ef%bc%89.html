@@ -1,0 +1,43 @@
+---
+layout: post
+title: 跟我一起复习数据库（三）
+date: 2007-07-03 13:41:28.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Programming
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '141'
+  _wp_old_slug: '141'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2007/07/03/%e8%b7%9f%e6%88%91%e4%b8%80%e8%b5%b7%e5%a4%8d%e4%b9%a0%e6%95%b0%e6%8d%ae%e5%ba%93%ef%bc%88%e4%b8%89%ef%bc%89/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body></p>
+<p>简单地说，如果把关系看作一张表，那么一个元组就是这张表的一行，一个属性就是一列；元组的数目称为势，属性的数目称作度；域是值的集合，关系中属性的值取自域。</p>
+<p style="text-align:center;"><img src="{{site.baseurl}}/assets/2007/07/relation.jpg"></p>
+<p>关系变量分两种类型：基本关系变量和视图（也分别称为实的和虚的关系变量）。SQL中的域不是类型；SQL中的表（基本的或其他的）不是关系，因为（ a）它们允许重复的行；（ b）它们的 列有从左到右的次序。实际上，它们甚至可以有两个或多个相同名字的列（对基本表或视图名，SQL中是不允许重名的） 。</p>
+<p>基本关系代数的8个操作符：<br />
+选择：返回一个关系，其中的元组来自指定关系中所有满足指定条件的元组。<br />
+投影：返回一个关系，由去掉若干属性列后的指定关系中剩余的所有（子）元组组成。<br />
+积：返回一个关系，包含任意两个分别来自两个指定关系的元组组合的所有可能的元组。<br />
+并：返回的关系由两个指定关系中所有的元组构成。<br />
+交：返回关系由同时出现在两个指定关系中的元组构成。<br />
+差：返回的关系由那些属于第一个关系却不属于第二个关系的元组构成。<br />
+连接： 返回关系中的元组是两个元组的结合，这两个元组分别来自两个指定的关系，需<br />
+满足的条件是此两个关系存在相同的属性，且在相同属性上有相同的值（在结果元组中，共同的值只出现一次，而不是两次） 。<br />
+除：此操作是在两个单目关系和一个双目关系上，返回关系的元组满足以下条件：这些<br />
+元组来自一个单目关系，其在双目关系中的对应元组能与另一个单目关系中的所有元组相匹配。</p>
+<p style="text-align:center;"><img src="{{site.baseurl}}/assets/2007/07/operations.jpg"></p>
+<p>A根据C除以B（其中A是被除数， B是除数，C是中间数）<br />
+也可以粗略地说，结果关系包含A中满足如下条件的 X值：在C中对应的Y值包含B中的所有Y值。</body></html></p>

@@ -1,0 +1,99 @@
+---
+layout: post
+title: Brackets
+date: 2007-08-09 21:34:36.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Programming
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '179'
+  _wp_old_slug: '179'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2007/08/09/brackets/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body>
+<p>Given a string consisting of brackets of two types find its longest substring that is a regular brackets sequence.</p>
+<p>Input</p>
+<p>There are mutiple cases in the input file.<br />
+Each case contains a string containing only characters ‘(’ , ‘)’ , ‘[’ and ‘]’ . The length of the string does not exceed 100,000.<br />
+There is an empty line after each case.</p>
+<p>Output</p>
+<p>Output the longest substring of the given string that is a regular brackets sequence.<br />
+There should be am empty line after each case.</p>
+<p>Sample Input</p>
+<p>([(][()]]()</p>
+<p>([)]</p>
+<p>Sample Output</p>
+<p>[()]</p>
+<p>#include<br />
+#include<br />
+#include<br />
+#include </p>
+<p>using namespace std;</p>
+<p>class Substr{<br />
+private:<br />
+	int from;<br />
+	int length;<br />
+	string s;<br />
+	bool ispair(char a, char b)<br />
+	{<br />
+		if(a =='(' &amp;&amp; b == ')')<br />
+			return true;<br />
+		else if(a == '[' &amp;&amp; b == ']')<br />
+			return true;<br />
+		else<br />
+			return false;<br />
+	}<br />
+	void calculate()<br />
+	{<br />
+		int max = 0;<br />
+		int len = 0;<br />
+		const char* p = this-&gt;s.c_str();<br />
+		stack vc;</p>
+<p>		do<br />
+		{<br />
+			if(!vc.empty() &amp;&amp; ispair(vc.top(),*p)){<br />
+				vc.pop();<br />
+				len++;<br />
+			} else {<br />
+				if(len &gt; max){<br />
+					max = len;<br />
+					from = p-this-&gt;s.c_str();<br />
+					length = len*2;<br />
+					from -= length;<br />
+				}<br />
+				len = 0;<br />
+				vc.push(*p);<br />
+			}<br />
+		}while(*p++);<br />
+	}<br />
+public:<br />
+	Substr(string str)<br />
+	{<br />
+		s = str;<br />
+		from = 0;<br />
+		length = 0;<br />
+	}<br />
+	void print()<br />
+	{<br />
+		calculate();<br />
+		cout&lt;&lt;s.substr(from, length)&lt;&lt;endl;<br />
+		cout&lt;&gt;s){<br />
+		Substr ss(s);<br />
+		ss.print();<br />
+	}<br />
+	return 0;<br />
+}</p>
+<p></body></html></p>

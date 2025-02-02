@@ -1,0 +1,99 @@
+---
+layout: post
+title: 在emacs下使用mew
+date: 2008-02-14 14:42:26.000000000 -08:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Linux Application
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '300'
+  _wp_old_slug: '300'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2008/02/14/%e5%9c%a8emacs%e4%b8%8b%e4%bd%bf%e7%94%a8mew/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body></p>
+<p align="right">作者： 西邮 王聪</p>
+<p><a href="http://www.mew.org/" target="_blank">Mew</a>是emacs里面一款很好很强大的邮件客户端插件，最近因迷恋emacs所以决定要把邮件客户端也换成emacs里面的。</p>
+<p>在这里，我以Fedora和Gmail为例简单说一下配置过程。</p>
+<p>首先需要安装mew，Fedora用户直接</p>
+<p>#yum install mew</p>
+<p>就可以了。安装好之后就开始配置，不用担心，其实很简单。需要修改的配置文件就两个，一个是~/.emacs，另一个是Mew专用的~/.mew.el。虽然说这些配置项放哪个文件里都成，但是最好还是人为区分一下，免得弄得~/.emacs里一团糟。;-)</p>
+<p>我在~/.emacs里为Mew添加了下面这些东西：</p>
+<p>(autoload 'mew "mew" nil t)<br />
+(autoload 'mew-send "mew" nil t)<br />
+(if (boundp 'read-mail-command)<br />
+(setq read-mail-command 'mew))<br />
+(autoload 'mew-user-agent-compose "mew" nil t)<br />
+(if (boundp 'mail-user-agent)<br />
+(setq mail-user-agent 'mew-user-agent))<br />
+(if (fboundp 'define-mail-user-agent)<br />
+(define-mail-user-agent<br />
+'mew-user-agent<br />
+'mew-user-agent-compose<br />
+'mew-draft-send-message<br />
+'mew-draft-kill<br />
+'mew-send-hook))</p>
+<p>(set-default 'mew-decode-quoted 't)<br />
+(when (boundp 'utf-translate-cjk)<br />
+(setq utf-translate-cjk t)<br />
+(custom-set-variables<br />
+'(utf-translate-cjk t)))<br />
+(if (fboundp 'utf-translate-cjk-mode)<br />
+(utf-translate-cjk-mode 1))<br />
+(require 'flyspell)</p>
+<p>然后在编辑~/.mew.el（没有就先创建）。我用的可以<a href="http://wangcong.org/down/dotmew.el" target="_blank">在这里下载</a>，我这个是综合了网上各路神仙的配置之后的结果。;-) 然后你根据自己需要把它修改成你自己的就行了。</p>
+<p>配置完成后我们进入mew模式就可以收发邮件了。我再总结一下它的基本使用方法：</p>
+<p>w 写信<br />
+M-TAB 补齐收信人信息<br />
+Q 退出mew<br />
+i 收信<br />
+g 跳转邮箱<br />
+o 对邮件进行分类<br />
+d 把邮件标记为删除<br />
+* 作星号标记<br />
+u 清除标记<br />
+x 对所有标记进行处理<br />
+a 不带引用的回复，不建议使用<br />
+A 带引用的回复，推荐<br />
+f 转发邮件<br />
+y 保存邮件，会提示是保存整个邮件和是仅保存正文<br />
+SPACE 阅读邮件<br />
+ENTER 让阅读的邮件向上滚动一行<br />
+- 向下滚动一行<br />
+n 下一封邮件<br />
+p 前一封邮件<br />
+j 跳到某一封邮件<br />
+N 下一封带星号的邮件<br />
+P 上一封带星号的邮件<br />
+S 按某个指定项目对邮件排序<br />
+/ 按指定条件搜索邮件，并进入虚拟模式<br />
+tt 进入虚拟模式，根据线索查看，普通模式下是不可以的<br />
+C 如果设置了多个邮箱，用此切换<br />
+C-cC-m 编辑新邮件，放入草稿中<br />
+C-cC-c 发送邮件<br />
+C-cC-q 取消草稿<br />
+C-cC-a 插入附件<br />
+C-cTAB 插入签名<br />
+C-cC-l    转换当前邮件的编码格式<br />
+C-cC-y 复制部分邮件，带引用前缀<br />
+C-cC-t 复制部分邮件，不带引用前缀<br />
+C-cC-a    把当前的发信人加入地址薄<br />
+C-uC-cC-a 比C-cC-a多加入昵称和名字，推荐</p>
+<p>恩，我就知道这些，但这些也已经足够对付日常使用了。如果需要更多，可查看<a href="http://www.mew.org/release/info/index.html.en">mew官方网站上的手册</a>。</p>
+<p>参考资料：</p>
+<p>1. Mew官方手册：<a href="http://www.mew.org/release/info/index.html.en" target="_blank">http://www.mew.org/release/info/index.html.en </a></p>
+<p>2. <a href="http://www.zhangw.com/emacs/dotmewel.html" target="_blank">http://www.zhangw.com/emacs/dotmewel.html</a></p>
+<p>3. <a href="http://learn.tsinghua.edu.cn:8080/2004211031/publish/GNU/mew.html" target="_blank">http://learn.tsinghua.edu.cn:8080/2004211031/publish/GNU/mew.html</a><br />
+</body></html></p>

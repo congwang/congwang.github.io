@@ -1,0 +1,30 @@
+---
+layout: post
+title: sparse 的一个 bug
+date: 2009-01-19 20:02:22.000000000 -08:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Linux Application
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '504'
+  _wp_old_slug: '504'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2009/01/19/sparse-%e7%9a%84%e4%b8%80%e4%b8%aa-bug/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body>
+<p>今天用sparse的时候遇到一个bug：</p>
+<p>error: unable to open 'stddef.h'</p>
+<p>简单地搜了搜，发现debian上已经<a href="http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=505177" target="_blank">有人报告</a>，最新的sparse的git树里已经解决了这个问题，可是Fedora还没有。于是只好自己编译，git-clone之后 make &amp;&amp;  make install PREFIX=/usr 就可以了。希望Fedora也尽快更新sparse。</p>
+<p></body></html></p>

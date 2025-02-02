@@ -1,0 +1,9 @@
+title: A Geek's Page
+description: Personal Blog Posts
+baseurl: "/blog" # if your site is in a project folder
+url: "https://congwang.github.io"
+github_username: congwang
+
+# Build settings
+markdown: kramdown
+theme: minima # or your preferred theme

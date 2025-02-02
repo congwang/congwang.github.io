@@ -1,0 +1,47 @@
+---
+layout: post
+title: ELF Extended Numbering
+date: 2010-04-22 22:18:37.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Linux Kernel
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '1082'
+  _wp_old_slug: '1082'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2010/04/22/elf-extended-numbering/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body></p>
+<p>ELF格式天生就有个不小的缺陷—— segment 个数最多 65535 个，这是由e_phnum来决定的，其类型是16位的无符号整数。对于一些程序来说，65535是不够的，如果它使用了很多mmap(2)的话。</p>
+<p>要解决这个问题并不容易，e_phnum是用了多年早已定型了的东西，不能随意修改，只能在别的地方想办法去补救，于是下面这个方案就出来乐。这个方案在Solaris上已经使用了长时间了，但 Linux 上一直还没有。其原理是：e_phnum保持不动， 如果 segment 的个数大于等于0xffff时，e_phnum设为0xffff ，同时下标为0的section header中的sh_info被设为真实的 segment 数。而 sh_info 是32位无符号类型，所以它最多能支持4294967295个。使用这个 sh_info 是合理的，因为下标为0的section header平时是没用的，其类型是 SHT_NULL。随之相应改变的还有 sh_size 和 sh_link，它们分别被设为 e_shnum和 e_shstrndx（见<a href="http://docs.sun.com/app/docs/doc/817-1984" target="_blank">该文档</a>P215）。</p>
+<p>Daisuke HATAYAMA 提交了Linux上的补丁，主要分为三部分：内核，gdb，和binutils。内核部分补丁不少，但真正起作用的补丁只有一个，其它的都是refactor，见下：</p>
+<pre id="comment_text_4">
+<pre id="comment_text_4">8d9032bbe4671dc481261ccd4e161cd96e54b118 elf coredump: add extended numbering support
+93eb211e6c9ff6054fcf9c5b9e344d8d9ad29175 elf coredump: make offset calculation process and writing process explicit
+1fcccbac89f5bbc5e41aa72086960059fce372da elf coredump: replace ELF_CORE_EXTRA_* macros by functions
+088e7af73a962fcc8883b7a6392544d8342553d6 coredump: move dump_write() and dump_seek() into a header file
+05f47fda9fc5b17bfab189e9d54228025befc996 coredump: unify dump_seek()
+
+gdb 的补丁如下：
+78999a9bcf9d87f72cd67a782e1e859a6a09d9de  * common.h (PN_XNUM): Define.
+cce546478afe296ebbb69f208b708a8b3fe5f7e5 * elfcode.h (elf_swap_ehdr_out): Handle e_phnum &gt; 0xffff.
+
+binutils 的补丁：
+<a href="http://sourceware.org/ml/binutils/2010-01/msg00393.html" target="_blank">http://sourceware.org/ml/binutils/2010-01/msg00393.html</a>
+
+man-page 补丁：
+<a href="http://permalink.gmane.org/gmane.linux.man/1302" target="_blank">http://permalink.gmane.org/gmane.linux.man/1302</a>
+</pre>
+<p></body></html></p>

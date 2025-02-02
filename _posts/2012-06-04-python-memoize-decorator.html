@@ -1,0 +1,85 @@
+---
+layout: post
+title: Python memoize decorator
+date: 2012-06-04 18:05:20.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Programming
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '2009'
+  _wp_old_slug: '2009'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2012/06/04/python-memoize-decorator/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body></p>
+<p>偶然看 Python 代码，看到这么一个叫memoize decorator 的东西，你会发现它非常有用。</p>
+<p>看下面的例子，我们最常见的 fibonacci 数列的递归实现。</p>
+<pre>
+~% python
+&gt;&gt;&gt; def fib(n):
+...     if n in (0, 1):
+...             return n
+...     else:
+...             return fib(n-1)+fib(n-2)
+...
+&gt;&gt;&gt; import timeit
+&gt;&gt;&gt; timeit.timeit("fib(5)", "from __main__ import fib")
+3.946546792984009
+&gt;&gt;&gt; timeit.timeit("fib(7)", "from __main__ import fib")
+10.944302082061768
+</pre>
+<p>很慢，不是么？你当然可以把它的实现改成迭代，但是，如果前提是我们不对fib()函数本身做任何代码修改的话，我们还有别的方法去改进它。</p>
+<p>我们注意到，fib(n-1) 和 fib(n-2) 实际上重复计算了很多结果，根本没必要，一个自然而然的想法就是把这些结果缓存起来，于是就有了下面的：</p>
+<pre>
+&gt;&gt;&gt; def memoize(f):
+...     memo = {}
+...     def wrapper(x):
+...         if x not in memo:
+...             memo[x] = f(x)
+...         return memo[x]
+...     return wrapper
+...
+&gt;&gt;&gt;
+&gt;&gt;&gt; def fib(n):
+...     if n in (0, 1):
+...         return n
+...     else:
+...         return fib(n-1) + fib(n-2)
+...
+&gt;&gt;&gt; fib = memoize(fib)
+&gt;&gt;&gt; import timeit
+&gt;&gt;&gt; timeit.timeit("fib(7)", "from __main__ import fib")
+0.35535502433776855
+</pre>
+<p>还不够，Python 还有自己的解决办法，那就是用 decorator</p>
+<p>[python]<br />
+def memoize(function):<br />
+  memo = {}<br />
+  def wrapper(*args):<br />
+    if args in memo:<br />
+      return memo[args]<br />
+    else:<br />
+      rv = function(*args)<br />
+      memo[args] = rv<br />
+      return rv<br />
+  return wrapper</p>
+<p>@memoize<br />
+def fib(n):<br />
+   if n in (0, 1):<br />
+      return n<br />
+   return fib(n-1) + fib(n-2)<br />
+[/python]</p>
+<p>为此，在 Python3 中还专门引入了一个<a href="http://docs.python.org/py3k/library/functools.html#functools.lru_cache"> lru_cache</a>。</p>
+<p>这个东西的牛逼之处在于，有了它你可以放心地去写递归的代码，不用为了效率去把它改成迭代形式，你也知道，有些时候递归代码比迭代代码更容易理解。这样可读性有了，效率也提升了，不用修改函数的实现，直接让它从次方级降到了线性级。</body></html></p>

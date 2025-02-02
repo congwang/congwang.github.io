@@ -1,0 +1,95 @@
+---
+layout: post
+title: Brackets, too
+date: 2007-08-10 20:18:05.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Programming
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '180'
+  _wp_old_slug: '180'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2007/08/10/brackets-too/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body>
+<p>If a is legal, (a), {a}, [a] are legal;<br />
+If a and b are both legal, ab is legal.</p>
+<p>You are given a string S with length of n. Assume that Si(1 &lt;= i &lt;= n) is the i-th character of S. Your task is to find out whether there is a k(1 &lt;= k &lt;= n) that SkSk+1Sk+2...SnS1S2...Sk-1 is legal.</p>
+<p>Input<br />
+There are several test cases. The first line contains an integer N. Then N test cases follows. In each test case, there is an only line that contains S. The length of S will not be larger than 1000. There are only (, ), {, }, [, ] in S.</p>
+<p>Output<br />
+For each test case, output a single line "YES" (without quotation marks) if there is such a k, or "NO" (without quotation marks) otherwise.</p>
+<p>Sample Input<br />
+3<br />
+}()[]{<br />
+}([)]{<br />
+()][</p>
+<p>Sample Output<br />
+YES<br />
+NO<br />
+YES</p>
+<p>#! /usr/bin/env python</p>
+<p>import string, sys</p>
+<p>def exchange_str(str, i):<br />
+	str1 = str[0:i]<br />
+	str2 = str[i:]<br />
+	return str2+str1</p>
+<p>def is_legal(str):<br />
+	if(len(str)==0):<br />
+		return 1<br />
+	if(len(str)==1):<br />
+		return 0</p>
+<p>	if(str[0]=='('):<br />
+		i = string.find(str, ")")<br />
+		if(i==-1):<br />
+			return 0<br />
+		elif(i==len(str)-1):<br />
+			return is_legal(str[1:len(str)-1])<br />
+		else:<br />
+			return is_legal(str[0:i+1]) and is_legal(str[i+1:len(str)])<br />
+	if(str[0]=='['):<br />
+		i = string.find(str, "]")<br />
+		if(i==-1):<br />
+			return 0<br />
+		elif(i==len(str)-1):<br />
+			return is_legal(str[1:len(str)-1])<br />
+		else:<br />
+			return is_legal(str[0:i+1]) and is_legal(str[i+1:len(str)])<br />
+	if(str[0]=='{'):<br />
+		i = string.find(str, "}")<br />
+		if(i==-1):<br />
+			return 0<br />
+		elif(i==len(str)-1):<br />
+			return is_legal(str[1:len(str)-1])<br />
+		else:<br />
+			return is_legal(str[0:i+1]) and is_legal(str[i+1:len(str)])</p>
+<p>n = string.atoi(sys.stdin.readline())<br />
+while(n!=0):<br />
+	str = sys.stdin.readline()<br />
+	str = str[0:len(str)-1]<br />
+	tmp = ""<br />
+	legal = 0;<br />
+	for i in range(0, len(str)):<br />
+		tmp = exchange_str(str, i)<br />
+		#print "==&gt;"+tmp+"n"<br />
+		if(is_legal(tmp)):<br />
+			legal = 1<br />
+			break<br />
+	if(legal==1):<br />
+		print "YES"<br />
+	else:<br />
+		print "NO"<br />
+	n-=1</p>
+<p></body></html></p>

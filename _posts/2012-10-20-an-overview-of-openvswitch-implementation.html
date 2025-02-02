@@ -1,0 +1,69 @@
+---
+layout: post
+title: An overview of Openvswitch implementation
+date: 2012-10-20 10:09:46.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Linux Kernel
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '2131'
+  _wp_old_slug: '2131'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2012/10/20/an-overview-of-openvswitch-implementation/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<!-- 		@page { margin: 2cm } 		P { margin-bottom: 0.21cm } 		H1 { margin-bottom: 0.21cm } 		H1.western { font-family: "Liberation Sans", sans-serif; font-size: 16pt } 		H1.cjk { font-family: "WenQuanYi Zen Hei"; font-size: 16pt } 		H1.ctl { font-family: "Lohit Devanagari"; font-size: 16pt } 		A:link { so-language: zxx } --><html><body><br />
+<strong>Author: Cong Wang &lt;xiyou.wangcong@gmail.com&gt;</strong></p>
+<p>This is NOT a tutorial on how to use openvswitch, this is for developers who want to know the implementation details of openvswitch project, thus, I assume you at least know the basic concepts of openvswitch and know how to use it. If not, see <a href="http://www.openvswitch.org/">www.openvswitch.org</a> to get some documents or slides.</p>
+<p>Let's start from the user-space part. Openvswitch user-space contains several components: they are a few daemons which actually implements the switch and the flow table, the core of openvswitch, and several utilities to manage the switch, the database, and even talk to the kernel directly.</p>
+<p>There are three daemons started by openvswitch service: ovs-vswitchd, which is the core implementation of the switch; ovsdb-server, which manipulates the database of the vswitch configuration and flows; and ovs-brcompatd which keeps the compatibility with the traditional bridges (that is the one you create with 'brctl' command) .</p>
+<p>Their relationship is shown in the picture below:</p>
+<p style="text-align:center;"><a href="http://wangcong.org/blog/wp-content/uploads/2012/10/openvswitch1.jpg"><img class="aligncenter size-full wp-image-2146" src="{{site.baseurl}}/assets/2012/10/openvswitch1.jpg" alt="" width="722" height="510"></a></p>
+<p><!-- 		@page { margin: 2cm } 		P { margin-bottom: 0.21cm } -->Obviously, the most important one is ovs-vswitchd, it implements the switch, it directly talks with kernel via netlink protocol (we will see the details later). And ovs-vsctl is the utility used primarily to manage the switch, which of course needs to talk with ovs-vswitchd. Ovs-vswitchd saves and changes the switch configuration into a database, which is directly managed by ovsdb-server, therefore, ovs-vswitchd will need to talk to ovsdb-server too, via Unix domain socket, in order to retrieve or save the configuration information. This is also why your openvswitch configuration  could survive from reboot even you are not using ifcfg* files.</p>
+<p>Ovs-brcompatd is omitted here, we are not very interested in it now.</p>
+<p>Ovs-vsctl can do lots of things for you, so most of time, you will use ovs-vsctl to manage openvswitch. Ovs-appctl is also available to manage the ovs-vswitchd itself, it sends some internal commands to ovs-vswitchd daemon to change some configurations.</p>
+<p>However, sometimes you may need to manage the datapath in the kernel directly by yourself, in this case, assume ovs-vswitchd is not running, you can invoke ovs-dpctl to let ovs-vswitchd to manage the datapath in the kernel space directly, without database.</p>
+<p>And, when you need to talk with ovsdb-server directly, to do some database operation, you can run ovsdb-client, or you want to manipulate the database directly without ovsdb-server, ovsdb-tool is handy too.</p>
+<p>What's more, openvswitch can be also administered and monitored by a remote controller. This is why we could define the network by software! sFlow is a protocol for packet sampling and monitoring, while OpenFlow is a protocol to manage the flow table of a switch, bridge, or device. Openvswitch supports both OpenFlow and sFlow. With ovs-ofctl, you can use OpenFlow to connect to the switch and do some monitoring and administering in the remote. sFlowTrend, which is not a part of openvswitch package, is the one that is capable for sFlow.</p>
+<p>Now, let's take a look at the kernel part.</p>
+<p>As mentioned previously, the user-space communicates with the kernel-space via netlink protocol, generic netlink is used in this case. So there are several groups of genl commands defined by the kernel, they are used to get/set/add/delete some datapath/flow/vport and execute some actions on a specific packet.</p>
+<p>The ones used to control datapatch are:</p>
+<p>enum ovs_datapath_cmd {</p>
+<p>OVS_DP_CMD_UNSPEC,</p>
+<p>OVS_DP_CMD_NEW,</p>
+<p>OVS_DP_CMD_DEL,</p>
+<p>OVS_DP_CMD_GET,</p>
+<p>OVS_DP_CMD_SET</p>
+<p>};</p>
+<p>and there are corresponding kernel functions which does the job:</p>
+<p>ovs_dp_cmd_new()</p>
+<p>ovs_dp_cmd_del()</p>
+<p>ovs_dp_cmd_get()</p>
+<p>ovs_dp_cmd_set()</p>
+<p>Similar functions are defined for vport and flow commands too.</p>
+<p>Before we talk about the details of the data structures, let's see how a packet is sent out or received from a port of an ovs bridge. When is packet is send out from the ovs bridge, an internal device defined by openvswitch module, which is viewed, by the kernel, as a struct vport too. The packet will be finally passed to internal_dev_xmit(), which in turn “receives” the packet. Now, the kernel needs to look at the flow table, to see if there is any “cache” for how to forward this packet. This is done by function ovs_flow_tbl_lookup(), which needs a key. The key is extracted by ovs_flow_extract() which briefly collects the details of the packet (L2~L4) and then constructs a unique key for this flow. Assume this is the first packet going out after we create the ovs bridge, so, there is no “cache” in the kernel, and the kernel doesn't know how to handle this packet! Then it will pass it to the user-space with “upcall” which uses genl too. The user-space daemon, ovs-vswitchd, will check the database and see which is the destination port for this packet, and will response to the kernel with OVS_ACTION_ATTR_OUTPUT to tell kernel which is the port it should forward to, in this case let's assume it is eth0. and finally a  OVS_PACKET_CMD_EXECUTE command is to let the kernel execute the action we just set. That is, the kernel will execute this genl command in function do_execute_actions() and finally forward the packet to the port “eth0” with do_output(). Then it goes to outside!</p>
+<p><!-- 		@page { margin: 2cm } 		P { margin-bottom: 0.21cm } -->The receiving side is similar. The openvswitch module registers an rx_handler for the underlying  (non-internal) devices, it is netdev_frame_hook(), so once the underlying device receives packets on wire, openvswitch will forward it to user-space to check where it should goes, and what actions it needs to execute on it. For example, if this is a VLAN packet, the VLAN tag should be removed from the packet first, and then forwarded to a right port. The user-space could learn that which is the right port to forward a given packet.</p>
+<p><!-- 		@page { margin: 2cm } 		P { margin-bottom: 0.21cm } -->The internal devices are special, when a packet is sent to an internal device, it is be immediately sent up to openvswitch to decide where it should go, instead of really sending it out. There is actually no way out of an internal device directly.</p>
+<p>Besides OVS_ACTION_ATTR_OUTPUT, the kernel also defines some other actions:</p>
+<p>OVS_ACTION_ATTR_USERSPACE, which tells the kernel to pass the packet to user-space</p>
+<p>OVS_ACTION_ATTR_SET:  Modify the header of the packet</p>
+<p>OVS_ACTION_ATTR_PUSH_VLAN: Insert a vlan tag into the packet</p>
+<p>OVS_ACTION_ATTR_POP_VLAN: Remove the vlan tag from the packet</p>
+<p>OVS_ACTION_ATTR_SAMPLE: Do sampling</p>
+<p>With these commands combined, the user-space could implement some different policies, like a bridge, a bond or a VLAN device etc. GRE tunnel is not currently in upstream, so we don't care about it now.</p>
+<p>So far, you already know how the packets are handled by openvswitch module. There are much more details, especially about the flow and datapath mentioned previously. A flow in kernel is represented as struct sw_flow, and datapath is defined as struct datapath, and the actions on a flow is defined as struct sw_flow_actions, and plus the one we mentioned, struct vport. These structures are the most important ones for openvswitch kernel module, their relationship is demonstrated in this picture:</p>
+<p style="text-align:center;"><a href="http://wangcong2015.files.wordpress.com/2012/10/openvswitch-kernel.jpg"><img class="aligncenter size-full wp-image-2134" src="{{site.baseurl}}/assets/2012/10/openvswitch-kernel.jpg" alt="" width="717" height="559"></a></p>
+<p>The most important one needs to mention is each struct sk_buff is associated with a struct sw_flow, which is via a pointer in ovs control block. And the above actions is associated with each flow, every time when a packet passed to openvswitch module, it first needs to lookup the flow table which is contained in a datapath which in turn either contains in a struct vport or in a global linked-list, with the key we mentioned. If a flow is found, the corresponding actions will be executed. Remember that datapath, flow, vport, all could be changed by the user-space with some specific genl command.</p>
+<p>As you can see, the kernel part only implements a mechanism and the fast path (except the first packet), and the user-space implements different policies upon the mechanism provided by the kernel, the slow path. The user-space is much more complicated, so I will not cover its details here.</p>
+<p>Update: Ben, one of the most active developers for openvswitch, pointed out some mistakes in the previous version, I updated this article as he suggested. Thanks to Ben!</body></html></p>

@@ -1,0 +1,46 @@
+---
+layout: post
+title: 还可以这样利用x86的堆栈
+date: 2008-02-26 12:41:28.000000000 -08:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Programming
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '308'
+  _wp_old_slug: '308'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2008/02/26/%e8%bf%98%e5%8f%af%e4%bb%a5%e8%bf%99%e6%a0%b7%e5%88%a9%e7%94%a8x86%e7%9a%84%e5%a0%86%e6%a0%88/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body>
+<p>原来还能这样“践踏”x86的堆栈，利用push后直接ret，很简单很直接！以前都是利用缓冲区溢出去覆盖～</p>
+<p>我写的用户空间的一段示例代码（注：执行时的段错误是意料之中的）：</p>
+<p>#include </p>
+<p>void hello(void)<br />
+{<br />
+	printf("hello world!n");<br />
+}</p>
+<p>void push_call(void *call)<br />
+{<br />
+	__asm__ __volatile__("pushl %%eaxnt"<br />
+		"ret"<br />
+		::"a" (call)<br />
+		);<br />
+}</p>
+<p>int main(void)<br />
+{<br />
+	push_call(&amp;hello);<br />
+	return 0;<br />
+}</p>
+<p></body></html></p>

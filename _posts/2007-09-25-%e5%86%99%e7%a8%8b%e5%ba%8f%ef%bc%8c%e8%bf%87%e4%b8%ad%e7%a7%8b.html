@@ -1,0 +1,61 @@
+---
+layout: post
+title: 写程序，过中秋
+date: 2007-09-25 22:15:33.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Life
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '222'
+  _wp_old_slug: '222'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2007/09/25/%e5%86%99%e7%a8%8b%e5%ba%8f%ef%bc%8c%e8%bf%87%e4%b8%ad%e7%a7%8b/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body><br />
+<a href="http://swady.blogbus.com/">王小敏同学</a>昨天给俺出了道题，还非得要求用C，结果差点儿没累死……换我们可爱的Python，结果一会儿就搞定了。题目是这样的：</p>
+<p>“有一个3x3的矩阵，现在要往里面填9个不同的数字。唯一的要求是：相邻的数字相加不能为质数。注：数字的取值范围为：1~N。（N为一个&gt;=10的数）请用程序解出尽可能多的符合要求的矩阵。”</p>
+<p>俺穷举了一把，就得出结果乐～～我的程序如下：</p>
+<p>#! /usr/bin/env python</p>
+<p>def Perm(items, n=None):<br />
+    if n is None:<br />
+        n = len(items)<br />
+    for i in range(len(items)):<br />
+        v = items[i:i+1]<br />
+        if n == 1:<br />
+            yield v<br />
+        else:<br />
+            rest = items[:i] + items[i+1:]<br />
+            for p in Perm(rest, n-1):<br />
+                yield v + p</p>
+<p>neighbors = [[1, 3], [2, 4], [5], [4, 6], [5, 7], [8], [7], [8]]</p>
+<p>def IsPrime(x):<br />
+	for i in range(2, x/2+2):<br />
+		if (x%i == 0):<br />
+			return False<br />
+	return True</p>
+<p>def WantIt(listobj):<br />
+	for i in range(len(listobj)-1):<br />
+		for j in neighbors[i]:<br />
+			if(IsPrime(listobj[i]+listobj[j])):<br />
+				return False<br />
+	return True</p>
+<p>enum = Perm(range(1, 11), 9)<br />
+for k in enum:<br />
+	if(WantIt(k)):<br />
+		print k</p>
+<p>打住，这道题就到此为止吧。</p>
+<p>接着说那令人心醉的patch。前几天做的一个patch提交了3次终于被Andrew给纳入-mm树了，呵，不容易啊！当中还正好赶上-mm树更新，不过quilt push一把居然没错！好险！要不今天也见不到akpm的确认邮件……说不定我还在那里痛苦地wiggle……</p>
+<p>由于mm同学今天来不了，所以俺就闲得没事干了，又正好赶上-mm又更新，干脆又把内核编译一把。N个小时后，把我搜集的warnings打开一看，发了，N多。挑了其中两个好修复的，又提交了两个patch。欧也！</p>
+<p>说patch不能不提<a href="http://repo.or.cz/w/fmail.git">我们的fmail</a>，昨天一口气提交了N个patch，Carlos都给apply上了。我对Carlos的名字很感兴趣，其实他的全名是Carlos Daniel Ruvalcaba Valenzuela，太长了！貌似应该是俄罗斯人。</body></html></p>

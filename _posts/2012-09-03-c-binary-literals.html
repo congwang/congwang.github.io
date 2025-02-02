@@ -1,0 +1,82 @@
+---
+layout: post
+title: C binary literals
+date: 2012-09-03 10:01:40.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Programming
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '2104'
+  _wp_old_slug: '2104'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2012/09/03/c-binary-literals/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body>
+<p>众所周知，C 语言中只有十进制、十六进制和八进制的常数表示（literal），没有二进制的常数表示。有时候我们很想用二进制的常数，因为它设置了哪些位一目了然。当然了，十六进制和八进制在某种程度上也行，对于熟练的人或许一眼就能看出，但是有二进制的常数表示不是更好嘛？</p>
+<p><a href="http://bytes.com/topic/c/answers/219656-literal-binary">这里</a>有人就给出了一个解决方法，构造一个宏接受二进制的“常量”，这样我们就可以通过它来直接使用二进制常量了。其实代码很容易理解，见下：</p>
+<p>[c]<br />
+/* Binary constant generator macro<br />
+By Tom Torfs - donated to the public domain<br />
+*/</p>
+<p>/* All macro's evaluate to compile-time constants */</p>
+<p>/* *** helper macros ***/</p>
+<p>/* turn a numeric literal into a hex constant<br />
+(avoids problems with leading zeroes)<br />
+8-bit constants max value 0x11111111, always fits in unsigned long<br />
+*/<br />
+#define HEX__(n) 0x##n##LU</p>
+<p>/* 8-bit conversion function */<br />
+#define B8__(x) ((x&amp;0x0000000FLU)?1:0)<br />
+		+((x&amp;0x000000F0LU)?2:0)<br />
+		+((x&amp;0x00000F00LU)?4:0)<br />
+		+((x&amp;0x0000F000LU)?8:0)<br />
+		+((x&amp;0x000F0000LU)?16:0)<br />
+		+((x&amp;0x00F00000LU)?32:0)<br />
+		+((x&amp;0x0F000000LU)?64:0)<br />
+		+((x&amp;0xF0000000LU)?128:0)</p>
+<p>/* *** user macros ***/</p>
+<p>/* for upto 8-bit binary constants */<br />
+#define B8(d) ((unsigned char)B8__(HEX__(d)))</p>
+<p>/* for upto 16-bit binary constants, MSB first */<br />
+#define B16(dmsb,dlsb) (((unsigned short)B8(dmsb)&lt;&lt;8)<br />
+			+ B8(dlsb))</p>
+<p>/* for upto 32-bit binary constants, MSB first */<br />
+#define B32(dmsb,db2,db3,dlsb) (((unsigned long)B8(dmsb)&lt;&lt;24)<br />
+				+ ((unsigned long)B8(db2)&lt;&lt;16)<br />
+				+ ((unsigned long)B8(db3)&lt;&lt;8)<br />
+				+ B8(dlsb))</p>
+<p>/* Sample usage:<br />
+B8(01010101) = 85<br />
+B16(10101010,01010101) = 43605<br />
+B32(10000000,11111111,10101010,01010101) = 2164238933<br />
+*/</p>
+<p>[/c]</p>
+<p>把这段代码放到头文件中，使用的时候 #include 进去就行了。当然了，这最好还是编译器支持才行，幸运的是，gcc 从<a href="http://gcc.gnu.org/gcc-4.3/changes.html">4.3</a> 开始就已经支持二进制常数了！以0b或者0B为前缀即可，比如：0b01010101。</p>
+<p>示例代码如下：</p>
+<p>[c]<br />
+#include<br />
+int main(void)<br />
+{<br />
+	assert(B8(01010101) == 85);<br />
+	assert(B8(01010101) == 0b01010101); //gcc extension!!<br />
+	assert(B8(11111111) == 0xff);<br />
+	assert(B8(00111111) == 077);<br />
+	assert(B16(10101010,01010101) == 43605);<br />
+	assert(B32(10000000,11111111,10101010,01010101) == 2164238933);<br />
+	return 0;<br />
+}<br />
+[/c]</p>
+<p>顺便说一句，在C++中你可以使用 <a href="http://www.cplusplus.com/reference/bitset/bitset/">std::bitset</a>。</p>
+<p></body></html></p>

@@ -1,0 +1,49 @@
+---
+layout: post
+title: C 语言新标准——C11
+date: 2011-12-21 22:46:14.000000000 -08:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Programming
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '1843'
+  _wp_old_slug: '1843'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2011/12/21/c-%e8%af%ad%e8%a8%80%e6%96%b0%e6%a0%87%e5%87%86-c11/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body></p>
+<p>12月8号，ISO <a href="http://www.iso.org/iso/iso_catalogue/catalogue_tc/catalogue_detail.htm?csnumber=57853" target="_blank">发布了</a>新的 C 语言的新标准——C11，之前被称为C1X，官方名称 ISO/IEC 9899:2011。新的标准可以<a href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf" target="_blank">这里</a>下载。这个标准是基于今年4月发布的名为 N1570 的草稿，但据说并未做任何改动。</p>
+<p>根据 <a href="http://en.wikipedia.org/wiki/C1X" target="_blank">wikipedia 记载</a>，相比 C99，C11 做了以下重要的更新：</p>
+<p>1. 对齐处理操作符 alignof，函数 aligned_alloc()，以及  头文件 &lt;stdalign.h&gt;。见 7.15 节。</p>
+<p>2.  _Noreturn 函数标记，类似于 gcc 的 __attribute__((noreturn))。例子：</p>
+<pre>	_Noreturn void thrd_exit(int res);</pre>
+<p>3.  _Generic 关键词，有点儿类似于 gcc 的 typeof。例子：</p>
+<pre>#define cbrt(X) _Generic((X), long double: cbrtl, 
+                              default: cbrt, 
+                              float: cbrtf)(X)</pre>
+<p>4.  静态断言（ static assertions），_Static_assert()，在解释 #if 和 #error 之后被处理。例子：</p>
+<pre>	_Static_assert(FOO &gt; 0, "FOO has a wrong value");</pre>
+<p>5. 删除了 gets() 函数，C99中已经将此函数被标记为过时，推荐新的替代函数 gets_s()。</p>
+<p>6. 新的 fopen() 模式，("…x")。类似 POSIX 中的 O_CREAT|O_EXCL，在文件锁中比较常用。</p>
+<p>7. 匿名结构体/联合体，这个早已经在 gcc 中了，我们并不陌生，定义在 6.7.2.1 p13。</p>
+<p>8. 多线程支持，包括：_Thread_local，头文件 &lt;threads.h&gt;，里面包含线程的创建和管理函数（比如 thrd_create()，thrd_exit()），mutex （比如 mtx_lock()，mtx_unlock()）等等，更多内容清参考 7.26 节。</p>
+<p>9. _Atomic类型修饰符和  头文件 &lt;stdatomic.h&gt;，见 7.17 节。</p>
+<p>10. 带边界检查（Bounds-checking）的函数接口，定义了新的安全的函数，例如 fopen_s()，strcat_s() 等等。更多参考 Annex K。</p>
+<p>11. 改进的 Unicode 支持，新的头文件 &lt;uchar.h&gt; 等。</p>
+<p>12. 新增 quick_exit() 函数，作为第三种终止程序的方式，当 <a href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1327.htm" target="_blank">exit() 失败</a>时可以做最少的清理工作（deinitializition），具体见 7.22.4.7。</p>
+<p>13. <a href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1464.htm" target="_blank">创建复数</a>的宏， CMPLX()，见 7.3.9.3。</p>
+<p>14. 更多浮点数处理的宏 （More macros for querying the characteristics of floating point types, concerning subnormal floating point numbers and the number of decimal digits the type is able to store）。</p>
+<p>15. struct timespec 成为 time.h 的一部分，以及宏 TIME_UTC，函数 timespec_get()。</p>
+<p>gcc 4.6 中新增了新的选项 -std=c1x 来支持这一标准，更多支持参考<a href="http://gcc.gnu.org/gcc-4.6/changes.html#c" target="_blank">这里</a>。但是 glibc 相关的部分尚未实现，所以你还不能马上在 Linux 上体验最新的 C11 特性。</body></html></p>

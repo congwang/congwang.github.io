@@ -1,0 +1,182 @@
+---
+layout: post
+title: Gcc Trampoline
+date: 2010-09-27 23:21:28.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Programming
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '1263'
+  _wp_old_slug: '1263'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2010/09/27/gcc-trampoline/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body></p>
+<p>gcc对<a href="http://gcc.gnu.org/onlinedocs/gccint/Trampolines.html">trampoline的定义</a>如下：</p>
+<p>A trampoline is a small piece of code that is created at run time when the address of a nested function is taken. It normally resides on the stack, in the stack frame of the containing function.</p>
+<p>trampoline是因nested function应运而生的。其基本原理描述如下：</p>
+<p>The instructions in the trampoline must do two things: load a constant address into the static chain register, and jump to the real address of the nested function. On CISC machines such as the m68k, this requires two instructions, a move immediate and a jump. Then the two addresses exist in the trampoline as word-long immediate operands. On RISC machines, it is often necessary to load each address into a register in two parts. Then pieces of each address form separate immediate operands.</p>
+<p>下面我们来看看它具体是怎么工作的。看<a href="http://www.technovelty.org/code/c/trampoline.html">这个例子</a>：<br />
+[c]<br />
+#include </p>
+<p>int function(int arg) {</p>
+<p>        int nested_function(int nested_arg) {<br />
+                return arg + nested_arg;<br />
+        }</p>
+<p>        return nested_function(arg);<br />
+}</p>
+<p>int main(void)<br />
+{<br />
+        printf("%dn", function(10));<br />
+}<br />
+[/c]<br />
+很明显我们使用到了一个nested function，但是我们看gcc生成的汇编：<br />
+[asm]<br />
+00000000004004c4 :<br />
+  4004c4:       55                      push   %rbp<br />
+  4004c5:       48 89 e5                mov    %rsp,%rbp<br />
+  4004c8:       89 7d fc                mov    %edi,-0x4(%rbp)<br />
+  4004cb:       4c 89 d0                mov    %r10,%rax<br />
+  4004ce:       8b 00                   mov    (%rax),%eax<br />
+  4004d0:       03 45 fc                add    -0x4(%rbp),%eax<br />
+  4004d3:       c9                      leaveq<br />
+  4004d4:       c3                      retq</p>
+<p>00000000004004d5 :<br />
+  4004d5:       55                      push   %rbp<br />
+  4004d6:       48 89 e5                mov    %rsp,%rbp<br />
+  4004d9:       48 83 ec 10             sub    $0x10,%rsp<br />
+  4004dd:       89 f8                   mov    %edi,%eax<br />
+  4004df:       89 45 f0                mov    %eax,-0x10(%rbp)<br />
+  4004e2:       8b 45 f0                mov    -0x10(%rbp),%eax<br />
+  4004e5:       48 8d 55 f0             lea    -0x10(%rbp),%rdx<br />
+  4004e9:       49 89 d2                mov    %rdx,%r10<br />
+  4004ec:       89 c7                   mov    %eax,%edi<br />
+  4004ee:       e8 d1 ff ff ff          callq  4004c4<br />
+  4004f3:       c9                      leaveq<br />
+  4004f4:       c3                      retq<br />
+[/asm]</p>
+<p>很明显这和普通的函数调用没什么区别嘛！（当然，除了汇编中的nest_function()的名字改变了。）没trampoline什么事。这是因为这时候还没必要使用trampoline，gcc优化还是很聪明的，它不到万不得已不会做一点儿额外的工作。</p>
+<p>下面我们就取一下它的地址：<br />
+[c]<br />
+#include </p>
+<p>int function(int arg) {</p>
+<p>        int nested_function(int nested_arg) {<br />
+                return arg + nested_arg;<br />
+        }</p>
+<p>        return nested_function(arg);<br />
+}</p>
+<p>int function2(int arg) {</p>
+<p>        int nested_function(int nested_arg) {<br />
+                return arg + nested_arg;<br />
+        }</p>
+<p>        int (*function_pointer)(int arg) = nested_function;</p>
+<p>        return function_pointer(arg);<br />
+}</p>
+<p>int main(void)<br />
+{<br />
+        printf("%dn", function(10));<br />
+        printf("%dn", function2(10));<br />
+        return 0;<br />
+}<br />
+[/c]<br />
+这时trampoline就产生了，因为我们对它取了地址，这个地址在栈上，而且nested function()的栈必须被设为外面function2()的栈。<br />
+[asm]<br />
+00000000004004f5 :<br />
+  4004f5:       55                      push   %rbp<br />
+  4004f6:       48 89 e5                mov    %rsp,%rbp<br />
+  4004f9:       89 7d fc                mov    %edi,-0x4(%rbp)<br />
+  4004fc:       4c 89 d0                mov    %r10,%rax<br />
+  4004ff:       8b 00                   mov    (%rax),%eax<br />
+  400501:       03 45 fc                add    -0x4(%rbp),%eax<br />
+  400504:       c9                      leaveq<br />
+  400505:       c3                      retq</p>
+<p>0000000000400506 :<br />
+  400506:       55                      push   %rbp<br />
+  400507:       48 89 e5                mov    %rsp,%rbp<br />
+  40050a:       48 83 ec 30             sub    $0x30,%rsp<br />
+  40050e:       89 f8                   mov    %edi,%eax<br />
+  400510:       89 45 d0                mov    %eax,-0x30(%rbp)<br />
+  400513:       48 8d 45 d0             lea    -0x30(%rbp),%rax<br />
+  400517:       48 83 c0 04             add    $0x4,%rax<br />
+  40051b:       48 8d 55 d0             lea    -0x30(%rbp),%rdx<br />
+  40051f:       b9 f5 04 40 00          mov    $0x4004f5,%ecx<br />
+  400524:       66 c7 00 41 bb          movw   $0xbb41,(%rax)<br />
+  400529:       89 48 02                mov    %ecx,0x2(%rax)<br />
+  40052c:       66 c7 40 06 49 ba       movw   $0xba49,0x6(%rax)<br />
+  400532:       48 89 50 08             mov    %rdx,0x8(%rax)<br />
+  400536:       c7 40 10 49 ff e3 90    movl   $0x90e3ff49,0x10(%rax)<br />
+  40053d:       48 8d 45 d0             lea    -0x30(%rbp),%rax<br />
+  400541:       48 83 c0 04             add    $0x4,%rax<br />
+  400545:       48 89 45 f8             mov    %rax,-0x8(%rbp)<br />
+  400549:       8b 45 d0                mov    -0x30(%rbp),%eax<br />
+  40054c:       48 8b 55 f8             mov    -0x8(%rbp),%rdx<br />
+  400550:       89 c7                   mov    %eax,%edi<br />
+  400552:       ff d2                   callq  *%rdx<br />
+  400554:       c9                      leaveq<br />
+  400555:       c3                      retq<br />
+[/asm]<br />
+读生成的汇编，我们可以看出堆栈大体这样：</p>
+<pre>
+[  xxx     ] &lt;-rsp
+[  eax     ]
+[  0xbb41  ]
+[  addr    ]
+[  0xba49  ]
+[   rsp    ]
+[0x90e3ff49]
+...
+[ xxx      ] &lt;- rbp
+</pre>
+<p>其中addr是指nested_function.2079的地址。这里最让我们困惑的应该那三个常数，它们是什么？根据上面的定义你应该可以猜出，是指令！到底是什么指令呢？我们手工反汇编一下：<br />
+[c]<br />
+unsigned short arrary[] = {0xbb41, 0xffff, 0xffff};<br />
+unsigned short array2[] = {0xba49, 0xffff, 0xffff};<br />
+unsigned short arrary3 [] = {0xff49, 0x90e3};<br />
+[/c]<br />
+其中0xffff仅仅是用作标记。把此文件保存为decode.c，然后：</p>
+<pre>
+cr0% gcc -c decode.c
+cr0% objdump -D decode.o
+</pre>
+<p>我们可以得到，它们大体就是下面三条指令：</p>
+<pre>
+movl $nested_function.2079,%r11
+movl %rsp, %r10
+jmp *%r11
+nop
+</pre>
+<p>根据nested_function.2079里的代码，我们可以看出%r10传递的是参数的地址，然后就直接jmp到nested_function.2079里去了。这就是传说中的trampoline！</p>
+<p>注：此时的stack必须是可执行的，因为有代码放在了里面，查看其maps可以看出：</p>
+<p>bfebe000-bfed3000 rwxp 00000000 00:00 0          [stack]</p>
+<p>提到nested function，不能不提一个trick，就是用nested function<a href="http://gcc.gnu.org/ml/gcc-help/2010-08/msg00229.html">来实现C的lambda</a>！如下：<br />
+[c]<br />
+  #define lambda(l_ret_type, l_arguments, l_body)<br />
+    ({<br />
+      l_ret_type l_anonymous_functions_name l_arguments<br />
+        l_body<br />
+      &amp;l_anonymous_functions_name;<br />
+    })</p>
+<p>    qsort (array, sizeof (array) / sizeof (array[0]), sizeof (array[0]),<br />
+           lambda (int, (const void *a, const void *b),<br />
+                   {<br />
+                     dump ();<br />
+                     printf ("Comparison %d: %d and %dn",<br />
+                             ++ comparison,<br />
+                             *(const int *) a, *(const int *) b);<br />
+                     return *(const int *) a - *(const int *) b;<br />
+                   }));<br />
+[/c]<br />
+怎么样？很有意思吧。<br />
+</body></html></p>

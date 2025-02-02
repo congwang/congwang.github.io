@@ -1,0 +1,134 @@
+---
+layout: post
+title: treap
+date: 2012-07-06 15:38:56.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Programming
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '2036'
+  _wp_old_slug: '2036'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2012/07/06/treap/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body><br />
+<a href="http://en.wikipedia.org/wiki/Treap">treap</a> 是一个很有意思的数据结构，从名字也能看得出来，它是 tree 和 heap 的混合产物。为什么会有这么一个数据结构还得从二叉树（BST）说起。</p>
+<p>我们都知道，普通的二叉树是不平衡的，在某些情况下进行插入删除操作可以导致时间复杂度从 O(logN) 下降到 O(N)。为了解决平衡的问题，有很多新的二叉树被引入，比如大家熟知的一些：Linux 内核中 CFS 使用到的<a href="http://en.wikipedia.org/wiki/Red%E2%80%93black_tree">红黑树（Red-black tree）</a>，数据结构课上都会讲到的<a href="http://en.wikipedia.org/wiki/AVL_tree"> AVL 树</a>。这些树都因为要进行复杂的旋转操作而不容易实现。</p>
+<p>那么有没有一个实现容易的平衡二叉树呢？Treap 就是一个。普通的二叉树节点只有 key，而 treap 又多了一个 priority，这里的 priority 就是 heap （优先队列）中的 priority。这样， treap 既可以利用二叉树的特性，又可以利用 heap 的特性了。</p>
+<p>看它是怎么利用的，以 Perl 的 <a href="http://cpansearch.perl.org/src/DHARD/Statistics-Descriptive-Weighted-0.6/lib/Tree/Treap.pm">Tree::Treap 模块</a>为例。</p>
+<p>1) 对于搜索，使用二叉树的 key 即可，和普通二叉树没有区别：</p>
+<p>[perl]<br />
+sub _get_node {<br />
+    my $self = shift;<br />
+    my $key  = shift;<br />
+    while(!$self-&gt;_is_empty() and $self-&gt;ne($key)){<br />
+        $self = $self-&gt;{$self-&gt;lt($key)?"left":"right"}<br />
+    }<br />
+    return $self-&gt;_is_empty() ? 0 : $self;<br />
+}<br />
+[/perl]</p>
+<p>2) 插入一个新的节点 key=x 时，随机一个整数值 y 作为 priority，利用二叉树搜索 x，在它应该出现的位置创建一个新的节点，只要 x 不是根节点而且优先级高于它的父节点，那么旋转这个节点使其和其父节点交换位置。</p>
+<p>[perl]<br />
+sub insert {<br />
+    my $self = shift;<br />
+    my $key  = shift;<br />
+    my $data = shift;<br />
+    $data = defined($data)? $data : $key;<br />
+    my $priority = shift() || rand();</p>
+<p>    if($self-&gt;_is_empty()) {<br />
+        $self-&gt;{priority} = $priority,<br />
+        $self-&gt;{key}      = $key;<br />
+        $self-&gt;{data}     = $data;<br />
+        $self-&gt;{left}     = $self-&gt;new($self-&gt;{cmp});<br />
+        $self-&gt;{right}    = $self-&gt;new($self-&gt;{cmp});<br />
+        return $self;<br />
+    }</p>
+<p>    if($self-&gt;gt($key)){<br />
+        $self-&gt;{right}-&gt;insert($key,$data,$priority);<br />
+        if($self-&gt;{right}-&gt;{priority} &gt; $self-&gt;{priority}){<br />
+            $self-&gt;_rotate_left();<br />
+        }<br />
+    }elsif($self-&gt;lt($key)){<br />
+        $self-&gt;{left}-&gt;insert($key,$data,$priority);<br />
+        if($self-&gt;{left}-&gt;{priority} &gt; $self-&gt;{priority}){<br />
+            $self-&gt;_rotate_right();<br />
+        }</p>
+<p>    }else{<br />
+        $self-&gt;_delete_node();<br />
+        $self-&gt;insert($key,$data,$priority);<br />
+    }<br />
+    return $self;<br />
+}<br />
+[/perl]</p>
+<p>从代码可以看出，旋转就是为了保持 heap 的属性，优先级高的节点在上层。</p>
+<p>3) 删除一个节点相对比较麻烦：如果要删除的节点 x 是一个叶子，直接删掉即可；如果 x 有一个孩子节点 z，把 x 删掉，然后把 z 作为 x 父亲的孩子；如果 x 有两个孩子节点，则把 x 和它的下一个节点（successor）交换，然后进行相应的旋转。实现是递归实现的，很容易理解。注意：这里实现删除时并没有进行实质的删除操作，而只是把优先级设为了最低的 -100，这也使得代码变得比上面的理论更简单。</p>
+<p>[perl]<br />
+sub delete {<br />
+    my $self = shift;<br />
+    my $key  = shift;<br />
+    return 0 unless $self = $self-&gt;_get_node($key);<br />
+    $self-&gt;_delete_node();<br />
+}</p>
+<p>sub _delete_node {<br />
+    my $self = shift;<br />
+    if($self-&gt;_is_leaf()) {<br />
+        %$self = (priority =&gt; -100, cmp =&gt; $self-&gt;{cmp});<br />
+    } elsif ($self-&gt;{left}-&gt;{priority} &gt; $self-&gt;{right}-&gt;{priority}) {<br />
+        $self-&gt;_rotate_right();<br />
+        $self-&gt;{right}-&gt;_delete_node();<br />
+    } else {<br />
+        $self-&gt;_rotate_left();<br />
+        $self-&gt;{left}-&gt;_delete_node();<br />
+    }<br />
+}<br />
+[/perl]</p>
+<p>这里的两个旋转操作很容易实现：</p>
+<p>[perl]<br />
+sub _clone_node  {<br />
+    my $self  = shift;<br />
+    my $other = shift;<br />
+    %$self = %$other;<br />
+}</p>
+<p>sub _rotate_left {<br />
+    my $self = shift;<br />
+    my $tmp = $self-&gt;new($self-&gt;{cmp});<br />
+    $tmp-&gt;_clone_node($self);<br />
+    $self-&gt;_clone_node($self-&gt;{right});<br />
+    $tmp-&gt;{right} = $self-&gt;{left};<br />
+    $self-&gt;{left} = $tmp;</p>
+<p>}</p>
+<p>sub _rotate_right {<br />
+    my $self = shift;<br />
+    my $tmp = $self-&gt;new($self-&gt;{cmp});<br />
+    $tmp-&gt;_clone_node($self);<br />
+    $self-&gt;_clone_node($self-&gt;{left});<br />
+    $tmp-&gt;{left} = $self-&gt;{right};<br />
+    $self-&gt;{right} = $tmp;<br />
+}<br />
+[/perl]</p>
+<p>或者借助于这个图来理解右旋：</p>
+<pre>
+      B            A
+     /           / 
+    A   2   --&gt;  0   B
+   /               / 
+  0   1            1   2
+</pre>
+<p>参考：<br />
+1. <a href="http://acs.lbl.gov/~aragon/treaps.html">http://acs.lbl.gov/~aragon/treaps.html</a><br />
+2. <a href="http://www.perlmonks.org/?node_id=289584">http://www.perlmonks.org/?node_id=289584</a><br />
+3. C 语言实现：<a href="http://www.canonware.com/trp/">http://www.canonware.com/trp/</a><br />
+4. Python 实现：<a href="http://stromberg.dnsalias.org/~strombrg/python-tree-and-heap-comparison/">http://stromberg.dnsalias.org/~strombrg/python-tree-and-heap-comparison/</a><br />
+</body></html></p>

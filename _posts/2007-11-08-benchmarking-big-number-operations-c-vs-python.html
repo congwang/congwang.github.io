@@ -1,0 +1,119 @@
+---
+layout: post
+title: 'Benchmarking big number operations: C vs Python'
+date: 2007-11-08 14:49:13.000000000 -08:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Programming
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '252'
+  _wp_old_slug: '252'
+author:
+  login: wangcong2015
+  email: wangcong@rocketmail.com
+  display_name: wangcong2015
+  first_name: ''
+  last_name: ''
+permalink: "/2007/11/08/benchmarking-big-number-operations-c-vs-python/"
+---
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><br />
+<html><body>
+<p>最近在做RSA加密算法，急需要对大数（很大的数，一般来说是十进制500位以上的数字）进行加法和乘法操作。这就需要对如此大的数操作很快才可以。自然而然，我就想到了Python，它天生就支持大数操作。所以我的RSA也是用Python实现的。</p>
+<p>简单地搜了一下网上的一些实现，用C的基本上都采用了<a href="http://gmplib.org/">gmp库</a>，很牛的一个数字计算的库，接口很方便，而且效率也很乐观。下载一个其中一个还算漂亮的实现，速度超快。相比之下，我的Python程序就慢成马了，难以容忍，优化了一下循环，替换了一个判断素数的算法，效率还是低得出奇。无奈之下，向Herbert求救，在他的提示下，对C和Python的大数操作benchmark了一番。</p>
+<p>我用的源代码如下：（声明：C代码编写仓促，很是丑陋，勿模仿！）</p>
+<p>#include<br />
+#include<br />
+#include<br />
+#include<br />
+#include </p>
+<p>void timediff(struct timeval* a,struct timeval* b,struct timeval* result)<br />
+{<br />
+    (result)-&gt;tv_sec  = (a)-&gt;tv_sec  - (b)-&gt;tv_sec;<br />
+    (result)-&gt;tv_usec = (a)-&gt;tv_usec - (b)-&gt;tv_usec;</p>
+<p>    if((result)-&gt;tv_usec tv_sec;<br />
+        (result)-&gt;tv_usec += 1000000;<br />
+    }<br />
+}</p>
+<p>int main(void)<br />
+{<br />
+	int i;<br />
+	mpz_t p, q, r;<br />
+	struct timeval before, after, diff;<br />
+	char p_str[1024] = {'1',};<br />
+	char q_str[1024] = {'1',};</p>
+<p>	mpz_init(p);<br />
+	mpz_init(q);<br />
+	mpz_init(r);<br />
+	srand(time(NULL));</p>
+<p>	for(i=1;i&lt;1024;i++)<br />
+		p_str[i] = (int)(2.0*rand()/(RAND_MAX+1.0)) + 48;</p>
+<p>	for(i=1;i&lt;1024;i++)<br />
+		q_str[i] = (int)(2.0*rand()/(RAND_MAX+1.0)) + 48;<br />
+	mpz_set_str(p, p_str, 10);<br />
+	mpz_set_str(q, q_str, 10);</p>
+<p>	gettimeofday(&amp;before, NULL);<br />
+	mpz_add(r, p, q);<br />
+	gettimeofday(&amp;after, NULL);<br />
+	timediff(&amp;after, &amp;before, &amp;diff);<br />
+	printf("add needs time:");<br />
+	printf("n%-15s : %ld","Seconds", diff.tv_sec);<br />
+	printf("n%-15s : %ld","Microseconds", diff.tv_usec);<br />
+	puts("");</p>
+<p>	gettimeofday(&amp;before, NULL);<br />
+	mpz_mul(r, p ,q);<br />
+	gettimeofday(&amp;after, NULL);<br />
+	timediff(&amp;after, &amp;before, &amp;diff);<br />
+	printf("multiply needs time:");<br />
+	printf("n%-15s : %ld","Seconds", diff.tv_sec);<br />
+	printf("n%-15s : %ld","Microseconds", diff.tv_usec);<br />
+	puts("");</p>
+<p>	mpz_clear(r);<br />
+	mpz_clear(q);<br />
+	mpz_clear(p);<br />
+	return 0;<br />
+}</p>
+<p>#!/usr/bin/env python</p>
+<p>import time<br />
+import string<br />
+import random</p>
+<p>p = q = r = 0<br />
+BIG_NUM = []</p>
+<p>for i in range(1024):<br />
+	BIG_NUM.append(random.choice('0123456789'))</p>
+<p>p = int(''.join(BIG_NUM))</p>
+<p>for i in range(1024):<br />
+	BIG_NUM[i] = random.choice('0123456789')</p>
+<p>q = int(''.join(BIG_NUM))</p>
+<p>before = time.time()<br />
+r = p+q<br />
+after = time.time()<br />
+#print r<br />
+print "Add needs time: %f us"%((after - before)*1000.0*1000.0)</p>
+<p>before = time.time()<br />
+r = p*q<br />
+after = time.time()<br />
+#print r<br />
+print "Multiply needs time: %f us"%((after - before)*1000.0*1000.0)</p>
+<p>实验结果如下：<br />
+(C version, compiled with gcc -O9)<br />
+$ ./bench<br />
+add needs time:<br />
+Seconds         : 0<br />
+Microseconds    : 5<br />
+multiply needs time:<br />
+Seconds         : 0<br />
+Microseconds    : 11</p>
+<p>(Python version)<br />
+$ ./bench.py<br />
+Add needs time: 15.020370 us<br />
+Multiply needs time: 207.901001 us</p>
+<p>-_-b 刚才搞错进制了。。。 1 second=1000*1000 microseconds 这下对了。Python确实比C慢。抑或是真正的问题出在这里？而不在我的算法？</p>
+<p>顺便也在这里问一下：有没有什么好的寻找大素数的算法？？<br />
+（整个RSA实现会在以后的文章中贴出。）</p>
+<p></body></html></p>
