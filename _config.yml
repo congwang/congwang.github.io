@@ -14,7 +14,7 @@ plugins:
   - jekyll-seo-tag
 
 # Include _pages directory
-include: ['_pages']
+include: ['_pages', '_attachments']
 
 # Force GitHub Pages to use new Jekyll version
 github-pages: 232
